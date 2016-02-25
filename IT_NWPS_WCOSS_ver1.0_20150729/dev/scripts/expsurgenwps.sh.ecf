@@ -1,0 +1,48 @@
+#!/bin/bash
+# ----------------------------------------------------------- 
+# UNIX Shell Script File
+# Shell Used: BASH shell
+# Original Author(s): Roberto Padilla-Hernandez
+# File Creation Date: 05/09/2015
+# Date Last Modified:
+#
+# Version control: 1.00
+#
+# Support Team:
+#
+# Contributors:
+#
+# ----------------------------------------------------------- 
+# ------------- Program Description and Details ------------- 
+# ----------------------------------------------------------- 
+#
+# ex job, to run Psurge2Nwps
+#
+# ----------------------------------------------------------- 
+
+echo "============================================================="
+echo "=                                                           ="
+echo "=                  RUNNING PSURGE2NWPS                      ="
+echo "=                                                           ="
+echo "============================================================="
+
+set -xa
+
+${USHnwps}/make_psurge.sh
+#${USHnwps}/make_psurge_para.sh
+#Running one WFO on one CPU
+#
+#cd ${RUNdir}
+#mpirun.lsf cfp ${RUNdir}/wfo_cmdfile
+
+#Log file
+#mv ${RUNdir}/*.log ${LOGdir}/
+
+#Cleaning 
+#rm ${RUNdir}/*.flt
+#rm ${RUNdir}/*.txt
+#rm ${RUNdir}/*.dat
+#rm ${RUNdir}/*.datum
+#rm  ${RUNdir}/*.grib2 
+#echo "mpirun.lsf complete"
+exit 0

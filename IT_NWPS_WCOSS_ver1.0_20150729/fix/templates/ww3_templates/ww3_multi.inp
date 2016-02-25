@@ -1,0 +1,154 @@
+$ -------------------------------------------------------------------- $
+$ WAVEWATCH III multi-grid model driver input file                     $
+$ -------------------------------------------------------------------- $
+$
+$ *******************************************************************
+$ *** NOTE : This is an example file from the mww3_test_05 script ***
+$ ***        Unlilke other input example files this one CANNOT    ***
+$ ***        be run as an independent interactive run             ***
+$ *******************************************************************
+$
+$ The first input line sets up the general multi-grid model definition
+$ by defining the follwing six parameters :
+$
+$   1) Number of wave model grids.i                         ( NRGRD )
+$   2) Number of grids definint input fields.               ( NRINP )
+$   3) Flag for using unified point output file.           ( UNIPTS )
+$   4) Output server type as in ww3_shel.inp
+$   5) Flag for dedicated process for iunified point output.
+$   6) Flag for grids sharing dedicated output processes.
+$  1 2 3 4 5 6
+$  1 1 F 1 F F
+$      1        2              3 4 5 6
+  #NumofCGrids# #NumofInpGrds# F 1 F F
+$
+$ -------------------------------------------------------------------- $
+$ If there are input data grids defined ( NRINP > 0 ), then these
+$ grids are defined first. These grids are defined as if they are wave
+$ model grids using the file mod_def.MODID. Each grid is defined on
+$ a separate input line with MODID, and eight input flags identifying
+$ the presentce of 1) water levels 2) currents 3) winds 4) ice and
+$ 5-7) assimilation data as in the file ww3_shel.inp.
+$
+#WLEMultInp#   T F F F F F F
+#CURMultInp#   F T F F F F F
+#WNDMultInp#   F F T F F F F
+#ICEMultInp#   F F F T F F F
+$
+$ In this example, we need the file mod_def.input to define the grid
+$ and the file wind.input to provide the corresponding wind data.
+$
+$ -------------------------------------------------------------------- $
+$ If all point output is gathered in a unified point output file
+$ ( UNIPTS = .TRUE. ), then the output spectral grid needs to be 
+$ defined. Ths information is taken from a wave model grid, and only
+$ the spectral definitions from this grid are relevant. Define the
+$ name of this grid here
+$
+$  'points'
+$
+$ In this example, we need the file mod_def.points to define the
+$ spectral output grid, and the point output will be written to the
+$ file out_pnt.points
+$
+$ -------------------------------------------------------------------- $
+$ Now each actual wave model grid is defined using 13 parameters to be
+$ read fom a single line in the file. Each line contains the following
+$ parameters
+$     1)   Define the grid with the extension of the mod_def file.
+$    2-8)  Define the inputs used by the grids with 8 keywords 
+$          corresponding to the 8 flags defining the input in the
+$          input files. Valid keywords are:
+$            'no'      : This input is not used.
+$            'native'  : This grid has its own input files, e.g. grid
+$                        grdX (mod_def.grdX) uses ice.grdX.
+$            'MODID'   : Take input from the grid identified by 
+$                        MODID. In the example below, all grids get
+$                        their wind from wind.input (mod_def.input).
+$     9)   Rank number of grid (internally sorted and reassigned).
+$    10)   Group number (internally reassigned so that different
+$          ranks result in different group numbers.
+$   11-12) Define fraction of cumminicator (processes) used for this
+$          grid.
+$    13)   Flag identifying dumping of boundary data used by this
+$          grid. If true, the file nest.MODID is generated.
+$
+$ '   '   WL    CUR   WND   ICE    Assimila data
+ 'grd1'  'no' '#CURFileExt#' '#WNDFileExt#'   '#ICEFileExt#' 'no' 'no' 'no'   1  1  0.00 1.00  F
+$ 'grd2'  'no' 'no' 'no' 'no' 'no' 'no' 'no'   2  1  0.25 0.75  F
+$ 'grd3'  'no' 'no' 'no' 'no' 'no' 'no' 'no'   3  1  0.50 1.00  F
+$ 'grd4'  'no' 'no' 'no' 'no' 'no' 'no' 'no'   1  1  0.00 0.50  F
+$ 'grd5'  'no' 'no' 'no' 'no' 'no' 'no' 'no'   2  1  0.25 0.75  F
+$ 'grd6'  'no' 'no' 'no' 'no' 'no' 'no' 'no'   3  1  0.50 1.00  F
+$
+$ In this example three grids are used requiring the files
+$ mod_def.grdN. All files get ther winds from the grid 'input'
+$ defined by mod_def.input, and no other inputs are used. In the lines
+$ that are commented out, each grid runs on a part of the pool of
+$ processes assigned to the computation.
+$
+$ -------------------------------------------------------------------- $
+$ Starting and ending times for the entire model run
+$
+$   20060101 000000  20060101 120000 
+  #RunTimeStart# #RunTimeEnd#
+$
+$ -------------------------------------------------------------------- $
+$ Specific multi-scale model settings (single line).
+$    Flag for masking computation in two-way nesting (except at 
+$                                                     output times).
+$    Flag for masking at printout time.
+$
+  T T
+$
+$ -------------------------------------------------------------------- $
+$ Conventional output requests as in ww3_shel.inp.  Will be applied
+$ to all grids.
+$
+  #TbegOut#  #DeltaOutputww3#  #TendOut# 
+$----------------------------------------------------------------
+$ D C W D W  I H L T T  T C F D S  D P P P P  P P W P D  F C C U C
+$ P U N T L  C S   0    M G P I P  P H T L T  S W S N T  C F F S H
+$ T R D   V  E     2    1 E   R R    S P P H  I S F R D    X D T A
+$----------------------------------------------------------------
+  T T T F T  F T T F F  F F T T F  T T F F T  F F F F F  F F F T F
+  F F F F F  F F F F F  F F F F F  F F F F F  F F F
+$----------------------------------------------------------------
+$ F T T W W  W W A U B  F T S T J  F T U M M  P U U
+$ A A W C C  C C B B E  B B X W    O U S S S  2 S S
+$ W W A C F  H M R R D  B B Y O    C S S S C  S 1 2
+$----------------------------------------------------------------
+$
+$ NOTE: Ff UNIPTS = .TRUE. then the point output needs to be defined
+$       here and cannot be redifined below.
+$
+  #TbegOut# #DeltaOutputww3# #TendOut#
+#outputpointshere#
+     0.0    0.0   'STOPSTRING'
+  #TbegOut# 0 #TendOut#
+  #TbegOut# 0 #TendOut#
+  #TbegOut# 0 #TendOut#
+$
+$ -------------------------------------------------------------------- $
+$ Type 6 : Separated wave field data.
+$          First, last step IX and IY, flag for formatted file
+$
+$ 'grd1'  6
+  #TbegOut#  #DeltaOutputww3#  #TendOut# 
+      1 #npxout# 1 1 #npyout# 1 T
+$
+$ -------------------------------------------------------------------- $
+$ Mandatory end of outpout requests per grid, identified by output 
+$ type set to 0.
+$
+  'the_end'  0
+$
+$ -------------------------------------------------------------------- $
+$ Moving grid data as in ww3_hel.inp. All grids will use same data.
+$
+$  'MOV' 19680606 000000   5.  90.
+  'STP'
+$
+$ -------------------------------------------------------------------- $
+$ End of input file                                                    $
+$ -------------------------------------------------------------------- $

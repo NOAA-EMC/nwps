@@ -1,0 +1,7 @@
+PreparedGeometry.lo: PreparedGeometry.cpp \
+ ../../../include/geos/geom/prep/PreparedGeometry.h \
+ ../../../include/geos/export.h
+
+../../../include/geos/geom/prep/PreparedGeometry.h:
+
+../../../include/geos/export.h:

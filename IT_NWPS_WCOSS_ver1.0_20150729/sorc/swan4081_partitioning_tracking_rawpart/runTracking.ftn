@@ -1,0 +1,275 @@
+!***********************************************************************
+!
+      PROGRAM runTracking
+!                                                                      *
+!***********************************************************************
+!
+      USE PARTDAT
+      USE PARTMAIN
+      USE MATFUNC
+!
+      IMPLICIT NONE
+!
+!  0. Authors
+!
+!     40.81: Andre van der Westhuysen and Jeff Hanson
+!
+!  1. Updates
+!
+!     40.81, Jul. 11: Origination, based on Matlab code by Jeff Hanson 
+!                     and Eve-Marie Devaliere
+!
+
+      CHARACTER    :: filename *32, paramFile *32                         40.81                                       
+      REAL         :: dirKnob, perKnob, hsKnob, wetPts, seedLat,          40.81
+     &                seedLon, dirTimeKnob, tpTimeKnob                    40.81
+      INTEGER      :: maxGroup                                            40.81
+      TYPE(dat2d), POINTER :: wsdat(:)                                    40.81   
+      TYPE(timsys), POINTER :: sysA(:)                                     40.81  
+      INTEGER, ALLOCATABLE :: maxSys(:)                                   40.81
+
+!
+!   5. Local variables
+!
+!     intype         Int       input  Type of input (0 = array from memory; 1 = from file)
+!     tmax           Int       input  Value of maxTs to apply (1 or 2, used for model coupling)
+!     tcur           Int       input  Index of current time step (1 or 2, used for model coupling)
+!
+      INTEGER           :: intype, tmax, tcur, maxI, maxJ
+      INTEGER           :: it, igrp, sysmatch, ind
+      INTEGER           :: counter, j, maxTs, leng
+      REAL, ALLOCATABLE :: dum(:,:)
+!
+!  6. Subroutines used
+!
+!     waveTracking_NWS_V2
+!
+!  7. Subroutines calling
+!
+!     This is the main program
+!
+!  8. Error messages
+!
+!     -
+!
+!  9. Remarks
+!
+! 10. Structure
+!
+
+!
+! 11. Source text
+!
+!     Since this program read the raw partitioning input from file,
+!     we set intype=1, and tmax and tcur to dummy values (not used).
+      intype = 1
+      tmax = 0
+      tcur = 0
+
+!     Parameters of tracking algorithm
+      dirKnob = 2.
+      perKnob = 2.
+      hsKnob = 2.
+      wetPts = 0.1
+      seedLat = 0.
+      seedLon = 0.
+      dirTimeKnob = 1.
+      tpTimeKnob = 2.
+      paramFile = 'params'
+
+!      filename = 'partRes2.txt'
+!      filename = 'partRes3.txt'
+!      filename = 'partRes.txt'
+!      filename = 'partRes_jeff.txt'
+      WRITE(6,*) 'Enter name of partitioning file:'
+      READ(*,*) filename
+
+      OPEN(unit=3,file='partitioning.log',status='new')
+
+      CALL waveTracking_NWS_V2 (intype     ,tmax       ,
+     &                          tcur       ,
+     &                          filename   ,dirKnob    , 
+     &                          perKnob    ,hsKnob     ,
+     &                          wetPts     ,seedLat    ,
+     &                          seedLon    ,dirTimeKnob,
+     &                          tpTimeKnob ,paramFile  ,
+     &                          sysA       ,wsdat      ,
+     &                          maxSys     ,maxGroup   )
+
+!-----Output systems as plain text----------------------------------------
+
+      maxI = SIZE(wsdat(1)%lon,1)
+      maxJ = SIZE(wsdat(1)%lon,2)
+
+!-----Final output: Hs
+      OPEN(unit=2,file='sys_out_hs.txt',status='new')
+!     Write lon/lat
+      DO counter = 1,1
+         WRITE(2,*) 'ipart = ',counter
+         DO j = maxJ,1,-1
+            WRITE(2,'(F7.2)',ADVANCE='NO') wsdat(1)%lon(:,j)
+            WRITE(2,*,ADVANCE='YES')
+         END DO
+      END DO
+      DO counter = 1,1
+         WRITE(2,*) 'ipart = ',counter
+         DO j = maxJ,1,-1
+            WRITE(2,'(F7.2)',ADVANCE='NO') wsdat(1)%lat(:,j)
+            WRITE(2,*,ADVANCE='YES')
+         END DO
+      END DO
+
+      ALLOCATE( dum(maxI,maxJ) )
+      WRITE(3,*) 'SIZE(sysA)',SIZE(sysA)
+      maxTs = SIZE(sysA)
+
+      DO it = 1,maxTs
+         WRITE(3,*) 'it =',it       
+         DO igrp = 1,maxGroup
+            dum(1:maxI,1:maxJ) = 9999.00
+!           Find system with this group tag
+            sysmatch = 1
+            DO WHILE (sysmatch.LE.maxSys(it))
+               IF (sysA(it)%sys(sysmatch)%grp.EQ.igrp) EXIT
+               sysmatch = sysmatch+1
+            END DO
+            IF (sysmatch.LE.maxSys(it)) THEN
+!              Match found: fill the output matrix with this data
+               leng = sysA(it)%sys(sysmatch)%nPoints
+               DO ind = 1, leng
+                  dum(sysA(it)%sys(sysmatch)%i(ind),
+     &                sysA(it)%sys(sysmatch)%j(ind)) = 
+     &                sysA(it)%sys(sysmatch)%hs(ind)
+               END DO
+            ELSE
+               leng = 0
+            END IF
+            
+            WRITE(2,'(A,4I)') 'ts, maxGroup, igrp, nPoints = ',
+     &                  it,maxGroup,igrp,leng
+            DO J = maxJ,1,-1
+               WRITE(2,'(F8.2)',ADVANCE='NO') dum(:,j)
+               WRITE(2,*,ADVANCE='YES')
+            END DO
+         END DO
+      END DO
+
+      CLOSE(2)
+
+!-----Final output: tp
+      OPEN(unit=2,file='sys_out_tp.txt',status='new')
+!     Write lon/lat
+      DO counter = 1,1
+         WRITE(2,*) 'ipart = ',counter
+         DO j = maxJ,1,-1
+            WRITE(2,'(F7.2)',ADVANCE='NO') wsdat(1)%lon(:,j)
+            WRITE(2,*,ADVANCE='YES')
+         END DO
+      END DO
+      DO counter = 1,1
+         WRITE(2,*) 'ipart = ',counter
+         DO j = maxJ,1,-1
+            WRITE(2,'(F7.2)',ADVANCE='NO') wsdat(1)%lat(:,j)
+            WRITE(2,*,ADVANCE='YES')
+         END DO
+      END DO
+
+      DO it = 1,maxTs
+         DO igrp = 1,maxGroup
+            dum(1:maxI,1:maxJ) = 9999.00
+!           Find system with this group tag
+            sysmatch = 1
+            DO WHILE (sysmatch.LE.maxSys(it))
+               IF (sysA(it)%sys(sysmatch)%grp.EQ.igrp) EXIT
+               sysmatch = sysmatch+1
+            END DO
+            IF (sysmatch.LE.maxSys(it)) THEN
+!              Match found: fill the output matrix with this data
+               leng = sysA(it)%sys(sysmatch)%nPoints
+               DO ind = 1, leng
+                  dum(sysA(it)%sys(sysmatch)%i(ind),
+     &                sysA(it)%sys(sysmatch)%j(ind)) = 
+     &                sysA(it)%sys(sysmatch)%tp(ind)
+               END DO
+            ELSE
+               leng = 0
+            END IF
+            
+            WRITE(2,'(A,4I)') 'ts, maxGroup, igrp, nPoints = ',
+     &                  it,maxGroup,igrp,leng
+            DO J = maxJ,1,-1
+               WRITE(2,'(F8.2)',ADVANCE='NO') dum(:,j)
+               WRITE(2,*,ADVANCE='YES')
+            END DO
+         END DO
+      END DO
+
+      CLOSE(2)
+
+!-----Final output: dir
+      OPEN(unit=2,file='sys_out_dir.txt',status='new')
+!     Write lon/lat
+      DO counter = 1,1
+         WRITE(2,*) 'ipart = ',counter
+         DO j = maxJ,1,-1
+            WRITE(2,'(F7.2)',ADVANCE='NO') wsdat(1)%lon(:,j)
+            WRITE(2,*,ADVANCE='YES')
+         END DO
+      END DO
+      DO counter = 1,1
+         WRITE(2,*) 'ipart = ',counter
+         DO j = maxJ,1,-1
+            WRITE(2,'(F7.2)',ADVANCE='NO') wsdat(1)%lat(:,j)
+            WRITE(2,*,ADVANCE='YES')
+         END DO
+      END DO
+
+      DO it = 1,maxTs
+         DO igrp = 1,maxGroup
+            dum(1:maxI,1:maxJ) = 9999.00
+!           Find system with this group tag
+            sysmatch = 1
+            DO WHILE (sysmatch.LE.maxSys(it))
+               IF (sysA(it)%sys(sysmatch)%grp.EQ.igrp) EXIT
+               sysmatch = sysmatch+1
+            END DO
+            IF (sysmatch.LE.maxSys(it)) THEN
+!              Match found: fill the output matrix with this data
+               leng = sysA(it)%sys(sysmatch)%nPoints
+               DO ind = 1, leng
+                  dum(sysA(it)%sys(sysmatch)%i(ind),
+     &                sysA(it)%sys(sysmatch)%j(ind)) = 
+     &                sysA(it)%sys(sysmatch)%dir(ind)
+               END DO
+            ELSE
+               leng = 0
+            END IF
+            
+            WRITE(2,'(A,4I)') 'ts, maxGroup, igrp, nPoints = ',
+     &                  it,maxGroup,igrp,leng
+            DO J = maxJ,1,-1
+               WRITE(2,'(F8.2)',ADVANCE='NO') dum(:,j)
+               WRITE(2,*,ADVANCE='YES')
+            END DO
+         END DO
+      END DO
+
+      CLOSE(2)
+      
+      DEALLOCATE(dum)      
+!-------------------------------------------------------------------------
+
+      DEALLOCATE(wsdat)
+      DEALLOCATE(sysA)
+      DEALLOCATE(maxSys)
+      CLOSE(3)
+
+      END PROGRAM runTracking
+
+
+
+
+      
+
+
+

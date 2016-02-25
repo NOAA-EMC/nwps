@@ -1,0 +1,133 @@
+#!/bin/sh
+date
+export PS4='$SECONDS ${0/\/nw.*\/nwps.*\/} + '
+set -xa
+# #### 04/01/15 ###############################
+# SETUP NWPS SHELL VARIABLES
+# #############################################
+
+curhour=$(date -u +%H)
+if [ $curhour -lt 12 ]; then CYCLE="00"; fi
+if [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
+if [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
+if [ $curhour -ge 22 ]; then CYCLE="18"; fi
+echo ""
+echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
+
+export cyc=${CYCLE}
+export cycle=t${cyc}z
+
+export utilscript=/nwprod/util/ush
+export USHutil=/nwprod/util/ush
+#sh $utilscript/setup.sh
+#sh $utilscript/setpdy.sh
+. ./PDY.${WFO}
+
+export pgm="NWPS"
+
+export DATA=/ptmpp1/${DEVWCOSS_USER}/data/${WFO}.${PDY}
+export GESROOT=/ptmpp1/${DEVWCOSS_USER}/data/nwges
+
+mkdir -p $DATA
+cd $DATA
+
+
+####################################
+# Specify NET and RUN Name and model
+####################################
+export NET=${model}
+export OFS=ofs
+export RUN=$(echo ${job}|awk -F"_" '{print $2}')
+
+####################################
+# SENDECF  - Flag Events on ECFLOW
+# SENDCOM  - Copy Files From TMPDIR to $COMOUT
+# SENDDBN  - Issue DBNet Client Calls
+####################################
+export SENDCOM=${SENDCOM:-YES}
+export SENDECF=${SENDECF:-YES}
+export SENDDBN=${SENDDBN:-NO}
+
+####################################
+# Specify Execution Areas
+####################################
+#export HOMEnwps=${NWROOT}/${model}.${nwps_ver}
+export HOMEnwps=${NWROOT}
+export FIXnwps=${FIXnwps:-${HOMEnwps}/fix}
+export EXECnwps=${EXECnwps:-${HOMEnwps}/exec}
+export SORCnwps=${SORCnwps:-${HOMEnwps}/sorc}
+export PARMnwps=${PARMnwps:-${HOMEnwps}/parm}
+export USHnwps=${USHnwps:-${HOMEnwps}/ush}
+export PMnwps=${PMnwps:-${USHnwps}/pm}
+export BATHYdb=${BATHYdb:-${FIXnwps}/bathy_db}
+export SHAPEFILEdb=${SHAPEFILEdb:-${FIXnwps}/shapefile_db}
+
+# Set processing DIRs here
+export ARCHdir=${ARCHdir:-${DATA}/archive}
+export DATAdir=${DATAdir:-${DATA}/data}
+export INPUTdir=${INPUTdir:-${DATA}/input}
+export VARdir=${VARdir:-${DATA}/var}
+export OUTPUTdir=${OUTPUTdir:-${DATA}/output}
+export RUNdir=${RUNdir:-${DATA}/run}
+export TMPdir=${TMPdir:-${DATA}/tmp}
+export LOGdir=${LOGdir:-${DATA}/logs}
+export GEN_NETCDF=${GEN_NETCDF:-FALSE}
+export GEN_HDF5=${GEN_HDF5:-FALSE}
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOMEnwps}/lib/szip:${HOMEnwps}/lib/proj
+export PYTHONPATH=${HOMEnwps}/lib/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
+export PYTHON=python
+
+# Set NWPS run conditions
+export DEBUGGING=${DEBUGGING:-TRUE}
+export DEBUG_LEVEL=${DEBUG_LEVEL:-1}
+export ISPRODUCTION=${ISPRODUCTION:-TRUE}
+export SITETYPE=${SITETYPE:-EMC}
+export MODELTYPE="SWAN"
+export pgmout=${RUNdir}/ww3_systrk.out
+export errfile=${RUNdir}/ww3_systrk.err
+
+##############################################
+# Define COM directory
+##############################################
+export COMIN=${COMROOT}/${NET}/${envir}/${WFO}.${PDY}
+export COMINm1=${COMROOT}/${NET}/${envir}/${WFO}.${PDYm1}
+export COMINm2=${COMROOT}/${NET}/${envir}/${WFO}.${PDYm2}
+export COMINm3=${COMROOT}/${NET}/${envir}/${WFO}.${PDYm3}
+export COMOUT=${COMROOT}/${NET}/${envir}/${WFO}.${PDY}
+export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
+export COMINgfs=/com/gfs/prod/gfs.${PDY}
+export COMINwave=/com/wave/prod
+export COMestofs=/com/estofs/prod/estofs.${PDY}
+export COMrtofs=/com/rtofs/prod/rtofs.${PDY}
+export dcom=${dcom:-/dcom/us007003}
+export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
+export COM_nwps_R_ES_TOFS="/com"
+export PCOM=/pcom/${envir}/${NET}
+
+if [ "${SENDCOM}" = YES ]; then
+    mkdir -p $COMOUT
+fi
+
+mkdir -p $COMIN $LOGdir $RUNdir $TMPdir $OUTPUTdir $ARCHdir $DATAdir $INPUTdir $VARdir
+
+startmsg
+
+##############################################
+# Execute the script
+${HOMEnwps}/scripts/exnwps_wavetrack.sh.ecf
+##############################################
+
+msg="JOB $job HAS COMPLETED NORMALLY."
+postmsg $jlogfile "$msg"
+
+if [ -e $pgmout ]; then
+    cat $pgmout
+fi
+
+cd $DATAROOT
+
+if [ "$KEEPDATA" != YES ]; then
+    rm -rf $DATA
+fi
+
+date

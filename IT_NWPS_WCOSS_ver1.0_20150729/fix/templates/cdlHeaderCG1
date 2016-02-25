@@ -1,0 +1,251 @@
+netcdf swanCG1 {		
+// ENP grid 255
+dimensions:
+
+	record = UNLIMITED ;	// (reference time, forecast time)
+	n_valtimes=10 ;
+ 	data_variables=12;
+ 	level = 1;
+	x =  99 ;
+	y =  114 ;
+        charsPerLevel = 10;
+	datetime_len = 21 ; 	// string length for datetime strings
+        namelen = 132;
+	nmodels = 1 ;		// both 80km and 48km models
+	nav = 1 ;		// For navigation.  Variables that use
+				// this dimension define a mapping between
+				// (x,y) indices and (lat,lon) coords.
+
+	nav_len = 100 ;		// max length for navigation character strings
+
+
+variables:
+
+	float   htsgw(record,level, y, x) ;
+                htsgw:long_name = "Total Significant Wave Height" ;
+                htsgw:units = "meters";
+                htsgw:valid_range = 0.f, 50.f;
+                htsgw:_FillValue = 1.e+37f ;
+                htsgw:navigation_var = "nav" ;
+                htsgw:_n3D = 1 ;
+                                                                                                                             
+        char    htsgwLevels(level, charsPerLevel);
+        char    htsgwInventory(n_valtimes, level);
+
+        float   dirpw(record,level, y, x) ;
+                dirpw:long_name = "Primary Wave Direction" ;
+                dirpw:units = "degree true";
+                dirpw:valid_range = 0.f, 360.f;
+                dirpw:_FillValue = 1.e+37f ;
+                dirpw:navigation_var = "nav" ;
+                dirpw:_n3D = 1 ;
+
+        char    dirpwLevels(level, charsPerLevel);
+        char    dirpwInventory(n_valtimes, level);
+	
+        float   wlevel(record,level, y, x) ;
+                wlevel:long_name = "Dev from MSL (m)" ;
+                wlevel:units = "m";
+                wlevel:valid_range = -2.f, 3.f;
+                wlevel:_FillValue = 1.e+37f ;
+                wlevel:navigation_var = "nav" ;
+                wlevel:_n3D = 1 ;
+
+        char    wlevelLevels(level, charsPerLevel);
+        char    wlevelInventory(n_valtimes, level);
+
+	float   perpw(record,level, y, x) ;
+                perpw:long_name = "Primary Wave Period" ;
+                perpw:units = "seconds";
+                perpw:valid_range = 0.f, 100.f;
+                perpw:_FillValue = 1.e+37f ;
+                perpw:navigation_var = "nav" ;
+                perpw:_n3D = 1 ;
+
+        char    perpwLevels(level, charsPerLevel);
+        char    perpwInventory(n_valtimes, level);
+
+        float   brkw(record,level, y, x) ;
+                brkw:long_name = "wave breaking points" ;
+               	brkw:units = "boolean";
+               	brkw:valid_range = 0.f, 1.f;
+                brkw:_FillValue = -9.f;
+                brkw:navigation_var = "nav" ;
+                brkw:_n3D = 1 ;
+                                                                                
+        char    brkwLevels(level, charsPerLevel);
+        char    brkwInventory(n_valtimes, level);
+
+	float   depth(record,level, y, x) ;
+                depth:long_name = "Depth" ;
+                depth:units = "meters";
+                depth:valid_range = 0.f, 3000.f;
+                depth:_FillValue = 1.e+37f ;
+                depth:navigation_var = "nav" ;
+                depth:_n3D = 1 ;
+
+        char    depthLevels(level, charsPerLevel);
+        char    depthInventory(n_valtimes, level);
+
+	float   curMag(record,level, y, x) ;
+                curMag:long_name = "Current Mag" ;
+                curMag:units = "knots";
+                curMag:valid_range = 0.f, 100.f;
+                curMag:_FillValue = 1.e+37f ;
+                curMag:navigation_var = "nav" ;
+                curMag:_n3D = 1 ;
+
+        char    curMagLevels(level, charsPerLevel);
+        char    curMagInventory(n_valtimes, level);
+
+        float   curDir(record,level, y, x) ;
+                curDir:long_name = "Current Dir" ;
+                curDir:units = "degree true";
+                curDir:valid_range = 0.f, 360.f;
+                curDir:_FillValue = 1.e+37f ;
+                curDir:navigation_var = "nav" ;
+                curDir:_n3D = 1 ;
+
+        char    curDirLevels(level, charsPerLevel);
+        char    curDirInventory(n_valtimes, level);
+
+     	float   swell(record,level, y, x) ;
+                swell:long_name = "SWELL" ;
+                swell:units = "meters";
+                swell:valid_range = 0.f, 100.f;
+                swell:_FillValue = 1.e+37f ;
+                swell:navigation_var = "nav" ;
+                swell:_n3D = 1 ;
+
+        char    swellLevels(level, charsPerLevel);
+        char    swellInventory(n_valtimes, level);
+
+	float   WLEN(record,level, y, x) ;
+                WLEN:long_name = "Wave Length" ;
+                WLEN:units = "meters";
+                WLEN:valid_range = 0.f, 100.f;
+                WLEN:_FillValue = 1.e+37f ;
+                WLEN:navigation_var = "nav" ;
+                WLEN:_n3D = 1 ;
+
+        char    WLENLevels(level, charsPerLevel);
+        char    WLENInventory(n_valtimes, level);
+	
+	float   wndDir(record,level, y, x) ;
+                wndDir:long_name = "Wind Direction" ;
+                wndDir:units = "degree true";
+                wndDir:valid_range = 0.f, 360.f;
+                wndDir:_FillValue = 1.e+37f ;
+                wndDir:navigation_var = "nav" ;
+                wndDir:_n3D = 1 ;
+                                                                                                                             
+        char    wndDirLevels(level, charsPerLevel);
+        char    wndDirInventory(n_valtimes, level);
+
+        float   wndMag(record,level, y, x) ;
+                wndMag:long_name = "Wind Speed" ;
+                wndMag:units = "knots";
+                wndMag:valid_range = 0.f, 200.f;
+                wndMag:_FillValue = 1.e+37f ;
+                wndMag:navigation_var = "nav" ;
+                wndMag:_n3D = 1 ;
+                                                                                                                             
+        char    wndMagLevels(level, charsPerLevel);
+        char    wndMagInventory(n_valtimes, level);
+
+
+        float   level(level) ;
+		level:long_name = "level" ;
+		level:units = "" ;
+
+	double	reftime(record) ;	// reference time of the model
+		reftime:long_name = "reference time" ;
+		reftime:units = "seconds since 1970-1-1" ;
+
+	double	valtime(record) ;       // forecast time ("valid" time)		
+		valtime:long_name = "valid time" ;
+		valtime:units = "seconds since 1970-1-1" ;
+
+	float   valtime_offset(record) ; // derived as valtime-reftime
+                valtime_offset:long_name = "hours from reference time" ;
+                valtime_offset:units = "hours" ;
+                                                                                                                             
+        char    datetime(record, datetime_len) ; // derived from reftime
+                datetime:long_name = "reference date and time" ;
+                // units YYYY-MM-DD hh:mm:ssZ  (ISO 8601)
+
+	int	valtimeMINUSreftime(n_valtimes) ; // derived as valtime-reftime
+		valtimeMINUSreftime:long_name = "hours from reference time" ;
+		valtimeMINUSreftime:units = "seconds" ;
+
+//     Model name ---> this is NEEDED for data to be accessable for GFE 
+//     Must match the filename in the AWIPS data pathway 
+
+        char    model(namelen);
+
+	int     model_id(nmodels) ;
+                model_id:long_name = "generating process ID number" ;
+	
+// global attributes:
+                                                                                                                             
+:record = "reftime, valtime" ;	// "dimension attribute" -- means
+					// (reftime, valtime) uniquely
+					// determine record
+                                                                                                                             
+:projIndex = 4 ;
+:projName = "LATLON";
+:centralLat = 41.85f ;
+:centralLon = -125.67f ;
+:gridPointLL = 0, 0 ;
+:gridPointUR = 80, 102 ;
+:lat00 = 39.95f ;
+:lon00 = -127.27f ;
+:latNxNy = 43.72f ;
+:lonNxNy = -124.00f ;
+
+data:
+                                                                                                                             
+// Forecast times(hrs) are: 0,12,24,36,48,60,72,84
+                                                                                                                             
+ valtimeMINUSreftime = 0,43200,86400,129600,172800,216000,259200,302400;
+                                                                                                                             
+ model       = "swanCG1";
+ model_id    = 1240;
+                                
+ htsgwLevels    = "SFC";
+ htsgwInventory = "1","1","1","1","1","1","1","1";
+
+ dirpwLevels    = "SFC";
+ dirpwInventory = "1","1","1","1","1";
+
+ wlevelLevels    = "SFC";
+ wlevelInventory = "1","1","1","1","1";
+                                                                                
+ perpwLevels    = "SFC";
+ perpwInventory = "1","1","1","1","1";
+
+ brkwLevels    = "SFC";
+ brkwInventory = "1","1","1","1","1";
+
+ depthLevels    = "SFC";
+ depthInventory = "1","1","1","1","1";
+ 
+ wndMagLevels    = "SFC";
+ wndMagInventory = "1","1","1","1","1","1","1","1";
+                                                                                                                             
+ wndDirLevels    = "SFC";
+ wndDirInventory = "1","1","1","1","1";
+
+ curMagLevels    = "SFC";
+ curMagInventory = "1","1","1","1","1";
+
+ curDirLevels    = "SFC";
+ curDirInventory = "1","1","1","1","1";
+
+ swellLevels    = "SFC";
+ swellInventory = "1","1","1","1","1";
+
+ WLENLevels    = "SFC";
+ WLENInventory = "1","1","1","1","1";
+
+ 

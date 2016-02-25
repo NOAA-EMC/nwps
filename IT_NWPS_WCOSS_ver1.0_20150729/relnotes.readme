@@ -1,0 +1,210 @@
+TITLE: 
+Nearshore Wave Prediction System (NWPS) v1.2 initial implementation on WCOSS
+
+CHANGE REQUEST CLASS: 
+Major change
+
+DESCRIPTION OF CHANGE:  
+Initial implementation of NWPS on WCOSS. NWPS will provide on-demand, high-resolution nearshore wave model guidance to forecasters using the model SWAN. It is driven by forecaster-developed wind grids compiled in AWIPS/GFE. These are submitted in real-time by coastal Weather Forecast Offices (WFOs) using a GUI baselined in AWIPS 2 v14.4.1, and pushed via Local Data Manager (LDM) data lines to Regional Headquarters, from where it is pulled to WCOSS, also via LDM. It furthermore incorporates wave spectra boundary conditions from WW3 Multi_1, tidal and surge water levels from ESTOFS (extra-tropical conditions), and nearshore surface currents from RTOFS Global. During tropical conditions, the water level input is switched to P-Surge, and wave spectra boundary conditions are received from NHC/TAFB, via DBNet. The forecast guidance provided by this system includes fields of wave parameters (e.g. total wave height, period and direction), partitioned and tracked wave systems, and empirical guidance on rip currents and wave runup at four pilot sites.
+
+NWPS has been running operationally as a local model at various coastal WFOs since 2013. For this initial implementation, the NWPS code has been ported to WCOSS for running the domains of Southern and Eastern Region coastal WFOs. These are (23 in total):
+
+   BRO - Brownsville, Texas
+   CRP - Corpus Christi, Texas
+   HGX - Houston/Galveston, Texas
+   LCH - Lake Charles, Louisiana
+   LIX - New Orleans/Baton Rouge, Louisiana
+   MOB - Mobile/Pensacola, Alabama/Florida
+   TAE - Tallahassee, Florida
+   TBW - Tampa Bay, Florida
+   MFL - Miami-South Florida, Florida
+   KEY - Key West, Florida
+   MLB - Melbourne, Florida
+   JAX - Jacksonville, Florida
+   SJU - San Juan, Puerto Rico
+   CAR - Caribou, Maine
+   GYX - Gray/Maine, Maine
+   BOX - Boston, Massachusetts
+   NYC - New York, New York
+   PHI - Mt. Holly, New Jersey
+   LWX - Baltimore/Washington, Maryland/Virginia
+   AKQ - Wakefield, Virginia
+   MHX - Morehead City, North Carolina
+   ILM - Wilmington, North Carolina
+   CHS - Charleston, South Carolina
+
+The NWPS is run 2-4 times per day, on demand, depending on the coastal Weather Forecast Office (WFO). The 3-hourly grids will be disseminated in GRIB2 format, as well as in graphical (png) format on http://polar.ncep.noaa.gov/waves/nwps/. Grid resolutions will be dependent upon individual coastal WFO. Each WFO will receive integral (total wave field) model guidance on a CG1 grid, and on up to 4 nested grids (CG2-CG5). In addition, partitioned wave fields will be available on a lower-resolution CG0 grid, if requested:
+
+   CG0 grid - partition output on low-resolution version of overall computational domain CG1
+   CG1 grid - integral output on overall computational grid
+   CG2 grid - integral output on first nested grid, if applicable
+   CG3 grid - integral output on second nested grid, if applicable
+   CG4 grid - integral output on third nested grid, if applicable
+   CG5 grid - integral output on fourth nested grid, if applicable
+
+JOB DEPENDENCIES
+This system has upstream dependencies on the following WCOSS models:
+ - WW3 Multi_1 (wave boundary conditions)
+ - RTOFS Global (surface current fields)
+ - ESTOFS Atlantic (water level fields)
+ - P-Surge (water level fields)
+
+The system has upstream data dependencies on:
+ - User input received from AWIPS 2 v14.4.1 (and later) via LDM
+ - Wave boundary conditions received from NHC/TABF via DBNet
+
+This system currently has no downstream dependencies.
+
+REQUIRED SYSTEM USAGE:
+For each of the 23 on-demand WFO runs, the following tasks are executed: PREP, FORECAST_CG1, POST_CG1, PRDGEN_CG1,  WAVETRACK_CG1, PRDGEN_CG0. Additionally, up to 4 nested domains are run, using the tasks FORECAST_CGn, POST_CGn and PRDGEN_CGn in a loop of n. The system usage for each of these tasks depends on the specific WFO domain, and number of nest grids. Example system usage values for WFO Miami (MFL) are:
+
+JNWPS_PREP
+   CPU time :   11:37 min:sec
+   Max/Ave Memory :   60 MB / 28.58 MB
+   Num of CPUs :   1 (Serial)
+
+JNWPS_FORECAST_CG1
+   CPU time :   33:21 min:sec
+   Max/Ave Memory :   460 MB / 365.62 MB
+   Num of CPUs :   8 (Parallel)
+
+JNWPS_POST_CG1 & JNWPS_PRDGEN_CG1
+   CPU time :   23:15 min:sec
+   Max/Ave Memory :   160 MB / 35.06 MB
+   Num of CPUs :   1 (Serial)
+
+JNWPS_WAVETRACK_CG1 & JNWPS_PRDGEN_CG0
+   CPU time :   12:44 min:sec
+   Max/Ave Memory :   2.8 GB / 95.65 MB
+   Num of CPUs :   8 (Parallel)
+
+JNWPS_FORECAST_CGn  (for MFL)
+   CPU time :   25:20 min:sec
+    Max/Ave Memory :   424 MB / 86.84 MB
+   Num of CPUs :   8 (Parallel)
+
+JNWPS_POST_CGn & JNWPS_PRDGEN_CGn 
+   CPU time :   12:49 min:sec
+   Max/Ave Memory :   621 MB / 54.60 MB
+   Num of CPUs :   Up to 4 (Parallel)
+
+Estimated average system usage for each of the 23 WFOs: 8 cores and peak memory of 2.8GB RAM. A total of 96 cores on WCOSS Phase 1 have been reserved for the on-demand operation, preferably EXCLUSIVE. With this configuration, the total average run time per WFO is:
+
+SR:                       ER:
+BRO: 47 min               CHS: 60 min
+CRP: 48 min               ILM: 44 min
+HGX: 72 min               MHX: 99 min
+LCH: 67 min               AKQ: 51 min
+LIX: 87 min               LWX: 32 min
+MOB: 81 min               PHI: 64 min
+TAE: 55 min               OKX: 66 min
+TBW: 107 min              BOX: 94 min
+KEY: 103 min              GYX: 59 min
+MFL: 119 min              CAR: 62 min
+MLB: 72 min
+JAX: 69 min
+SJU: 103 min
+
+Disk storage: Total GRIB2 volume (23 WFOs, all domains) = 1.6 GB/cycle ~ 2 cycles/day. Total PNG volume =  964 MB/cycle (18,866 files) ~ 2 cycles /day. Request data to be archived for 5 days.
+
+BENEFIT OF CHANGE: 
+Initial implementation. Coastal WFOs in SR and ER provided with high-resolution coastal wave guidance not produced on WCOSS previously.
+
+USER IMPACT STATEMENT:
+Coastal WFOs in SR and ER provided with high-resolution coastal wave guidance, formatted to be ingested in GFE (for editing) and D2D (for display).
+
+TECHNICAL IMPACT STATEMENT:
+As described above, new GRIB2 files will become available for each participating WFO. Coastal WFOs who choose to run the local workstation implementation of NWPS alongside the WCOSS implementation (AWIPS 2 v14.4.1 NWPS GUI option “Both”) will potentially have two sets of GRIB2 files in their AWIPS system. The locally-produced files will have to be renamed to avoid clashes. 
+
+RISKS:
+This on-demand system has two primary technical risks:
+1. Dataflow: Each of the 23 coastal WFOs will submit a set of three files via LDM for their respective runs. The data volume of each submission will be up to 3 MB. There is a risk that there would be insufficient capacity on the LDM to relay this data. If this occurs, the NWPS runs would not initiate on WCOSS.
+2. The NWPS will handle individual runs of up to 23 coastal WFOs, but typically not all concurrently. Projections suggest that 96 compute cores (6 nodes) would provide sufficient capacity, but the actual operational loading will have to be assessed once NWPS is implemented.  
+
+PROPOSED IMPLEMENTATION
+DATE:  September 15, 2015 (WFOs MFL and BOX); October 15, 2015 (remaining 21 coastal WFOs in SR and ER).
+TIME: 00z
+
+BUGFIXES
+None
+
+
+IMPLEMENTATION INSTRUCTIONS
+
+I) Checking out the code from EMC-SVN
+
+In your $HOME directory (or other model save directory), make a model directory (“NWPS” for example):
+> mkdir NWPS
+> cd NWPS
+
+Check out the NWPS code from the following emc-svn tag: https://svnemc.ncep.noaa.gov/projects/ww3_nwps/tags/IT_NWPS_WCOSS_ver1.0-20150729
+> svn checkout  https://svnemc.ncep.noaa.gov/projects/ww3_nwps/tags/IT_NWPS_WCOSS_ver1.0-20150729 
+
+II) Building the executables
+
+First define the path variable ${NWPSdir} in your profile file, which points to the base of the code checked out under (I) above.
+> NWPSdir=$(pwd)
+
+Next, change directory to ${NWPSdir}/sorc/, and execute the general NWPS install script. This single step will install the total package, including all binary compilations:
+
+> cd ${NWPS}/sorc
+> ./make_NWPS.sh
+
+Once the compilations are done, all executables are moved to ${NWPSdir}/exec, and the system will be ready.
+
+Alternatively, the individual components of the NWPS system can be built interactively, following the instructions below.
+
+FOR  SWAN WAVE MODEL
+To build the SWAN executable ${NWPSdir}/exec/swan-mpi.exe:
+> cd ${NWPSdir}/sorc
+> ./make_swan.sh
+
+FOR WAVE TRACKING
+To build the wave tracking executable ${NWPSdir}/exec/ww3_systrk_mpi
+> cd ${NWPS}/sorc
+> ./make_ww3_systrk.sh
+
+FOR RIP CURRENTS
+To build the rip current executable ripforecast.x
+> cd ${NWPS}/sorc
+> ./make_rip_current_program.sh
+
+FOR RUNUP
+To build the wave runup executable runupforecast.exe
+> cd ${NWPS}/sorc
+> ./make_runup_program.sh
+
+FOR UTILITY PROGRAMS
+This will generate : read_awips_windfile, fix_ascii_point_data, g2_write_template, writedat, readdat, swan_out_to_bin, g2_read_template
+> cd ${NWPS}/sorc
+> ./make_nwps_utils.sh
+
+FOR PSURGE2NWPS
+The following will generate the executables: psurge2nwps_64, psurge_identify.exe and  psoutTOnwps.exe.
+> cd ${NWPS}/sorc
+> ./make_Psurge2NWPS.sh
+
+FOR WGRIB2
+This will generate : wgrib2
+> cd ${NWPS}/sorc
+> ./make_wgrib2.sh
+
+FOR DEGRIB
+This will generate : degrib
+> cd ${NWPS}/sorc
+> ./make_degrib.sh
+
+FOR PYTHON MODULES
+This will generate : Python modules for Basemap and Matplotlib
+> cd ${NWPS}/sorc
+> ./make_python_modules.sh
+
+FOR PYTHON BASEMAP (separate build)
+> cd ${NWPS}/sorc
+./make_basemap.sh
+
+ADD the path to the job card $NWPSdir/jobs/JNWPS_POST:
+export PYTHONPATH=${HOMEnwps}/lib/python/python_modules/lib64/python2.6/
+site-packages:${HOMEnwps}/lib/basemap:${PYTHONPATH}
+export PYTHON=python
+

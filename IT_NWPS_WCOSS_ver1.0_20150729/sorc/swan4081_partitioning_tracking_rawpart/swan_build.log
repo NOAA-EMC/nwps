@@ -1,0 +1,1992 @@
+Building OpenMPI SWAN binary for  compiler
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpif90 FFLAGS=" -w -fno-second-underscore " \
+	        FFLAGS90=" -w -fno-second-underscore -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpif90 swmod1.f -c -w -fno-second-underscore  
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpif90 FFLAGS=" -w -fno-second-underscore " \
+	        FFLAGS90=" -w -fno-second-underscore -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpif90 swmod1.f -c -w -fno-second-underscore  
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpif90 FFLAGS=" -w -fno-second-underscore " \
+	        FFLAGS90=" -w -fno-second-underscore -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpif90 swmod1.f -c -w -fno-second-underscore  
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpif90 FFLAGS=" -w -fno-second-underscore " \
+	        FFLAGS90=" -w -fno-second-underscore -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpif90 swmod1.f -c -w -fno-second-underscore  
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS=" -list -W0 -assume byterecl -traceback " \
+	        FFLAGS90=" -list -W0 -assume byterecl -traceback " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -list -W0 -assume byterecl -traceback  
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS="  -g -O2 -v -o " \
+	        FFLAGS90="  -g -O2 -v -o " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_constants.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_constants.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_fileio.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_fileio.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort serv_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran serv_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort mod_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran mod_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGriddata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGriddata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridobjects.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridobjects.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompdata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompdata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanmain.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanmain.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom4.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom4.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom5.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom5.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanser.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanser.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanparll.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanparll.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadADCGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadADCGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadTriangleGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadTriangleGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadEasymeshGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadEasymeshGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInitCompGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInitCompGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCheckGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCheckGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCreateEdges.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCreateEdges.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridTopology.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridTopology.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridVert.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridVert.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridCell.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridCell.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridFace.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridFace.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrintGridInfo.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrintGridInfo.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanFindPoint.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanFindPoint.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPointinMesh.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPointinMesh.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanBpntlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanBpntlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrepComp.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrepComp.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanVertlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanVertlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompUnstruc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompUnstruc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS="  -g -O2 -v -o " \
+	        FFLAGS90="  -g -O2 -v -o " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_constants.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_constants.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_fileio.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_fileio.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort serv_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran serv_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort mod_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran mod_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGriddata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGriddata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridobjects.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridobjects.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompdata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompdata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanmain.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanmain.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom4.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom4.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom5.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom5.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanser.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanser.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanparll.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanparll.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadADCGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadADCGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadTriangleGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadTriangleGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadEasymeshGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadEasymeshGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInitCompGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInitCompGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCheckGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCheckGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCreateEdges.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCreateEdges.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridTopology.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridTopology.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridVert.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridVert.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridCell.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridCell.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridFace.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridFace.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrintGridInfo.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrintGridInfo.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanFindPoint.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanFindPoint.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPointinMesh.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPointinMesh.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanBpntlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanBpntlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrepComp.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrepComp.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanVertlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanVertlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompUnstruc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompUnstruc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS="  -g -O2 -v -o " \
+	        FFLAGS90="  -g -O2 -v -o " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_constants.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_constants.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_fileio.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_fileio.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort serv_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran serv_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort mod_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran mod_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGriddata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGriddata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridobjects.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridobjects.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompdata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompdata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanmain.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanmain.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom4.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom4.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom5.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom5.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanser.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanser.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanparll.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanparll.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadADCGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadADCGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadTriangleGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadTriangleGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadEasymeshGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadEasymeshGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInitCompGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInitCompGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCheckGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCheckGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCreateEdges.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCreateEdges.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridTopology.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridTopology.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridVert.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridVert.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridCell.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridCell.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridFace.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridFace.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrintGridInfo.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrintGridInfo.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanFindPoint.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanFindPoint.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPointinMesh.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPointinMesh.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanBpntlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanBpntlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrepComp.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrepComp.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanVertlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanVertlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompUnstruc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompUnstruc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS="  -g -O2 -v -o " \
+	        FFLAGS90="  -g -O2 -v -o " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_constants.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_constants.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_fileio.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_fileio.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort serv_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran serv_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort mod_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran mod_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGriddata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGriddata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridobjects.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridobjects.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompdata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompdata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanmain.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanmain.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom4.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom4.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom5.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom5.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanser.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanser.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanparll.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanparll.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadADCGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadADCGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadTriangleGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadTriangleGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadEasymeshGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadEasymeshGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInitCompGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInitCompGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCheckGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCheckGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCreateEdges.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCreateEdges.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridTopology.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridTopology.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridVert.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridVert.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridCell.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridCell.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridFace.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridFace.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrintGridInfo.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrintGridInfo.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanFindPoint.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanFindPoint.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPointinMesh.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPointinMesh.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanBpntlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanBpntlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrepComp.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrepComp.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanVertlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanVertlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompUnstruc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompUnstruc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanDispParm.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanDispParm.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelX.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPropvelX.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanSweepSel.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanSweepSel.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelS.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPropvelS.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS="  -g -O2 -v -o " \
+	        FFLAGS90="  -g -O2 -v -o " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_constants.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_constants.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_fileio.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_fileio.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort serv_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran serv_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort mod_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran mod_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGriddata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGriddata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridobjects.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridobjects.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompdata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompdata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanmain.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanmain.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom4.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom4.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom5.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom5.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanser.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanser.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanparll.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanparll.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadADCGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadADCGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadTriangleGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadTriangleGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadEasymeshGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadEasymeshGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInitCompGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInitCompGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCheckGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCheckGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCreateEdges.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCreateEdges.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridTopology.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridTopology.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridVert.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridVert.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridCell.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridCell.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridFace.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridFace.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrintGridInfo.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrintGridInfo.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanFindPoint.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanFindPoint.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPointinMesh.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPointinMesh.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanBpntlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanBpntlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrepComp.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrepComp.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanVertlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanVertlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompUnstruc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompUnstruc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanDispParm.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanDispParm.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelX.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPropvelX.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanSweepSel.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanSweepSel.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelS.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPropvelS.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanTranspAc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanTranspAc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanTranspX.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanTranspX.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanDiffPar.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanDiffPar.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGSECorr.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGSECorr.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolatePoint.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInterpolatePoint.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolateAc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInterpolateAc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS="  -g -O2 -v -o " \
+	        FFLAGS90="  -g -O2 -v -o " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_constants.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_constants.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_fileio.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_fileio.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort serv_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran serv_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort mod_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran mod_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGriddata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGriddata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridobjects.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridobjects.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompdata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompdata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanmain.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanmain.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom4.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom4.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom5.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom5.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanser.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanser.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanparll.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanparll.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadADCGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadADCGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadTriangleGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadTriangleGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadEasymeshGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadEasymeshGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInitCompGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInitCompGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCheckGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCheckGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCreateEdges.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCreateEdges.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridTopology.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridTopology.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridVert.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridVert.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridCell.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridCell.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridFace.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridFace.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrintGridInfo.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrintGridInfo.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanFindPoint.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanFindPoint.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPointinMesh.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPointinMesh.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanBpntlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanBpntlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrepComp.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrepComp.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanVertlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanVertlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompUnstruc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompUnstruc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanDispParm.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanDispParm.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelX.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPropvelX.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanSweepSel.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanSweepSel.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelS.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPropvelS.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanTranspAc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanTranspAc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanTranspX.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanTranspX.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanDiffPar.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanDiffPar.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGSECorr.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGSECorr.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolatePoint.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInterpolatePoint.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolateAc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInterpolateAc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolateOutput.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInterpolateOutput.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS="  -g -O2 -v -o " \
+	        FFLAGS90="  -g -O2 -v -o " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_constants.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_constants.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_fileio.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_fileio.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort serv_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran serv_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort mod_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran mod_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGriddata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGriddata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridobjects.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridobjects.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompdata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompdata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanmain.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanmain.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom4.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom4.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom5.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom5.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanser.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanser.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanparll.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanparll.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadADCGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadADCGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadTriangleGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadTriangleGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadEasymeshGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadEasymeshGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInitCompGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInitCompGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCheckGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCheckGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCreateEdges.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCreateEdges.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridTopology.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridTopology.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridVert.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridVert.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridCell.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridCell.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridFace.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridFace.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrintGridInfo.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrintGridInfo.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanFindPoint.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanFindPoint.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPointinMesh.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPointinMesh.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanBpntlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanBpntlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrepComp.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrepComp.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanVertlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanVertlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompUnstruc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompUnstruc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanDispParm.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanDispParm.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelX.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPropvelX.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanSweepSel.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanSweepSel.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelS.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPropvelS.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanTranspAc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanTranspAc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanTranspX.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanTranspX.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanDiffPar.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanDiffPar.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGSECorr.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGSECorr.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolatePoint.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInterpolatePoint.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolateAc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInterpolateAc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolateOutput.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInterpolateOutput.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanConvAccur.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanConvAccur.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanConvStopc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanConvStopc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpif90 FFLAGS=" -w -fno-second-underscore " \
+	        FFLAGS90=" -w -fno-second-underscore -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpif90 swmod1.f -c -w -fno-second-underscore  
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS="  -g -O2 -v -o " \
+	        FFLAGS90="  -g -O2 -v -o " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_constants.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_constants.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_fileio.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_fileio.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort serv_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran serv_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort mod_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran mod_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGriddata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGriddata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridobjects.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridobjects.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompdata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompdata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanmain.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanmain.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom4.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom4.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom5.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom5.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanser.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanser.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanparll.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanparll.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadADCGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadADCGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadTriangleGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadTriangleGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadEasymeshGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadEasymeshGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInitCompGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInitCompGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCheckGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCheckGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCreateEdges.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCreateEdges.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridTopology.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridTopology.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridVert.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridVert.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridCell.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridCell.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridFace.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridFace.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrintGridInfo.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrintGridInfo.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanFindPoint.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanFindPoint.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPointinMesh.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPointinMesh.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanBpntlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanBpntlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrepComp.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrepComp.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanVertlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanVertlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompUnstruc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompUnstruc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanDispParm.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanDispParm.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelX.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPropvelX.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanSweepSel.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanSweepSel.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelS.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPropvelS.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanTranspAc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanTranspAc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanTranspX.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanTranspX.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanDiffPar.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanDiffPar.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGSECorr.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGSECorr.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolatePoint.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInterpolatePoint.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolateAc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInterpolateAc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolateOutput.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInterpolateOutput.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanConvAccur.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanConvAccur.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanConvStopc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanConvStopc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanThreadBounds.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanThreadBounds.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanFindObstacles.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanFindObstacles.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCrossObstacle.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCrossObstacle.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanComputeForce.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanComputeForce.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanIntgratSpc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanIntgratSpc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort ocpids.f -c -g -O2 -v -o  
+/usr/bin/gfortran ocpids.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort ocpcre.f -c -g -O2 -v -o  
+/usr/bin/gfortran ocpcre.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort ocpmix.f -c -g -O2 -v -o  
+/usr/bin/gfortran ocpmix.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2 -v -o  -o swan.exe  
+/usr/bin/gfortran swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2 -v -o -o swan.exe -m64 -Wl,--allow-shlib-undefined -Wl,--enable-new-dtags -Wl,-rpath,/opt/ibmhpc/pecurrent/mpich2/gnu/lib64 -Wl,-rpath,/opt/ibmhpc/pecurrent/pempi/gnu/lib64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64 -L/opt/ibmhpc/pecurrent/mpich2/gnu/lib64 -lmpi -lmpigf -ldl -L/opt/ibmhpc/pecurrent/pempi/gnu/lib64 -lpoe -lpthread -lrt
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS="  -g -O2 -v -o " \
+	        FFLAGS90="  -g -O2 -v -o " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_constants.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_constants.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_fileio.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_fileio.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort serv_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran serv_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort mod_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran mod_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGriddata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGriddata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridobjects.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridobjects.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompdata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompdata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanmain.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanmain.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom4.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom4.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom5.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom5.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanser.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanser.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanparll.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanparll.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadADCGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadADCGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadTriangleGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadTriangleGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadEasymeshGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadEasymeshGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInitCompGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInitCompGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCheckGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCheckGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCreateEdges.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCreateEdges.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridTopology.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridTopology.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridVert.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridVert.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridCell.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridCell.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridFace.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridFace.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrintGridInfo.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrintGridInfo.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanFindPoint.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanFindPoint.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPointinMesh.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPointinMesh.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanBpntlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanBpntlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrepComp.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrepComp.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanVertlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanVertlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompUnstruc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompUnstruc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanDispParm.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanDispParm.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelX.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPropvelX.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanSweepSel.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanSweepSel.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelS.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPropvelS.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanTranspAc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanTranspAc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanTranspX.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanTranspX.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanDiffPar.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanDiffPar.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGSECorr.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGSECorr.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolatePoint.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInterpolatePoint.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolateAc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInterpolateAc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolateOutput.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInterpolateOutput.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanConvAccur.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanConvAccur.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanConvStopc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanConvStopc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanThreadBounds.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanThreadBounds.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanFindObstacles.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanFindObstacles.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCrossObstacle.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCrossObstacle.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanComputeForce.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanComputeForce.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanIntgratSpc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanIntgratSpc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort ocpids.f -c -g -O2 -v -o  
+/usr/bin/gfortran ocpids.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort ocpcre.f -c -g -O2 -v -o  
+/usr/bin/gfortran ocpcre.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort ocpmix.f -c -g -O2 -v -o  
+/usr/bin/gfortran ocpmix.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2 -v -o  -o swan.exe  
+/usr/bin/gfortran swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2 -v -o -o swan.exe -m64 -Wl,--allow-shlib-undefined -Wl,--enable-new-dtags -Wl,-rpath,/opt/ibmhpc/pecurrent/mpich2/gnu/lib64 -Wl,-rpath,/opt/ibmhpc/pecurrent/pempi/gnu/lib64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64 -L/opt/ibmhpc/pecurrent/mpich2/gnu/lib64 -lmpi -lmpigf -ldl -L/opt/ibmhpc/pecurrent/pempi/gnu/lib64 -lpoe -lpthread -lrt
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpifort FFLAGS="  -g -O2 -v -o " \
+	        FFLAGS90="  -g -O2 -v -o " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpifort swmod1.f -c -g -O2 -v -o  
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS="  -g -O2 -v -o " \
+	        FFLAGS90="  -g -O2 -v -o " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swmod3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_constants.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_constants.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_fileio.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran m_fileio.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort serv_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran serv_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort mod_xnl4v5.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran mod_xnl4v5.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGriddata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGriddata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridobjects.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridobjects.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompdata.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompdata.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanmain.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanmain.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanpre2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom3.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom3.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom4.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom4.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom5.f -c -g -O2 -v -o  
+/usr/bin/gfortran swancom5.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout1.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout1.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout2.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanout2.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanser.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanser.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanparll.f -c -g -O2 -v -o  
+/usr/bin/gfortran swanparll.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadADCGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadADCGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadTriangleGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadTriangleGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadEasymeshGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanReadEasymeshGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInitCompGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInitCompGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCheckGrid.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCheckGrid.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCreateEdges.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCreateEdges.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridTopology.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridTopology.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridVert.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridVert.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridCell.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridCell.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridFace.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGridFace.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrintGridInfo.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrintGridInfo.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanFindPoint.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanFindPoint.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPointinMesh.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPointinMesh.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanBpntlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanBpntlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrepComp.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPrepComp.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanVertlist.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanVertlist.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompUnstruc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCompUnstruc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanDispParm.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanDispParm.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelX.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPropvelX.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanSweepSel.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanSweepSel.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelS.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanPropvelS.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanTranspAc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanTranspAc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanTranspX.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanTranspX.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanDiffPar.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanDiffPar.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGSECorr.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanGSECorr.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolatePoint.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInterpolatePoint.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolateAc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInterpolateAc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolateOutput.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanInterpolateOutput.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanConvAccur.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanConvAccur.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanConvStopc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanConvStopc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanThreadBounds.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanThreadBounds.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanFindObstacles.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanFindObstacles.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCrossObstacle.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanCrossObstacle.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanComputeForce.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanComputeForce.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanIntgratSpc.f90 -c -g -O2 -v -o  
+/usr/bin/gfortran SwanIntgratSpc.f90 -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort ocpids.f -c -g -O2 -v -o  
+/usr/bin/gfortran ocpids.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort ocpcre.f -c -g -O2 -v -o  
+/usr/bin/gfortran ocpcre.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort ocpmix.f -c -g -O2 -v -o  
+/usr/bin/gfortran ocpmix.f -c -g -O2 -v -o -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2 -v -o  -o swan.exe  
+/usr/bin/gfortran swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2 -v -o -o swan.exe -m64 -Wl,--allow-shlib-undefined -Wl,--enable-new-dtags -Wl,-rpath,/opt/ibmhpc/pecurrent/mpich2/gnu/lib64 -Wl,-rpath,/opt/ibmhpc/pecurrent/pempi/gnu/lib64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64 -L/opt/ibmhpc/pecurrent/mpich2/gnu/lib64 -lmpi -lmpigf -ldl -L/opt/ibmhpc/pecurrent/pempi/gnu/lib64 -lpoe -lpthread -lrt
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS="  " \
+	        FFLAGS90="  " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c  
+mpfort swmod2.f -c  
+mpfort swmod3.f -c  
+mpfort m_constants.f90 -c  
+mpfort m_fileio.f90 -c  
+mpfort serv_xnl4v5.f90 -c  
+mpfort mod_xnl4v5.f90 -c  
+mpfort SwanGriddata.f90 -c  
+mpfort SwanGridobjects.f90 -c  
+mpfort SwanCompdata.f90 -c  
+mpfort swanmain.f -c  
+mpfort swanpre1.f -c  
+mpfort swanpre2.f -c  
+mpfort swancom1.f -c  
+mpfort swancom2.f -c  
+mpfort swancom3.f -c  
+mpfort swancom4.f -c  
+mpfort swancom5.f -c  
+mpfort swanout1.f -c  
+mpfort swanout2.f -c  
+mpfort swanser.f -c  
+mpfort swanparll.f -c  
+mpfort SwanReadGrid.f90 -c  
+mpfort SwanReadADCGrid.f90 -c  
+mpfort SwanReadTriangleGrid.f90 -c  
+mpfort SwanReadEasymeshGrid.f90 -c  
+mpfort SwanInitCompGrid.f90 -c  
+mpfort SwanCheckGrid.f90 -c  
+mpfort SwanCreateEdges.f90 -c  
+mpfort SwanGridTopology.f90 -c  
+mpfort SwanGridVert.f90 -c  
+mpfort SwanGridCell.f90 -c  
+mpfort SwanGridFace.f90 -c  
+mpfort SwanPrintGridInfo.f90 -c  
+mpfort SwanFindPoint.f90 -c  
+mpfort SwanPointinMesh.f90 -c  
+mpfort SwanBpntlist.f90 -c  
+mpfort SwanPrepComp.f90 -c  
+mpfort SwanVertlist.f90 -c  
+mpfort SwanCompUnstruc.f90 -c  
+mpfort SwanDispParm.f90 -c  
+mpfort SwanPropvelX.f90 -c  
+mpfort SwanSweepSel.f90 -c  
+mpfort SwanPropvelS.f90 -c  
+mpfort SwanTranspAc.f90 -c  
+mpfort SwanTranspX.f90 -c  
+mpfort SwanDiffPar.f90 -c  
+mpfort SwanGSECorr.f90 -c  
+mpfort SwanInterpolatePoint.f90 -c  
+mpfort SwanInterpolateAc.f90 -c  
+mpfort SwanInterpolateOutput.f90 -c  
+mpfort SwanConvAccur.f90 -c  
+mpfort SwanConvStopc.f90 -c  
+mpfort SwanThreadBounds.f90 -c  
+mpfort SwanFindObstacles.f90 -c  
+mpfort SwanCrossObstacle.f90 -c  
+mpfort SwanComputeForce.f90 -c  
+mpfort SwanIntgratSpc.f90 -c  
+mpfort ocpids.f -c  
+mpfort ocpcre.f -c  
+mpfort ocpmix.f -c  
+mpfort swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o  -o swan.exe  
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+make hcat
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+make FOR=ifort FFLAGS="  " \
+	        FFLAGS90="  " hcat.exe
+make[2]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+ifort swanhcat.f -c  
+ifort swanhcat.o  -o hcat.exe
+make[2]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS="  " \
+	        FFLAGS90="  " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c  
+mpfort swmod2.f -c  
+mpfort swmod3.f -c  
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS="  " \
+	        FFLAGS90="  " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c  
+mpfort swmod2.f -c  
+mpfort swmod3.f -c  
+mpfort m_constants.f90 -c  
+mpfort m_fileio.f90 -c  
+mpfort serv_xnl4v5.f90 -c  
+mpfort mod_xnl4v5.f90 -c  
+mpfort SwanGriddata.f90 -c  
+mpfort SwanGridobjects.f90 -c  
+mpfort SwanCompdata.f90 -c  
+mpfort swanmain.f -c  
+mpfort swanpre1.f -c  
+mpfort swanpre2.f -c  
+mpfort swancom1.f -c  
+mpfort swancom2.f -c  
+mpfort swancom3.f -c  
+mpfort swancom4.f -c  
+mpfort swancom5.f -c  
+mpfort swanout1.f -c  
+mpfort swanout2.f -c  
+mpfort swanser.f -c  
+mpfort swanparll.f -c  
+mpfort SwanReadGrid.f90 -c  
+mpfort SwanReadADCGrid.f90 -c  
+mpfort SwanReadTriangleGrid.f90 -c  
+mpfort SwanReadEasymeshGrid.f90 -c  
+mpfort SwanInitCompGrid.f90 -c  
+mpfort SwanCheckGrid.f90 -c  
+mpfort SwanCreateEdges.f90 -c  
+mpfort SwanGridTopology.f90 -c  
+mpfort SwanGridVert.f90 -c  
+mpfort SwanGridCell.f90 -c  
+mpfort SwanGridFace.f90 -c  
+mpfort SwanPrintGridInfo.f90 -c  
+mpfort SwanFindPoint.f90 -c  
+mpfort SwanPointinMesh.f90 -c  
+mpfort SwanBpntlist.f90 -c  
+mpfort SwanPrepComp.f90 -c  
+mpfort SwanVertlist.f90 -c  
+mpfort SwanCompUnstruc.f90 -c  
+mpfort SwanDispParm.f90 -c  
+mpfort SwanPropvelX.f90 -c  
+mpfort SwanSweepSel.f90 -c  
+mpfort SwanPropvelS.f90 -c  
+mpfort SwanTranspAc.f90 -c  
+mpfort SwanTranspX.f90 -c  
+mpfort SwanDiffPar.f90 -c  
+mpfort SwanGSECorr.f90 -c  
+mpfort SwanInterpolatePoint.f90 -c  
+mpfort SwanInterpolateAc.f90 -c  
+mpfort SwanInterpolateOutput.f90 -c  
+mpfort SwanConvAccur.f90 -c  
+mpfort SwanConvStopc.f90 -c  
+mpfort SwanThreadBounds.f90 -c  
+mpfort SwanFindObstacles.f90 -c  
+mpfort SwanCrossObstacle.f90 -c  
+mpfort SwanComputeForce.f90 -c  
+mpfort SwanIntgratSpc.f90 -c  
+mpfort ocpids.f -c  
+mpfort ocpcre.f -c  
+mpfort ocpmix.f -c  
+mpfort swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o  -o swan.exe  
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+make hcat
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+make FOR=ifort FFLAGS="  " \
+	        FFLAGS90="  " hcat.exe
+make[2]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+ifort swanhcat.f -c  
+ifort swanhcat.o  -o hcat.exe
+make[2]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS=" -W0 -assume byterecl -traceback " \
+	        FFLAGS90=" -W0 -assume byterecl -traceback " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/gp1/nco/ops/nwpara/nwps.v1.3.0/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -W0 -assume byterecl -traceback  
+mpfort swmod2.f -c -W0 -assume byterecl -traceback  
+mpfort swmod3.f -c -W0 -assume byterecl -traceback  
+mpfort m_constants.f90 -c -W0 -assume byterecl -traceback  
+mpfort m_fileio.f90 -c -W0 -assume byterecl -traceback  
+mpfort serv_xnl4v5.f90 -c -W0 -assume byterecl -traceback  
+mpfort mod_xnl4v5.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanGriddata.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanGridobjects.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanCompdata.f90 -c -W0 -assume byterecl -traceback  
+mpfort swanmain.f -c -W0 -assume byterecl -traceback  
+mpfort swanpre1.f -c -W0 -assume byterecl -traceback  
+mpfort swanpre2.f -c -W0 -assume byterecl -traceback  
+mpfort swancom1.f -c -W0 -assume byterecl -traceback  
+mpfort swancom2.f -c -W0 -assume byterecl -traceback  
+mpfort swancom3.f -c -W0 -assume byterecl -traceback  
+mpfort swancom4.f -c -W0 -assume byterecl -traceback  
+mpfort swancom5.f -c -W0 -assume byterecl -traceback  
+mpfort swanout1.f -c -W0 -assume byterecl -traceback  
+mpfort swanout2.f -c -W0 -assume byterecl -traceback  
+mpfort swanser.f -c -W0 -assume byterecl -traceback  
+mpfort swanparll.f -c -W0 -assume byterecl -traceback  
+mpfort SwanReadGrid.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanReadADCGrid.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanReadTriangleGrid.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanReadEasymeshGrid.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanInitCompGrid.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanCheckGrid.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanCreateEdges.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanGridTopology.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanGridVert.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanGridCell.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanGridFace.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanPrintGridInfo.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanFindPoint.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanPointinMesh.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanBpntlist.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanPrepComp.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanVertlist.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanCompUnstruc.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanDispParm.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanPropvelX.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanSweepSel.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanPropvelS.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanTranspAc.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanTranspX.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanDiffPar.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanGSECorr.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanInterpolatePoint.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanInterpolateAc.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanInterpolateOutput.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanConvAccur.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanConvStopc.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanThreadBounds.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanFindObstacles.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanCrossObstacle.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanComputeForce.f90 -c -W0 -assume byterecl -traceback  
+mpfort SwanIntgratSpc.f90 -c -W0 -assume byterecl -traceback  
+mpfort ocpids.f -c -W0 -assume byterecl -traceback  
+mpfort ocpcre.f -c -W0 -assume byterecl -traceback  
+mpfort ocpmix.f -c -W0 -assume byterecl -traceback  
+mpfort swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -W0 -assume byterecl -traceback  -o swan.exe  
+make[1]: Leaving directory `/gpfs/gp1/nco/ops/nwpara/nwps.v1.3.0/sorc/swan4081_partitioning_tracking_rawpart'
+make hcat
+make[1]: Entering directory `/gpfs/gp1/nco/ops/nwpara/nwps.v1.3.0/sorc/swan4081_partitioning_tracking_rawpart'
+make FOR=ifort FFLAGS=" -W0 -assume byterecl -traceback " \
+	        FFLAGS90=" -W0 -assume byterecl -traceback " hcat.exe
+make[2]: Entering directory `/gpfs/gp1/nco/ops/nwpara/nwps.v1.3.0/sorc/swan4081_partitioning_tracking_rawpart'
+ifort swanhcat.f -c -W0 -assume byterecl -traceback  
+ifort swanhcat.o -W0 -assume byterecl -traceback  -o hcat.exe
+make[2]: Leaving directory `/gpfs/gp1/nco/ops/nwpara/nwps.v1.3.0/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/gp1/nco/ops/nwpara/nwps.v1.3.0/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS=" -W0 -assume byterecl -traceback " \
+	        FFLAGS90=" -W0 -assume byterecl -traceback " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -W0 -assume byterecl -traceback  
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS=" -W0 -assume byterecl -traceback " \
+	        FFLAGS90=" -W0 -assume byterecl -traceback " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -W0 -assume byterecl -traceback  
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS=" -W0 -assume byterecl -traceback " \
+	        FFLAGS90=" -W0 -assume byterecl -traceback " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -W0 -assume byterecl -traceback  
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS=" -W0 -assume byterecl -traceback " \
+	        FFLAGS90=" -W0 -assume byterecl -traceback " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -W0 -assume byterecl -traceback  
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS=" -g -O2 -v " \
+	        FFLAGS90=" -g -O2 -v " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -g -O2 -v  
+/usr/bin/gfortran swmod1.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod2.f -c -g -O2 -v  
+/usr/bin/gfortran swmod2.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod3.f -c -g -O2 -v  
+/usr/bin/gfortran swmod3.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_constants.f90 -c -g -O2 -v  
+/usr/bin/gfortran m_constants.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_fileio.f90 -c -g -O2 -v  
+/usr/bin/gfortran m_fileio.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort serv_xnl4v5.f90 -c -g -O2 -v  
+/usr/bin/gfortran serv_xnl4v5.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort mod_xnl4v5.f90 -c -g -O2 -v  
+/usr/bin/gfortran mod_xnl4v5.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGriddata.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanGriddata.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridobjects.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanGridobjects.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompdata.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanCompdata.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanmain.f -c -g -O2 -v  
+/usr/bin/gfortran swanmain.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre1.f -c -g -O2 -v  
+/usr/bin/gfortran swanpre1.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre2.f -c -g -O2 -v  
+/usr/bin/gfortran swanpre2.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom1.f -c -g -O2 -v  
+/usr/bin/gfortran swancom1.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom2.f -c -g -O2 -v  
+/usr/bin/gfortran swancom2.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom3.f -c -g -O2 -v  
+/usr/bin/gfortran swancom3.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom4.f -c -g -O2 -v  
+/usr/bin/gfortran swancom4.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom5.f -c -g -O2 -v  
+/usr/bin/gfortran swancom5.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout1.f -c -g -O2 -v  
+/usr/bin/gfortran swanout1.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout2.f -c -g -O2 -v  
+/usr/bin/gfortran swanout2.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanser.f -c -g -O2 -v  
+/usr/bin/gfortran swanser.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanparll.f -c -g -O2 -v  
+/usr/bin/gfortran swanparll.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadGrid.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanReadGrid.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadADCGrid.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanReadADCGrid.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadTriangleGrid.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanReadTriangleGrid.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadEasymeshGrid.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanReadEasymeshGrid.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInitCompGrid.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanInitCompGrid.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCheckGrid.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanCheckGrid.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCreateEdges.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanCreateEdges.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridTopology.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanGridTopology.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridVert.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanGridVert.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridCell.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanGridCell.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridFace.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanGridFace.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrintGridInfo.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanPrintGridInfo.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanFindPoint.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanFindPoint.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPointinMesh.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanPointinMesh.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanBpntlist.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanBpntlist.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrepComp.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanPrepComp.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanVertlist.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanVertlist.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompUnstruc.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanCompUnstruc.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanDispParm.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanDispParm.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelX.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanPropvelX.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanSweepSel.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanSweepSel.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelS.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanPropvelS.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanTranspAc.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanTranspAc.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanTranspX.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanTranspX.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanDiffPar.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanDiffPar.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGSECorr.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanGSECorr.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolatePoint.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanInterpolatePoint.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolateAc.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanInterpolateAc.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolateOutput.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanInterpolateOutput.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanConvAccur.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanConvAccur.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanConvStopc.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanConvStopc.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanThreadBounds.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanThreadBounds.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanFindObstacles.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanFindObstacles.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCrossObstacle.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanCrossObstacle.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanComputeForce.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanComputeForce.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanIntgratSpc.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanIntgratSpc.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort ocpids.f -c -g -O2 -v  
+/usr/bin/gfortran ocpids.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort ocpcre.f -c -g -O2 -v  
+/usr/bin/gfortran ocpcre.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort ocpmix.f -c -g -O2 -v  
+/usr/bin/gfortran ocpmix.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2 -v  -o swan.exe  
+/usr/bin/gfortran swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2 -v -o swan.exe -m64 -Wl,--allow-shlib-undefined -Wl,--enable-new-dtags -Wl,-rpath,/opt/ibmhpc/pecurrent/mpich2/gnu/lib64 -Wl,-rpath,/opt/ibmhpc/pecurrent/pempi/gnu/lib64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64 -L/opt/ibmhpc/pecurrent/mpich2/gnu/lib64 -lmpi -lmpigf -ldl -L/opt/ibmhpc/pecurrent/pempi/gnu/lib64 -lpoe -lpthread -lrt
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+make hcat
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+make FOR=ifort FFLAGS=" -g -O2 -v " \
+	        FFLAGS90=" -g -O2 -v " hcat.exe
+make[2]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+ifort swanhcat.f -c -g -O2 -v  
+ifort swanhcat.o -g -O2 -v  -o hcat.exe
+make[2]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS=" -g " \
+	        FFLAGS90=" -g " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -g  
+mpfort swmod2.f -c -g  
+mpfort swmod3.f -c -g  
+mpfort m_constants.f90 -c -g  
+mpfort m_fileio.f90 -c -g  
+mpfort serv_xnl4v5.f90 -c -g  
+mpfort mod_xnl4v5.f90 -c -g  
+mpfort SwanGriddata.f90 -c -g  
+mpfort SwanGridobjects.f90 -c -g  
+mpfort SwanCompdata.f90 -c -g  
+mpfort swanmain.f -c -g  
+mpfort swanpre1.f -c -g  
+mpfort swanpre2.f -c -g  
+mpfort swancom1.f -c -g  
+mpfort swancom2.f -c -g  
+mpfort swancom3.f -c -g  
+mpfort swancom4.f -c -g  
+mpfort swancom5.f -c -g  
+mpfort swanout1.f -c -g  
+mpfort swanout2.f -c -g  
+mpfort swanser.f -c -g  
+mpfort swanparll.f -c -g  
+mpfort SwanReadGrid.f90 -c -g  
+mpfort SwanReadADCGrid.f90 -c -g  
+mpfort SwanReadTriangleGrid.f90 -c -g  
+mpfort SwanReadEasymeshGrid.f90 -c -g  
+mpfort SwanInitCompGrid.f90 -c -g  
+mpfort SwanCheckGrid.f90 -c -g  
+mpfort SwanCreateEdges.f90 -c -g  
+mpfort SwanGridTopology.f90 -c -g  
+mpfort SwanGridVert.f90 -c -g  
+mpfort SwanGridCell.f90 -c -g  
+mpfort SwanGridFace.f90 -c -g  
+mpfort SwanPrintGridInfo.f90 -c -g  
+mpfort SwanFindPoint.f90 -c -g  
+mpfort SwanPointinMesh.f90 -c -g  
+mpfort SwanBpntlist.f90 -c -g  
+mpfort SwanPrepComp.f90 -c -g  
+mpfort SwanVertlist.f90 -c -g  
+mpfort SwanCompUnstruc.f90 -c -g  
+mpfort SwanDispParm.f90 -c -g  
+mpfort SwanPropvelX.f90 -c -g  
+mpfort SwanSweepSel.f90 -c -g  
+mpfort SwanPropvelS.f90 -c -g  
+mpfort SwanTranspAc.f90 -c -g  
+mpfort SwanTranspX.f90 -c -g  
+mpfort SwanDiffPar.f90 -c -g  
+mpfort SwanGSECorr.f90 -c -g  
+mpfort SwanInterpolatePoint.f90 -c -g  
+mpfort SwanInterpolateAc.f90 -c -g  
+mpfort SwanInterpolateOutput.f90 -c -g  
+mpfort SwanConvAccur.f90 -c -g  
+mpfort SwanConvStopc.f90 -c -g  
+mpfort SwanThreadBounds.f90 -c -g  
+mpfort SwanFindObstacles.f90 -c -g  
+mpfort SwanCrossObstacle.f90 -c -g  
+mpfort SwanComputeForce.f90 -c -g  
+mpfort SwanIntgratSpc.f90 -c -g  
+mpfort ocpids.f -c -g  
+mpfort ocpcre.f -c -g  
+mpfort ocpmix.f -c -g  
+mpfort swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g  -o swan.exe  
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+make hcat
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+make FOR=ifort FFLAGS=" -g " \
+	        FFLAGS90=" -g " hcat.exe
+make[2]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+ifort swanhcat.f -c -g  
+ifort swanhcat.o -g  -o hcat.exe
+make[2]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS=" -W0 -assume byterecl -traceback " \
+	        FFLAGS90=" -W0 -assume byterecl -traceback " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -W0 -assume byterecl -traceback  
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS=" -g -O2 -v " \
+	        FFLAGS90=" -g -O2 -v " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -g -O2 -v  
+/usr/bin/gfortran swmod1.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod2.f -c -g -O2 -v  
+/usr/bin/gfortran swmod2.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod3.f -c -g -O2 -v  
+/usr/bin/gfortran swmod3.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_constants.f90 -c -g -O2 -v  
+/usr/bin/gfortran m_constants.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_fileio.f90 -c -g -O2 -v  
+/usr/bin/gfortran m_fileio.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort serv_xnl4v5.f90 -c -g -O2 -v  
+/usr/bin/gfortran serv_xnl4v5.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort mod_xnl4v5.f90 -c -g -O2 -v  
+/usr/bin/gfortran mod_xnl4v5.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGriddata.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanGriddata.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridobjects.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanGridobjects.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompdata.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanCompdata.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanmain.f -c -g -O2 -v  
+/usr/bin/gfortran swanmain.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre1.f -c -g -O2 -v  
+/usr/bin/gfortran swanpre1.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre2.f -c -g -O2 -v  
+/usr/bin/gfortran swanpre2.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom1.f -c -g -O2 -v  
+/usr/bin/gfortran swancom1.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom2.f -c -g -O2 -v  
+/usr/bin/gfortran swancom2.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom3.f -c -g -O2 -v  
+/usr/bin/gfortran swancom3.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom4.f -c -g -O2 -v  
+/usr/bin/gfortran swancom4.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swancom5.f -c -g -O2 -v  
+/usr/bin/gfortran swancom5.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout1.f -c -g -O2 -v  
+/usr/bin/gfortran swanout1.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanout2.f -c -g -O2 -v  
+/usr/bin/gfortran swanout2.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanser.f -c -g -O2 -v  
+/usr/bin/gfortran swanser.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanparll.f -c -g -O2 -v  
+/usr/bin/gfortran swanparll.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadGrid.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanReadGrid.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadADCGrid.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanReadADCGrid.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadTriangleGrid.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanReadTriangleGrid.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanReadEasymeshGrid.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanReadEasymeshGrid.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInitCompGrid.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanInitCompGrid.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCheckGrid.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanCheckGrid.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCreateEdges.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanCreateEdges.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridTopology.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanGridTopology.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridVert.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanGridVert.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridCell.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanGridCell.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridFace.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanGridFace.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrintGridInfo.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanPrintGridInfo.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanFindPoint.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanFindPoint.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPointinMesh.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanPointinMesh.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanBpntlist.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanBpntlist.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPrepComp.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanPrepComp.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanVertlist.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanVertlist.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompUnstruc.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanCompUnstruc.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanDispParm.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanDispParm.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelX.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanPropvelX.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanSweepSel.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanSweepSel.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanPropvelS.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanPropvelS.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanTranspAc.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanTranspAc.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanTranspX.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanTranspX.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanDiffPar.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanDiffPar.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGSECorr.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanGSECorr.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolatePoint.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanInterpolatePoint.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolateAc.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanInterpolateAc.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanInterpolateOutput.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanInterpolateOutput.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanConvAccur.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanConvAccur.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanConvStopc.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanConvStopc.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanThreadBounds.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanThreadBounds.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanFindObstacles.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanFindObstacles.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCrossObstacle.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanCrossObstacle.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanComputeForce.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanComputeForce.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanIntgratSpc.f90 -c -g -O2 -v  
+/usr/bin/gfortran SwanIntgratSpc.f90 -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort ocpids.f -c -g -O2 -v  
+/usr/bin/gfortran ocpids.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort ocpcre.f -c -g -O2 -v  
+/usr/bin/gfortran ocpcre.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort ocpmix.f -c -g -O2 -v  
+/usr/bin/gfortran ocpmix.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2 -v  -o swan.exe  
+/usr/bin/gfortran swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2 -v -o swan.exe -m64 -Wl,--allow-shlib-undefined -Wl,--enable-new-dtags -Wl,-rpath,/opt/ibmhpc/pecurrent/mpich2/gnu/lib64 -Wl,-rpath,/opt/ibmhpc/pecurrent/pempi/gnu/lib64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64 -L/opt/ibmhpc/pecurrent/mpich2/gnu/lib64 -lmpi -lmpigf -ldl -L/opt/ibmhpc/pecurrent/pempi/gnu/lib64 -lpoe -lpthread -lrt
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+make hcat
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+make FOR=ifort FFLAGS=" -g -O2 -v " \
+	        FFLAGS90=" -g -O2 -v " hcat.exe
+make[2]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+ifort swanhcat.f -c -g -O2 -v  
+ifort swanhcat.o -g -O2 -v  -o hcat.exe
+make[2]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS=" -w -fno-second-underscore " \
+	        FFLAGS90=" -w -fno-second-underscore -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -w -fno-second-underscore  
+mpfort swmod2.f -c -w -fno-second-underscore  
+mpfort swmod3.f -c -w -fno-second-underscore  
+mpfort m_constants.f90 -c -w -fno-second-underscore -ffree-line-length-none  
+mpfort m_fileio.f90 -c -w -fno-second-underscore -ffree-line-length-none  
+mpfort serv_xnl4v5.f90 -c -w -fno-second-underscore -ffree-line-length-none  
+mpfort mod_xnl4v5.f90 -c -w -fno-second-underscore -ffree-line-length-none  
+mpfort SwanGriddata.f90 -c -w -fno-second-underscore -ffree-line-length-none  
+mpfort SwanGridobjects.f90 -c -w -fno-second-underscore -ffree-line-length-none  
+mpfort SwanCompdata.f90 -c -w -fno-second-underscore -ffree-line-length-none  
+mpfort swanmain.f -c -w -fno-second-underscore  
+mpfort swanpre1.f -c -w -fno-second-underscore  
+mpfort swanpre2.f -c -w -fno-second-underscore  
+mpfort swancom1.f -c -w -fno-second-underscore  
+mpfort swancom2.f -c -w -fno-second-underscore  
+mpfort swancom3.f -c -w -fno-second-underscore  
+mpfort swancom4.f -c -w -fno-second-underscore  
+mpfort swancom5.f -c -w -fno-second-underscore  
+mpfort swanout1.f -c -w -fno-second-underscore  
+mpfort swanout2.f -c -w -fno-second-underscore  
+mpfort swanser.f -c -w -fno-second-underscore  
+mpfort swanparll.f -c -w -fno-second-underscore  
+mpfort SwanReadGrid.f90 -c -w -fno-second-underscore -ffree-line-length-none  
+mpfort SwanReadADCGrid.f90 -c -w -fno-second-underscore -ffree-line-length-none  
+mpfort SwanReadTriangleGrid.f90 -c -w -fno-second-underscore -ffree-line-length-none  
+mpfort SwanReadEasymeshGrid.f90 -c -w -fno-second-underscore -ffree-line-length-none  
+mpfort SwanInitCompGrid.f90 -c -w -fno-second-underscore -ffree-line-length-none  
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS="  " \
+	        FFLAGS90="  -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c  
+mpfort swmod2.f -c  
+mpfort swmod3.f -c  
+mpfort m_constants.f90 -c -ffree-line-length-none  
+mpfort m_fileio.f90 -c -ffree-line-length-none  
+mpfort serv_xnl4v5.f90 -c -ffree-line-length-none  
+mpfort mod_xnl4v5.f90 -c -ffree-line-length-none  
+mpfort SwanGriddata.f90 -c -ffree-line-length-none  
+mpfort SwanGridobjects.f90 -c -ffree-line-length-none  
+mpfort SwanCompdata.f90 -c -ffree-line-length-none  
+mpfort swanmain.f -c  
+mpfort swanpre1.f -c  
+mpfort swanpre2.f -c  
+mpfort swancom1.f -c  
+mpfort swancom2.f -c  
+mpfort swancom3.f -c  
+mpfort swancom4.f -c  
+mpfort swancom5.f -c  
+mpfort swanout1.f -c  
+mpfort swanout2.f -c  
+mpfort swanser.f -c  
+mpfort swanparll.f -c  
+mpfort SwanReadGrid.f90 -c -ffree-line-length-none  
+mpfort SwanReadADCGrid.f90 -c -ffree-line-length-none  
+mpfort SwanReadTriangleGrid.f90 -c -ffree-line-length-none  
+mpfort SwanReadEasymeshGrid.f90 -c -ffree-line-length-none  
+mpfort SwanInitCompGrid.f90 -c -ffree-line-length-none  
+mpfort SwanCheckGrid.f90 -c -ffree-line-length-none  
+mpfort SwanCreateEdges.f90 -c -ffree-line-length-none  
+mpfort SwanGridTopology.f90 -c -ffree-line-length-none  
+mpfort SwanGridVert.f90 -c -ffree-line-length-none  
+mpfort SwanGridCell.f90 -c -ffree-line-length-none  
+mpfort SwanGridFace.f90 -c -ffree-line-length-none  
+mpfort SwanPrintGridInfo.f90 -c -ffree-line-length-none  
+mpfort SwanFindPoint.f90 -c -ffree-line-length-none  
+mpfort SwanPointinMesh.f90 -c -ffree-line-length-none  
+mpfort SwanBpntlist.f90 -c -ffree-line-length-none  
+mpfort SwanPrepComp.f90 -c -ffree-line-length-none  
+mpfort SwanVertlist.f90 -c -ffree-line-length-none  
+mpfort SwanCompUnstruc.f90 -c -ffree-line-length-none  
+mpfort SwanDispParm.f90 -c -ffree-line-length-none  
+mpfort SwanPropvelX.f90 -c -ffree-line-length-none  
+mpfort SwanSweepSel.f90 -c -ffree-line-length-none  
+mpfort SwanPropvelS.f90 -c -ffree-line-length-none  
+mpfort SwanTranspAc.f90 -c -ffree-line-length-none  
+mpfort SwanTranspX.f90 -c -ffree-line-length-none  
+mpfort SwanDiffPar.f90 -c -ffree-line-length-none  
+mpfort SwanGSECorr.f90 -c -ffree-line-length-none  
+mpfort SwanInterpolatePoint.f90 -c -ffree-line-length-none  
+mpfort SwanInterpolateAc.f90 -c -ffree-line-length-none  
+mpfort SwanInterpolateOutput.f90 -c -ffree-line-length-none  
+mpfort SwanConvAccur.f90 -c -ffree-line-length-none  
+mpfort SwanConvStopc.f90 -c -ffree-line-length-none  
+mpfort SwanThreadBounds.f90 -c -ffree-line-length-none  
+mpfort SwanFindObstacles.f90 -c -ffree-line-length-none  
+mpfort SwanCrossObstacle.f90 -c -ffree-line-length-none  
+mpfort SwanComputeForce.f90 -c -ffree-line-length-none  
+mpfort SwanIntgratSpc.f90 -c -ffree-line-length-none  
+mpfort ocpids.f -c  
+mpfort ocpcre.f -c  
+mpfort ocpmix.f -c  
+mpfort swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o  -o swan.exe  
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+make hcat
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+make FOR=ifort FFLAGS="  " \
+	        FFLAGS90="  -ffree-line-length-none " hcat.exe
+make[2]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+ifort swanhcat.f -c  
+ifort swanhcat.o  -o hcat.exe
+make[2]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS=" -g -O2 -v  " \
+	        FFLAGS90=" -g -O2 -v  -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -g -O2 -v   
+/usr/bin/gfortran swmod1.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod2.f -c -g -O2 -v   
+/usr/bin/gfortran swmod2.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swmod3.f -c -g -O2 -v   
+/usr/bin/gfortran swmod3.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_constants.f90 -c -g -O2 -v  -ffree-line-length-none  
+/usr/bin/gfortran m_constants.f90 -c -g -O2 -v -ffree-line-length-none -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort m_fileio.f90 -c -g -O2 -v  -ffree-line-length-none  
+/usr/bin/gfortran m_fileio.f90 -c -g -O2 -v -ffree-line-length-none -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort serv_xnl4v5.f90 -c -g -O2 -v  -ffree-line-length-none  
+/usr/bin/gfortran serv_xnl4v5.f90 -c -g -O2 -v -ffree-line-length-none -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort mod_xnl4v5.f90 -c -g -O2 -v  -ffree-line-length-none  
+/usr/bin/gfortran mod_xnl4v5.f90 -c -g -O2 -v -ffree-line-length-none -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGriddata.f90 -c -g -O2 -v  -ffree-line-length-none  
+/usr/bin/gfortran SwanGriddata.f90 -c -g -O2 -v -ffree-line-length-none -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanGridobjects.f90 -c -g -O2 -v  -ffree-line-length-none  
+/usr/bin/gfortran SwanGridobjects.f90 -c -g -O2 -v -ffree-line-length-none -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort SwanCompdata.f90 -c -g -O2 -v  -ffree-line-length-none  
+/usr/bin/gfortran SwanCompdata.f90 -c -g -O2 -v -ffree-line-length-none -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanmain.f -c -g -O2 -v   
+/usr/bin/gfortran swanmain.f -c -g -O2 -v -m64 -I/opt/ibmhpc/pecurrent/mpich2/gnu/include64 -I/opt/ibmhpc/pecurrent/base/include64
+mpfort swanpre1.f -c -g -O2 -v   
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=mpfort FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+mpfort swmod1.f -c -g -O2   
+mpfort swmod2.f -c -g -O2   
+mpfort swmod3.f -c -g -O2   
+mpfort m_constants.f90 -c -g -O2  -ffree-line-length-none  
+mpfort m_fileio.f90 -c -g -O2  -ffree-line-length-none  
+mpfort serv_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+mpfort mod_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanGriddata.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanGridobjects.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanCompdata.f90 -c -g -O2  -ffree-line-length-none  
+mpfort swanmain.f -c -g -O2   
+mpfort swanpre1.f -c -g -O2   
+mpfort swanpre2.f -c -g -O2   
+mpfort swancom1.f -c -g -O2   
+mpfort swancom2.f -c -g -O2   
+mpfort swancom3.f -c -g -O2   
+mpfort swancom4.f -c -g -O2   
+mpfort swancom5.f -c -g -O2   
+mpfort swanout1.f -c -g -O2   
+mpfort swanout2.f -c -g -O2   
+mpfort swanser.f -c -g -O2   
+mpfort swanparll.f -c -g -O2   
+mpfort SwanReadGrid.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanReadADCGrid.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanReadTriangleGrid.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanReadEasymeshGrid.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanInitCompGrid.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanCheckGrid.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanCreateEdges.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanGridTopology.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanGridVert.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanGridCell.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanGridFace.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanPrintGridInfo.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanFindPoint.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanPointinMesh.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanBpntlist.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanPrepComp.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanVertlist.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanCompUnstruc.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanDispParm.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanPropvelX.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanSweepSel.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanPropvelS.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanTranspAc.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanTranspX.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanDiffPar.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanGSECorr.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanInterpolatePoint.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanInterpolateAc.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanInterpolateOutput.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanConvAccur.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanConvStopc.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanThreadBounds.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanFindObstacles.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanCrossObstacle.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanComputeForce.f90 -c -g -O2  -ffree-line-length-none  
+mpfort SwanIntgratSpc.f90 -c -g -O2  -ffree-line-length-none  
+mpfort ocpids.f -c -g -O2   
+mpfort ocpcre.f -c -g -O2   
+mpfort ocpmix.f -c -g -O2   
+mpfort swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2   -o swan.exe  
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+make hcat
+make[1]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+make FOR=ifort FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " hcat.exe
+make[2]: Entering directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+ifort swanhcat.f -c -g -O2   
+ifort swanhcat.o -g -O2   -o hcat.exe
+make[2]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe

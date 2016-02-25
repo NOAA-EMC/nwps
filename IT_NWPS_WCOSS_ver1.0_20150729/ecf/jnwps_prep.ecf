@@ -1,0 +1,60 @@
+#BSUB -J %E%%MODEL%_%FAMILY1%_prep
+#BSUB -o %COMROOT%/output/%ENVIR%/today/%MODEL%_%FAMILY1%_prep.o%J
+#BSUB -e %COMROOT%/output/%ENVIR%/today/%MODEL%_%FAMILY1%_prep.o%J
+#BSUB -L /bin/sh
+#BSUB -q %QUEUE%
+#BSUB -cwd /tmpnwprd1
+#BSUB -W 1:30
+#BSUB -n 8
+#BSUB -a poe
+#BSUB -R span[ptile=8] -R rusage[mem=1700] -R affinity[core]
+#BSUB -P NWPS-%PROJ%
+
+%include <head.h>
+sleep 10
+
+module load %MODULES%
+export FORT_BUFFERED=true
+export NWPSplatform="WCOSS"
+export MP_PGMMODEL=mpmd
+export MP_CSS_INTERRUPT=yes
+export WFO=%FAMILY1%
+export siteid=${WFO}
+export SITEID=${WFO^^}
+export KEEPDATA=%KEEPDATA%
+export model=%MODEL%
+export MODEL=${model^^}
+
+%include <envir-p1.h>
+
+VERSION_FILE=${NWROOT}/versions/${model}.ver
+if [ -f $VERSION_FILE ]; then
+  . $VERSION_FILE
+else
+  ecflow_client --msg="***JOB ${ECFNAME} ERROR: Version File $VERSION_FILE does not exist ***"
+  ecflow_client --abort
+  exit
+fi
+
+${NWROOT}/${model}.${nwps_ver}/jobs/J${MODEL}_PREP
+
+%include <tail.h>
+
+%manual
+################################################################################
+#TASKSCRIPT DOCUMENTATION BLOCK
+#TASKSCRIPT:     jnwps_%FAMILY1%_prep
+#LAST MODIFIER:  Floyd Fayton
+#ORGANIZATION:   NP11
+#DATE:           SEP 2014
+#FULL NAME:    /nwps_para/nwps/SR/jmfl
+#PURPOSE:  To execute the job that creates NWPS MFL GRIB output files
+#JOB SCRIPT CALLED: /nwprod/nwps.${nwps_ver}/jobs/JNWPS ==>
+#                            /nwprod/nwps.${nwps_ver}/scripts/exnwps_prep.sh.ecf
+#################################################################################
+######################################################################
+# Job specific troubleshooting instructions:
+#  see generic troubleshoot manual page
+#
+######################################################################
+%end

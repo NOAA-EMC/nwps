@@ -1,0 +1,11 @@
+# WW3 Boundary Condition Config
+#
+# TODO: Set your site specific config here
+# TODO: These are the WW3 boundary conditions you will be downloading from NCEP
+
+FTPPAT1:multi_1
+FTPPAT1B:nah
+FTPPAT2:SRH
+NFTPATTEMPTS:3
+WAVECPS:nah.SRH51.spec.swan,nah.SRH65.spec.swan,nah.SRH71.spec.swan
+

@@ -1,0 +1,117 @@
+#!/bin/bash
+# ----------------------------------------------------------- 
+# UNIX Shell Script File
+# Tested Operating System(s): RHEL 5,6
+# Tested Run Level(s): 3, 5
+# Shell Used: BASH shell
+# Original Author(s): Roberto Padilla-Hernandez
+# File Creation Date: 02/01/2015
+# Date Last Modified:
+#
+# Version control: 1.14
+#
+# Support Team:
+#
+# Contributors: Floyd fayton
+#
+# ----------------------------------------------------------- 
+# ------------- Program Description and Details ------------- 
+# ----------------------------------------------------------- 
+#
+# Job Card to set the resources required for a NWPS run
+#
+# ----------------------------------------------------------- 
+
+#BSUB -J ofs.psurge
+#BSUB -oo /ptmpp1/Andre.VanderWesthuysen/data/ofs/com/nwps/para/ofs.psurge.o
+#     -e /ptmpp1/Andre.VanderWesthuysen/data/ofs/com/nwps/para/ofs.psurge.o
+#BSUB -q "dev"
+#BSUB -W 2:00
+#BSUB -n 24
+#BSUB -a poe
+#BSUB -R span[ptile=6] -R rusage[mem=800] -R affinity[core]
+#BSUB -P NWPS-T2O
+
+#module load %MODULES%
+. /usrx/local/Modules/3.2.9/init/bash
+module load prod_util
+module load ics
+module load ibmpe
+module load cfp
+module load lsf
+
+module list
+
+export FORT_BUFFERED=true
+export NWPSplatform="DEVWCOSS"
+export MP_PGMMODEL=mpmd
+export MP_CSS_INTERRUPT=yes
+export KEEPDATA="YES"
+export model="nwps"
+export MODEL=${model^^}
+
+export envir="para"
+
+export DEVWCOSS_USER=$(whoami)
+export COMROOT=/ptmpp1/${DEVWCOSS_USER}/data/ofs/com
+
+#Dev environment value for $job and $jobid
+export job=pnwps_ofs_psurge
+export jobid=pnwps_ofs_psurge.$$
+
+#Dev environment jlogfile
+mkdir -p ${COMROOT}/logs/${envir}
+export jlogfile=${COMROOT}/logs/${envir}/jlogfile.${job}
+
+#
+#************IMPORTANT ****************
+#* ADJUST THE PSURGE FIELDS TIME STEP *
+#* IN  scripts/exnwps_ofs_prep.sh.ecf    *
+#**************************************
+#
+if [ -e /gpfs/gd1 ]
+then
+   echo "INFO - WCOSS is on GYRE system"
+   export  WCOSS_SYSTEM="gd1"
+fi
+if [ -e /gpfs/td1 ]
+then
+   echo "INFO - WCOSS is on TIDE system"
+   export WCOSS_SYSTEM="td1"
+fi
+export DEVWCOSS_USER=$(whoami)
+export NWROOT="/gpfs/${WCOSS_SYSTEM}/emc/marine/save/${DEVWCOSS_USER}/NWPS/IT_NWPS_WCOSS_ver1.0_20150729"
+
+VERSION_FILE=${NWROOT}/dev/psurge2nwps_test.ver
+if [ -f $VERSION_FILE ]; then
+  . $VERSION_FILE
+else
+  echo "***JOB ${job} ERROR: Version File $VERSION_FILE does not exist ***"
+  exit
+fi
+
+export OFSTYPE="psurge"
+
+${NWROOT}/dev/jobs/JNWPS_OFSPREP
+
+#%include <tail.h>
+
+#%manual
+################################################################################
+#TASKSCRIPT DOCUMENTATION BLOCK
+#TASKSCRIPT:     jpsurgenwps
+#LAST MODIFIER:  Roberto Padilla
+#ORGANIZATION:   NP11
+#DATE:           JUL 2015
+#FULL NAME:    
+#PURPOSE:  To execute the job that creates output files from Psurge to bused 
+#          by NWPS
+#JOB SCRIPT CALLED: ${NWROOT}/jobs/JPSURGENWPS ==>
+#                            ${NWROOT}/scripts/expsurgenwps.sh.ecf
+#################################################################################
+######################################################################
+# Job specific troubleshooting instructions:
+#  see generic troubleshoot manual page
+#
+######################################################################
+#%end

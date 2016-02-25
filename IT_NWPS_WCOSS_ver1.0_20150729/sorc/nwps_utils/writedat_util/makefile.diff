@@ -1,0 +1,27 @@
+9c9
+< # Date Last Modified: 05/20/2011
+---
+> # Date Last Modified: 07/24/2014
+11c11
+< # Version: 1.03
+---
+> # Version: 1.05
+26,33d25
+< # Define macros for compiler and linker
+< CC = gcc
+< CPP = g++
+< F77 = g77
+< F90 = gfortran
+< 
+< LINKER = ld
+< 
+41,42c33,34
+< CFLAGS= -v -Wall
+< FFLAGS = 
+---
+> CFLAGS := -v -Wall $(CFLAGS)
+> FFLAGS := $(FFLAGS)
+45c37
+< LFLAGS = #-static 
+---
+> LFLAGS := -static $(LFLAGS)

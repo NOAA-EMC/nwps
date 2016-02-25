@@ -1,0 +1,54 @@
+9c9
+< # Date Last Modified: 09/15/2011
+---
+> # Date Last Modified: 11/15/2014
+11c11
+< # Version control: 1.03
+---
+> # Version control: 1.06
+27,40c27,44
+< #if [ "${NWPSdir}" == "" ]
+< #    then 
+< #    echo "ERROR - Your NWPSdir variable is not set"
+< #    exit 1
+< #fi
+< #
+< #if [ ! -e ${NWPSdir}/utils/etc/nwps_config.sh ]
+< #    then
+< #    "ERROR - Cannot find ${NWPSdir}/utils/etc/nwps_config.sh"
+< #    exit 1
+< #fi
+< #    
+< ## Setup our NWPS environment                                                    
+< #source ${NWPSdir}/utils/etc/nwps_config.sh
+---
+> if [ "${NWPSdir}" == "" ]
+>     then 
+>     echo "ERROR - Your NWPSdir variable is not set"
+>     exit 1
+> fi
+> 
+> if [ ! -e ${NWPSdir}/utils/etc/nwps_config.sh ]
+>     then
+>     "ERROR - Cannot find ${NWPSdir}/utils/etc/nwps_config.sh"
+>     exit 1
+> fi
+>     
+> # Setup our NWPS environment
+> unset LD_LIBRARY_PATH                                                    
+> source ${NWPSdir}/utils/etc/nwps_config.sh
+> 
+> # Setup our build environment
+> source ${NWPSdir}/sorc/set_compiler.sh
+42a47,57
+> 
+> cd makelibs
+> if [ "${ARCHBITS}" == "64" ];
+> then
+>     make 64BITCFG=1 FINAL=1
+> else
+>     make 64BITCFG=0 FINAL=1
+> fi
+> make install
+> make clean
+> cd ${WORKDIR}

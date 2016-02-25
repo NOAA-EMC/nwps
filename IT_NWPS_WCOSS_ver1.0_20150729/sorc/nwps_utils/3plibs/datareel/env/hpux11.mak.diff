@@ -1,0 +1,4 @@
+32c32
+< 	$(CPP) $(COMPILE_FLAGS) $(OBJECTS) \
+---
+> 	$(CXX) $(COMPILE_FLAGS) $(OBJECTS) \

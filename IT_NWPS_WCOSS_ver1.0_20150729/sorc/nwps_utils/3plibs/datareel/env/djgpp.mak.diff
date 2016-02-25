@@ -1,0 +1,4 @@
+15c15
+< PROJECT_SRC_PATH = ../../src
+---
+> PROJECT_SRC_PATH = ../../sorc

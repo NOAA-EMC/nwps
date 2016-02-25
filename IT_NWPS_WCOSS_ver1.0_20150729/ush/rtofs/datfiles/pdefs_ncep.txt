@@ -1,0 +1,16 @@
+
+PDEF 4500 3298 bilin sequential binary-big pdef_ncep_global
+XDEF 4320 LINEAR 74.16 0.08333
+YDEF 2160 LINEAR -90.0 0.08333
+
+PDEF 742 1710 bilin sequential binary-big pdef_ncep_reg1
+XDEF 700  LINEAR -100. 0.086
+YDEF 1650 LINEAR  0.   0.04333
+
+PDEF 1047 1666 bilin sequential binary-big pdef_ncep_reg2
+XDEF 1000  LINEAR -157.9 0.08
+YDEF 1600 LINEAR  10.   0.038
+
+PDEF 501 795 bilin sequential binary-big pdef_ncep_reg3
+XDEF 500  LINEAR -179.92 0.798
+YDEF 700  LINEAR  45.77   0.0411

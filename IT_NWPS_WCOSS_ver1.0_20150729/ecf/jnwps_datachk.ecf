@@ -1,0 +1,61 @@
+#BSUB -J %E%%MODEL%_datachk
+#BSUB -o %COMROOT%/output/%ENVIR%/today/%MODEL%_datachk.o%J
+#BSUB -e %COMROOT%/output/%ENVIR%/today/%MODEL%_datachk.o%J
+#BSUB -L /bin/sh
+#BSUB -q %QUEUESERV%
+#BSUB -cwd /tmpnwprd2
+#BSUB -W 0:05
+#BSUB -n 1
+#BSUB -a poe
+#BSUB -R span[ptile=1] -R rusage[mem=1700] -R affinity[core]
+#BSUB -P NWPS-%PROJ%
+
+%include <head.h>
+
+module load %MODULES%
+export FORT_BUFFERED=true
+export NWPSplatform="WCOSS"
+export MP_PGMMODEL=mpmd
+export MP_CSS_INTERRUPT=yes
+export KEEPDATA=%KEEPDATA%
+export model=%MODEL%
+export MODEL=${model^^}
+
+%include <envir-p1.h>
+
+VERSION_FILE=${NWROOT}/versions/${model}.ver
+if [ -f $VERSION_FILE ]; then
+  . $VERSION_FILE
+else
+  ecflow_client --msg="***JOB ${ECFNAME} ERROR: Version File $VERSION_FILE does not exist ***"
+  ecflow_client --abort
+  exit
+fi
+
+${NWROOT}/${model}.${nwps_ver}/jobs/J${MODEL}_DATACHK
+
+export PSURGE_JOB=/%SUITE%/prep/psurge/jnwps_psurge_prep
+if $(ecflow_client --group="get ${PSURGE_JOB}; show state" 2> /dev/null|grep --quiet state:complete); then 
+    ecflow_client --requeue ${PSURGE_JOB}
+fi
+
+%include <tail.h>
+
+%manual
+################################################################################
+#TASKSCRIPT DOCUMENTATION BLOCK
+#TASKSCRIPT:     jnwps_datachk
+#LAST MODIFIER:  Floyd Fayton
+#ORGANIZATION:   NP11
+#DATE:           SEP 2014
+#FULL NAME:    /nwps/regions/jnwps_datachk
+#PURPOSE:  To execute the job that creates NWPS MFL GRIB output files
+#JOB SCRIPT CALLED: /nwprod/nwps.${nwps_ver}/jobs/JNWPS_DATACHK ==>
+#                            /nwprod/nwps.${nwps_ver}/scripts/exnwps_datachk.sh.ecf
+#################################################################################
+######################################################################
+# Job specific troubleshooting instructions:
+#  see generic troubleshoot manual page
+#
+######################################################################
+%end

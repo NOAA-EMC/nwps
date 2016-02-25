@@ -1,0 +1,74 @@
+$ -------------------------------------------------------------------- $
+$ WAVEWATCH III Grid output post-processing                            $
+$--------------------------------------------------------------------- $
+$ Time, time increment and number of outputs
+$
+$  20060101 000000 3600 13
+  #TbegOut#  #DeltaOutputww3#  #NumOfOutTimes#
+$ Output request flags identifying fields as in ww3_shel input and
+$ section 2.4 of the manual.
+$
+$----------------------------------------------------------------
+$Mn=Mean ; Wv=Wave, T=Period, Mmt=Moment, XX=NOT PLUGGED YET
+$
+$5) Mn Wat Dep    ; Mn Cur Vel  ; Mn Wnd Sp Vec  ; Air-Sea Temp ; Diff Wat Lev
+$10) Ice concentr ; Sig Wv Heig ; Mn Wv lenght   ; Mn Wv T(m2)  ; Mn Wv T(m01) 
+$15) Mn Wv T(m-01); Energy Flux ; Peak freq      ; Mn Wv Direc  ; Mn Dir Spread
+$20) Peak Dir     ; H from part ; Tp from Part   ; Lp from Part ; Mn Dir Partit
+$25) Dspread Part ; Wndsea Part ; Wndsea TotSpec ; Num of Parti ; Tstep Sfunct
+$30) Cut off Freq ; CFL xyAdve  ; CFL SpecAdve   ; Fric Vel U*  ; Charnoc param       
+$----------------------------------------------------------------
+  T T T F T  F T T F F  F F T T F  T T F F T  F F F F F  F F F T F
+  F F F F F  F F F F F  F F F F F  F F F F F  F F F
+$----------------------------------------------------------------
+$35) Wnd->Wv Eflux; Wv supp strs; Wv->Wnd Mmtflux; Wcap cov XX  ;Wcap Mn ThickXX
+$40) Mn Brk Wv HXX;Mmt Wcp DistXX;Arms excursion ;Urms BotOrbVel; Bedforms param
+$45) Edis in WBBL ;Mmnt loss WBBL; Rad stress    ; Wv->Ocean Ene; Bernoul head
+$50) Wv->Oc Mmt   ;StocksVolTran; StckDrift @ SS ;Mn sqr slopxy ; Spec tail lev
+$53) 2d ord press ; User Defined ; User Defined  ; 
+$----------------------------------------------------------------
+$
+$ Output type ITYPE [0,1,2,3], and IPART [ 0,...,NOSWLL ]
+$
+  3  0
+$ -------------------------------------------------------------------- $
+$ ITYPE = 0, inventory of file.
+$            No additional input, the above time range is ignored.
+$
+$ -------------------------------------------------------------------- $
+$ ITYPE = 1, print plots.
+$            IX,IY range and stride, flag for automatic scaling to
+$            maximum value (otherwise fixed scaling),
+$            vector component flag (dummy for scalar quantities),
+$
+$  1 12 1 1 12 1 F F
+$
+$ -------------------------------------------------------------------- $
+$ ITYPE = 2, field statistics.
+$            IX,IY range.
+$
+$ 1 12 1 12
+$
+$ -------------------------------------------------------------------- $
+$ ITYPE = 3, transfer files.
+$            IX, IY range, IDLA and IDFM as in ww3_grid.inp.
+$            The additional option IDLA=5 gives ia longitude, lattitude 
+$            and parameter value(s) per record (defined points only),
+$
+ 1 #npxout# 1 #npyout# 4 4    
+$
+$ For each field and time a new file is generated with the file name
+$ ww3.yymmddhh.xxx, where yymmddhh is a conventional time idicator,
+$ and xxx is a field identifier. The first record of the file contains
+$ a file ID (C*13), the time in yyyymmdd hhmmss format, the lowest,
+$ highest and number of longitudes (2R,I), id.  latitudes, the file
+$ extension name (C*$), a scale factor (R), a unit identifier (C*10),
+$ IDLA, IDFM, a format (C*11) and a number identifying undefined or
+$ missing values (land, ice, etc.).  The field follows as defined by
+$ IDFM and IDLA, defined as in the grid proprocessor. IDLA=5 is added
+$ and gives a set of records containing the longitude, latitude and
+$ parameter value. Note that the actual data is written as an integers.
+$
+$ -------------------------------------------------------------------- $
+$ End of input file                                                    $
+$ -------------------------------------------------------------------- $

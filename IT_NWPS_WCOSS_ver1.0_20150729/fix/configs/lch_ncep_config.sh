@@ -1,0 +1,17 @@
+# NCEP Config file for global RTOFS and ESTOF init files
+
+# RTOFS Domain for ocean currents
+export RTOFSSECTOR="west_atl"
+# RTOFSDOMAIN="LON LAT 0. NX NY EW-RESOLUTION NS-RESOLUTION"
+export RTOFSDOMAIN="264.54 27.20 0. 194 130 0.029326 0.027027"
+export RTOFSNX="195"
+export RTOFSNY="131"
+
+
+# ESTOFS Domain for water level
+export ESTOFS_REGION="conus"
+# ESFOTSDOMAIN="LON LAT 0. NX NY EW-RESOLUTION NS-RESOLUTION"
+export ESTOFSDOMAIN="264.54 27.20 0. 194 130 0.029326 0.027027"
+export ESTOFSNX="195"
+export ESTOFSNY="131"
+

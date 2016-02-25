@@ -1,0 +1,50 @@
+#!/bin/make
+
+# Set by calling makefile CC='$(CC)'
+CC=gcc
+
+# Set by calling makefile CFLAGS='$(CFLAGS)'
+CFLAGS=-O3 -Wall -ansi -DWORDS_BIGENDIAN
+
+AR=ar
+RANLIB=ranlib
+ARFLAGS=r
+LIBNAME=aat
+LIBA=lib$(LIBNAME).a
+
+C_OBJS = $(LIBA)(myassert.o) \
+         $(LIBA)(allocSprintf.o) \
+         $(LIBA)(mywarn.o) \
+         $(LIBA)(mycomplex.o) \
+         $(LIBA)(tendian.o) \
+         $(LIBA)(myutil.o) \
+         $(LIBA)(spline.o) \
+         $(LIBA)(probability.o) \
+         $(LIBA)(sphere.o) \
+         $(LIBA)(shpfile.o) \
+         $(LIBA)(dbffile.o) \
+         $(LIBA)(clock.o)
+
+H_SOURCES = libaat.h
+
+all: $(LIBA)
+
+$(LIBA): $(C_OBJS)
+	$(RANLIB) $(LIBA)
+
+install:
+
+.c.o: $(H_SOURCES)
+	$(CC) -c $(CFLAGS) $< -o $@
+
+.o.a:
+	$(AR) $(ARFLAGS) $@ $<
+	rm -f $<
+
+.c.a:
+	$(CC) $(CFLAGS) -c $<
+	$(AR) $(ARFLAGS) $@ $*.o
+	rm -f $*.o
+
+clean:
+	rm -f *.o *.a

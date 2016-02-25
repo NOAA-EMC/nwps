@@ -1,0 +1,32 @@
+$BOUNDARY COMMAND LINES
+BOUN SEG XY 276.46 27.70 276.46 24.10 VAR FILE 0.00 'multi_2.MIA56.swan.bc'    1 &
+     0.72 'multi_2.MIA55.swan.bc'    1 &
+     1.44 'multi_2.MIA54.swan.bc'    1 &
+     2.16 'multi_2.MIA53.swan.bc'    1 &
+     2.88 'multi_2.MIA52.swan.bc'    1 &
+     3.60 'multi_2.MIA51.swan.bc'    1
+$
+BOUN SEG XY 281.59 27.70 276.46 27.70 VAR FILE 0.00 'multi_2.MIA62.swan.bc'    1 &
+     0.40 'multi_2.MIA61.swan.bc'    1 &
+     0.80 'multi_2.MIA60.swan.bc'    1 &
+     1.20 'multi_2.MIA59.swan.bc'    1 &
+     1.60 'multi_2.MIA58.swan.bc'    1 &
+     4.73 'multi_2.MIA57.swan.bc'    1 &
+     5.13 'multi_2.MIA56.swan.cp.bc' 1
+$
+BOUN SEG XY 281.59 25.90 281.59 27.70 VAR FILE 0.00 'multi_2.MIA66.swan.bc'    1 &
+     0.30 'multi_2.MIA65.swan.bc'    1 &
+     0.60 'multi_2.MIA64.swan.bc'    1 &
+     1.50 'multi_2.MIA63.swan.bc'    1 &
+     1.80 'multi_2.MIA62.swan.cp.bc' 1
+$
+BOUN SEG XY 276.46 24.10 280.56 24.10 VAR FILE 0.00 'multi_2.MIA51.swan.cp.bc'    1 &
+     0.51 'multi_2.MIA76.swan.bc'    1 &
+     1.03 'multi_2.MIA75.swan.bc'    1 &
+     1.54 'multi_2.MIA74.swan.bc'    1 &
+     2.05 'multi_2.MIA73.swan.bc'    1 &
+     2.57 'multi_2.MIA72.swan.bc'    1 &
+     3.08 'multi_2.MIA71.swan.bc'    1 &
+     3.59 'multi_2.MIA70.swan.bc'    1 &
+     4.10 'multi_2.MIA69.swan.bc'    1
+$END BOUNSEG

@@ -1,0 +1,59 @@
+SHELL = @SHELL@
+
+CC = @CC@
+CFLAGS = @CFLAGS@ -DMEMWATCH -DMEMWATCH_STDIO
+AR = @AR@
+ARFLAGS = @ARFLAGS@
+RANLIB = @RANLIB@
+
+LIBNAME = memwatch
+LIBA = lib$(LIBNAME).a
+
+SOURCE = memwatch.c
+
+HEADERS = memwatch.h
+
+TEST = test.c
+
+DOCS = FAQ README USING gpl.txt memwatch.lsm
+CONFIG = configure.ac configure Makefile.in
+SAMPLE_CONFIG = config-win.sh
+
+library : $(LIBA)
+$(LIBA) : $(SOURCE:.c=.o)
+	$(AR) $(ARFLAGS) r $(LIBA) $?
+	- $(RANLIB) $(LIBA)
+
+test: $(TEST) $(SOURCE)
+	$(CC) -DMEMWATCH -DMW_STDIO $(TEST) $(SOURCE)
+
+.c.o: $(HEADERS)
+	$(CC) -c $(CFLAGS) $< -o $@
+
+install: library
+
+uninstall:
+
+clean:
+	rm -f *.o *.a *.bak
+
+distclean: clean
+	rm -r -f config.* Makefile autom4te.cache
+
+ifndef DIST_DIR
+  package = @PACKAGE_NAME@-@PACKAGE_VERSION@
+  DIST_DIR = ./$(package)
+  DIST_TARCMD = tar -cf $(package).tar $(DIST_DIR)
+  DIST_RMCMD = rm -r -f $(package)
+  DIST_GZIPCMD = gzip $(package).tar
+endif
+
+DISTRIB = $(SOURCE) $(HEADERS) $(TEST) $(DOCS) $(CONFIG) $(SAMPLE_CONFIG)
+dist: $(DISTRIB)
+	@if [ ! -d $(DIST_DIR) ]; then mkdir $(DIST_DIR); fi
+	@for file in $(DISTRIB); do cp $$file $(DIST_DIR); done
+	@if [ ! -d $(DIST_DIR) ]; then mkdir $(DIST_DIR); fi
+	@$(DIST_TARCMD)
+	@$(DIST_RMCMD)
+	@$(DIST_GZIPCMD)
+

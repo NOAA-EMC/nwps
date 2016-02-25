@@ -1,0 +1,90 @@
+# NWPS GRIB2 Encoding Template
+#
+# META data template file for: ???
+# SWAN data type: WLEN - mean wave length
+# Last Modified: 05/27/2011
+
+# NOTE: All "<< name of value >>" fields will be set dynamically during model post-processing
+# NOTE: All "<< name of value >>" fields must be set before encoding
+
+# GRIB2 Section 0 meta data
+discipline = 10
+
+# GRIB2 Section 1  meta data
+originating_center = 7
+originating_subcenter = 0
+master_table_version = 2
+grib_local_table_ver = 1
+time_reference = 1
+year = << SET START YEAR >>
+month = << SET START MONTH >>
+day = << SET START DAY >>
+hour = << SET START HOUR >>
+minute = << SET START MINUTE >>
+second = << SET START SECOND >>
+production_status = 0
+
+# GRIB2 Section 3  meta data
+source_of_grid_def = 0
+num_grid_data_points = << SET NUM POINTS >>
+num_non_rect_points = 0
+appended_point_list = 0
+grid_def_template = 0
+
+# GRIB2 grid definition template 3.0 meta data
+shape_of_earth = 6
+radius_scale_factor = 0
+radius_scale_value = 6371.229
+major_axis_scale_factor = 0
+major_axis_scale_value = 0
+minor_axis_scale_factor = 0
+minor_axis_scale_value = 0
+nx = << SET NX >>
+ny = << SET NY >>
+basic_angle = 0
+subdivisions_of_basic_angle = 0
+la1 = << SET LA1 >>
+lo1 = << SET LO1 >>
+la2 = << SET LA2 >>
+lo2 = << SET LO2 >>
+res_and_comp_flag = 48
+dx = << SET DX >>
+dy = << SET DY >>
+scanning_mode = 64
+
+# GRIB2 Section 4  meta data
+num_coords = 0
+product_def_number = 0
+
+# GRIB2 product template 4.0 meta data
+parameter_category = 255
+parameter_number = 255
+process_type = 2
+process_id = 0
+forecast_process = 255
+hours = 0
+minutes = 0
+time_range_unit = 1
+forecast_time = << SET FORECAST HOUR >>
+surface_type = 1
+surface_scale_factor = 0
+surface_scale_value = 0
+surface_type2 = 255
+surface_scale_factor2 = 255
+surface_scale_value2 = -1
+
+# GRIB2 Section 5  meta data
+num_rep_data_points = << SET NUM POINTS >>
+data_rep_template_num = 0
+
+# GRIB2 grid template 5.0 meta data
+ref_value = 0
+bin_scale_factor = 0
+dec_scale_factor = 0
+num_bits = 0
+org_field_val = 0
+
+# GRIB2 Section 6  meta data
+bit_map_indicator = 255
+
+# End of meta data

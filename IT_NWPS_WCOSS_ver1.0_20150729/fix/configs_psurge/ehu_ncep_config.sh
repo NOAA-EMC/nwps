@@ -1,0 +1,13 @@
+
+# RTOFS Domain for ocean currents
+export RTOFSLON="262.00 282.00"
+export RTOFSLAT="23.0 33.00"
+
+# ESTOFS Domain for water level
+export ESTOFS_REGION="conus"
+# ESFOTSDOMAIN="LON LAT 0. NX NY EW-RESOLUTION NS-RESOLUTION"
+export ESTOFSDOMAIN="262.00 23.0 0. 682 370 0.029326 0.027027"
+export ESTOFSNX="683"
+export ESTOFSNY="371"
+
+

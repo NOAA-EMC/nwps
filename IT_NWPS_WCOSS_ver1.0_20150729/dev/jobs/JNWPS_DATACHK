@@ -1,0 +1,124 @@
+#!/bin/sh
+# ----------------------------------------------------------- 
+# UNIX Shell Script File
+# Tested Operating System(s): RHEL 5,6
+# Tested Run Level(s): 3, 5
+# Shell Used: BASH shell
+# Original Author(s): Andre van der Westhuysen
+# File Creation Date: 09/17/2015
+# Date Last Modified:
+#
+# Version control: 1.00
+#
+# Support Team:
+#
+# Contributors: Floyd fayton
+#
+# ----------------------------------------------------------- 
+# ------------- Program Description and Details ------------- 
+# ----------------------------------------------------------- 
+#
+# Job Card to set the resources required for a NWPS run
+#
+# -----------------------------------------------------------
+
+date
+export PS4='$SECONDS ${0/\/nw.*\/nwps.*\/} + '
+set -xa
+# #### 04/01/15 ###############################
+# SETUP NWPS SHELL VARIABLES
+# #############################################
+export DATA=/ptmpp1/${DEVWCOSS_USER}/data                # Add the ${siteid} ???
+export COMROOT=/ptmpp1/${DEVWCOSS_USER}/data/com
+export GESROOT=/ptmpp1/${DEVWCOSS_USER}/data/nwges
+
+mkdir -p $DATA
+cd $DATA
+
+curhour=$(date -u +%H)
+if [ $curhour -lt 12 ]; then CYCLE="00"; fi
+if [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
+if [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
+if [ $curhour -ge 22 ]; then CYCLE="18"; fi
+echo ""
+echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
+export cyc=${CYCLE}
+export cycle=t${cyc}z
+
+####################################
+# Specify NET and RUN Name and model
+####################################
+export NET=${model}
+export RUN=$(echo ${job}|awk -F"_" '{print $2}')
+
+####################################
+# SENDECF  - Flag Events on ECFLOW
+# SENDCOM  - Copy Files From TMPDIR to $COMOUT
+# SENDDBN  - Issue DBNet Client Calls
+####################################
+export SENDCOM=${SENDCOM:-YES}
+export SENDECF=${SENDECF:-YES}
+export SENDDBN=${SENDDBN:-NO}
+
+####################################
+# Specify Execution Areas
+####################################
+#export HOMEnwps=${NWROOT}/${model}.${nwps_ver}
+export HOMEnwps=${NWROOT}
+export FIXnwps=${FIXnwps:-${HOMEnwps}/fix}
+export EXECnwps=${EXECnwps:-${HOMEnwps}/exec}
+export SORCnwps=${SORCnwps:-${HOMEnwps}/sorc}
+export PARMnwps=${PARMnwps:-${HOMEnwps}/parm}
+export USHnwps=${USHnwps:-${HOMEnwps}/ush}
+export PMnwps=${PMnwps:-${USHnwps}/pm}
+export BATHYdb=${BATHYdb:-${FIXnwps}/bathy_db}
+export SHAPEFILEdb=${SHAPEFILEdb:-${FIXnwps}/shapefile_db}
+
+# Set NWPS run conditions
+export DEBUGGING=${DEBUGGING:-TRUE}
+export DEBUG_LEVEL=${DEBUG_LEVEL:-1}
+export ISPRODUCTION=${ISPRODUCTION:-TRUE}
+export SITETYPE=${SITETYPE:-EMC}
+export MODELTYPE="SWAN"
+
+#export pgmout=OUTPUT.$$
+export utilscript=/nwprod/util/ush
+export USHutil=/nwprod/util/ush
+sh $utilscript/setpdy.sh
+. ./PDY
+
+##############################################
+# Define COM directory
+##############################################
+export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
+export GESOUTm1=${GESROOT}/${envir}/${NET}.${PDYm1}
+export dcom_hist="$GESOUT/dcom_hist.txt"
+export dcom_histm1="$GESOUTm1/dcom_hist.txt"
+export web_status_file="$GESOUT/status_file.txt"
+export dcom=${dcom:-/dcom/us007003}
+export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
+
+# make sure NWPS COM directory exists
+if [ "${SENDCOM}" = YES ]; then
+    mkdir -p $GESOUT
+fi
+
+##############################################
+# Execute the script
+${HOMEnwps}/dev/scripts/exnwps_datachk.sh.ecf
+##############################################
+
+#msg="JOB $job HAS COMPLETED NORMALLY."
+#postmsg $jlogfile "$msg"
+
+if [ -e $pgmout ]; then
+    cat $pgmout
+fi
+
+cd $DATAROOT
+
+if [ "$KEEPDATA" != YES ]; then
+    rm -rf $DATA
+fi
+
+date

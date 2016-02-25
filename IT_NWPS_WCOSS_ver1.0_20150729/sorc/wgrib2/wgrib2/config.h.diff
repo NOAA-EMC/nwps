@@ -1,0 +1,8 @@
+4c4
+< #define USE_PROJ4
+---
+> //#define USE_PROJ4
+6c6
+< #define USE_NETCDF4
+---
+> //#define USE_NETCDF4

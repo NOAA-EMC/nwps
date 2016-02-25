@@ -1,0 +1,155 @@
+#!/bin/sh
+date
+export PS4='$SECONDS ${0/\/nw.*\/nwps.*\/} + '
+set -xa
+
+# #### 04/01/15 ###############################
+# SETUP NWPS SHELL VARIABLES
+# #############################################
+export DATA=${DATA:-${DATAROOT}/${jobid}}
+mkdir $DATA
+cd $DATA
+
+curhour=$(date -u +%H)
+if [ $curhour -lt 12 ]; then CYCLE="00"; fi
+if [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
+if [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
+if [ $curhour -ge 22 ]; then CYCLE="18"; fi
+echo ""
+echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
+export cyc=${CYCLE}
+export cycle=t${cyc}z
+
+####################################
+# Specify NET and RUN Name and model
+####################################
+export NET=${model}
+export RUN=$(echo ${job}|awk -F"_" '{print $2}')
+
+####################################
+# SENDECF  - Flag Events on ECFLOW
+# SENDCOM  - Copy Files From TMPDIR to $COMOUT
+# SENDDBN  - Issue DBNet Client Calls
+####################################
+export SENDCOM=${SENDCOM:-YES}
+export SENDECF=${SENDECF:-YES}
+export SENDDBN=${SENDDBN:-YES}
+
+####################################
+# Specify Execution Areas
+####################################
+export HOMEnwps=${NWROOT}/${model}.${nwps_ver}
+export FIXnwps=${FIXnwps:-${HOMEnwps}/fix}
+export EXECnwps=${EXECnwps:-${HOMEnwps}/exec}
+export SORCnwps=${SORCnwps:-${HOMEnwps}/sorc}
+export PARMnwps=${PARMnwps:-${HOMEnwps}/parm}
+export USHnwps=${USHnwps:-${HOMEnwps}/ush}
+export PMnwps=${PMnwps:-${USHnwps}/pm}
+export BATHYdb=${BATHYdb:-${FIXnwps}/bathy_db}
+export SHAPEFILEdb=${SHAPEFILEdb:-${FIXnwps}/shapefile_db}
+
+# Set NWPS run conditions
+export DEBUGGING=${DEBUGGING:-TRUE}
+export DEBUG_LEVEL=${DEBUG_LEVEL:-1}
+export ISPRODUCTION=${ISPRODUCTION:-TRUE}
+export SITETYPE=${SITETYPE:-EMC}
+export MODELTYPE="SWAN"
+
+export pgmout=OUTPUT.$$
+setpdy.sh
+. ./PDY
+
+##############################################
+# Define COM directory
+##############################################
+export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
+export GESOUTm1=${GESROOT}/${envir}/${NET}.${PDYm1}
+export dcom_hist="$GESOUT/dcom_hist.txt"
+export dcom_histm1="$GESOUT/dcom_hist.txt"
+export web_status_file="$GESOUT/status_file.txt"
+export dcom=${dcom:-/dcom/us007003}
+export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
+
+# make sure NWPS COM directory exists
+if [ "${SENDCOM}" = YES ]; then
+    mkdir -p $GESOUT $GESOUT/warnings
+fi
+
+##############################################
+# Execute the script
+${HOMEnwps}/scripts/exnwps_datachk.sh.ecf
+export err=$?; err_chk
+
+function rsync_sh {
+    #source=$(echo ${@: -2}|awk '{print $1}')
+    #dest=${@: -1}
+    source=$1
+    dest=$2
+    set +xa
+    echo ${options:?" FATAL ERROR:  Need to set \"options\" properly to avoid lengthy transfers. "}
+    if [ $# -eq 2  ] ; then
+        echo "=========================================================================================="
+        echo "Now running \"rsync $source $dest\" "
+        echo "Please export $options before running this script."
+        echo "=========================================================================================="
+        echo " "
+    else
+        echo "FATAL ERROR:  Not enough options given.  Missing source or destination variable."
+        echo "Usage:  rsync_sh $source $dest"
+        echo "Example: rsync_sh ${web_status_file} ${remote_stat}"
+        echo "Define the variable options first"
+        echo "export options=\"\-\-delete\""
+    fi
+    set -xa
+    let numattempts=3
+    while [ $numattempts -gt 0 ]; do
+        /usr/bin/rsync ${options[@]} ${source} ${dest}
+        err=$?
+        date
+        if [ $err -eq 23 ] || [ $err -eq 24 ]; then
+            echo "Possible Failure: error code is 23, check if any file is really missing"
+            let numattempts=-1  # successful completion
+        elif [ $err -ne 0 ]; then
+            ((numattempts--))
+            sleep 5
+        else
+            let numattempts=-1  # successful completion
+        fi
+    done
+    if [ $numattempts -eq 0 ]; then
+        echo "FATAL ERROR: rsync failed after three attempts"
+        err_exit
+    fi
+}
+
+if [ "${envir}" = "prod" ]; then
+    export remote_stat="ncorzdm.ncep.noaa.gov:~/pmb/spa/nwps/status_file.txt"
+    export remote_warn="ncorzdm.ncep.noaa.gov:~/pmb/spa/nwps/warnings/"
+    export options=(-aWzv --timeout=30 --delete)
+    rsync_sh ${web_status_file} ${remote_stat}
+    rsync_sh ${GESOUT}/warnings/ ${remote_warn}
+else
+    export remote_stat="intra.ncep.noaa.gov:~/pmb/spatools/nwps_status/status_file.txt"
+    export remote_warn="intra.ncep.noaa.gov:~/pmb/spatools/nwps_status/warnings/"
+    export options=(-aWzv --timeout=30 --delete)
+    rsync_sh ${web_status_file} ${remote_stat}
+    rsync_sh ${GESOUT}/warnings/ ${remote_warn}
+fi
+
+
+##############################################
+
+msg="JOB $job HAS COMPLETED NORMALLY."
+postmsg $jlogfile "$msg"
+
+if [ -e $pgmout ]; then
+    cat $pgmout
+fi
+
+cd $DATAROOT
+
+if [ "$KEEPDATA" != YES ]; then
+    rm -rf $DATA
+fi
+
+date
