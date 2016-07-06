@@ -114,10 +114,10 @@ echo ${REGION}
 ##############################################
 # Define COM directory
 ##############################################
-export COMIN=${COMROOT}/${NET}/${envir}/${WFO}.${PDY}
-export COMINm1=${COMROOT}/${NET}/${envir}/${WFO}.${PDYm1}
-export COMINm2=${COMROOT}/${NET}/${envir}/${WFO}.${PDYm2}
-export COMINm3=${COMROOT}/${NET}/${envir}/${WFO}.${PDYm3}
+export COMIN=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
+export COMINm1=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm1}/${WFO}
+export COMINm2=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm2}/${WFO}
+export COMINm3=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm3}/${WFO}
 export COMOUT=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
 export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
 #export COMINgfs=${COMROOT}/gfs/prod/gfs.${PDY}
