@@ -42,7 +42,7 @@ module load PrgEnv-intel
 #export IOBUF_PARAMS="*:count=4:size=32M:prefetch=1:preflush=1:verbose"
 module load cfp-intel-sandybridge
 module load netcdf4-python
-module use /gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/lib/python/modulefiles
+module use /gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/trunk/lib/python/modulefiles
 module load nwps_python
 module list
 
@@ -75,7 +75,8 @@ export jlogfile=${COMROOT}/logs/${envir}/jlogfile.${job}
 export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )d1
 export WCOSS_SYSTEM_COM=$( echo $COMROOTp1 | cut -c7-9 )
 
-export NWROOT="/gpfs/hps/emc/marine/noscrub/${DEVWCOSS_USER}/NWPS/WCOSS_incl_WR_PR_AR"
+#export NWROOT="/gpfs/hps/emc/marine/noscrub/${DEVWCOSS_USER}/NWPS/WCOSS_incl_WR_PR_AR"
+export NWROOT=${NWPSdir}
 
 VERSION_FILE=${NWROOT}/dev/nwps_test.ver
 if [ -f $VERSION_FILE ]; then
