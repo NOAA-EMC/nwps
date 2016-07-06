@@ -87,6 +87,7 @@ export GEN_HDF5=${GEN_HDF5:-TRUE}
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 export PYTHONPATH=${HOMEnwps}/lib/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
 export PYTHON=python
+
 # Set NWPS run conditions
 export DEBUGGING=${DEBUGGING:-TRUE}
 export DEBUG_LEVEL=${DEBUG_LEVEL:-1}
