@@ -75,7 +75,6 @@ export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )d1
 export WCOSS_SYSTEM_COM=$( echo $COMROOTp1 | cut -c7-9 )
 
 export DEVWCOSS_USER=$(whoami)
-#export NWROOT="/gpfs/hps/emc/marine/noscrub/${DEVWCOSS_USER}/NWPS/WCOSS_incl_WR_PR_AR"
 export NWROOT=${NWPSdir}
 
 VERSION_FILE=${NWROOT}/dev/psurge2nwps_test.ver
