@@ -59,15 +59,12 @@ else
 fi
 
 # NOTE: Path for extra LIB files 
-export MPIEXEC=mpirun.lsf
-export MPIRUN=mpirun.lsf
+export MPIEXEC=aprun
+export MPIRUN=aprun
 export OPAL_PREFIX="${LSF_BINDIR}/.."
 export PATH=$PATH:${EXECnwps}
-export GRIBMAP=${GRIBMAP}
 export NCDUMP=ncdump
 export NCGEN=ncgen
-export DEGRIB=degrib
-export WGRIB2=${EXECnwps}/wgrib2
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${NWPSdir}/lib"
 
 echo "Detecting CPU info and number of processors"
@@ -97,10 +94,8 @@ echo "$ARCHBITS" >> ${RUNdir}/info_to_all_modules.txt
 echo "$MPIEXEC" >> ${RUNdir}/info_to_all_modules.txt
 echo "$OPAL_PREFIX" >> ${RUNdir}/info_to_all_modules.txt
 echo "$GADDIR" >> ${RUNdir}/info_to_all_modules.txt
-echo "$GRIBMAP" >> ${RUNdir}/info_to_all_modules.txt
 echo "$NCDUMP" >> ${RUNdir}/info_to_all_modules.txt
 echo "$NCGEN" >> ${RUNdir}/info_to_all_modules.txt
-echo "$GRADS" >> ${RUNdir}/info_to_all_modules.txt
 echo "$WGRIB2" >> ${RUNdir}/info_to_all_modules.txt
 echo "$DEGRIB" >> ${RUNdir}/info_to_all_modules.txt
 echo "$PATH" >> ${RUNdir}/info_to_all_modules.txt

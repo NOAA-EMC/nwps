@@ -30,7 +30,10 @@ sed 's/!\/MPI//g' temp2 > w3strkmd_compile.f90
 
 #From Carolyn: compiling MPI with -g and -O2 options so that it is optimized
 #and you can analyze any coredumps you get in production.  
-mpfort -g -O2 -v -o ww3_systrk_mpi w3strkmd_compile.f90 ww3_systrk_compile.f90
+#mpfort -g -O2 -v -o ww3_systrk_mpi w3strkmd_compile.f90 ww3_systrk_compile.f90
+#20160331 AW: Updated for Cray machines
+ftn -c -g -O2 -v w3strkmd_compile.f90 ww3_systrk_compile.f90
+ftn w3strkmd_compile.o ww3_systrk_compile.o -o ww3_systrk_mpi 
 
 mkdir -p ${NWPSdir}/exec
 mv -v ww3_systrk_mpi ${NWPSdir}/exec/ww3_systrk_mpi 

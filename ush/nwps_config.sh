@@ -176,7 +176,7 @@ then
     echo "NWPS is installed on DEVWCOSS platform, loading WCOSS config"
     if [ ! -e ${NWPSdir}/ush/devwcoss_config.sh ]
     then
-	echo "ERROR - Missing WCOSS config file ${NWPSdir}/utils/etc/devwcoss_config.sh"
+	echo "ERROR - Missing WCOSS config file ${NWPSdir}/ush/devwcoss_config.sh"
 	echo "ERROR - Check your NWPS platform type"
 	export err=1; err_chk
     else

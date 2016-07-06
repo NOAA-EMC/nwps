@@ -203,5 +203,6 @@ export WAVECPS="multi_1.KEY51.spec.swan,multi_1.KEY63.spec.swan,multi_1.KEY68.sp
 #3.95 'multi_1.KEY80.spec.swan'    1 &
 #4.20 'multi_1.KEY81.spec.swan'    1 &
 #4.50 'multi_1.KEY51.spec.swan.cp' 1
+#NUM DIRimpl cdd=1 cdlim=2
 #$END BOUNSEG
 #

@@ -61,7 +61,10 @@ mkdir -p ${NWPSdir}/exec
 #make omp FLAGS_OPT="${OPTFLAGS}" | tee -a ./swan_build.log
 #cp -pfv swan.exe ${NWPSdir}/exec/swan-omp.exe
 
-module load ics
+#module purge
+#module load ncep
+#module load ../modulefiles/NWPS/v1.1.0
+#module list
 
 echo "Building OpenMPI SWAN binary" | tee ./swan_build.log
 cd ${NWPSdir}/sorc/swan

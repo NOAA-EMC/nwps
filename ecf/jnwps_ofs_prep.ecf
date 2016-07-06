@@ -4,17 +4,25 @@
 #BSUB -L /bin/sh
 #BSUB -q %QUEUE%_shared
 #BSUB -cwd /tmpnwprd2
-#BSUB -W 3:00
-#BSUB -a poe
-##BSUB -R "span[ptile=16]"
-#BSUB -R "rusage[mem=1700]"
-#BSUB -R "affinity[core]"
-#BSUB -n 1
+#BSUB -W 5:00
+#BSUB -M 1700
 #BSUB -P NWPS-%PROJ%
+#BSUB -extsched 'CRAYLINUX[]'
+export NODES=1
 
 %include <head.h>
 
 module load %MODULES%
+#---- Suggested modules -----------------------------------------
+module use /gpfs/hps/nco/ops/nwpara/modulefiles
+module load prod_envir
+module load prod_util
+module load PrgEnv-intel
+module load iobuf
+export IOBUF_PARAMS="*:count=24:size=32M:prefetch=1:preflush=1:verbose"
+module load grib_util/1.0.3
+module load cfp-intel-sandybridge
+#----------------------------------------------------------------
 export FORT_BUFFERED=true
 export NWPSplatform="WCOSS"
 export MP_PGMMODEL=mpmd

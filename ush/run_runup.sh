@@ -21,11 +21,11 @@ echo " ${DATA}  ${siteid}/${SITEID} ${SLOPEDATADIR} ${CONTOURS} ${CGS}"  | tee -
 echo " ${TEMPDIRrunup} ${RUNUPDOMAIN}"  | tee -a logrunup
 for CONTOUR in $CONTOURS; do
 for CG in $CGS; do
-echo "LOOKING FOR  FILE :  ${CONTOUR}_cont_${CG}.${INIT_DATE}_${SITEID}" | tee -a logrunup
+echo "LOOKING FOR FILE :  ${CONTOUR}_contour_${CG}.${INIT_DATE}_${SITEID}" | tee -a logrunup
 #
 # If the model file doesn't exist, move on to the next one
-if [[ ! -f ${CONTOUR}_cont_${CG}.${INIT_DATE}_${SITEID} ]]; then
-echo "Cant find ${CONTOUR}_cont_${CG}.${INIT_DATE}_${SITEID}" | tee -a logrunup
+if [[ ! -f ${CONTOUR}_contour_${CG}.${INIT_DATE}_${SITEID} ]]; then
+echo "Cant find ${CONTOUR}_contour_${CG}.${INIT_DATE}_${SITEID}" | tee -a logrunup
    continue
 fi
 #
@@ -46,7 +46,7 @@ export FORT22="${WFO}_${NET}_${CONTOUR}_${CG}_runup.${DATE}_${CYCLE}"
 # ======================================================================
 echo "% " > $FORT22
 echo "% " >> $FORT22
-grep SWAN ${CONTOUR}_cont_${CG}.${INIT_DATE}_${SITEID} >> $FORT22
+grep SWAN ${CONTOUR}_contour_${CG}.${INIT_DATE}_${SITEID} >> $FORT22
 echo "% Runup Code Version:1.0" >> $FORT22
 echo "% NOTE:  X,Y locations refer to shoreline location projected from the 20m contour" >> $FORT22
 echo "% " >> $FORT22
@@ -74,19 +74,26 @@ while read line; do
       rm -f $FORT20
    fi
 ## Get the current model data
-  if [[ -f ${CONTOUR}_cont_${CG}.${INIT_DATE}_${SITEID} ]]; then
-#      cat ${TEMPDIRrunup}/${CONTOUR}_cont_${CG}.${INIT_DATE}_MHX | \
+  if [[ -f ${CONTOUR}_contour_${CG}.${INIT_DATE}_${SITEID} ]]; then
+#      cat ${TEMPDIRrunup}/${CONTOUR}_contour_${CG}.${INIT_DATE}_MHX | \
 #      awk "/${LAT}/ && /${LON}/" | \
 #      head -24 >> $FORT20
 #   fi
-      cat ${CONTOUR}_cont_${CG}.${INIT_DATE}_${SITEID} | \
+      cat ${CONTOUR}_contour_${CG}.${INIT_DATE}_${SITEID} | \
       awk "/${LAT}/ && /${LON}/" >> $FORT20
     fi
 # ======================================================================
 # Execute the program
 # ======================================================================
    if [ -s $FORT20 ]; then
-         ./runupforecast.exe 
+        ${NWPSdir}/exec/runupforecast.exe
+        export err=$?;
+        echo "Exit Code: ${err}" | tee -a ${LOGdir}/runup.log
+        if [ "${err}" != "0" ];then
+           msg="FATAL ERROR: Wave runup executable runupforecast.exe failed."
+           postmsg "$jlogfile" "$msg"
+        fi
+        err_chk
    fi  
 
 done < $FORT21

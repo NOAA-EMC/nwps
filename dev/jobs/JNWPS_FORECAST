@@ -40,16 +40,16 @@ echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
 export cyc=${CYCLE}
 export cycle=t${cyc}z
 
-export utilscript=/nwprod/util/ush
-export USHutil=/nwprod/util/ush
-#sh $utilscript/setup.sh
-#sh $utilscript/setpdy.sh
+export UTILROOT=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.3
+
+export utilscript=${UTILROOT}/ush
+export USHutil=${UTILROOT}/ush
 . ./PDY.${WFO}
 
 export pgm="NWPS"
 
-export DATA=/ptmpp1/${DEVWCOSS_USER}/data/${WFO}.${PDY}
-export GESROOT=/ptmpp1/${DEVWCOSS_USER}/data/nwges
+export DATA=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/${WFO}.${PDY}
+export GESROOT=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/nwges
 
 mkdir -p $DATA
 cd $DATA
@@ -97,8 +97,6 @@ export LOGdir=${LOGdir:-${DATA}/logs}
 export GEN_NETCDF=${GEN_NETCDF:-FALSE}
 export GEN_HDF5=${GEN_HDF5:-FALSE}
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOMEnwps}/lib/szip:${HOMEnwps}/lib/proj
-#export PYTHONPATH=${HOMEnwps}/lib/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
-#export PYTHON=python
 
 # Set NWPS run conditions
 export DEBUGGING=${DEBUGGING:-TRUE}
@@ -109,6 +107,10 @@ export MODELTYPE="SWAN"
 export pgmout=${RUNdir}/PRINT-001
 export errfile=${RUNdir}/Errfile-001
 
+# Determine WFO's Region
+export REGION=$( grep ${WFO,,} ${PARMnwps}/wfo.tbl | cut -c1-2 | tr '[:upper:]' '[:lower:]' )
+echo ${REGION}
+
 ##############################################
 # Define COM directory
 ##############################################
@@ -116,16 +118,20 @@ export COMIN=${COMROOT}/${NET}/${envir}/${WFO}.${PDY}
 export COMINm1=${COMROOT}/${NET}/${envir}/${WFO}.${PDYm1}
 export COMINm2=${COMROOT}/${NET}/${envir}/${WFO}.${PDYm2}
 export COMINm3=${COMROOT}/${NET}/${envir}/${WFO}.${PDYm3}
-export COMOUT=${COMROOT}/${NET}/${envir}/${WFO}.${PDY}
+export COMOUT=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
 export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
-export COMINgfs=/com/gfs/prod/gfs.${PDY}
-export COMINwave=/com/wave/prod
-export COMestofs=/com/estofs/prod/estofs.${PDY}
-export COMrtofs=/com/rtofs/prod/rtofs.${PDY}
-export dcom=${dcom:-/dcom/us007003}
+#export COMINgfs=${COMROOT}/gfs/prod/gfs.${PDY}
+export COMINwave=${COMROOTp1}/wave/prod
+export COMINestofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/estofs/${WFO}_output
+export COMINestofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/estofs/${WFO}_output
+export COMINrtofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/rtofs/${WFO}_output
+export COMINrtofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/rtofs/${WFO}_output
+export COMINpsurge=${COMROOT}/${NET}/${envir}/ofs.${PDY}/psurge/${WFO}_output
+export COMINpsurgem1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/psurge/${WFO}_output
+export dcom=${dcom:-/gpfs/${WCOSS_SYSTEM_COM}/dcomdev/us007003}
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 export COM_nwps_R_ES_TOFS="/com"
-export PCOM=/pcom/${envir}/${NET}
+export PCOM=${PCOMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
 
 if [ "${SENDCOM}" = YES ]; then
     mkdir -p $COMOUT

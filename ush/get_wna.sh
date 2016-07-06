@@ -204,19 +204,19 @@ echo "******************* In get_wna.sh  ******************"
 echo "FTPPAT1:   ${FTPPAT1}"
 echo "FTPPAT2:   ${FTPPAT2}"
 echo "WNA:      ${WNA}"
-if [ "${WNA}" = "WNAWave" ]
+if [ "${WNA^^}" = "WNAWAVE" ]
 then
    bc_option="multi_1" 
    bctarfile="${bc_option}.t${CYCLE}z.spec_tar.gz"
    url="${COMINwave}/${bc_option}.${YYYYMMDD}"
 
-elif [ "${WNA}" = "HURWave" ]
+elif [ "${WNA^^}" = "HURWAVE" ]
    then
    bc_option="multi_2"
    bctarfile="${bc_option}.t${CYCLE}z.spec_tar.gz"
    url="${COMINwave}/${bc_option}.${YYYYMMDD}"
 
-elif [ "${WNA}" = "TAFB-NWPS" ]
+elif [ "${WNA^^}" = "TAFB-NWPS" ]
    then
    #bc_$WFO_$YYYYMMDDHH.tar.xz
    #/dcom/us007003/YYYYMMDD/wtxtbul/nhc_nwps_bc/
@@ -228,7 +228,7 @@ elif [ "${WNA}" = "TAFB-NWPS" ]
    bctarfile="${bc_option}.t${CYCLE}z.spec_tar.gz"
    url="${COMINwave}/${bc_option}.${YYYYMMDD}"
 
-elif [ "${WNA}" = "NO" ]
+elif [ "${WNA^^}" = "NO" ]
    then
    echo " NOT BOUNDARY CONDITIONS"
    bc_option="NO"

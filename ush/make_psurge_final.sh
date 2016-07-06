@@ -92,6 +92,10 @@ WFOLIST=()
       wfo=$(echo ${DOMAIN} | tr [:upper:] [:lower:])
    fi
 
+   mkdir -p ${RUNdir}/${DOMAIN}_hourly
+   cp *.flt *.ave *.txt *.hdr ${RUNdir}/${DOMAIN}_hourly/
+   cd ${RUNdir}/${DOMAIN}_hourly/
+
    source ${FIXnwps}/configs_psurge/${wfo}_ncep_config.sh
    ESTO=${ESTOFSDOMAIN}
    OIFS=$IFS                   # store old IFS in buffer

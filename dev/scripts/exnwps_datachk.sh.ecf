@@ -51,8 +51,7 @@ function process_nwps_dcom {
     nrunning=0
     nfinished=0
     nignored=0
-    #DCOM_FILES=($( for i in $(cat ${PARMnwps}/wfo.tbl|grep -v "#"|awk -F"/" '{print $2}'); do
-    DCOM_FILES=($( for i in $(cat ${PARMnwps}/wfo_dev.tbl|grep -v "#"|awk -F"/" '{print $2}'); do
+    DCOM_FILES=($( for i in $(cat ${PARMnwps}/wfo.tbl|grep -v "#"|awk -F"/" '{print $2}'); do
                         if ls -1rt ${FORECASTWINDdir}/*_${i}* &> /dev/null; then
                             ls -1rt ${FORECASTWINDdir}/*_${i}*|tail -n 1
                         fi
@@ -66,8 +65,7 @@ function process_nwps_dcom {
         echo "PROCESSING LASTEST WFO FILES FOR THE LAST 6 CYCLES ONLY."
         for dfile in ${DCOM_FILES[@]}; do
             wfo=$(echo ${dfile} ${dcom}|awk -F_ '{print $2}')
-            #ecf_wfo=$(grep ${wfo} ${PARMnwps}/wfo.tbl)
-            ecf_wfo=$(grep ${wfo} ${PARMnwps}/wfo_dev.tbl)
+            ecf_wfo=$(grep ${wfo} ${PARMnwps}/wfo.tbl)
             region=$(echo ${ecf_wfo} |awk -F"/" '{print $1}')
             if grep -q "STARTED .*$dfile" $dcom_hist && grep -q "FINISHED.*${dfile}" $dcom_hist; then
                 #--- Run started today has already completed. Remove wind file from execution list. ---
@@ -213,10 +211,9 @@ if [ "${#DCOM_FILES[@]}" -eq 0 ];then
 else
     echo "============"
     for runit in ${DCOM_FILES[@]}; do
-        if [ "$nrunning" -lt 12 ]; then
+        if [ "$nrunning" -lt 18 ]; then
             wfo=$(echo ${runit}|awk -F_ '{print $2}')
-            #ecf_wfo=$(grep ${wfo} ${PARMnwps}/wfo.tbl)
-            ecf_wfo=$(grep ${wfo} ${PARMnwps}/wfo_dev.tbl)
+            ecf_wfo=$(grep ${wfo} ${PARMnwps}/wfo.tbl)
             region=$(echo ${ecf_wfo} |awk -F"/" '{print $1}')
             #if ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:active; then
             if [ ! -z $(bjobs -u $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}.log | awk -F"<" '{print $2}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
@@ -292,7 +289,7 @@ else
                 sleep 5
             fi
         else
-            echo -ne "\nNWPS has reached its limit of running 12 jobs on 6 nodes, \nThe following DCOM files will not be processed at this time:\n$(echo $DCOM_FILES|tr ' ' '\n')\n\n"
+            echo -ne "\nNWPS has reached its limit of running 18 jobs on 9 nodes, \nThe following DCOM files will not be processed at this time:\n$(echo $DCOM_FILES|tr ' ' '\n')\n\n"
             #export ECF_NAME="${ECF_NAME}_info" ECF_PASS=FREE
             #ecflow_client --label=queued "`echo "${FORECASTWINDdir} ${DCOM_FILES[@]}"|tr ' ' '\n'| \
             #    awk -F'NWPSWINDGRID_' '{print $2}'|sed 's/\.tar\.gz//g'|tr '[a-z]' '[A-Z]'`"

@@ -5,6 +5,8 @@
 # Purpose: Plots SWAN 1D Spectrum from binary file.
 #--------------------------------------------------------
 
+import matplotlib
+matplotlib.use('Agg',warn=False)
 import numpy as np
 from pylab import *
 from time import gmtime, strftime
@@ -47,6 +49,7 @@ LocName=sys.argv[1]
 lon=sys.argv[2]
 lat=sys.argv[3]
 windSource=sys.argv[4]
+region=sys.argv[5]
 
 #-----------------------------------------
 #--- Read NOAA and NWS logos
@@ -148,9 +151,15 @@ for i in range(0,timeSteps,1): #different lines
     else:
 	waveComp.append('')
 
+#Set regional override for fixed vector scaling
+if region == 'wr':
+    mxUVwave = 10./3.28    #in ft/3.28
+    mxUVwind = 40./1.94   #in knt/1.94
+
 #-----------------------------------------
 #--- Plot the data
 #-----------------------------------------
+timeSteps = min(9,timeSteps)          ## Limit plot to 9 wave systems
 for i in range(0,timeSteps,1):
     
     subplot(6,1,(1,4))
@@ -162,7 +171,7 @@ for i in range(0,timeSteps,1):
     ax.yaxis.set_major_locator(MultipleLocator(2))
     ax.yaxis.grid(b=True, which='major', color='#C0C0C0', linestyle=':')
     ax.tick_params( labelsize='x-small')
-    ax.set_ylabel('Peak Period [s]',labelpad = 12)
+    ax.set_ylabel('Peak Wave Period [s]',labelpad = 12)
 
     xticks(waveXvals,waveXticks)
     xlim(0,waveXvals[-1])
@@ -171,8 +180,8 @@ for i in range(0,timeSteps,1):
     
     if i == (timeSteps-1):
 	annotate(' NWPSystem\n\nWave\nPartition', xy=(1.1, 0.925), xycoords='axes fraction', color='k', horizontalalignment='center')
-	for j in range(len(waveComp)):
-	    annotate(waveComp[j]+'\n', xy=(1.1, 0.8-(j*0.075)), xycoords='axes fraction', color=VectorColors[j], horizontalalignment='center')
+	for j in range(min(9,len(waveComp))):          ## Limit plot to 9 wave systems
+	    annotate(waveComp[j]+'\n', xy=(1.1, 0.83-(j*0.065)), xycoords='axes fraction', color=VectorColors[j], horizontalalignment='center')
 
     
 subplot(6,1,(5,6))
@@ -186,15 +195,16 @@ ax1.yaxis.grid(b=True, which='major', color='#C0C0C0', linestyle=':')
 ax1.tick_params( labelsize='x-small')
 
 xticks(waveXvals,waveXticks)
+xlim(0,waveXvals[-1])
 ylabel('Wind Speed [kts]')
 ylim(int(np.round(mxUVwind*1.94,0))*-1,int(np.round(mxUVwind*1.94,0)))
 
 subplots_adjust(hspace=1.5)    
 
-quiverkey(Qwave,waveXvals[-1]*1.1,3,mxUVwave,'Max\nWave Height\n'+str(np.round(mxUVwave*3.28,1))+" [ft]",coordinates='data',color='r',fontproperties={'size': 'small'})
+quiverkey(Qwave,waveXvals[-1]*1.1,3,mxUVwave,'Wave Height\nScale\n'+str(np.round(mxUVwave*3.28,1))+" [ft]",coordinates='data',color='r',fontproperties={'size': 'small'})
 annotate(''+str(np.round((mxUVwave),1))+' [m]', xy=(1.1, 1.54), xycoords='axes fraction', color='k', horizontalalignment='center', fontsize='small')
 
-quiverkey(Qwind,waveXvals[-1]*1.1,int(np.round(mxUVwind*1.94,0))*-0.5,mxUVwind,'WindSource\n'+windSource+'\n\nMax\nWind Speed\n'+str(np.round(mxUVwind*1.94,1))+" [knots]",coordinates='data',color='r',fontproperties={'size': 'small'})
+quiverkey(Qwind,waveXvals[-1]*1.1,int(np.round(mxUVwind*1.94,0))*-0.5,mxUVwind,'Wind Source:\n'+windSource+'\n\nWind Speed\nScale\n'+str(np.round(mxUVwind*1.94,1))+" [kts]",coordinates='data',color='r',fontproperties={'size': 'small'})
 annotate(''+str(np.round((mxUVwind),1))+' [m/s]', xy=(1.1, 0.06), xycoords='axes fraction', color='k', horizontalalignment='center', fontsize='small')
 
 

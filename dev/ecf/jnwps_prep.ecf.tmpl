@@ -6,13 +6,13 @@
 # Shell Used: BASH shell
 # Original Author(s): Roberto Padilla-Hernandez
 # File Creation Date: 02/01/2015
-# Date Last Modified:
+# Date Last Modified: 06/30/2016
 #
 # Version control: 1.14
 #
 # Support Team:
 #
-# Contributors: Floyd fayton
+# Contributors: Floyd fayton, Andre van der Westhuysen
 #
 # ----------------------------------------------------------- 
 # ------------- Program Description and Details ------------- 
@@ -23,22 +23,18 @@
 # ----------------------------------------------------------- 
 
 #BSUB -J %WFO%_prep
-#BSUB -oo /ptmpp1/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_prep.o
-#     -e /ptmpp1/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_prep.o
+#BSUB -oo /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_prep.o
+#     -e /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_prep.o
 #BSUB -q "dev"
-#BSUB -W 0:15
-#BSUB -n 1
-#BSUB -a poe
-#BSUB -R span[ptile=1] -R rusage[mem=1700] -R affinity[core]
+#BSUB -W 0:45
+#BSUB -R rusage[mem=1700]
 #BSUB -P NWPS-T2O
 
-#module load %MODULES%
-. /usrx/local/Modules/3.2.9/init/bash
+module use /gpfs/hps/nco/ops/nwpara/modulefiles
+module load prod_envir
 module load prod_util
-module load ics
-module load ibmpe
-module load lsf
-module load mpiserial
+module load PrgEnv-intel
+#export IOBUF_PARAMS="*:count=4:size=32M:prefetch=1:preflush=1"
 
 module list
 
@@ -56,7 +52,7 @@ export MODEL=${model^^}
 export envir="para"
 
 export DEVWCOSS_USER=$(whoami)
-export COMROOT=/ptmpp1/${DEVWCOSS_USER}/data/com
+export COMROOT=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/com
 
 #Dev environment value for $job and $jobid
 export job=pnwps_${WFO}_prep
@@ -66,18 +62,11 @@ export jobid=pnwps_${WFO}_prep.$$
 mkdir -p ${COMROOT}/logs/${envir}
 export jlogfile=${COMROOT}/logs/${envir}/jlogfile.${job}
 
-if [ -e /gpfs/gd1 ]
-then
-   echo "INFO - WCOSS is on GYRE system"
-   export  WCOSS_SYSTEM="gd1"
-fi
-if [ -e /gpfs/td1 ]
-then
-   echo "INFO - WCOSS is on TIDE system"
-   export WCOSS_SYSTEM="td1"
-fi
+#Set platform
+export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )d1
+export WCOSS_SYSTEM_COM=$( echo $COMROOTp1 | cut -c7-9 )
 
-export NWROOT="/gpfs/${WCOSS_SYSTEM}/emc/marine/save/${DEVWCOSS_USER}/NWPS/IT_NWPS_WCOSS_ver1.0_20150729"
+export NWROOT="/gpfs/hps/emc/marine/noscrub/${DEVWCOSS_USER}/NWPS/WCOSS_incl_WR_PR_AR"
 
 VERSION_FILE=${NWROOT}/dev/nwps_test.ver
 if [ -f $VERSION_FILE ]; then

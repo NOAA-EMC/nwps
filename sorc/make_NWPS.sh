@@ -9,7 +9,7 @@
 #
 # Support Team:
 #
-# Contributors:
+# Contributors: Andre.VanderWesthuysen@noaa.gov
 # ------------- Program Description and Details ------------- 
 # ----------------------------------------------------------- 
 #  This script produce all executables (as described bellow)
@@ -25,7 +25,15 @@ if [ "${NWPSdir}" == "" ]
     exit 1
 fi
 
-module load ics
+#FOR DEGRIB
+#Using the GNU compiler or the Jasper/JPEG compression library will not work properly
+./make_degrib.sh
+
+module purge
+module load ncep
+module load ../modulefiles/NWPS/v1.1.0
+module list
+
 #FOR SWAN
 cd ${NWPSdir}/sorc
 ./make_swan.sh
@@ -42,25 +50,19 @@ cd ${NWPSdir}/sorc
 #The executable is runupforecast.exe
 ./make_runup_program.sh
 
-#FOR UTILITY PROGRAMS
-./make_nwps_utils.sh
-
-#FOR WGRIB2
-./make_wgrib2.sh
-
 #PYTHON MODULES (Basemap and Matplotlib)
 ./make_python_modules.sh
 
 #BASEMAP FOR PYTHON
 ./make_basemap.sh
 
-#FOR DEGRIB
-./make_degrib.sh
-
 #FOR PSURGE2NWPS
 #The following will generate the executables: psurge2nwps_64, psurge_identify.exe and  psoutTOnwps.exe.
 ./make_Psurge2NWPS.sh
 
-echo "Build complete"
+#FOR UTILITY PROGRAMS
+./make_nwps_utils.sh
+
+echo "NWPS Build complete"
 exit 0
 

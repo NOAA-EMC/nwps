@@ -4,6 +4,8 @@
 # Purpose: Plots SWAN 1D Spectrum from binary file.
 #--------------------------------------------------------
 
+import matplotlib
+matplotlib.use('Agg',warn=False)
 import numpy as np
 from pylab import *
 from time import gmtime, strftime

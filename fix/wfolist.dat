@@ -4,13 +4,11 @@
 # where "xxx" is the side ID
 
 # Regional domains
-EHU
+##EHU
 ##OPC
 ##NHC
 # WFO Southern Region (SR) domains
-MFL
 BRO
-CHS
 CRP
 HGX
 LCH
@@ -19,9 +17,11 @@ MOB
 TAE
 TBW
 KEY
+MFL
 MLB
 JAX
 SJU
+# WFO Eastern Region (ER) domains
 CAR
 GYX
 BOX
@@ -31,21 +31,23 @@ LWX
 AKQ
 MHX
 ILM
-#Western Region (WR Domains
-#SGX
-#LOX
-#MTR
-#EKA
-#MFR
-#PQR
-#SEW
+CHS
+#Western Region (WR) Domains
+SGX
+LOX
+MTR
+EKA
+MFR
+PQR
+SEW
 #Pacific Region (PR) Domains
-#HFO
-#GUM
-#AJK
-#AER
-#ALU
-#AFG
+HFO
+GUM
+#Alaska Region (AR) Domains
+AJK
+AER
+ALU
+AFG
 # Test domains
-TXX
+#TXX
 

@@ -47,6 +47,7 @@ if [ "${SITEID}" == "" ]
     SITEID="default"
 fi
 SITEID=$(echo ${SITEID} | tr [:upper:] [:lower:])
+REGION=$(echo ${REGION} | tr [:upper:] [:lower:])
 
 DimTpArray=51    # Elements in Tp array: 51 from 0.0 to 25 s
 DeltaTp=0.5      # Delta Tp:0.5
@@ -230,7 +231,7 @@ do
 
       #------------------------------------- RUN PYTHON SCRIPT --------------------------------------------------
       echo "Plotting partition images"
-      python partition.py ${LOCATION} ${LONGITUDE} ${LATITUDE} ${windsource} # Added by E. Rodriguez on 5/18/2015
+      python partition.py ${LOCATION} ${LONGITUDE} ${LATITUDE} ${windsource} ${REGION} # Added by E. Rodriguez on 5/18/2015
       #----------------------------------------------------------------------------------------------------------
 
 	# NOTE: We must clean up the PNG files before they are copied to ${GRAPHICSdir} 
@@ -251,6 +252,9 @@ do
   tar cvfz ${figsTarFile} *.png
   cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
 #  tarbal with plots send to CG0
+  COMOUTCYCold="${COMOUTold}/${cycleout}/CG0"
+  mkdir -p $COMOUTCYCold
+  cp ${figsTarFile} $COMOUTCYCold/${figsTarFile}
   COMOUTCYC="${COMOUT}/${cycleout}/CG0"
   mkdir -p $COMOUTCYC
   cp ${figsTarFile} $COMOUTCYC/${figsTarFile}

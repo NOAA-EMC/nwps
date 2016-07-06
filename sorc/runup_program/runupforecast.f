@@ -67,6 +67,15 @@
       real, dimension(ninput) :: twl,twl95,twl05
       character(len=255) :: FORT22
 !
+!        Banner
+!
+      write(6,*) '**************************************************'
+      write(6,*) '*   W A V E  R U N U P   P R E D I C T I O N     *'
+      write(6,*) '*                                                *'
+      write(6,*) '*   Authors: Stockdon, H. F., R. A. Holman,      *'
+      write(6,*) '*          P. A. Howd, J. Sallenger and J Long   *'
+      write(6,*) '**************************************************'
+!
 !        initalize arrays
 !
       nhs=0

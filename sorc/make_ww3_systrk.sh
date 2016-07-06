@@ -32,9 +32,10 @@ if [ "${NWPSdir}" == "" ]
 fi
 
 #loading the necessary modules 
-module load ics
-module load ibmpe
-module load lsf
+#module purge
+#module load ncep
+#module load ../modulefiles/NWPS/v1.1.0
+#module list
 
 # The gnu fortran compiler  buffers the writes on default, the intel fortran compiler 
 # does not.So if you are writing a small amount of data it won't buffer it and actually

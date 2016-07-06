@@ -51,8 +51,11 @@ then
     source ${USHnwps}/set_os_env.sh
 fi
 
-echo "Starting mpirun.lsf"
-${MPIRUN} ${EXECnwps}/swan-mpi.exe
+#echo "Starting "${MPIRUN}
+#${MPIRUN} -n8 -N8 -j1 -d1 ${EXECnwps}/swan-mpi.exe
+echo "Starting "${MPIRUN}" for "${siteid}
+#bsub < ${NWPSdir}/dev/ecf/jnwps_core_cg1.ecf.${siteid}  >> ${NWPSdir}/dev/ecf/jobids_${siteid}.log;
+aprun -n8 -N8 -j1 -d1 ${EXECnwps}/swan-mpi.exe
 export err=$?;
 #echo "Exit Code: ${SAVEPAR}" | tee -a ${LOGdir}/swan_exe_error.log
 echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log

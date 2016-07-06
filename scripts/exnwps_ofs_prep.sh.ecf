@@ -26,7 +26,6 @@ export SHAPEFILEdb=${HOMEnwps}/fix/shapefile_db
 export DEBUGGING="FALSE"
 export ISPRODUCTION="TRUE"
 export SITETYPE="EMC"
-export WGRIB2=${EXECnwps}/wgrib2
 export ESTOFSTIMESTEP="1"
 export ESTOFSHOURS="144"
 export ESTOFSDOMAIN="262.00 23.0 0. 682 370 0.029326 0.027027"
@@ -37,6 +36,8 @@ export RTOFSLAT="23.0 33.00"
 export RTOFSDATFILE="pdef_ncep_global"
 export RTOFSHOURS="144"
 export RTOFSTIMESTEP="3"
+export PSURGESHOURS="78"
+export PSURGETIMESTEP="1"
 
 # NOTE: This should only be set once your verify your IFPS account
 # NOTE: can SSH to LDAD using keyed authentication. Move this export

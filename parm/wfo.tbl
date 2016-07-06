@@ -28,19 +28,20 @@ ER/mhx
 ER/ilm
 ER/chs
 #Western Region (WR) Domains
-#WR/sgx
-#WR/lox
-#WR/mtr
-#WR/eka
-#WR/mfr
-#WR/pqr
-#WR/sew
+WR/sgx
+WR/lox
+WR/mtr
+WR/eka
+WR/mfr
+WR/pqr
+WR/sew
 #Pacific Region (PR) Domains
-#PR/hfo
-#PR/gum
-#PR/ajk
-#PR/aer
-#PR/alu
-#PR/afg
+PR/hfo
+PR/gum
+#Alaska Region (AR) Domains
+AR/ajk
+AR/aer
+AR/alu
+AR/afg
 # Test domains
 #TD/txx

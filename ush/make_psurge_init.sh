@@ -30,6 +30,7 @@ if [ "${HOMEnwps}" == "" ]
 fi
 
 source ${USHnwps}/psurge_config.sh
+export err=$?; err_chk
 
 # NOTE: Data is processed on the server in UTC
 export TZ=UTC
@@ -178,13 +179,17 @@ do
       #---- First identify which WFO domains have data to extract (at the operational res.), 
       #---- based on a quick scan low-resolution extraction of their contents. Assume 
       #---- the worst-case scenario of 10% exceedance for this (largest footprint).
-      rm -f *.ave *.hdr 
-      if [[ ${EXCEED} == "10" ]]; then
+      rm -f *.ave *.hdr
+      # Deactivate time-consuming preprocessing (make_psurge_identify.sh) and go straight
+      # to the main processing of high-res domains. 
+      # if [[ ${EXCEED} == "10" ]]; then
+      if [[ ${EXCEED} == "9999" ]]; then
          echo "DEGRIBING ${file}   EXCEED: ${EXCEED}"
          echo "This might take a while..."
          echo ""
          ${DEGRIB} ${file} -C -Flt -msg all -nameStyle "%e_%lv_%p_e${EXCEED}.txt" -Unit none
-         ${USHnwps}//make_psurge_identify.sh ${file} ${EXCEED}
+         ${USHnwps}/make_psurge_identify.sh ${file} ${EXCEED}
+         export err=$?; err_chk
          echo ""
          echo "Now find GRIB2 files with remaining exceedances for final extraction..."
       else
@@ -196,10 +201,14 @@ done
 
 echo ""
 echo "DEGRIB these GRIB2 files, using multi-core processing..."
-mpirun.lsf cfp ${RUNdir}/degrib_cmdfile
+##Running 24 tasks, 6 per node (on a total of 4 nodes)
+#aprun -n24 -N6 -j1 -d1 cfp ${RUNdir}/degrib_cmdfile
+#Running 24 tasks, 12 per node (on a total of 2 nodes)
+aprun -n24 -N12 -j1 -d1 cfp ${RUNdir}/degrib_cmdfile
 
 echo ""
-echo "Prepare wfo_cmdfile to process the final WFOs in ${RUNdir}/wfolist_psurge_final.dat..."
+#>052716 echo "Prepare wfo_cmdfile to process the final WFOs in ${RUNdir}/wfolist_psurge_final.dat..."
+echo "Prepare wfo_cmdfile to process the WFOs in ${FIXnwps}/configs_psurge/wfolist_psurge.dat..."
 while read line
 do
    DOMAIN=`echo $line | awk -F" " '{print $1}'`
@@ -208,7 +217,8 @@ do
    echo "Domain: $DOMAIN  Nx: $Npx   Ny: $Npy  ADVnum: ${ADVnum}"
    echo "Clipping P-Surge data for:  ${DOMAIN} $Npx $Npy ${TS_f}" | tee -a ${LOGfile}
    echo "${USHnwps}/make_psurge_final.sh  ${DOMAIN} ${TS_f}" >> ${RUNdir}/wfo_cmdfile
-done < wfolist_psurge_final.dat
+#>052716 done < wfolist_psurge_final.dat
+done < ${FIXnwps}/configs_psurge/wfolist_psurge.dat
 #Cleanning run directory
 
 echo "Intial processing complete" | tee -a ${LOGfile}

@@ -1990,3 +1990,1280 @@ ifort swanhcat.o -g -O2   -o hcat.exe
 make[2]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
 make[1]: Leaving directory `/gpfs/td1/emc/marine/save/Roberto.Padilla/NWPS/emc_nwps_1.3/sorc/swan4081_partitioning_tracking_rawpart'
 rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=ftn FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+ftn swmod1.f -c -g -O2   
+ftn swmod2.f -c -g -O2   
+ftn swmod3.f -c -g -O2   
+ftn m_constants.f90 -c -g -O2  -ffree-line-length-none  
+ftn m_fileio.f90 -c -g -O2  -ffree-line-length-none  
+ftn serv_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+ftn mod_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGriddata.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGridobjects.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanCompdata.f90 -c -g -O2  -ffree-line-length-none  
+ftn swanmain.f -c -g -O2   
+ftn swanpre1.f -c -g -O2   
+ftn swanpre2.f -c -g -O2   
+ftn swancom1.f -c -g -O2   
+ftn swancom2.f -c -g -O2   
+ftn swancom3.f -c -g -O2   
+ftn swancom4.f -c -g -O2   
+ftn swancom5.f -c -g -O2   
+ftn swanout1.f -c -g -O2   
+ftn swanout2.f -c -g -O2   
+ftn swanser.f -c -g -O2   
+ftn swanparll.f -c -g -O2   
+ftn SwanReadGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanReadADCGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanReadTriangleGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanReadEasymeshGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanInitCompGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanCheckGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanCreateEdges.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGridTopology.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGridVert.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGridCell.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGridFace.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanPrintGridInfo.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanFindPoint.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanPointinMesh.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanBpntlist.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanPrepComp.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanVertlist.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanCompUnstruc.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanDispParm.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanPropvelX.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanSweepSel.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanPropvelS.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanTranspAc.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanTranspX.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanDiffPar.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGSECorr.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanInterpolatePoint.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanInterpolateAc.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanInterpolateOutput.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanConvAccur.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanConvStopc.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanThreadBounds.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanFindObstacles.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanCrossObstacle.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanComputeForce.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanIntgratSpc.f90 -c -g -O2  -ffree-line-length-none  
+ftn ocpids.f -c -g -O2   
+ftn ocpcre.f -c -g -O2   
+ftn ocpmix.f -c -g -O2   
+ftn swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2   -o swan.exe  
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make hcat
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make FOR=ifort FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " hcat.exe
+make[2]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+ifort swanhcat.f -c -g -O2   
+ifort swanhcat.o -g -O2   -o hcat.exe
+make[2]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=ftn FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+ftn swmod1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swmod2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swmod3.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn m_constants.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn m_fileio.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn serv_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn mod_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGriddata.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridobjects.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCompdata.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanmain.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanpre1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanpre2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom3.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom4.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom5.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanout1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanout2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanser.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanparll.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadADCGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadTriangleGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadEasymeshGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInitCompGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCheckGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCreateEdges.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridTopology.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridVert.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridCell.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridFace.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPrintGridInfo.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanFindPoint.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPointinMesh.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanBpntlist.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPrepComp.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanVertlist.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCompUnstruc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanDispParm.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPropvelX.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanSweepSel.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPropvelS.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanTranspAc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanTranspX.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanDiffPar.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGSECorr.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInterpolatePoint.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInterpolateAc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInterpolateOutput.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanConvAccur.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanConvStopc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanThreadBounds.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanFindObstacles.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCrossObstacle.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanComputeForce.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanIntgratSpc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn ocpids.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn ocpcre.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn ocpmix.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2   -o swan.exe  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make hcat
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make FOR=ifort FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " hcat.exe
+make[2]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+ifort swanhcat.f -c -g -O2   
+ifort swanhcat.o -g -O2   -o hcat.exe
+make[2]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=ftn FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+ftn swmod1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swmod2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swmod3.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn m_constants.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn m_fileio.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn serv_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn mod_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGriddata.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridobjects.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCompdata.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanmain.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanpre1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanpre2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom3.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom4.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom5.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanout1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanout2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanser.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanparll.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadADCGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadTriangleGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadEasymeshGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInitCompGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCheckGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCreateEdges.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridTopology.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridVert.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridCell.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridFace.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPrintGridInfo.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanFindPoint.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPointinMesh.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanBpntlist.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPrepComp.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanVertlist.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCompUnstruc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanDispParm.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPropvelX.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanSweepSel.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPropvelS.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanTranspAc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanTranspX.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanDiffPar.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGSECorr.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInterpolatePoint.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInterpolateAc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInterpolateOutput.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanConvAccur.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanConvStopc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanThreadBounds.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanFindObstacles.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCrossObstacle.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanComputeForce.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanIntgratSpc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn ocpids.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn ocpcre.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn ocpmix.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2   -o swan.exe  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make hcat
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make FOR=ifort FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " hcat.exe
+make[2]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+ifort swanhcat.f -c -g -O2   
+ifort swanhcat.o -g -O2   -o hcat.exe
+make[2]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR= FFLAGS="  " \
+	        FFLAGS90="  " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *. *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *. *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR= FFLAGS="  " \
+	        FFLAGS90="  " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *. *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *. *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR= FFLAGS="  " \
+	        FFLAGS90="  " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *. *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *. *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=ftn FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+ftn swmod1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swmod2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swmod3.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn m_constants.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn m_fileio.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn serv_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn mod_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGriddata.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridobjects.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCompdata.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanmain.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanpre1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanpre2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom3.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom4.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom5.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanout1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanout2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanser.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanparll.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadADCGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadTriangleGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadEasymeshGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInitCompGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCheckGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCreateEdges.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridTopology.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridVert.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridCell.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridFace.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPrintGridInfo.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanFindPoint.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPointinMesh.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanBpntlist.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPrepComp.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanVertlist.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCompUnstruc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanDispParm.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPropvelX.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanSweepSel.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPropvelS.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanTranspAc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanTranspX.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanDiffPar.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGSECorr.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInterpolatePoint.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInterpolateAc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInterpolateOutput.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanConvAccur.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanConvStopc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanThreadBounds.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanFindObstacles.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCrossObstacle.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanComputeForce.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanIntgratSpc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn ocpids.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn ocpcre.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn ocpmix.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2   -o swan.exe  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make hcat
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make FOR=ifort FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " hcat.exe
+make[2]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+ifort swanhcat.f -c -g -O2   
+ifort swanhcat.o -g -O2   -o hcat.exe
+make[2]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=ftn FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+ftn swmod1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swmod2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swmod3.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn m_constants.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn m_fileio.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn serv_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn mod_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGriddata.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridobjects.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCompdata.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanmain.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanpre1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanpre2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom3.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom4.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom5.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanout1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanout2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanser.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanparll.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadADCGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadTriangleGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadEasymeshGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInitCompGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCheckGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCreateEdges.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridTopology.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridVert.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridCell.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridFace.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPrintGridInfo.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanFindPoint.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPointinMesh.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanBpntlist.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPrepComp.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanVertlist.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCompUnstruc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanDispParm.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPropvelX.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanSweepSel.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPropvelS.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanTranspAc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanTranspX.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanDiffPar.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGSECorr.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInterpolatePoint.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInterpolateAc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInterpolateOutput.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanConvAccur.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanConvStopc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanThreadBounds.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanFindObstacles.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCrossObstacle.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanComputeForce.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanIntgratSpc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn ocpids.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn ocpcre.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn ocpmix.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2   -o swan.exe  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make hcat
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make FOR=ifort FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " hcat.exe
+make[2]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+ifort swanhcat.f -c -g -O2   
+ifort swanhcat.o -g -O2   -o hcat.exe
+make[2]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=ftn FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+ftn swmod1.f -c -g -O2   
+ftn swmod2.f -c -g -O2   
+ftn swmod3.f -c -g -O2   
+ftn m_constants.f90 -c -g -O2  -ffree-line-length-none  
+ftn m_fileio.f90 -c -g -O2  -ffree-line-length-none  
+ftn serv_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+ftn mod_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=ftn FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+ftn swmod1.f -c -g -O2   
+ftn swmod2.f -c -g -O2   
+ftn swmod3.f -c -g -O2   
+ftn m_constants.f90 -c -g -O2  -ffree-line-length-none  
+ftn m_fileio.f90 -c -g -O2  -ffree-line-length-none  
+ftn serv_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+ftn mod_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGriddata.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGridobjects.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanCompdata.f90 -c -g -O2  -ffree-line-length-none  
+ftn swanmain.f -c -g -O2   
+ftn swanpre1.f -c -g -O2   
+ftn swanpre2.f -c -g -O2   
+ftn swancom1.f -c -g -O2   
+ftn swancom2.f -c -g -O2   
+ftn swancom3.f -c -g -O2   
+ftn swancom4.f -c -g -O2   
+ftn swancom5.f -c -g -O2   
+ftn swanout1.f -c -g -O2   
+ftn swanout2.f -c -g -O2   
+ftn swanser.f -c -g -O2   
+ftn swanparll.f -c -g -O2   
+ftn SwanReadGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanReadADCGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanReadTriangleGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanReadEasymeshGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanInitCompGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanCheckGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanCreateEdges.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGridTopology.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGridVert.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGridCell.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGridFace.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanPrintGridInfo.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanFindPoint.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanPointinMesh.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanBpntlist.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanPrepComp.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanVertlist.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanCompUnstruc.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanDispParm.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanPropvelX.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanSweepSel.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanPropvelS.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanTranspAc.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanTranspX.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanDiffPar.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGSECorr.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanInterpolatePoint.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanInterpolateAc.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanInterpolateOutput.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanConvAccur.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanConvStopc.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanThreadBounds.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanFindObstacles.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanCrossObstacle.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanComputeForce.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanIntgratSpc.f90 -c -g -O2  -ffree-line-length-none  
+ftn ocpids.f -c -g -O2   
+ftn ocpcre.f -c -g -O2   
+ftn ocpmix.f -c -g -O2   
+ftn swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2   -o swan.exe  
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make hcat
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make FOR=ifort FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " hcat.exe
+make[2]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+ifort swanhcat.f -c -g -O2   
+ifort swanhcat.o -g -O2   -o hcat.exe
+make[2]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=ftn FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+ftn swmod1.f -c -g -O2   
+ftn swmod2.f -c -g -O2   
+ftn swmod3.f -c -g -O2   
+ftn m_constants.f90 -c -g -O2  -ffree-line-length-none  
+ftn m_fileio.f90 -c -g -O2  -ffree-line-length-none  
+ftn serv_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+ftn mod_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGriddata.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGridobjects.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanCompdata.f90 -c -g -O2  -ffree-line-length-none  
+ftn swanmain.f -c -g -O2   
+ftn swanpre1.f -c -g -O2   
+ftn swanpre2.f -c -g -O2   
+ftn swancom1.f -c -g -O2   
+ftn swancom2.f -c -g -O2   
+ftn swancom3.f -c -g -O2   
+ftn swancom4.f -c -g -O2   
+ftn swancom5.f -c -g -O2   
+ftn swanout1.f -c -g -O2   
+ftn swanout2.f -c -g -O2   
+ftn swanser.f -c -g -O2   
+ftn swanparll.f -c -g -O2   
+ftn SwanReadGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanReadADCGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanReadTriangleGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanReadEasymeshGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanInitCompGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanCheckGrid.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanCreateEdges.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGridTopology.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGridVert.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGridCell.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGridFace.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanPrintGridInfo.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanFindPoint.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanPointinMesh.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanBpntlist.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanPrepComp.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanVertlist.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanCompUnstruc.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanDispParm.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanPropvelX.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanSweepSel.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanPropvelS.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanTranspAc.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanTranspX.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanDiffPar.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanGSECorr.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanInterpolatePoint.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanInterpolateAc.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanInterpolateOutput.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanConvAccur.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanConvStopc.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanThreadBounds.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanFindObstacles.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanCrossObstacle.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanComputeForce.f90 -c -g -O2  -ffree-line-length-none  
+ftn SwanIntgratSpc.f90 -c -g -O2  -ffree-line-length-none  
+ftn ocpids.f -c -g -O2   
+ftn ocpcre.f -c -g -O2   
+ftn ocpmix.f -c -g -O2   
+ftn swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2   -o swan.exe  
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make hcat
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make FOR=ifort FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " hcat.exe
+make[2]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+ifort swanhcat.f -c -g -O2   
+ifort swanhcat.o -g -O2   -o hcat.exe
+make[2]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe
+make FOR=ftn FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " \
+                INCS="" LIBS="" swan.exe
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+ftn swmod1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swmod2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swmod3.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn m_constants.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn m_fileio.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn serv_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn mod_xnl4v5.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGriddata.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridobjects.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCompdata.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanmain.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanpre1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanpre2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom3.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom4.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swancom5.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanout1.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanout2.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanser.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swanparll.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadADCGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadTriangleGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanReadEasymeshGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInitCompGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCheckGrid.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCreateEdges.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridTopology.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridVert.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridCell.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGridFace.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPrintGridInfo.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanFindPoint.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPointinMesh.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanBpntlist.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPrepComp.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanVertlist.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCompUnstruc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanDispParm.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPropvelX.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanSweepSel.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanPropvelS.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanTranspAc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanTranspX.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanDiffPar.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanGSECorr.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInterpolatePoint.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInterpolateAc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanInterpolateOutput.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanConvAccur.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanConvStopc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanThreadBounds.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanFindObstacles.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanCrossObstacle.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanComputeForce.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn SwanIntgratSpc.f90 -c -g -O2  -ffree-line-length-none  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn ocpids.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn ocpcre.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn ocpmix.f -c -g -O2   
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+ftn swmod1.o swmod2.o swmod3.o m_constants.o m_fileio.o serv_xnl4v5.o mod_xnl4v5.o SwanGriddata.o SwanGridobjects.o SwanCompdata.o swanmain.o swanpre1.o swanpre2.o swancom1.o swancom2.o swancom3.o swancom4.o swancom5.o swanout1.o swanout2.o swanser.o swanparll.o SwanReadGrid.o SwanReadADCGrid.o SwanReadTriangleGrid.o SwanReadEasymeshGrid.o SwanInitCompGrid.o SwanCheckGrid.o SwanCreateEdges.o SwanGridTopology.o SwanGridVert.o SwanGridCell.o SwanGridFace.o SwanPrintGridInfo.o SwanFindPoint.o SwanPointinMesh.o SwanBpntlist.o SwanPrepComp.o SwanVertlist.o SwanCompUnstruc.o SwanDispParm.o SwanPropvelX.o SwanSweepSel.o SwanPropvelS.o SwanTranspAc.o SwanTranspX.o SwanDiffPar.o SwanGSECorr.o SwanInterpolatePoint.o SwanInterpolateAc.o SwanInterpolateOutput.o SwanConvAccur.o SwanConvStopc.o SwanThreadBounds.o SwanFindObstacles.o SwanCrossObstacle.o SwanComputeForce.o SwanIntgratSpc.o ocpids.o ocpcre.o ocpmix.o -g -O2   -o swan.exe  
+No supported cpu target is set, so CRAY_CPU_TARGET=x86-64.
+Load a valid targeting module or set CRAY_CPU_TARGET
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make hcat
+make[1]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make FOR=ifort FFLAGS=" -g -O2  " \
+	        FFLAGS90=" -g -O2  -ffree-line-length-none " hcat.exe
+make[2]: Entering directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+ifort swanhcat.f -c -g -O2   
+ifort swanhcat.o -g -O2   -o hcat.exe
+make[2]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+make[1]: Leaving directory `/gpfs/hps/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/WCOSS_incl_WR_PR_AR/sorc/swan4081_partitioning_tracking_rawpart'
+rm -f *.o *.mod *.lst *.f *.for *.f90 swan.exe hcat.exe

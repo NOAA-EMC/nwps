@@ -4,9 +4,9 @@
 # PERL Version(s): 5
 # Original Author(s): Eve-Marie Devalire for WFO-Eureka 
 # File Creation Date: 04/20/2004
-# Date Last Modified: 11/17/2014
+# Date Last Modified: 03/24/2016
 #
-# Version control: 2.51
+# Version control: 2.54
 #
 # Support Team:
 #
@@ -440,7 +440,10 @@ sub graphicOutputProcessing (%){
 	print G2LOG "Processing GRIB2 dataType $_\n";
 	my $g2DataType=$_;
 	my $num_componets = 1;
-	
+	my $set_exception_value = 0;
+	my $swan_nan_value = 0.0;
+	my $g2_nan_value = 9.999e+20;
+
 	# TODO: To exclude any variables from the GRIB2 file, do that in the IF statements below
 	if ($g2DataType eq 'spc1d') { 
 	    next;
@@ -451,28 +454,42 @@ sub graphicOutputProcessing (%){
 
 	# TODO: Ensure all GRIB2 variables are mapped to SWAN outputs in IF statements below
 	if ($g2DataType eq 'htsgw') { 
-	    $g2DataType='HSIG'; 
+	    $g2DataType='HSIG';
+	    $set_exception_value = 1;
+	    $swan_nan_value = "-9.0";
 	}
 	if ($g2DataType eq 'depth') { 
-	    $g2DataType='DEPTH'; 
+	    $g2DataType='DEPTH';
+	    $set_exception_value = 1;
+	    $swan_nan_value = "-99.0";
 	}
 	if ($g2DataType eq 'dirpw') { 
-	    $g2DataType='PDIR'; 
+	    $g2DataType='PDIR';
+	    $set_exception_value = 1;
+	    $swan_nan_value = "-999.0";
 	}
 	if ($g2DataType eq 'perpw') { 
-	    $g2DataType='TPS'; 
+	    $g2DataType='TPS';
+	    $set_exception_value = 1;
+	    $swan_nan_value = "-9.0";
 	}
 	if ($g2DataType eq 'WLEN') { 
-	    $g2DataType='WLEN'; 
+	    $g2DataType='WLEN';
+	    $set_exception_value = 1;
+	    $swan_nan_value = "-9.0";
 	}
 	if ($g2DataType eq 'brkw') { 
 	    $g2DataType='DISSU'; 
 	}
 	if ($g2DataType eq 'swell') { 
-	    $g2DataType='HSWE'; 
+	    $g2DataType='HSWE';
+	    $set_exception_value = 1;
+	    $swan_nan_value = "-9.0";
 	}
 	if ($g2DataType eq 'wlevel') { 
-	    $g2DataType='WATL'; 
+	    $g2DataType='WATL';
+	    $set_exception_value = 1;
+	    $swan_nan_value = "-9999.0";
 	}
 	if ($g2DataType eq 'cur') {
 	    $g2DataType='VEL';
@@ -487,21 +504,35 @@ sub graphicOutputProcessing (%){
 	# Example file: HSIG.CG1.CGRID.YY11.MO01.DD25.HH00
 	my $SWANCGIDFILE = "${g2DataType}.CG${cgnum}.CGRID.YY${g2YY}.MO${g2MONTH}.DD${g2DAY}.HH${g2HOUR}";
 	print G2LOG "SWAN CGRID file: $SWANCGIDFILE\n";
-	
+
 	# Call C program that will convert the ASCII point file for all hours to an hourly BIN file per forecast hour
 	# The BIN file is sequence of floating point values readable by GRADS, WGRIB2, CDO, DEGRIB, C and Fortran processing programs
 	# Example command 1:  swan_out_to_bin HSIG.CG1.CGRID.YY11.MO01.DD25.HH00 627 3 1 24 
 	# Example command 2:  swan_out_to_bin WIND.CG1.CGRID.YY11.MO01.DD25.HH00 627 3 2 24 dir mag speeddir
 	if ($num_componets == 1) {
-	    print G2LOG "System call: swan_out_to_bin ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} \
+	    if($set_exception_value == 1) {
+		print G2LOG "System call: swan_out_to_bin -v -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} \
 >> ${g2logfname}\n";
-	    system("swan_out_to_bin ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} >> ${g2logfname}" );
+		system("swan_out_to_bin -v -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} >> ${g2logfname}" );
+		
+	    }
+	    else {
+		print G2LOG "System call: swan_out_to_bin -v ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} \
+>> ${g2logfname}\n";
+		system("swan_out_to_bin -v ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} >> ${g2logfname}" );
+	    }
 	}
 	else {
-	    
-	    print G2LOG "System call: swan_out_to_bin ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir \
+	    if($set_exception_value == 1) {
+		print G2LOG "System call: swan_out_to_bin -v -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir \
 >> ${g2logfname}\n";
-	    system("swan_out_to_bin ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir >> ${g2logfname}" );
+		system("swan_out_to_bin -v -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir >> ${g2logfname}" );
+	    }
+	    else {
+		print G2LOG "System call: swan_out_to_bin -v ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir \
+>> ${g2logfname}\n";
+		system("swan_out_to_bin -v ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir >> ${g2logfname}" );
+	    }
 	}
 	
 	for(my $comp_count = 0; $comp_count <  $num_componets; $comp_count++) {
@@ -641,8 +672,17 @@ sub graphicOutputProcessing (%){
 	my (undef,$spcyear,$spcmonth,$spcday,undef,$spchour)=unpack"A2 A2 A2 A2 A A2",$filename;
 	my $spcdateSuffix="YY".$spcyear.".MO".$spcmonth.".DD".$spcday.".HH".$spchour;
 	system("rm -f ${OUTPUTdir}/spectra/CG${cgnum}/SPC1D*.*");
+        #------- SPC2D -------
+        system("rm -f ${OUTPUTdir}/spectra/CG${cgnum}/SPC2D*.*");
+        #------- SPC2D -------
 	foreach $spc1DName (@spc1DFileNames) {
 	    system("mv -f ${RUNdir}/${spc1DName} ${OUTPUTdir}/spectra/CG${cgnum}/${spc1DName}.${spcdateSuffix}");
+            #------- SPC2D -------
+            my $fragment = substr $spc1DName, 5;
+            my $spc2DName = "SPC2D".$fragment;
+            print SPCLOG "Copying 2D spectra data file ${spc2DName} to ${OUTPUTdir}/spectra/CG${cgnum}/\n";
+            system("mv -f ${RUNdir}/${spc2DName} ${OUTPUTdir}/spectra/CG${cgnum}/${spc2DName}.${spcdateSuffix}");
+            #------- SPC2D -------
 	    print SPCLOG "Create spectra data file for ${spc1DName} CG${cgnum}\n";
 	    &createDataSpc1D('spc1d', ${spc1DName}, "CG${cgnum}");
 	    if($hasspcerror eq 'TRUE' ) { 

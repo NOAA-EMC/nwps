@@ -170,9 +170,9 @@ echo " " | tee -a $logrunup
      date_stamp="${yyyy}${mon}${dd}"
      echo "date_stamp: ${date_stamp}"  | tee -a $logrunup
      CYCLErunup="${hh}${mm}" 
-     # nomenclature in[ut file for run_runup.sh e.g 20m_cont_CG2.20150202_0000_MHX
+     # nomenclature in[ut file for run_runup.sh e.g 20m_contour_CG2.20150202_0000_MHX
      fileor="${dpt_runup_contour}_contour_CG${CGNUM}"
-     filein="${dpt_runup_contour}_cont_CG${CGNUM}.${yyyy}${mon}${dd}_${CYCLErunup}_${SITEID}"
+     filein="${dpt_runup_contour}_contour_CG${CGNUM}.${yyyy}${mon}${dd}_${CYCLErunup}_${SITEID}"
      fileout="${dpt_runup_contour}_CG${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}_${SITEID}.txt"
      echo "filein: ${filein}"  | tee -a $logrunup
      cp -fvp ${RUNdir}/${fileor} .
@@ -181,7 +181,8 @@ echo " " | tee -a $logrunup
      cp ${HOMEnwps}/exec/runupforecast.exe .   | tee -a $logrunup
      cp ${USHnwps}/run_runup.sh .   | tee -a $logrunup
      ls -lt  | tee -a $logrunup
-     source run_runup.sh  ${CYCLErunup} ${date_stamp}  
+     source run_runup.sh  ${CYCLErunup} ${date_stamp}
+     export err=$?; err_chk
      
      #Make output directory
      OUTDIRrunup=${DATA}/output/runup/CG${CGNUM}/
@@ -207,8 +208,18 @@ echo " " | tee -a $logrunup
      dptcontour=${RIPCONT:0:1}
      echo " CG domain for rip currents: ${RIPDOMAIN}"
      echo " Depth contour used     : ${dptcontour} m"
-     ${USHnwps}/rip_current_program/run_nos.sh ${RIPDOMAIN} ${dptcontour}
-     #cp -vpf ripprob.png ${GRAPHICSdir}/.
+     source ${USHnwps}/run_ripcurrent.sh ${RIPDOMAIN} ${dptcontour}
+     export err=$?; err_chk
+
+     # Copy results to output directories
+     cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
+     COMOUTCYC="${COMOUT}/${cycleout}/${RIPDOMAIN}"
+     mkdir -p $COMOUTCYC
+     cp -fv  ${RIPDATA}/${CGCONT} ${COMOUTCYC}/${CGCONT}
+     cp -fv  ${RIPDATA}/${FORT23} ${COMOUTCYC}/${FORT23}
+
+     mkdir -p $GESOUT/riphist/${SITEID}
+     cp -fv  ${RIPDATA}/${CGCONT} ${GESOUT}/riphist/${SITEID}/${CGCONT}
   else
      echo " Rip current calculation not activated for this domain (CG${CGNUM})"
   fi
@@ -229,8 +240,7 @@ then
     echo "Creating output plots" | tee -a $logfile
     #${USHnwps}/grads/bin/plot_nwps_run.sh ${SITEID} |tee -a $logfile
     ${USHnwps}/python/plot_nwps_run.sh ${SITEID} |tee -a $logfile
-
-
+    export err=$?; err_chk
 fi
 #Sending grib2 files with gridded wave parameters to COMOUT
 cd ${DATA}/output/grib2/CG${CGNUM}
@@ -269,6 +279,15 @@ cd ${DATA}/output/grib2/CG${CGNUM}
         if [ "${SENDDBN}" == "YES" ]; then
             ${DBNROOT}/bin/dbn_alert MODEL NWPS_GRIB $job ${COMOUTCYC}/${grib2File}
         fi
+     fi
+
+#Sending spec2d files at buoy locations to COMOUT
+cd ${DATA}/output/spectra/CG${CGNUM}
+     yy=$(echo $yyyy | cut -c 3-4)
+     spec2dFile="SPC2D.*.CG${CGNUM}.YY${yy}.MO${mon}.DD${dd}.HH${hh}"
+     if [ "${SENDCOM}" == "YES" ]; then
+        mkdir -p $COMOUTCYC
+        cp -fv  ${spec2dFile} ${COMOUTCYC}/
      fi
 
 export WEB="NO"
@@ -734,6 +753,7 @@ echo "===================================="         | tee -a $logfile
 echo " "                                            | tee -a $logfile
 
 source ${USHnwps}/calc_runtime.sh
+export err=$?; err_chk
 echo " " | tee -a $logfile
 
 date +%s > ${VARdir}/total_end_secs.txt
@@ -741,6 +761,7 @@ START=$(cat ${VARdir}/total_start_secs.txt)
 FINISH=$(cat ${VARdir}/total_end_secs.txt)
 PROCNAME="NWPS package"
 calc_runtime ${START} ${FINISH} "${PROCNAME}"| tee -a $logfile
+export err=$?; err_chk
 
 echo " " | tee -a $logfile
 

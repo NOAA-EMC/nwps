@@ -45,12 +45,13 @@ if [ -e ${USHnwps}/nwps_config.sh ]
 then
     source ${USHnwps}/nwps_config.sh
 else
-    "ERROR - Cannot find ${NWPSdir}/utils/etc/nwps_config.sh"
+    "ERROR - Cannot find ${USHnwps}/nwps_config.sh"
     export err=1; err_chk
 fi
  
 # Source and BASH includes
 source ${USHnwps}/calc_runtime.sh
+export err=$?; err_chk
 #source ${USHnwps}/process_lock.sh
 
 # Setup process locking
@@ -217,7 +218,6 @@ date +%s > ${VARdir}/total_start_secs.txt
 if [ ! -e ${ARCHdir} ]; then mkdir -vp ${ARCHdir} | tee -a $logfile; fi
 if [ ! -e ${ARCHdir}/pen ]; then mkdir -vp ${ARCHdir}/pen | tee -a $logfile; fi
 if [ ! -e ${ARCHdir}/extract ]; then mkdir -vp ${ARCHdir}/extract | tee -a $logfile; fi
-if [ ! -e ${NWPSdir}/utils/etc ]; then mkdir -vp ${NWPSdir}/utils/etc | tee -a $logfile; fi
 if [ ! -e ${DATAdir} ]; then mkdir -vp ${DATAdir} | tee -a $logfile; fi
 if [ ! -e ${INPUTdir} ]; then mkdir -vp ${INPUTdir} | tee -a $logfile; fi
 if [ ! -e ${INPUTdir}/ndbc ]; then mkdir -vp ${INPUTdir}/ndbc | tee -a $logfile; fi
@@ -311,6 +311,22 @@ if [ "${NESTS}" == "YES" ] && [ "${NESTINCG1}" == "NO" ]
    sed -i '/BOUN NEST/d' ${DATA}/parm/templates/${siteid}/inputCG4
    sed -i '/BOUN NEST/d' ${DATA}/parm/templates/${siteid}/inputCG5
 fi
+if [ "${NESTS}" == "YES" ] && [ "${NEST1INCG1}" == "NO" ]
+   then
+   sed -i '/BOUN NEST/d' ${DATA}/parm/templates/${siteid}/inputCG2
+fi
+if [ "${NESTS}" == "YES" ] && [ "${NEST2INCG1}" == "NO" ]
+   then
+   sed -i '/BOUN NEST/d' ${DATA}/parm/templates/${siteid}/inputCG3
+fi
+if [ "${NESTS}" == "YES" ] && [ "${NEST3INCG1}" == "NO" ]
+   then
+   sed -i '/BOUN NEST/d' ${DATA}/parm/templates/${siteid}/inputCG4
+fi
+if [ "${NESTS}" == "YES" ] && [ "${NEST4INCG1}" == "NO" ]
+   then
+   sed -i '/BOUN NEST/d' ${DATA}/parm/templates/${siteid}/inputCG5
+fi
 
 cp -vfp ${DATA}/parm/templates/${siteid}/inputCG1 ${RUNdir}/inputCG1 | tee -a $logfile
 ### Initialize with WNAwaves/HURWave/TAFB-NWPS:
@@ -329,6 +345,7 @@ then
     echo "==============================================="
     echo " In nwps_preproc  get_wna.sh added !!!  "
     ${USHnwps}/get_wna.sh
+    export err=$?; err_chk
     echo "==============================================="
 else
     export WNA="NO"
@@ -351,6 +368,7 @@ if [ "${ESTOFS}" == "YES" ]
 then
    echo "Setting up water levels from ESTOFS" | tee -a $logfile 
    source ${USHnwps}/get_ncep_initfiles.sh ESTOFS
+   export err=$?; err_chk
 else
    export ESTOFS="NO"
    echo "ESTOFS Water Levels will NOT be used" | tee -a $logfile
@@ -364,6 +382,7 @@ if [ "${RTOFS}" == "YES" ]
 then
    echo "Setting up Currents from RTOFS" | tee -a $logfile
    source ${USHnwps}/get_ncep_initfiles.sh RTOFS
+   export err=$?; err_chk
 else
    export RTOFS="NO"
    echo "RTOFS Currents will NOT be used" | tee -a $logfile
@@ -377,6 +396,7 @@ if [ "${PSURGE}" == "YES" ]
 then
    echo "Setting up water levels from PSURGE" | tee -a $logfile
    source ${USHnwps}/get_ncep_initfiles.sh PSURGE
+   export err=$?; err_chk
     
    #if [ -e ${RUNdir}/nopsurge ] && [ ! -e ${RUNdir}/noestofs ]
    #   export WATERLEVELS="ESTOFS"
@@ -395,6 +415,7 @@ then
       echo "PSURGE data not found. Initializing WATERLEVELS from ESTOFS instead"
       echo "WATERLEVELS: ${WATERLEVELS},  ESTOFS: ${ESTOFS}"
       source ${USHnwps}/get_ncep_initfiles.sh ESTOFS
+      export err=$?; err_chk
    fi
 else
    export PSURGE="NO"
@@ -553,9 +574,11 @@ if [ "${DEBUGGING}" == "TRUE" ]
 then
     echo "perl -w ${USHnwps}/nwps_preproc.pl" | tee -a $logfile    
     perl -w ${USHnwps}/nwps_preproc.pl | tee -a $logfile
+    export err=$?; err_chk
 else
     echo "perl ${USHnwps}/nwps_preproc.pl" | tee -a $logfile    
     perl ${USHnwps}/nwps_preproc.pl | tee -a $logfile
+    export err=$?; err_chk
 fi
 #for WCOSS
 #Break here for WCOSS_preproc_01

@@ -55,6 +55,7 @@
 !     intype         Int       input  Type of input (0 = from memory; 1 = from file)
 !     tmax           Int       input  Value of maxTs to apply (1 or 2, used for model coupling)
 !     tcur           Int       input  Index of current time step (1 or 2, used for model coupling)
+!     ulimGroup      Int       input  Upper limit of number of wave systems to output
 !
       LOGICAL           :: file_exists
       CHARACTER         :: inpstr*72,prtyear*4,prtmonth*2,prtday*2, &
@@ -64,11 +65,13 @@
       INTEGER           :: counter, i, j, maxTs, leng
       INTEGER           :: dumdate1, dumdate2, dumdate3, dumdate4
       INTEGER           :: dumdate5, dumdate6
+      INTEGER           :: ulimGroup
       REAL, ALLOCATABLE :: dum(:,:)
       REAL*8            :: date1, date2, tstart, tend
       REAL              :: dlon, dlat, lonprt, latprt
       REAL              :: dt
       REAL              :: minlon, maxlon, minlat, maxlat
+      INTEGER           :: mxcwt, mycwt
 !/MPI      INTEGER           :: rank, nproc, ierr
 !/MPI      CHARACTER         :: rankstr*4
 
@@ -169,14 +172,14 @@
          READ(10,'(A72)') inpstr
       END DO
       BACKSPACE(10)
-      READ(10,*) minlon, maxlon
+      READ(10,*) minlon, maxlon, mxcwt
 
       READ(10,'(A72)') inpstr
       DO WHILE (inpstr(1:1).EQ.'$')
          READ(10,'(A72)') inpstr
       END DO
       BACKSPACE(10)
-      READ(10,*) minlat, maxlat
+      READ(10,*) minlat, maxlat, mycwt
 
       READ(10,'(A72)') inpstr
       DO WHILE (inpstr(1:1).EQ.'$')
@@ -215,8 +218,9 @@
       WRITE(20,'(A,F15.6)') 'Start time = ',tstart
       WRITE(20,*) 'dt = ',dt
       WRITE(20,*) 'No. time levels = ',ntint
-      WRITE(20,*) 'Domain limits: Longitude =',minlon, maxlon
-      WRITE(20,*) '               Latitude  =',minlat, maxlat
+      WRITE(20,'(A,2F7.2)') 'Domain limits: Longitude =',minlon, maxlon
+      WRITE(20,'(A,2F7.2)') '               Latitude  =',minlat, maxlat
+      WRITE(20,*) 'No. increments: Long, Lat  =',mxcwt, mycwt
       WRITE(20,*) 'dirKnob, perKnob, hsKnob, wetPts, & 
                 dirTimeKnob, tpTimeKnob, seedLat, seedLon ='
       WRITE(20,'(8F6.2)') dirKnob, perKnob, hsKnob, wetPts, & 
@@ -239,6 +243,8 @@
 !/MPI      CALL MPI_BCAST(maxlon,1,MPI_REAL,0,MPI_COMM_WORLD,IERR)
 !/MPI      CALL MPI_BCAST(minlat,1,MPI_REAL,0,MPI_COMM_WORLD,IERR)
 !/MPI      CALL MPI_BCAST(maxlat,1,MPI_REAL,0,MPI_COMM_WORLD,IERR)
+!/MPI      CALL MPI_BCAST(mxcwt,1,MPI_INTEGER,0,MPI_COMM_WORLD,IERR)
+!/MPI      CALL MPI_BCAST(mycwt,1,MPI_INTEGER,0,MPI_COMM_WORLD,IERR)
 !/MPI      CALL MPI_BCAST(dirKnob,1,MPI_REAL,0,MPI_COMM_WORLD,IERR)
 !/MPI      CALL MPI_BCAST(perKnob,1,MPI_REAL,0,MPI_COMM_WORLD,IERR)
 !/MPI      CALL MPI_BCAST(hsKnob,1,MPI_REAL,0,MPI_COMM_WORLD,IERR)
@@ -259,6 +265,7 @@
                                 dt         ,ntint      , &
                                 minlon     ,maxlon     , & 
                                 minlat     ,maxlat     , &
+                                mxcwt      ,mycwt      , &
                                 dirKnob    ,             &
                                 perKnob    ,hsKnob     , &
                                 wetPts     ,seedLat    , &
@@ -268,6 +275,9 @@
                                 maxSys     ,maxGroup   )
 
 !/MPI      IF (rank.EQ.0) THEN
+
+!     Set upper limit for wave systems to output (limited by AWIPS display)
+      ulimGroup = 9
 
 !-----Output systems as plain text----------------------------------------
 
@@ -314,10 +324,11 @@
       ALLOCATE( dum(maxI,maxJ) )
 
       DO it = 1,SIZE(sysA)
-!        Loop through identified groups, limiting the output in file to 10
+!        Loop through identified groups, limiting the output in file to ulimGroup
          WRITE(22,'(F15.6,60x,A)') wsdat(it)%date,'Time'
-         WRITE(22,'(I6,69x,A)') MIN(10,maxGroup),'Tot number of systems'      
-         DO igrp = 1,MIN(10,maxGroup)
+         WRITE(22,'(I6,69x,A)') MIN(ulimGroup,maxGroup), &
+               'Tot number of systems'      
+         DO igrp = 1,MIN(ulimGroup,maxGroup)
             dum(1:maxI,1:maxJ) = 9999.00
 !           Find system with this group tag
             sysmatch = 1
@@ -358,10 +369,11 @@
       WRITE(23,'(I6,69X,A)') maxI,'Number of cols'
 
       DO it = 1,SIZE(sysA)
-!        Loop through identified groups, limiting the output in file to 10
+!        Loop through identified groups, limiting the output in file to ulimGroup
          WRITE(23,'(F15.6,60x,A)') wsdat(it)%date,'Time'
-         WRITE(23,'(I6,69X,A)') MIN(10,maxGroup),'Tot number of systems'  
-         DO igrp = 1,MIN(10,maxGroup)
+         WRITE(23,'(I6,69X,A)') MIN(ulimGroup,maxGroup), &
+               'Tot number of systems'  
+         DO igrp = 1,MIN(ulimGroup,maxGroup)
             dum(1:maxI,1:maxJ) = 9999.00
 !           Find system with this group tag
             sysmatch = 1
@@ -402,10 +414,11 @@
       WRITE(24,'(I6,69X,A)') maxI,'Number of cols'
 
       DO it = 1,SIZE(sysA)
-!        Loop through identified groups, limiting the output in file to 10
+!        Loop through identified groups, limiting the output in file to ulimGroup
          WRITE(24,'(F15.6,60x,A)') wsdat(it)%date,'Time'
-         WRITE(24,'(I6,69X,A)') MIN(10,maxGroup),'Tot number of systems'
-         DO igrp = 1,MIN(10,maxGroup)
+         WRITE(24,'(I6,69X,A)') MIN(ulimGroup,maxGroup), &
+               'Tot number of systems'
+         DO igrp = 1,MIN(ulimGroup,maxGroup)
             dum(1:maxI,1:maxJ) = 9999.00
 !           Find system with this group tag
             sysmatch = 1
@@ -446,10 +459,11 @@
       WRITE(25,'(I6,69X,A)') maxI,'Number of cols'
 
       DO it = 1,SIZE(sysA)
-!        Loop through identified groups, limiting the output in file to 10
+!        Loop through identified groups, limiting the output in file to ulimGroup
          WRITE(25,'(F15.6,60x,A)') wsdat(it)%date,'Time'
-         WRITE(25,'(I6,69X,A)') MIN(10,maxGroup),'Tot number of systems'
-         DO igrp = 1,MIN(10,maxGroup)
+         WRITE(25,'(I6,69X,A)') MIN(ulimGroup,maxGroup), &
+               'Tot number of systems'
+         DO igrp = 1,MIN(ulimGroup,maxGroup)
             dum(1:maxI,1:maxJ) = 9999.00
 !           Find system with this group tag
             sysmatch = 1
@@ -763,7 +777,7 @@
                END IF  
             END DO
             WRITE(28,'(32F14.4)') lonprt,latprt, &
-                       hsprt(1:10),tpprt(1:10),dirprt(1:10)  
+                       hsprt(1:10),tpprt(1:10),dirprt(1:10)
          END DO
       END DO
 

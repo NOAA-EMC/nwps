@@ -33,7 +33,9 @@
 # [[ "$LOUD" = YES ]] && set -x
 
 source ${USHnwps}/nwps_config.sh
+export err=$?; err_chk
 ${USHnwps}/run_posproc.sh
+export err=$?; err_chk
 
 echo "post-process for CG1 complete"
 exit 0

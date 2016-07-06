@@ -34,7 +34,7 @@
       open(31,FILE='fileContents.txt',action="read")
       !how many
       i = 0
-      OPEN(40,FILE='wfolist_psurge_final.dat',access='append',
+      OPEN(40,FILE='../wfolist_psurge_final.dat',access='append',
      1     STATUS='old')
       do
          read(31,FMT='(a)',iostat=reason) r

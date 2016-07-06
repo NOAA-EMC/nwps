@@ -28,7 +28,7 @@
 #    selected to wfo_cmdfile in Step (1) above, e.g.
 #    ${NWPSdir}/ush/make_psurge_final.sh  mfl 3600
 #
-# These steps used the program psurge2nwps, which has the 
+# These steps use the program psurge2nwps, which has the 
 # following functionality:
 #
 #$ ./psurge2nwps -H
@@ -68,13 +68,18 @@ echo "============================================================="
 # 1) Prepare the list of WFO domains to process, based on a quick
 #    scan of their P-Surge coverage for a given storm.
 ${USHnwps}/make_psurge_init.sh
+export err=$?; err_chk
 
 # 2) Call make_psurge_final.sh to perform the final high-res 
 #    water level field extraction for those WFOs selected to wfo_cmdfile 
 #    in Step (1) above, e.g.
 #    ${NWPSdir}/ush/make_psurge_final.sh  mfl 3600
 cd ${RUNdir}
-mpirun.lsf cfp ${RUNdir}/wfo_cmdfile
+##Running 24 tasks, 6 per node (on a total of 4 nodes)
+#aprun -n24 -N6 -j1 -d1 cfp ${RUNdir}/wfo_cmdfile
+#Running 24 tasks, 12 per node (on a total of 2 nodes)
+aprun -n24 -N12 -j1 -d1 cfp ${RUNdir}/wfo_cmdfile
+export err=$?; err_chk
 
 #Log file
 mv ${RUNdir}/*.log ${LOGdir}/

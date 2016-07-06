@@ -52,7 +52,7 @@ echo "Our RTOFS source is set to ${RTOFSSOURCE}"
 #${BINdir}/make_rtofs_sector.sh $1 $2 $3 $4 $5 $6 $7 $8 $9
 #
 ${BINdir}/make_rtofs_sector.sh 00 144 3 20150812 $5 $6 $7 $8 $9
-
+export err=$?; err_chk
 
 cd ${myPWD}
 exit 0

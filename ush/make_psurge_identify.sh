@@ -68,6 +68,10 @@ do
       WFO=$(echo ${DOMAIN} | tr [:lower:] [:upper:])
       wfo=$(echo ${DOMAIN} | tr [:upper:] [:lower:])
    fi
+
+   mkdir -p ${RUNdir}/${DOMAIN}_hourly
+   cp *.flt *.ave *.txt *.hdr ${RUNdir}/${DOMAIN}_hourly/
+   cd ${RUNdir}/${DOMAIN}_hourly/
    ##echo "========  RUNNING PSURGE2NWPS.C ======="
    x=1
    for file in `ls *.flt` ; do
@@ -131,7 +135,7 @@ done < ${FIXnwps}/configs_psurge/wfolist_psurge.dat
 echo ""
 echo "Preprocessing complete" | tee -a ${LOGfile}
 echo "WFO domains selected for final detailed extraction, from ${RUNdir}/wfolist_psurge_final.dat:"
-cat wfolist_psurge_final.dat
+cat ../wfolist_psurge_final.dat
 cd ${myPWD}
 echo "====== Exiting make_psurge_identify.sh =======================" | tee -a ${LOGfile}
 date

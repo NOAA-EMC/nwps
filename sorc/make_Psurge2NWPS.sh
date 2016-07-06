@@ -6,9 +6,11 @@ if [ "${NWPSdir}" == "" ]
     exit 1
 fi
 
-
-###${NWPSdir}/sorc/make_Psurge/make_psurge2nwps.sh
-
+#loading the necessary modules 
+#module purge
+#module load ncep
+#module load ../modulefiles/NWPS/v1.1.0
+#module list
 
 echo "Building Psurge2nwps"
 
@@ -19,10 +21,10 @@ make
 
 cd ${NWPSdir}/sorc/make_Psurge
 #ifort -O2 -g -traceback -v -o -o psoutTOnwps.exe psoutTOnwps_ver04.f
-gfortran -o psoutTOnwps.exe psoutTOnwps.f
+ftn -o psoutTOnwps.exe psoutTOnwps.f
 mv -v psoutTOnwps.exe ${NWPSdir}/exec/psoutTOnwps.exe
 
-gfortran -o psurge_identify.exe psurge_identify.f
+ftn -o psurge_identify.exe psurge_identify.f
 mv -v psurge_identify.exe ${NWPSdir}/exec/psurge_identify.exe
 
 

@@ -5,14 +5,20 @@
 #BSUB -q %QUEUE%
 #BSUB -cwd /tmpnwprd1
 #BSUB -W 0:20
-#BSUB -n 1
-#BSUB -a poe
-#BSUB -R span[ptile=1] -R rusage[mem=1700] -R affinity[core]
+#BSUB -M 1700
 #BSUB -P NWPS-%PROJ%
 
 %include <head.h>
 
 module load %MODULES%
+#---- Suggested modules -----------------------------------------
+module use /gpfs/hps/nco/ops/nwpara/modulefiles
+module load prod_envir
+module load prod_util
+module load grib_util/1.0.3
+module load PrgEnv-intel
+export IOBUF_PARAMS="*:count=4:size=32M:prefetch=1:preflush=1"
+#----------------------------------------------------------------
 export FORT_BUFFERED=true
 export NWPSplatform="WCOSS"
 export MP_PGMMODEL=mpmd

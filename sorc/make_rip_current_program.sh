@@ -7,18 +7,19 @@ if [ "${NWPSdir}" == "" ]
     echo "ERROR - Your NWPSdir variable is not set"
     exit 1
 fi
-#if [ ! -e ${NWPSdir}/utils/etc/nwps_config.sh ]
-#then
-#    "ERROR - Cannot find ${NWPSdir}/utils/etc/nwps_config.sh"
-#    exit 1
-#fi
-#
-#unset LD_LIBRARY_PATH
-#source ${NWPSdir}/utils/etc/nwps_config.sh
-#
+
 ## Setup our build environment
 #source ${NWPSdir}/sorc/set_compiler.sh
 
-${NWPSdir}/sorc/rip_current_program/make_rip_current_program.sh
+#module purge
+#module load ncep
+#module load ../modulefiles/NWPS/v1.1.0
+#module list
 
+cd ${NWPSdir}/sorc/rip_current_program/
+make ripforecast
+rm *.o
+mv -v ripforecast.exe ${NWPSdir}/exec/ripforecast.exe
 
+echo "Build complete"
+exit 0

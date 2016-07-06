@@ -1,2 +1,0 @@
-%lat     %lon     %shoreline direction (deg true)
-279.881  25.8400       090

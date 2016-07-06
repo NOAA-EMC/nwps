@@ -146,11 +146,11 @@ echo " " | tee -a $logrunup
         postmsg $jlogfile "$msg"        
         export err=1; err_chk
      fi
-     #Moving input files and programs to teh temporary directoy
+     #Moving input files and programs to the temporary directory
      export TEMPDIRrunup=${VARdir}/${siteid}.tmp/CG${CGNUM}/runup
      mkdir -p ${TEMPDIRrunup}
      cd ${TEMPDIRrunup}
-     #Copying all needed data; input and programs here to run ru_runup.sh
+     #Copying all needed data; input and programs here to run run_runup.sh
      # in ${VARdir}/${siteid}.tmp/CG${CGNUM}/runup
      cp ${inputparm} .
      grep "^INPGRID WIND" inputCG${CGNUM} > blah1
@@ -172,19 +172,20 @@ echo " " | tee -a $logrunup
      echo "date_stamp: ${date_stamp}"  | tee -a $logrunup
      CYCLErunup="${hh}${mm}" 
      CYCLErunupout="${hh}"
-     # nomenclature input file for run_runup.sh e.g 20m_cont_CG2.20150202_0000_MHX
+     # nomenclature input file for run_runup.sh e.g 20m_contour_CG2.20150202_0000_MHX
      fileor="${dpt_runup_contour}_contour_CG${CGNUM}"
-     filein="${dpt_runup_contour}_cont_CG${CGNUM}.${yyyy}${mon}${dd}_${CYCLErunup}_${SITEID}"
+     filein="${dpt_runup_contour}_contour_CG${CGNUM}.${yyyy}${mon}${dd}_${CYCLErunup}_${SITEID}"
      #fileout="${dpt_runup_contour}_CG${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}_${SITEID}.txt"
      #fileout="${WFO}_${NET}_${dpt_runup_contour}_CG${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}"
      echo "filein: ${filein}"  | tee -a $logrunup
      cp -fvp ${RUNdir}/${fileor} .
      cp ${fileor} ${filein}    | tee -a $logrunup
      cp -fvp ${FIXnwps}/beach_slope_db/CG${CGNUM}.${SITEID}_slopes.txt .   | tee -a $logrunup
-     cp ${HOMEnwps}/exec/runupforecast.exe .   | tee -a $logrunup
-     cp ${USHnwps}/run_runup.sh .   | tee -a $logrunup
+     #cp ${HOMEnwps}/exec/runupforecast.exe .   | tee -a $logrunup
+     #cp ${USHnwps}/run_runup.sh .   | tee -a $logrunup
      ls -lt  | tee -a $logrunup
-     source run_runup.sh  ${CYCLErunup} ${date_stamp}  
+     source ${USHnwps}/run_runup.sh  ${CYCLErunup} ${date_stamp}  
+     export err=$?; err_chk
      
      #Make output directory
      OUTDIRrunup=${DATA}/output/runup/CG${CGNUM}/
@@ -215,8 +216,18 @@ echo " " | tee -a $logrunup
      dptcontour=${RIPCONT:0:1}
      echo " CG domain for rip currents: ${RIPDOMAIN}"
      echo " Depth contour used        : ${dptcontour} m"
-     ${USHnwps}/rip_current_program/run_nos.sh ${RIPDOMAIN} ${dptcontour}
-     #cp -vpf ripprob.png ${GRAPHICSdir}/.
+     source ${USHnwps}/run_ripcurrent.sh ${RIPDOMAIN} ${dptcontour}
+     export err=$?; err_chk     
+
+     # Copy results to output directories
+     cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
+     COMOUTCYC="${COMOUT}/${cycleout}/${RIPDOMAIN}"
+     mkdir -p $COMOUTCYC
+     cp -fv  ${RIPDATA}/${CGCONT} ${COMOUTCYC}/${CGCONT}
+     cp -fv  ${RIPDATA}/${FORT23} ${COMOUTCYC}/${FORT23}
+
+     mkdir -p $GESOUT/riphist/${SITEID}
+     cp -fv  ${RIPDATA}/${CGCONT} ${GESOUT}/riphist/${SITEID}/${CGCONT}
   else
      echo " Rip current calculation not activated for this domain (CG${CGNUM})"
   fi
@@ -236,7 +247,8 @@ then
 #    rm -fr ${OUTPUTdir}/ush/grads/${siteid}/partition | tee -a $logfile
     echo "Creating output plots"
     #${NWPSdir}/ush/grads/bin/plot_nwps_run.sh ${SITEID} |tee -a $logfile
-    ${NWPSdir}/ush/python/plot_nwps_run.sh ${SITEID} 
+    ${NWPSdir}/ush/python/plot_nwps_run.sh ${SITEID}
+    export err=$?; err_chk 
 fi
 
 #Sending grib2 files with gridded wave parameters to COMOUT
@@ -278,6 +290,14 @@ cd ${DATA}/output/grib2/CG${CGNUM}
         fi
      fi
 
+#Sending spec2d files at buoy locations to COMOUT
+cd ${DATA}/output/spectra/CG${CGNUM}
+     yy=$(echo $yyyy | cut -c 3-4)
+     spec2dFile="SPC2D.*.CG${CGNUM}.YY${yy}.MO${mon}.DD${dd}.HH${hh}"
+     if [ "${SENDCOM}" == "YES" ]; then
+        mkdir -p $COMOUTCYC
+        cp -fv  ${spec2dFile} ${COMOUTCYC}/
+     fi
 
 #if [ "${WEB}" == "YES" ]
 #then

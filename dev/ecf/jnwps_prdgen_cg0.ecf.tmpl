@@ -23,20 +23,20 @@
 # ----------------------------------------------------------- 
 
 #BSUB -J %WFO%_pd_cg0
-#BSUB -oo /ptmpp1/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_prdgen_cg0.o
-#     -e /ptmpp1/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_prdgen_cg0.o
+#BSUB -oo /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_prdgen_cg0.o
+#     -e /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_prdgen_cg0.o
 #BSUB -q "dev"
 ##BSUB -W 0:10
-#BSUB -W 2:35
-#BSUB -R rusage[mem=1700] -R affinity[core]
+#BSUB -W 3:05
+#BSUB -R rusage[mem=1700]
 #BSUB -P NWPS-T2O
 
-#module load %MODULES%
+module use /gpfs/hps/nco/ops/nwpara/modulefiles
+module load prod_envir
 module load prod_util
-module load ics
-module load ibmpe
-module load lsf
-module load mpiserial
+module load grib_util/1.0.3
+module load PrgEnv-intel
+export IOBUF_PARAMS="*:count=4:size=32M:prefetch=1:preflush=1"
 
 export FORT_BUFFERED=true
 export NWPSplatform="DEVWCOSS"
@@ -53,7 +53,7 @@ export MODEL=${model^^}
 export envir="para"
 
 export DEVWCOSS_USER=$(whoami)
-export COMROOT=/ptmpp1/${DEVWCOSS_USER}/data/com
+export COMROOT=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/com
 
 #Dev environment value for $job
 export job=pnwps_${WFO}_pd_cg0
@@ -63,18 +63,11 @@ export jobid=pnwps_${WFO}_pd_cg0.$$
 mkdir -p ${COMROOT}/logs/${envir}
 export jlogfile=${COMROOT}/logs/${envir}/jlogfile.${job}
 
-if [ -e /gpfs/gd1 ]
-then
-   echo "INFO - WCOSS is on GYRE system"
-   export  WCOSS_SYSTEM="gd1"
-fi
-if [ -e /gpfs/td1 ]
-then
-   echo "INFO - WCOSS is on TIDE system"
-   export WCOSS_SYSTEM="td1"
-fi
+#Set platform
+export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )d1
+export WCOSS_SYSTEM_COM=$( echo $COMROOTp1 | cut -c7-9 )
 
-export NWROOT="/gpfs/${WCOSS_SYSTEM}/emc/marine/save/${DEVWCOSS_USER}/NWPS/IT_NWPS_WCOSS_ver1.0_20150729"
+export NWROOT="/gpfs/hps/emc/marine/noscrub/${DEVWCOSS_USER}/NWPS/WCOSS_incl_WR_PR_AR"
 
 VERSION_FILE=${NWROOT}/dev/nwps_test.ver
 if [ -f $VERSION_FILE ]; then

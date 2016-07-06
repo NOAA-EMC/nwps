@@ -1168,7 +1168,8 @@ sub ReadPRTLocNames($%) {
              $RunValues{$pointLati } =$temp[3];
              undef $keyfound, @temp;  
            }
-           if ($comline =~/^SPECOUT/)  {
+           #if ($comline =~/^SPECOUT/)  {
+           if ($comline =~/SPEC1D/)  {
              $numofOutputSpectra+=1;
              #print " Searching for: Output Spectra ($numofOutputSpectra)\n";
              $keyfound=$_;

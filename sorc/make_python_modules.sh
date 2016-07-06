@@ -11,6 +11,11 @@
 #
 # Contributors:
 
+#module purge
+#module load ncep
+#module load ../modulefiles/NWPS/v1.1.0
+#module list
+
 if [ "${NWPSdir}" == "" ]
     then 
     echo "ERROR - Your NWPSdir variable is not set"

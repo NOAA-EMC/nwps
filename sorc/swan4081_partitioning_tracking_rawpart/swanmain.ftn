@@ -1987,11 +1987,16 @@
       OVLNAM(IVTYPE) = 'Water level'
       OVUNIT(IVTYPE) = UH
       OVSVTY(IVTYPE) = 1
-      OVLLIM(IVTYPE) = -1.E4
-      OVULIM(IVTYPE) = 1.E4
-      OVLEXP(IVTYPE) = -100.
+!      OVLLIM(IVTYPE) = -1.E4
+!      OVULIM(IVTYPE) = 1.E4
+!      OVLEXP(IVTYPE) = -100.
+!      OVHEXP(IVTYPE) = 100.
+!      OVEXCV(IVTYPE) = -99.
+      OVLLIM(IVTYPE) = -1.E5
+      OVULIM(IVTYPE) = 1.E5
+      OVLEXP(IVTYPE) = -9999.
       OVHEXP(IVTYPE) = 100.
-      OVEXCV(IVTYPE) = -99.
+      OVEXCV(IVTYPE) = -9999.
 !
       IVTYPE = 52                                                         40.51
       OVKEYW(IVTYPE) = 'BOTL'

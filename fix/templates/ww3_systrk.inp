@@ -13,8 +13,8 @@ $
 $ Domain over which tracking is to be performed. First line: longitude
 $ limits; second line: latitude limits. For entire domain, use -999. 999
 $
-  -999. 999.
-  -999. 999.
+  #SWLONCIRCWT# #NELONCIRCWT# #MESHLONWT#
+  #SWLATWT# #NELATWT# #MESHLATWT#
 $
 $ Parameters of tracking algorithm ----------------------------------- $
 $   - dirKnob, perKnob, hsKnob, wetPts, dirTimeKnob, tpTimeKnob

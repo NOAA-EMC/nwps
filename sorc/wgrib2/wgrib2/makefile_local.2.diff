@@ -1,6 +1,0 @@
-51,52c51,52
-< jasper_lib=-L../jasper-1.900.1/src/libjasper/.libs -ljasper
-< jasper_inc=-I../jasper-1.900.1/src/libjasper/include
----
-> jasper_lib=-L../jasper-1.900.1/sorc/libjasper/.libs -ljasper
-> jasper_inc=-I../jasper-1.900.1/sorc/libjasper/include

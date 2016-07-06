@@ -5,9 +5,7 @@
 #BSUB -q %QUEUESERV%
 #BSUB -cwd /tmpnwprd2
 #BSUB -W 0:05
-#BSUB -n 1
-#BSUB -a poe
-#BSUB -R span[ptile=1] -R rusage[mem=1700] -R affinity[core]
+#BSUB -M 1700
 #BSUB -P NWPS-%PROJ%
 
 %include <head.h>

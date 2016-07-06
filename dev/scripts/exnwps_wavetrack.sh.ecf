@@ -37,7 +37,9 @@
   #[[ "$LOUD" = YES ]] && set -x
 
 source ${USHnwps}/nwps_config.sh
+export err=$?; err_chk
 ${USHnwps}/nwps_wavetrack_cg1.sh
+export err=$?; err_chk
 
 echo "Forecast complete"
 exit 0

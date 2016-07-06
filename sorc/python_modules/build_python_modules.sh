@@ -24,7 +24,7 @@ mkdir -p ${BUILD_DIR}
 
 # matplotlib build
 cd $SORC_DIR
-gtar -zxvf matplotlib-${MPL_VERSION}.tar.gz
+tar -zxvf matplotlib-${MPL_VERSION}.tar.gz
 cd matplotlib-${MPL_VERSION}
 python setup.py build
 python setup.py install --prefix=$BUILD_DIR/python_modules
@@ -32,7 +32,7 @@ python setup.py install --prefix=$BUILD_DIR/python_modules
 # basemap build
 # begin with geos sub-build
 cd $SORC_DIR
-gtar -zxvf basemap-${BASEMAP_VERSION}.tar.gz
+tar -zxvf basemap-${BASEMAP_VERSION}.tar.gz
 cd basemap-${BASEMAP_VERSION}
 cd geos-3.3.3
 ./configure --prefix=$BUILD_DIR/basemap-${BASEMAP_VERSION}/geos-3.3.3

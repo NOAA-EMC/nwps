@@ -45,16 +45,26 @@ export TSTEP="3"
 # nested grids. Change this only if you know what you are doing.
 # You can choose STA or NON for a particular nested grid.
 #  
-export NESTGRIDS="0"
+export NESTGRIDS="2"
 export NESTINCG1="YES"
 #
-export NELATN1="27.02"
-export NELONN1="-79.94"
-export SWLATN1="26.90"
-export SWLONN1="-80.10"
+# Charleston Harbor and Beaches
+export NELATN1="32.8302"
+export NELONN1="-79.6121"
+export SWLATN1="32.6058"
+export SWLONN1="-80.0123"
 export RESN1=".5"
 export TSTEPN1="3"
-export STATN1="STA"
+export STATN1="NON"
+#
+# Savannah Harbor and Beaches
+export NELATN2="32.3778"
+export NELONN2="-80.4376"
+export SWLATN2="31.8794"
+export SWLONN2="-81.1329"
+export RESN2=".5"
+export TSTEPN2="3"
+export STATN2="NON"
 #
 #========================================================================
 #                    SPECTRA OUTPUT LOCATIONS                           =
@@ -62,7 +72,7 @@ export STATN1="STA"
 # Specta points defined as space delimited list of:
 #   "name1:lat1:lon1 name2:lat2:lon2 name3:lat3:lon3 name4:lat4:lon4 name5:lat5:lon5 ...."
 #
-export SPECPOINTS="41008:31.4:-80.869 41112:30.79:-81.293 41004:32.501:-79.099 41029:32.810:-79.630 41033:32.280:-80.410 NCEP_53:30.67:-79.00 NCEP_57:32.13:-78.10 NCEP_60:33.58:-78.50"
+export SPECPOINTS="41008:31.4:-80.869 41112:30.79:-81.293 41004:32.501:-79.099 41029:32.810:-79.630 41033:32.280:-80.410 NCEP_53:30.67:-79.00 NCEP_57:32.13:-78.10 NCEP_60:33.58:-78.50 CHSHB:32.73:-79.84 SVNNH:32.02:-80.81 ALTMH:31.30:-81.19 NAVB6:32.64:-79.68 HLTHD:32.14:-80.34 OSVNH:31.53:-80.15"
 #
 #========================================================================
 #                    WAVE TRACKING (and WAVE PARTITION) ON/OFF          =

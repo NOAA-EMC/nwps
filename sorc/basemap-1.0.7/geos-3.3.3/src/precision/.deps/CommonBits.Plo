@@ -1,13 +1,13 @@
 CommonBits.lo: CommonBits.cpp ../../include/geos/platform.h \
- /usr/include/inttypes.h /usr/include/features.h /usr/include/sys/cdefs.h \
- /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
- /usr/include/gnu/stubs-64.h /usr/include/stdint.h \
- /usr/include/bits/wchar.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/limits \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/c++config.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/os_defines.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/cpu_defines.h \
- ../../include/geos/precision/CommonBits.h ../../include/geos/export.h
+  /usr/include/inttypes.h /usr/include/features.h \
+  /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
+  /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
+  /usr/include/stdint.h /usr/include/bits/wchar.h \
+  /usr/include/c++/4.3/limits \
+  /usr/include/c++/4.3/x86_64-suse-linux/bits/c++config.h \
+  /usr/include/c++/4.3/x86_64-suse-linux/bits/os_defines.h \
+  /usr/include/c++/4.3/x86_64-suse-linux/bits/cpu_defines.h \
+  ../../include/geos/precision/CommonBits.h ../../include/geos/export.h
 
 ../../include/geos/platform.h:
 
@@ -27,13 +27,13 @@ CommonBits.lo: CommonBits.cpp ../../include/geos/platform.h \
 
 /usr/include/bits/wchar.h:
 
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/limits:
+/usr/include/c++/4.3/limits:
 
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/c++config.h:
+/usr/include/c++/4.3/x86_64-suse-linux/bits/c++config.h:
 
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/os_defines.h:
+/usr/include/c++/4.3/x86_64-suse-linux/bits/os_defines.h:
 
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/cpu_defines.h:
+/usr/include/c++/4.3/x86_64-suse-linux/bits/cpu_defines.h:
 
 ../../include/geos/precision/CommonBits.h:
 

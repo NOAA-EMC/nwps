@@ -55,6 +55,15 @@
       real, dimension(ninput) :: prob,shore
 !      logical, dimension(ninput) :: eventout
       integer, dimension(ninput) :: eventout
+
+!
+!        Banner
+!
+      write(6,*) '**************************************************'
+      write(6,*) '*   R I P  C U R R E N T  P R E D I C T I O N    *'
+      write(6,*) '*                                                *'
+      write(6,*) '*   Authors: Greg Dusek, Harvey Seim (2013)      *'
+      write(6,*) '**************************************************'
 !
 !        initalize arrays
 !

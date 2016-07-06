@@ -3,8 +3,8 @@
 ##############################################################################
 F90_SER = ifort
 F90_OMP = ifort
-F90_MPI = mpfort
-FLAGS_OPT = 
+F90_MPI = ftn
+FLAGS_OPT = -c
 FLAGS_MSC = -g -O2 
 FLAGS90_MSC = $(FLAGS_MSC) -ffree-line-length-none
 FLAGS_SER =

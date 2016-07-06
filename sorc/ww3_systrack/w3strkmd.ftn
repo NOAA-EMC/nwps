@@ -278,6 +278,7 @@
                                       dt         ,ntint      , & 
                                       minlon     ,maxlon     , & 
                                       minlat     ,maxlat     , &
+                                      mxcwt      ,mycwt      , &
                                       dirKnob    ,             &
                                       perKnob    ,hsKnob     , &
                                       wetPts     ,seedLat    , &
@@ -360,6 +361,7 @@
       INTEGER      :: NumConsSys, iConsSys
       REAL         :: dt
       REAL         :: minlon, maxlon, minlat, maxlat 
+      INTEGER      :: mxcwt, mycwt
 
 !     Note: Variables wsdat, sysA and maxSys have IN/OUT intent so that they 
 !     can be manipulated outside of this subroutine, e.g. re-indexing of 
@@ -403,7 +405,7 @@
                                 tp0(:),dir0(:),dspr0(:),wf0(:),&
                                 wndSpd0(:),wndDir0(:),wndFce0(:)
       REAL*8, ALLOCATABLE :: date0(:)
-      INTEGER    :: maxTs, t0, nout, maxI, maxJ
+      INTEGER    :: maxTs, t0, nout1, nout2, maxI, maxJ
       REAL, ALLOCATABLE :: mlon(:,:), mlat(:,:)
       REAL, POINTER :: uniqueTim(:),uniqueLatraw(:),uniqueLonraw(:), &
                        uniqueLat(:),uniqueLon(:)
@@ -416,6 +418,7 @@
       REAL       :: dx
       INTEGER    :: latind1, latind2, lonind1, lonind2
       REAL       :: lonext, latext
+
 !/MPI      INTEGER    :: rank, irank, nproc, EXTENT, DOMSIZE, tag1, tag2
 !/MPI!      INTEGER    :: MPI_INT_DOMARR, MPI_REAL_DOMARR 
 !/MPI      INTEGER    :: MPI_STATUS(MPI_STATUS_SIZE)
@@ -698,8 +701,32 @@
          CALL UNIQUE(REAL(ts),SIZE(ts),uniqueTim,maxTs)
 
 !        Find unique lat and lon values (and sort in ascending order)
-         CALL UNIQUE(llat(1:line),SIZE(llat(1:line)),uniqueLatraw,nout)
-         CALL UNIQUE(llon(1:line),SIZE(llon(1:line)),uniqueLonraw,nout)
+         CALL UNIQUE(llat(1:line),SIZE(llat(1:line)),uniqueLatraw,nout1)
+         CALL UNIQUE(llon(1:line),SIZE(llon(1:line)),uniqueLonraw,nout2)
+
+!--042916-----------------------
+!
+!        Redefine uniqueLatraw and uniqueLonrawto based on domain extent
+         WRITE(20,*) 'uniqueLatraw(:) =', uniqueLatraw(:)
+         WRITE(20,*) 'uniqueLonraw(:) =', uniqueLonraw(:)
+
+         WRITE(20,*) 'No. increments: Longitude, Latitue =', mxcwt, mycwt
+         DEALLOCATE(uniqueLatraw)
+         DEALLOCATE(uniqueLonraw)
+         ALLOCATE(uniqueLatraw(mycwt+1))
+         ALLOCATE(uniqueLonraw(mxcwt+1))
+         DO i = 1,(mycwt+1)
+            uniqueLatraw(i) =  minlat + & 
+                               (REAL(i)-1)/REAL(mycwt)*(maxlat-minlat)
+         END DO
+         DO i = 1,(mxcwt+1)
+            uniqueLonraw(i) =  minlon + &
+                               (REAL(i)-1)/REAL(mxcwt)*(maxlon-minlon)
+         END DO
+         WRITE(20,*) 'uniqueLatraw(:) =', uniqueLatraw(:)
+         WRITE(20,*) 'uniqueLonraw(:) =', uniqueLonraw(:)
+!
+!--042916-----------------------
 
 !        Filter out lats and lons outside of domain of interest
          DO latind1 = 1,SIZE(uniqueLatraw)
@@ -728,9 +755,11 @@
          ALLOCATE(uniqueLon(lonind2-lonind1+1))
          uniqueLat = uniqueLatraw(latind1:latind2)
          uniqueLon = uniqueLonraw(lonind1:lonind2)
-         WRITE(20,*) 'In waveTracking_NWS_V2: Longitude range =', &
+         WRITE(20,'(A,2F7.2)') &
+                    'In waveTracking_NWS_V2: Longitude range =', &
                      uniqueLon(1), uniqueLon(SIZE(uniqueLon))
-         WRITE(20,*) '                        Latitude range  =', &
+         WRITE(20,'(A,2F7.2)') &
+                    '                        Latitude range  =', &
                      uniqueLat(1), uniqueLat(SIZE(uniqueLat))
 
 !        Map is transposed (rotated by 90 deg), so that: 
@@ -796,9 +825,13 @@
          DO l = 1,line
             DO j = 1,maxJ
                DO i = 1,maxI            
-                  IF ( (llat(l).EQ.mlat(i,j)).AND. &
-                       (llon(l).EQ.mlon(i,j)) ) THEN
-
+!>042916                  IF ( (llat(l).EQ.mlat(i,j)).AND. &
+!>042916                       (llon(l).EQ.mlon(i,j)) ) THEN
+                  IF ( (ABS(llat(l)-mlat(i,j)).LT.0.01).AND. &
+                       (ABS(llon(l)-mlon(i,j)).LT.0.01) ) THEN
+!                     WRITE(20,*) 'MATCHED! ',l,&
+!                        llat(l),mlat(i,j),ABS(llat(l)-mlat(i,j)),&
+!                        llon(l),mlon(i,j),ABS(llon(l)-mlon(i,j))
                      wsdat(ts(l))%lat(i,j) = llat(l)
                      wsdat(ts(l))%lon(i,j) = llon(l)
 !                    Find next free partition. Do not include more that 10
@@ -869,7 +902,7 @@
 !/MPI
 !/MPI                DO j = 1,maxJ
 !/MPI                   DO i = 1,maxI
-!/MPI                      tag1 = ((j-1)*maxI+i)*100
+!/MPI                      tag1 = ((j-1)*maxI+i)*10
 !/MPI
 !/MPI                      IF (rank.EQ.0) THEN
 !/MPI!                        WRITE(6,*) '>> Sending: rank,irank,tag1=', &

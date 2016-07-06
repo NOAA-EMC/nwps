@@ -36,14 +36,10 @@ echo ' '
 echo "Starting at : `date`"
 [[ "$LOUD" = YES ]] && set -x
 
-
 source ${USHnwps}/nwps_config.sh
 export err=$?; err_chk
 ${USHnwps}/prdgen.sh
 export err=$?; err_chk
 echo "Prdgen-process completed"
 exit 0
-
-
-
-
+# End of script ------------------------------------------------------------- #

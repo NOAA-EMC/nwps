@@ -202,7 +202,7 @@ if [ "${#DCOM_FILES[@]}" -eq 0 ];then
 else
     echo "============"
     for runit in ${DCOM_FILES[@]}; do
-        if [ "$nrunning" -lt 12 ]; then
+        if [ "$nrunning" -lt 18 ]; then
             wfo=$(echo ${runit}|awk -F_ '{print $2}')
             ecf_wfo=$(grep ${wfo} ${PARMnwps}/wfo.tbl)
             region=$(echo ${ecf_wfo} |awk -F"/" '{print $1}')
@@ -234,7 +234,7 @@ else
                 sleep 1
             fi
         else
-            echo -ne "\nNWPS has reached its limit of running 12 jobs on 6 nodes, \nThe following DCOM files will not be processed at this time:\n$(echo $DCOM_FILES|tr ' ' '\n')\n\n"
+            echo -ne "\nNWPS has reached its limit of running 18 jobs on 9 nodes, \nThe following DCOM files will not be processed at this time:\n$(echo $DCOM_FILES|tr ' ' '\n')\n\n"
             set -xa
             export ECF_NAME_INFO=${ECF_NAME}_info
             ecflow_client --alter change label queued "`echo -ne "\n***COUNTING THE LATEST FILES FOR EACH WFO ONLY.***\n++++++++++++++++++++++++++++++++++++++++++\n

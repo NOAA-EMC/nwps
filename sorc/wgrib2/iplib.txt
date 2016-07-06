@@ -1,2 +1,0 @@
-
-http://www.nco.ncep.noaa.gov/pmb/docs/libs/iplib/ncep_iplib.shtml

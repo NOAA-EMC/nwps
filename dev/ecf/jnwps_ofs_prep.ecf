@@ -1,0 +1,115 @@
+#!/bin/bash
+# ----------------------------------------------------------- 
+# UNIX Shell Script File
+# Tested Operating System(s): RHEL 5,6
+# Tested Run Level(s): 3, 5
+# Shell Used: BASH shell
+# Original Author(s): Roberto Padilla-Hernandez
+# File Creation Date: 02/01/2015
+# Date Last Modified:
+#
+# Version control: 1.14
+#
+# Support Team:
+#
+# Contributors: Floyd fayton
+#
+# ----------------------------------------------------------- 
+# ------------- Program Description and Details ------------- 
+# ----------------------------------------------------------- 
+#
+# Job Card to set the resources required for a NWPS run
+#
+# ----------------------------------------------------------- 
+
+#BSUB -J ofs_prep
+#BSUB -oo /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/ofs/com/nwps/para/ofs_prep.o
+#     -e /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/ofs/com/nwps/para/ofs_prep.o
+#BSUB -q "dev"
+#BSUB -W 5:00
+#BSUB -R rusage[mem=1700]
+#BSUB -P NWPS-T2O
+#BSUB -extsched 'CRAYLINUX[]'
+export NODES=1
+
+#module load %MODULES%
+module use /gpfs/hps/nco/ops/nwpara/modulefiles
+module load prod_envir
+module load prod_util
+module load PrgEnv-intel
+module load iobuf
+export IOBUF_PARAMS="*:count=24:size=32M:prefetch=1:preflush=1:verbose"
+module load grib_util/1.0.3
+module load cfp-intel-sandybridge
+
+module list
+
+export FORT_BUFFERED=true
+export NWPSplatform="DEVWCOSS"
+export MP_PGMMODEL=mpmd
+export MP_CSS_INTERRUPT=yes
+export KEEPDATA="YES"
+export model="nwps"
+export MODEL=${model^^}
+
+export envir="para"
+
+export DEVWCOSS_USER=$(whoami)
+export COMROOT=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/com
+
+#Dev environment value for $job and $jobid
+export job=pnwps_ofs_prep
+export jobid=pnwps_ofs_prep.$$
+
+#Dev environment jlogfile
+mkdir -p ${COMROOT}/logs/${envir}
+export jlogfile=${COMROOT}/logs/${envir}/jlogfile.${job}
+
+#************IMPORTANT ****************
+#* ADJUST THE PSURGE FIELDS TIME STEP *
+#* IN  scripts/exnwps_ofs_prep.sh.ecf    *
+#**************************************
+
+#Set platform
+export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )d1
+export WCOSS_SYSTEM_COM=$( echo $COMROOTp1 | cut -c7-9 )
+
+export DEVWCOSS_USER=$(whoami)
+#export NWROOT="/gpfs/hps/emc/marine/noscrub/${DEVWCOSS_USER}/NWPS/WCOSS_incl_WR_PR_AR"
+export NWROOT=${NWPSdir}
+
+VERSION_FILE=${NWROOT}/dev/psurge2nwps_test.ver
+if [ -f $VERSION_FILE ]; then
+  . $VERSION_FILE
+else
+  echo "***JOB ${job} ERROR: Version File $VERSION_FILE does not exist ***"
+  exit
+fi
+
+#export OFSTYPE="psurge"
+#export OFSTYPE="estofs"
+#export OFSTYPE="rtofs"
+
+${NWROOT}/dev/jobs/JNWPS_OFS_PREP
+
+#%include <tail.h>
+
+#%manual
+################################################################################
+#TASKSCRIPT DOCUMENTATION BLOCK
+#TASKSCRIPT:     jpsurgenwps
+#LAST MODIFIER:  Roberto Padilla
+#ORGANIZATION:   NP11
+#DATE:           JUL 2015
+#FULL NAME:    
+#PURPOSE:  To execute the job that creates output files from Psurge to bused 
+#          by NWPS
+#JOB SCRIPT CALLED: ${NWROOT}/jobs/JPSURGENWPS ==>
+#                            ${NWROOT}/scripts/expsurgenwps.sh.ecf
+#################################################################################
+######################################################################
+# Job specific troubleshooting instructions:
+#  see generic troubleshoot manual page
+#
+######################################################################
+#%end

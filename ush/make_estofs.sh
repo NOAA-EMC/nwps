@@ -73,13 +73,23 @@ function MakeClip() {
     swan_wl_ofile="${OUTPUTdir}/${swan_wl_ofile_fname}"
 
     if [ ! -e ${swan_wl_ofile} ];then
-	    PARM="var"
-	    echo "Extract ${PARM} data" 
-	    echo "${WGRIB2} -no_header -match ${PARM} -text ${CLIPdir}/${PARM}.dat ${CLIPdir}/${clip_file}" 
+	PARM="var"
+	echo "Extract ${PARM} data"
+	if [ "${ESTOFSUSEICEMASK}" == "TRUE" ]
+	then
+	    echo "Using sea ice to mask ESTOFS area with high ice density" | tee -a ${LOGfile}
+	    echo "${WGRIB2} -no_header -match ${PARM} -bin ${CLIPdir}/${PARM}.bin ${CLIPdir}/${clip_file}"
+	    ${WGRIB2} -no_header -match ${PARM} -bin ${CLIPdir}/${PARM}.bin ${CLIPdir}/${clip_file}
+	    echo "Writing final DAT file with ice mask"  
+	    ${EXECnwps}/seaice_mask -m${SEAICEBLOCKDENS} ${CLIPdir}/${PARM}.bin ${CLIPdir}/ice.bin > ${swan_wl_ofile}
+	    rm -f ${CLIPdir}/${PARM}.bin
+	else
+	    echo "${WGRIB2} -no_header -match ${PARM} -text ${CLIPdir}/${PARM}.dat ${CLIPdir}/${clip_file}"
 	    ${WGRIB2} -no_header -match ${PARM} -text ${CLIPdir}/${PARM}.dat ${CLIPdir}/${clip_file}
-	    echo "Writing final DAT file" 
+	    echo "Writing final DAT file"
 	    ${EXECnwps}/fix_ascii_point_data ${CLIPdir}/${PARM}.dat 9.999e+20 0.0 ${swan_wl_ofile}
 	    rm -f ${CLIPdir}/${PARM}.dat
+	fi
     fi
 }
 
@@ -91,12 +101,21 @@ function process_wfolist() {
     export err=$?; err_chk
     ESTOFS_REGION=$(echo ${ESTOFS_REGION} | tr [:upper:] [:lower:])
 #..........................................
-     if [ "${ESTOFS_REGION}" == "conus" ]
+     if [ "${ESTOFS_BASIN}" == "estofs.atl" ] && [ "${ESTOFS_REGION}" == "conus" ]
      then
        hasdownload_000=${hasDL[1]}
-     elif [ "${ESTOFS_REGION}" == "puertori" ]
+     elif [ "${ESTOFS_BASIN}" == "estofs.atl" ] && [ "${ESTOFS_REGION}" == "puertori" ]
      then
        hasdownload_000=${hasDL[2]}
+     elif [ "${ESTOFS_BASIN}" == "estofs.pac" ] && [ "${ESTOFS_REGION}" == "conus" ]
+     then
+       hasdownload_000=${hasDL[3]}
+     elif [ "${ESTOFS_BASIN}" == "estofs.pac" ] && [ "${ESTOFS_REGION}" == "hawaii" ]
+     then
+       hasdownload_000=${hasDL[4]}
+     elif [ "${ESTOFS_BASIN}" == "estofs.pac" ] && [ "${ESTOFS_REGION}" == "alaska" ]
+     then
+       hasdownload_000=${hasDL[5]}
      fi
 #................................................
     OUTPUTdir="${DATAdir}/${wfo}_output"
@@ -131,33 +150,99 @@ function process_wfolist() {
     # Get the first forecast cycle
     touch ${OUTPUTdir}/LOCKFILE
     FF="000"
-    file="estofs.atl.t${CYCLE}z.${ESTOFS_REGION}.f${FF}.grib2"
+    file="${ESTOFS_BASIN}.t${CYCLE}z.${ESTOFS_REGION}.f${FF}.grib2"
+    icefile="seaice.t00z.5min.grb.grib2"
     outfile="${file}"
     cd ${SPOOLdir}
 
     if [ "${hasdownload_000}" == "" ]; then hasdownload_000="false"; fi
     
     if [ "${hasdownload_000}" == "false" ];then
-        if [ "${ESTOFS_REGION}" == "conus" ];then
+        if [ "${ESTOFS_BASIN}" == "estofs.atl" ] && [ "${ESTOFS_REGION}" == "conus" ];then
            hasDL[1]="true"
-        elif [ "${ESTOFS_REGION}" == "puertori" ];then
+        elif [ "${ESTOFS_BASIN}" == "estofs.atl" ] && [ "${ESTOFS_REGION}" == "puertori" ];then
            hasDL[2]="true"
+        elif [ "${ESTOFS_BASIN}" == "estofs.pac" ] && [ "${ESTOFS_REGION}" == "conus" ];then
+           hasDL[3]="true"
+        elif [ "${ESTOFS_BASIN}" == "estofs.pac" ] && [ "${ESTOFS_REGION}" == "hawaii" ];then
+           hasDL[4]="true"
+        elif [ "${ESTOFS_BASIN}" == "estofs.pac" ] && [ "${ESTOFS_REGION}" == "alaska" ];then
+           hasDL[5]="true"
         fi
-    	    echo "Downloading ${SPOOLdir}/$file to $outfile" 
-    	    echo "cp -rp ${COMINestofs}/${file} ."
-    	    cp -rp ${COMINestofs}/${file} .
-    	    if [ "$?" != "0" ] && [ ! -e ${file} ];then
-            sleep 2
-    	        echo "ERROR - downling file ${PRODUCTdir}/${file}" 
-    	    fi
-    	    cp -rp ${COMINestofs}/${file} .
-    	    if [ "$?" != "0" ] && [ ! -e ${file} ];then
-    	        echo "ERROR - downling file ${PRODUCTdir}/${file}" 
-            export err=1; err_chk
-    	    fi
+
+        echo "Downloading ${SPOOLdir}/$file to $outfile" 
+        if [ "${ESTOFS_BASIN}" == "estofs.pac" ]; then
+           echo "cp -rp ${COMINestofspac}/${file} ."
+           cp -rp ${COMINestofspac}/${file} .
+        else
+           echo "cp -rp ${COMINestofs}/${file} ."
+           cp -rp ${COMINestofs}/${file} .
+        fi
+        if [ "$?" != "0" ] && [ ! -e ${file} ];then
+           sleep 2
+           echo "ERROR - downling file ${PRODUCTdir}/${file}" 
+        fi
+        if [ "${ESTOFS_BASIN}" == "estofs.pac" ]; then
+           cp -rp ${COMINestofspac}/${file} .
+        else
+           cp -rp ${COMINestofs}/${file} .
+        fi
+        if [ "$?" != "0" ] && [ ! -e ${file} ];then
+           echo "ERROR - downling file ${PRODUCTdir}/${file}" 
+           export err=1; err_chk
+        fi
+
+        if [ "${ESTOFSUSEICEMASK}" == "TRUE" ]
+        then
+            echo "Using sea ice to mask ESTOFS area with high ice density"
+
+            echo "Downloading ${SPOOLdir}/$icefile"
+            if [ -e ${COMINsice}/${icefile} ];then
+               echo "cp -rp ${COMINsice}/${icefile} ."
+               cp -rp ${COMINsice}/${icefile} .
+
+               if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
+                   sleep 2
+                   echo "ERROR - downling file ${PRODUCTdir}/${file}" 
+               fi
+               cp -rp ${COMINsice}/${icefile} .
+               if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
+                   echo "ERROR - downling file ${PRODUCTdir}/${file}"
+                   export err=1; err_chk
+               fi
+
+            elif [ -e ${COMINsicem1}/${icefile} ];then
+               echo "Today's ice concentration file not yet available. Downloading yesterday's file."
+               echo "cp -rp ${COMINsicem1}/${icefile} ."
+               cp -rp ${COMINsicem1}/${icefile} .
+
+               if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
+                   sleep 2
+                   echo "ERROR - downling file ${PRODUCTdir}/${file}" 
+               fi
+               cp -rp ${COMINsicem1}/${icefile} .
+               if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
+                   echo "ERROR - downling file ${PRODUCTdir}/${file}"
+                   export err=1; err_chk
+               fi
+            fi
+        fi
+
     fi
     
     hasdownload_000="true"
+
+    if [ "${ESTOFSUSEICEMASK}" == "TRUE" ]
+    then
+       echo "Using sea ice to mask ESTOFS area with high ice density"
+       echo "Clip and reproject to sea ice grid"
+       echo "${WGRIB2} ${SPOOLdir}/${icefile} -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/ice.grib2"
+       ${WGRIB2} ${SPOOLdir}/${icefile} -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/ice.grib2
+       PARM="ICEC"
+       echo "Extract ${PARM} data"
+       echo "${WGRIB2} -no_header -match ${PARM} -bin ${CLIPdir}/ice.bin ${CLIPdir}/ice.grib2"
+       ${WGRIB2} -no_header -match ${PARM} -bin ${CLIPdir}/ice.bin ${CLIPdir}/ice.grib2
+    fi
 
     epoc_time=`${WGRIB2} -unix_time ${SPOOLdir}/${file} | grep "1:4:unix" | awk -F= '{ print $3 }'`
     date_str=`echo ${epoc_time} | awk '{ print strftime("%Y%m%d", $1) }'`
@@ -213,18 +298,28 @@ function process_wfolist() {
     	    continue
     	fi
     	
-    	file="estofs.atl.t${CYCLE}z.${ESTOFS_REGION}.f${FF}.grib2"
+        file="${ESTOFS_BASIN}.t${CYCLE}z.${ESTOFS_REGION}.f${FF}.grib2"
     	outfile="${file}"
     	cd ${PRODUCTdir}
-    	if [ ! -e ${VARdir}/hasestofsdownload_${CYCLE}z.${ESTOFS_REGION}.f${FF} ];then
-	        echo "Copying ${COMINestofs}/${file} ${PRODUCTdir}/${file}"
-	        echo "cp -rp ${COMINestofs}/${file} ."
-	        cp -rp ${COMINestofs}/${file} .
+    	if [ ! -e ${VARdir}/hasestofsdownload_${CYCLE}z.${ESTOFS_BASIN}.${ESTOFS_REGION}.f${FF} ];then
+                if [ "${ESTOFS_BASIN}" == "estofs.pac" ]; then
+	           echo "Copying ${COMINestofspac}/${file} ${PRODUCTdir}/${file}"
+	           echo "cp -rp ${COMINestofspac}/${file} ."
+	           cp -rp ${COMINestofspac}/${file} .                
+                else
+	           echo "Copying ${COMINestofs}/${file} ${PRODUCTdir}/${file}"
+	           echo "cp -rp ${COMINestofs}/${file} ."
+	           cp -rp ${COMINestofs}/${file} .
+                fi
 	        if [ "$?" != "0" ] && [ ! -e ${file} ];then
                 sleep 2
 	            echo "ERROR - downling file ${PRODUCTdir}/${file}" 
 	        fi
-	        cp -rp ${COMINestofs}/${file} .
+                if [ "${ESTOFS_BASIN}" == "estofs.pac" ]; then
+ 	           cp -rp ${COMINestofspac}/${file} .
+                else
+ 	           cp -rp ${COMINestofs}/${file} .
+                fi
 	        if [ "$?" != "0" ] && [ ! -e ${file} ];then
 	            echo "ERROR - downling file ${PRODUCTdir}/${file}" 
                 export err=1; err_chk
@@ -238,7 +333,7 @@ function process_wfolist() {
         		export err=1; err_chk
     	    fi
     	fi
-    	touch ${VARdir}/hasestofsdownload_${CYCLE}z.${ESTOFS_REGION}.f${FF}
+    	touch ${VARdir}/hasestofsdownload_${CYCLE}z.${ESTOFS_BASIN}.${ESTOFS_REGION}.f${FF}
     
     	MakeClip ${PRODUCTdir} ${file} ${end} ${WFO}
     	export err=$?; err_chk
@@ -264,11 +359,19 @@ mkdir -p ${PRODUCTdir}
 mkdir -p ${SPOOLdir}
 mkdir -p ${VARdir}
 
+# Cleanup
+echo "Clean up working directory ${VARdir}..."
+rm ${VARdir}/hasestofsdownload_${CYCLE}z*
+rm ${VARdir}/wfolist.dat
+rm ${VARdir}/wfolist_sorted_estofs.dat
+rm ${VARdir}/wfolist_estofs.sh
+
 echo "Our spool DIR for FTP n000 data is: ${SPOOLdir}" 
 echo "Our spool DIR for FTP forecast data is: ${PRODUCTdir}" 
 
 # Create WFO list to make init files for
 ${USHnwps}/make_wfolist.sh ESTOFS
+export err=$?; err_chk
 source ${VARdir}/wfolist_estofs.sh
 
 if [ "${WFOLIST}" == "" ];then

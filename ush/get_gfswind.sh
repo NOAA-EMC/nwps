@@ -370,6 +370,7 @@ echo "Ending download at $datetime UTC" | tee -a ${LOGfile}
 
 echo "Purging previous run from ${OUTPUTdir}" | tee -a ${LOGfile} 2>&1
 ${BINdir}/purge_gfswind.sh ${OUTPUTdir} ${GFSHOURS} | tee -a ${LOGfile}
+export err=$?; err_chk
 
 if [ $end -ge $HOURS ]
 then 
@@ -378,6 +379,7 @@ then
     echo "GFSWINDDOMAIN:${GFSWINDDOMAIN}" > ${INGESTdir}/gfswind_domain.txt
     echo "Purging previous run from ${INGESTdir}" | tee -a ${LOGfile} 2>&1
     ${BINdir}/purge_gfswind.sh ${INGESTdir} ${GFSHOURS} | tee -a ${LOGfile}
+    export err=$?; err_chk
     echo "$RSYNC -av --force ${OUTPUTdir}/*.dat ${INGESTdir}/." | tee -a ${LOGfile} 2>&1
     $RSYNC -av --force ${OUTPUTdir}/*.dat ${INGESTdir}/.  | tee -a ${LOGfile} 2>&1
 fi

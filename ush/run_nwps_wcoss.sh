@@ -219,8 +219,7 @@ else
            echo "FATAL ERROR: Wind file ${WindFileName} not transmitted. NWPS will not be executed. Please resend wind file." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
            msg="FATAL ERROR: NWPS will not be executed due to absent forecast wind file."
            postmsg "$jlogfile" "$msg"
-           mkdir -p $COMOUTCYC $GESOUT/warnings
-           cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${COMOUTCYC}/Warn_Forecaster_${SITEID}.${PDY}.txt
+           mkdir -p $GESOUT/warnings
            cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${GESOUT}/warnings/Warn_Forecaster_${SITEID}.${PDY}.txt
            echo "ABORTED $FORECASTWINDdir/${NewestWind} AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
            export err=1; err_chk
@@ -248,8 +247,7 @@ else
            echo "FATAL ERROR: Wind file ${WindNewName} is empty. NWPS will not be executed. Please resend wind file." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
            msg="FATAL ERROR: NWPS will not be executed due to empty forecast wind file."
            postmsg "$jlogfile" "$msg"
-           mkdir -p $COMOUTCYC $GESOUT/warnings
-           cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${COMOUTCYC}/Warn_Forecaster_${SITEID}.${PDY}.txt
+           mkdir -p $GESOUT/warnings
            cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${GESOUT}/warnings/Warn_Forecaster_${SITEID}.${PDY}.txt
            echo "ABORTED $FORECASTWINDdir/${NewestWind} AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
            export err=1; err_chk
@@ -260,8 +258,7 @@ else
            echo "FATAL ERROR: Number of wind fields received is $Num_wind_fields, must be at least 103. NWPS will not be executed." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
            msg="FATAL ERROR: Number of wind fields received is $Num_wind_fields, must be at least 103. NWPS will not be executed."
            postmsg "$jlogfile" "$msg"
-           mkdir -p $COMOUTCYC $GESOUT/warnings
-           cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${COMOUTCYC}/Warn_Forecaster_${SITEID}.${PDY}.txt
+           mkdir -p $GESOUT/warnings
            cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${GESOUT}/warnings/Warn_Forecaster_${SITEID}.${PDY}.txt
            echo "ABORTED $FORECASTWINDdir/${NewestWind} AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
            export err=1; err_chk
@@ -331,10 +328,10 @@ else
         Default_PLOT="Yes"
 
         if [ "${RUNLEN}" -ne "${Default_RUNLEN}" ] || [ "${USERDELTAC}" -ne "${Default_USERDELTAC}" ] || \
-           [ "${WNA}" = "TAFB-NWPS" ] || [ "${WAVEMODEL}" != "${Default_WAVEMODEL}" ] || \
+           [ "${WNA}" == "TAFB-NWPS" ] || [ "${WNA}" == "HURWave" ] || [ "${WAVEMODEL}" != "${Default_WAVEMODEL}" ] || \
            [ "${PLOT}" != "${Default_PLOT}" ] || \
-           [ [ "${NESTS^^}" != "${Default_NESTS^^}" ] && [ ${NESTGRIDS} -ne 0 ] ] \
-           [ [ "${NESTS^^}" == "${Default_NESTS^^}" ] && [ ${NESTGRIDS} -eq 0 ] ]
+           [ "${NESTS^^}" != "${Default_NESTS^^}" -a "${NESTGRIDS}" -ne 0 ] \
+           [ "${NESTS^^}" == "${Default_NESTS^^}" -a "${NESTGRIDS}" -eq 0 ]
         then
            echo "WARNING: Some forecaster settings overwritten by WCOSS defaults:" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
         fi
@@ -349,10 +346,17 @@ else
            echo "WARNING: User input USERDELTAC=${USERDELTAC} not equal to Default_USERDELTAC=${Default_USERDELTAC}. Default computational time step of -${Default_USERDELTAC} s- will be used." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
            warnings="YES"
         fi
-        if [ "${WNA}" = "TAFB-NWPS" ]
+        if [ "${WNA}" == "TAFB-NWPS" ]
         then
             echo "WARNING: NWPS-WCOSS is not ready to ingest TAFB boundary conditions. Will use boundary conditions from WW3_multi2 (HURWave)." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
             export WNA="HURWave"
+           warnings="YES"
+        fi
+        if [ "${WNA}" == "HURWave" ] && [ "${SITEID}" == "HFO" -o "${SITEID}" == "GUM" -o "${SITEID}" == "SGX" -o \
+             "${SITEID}" == "SEW" -o "${SITEID}" == "AJK" -o "${SITEID}" == "ALU" ]
+        then
+            echo "WARNING: Your WFO is not configured to ingest WW3_multi2 (HURWave) boundary conditions. Will use boundary conditions from WW3_multi1 (WNAWave)." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+            export WNA="WNAWave"
            warnings="YES"
         fi
         if [ "${WAVEMODEL}" != "${Default_WAVEMODEL}" ]
@@ -587,9 +591,10 @@ else
 fi
 
 ${USHnwps}/nwps_preproc.sh ${RUNLEN} ${WNA} ${NESTS} ${RTOFS} ${WINDS} ${WEB} ${PLOT} ${USERDELTAC} ${HOTSTART} ${WATERLEVELS} ${MODELCORE} ${EXCD} | tee -a ${LOGdir}/run_nwps.log 
+export err=$?; err_chk
 cd ${RUNdir}
 hh=`ls *.wnd | cut -c9-10`
-COMOUTCYC="${COMOUT}/${hh}"
+export COMOUTCYC="${COMOUT}/${hh}"
 echo ${hh} > ${RUNdir}/CYCLE
 
 fcstday=`ls *.wnd | cut -c1-8`

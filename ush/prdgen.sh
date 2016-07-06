@@ -278,7 +278,8 @@ YMDH=${PDY}
 
 # 2.a.2 Make GRIB index
       echo "   Make GRIB index for tocgrib2."
-      $utilexec/grb2index gribfile.$grdID gribindex.$grdID
+      #$utilexec/grb2index gribfile.$grdID gribindex.$grdID
+      $GRB2INDEX gribfile.$grdID gribindex.$grdID
       OK=$?
 
       if [ "$OK" != '0' ]
@@ -303,7 +304,8 @@ YMDH=${PDY}
       export FORT51="AWIPSGRIB"
 
 #      $utilexec/tocgrib2 < awipsgrb.$grdID parm='KMFL' > "tocgrib2_${grdID}.out" 2>&1
-      $utilexec/tocgrib2 < awipsgrb.$grdID parm='${parmKSITE}' > "tocgrib2_${grdID}.out" 2>&1
+      #$utilexec/tocgrib2 < awipsgrb.$grdID parm='${parmKSITE}' > "tocgrib2_${grdID}.out" 2>&1
+      $TOCGRIB2 < awipsgrb.$grdID parm='${parmKSITE}' > "tocgrib2_${grdID}.out" 2>&1
       OK=$?
 
       if [ "$OK" != '0' ]

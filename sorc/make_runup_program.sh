@@ -17,6 +17,11 @@ if [ "${NWPSdir}" == "" ]
     exit 1
 fi
 
+#module purge
+#module load ncep
+#module load ../modulefiles/NWPS/v1.1.0
+#module list
+
 cd ${NWPSdir}/sorc/runup_program/
 make runupforecast
 rm *.o

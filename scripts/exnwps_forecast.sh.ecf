@@ -40,6 +40,11 @@ export err=$?; err_chk
 ${USHnwps}/nwps_coremodel_cg${N,,}.pl
 export err=$?; err_chk
 
+# Copy any final forecaster warnings out to COMOUT and GESOUT
+mkdir -p $COMOUTCYC $GESOUT/warnings
+cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${COMOUTCYC}/Warn_Forecaster_${SITEID}.${PDY}.txt
+cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${GESOUT}/warnings/Warn_Forecaster_${SITEID}.${PDY}.txt
+
 echo "Forecast complete"
 exit 0
 # End of script ------------------------------------------------------------- #

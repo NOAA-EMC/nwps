@@ -26,16 +26,10 @@ if [ "${hastracking}" == "TRUE" ]
    pwd                                                 | tee -a $logfile
    echo "perl -I${PMnwps} -I${RUNdir} ${USHnwps}/waveTracking.pl" | tee -a $logfile    
    perl -I${PMnwps} -I${RUNdir} ${USHnwps}/waveTracking.pl | tee -a $logfile
+   export err=$?; err_chk
 fi
 
 #########################################################################
-
-# NOTE: This will allow us to automate plotting with out send to Web option
-if [ "${WEB}" == "YES" ] && [ "${hastracking}" == "TRUE" ]
-then
-    echo "Sending parition wave fields output plots to Web" | tee -a $logfile
-    ${NWPSdir}/ush/grads/bin/send_to_web.sh ${SITEID} | tee -a $logfile
-fi
 
 echo " "                                            | tee -a $logfile
 echo -n "Wave Tracking Run Finished: "              | tee -a $logfile

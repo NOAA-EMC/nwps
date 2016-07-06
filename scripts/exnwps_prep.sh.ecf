@@ -15,52 +15,7 @@ export WINDS=${WINDS:-FORECASTER}
 export DOMAINSET=${DOMAINSET:-${FIXnwps}/domains/${SITEID}}
 
 ${USHnwps}/run_nwps_wcoss.sh --sitename ${SITEID} --runlen ${RUNLEN}  --wna --nest --waterlevels ESTOFS --rtofs --winds ${WINDS} --domainsetup ${DOMAINSET} --deltac ${DELTAC} --plot --wavemodel ${WAVEMODEL}
-#${USHnwps}/run_nwps_wcoss.sh --sitename ${SITEID} --winds ${WINDS} --domainsetup ${DOMAINSET}
-
-#Check that the necessary input files have been created during the prep step
-#   #a) Wind input file
-#   #if [ ! -f $RUNdir/${PDY}${cyc}.wnd ]
-#   if [ ! -f $RUNdir/*.wnd ]
-#   then
-#      msg="FATAL ERROR: Input wind file ${PDY}${cyc}.wnd does not exist"
-#      postmsg "$jlogfile" "$msg"
-#      export err=1; err_chk
-#   fi
-#   #b) Wave boundary conditions
-#   if [ ! -f $RUNdir/*.spec.swan ]
-#   then
-#      msg="FATAL ERROR: Wave boundary condition files *.spec.swan do not exist"
-#      postmsg "$jlogfile" "$msg"
-#      export err=1; err_chk
-#   fi
-#   #c) Water levels (NOTE: if these are absent the run continues with warning)
-#   if [ ! -f $RUNdir/*.wlev ]
-#   then
-#      msg="WARNING: Water level fields *.wlev do not exist"
-#      postmsg "$jlogfile" "$msg"
-#      echo "WARNING: No water level fields selected/found. Run will continue without tides and surge." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-#   fi
-#   #d) Surface currents (NOTE: if these are absent the run continues with warning)
-#   if [ ! -f $RUNdir/*.cur ]
-#   then
-#      msg="WARNING: Surface current fields *.cur do not exist"
-#      postmsg "$jlogfile" "$msg"
-#      echo "WARNING: No surface current fields selected/found. Run will continue without currents." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-#   fi
-#   #e) Check if water level files are empty
-#   if [ -s $RUNdir/*.wlev ]
-#   then
-#      msg="FATAL ERROR: Water level fields *.wlev are empty"
-#      postmsg "$jlogfile" "$msg"
-#      export err=1; err_chk
-#   fi
-#   #f) Check if surface current files are empty
-#   if [ -s $RUNdir/*.cur ]
-#   then
-#      msg="FATAL ERROR: Surface current fields *.cur are empty"
-#      postmsg "$jlogfile" "$msg"
-#      export err=1; err_chk
-#   fi
+export err=$?; err_chk
 
 echo "Pre-process completed"
 exit 0

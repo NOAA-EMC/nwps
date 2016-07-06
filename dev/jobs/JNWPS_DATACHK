@@ -28,9 +28,9 @@ set -xa
 # #### 04/01/15 ###############################
 # SETUP NWPS SHELL VARIABLES
 # #############################################
-export DATA=/ptmpp1/${DEVWCOSS_USER}/data                # Add the ${siteid} ???
-export COMROOT=/ptmpp1/${DEVWCOSS_USER}/data/com
-export GESROOT=/ptmpp1/${DEVWCOSS_USER}/data/nwges
+export DATA=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/                # Add the ${siteid} ???
+export COMROOT=${DATA}/com
+export GESROOT=${DATA}/nwges
 
 mkdir -p $DATA
 cd $DATA
@@ -82,8 +82,8 @@ export SITETYPE=${SITETYPE:-EMC}
 export MODELTYPE="SWAN"
 
 #export pgmout=OUTPUT.$$
-export utilscript=/nwprod/util/ush
-export USHutil=/nwprod/util/ush
+export utilscript=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.3/ush
+export USHutil=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.3/ush
 sh $utilscript/setpdy.sh
 . ./PDY
 
@@ -95,7 +95,7 @@ export GESOUTm1=${GESROOT}/${envir}/${NET}.${PDYm1}
 export dcom_hist="$GESOUT/dcom_hist.txt"
 export dcom_histm1="$GESOUTm1/dcom_hist.txt"
 export web_status_file="$GESOUT/status_file.txt"
-export dcom=${dcom:-/dcom/us007003}
+export dcom=${dcom:-/gpfs/${WCOSS_SYSTEM_COM}/dcomdev/us007003}
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 
 # make sure NWPS COM directory exists

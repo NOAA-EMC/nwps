@@ -128,7 +128,10 @@ then
          fi
       done
    else
+      mkdir -p $COMOUTCYC $GESOUT/warnings
       echo "WARNING: There are no RTOFS data available (neither today nor yesterday). Run will continue without surface current fields." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+      cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${COMOUTCYC}/Warn_Forecaster_${SITEID}.${PDY}.txt
+      cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${GESOUT}/warnings/Warn_Forecaster_${SITEID}.${PDY}.txt
       msg="WARNING: There are no RTOFS data available (neither today nor yesterday). Run will continue without surface current fields."
       postmsg "$jlogfile" "$msg"
       touch ${RUNdir}/nortofs

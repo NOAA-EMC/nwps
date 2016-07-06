@@ -1,38 +1,43 @@
+#!/bin/bash
+#
+# ----------------------------------------------------------- 
+# Original Author(s): Douglas.Gaer@noaa.gov
+# File Creation Date: 05/14/2016
+# Date Last Modified: 05/14/2016
+#
+# Version control: 1.17
+#
 # Support Team:
 #
-# Contributors: 
+# Contributors:
 # ----------------------------------------------------------- 
 # ------------- Program Description and Details ------------- 
 # ----------------------------------------------------------- 
-#
-# Script used to build DEGRIB
-#
-# ----------------------------------------------------------- 
-
-echo "Building source code DIRs"
-
-# Setup our NWPS environment                                                    
 export pwd=`pwd`
 export NWPSdir=${pwd%/*}
 if [ "${NWPSdir}" == "" ]
-    then 
-    echo "ERROR - Your NWPSdir variable is not set"
-    exit 1
+   then 
+   if [ -e /gpfs/gd1 ]
+   then
+      echo "INFO - WCOSS is on GYRE system"
+      export  WCOSS_SYSTEM="gd1"
+   fi
+   if [ -e /gpfs/td1 ]
+   then
+      echo "INFO - WCOSS is on TIDE system"
+      export WCOSS_SYSTEM="td1"
+   fi
+   export DEVWCOSS_USER=$(whoami)
+   export NWPSdir="/gpfs/${WCOSS_SYSTEM}/emc/marine/save/${DEVWCOSS_USER}/NWPS/emc_nwps"
 fi
-echo "Building degrib" 
-PWD=$(pwd)
-cd degrib
-rm -r degrib
-gunzip -c degrib-src.tar.gz | tar -xf -
-cd degrib/src
-./config-linux.sh
-cd degrib
-sed -i 's/all: $(PRJ_NAME) $(CLOCK_NAME) $(DP_NAME) $(DRAWSHP_NAME) $(TCL_NAME) $(TK_NAME)/all: $(PRJ_NAME) $(CLOCK_NAME) $(DP_NAME) $(DRAWSHP_NAME) /g' Makefile
-sed -i '/cp \$(/d' Makefile
-cd ..
-make
-mv degrib/degrib $NWPSdir/exec/degrib
 
+#loading the necessary modules 
+#module purge
+#module load ncep
+#module load ../modulefiles/NWPS/v1.1.0
+#module list
 
-cd ${PWD}
-echo "Done building DEGRIB"
+# We can only use the GNU compiler or the Jasper/JPEG compression library will not work properly
+cd ${NWPSdir}/sorc/degrib_gnu_cray/
+./build_degrib.sh
+

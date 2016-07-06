@@ -2,6 +2,8 @@
 # Author: Andre van der Westhuysen, 04/28/15
 # Purpose: Plots SWAN output parameters from GRIB2.
 
+import matplotlib
+matplotlib.use('Agg',warn=False)
 import sys
 import os
 import datetime
@@ -12,8 +14,8 @@ from mpl_toolkits.basemap import Basemap
 
 # Parameters
 monthstr = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']
-clevs = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-excpt = -9.0
+#clevs = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+#excpt = -9.0
 
 # Read NOAA and NWS logos
 noaa_logo = plt.imread('NOAA-Transparent-Logo.png')
@@ -64,18 +66,24 @@ for tstep in range(1, (TDEF+1)):
 
    # Significant height of swell waves
    grib2dump = 'SWELL_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
+   fieldmax = 'SWELL_extract_fieldmax.txt'
    if tstep == 1:
-      command = 'wgrib2 '+DSET+' -s | grep "SWELL:surface:anl" | wgrib2 -i '+DSET+' -spread '+grib2dump
+      command = '$WGRIB2 '+DSET+' -s | grep "SWELL:surface:anl" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
+      command2 = '$WGRIB2 '+DSET+' -s | grep "SWELL:surface:anl" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
    else:
-      command = 'wgrib2 '+DSET+' -s | grep "SWELL:surface:'+str((tstep-1)*TINCR)+' hour" | wgrib2 -i '+DSET+' -spread '+grib2dump
+      command = '$WGRIB2 '+DSET+' -s | grep "SWELL:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
+      command2 = '$WGRIB2 '+DSET+' -s | grep "SWELL:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -max | cat >> '+fieldmax
    os.system(command)
+   os.system(command2)
 
 # Set up lon/lat mesh
 lons=np.linspace(x0,x0+float(nlon-1)*dx,num=nlon)
 lats=np.linspace(y0,y0+float(nlat-1)*dy,num=nlat)
 reflon,reflat=np.meshgrid(lons,lats)
 
-if (lons.max()-lons.min()) > 1.0:
+if (lons.max()-lons.min()) > 15.0:
+   dlon = 4.0
+elif (lons.max()-lons.min()) > 1.0:
    dlon = 1.0
 else:
    dlon = (lons.max()-lons.min())/5.
@@ -86,6 +94,9 @@ else:
 
 SITEID = os.environ.get('SITEID')
 CGNUMPLOT = os.environ.get('CGNUMPLOT')
+
+temp=np.loadtxt(fieldmax, delimiter='=', usecols=[1])
+maxval=max(temp)
 
 plt.figure()
 # Read the extracted text file
@@ -128,7 +139,7 @@ for tstep in range(1, (TDEF+1)):
          par[lat,lon] = data[nlon*lat+lon,2:3]
 
    # Remove exception values
-   par[np.where(par==excpt)] = 0.
+   par[np.where(par==-9999)] = np.nan
 
    # Convert units to feet
    unit = 'm'
@@ -138,8 +149,20 @@ for tstep in range(1, (TDEF+1)):
 
    # Plot data
    if tstep == 1:
-      m=Basemap(projection='merc',llcrnrlon=lons.min(),urcrnrlon=lons.max(),llcrnrlat=lats.min(),urcrnrlat=lats.max(),resolution='h')
+      if ((SITEID == 'afg') & (CGNUMPLOT == '1')):
+         m=Basemap(projection='merc',llcrnrlon=lons.min(),urcrnrlon=lons.max(),llcrnrlat=(lats.min()-0.1),urcrnrlat=lats.max(),resolution='h')
+      else:
+         m=Basemap(projection='merc',llcrnrlon=lons.min(),urcrnrlon=lons.max(),llcrnrlat=lats.min(),urcrnrlat=lats.max(),resolution='h')
       x,y=m(reflon,reflat)
+   culim = int(unitconvert*maxval)+1
+   if (not ((SITEID == 'gyx') & (CGNUMPLOT == '2'))) & \
+      (not ((SITEID == 'gyx') & (CGNUMPLOT == '3'))):
+      if (culim > 5):
+         clevs = np.arange(0, culim+1)      #Have to add an additional 1 to get the right array upper limit
+      else:
+         clevs = np.arange(0, culim+0.5, 0.5)      #Have to add an additional 0.5 to get the right array upper limit
+   else:
+      clevs = np.arange(0, culim+1, 0.1)      #Have to add an additional 1 to get the right array upper limit
    m.contourf(x,y,par,clevs,cmap=plt.cm.jet)
    #cmap = plt.get_cmap('BlueRed1')
    #m.contourf(x,y,par,clevs,cmap=cmap)
@@ -157,6 +180,24 @@ for tstep in range(1, (TDEF+1)):
    # Draw CWA zones from ESRI shapefiles. NB: Make sure the lon convention is -180:180.
    #m.readshapefile('marine_zones','marine_zones')
    #m.drawcounties()
+
+   # Draw Columbia River Mouth piers
+   if ((SITEID == 'pqr') & (CGNUMPLOT == '3')):
+      ipierlons = [(235.96161-360),(235.96173-360),(235.95755-360)]
+      ipierlats = [46.265216,46.267288,46.276829]
+      npierlons = [(235.90511-360),(235.91421-360),(235.91421-360),
+                   (235.93265-360),(235.93841-360),(235.94009-360)]
+      npierlats = [46.261173,46.264595,46.264595,46.275276,46.279504,46.280726]
+      spierlons = [(235.92139-360),(235.92446-360),(235.92598-360),(235.9313-360),
+                   (235.95295-360),(235.95676-360),(235.98158-360),(235.99183-360)]
+      spierlats = [46.23481,46.234087,46.233942,46.233758,
+                   46.232979,46.233316,46.227833,46.224246]
+      xx, yy = m(ipierlons, ipierlats) 
+      xxx, yyy = m(npierlons, npierlats) 
+      xxxx, yyyy = m(spierlons, spierlats) 
+      m.plot(xx,yy,color="black", linewidth=2.5, linestyle="-")
+      m.plot(xxx,yyy,color="black", linewidth=2.5, linestyle="-")
+      m.plot(xxxx,yyyy,color="black", linewidth=2.5, linestyle="-")
 
    figtitle = 'NWPS Swell (ft) \n Hour '\
               +str(forecastTime)+' ('+str(date.hour).zfill(2)+'Z'+str(date.day).zfill(2)\

@@ -158,8 +158,10 @@ elsif ($os =~ /Linux/i) {
     print OUTFILE "##############################################################################\n";
     print OUTFILE "F90_SER = ifort\n";
     print OUTFILE "F90_OMP = ifort\n";
-    print OUTFILE "F90_MPI = mpfort\n";
-    print OUTFILE "FLAGS_OPT = \n";
+    #print OUTFILE "F90_MPI = mpfort\n";
+    print OUTFILE "F90_MPI = ftn\n";
+    #print OUTFILE "FLAGS_OPT = \n";
+    print OUTFILE "FLAGS_OPT = -c\n";
     print OUTFILE "FLAGS_MSC = -g -O2 \n";
     print OUTFILE "FLAGS90_MSC = \$(FLAGS_MSC) -ffree-line-length-none\n";
 

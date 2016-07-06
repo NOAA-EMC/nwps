@@ -204,10 +204,10 @@ for parm in ${SWANPARMS}
   cp -f ${ETCdir}/default/*.gs ${TEMPDIR}/.
 
   # AG 11/27/2011: This script will adjust all color scales from latest run.
-  echo ""
-  echo "Updating colorscales based on the latest swan.grib2 data"
-  echo ""
-  ${PYPdir}/fix_colorscales.sh ${CGNUM}
+  #echo ""
+  #echo "Updating colorscales based on the latest swan.grib2 data"
+  #echo ""
+  #${PYPdir}/fix_colorscales.sh ${CGNUM}
 
   # Create SITE and RUN specific GS files
   # Out time and run length will vary with each model run
@@ -388,6 +388,9 @@ for parm in ${SWANPARMS}
 
   tar cvfz ${figsTarFile} *.png
   cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
+  COMOUTCYCold="${COMOUTold}/${cycleout}/CG${CGNUM}"
+  mkdir -p $COMOUTCYCold
+  cp ${figsTarFile} $COMOUTCYCold/${figsTarFile}
   COMOUTCYC="${COMOUT}/${cycleout}/CG${CGNUM}"
   mkdir -p $COMOUTCYC
   cp ${figsTarFile} $COMOUTCYC/${figsTarFile}
