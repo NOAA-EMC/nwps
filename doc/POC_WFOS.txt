@@ -1,2 +1,36 @@
+POC BRO jason.straub@noaa.gov, philip.gonsalves@noaa.gov
+POC CRP mike.buchanan@noaa.gov
+POC HGX mark.keehn@noaa.gov
+POC LCH felix.navejar@noaa.gov
+POC LIX angel.montanez@noaa.gov
+POC MOB ray.ball@noaa.gov
+POC TAE donal.harrigan@noaa.gov
+POC TBW charlie.paxton@noaa.gov
 POC MFL	pablo.santos@noaa.gov
+POC KEY kennard.kasper@noaa.gov, daniel.milner@noaa.gov
+POC MLB peter.blottman@noaa.gov, matthew.volkmer@noaa.gov
+POC JAX andrew.shashy@noaa.gov
+POC SJU andrew.shashy@noaa.gov, carlos.anselmi@noaa.gov
+POC CAR anthony.mignone@noaa.gov 
+POC GYX andrew.pohl@noaa.gov
 POC BOX	james.notchey@noaa.gov
+POC NYC nelson.vaz@noaa.gov, jeffrey.tongue@noaa.gov
+POC PHI alan.cope@noaa.gov, walter.drag@noaa.gov
+POC LWX diana.norgaard@noaa.gov
+POC AKQ scott.schumann@noaa.gov
+POC MHX donnie.king@noaa.gov
+POC ILM carl.r.morgan@noaa.gov
+POC CHS jeffrey.stewart@noaa.gov
+POC SGX ivory.small@noaa.gov, michael.khuat@noaa.gov
+POC LOX william.forwood@noaa.gov, mark.jackson@noaa.gov
+POC MTR drew.peterson@noaa.gov, warren.blier@noaa.gov
+POC EKA sten.tjaden@noaa.gov
+POC MFR michael.stavish@noaa.gov, john.lovegrove@noaa.gov
+POC PQR bill.schneider@noaa.gov, william.ahue@noaa.gov, jeremiah.pyle@noaa.gov
+POC SEW kirby.cook@noaa.gov, melissa.clark@noaa.gov
+POC HFO alex.gibbs@noaa.gov
+POC GUM paul.stanko@noaa.gov
+POC AJK bryan.caffrey@noaa.gov, jason.powers@noaa.gov
+POC AER emily.niebuhr@noaa.gov, craig.searcy@noaa.gov
+POC ALU emily.niebuhr@noaa.gov, craig.searcy@noaa.gov
+POC AFG melissa.kreller@noaa.gov, jay.smith@noaa.gov
