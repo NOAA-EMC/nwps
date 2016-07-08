@@ -79,19 +79,19 @@ directly ingestible in NWPS. These run in parallel to the on-demand runs for eac
 for on-demand use in the latter.
 
 ESTOFS water level and Sea Ice extraction:
-CPU time:   3:17:02 h:min:sec
-Max/Ave Memory :   199 MB / 57.86 MB
-Num of CPUs :   1 (Serial, on 1 node)
+   CPU time:   3:17:02 h:min:sec
+   Max/Ave Memory :   199 MB / 57.86 MB
+   Num of CPUs :   1 (Serial, on 1 node)
 
 RTOFS surface current extraction:
-CPU time:   0:12:27 h:min:sec
-Max/Ave Memory :   100 MB / 34.18 MB
-Num of CPUs :   1 (Serial, on 1 node)
+   CPU time:   0:12:27 h:min:sec
+   Max/Ave Memory :   100 MB / 34.18 MB
+   Num of CPUs :   1 (Serial, on 1 node)
 
 P-Surge water level extraction (tropical conditions in SR/ER):
-CPU time :   2:59:20 h:min:sec
-Max/Ave Memory :   27 MB / 22.08 MB
-Num of CPUs :   23 (cfp parallel, distrib. over 2 nodes)
+   CPU time :   2:59:20 h:min:sec
+   Max/Ave Memory :   27 MB / 22.08 MB
+   Num of CPUs :   23 (cfp parallel, distrib. over 2 nodes)
 
 ii) Real-time, on-demand model:
 For each of the 36 on-demand WFO runs, the following tasks are executed: PREP, FORECAST_CG1, POST_CG1, PRDGEN_CG1,  WAVETRACK_CG1, PRDGEN_CG0. Additionally, up to 4 nested domains are run, using the tasks FORECAST_CGn, POST_CGn and PRDGEN_CGn in a loop of n. The system usage for each of these tasks depends on the specific WFO domain, and number of nest grids. Example system usage values for WFO Medford (MFR) are:
