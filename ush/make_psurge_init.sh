@@ -202,9 +202,9 @@ done
 echo ""
 echo "DEGRIB these GRIB2 files, using multi-core processing..."
 ##Running 24 tasks, 6 per node (on a total of 4 nodes)
-#aprun -n24 -N6 -j1 -d1 cfp ${RUNdir}/degrib_cmdfile
+aprun -n24 -N6 -j1 -d1 cfp ${RUNdir}/degrib_cmdfile
 #Running 24 tasks, 12 per node (on a total of 2 nodes)
-aprun -n24 -N12 -j1 -d1 cfp ${RUNdir}/degrib_cmdfile
+#aprun -n24 -N12 -j1 -d1 cfp ${RUNdir}/degrib_cmdfile
 
 echo ""
 #>052716 echo "Prepare wfo_cmdfile to process the final WFOs in ${RUNdir}/wfolist_psurge_final.dat..."

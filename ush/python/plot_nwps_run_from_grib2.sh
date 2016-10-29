@@ -201,7 +201,6 @@ for parm in ${SWANPARMS}
   echo "Creating run-time PYTHON files from ${PYPdir}/*.py files"
   echo "This will not overwrite your site template file"
   cp -f ${PYPdir}/* ${TEMPDIR}/.
-  cp -f ${ETCdir}/default/*.gs ${TEMPDIR}/.
 
   # AG 11/27/2011: This script will adjust all color scales from latest run.
   #echo ""
@@ -213,11 +212,7 @@ for parm in ${SWANPARMS}
   # Out time and run length will vary with each model run
   sed -i "s/<!-- SET TIMESTEP HERE -->/t2=t1*${LENGTHTIMESTEP}-${LENGTHTIMESTEP}/g" ${TEMPDIR}/*.py
 
-  echo "Creating DAT files from ${ETCdir}/default/*.dat files"
-  cp -f ${ETCdir}/default/*.dat ${TEMPDIR}/.
   
-  echo "Creating ASC files from ${ETCdir}/default/*.asc files"
-  cp -f ${ETCdir}/default/*.asc ${TEMPDIR}/.
 
   echo "Copying LOGO from ${ETCdir}/default/*.gif files"
   cp -f ${ETCdir}/default/*.gif ${TEMPDIR}/.
@@ -388,9 +383,6 @@ for parm in ${SWANPARMS}
 
   tar cvfz ${figsTarFile} *.png
   cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
-  COMOUTCYCold="${COMOUTold}/${cycleout}/CG${CGNUM}"
-  mkdir -p $COMOUTCYCold
-  cp ${figsTarFile} $COMOUTCYCold/${figsTarFile}
   COMOUTCYC="${COMOUT}/${cycleout}/CG${CGNUM}"
   mkdir -p $COMOUTCYC
   cp ${figsTarFile} $COMOUTCYC/${figsTarFile}

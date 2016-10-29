@@ -49,13 +49,13 @@ case ${OFSTYPE} in
         export CYCLE="${CYC}"
         ${USHnwps}/make_estofs.sh
         export err=$?; err_chk
-        rm -rf ${COMOUT}/${OFSTYPE}/{*hourly,*hourly.spool}
+        rm -rf ${RUNdir}/{*hourly,*hourly.spool}
     ;;
     rtofs)
         export CYCLE="00"
         ${USHnwps}/make_rtofs.sh
         export err=$?; err_chk
-        rm -rf ${COMOUT}/${OFSTYPE}/{*hourly,*hourly.spool}
+        rm -rf ${RUNdir}/{*hourly,*hourly.spool}
     ;;
     psurge)
         export CYCLE="00"
@@ -83,7 +83,7 @@ if [ $SENDDBN = YES ]; then
 
         echo "tar cvf ${DATA}/tars/${i##*/}.tar -C ${i} -T ${DATA}/tars/${i##*/}.list; if [ "$?" = "0" ]; then mv ${DATA}/tars/${i##*/}.tar ${COMOUT}/${OFSTYPE}/; $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_TAR $job ${COMOUT}/${OFSTYPE}/${i##*/}.tar; fi" >> ${DATA}/tars/tar_cmdfile
     done
-    mpirun.lsf cfp ${DATA}/tars/tar_cmdfile
+    aprun -n24 -N24 -j1 -d1 cfp ${DATA}/tars/tar_cmdfile
 fi
 
 #####################################################################

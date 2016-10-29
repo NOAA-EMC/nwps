@@ -104,12 +104,29 @@ then
       cp -pfv ${COMINrtofsm1}/* .
       rm -fr index.* robots.*
    fi
-   echo "Downloading RTOFS Data. Checking Today."
-   #${WGET} ${WGETargs} http://${SITE}/${RTOFSPATH}
-   if [ -e ${COMINrtofs}/LOCKFILE ]; then sleep 600; fi
-   cp -pfv ${COMINrtofs}/* .
-   rm -fr index.* robots.*
- 
+
+   #Check whether wind file initialization time (=run start time) falls within yesterday. 
+   # If it does, we shouldn't download today's RTOFS data. 
+   YYYY=`echo ${PDY} | cut -b1-4`
+   MM=`echo ${PDY} | cut -b5-6`
+   DD=`echo ${PDY} | cut -b7-8`
+   time_str="${YYYY} ${MM} ${DD} 00 00 00"
+   pdy_time=`echo ${time_str} | awk -F: '{ print mktime($1 $2 $3 $4 $5 $6) }'`
+   model_start_time=`grep Wind_Mag_SFC:validTimes ${INPUTdir}/wind/*WIND.txt | cut -c29-38 | tail -1`
+   echo "PDY in UNIX time: ${pdy_time}" | tee -a ${LOGfile}
+   echo "Model start UNIX time: ${model_start_time}" | tee -a ${LOGfile}
+
+   if [ $model_start_time -ge $pdy_time ]
+   then
+      echo "Downloading RTOFS Data. Checking Today."
+      #${WGET} ${WGETargs} http://${SITE}/${RTOFSPATH}
+      if [ -e ${COMINrtofs}/LOCKFILE ]; then sleep 600; fi
+      cp -pfv ${COMINrtofs}/* .
+      rm -fr index.* robots.*
+   else
+      echo "Wind initialization time is yesterday. Don't need today's RTOFS data."
+   fi 
+
    echo "Cleaning OLD data from RTOFS Directory"
    if [ -e rtofs_current_start_time.txt ]
    then
@@ -178,8 +195,8 @@ then
          fi
       done
    else
-      echo "WARNING: There are no ESTOFS data available (neither today nor yesterday). Run will continue without water level variation." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-      msg="WARNING: There are no ESTOFS data available (neither today nor yesterday). Run will continue without water level variation."
+      echo "WARNING: There are no ESTOFS/Sea Ice data available (neither today nor yesterday). Run will continue without water level variation and ice blocking." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+      msg="WARNING: There are no ESTOFS/Sea Ice data available (neither today nor yesterday). Run will continue without water level variation and ice blocking."
       postmsg "$jlogfile" "$msg"
       touch ${RUNdir}/noestofs
    fi

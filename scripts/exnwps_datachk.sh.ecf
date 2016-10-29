@@ -58,83 +58,99 @@ function process_nwps_dcom {
     else
         echo "PROCESSING LASTEST WFO FILES FOR THE LAST 6 CYCLES ONLY."
         for dfile in ${DCOM_FILES[@]}; do
+            # remove the path with /gpfs/?p1/nco/ops from dfile for dcom_hist.txt
+            #dfileH=`echo $dfile|awk -Fops '{print $2}'`
+            dfileH=`basename $dfile`
             wfo=$(echo ${dfile} ${dcom}|awk -F_ '{print $2}')
             ecf_wfo=$(grep ${wfo} ${PARMnwps}/wfo.tbl)
             region=$(echo ${ecf_wfo} |awk -F"/" '{print $1}')
-            dcom_name=$(ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}/jnwps_prep; show state"|grep label|awk '{print $NF}'|sed 's/\"//g')
-            if grep -q "STARTED .*$dfile" $dcom_hist && grep -q "FINISHED.*${dfile}" $dcom_hist; then
+            dcom_name=$(ecflow_client --group="get ${ECF_NAME%/*}/regions/${ecf_wfo}/jnwps_prep; show state"|grep label|awk '{print $NF}'|sed 's/\"//g')
+            if grep -q "STARTED .*$dfileH" $dcom_hist && grep -q "FINISHED.*${dfileH}" $dcom_hist; then
                 DCOM_FILES=( "${DCOM_FILES[@]/${dfile}}" )
                 export status="FINISHED"
                 export step=""
                 export job=""
-                export tstart=$(grep STARTED.*${dfile} ${dcom_hist}|awk '{print $NF}'|cut -c9-)
-                export tstop=$(grep FINISHED.*${dfile} ${dcom_hist}|awk '{print $NF}'|cut -c9-)
+                export tstart=$(grep STARTED.*${dfileH} ${dcom_hist}|awk '{print $NF}'|cut -c9-)
+                export tstop=$(grep FINISHED.*${dfileH} ${dcom_hist}|awk '{print $NF}'|cut -c9-)
                 ((nfinished++))
                 echo -ne "$dfile\t\tFINISHED\n"
                 update_web
-            elif grep -q "STARTED .*$dfile" $dcom_histm1 && grep -q "FINISHED.*${dfile}" $dcom_hist; then
+            elif grep -q "STARTED .*$dfileH" $dcom_histm1 && grep -q "FINISHED.*${dfileH}" $dcom_hist; then
                 DCOM_FILES=( "${DCOM_FILES[@]/${dfile}}" )
                 export status="FINISHED"
                 export step=""
-                export tstart=$(grep STARTED.*${dfile} ${dcom_histm1}|awk '{print $NF}'|cut -c9-)
-                export tstop=$(grep FINISHED.*${dfile} ${dcom_histm1}|awk '{print $NF}'|cut -c9-)
+                export tstart=$(grep STARTED.*${dfileH} ${dcom_histm1}|awk '{print $NF}'|cut -c9-)
+                export tstop=$(grep FINISHED.*${dfileH} ${dcom_histm1}|awk '{print $NF}'|cut -c9-)
                 ((nfinished++))
                 echo -ne "$dfile\t\tFINISHED\n"
                 update_web
-            elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && \
-                (ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:aborted) && \
-                (! grep -q "ABORTED.*$dfile" ${dcom_hist} || ! grep -q "ABORTED.*$dfile" ${dcom_hist}); then
+            elif (grep -q "STARTED .*$dfileH" $dcom_histm1 || grep -q "STARTED .*$dfileH" $dcom_hist) && ! grep -q "FINISHED.*${dfileH}" $dcom_hist && \
+                (ecflow_client --group="get ${ECF_NAME%/*}/regions/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:aborted) && \
+                (! grep -q "ABORTED.*$dfileH" ${dcom_hist} || ! grep -q "ABORTED.*$dfileH" ${dcom_hist}); then
                 echo -ne "$dfile\t\t${wfo}\t\t\ta ${ecf_wfo^^} aborted\n"
                 export status="ABORTED"
                 export step=""
-                export tstart=$(grep STARTED.*${dfile} ${dcom_hist}|awk '{print $NF}'|cut -c9-)
-                export tstart=${tstart:-$(grep STARTED.*${dfile} ${dcom_histm1}|awk '{print $NF}'|cut -c9-)}
+                export tstart=$(grep STARTED.*${dfileH} ${dcom_hist}|awk '{print $NF}'|cut -c9-)
+                export tstart=${tstart:-$(grep STARTED.*${dfileH} ${dcom_histm1}|awk '{print $NF}'|cut -c9-)}
                 export tstop=""
                 echo "ABORTED $dfile AT ${tstart}" >> ${dcom_hist}
                 DCOM_FILES=( "${DCOM_FILES[@]/${dfile}}" )
                 ((nignored++))
                 update_web
-            elif grep -q "ABORTED .*${dfile}" $dcom_hist && ! grep -q "FINISHED.*${dfile}" $dcom_hist && \
-                ! (ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:active); then
+            elif grep -q "ABORTED .*${dfileH}" $dcom_hist && ! grep -q "FINISHED.*${dfileH}" $dcom_hist && \
+                ! (ecflow_client --group="get ${ECF_NAME%/*}/regions/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:active); then
                 echo -ne "$dfile\t\t${wfo}\t\t\ta ${ecf_wfo^^} aborted\n"
                 export status="ABORTED"
                 export step=""
-                export tstart=$(grep STARTED.*${dfile} ${dcom_hist}|awk '{print $NF}'|cut -c9-)
-                export tstart=${tstart:-$(grep STARTED.*${dfile} ${dcom_histm1}|awk '{print $NF}'|cut -c9-)}
+                export tstart=$(grep STARTED.*${dfileH} ${dcom_hist}|awk '{print $NF}'|cut -c9-)
+                export tstart=${tstart:-$(grep STARTED.*${dfileH} ${dcom_histm1}|awk '{print $NF}'|cut -c9-)}
                 export tstop=""
                 DCOM_FILES=( "${DCOM_FILES[@]/${dfile}}" )
                 ((nignored++))
                 update_web
-            elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && \
-                ! grep -q "FINISHED.*${dfile}" $dcom_hist && ! (ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:aborted); then
+            elif (grep -q "STARTED .*$dfileH" $dcom_histm1 || grep -q "STARTED .*$dfileH" $dcom_hist) && \
+                ! grep -q "FINISHED.*${dfileH}" $dcom_hist && (ecflow_client --group="get ${ECF_NAME%/*}/regions/${ecf_wfo}; show state" 2> /dev/null|grep "family ${wfo}" |grep --quiet state:complete); then
+                DCOM_FILES=( "${DCOM_FILES[@]/${dfile}}" )
+                export status="FINISHED"
+                export step=""
+                export tstart=$(grep STARTED.*${dfileH} ${dcom_hist}|awk '{print $NF}'|cut -c9-)
+                export tstart=${tstart:-$(grep STARTED.*${dfileH} ${dcom_histm1}|awk '{print $NF}'|cut -c9-)}
+                export tstop=$(date -u "+%Y%m%d%H%M")
+                ((nfinished++))
+                echo "FINISHED $dfile AT ${tstop}" >> ${dcom_hist}
+                DCOM_FILES=( "${DCOM_FILES[@]/${dfile}}" )
+                update_web
+            elif (grep -q "STARTED .*$dfileH" $dcom_histm1 || grep -q "STARTED .*$dfileH" $dcom_hist) && \
+                ! grep -q "FINISHED.*${dfileH}" $dcom_hist && ! (ecflow_client --group="get ${ECF_NAME%/*}/regions/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:aborted); then
                 DCOM_FILES=( "${DCOM_FILES[@]/${dfile}}" )
                 export status="RUNNING"
-                export step=$(ecflow_client "--group=get ${ECF_NAME%/*}/${ecf_wfo}; show state"|grep "task.*state:active"|awk '{print $2}'|sed 's/jnwps_//g')
-                export tstart=$(grep STARTED.*${dfile} ${dcom_hist}|awk '{print $NF}'|cut -c9-)
-                export tstart=${tstart:-$(grep STARTED.*${dfile} ${dcom_histm1}|awk '{print $NF}'|cut -c9-)}
+                export step=$(ecflow_client "--group=get ${ECF_NAME%/*}/regions/${ecf_wfo}; show state"|grep "task.*state:active"|awk '{print $2}'|sed 's/jnwps_//g')
+                export tstart=$(grep STARTED.*${dfileH} ${dcom_hist}|awk '{print $NF}'|cut -c9-)
+                export tstart=${tstart:-$(grep STARTED.*${dfileH} ${dcom_histm1}|awk '{print $NF}'|cut -c9-)}
                 export tstop=""
                 ((nrunning++))
                 echo -ne "$dfile\t\tACTIVE\n"
                 update_web
-            elif grep -q "FINISHED.*${dfile}" $dcom_hist; then
+            elif grep -q "FINISHED.*${dfileH}" $dcom_hist; then
                 echo "$dfile\t\tFINISHED but not STARTED?, please investigate!!!!!!!"
                 DCOM_FILES=( "${DCOM_FILES[@]/${dfile}}" )
                 export status="FINISHED"
                 export step=""
                 export tstart=""
-                export tstop=$(grep FINISHED.*${dfile} ${dcom_hist}|awk '{print $NF}'|cut -c9-)
+                export tstop=$(grep FINISHED.*${dfileH} ${dcom_hist}|awk '{print $NF}'|cut -c9-)
                 ((nfinished++))
                 update_web
-            elif ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:active; then
+            elif ecflow_client --group="get ${ECF_NAME%/*}/regions/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:active; then
                 echo -ne "${dcom_name}\t\t${wfo}\t\t\ta ${ecf_wfo^^} running\n"
                 export status="RUNNING"
-                export step=$(ecflow_client "--group=get ${ECF_NAME%/*}/${ecf_wfo}; show state"|grep "task.*state:active"|awk '{print $2}'|sed 's/jnwps_//g')
+                export step=$(ecflow_client "--group=get ${ECF_NAME%/*}/regions/${ecf_wfo}; show state"|grep "task.*state:active"|awk '{print $2}'|sed 's/jnwps_//g')
+                # JY !!!! should it be dfile other than ${dcom_name} in the following??? 
                 export tstart=$(grep STARTED.*${dcom_name} ${dcom_hist}|awk '{print $NF}'|cut -c9-)
                 export tstop=""
                 DCOM_FILES=( "${DCOM_FILES[@]/${dfile}}" )
                 ((nrunning++))
                 update_web
-            elif grep -q "ERROR.*${dfile}" $dcom_hist; then
+            elif grep -q "ERROR.*${dfileH}" $dcom_hist; then
                 echo -ne "$dfile\t\t${wfo}\t\t\ta ${ecf_wfo^^} has_an_error.\n"
                 export status="ERROR"
                 export step=""
@@ -202,16 +218,17 @@ if [ "${#DCOM_FILES[@]}" -eq 0 ];then
 else
     echo "============"
     for runit in ${DCOM_FILES[@]}; do
-        if [ "$nrunning" -lt 18 ]; then
+        # JY if [ "$nrunning" -lt 18 ]; then
+        if [ "$nrunning" -lt $RUN_LIMIT ]; then
             wfo=$(echo ${runit}|awk -F_ '{print $2}')
             ecf_wfo=$(grep ${wfo} ${PARMnwps}/wfo.tbl)
             region=$(echo ${ecf_wfo} |awk -F"/" '{print $1}')
-            if ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:active; then
+            if ecflow_client --group="get ${ECF_NAME%/*}/regions/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:active; then
                 echo "Not starting ${ecf_wfo} with ${runint}, ${ecf_wfo^^} is active."
                 DCOM_FILES=( "${DCOM_FILES[@]/${runit}}" )
             else
                 echo -ne "QUEUEING:\t\t$wfo\n"
-                ecflow_client --requeue force ${ECF_NAME%/*}/${ecf_wfo} 2> /dev/null
+                ecflow_client --requeue force ${ECF_NAME%/*}/regions/${ecf_wfo} 2> /dev/null
                 #ecflow_client --requeue force ${ECF_NAME%/*}/${ecf_wfo}/jnwps_prep 2> /dev/null
                 #ecflow_client --requeue force ${ECF_NAME%/*}/${ecf_wfo}/jnwps_forecast_cg1 2> /dev/null
                 #ecflow_client --requeue force ${ECF_NAME%/*}/${ecf_wfo}/jnwps_post_cg1 2> /dev/null

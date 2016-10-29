@@ -95,7 +95,7 @@ export GESOUTm1=${GESROOT}/${envir}/${NET}.${PDYm1}
 export dcom_hist="$GESOUT/dcom_hist.txt"
 export dcom_histm1="$GESOUTm1/dcom_hist.txt"
 export web_status_file="$GESOUT/status_file.txt"
-export dcom=${dcom:-/gpfs/${WCOSS_SYSTEM_COM}/dcomdev/us007003}
+export dcom=${dcom:-${DCOMROOT}/us007003}
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 
 # make sure NWPS COM directory exists

@@ -4,9 +4,9 @@
 # PERL Version(s): 5
 # Original Author(s): Eve-Marie Devalire for WFO-Eureka 
 # File Creation Date: 04/20/2004
-# Date Last Modified: 03/24/2016
+# Date Last Modified: 09/15/2016
 #
-# Version control: 2.54
+# Version control: 2.55
 #
 # Support Team:
 #
@@ -441,6 +441,7 @@ sub graphicOutputProcessing (%){
 	my $g2DataType=$_;
 	my $num_componets = 1;
 	my $set_exception_value = 0;
+	my $set_exception_lt_value = 0;
 	my $swan_nan_value = 0.0;
 	my $g2_nan_value = 9.999e+20;
 
@@ -456,48 +457,61 @@ sub graphicOutputProcessing (%){
 	if ($g2DataType eq 'htsgw') { 
 	    $g2DataType='HSIG';
 	    $set_exception_value = 1;
+	    $set_exception_lt_value = 0;
 	    $swan_nan_value = "-9.0";
 	}
 	if ($g2DataType eq 'depth') { 
 	    $g2DataType='DEPTH';
 	    $set_exception_value = 1;
+	    $set_exception_lt_value = 0;
 	    $swan_nan_value = "-99.0";
 	}
 	if ($g2DataType eq 'dirpw') { 
 	    $g2DataType='PDIR';
 	    $set_exception_value = 1;
+	    $set_exception_lt_value = 0;
 	    $swan_nan_value = "-999.0";
 	}
 	if ($g2DataType eq 'perpw') { 
 	    $g2DataType='TPS';
 	    $set_exception_value = 1;
+	    $set_exception_lt_value = 0;
 	    $swan_nan_value = "-9.0";
 	}
 	if ($g2DataType eq 'WLEN') { 
 	    $g2DataType='WLEN';
 	    $set_exception_value = 1;
+	    $set_exception_lt_value = 0;
 	    $swan_nan_value = "-9.0";
 	}
 	if ($g2DataType eq 'brkw') { 
 	    $g2DataType='DISSU'; 
+	    $set_exception_lt_value = 0;
+	    $set_exception_value = 0;
 	}
 	if ($g2DataType eq 'swell') { 
 	    $g2DataType='HSWE';
 	    $set_exception_value = 1;
+	    $set_exception_lt_value = 0;
 	    $swan_nan_value = "-9.0";
 	}
 	if ($g2DataType eq 'wlevel') { 
 	    $g2DataType='WATL';
-	    $set_exception_value = 1;
-	    $swan_nan_value = "-9999.0";
+	    $set_exception_value = 0;
+	    $set_exception_lt_value = 1;
+	    $swan_nan_value = "-30.0";
 	}
 	if ($g2DataType eq 'cur') {
 	    $g2DataType='VEL';
 	    $num_componets = 2;
+	    $set_exception_lt_value = 0;
+	    $set_exception_value = 0;
 	}
 	if ($g2DataType eq 'wnd') {
 	    $g2DataType='WIND';
 	    $num_componets = 2;
+	    $set_exception_lt_value = 0;
+	    $set_exception_value = 0;
 	}
 	
 	# Process the SWAN raw output in ASCII point file format
@@ -514,7 +528,11 @@ sub graphicOutputProcessing (%){
 		print G2LOG "System call: swan_out_to_bin -v -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} \
 >> ${g2logfname}\n";
 		system("swan_out_to_bin -v -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} >> ${g2logfname}" );
-		
+	    }
+	    elsif($set_exception_lt_value == 1) {
+		print G2LOG "System call: swan_out_to_bin -v -l\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} \
+>> ${g2logfname}\n";
+		system("swan_out_to_bin -v -l\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} >> ${g2logfname}" );
 	    }
 	    else {
 		print G2LOG "System call: swan_out_to_bin -v ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} \
@@ -527,6 +545,11 @@ sub graphicOutputProcessing (%){
 		print G2LOG "System call: swan_out_to_bin -v -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir \
 >> ${g2logfname}\n";
 		system("swan_out_to_bin -v -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir >> ${g2logfname}" );
+	    }
+	    elsif($set_exception_lt_value == 1) {
+		print G2LOG "System call: swan_out_to_bin -v -l\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir \
+>> ${g2logfname}\n";
+		system("swan_out_to_bin -v -l\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir >> ${g2logfname}" );
 	    }
 	    else {
 		print G2LOG "System call: swan_out_to_bin -v ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir \

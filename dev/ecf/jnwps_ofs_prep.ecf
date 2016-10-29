@@ -23,14 +23,14 @@
 # ----------------------------------------------------------- 
 
 #BSUB -J ofs_prep
-#BSUB -oo /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/ofs/com/nwps/para/ofs_prep.o
-#     -e /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/ofs/com/nwps/para/ofs_prep.o
+#BSUB -oo /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/ofs_prep.o
+#     -e /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/ofs_prep.o
 #BSUB -q "dev"
 #BSUB -W 5:00
 #BSUB -R rusage[mem=1700]
 #BSUB -P NWPS-T2O
 #BSUB -extsched 'CRAYLINUX[]'
-export NODES=1
+export NODES=4
 
 #module load %MODULES%
 module use /gpfs/hps/nco/ops/nwpara/modulefiles

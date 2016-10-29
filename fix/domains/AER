@@ -72,7 +72,7 @@ export STATN2="NON"
 # Specta points defined as space delimited list of:
 #   "name1:lat1:lon1 name2:lat2:lon2 name3:lat3:lon3 name4:lat4:lon4 name5:lat5:lon5 ...."
 #
-export SPECPOINTS="46001:56.304:-147.92 46080:57.939:-149.96 46076:59.502:-147.990 46082:59.668:-143.392 46061:60.227:-146.834 46060:60.584:-146.784 46108:59.590:-151.817"
+export SPECPOINTS="46001:56.304:-147.92 46080:57.939:-149.96 46076:59.502:-147.990 46082:59.668:-143.392 46061:60.227:-146.834 46060:60.584:-146.784 46108:59.590:-151.817 46081:60.799:-148.263 46077:57.892:-154.291"
 #
 #========================================================================
 #                    WAVE TRACKING (and WAVE PARTITION) ON/OFF          =
@@ -101,7 +101,7 @@ export GEORESWT="12.0"
 # *CAUTION* CHANGE THEM ONLY IF YOU KNOW WHAT YOU ARE DOING
 # RECOMENDED VALUES WVTRKPA="10. 1. 0.25 0.1 10. 1."
 #               dirKnob, perKnob, hsKnob, wetPts, dirTimeKnob, tpTimeKnob
-export WVTRKPA="10. 1. 0.25 0.1 10. 1."
+export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 #
 #========================================================================
 #                   CURRENTS DEFINITION (SEE SWAN MANUAL)               =

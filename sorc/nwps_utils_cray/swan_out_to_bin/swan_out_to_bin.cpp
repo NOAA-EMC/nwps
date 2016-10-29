@@ -6,7 +6,7 @@
 // Compiler Used: MSVC, GCC
 // Produced By: Douglas.Gaer@noaa.gov
 // File Creation Date: 03/01/2011
-// Date Last Modified: 06/03/2016
+// Date Last Modified: 09/14/2016
 // ----------------------------------------------------------- // 
 // ------------- Program Description and Details ------------- // 
 // ----------------------------------------------------------- // 
@@ -47,7 +47,7 @@ using namespace std; // Use unqualified names for Standard C++ library
 #include "dfileb.h"
 #include "futils.h"
 
-const char *version_string = "4.01";
+const char *version_string = "4.02";
 const char *program_name = "swan_out_to_bin";
 const char *program_description = "Program used convert raw SWAN output to a fortan BIN file";
 const char *project_acro = "NWPS";
@@ -66,7 +66,11 @@ gxString process_name;
 // Default exception values
 const float default_nan = 9.999e+20;
 float input_nan = .0;
+float input_lt_nan = .0;
+float input_gt_nan = .0;
 int user_input_nan = 0;
+int user_input_lt_nan = 0;
+int user_input_gt_nan = 0;
 float nan_value = default_nan;
 
 // Functions
@@ -157,20 +161,34 @@ int main(int argc, char **argv)
     std::cout << "element_2 = " << element_2.c_str() << "\n";
     std::cout << "comp_type = " << comp_type << "\n";
 
-    if(user_input_nan == 0) {
+    if((user_input_nan == 0) && (user_input_lt_nan == 0) && (user_input_gt_nan == 0)) {
       std::cout << "Using SWAN default exception values" << "\n";
     }
     else {
-      std::cout << "Replacing SWAN default execption values" << "\n";
-      std::cout << "Input value = ";
-      printf("%E\n", input_nan);
-      std::cout << "Replacement value = ";
-      printf("%E\n", nan_value);
+      if(user_input_nan) {
+	std::cout << "Replacing SWAN default execption values" << "\n";
+	std::cout << "Input value = ";
+	printf("%E\n", input_nan);
+	std::cout << "Replacement value = ";
+	printf("%E\n", nan_value);
+      }
+      if(user_input_lt_nan) {
+	std::cout << "Replacing SWAN execption values with less than value" << "\n";
+	std::cout << "Less than value = ";
+	printf("%E\n", input_lt_nan);
+	std::cout << "Replacement value = ";
+	printf("%E\n", nan_value);
+      }
+      if(user_input_gt_nan) {
+	std::cout << "Replacing SWAN execption values with greater than value" << "\n";
+	std::cout << "Greater than value = ";
+	printf("%E\n", input_gt_nan);
+	std::cout << "Replacement value = ";
+	printf("%E\n", nan_value);
+      }
     }
-
     std::cout << "\n";
   }
-
 
   char sbuf[1024];
   gxString ofname;
@@ -247,6 +265,12 @@ int main(int argc, char **argv)
 	if(user_input_nan == 1) {
 	  if(f == input_nan) f = nan_value;
 	}
+	if(user_input_lt_nan == 1) {
+	  if(f < input_lt_nan) f = nan_value;
+	}
+	if(user_input_gt_nan == 1) {
+	  if(f > input_gt_nan) f = nan_value;
+	}
 	ofile.df_Write(&f, sizeof(f));
 	point_number++;
 	if(point_number == num_data_points) {
@@ -292,6 +316,12 @@ int main(int argc, char **argv)
 	sscanf(vals[i].c_str(), "%f", &f);
 	if(user_input_nan == 1) {
 	  if(f == input_nan) f = nan_value;
+	}
+	if(user_input_lt_nan == 1) {
+	  if(f < input_lt_nan) f = nan_value;
+	}
+	if(user_input_gt_nan == 1) {
+	  if(f > input_gt_nan) f = nan_value;
 	}
 	ofile << f;
 	point_number++;
@@ -515,6 +545,16 @@ int ProcessArgs(int argc, char *argv[])
 	  input_nan = atof(sbuf);
 	  user_input_nan = 1;
 	  break;
+	case 'l': case 'L':
+	  strncpy(sbuf, &argv[i][2], (sizeof(sbuf)-1));
+	  input_lt_nan = atof(sbuf);
+	  user_input_lt_nan = 1;
+	  break;
+	case 'g': case 'G':
+	  strncpy(sbuf, &argv[i][2], (sizeof(sbuf)-1));
+	  input_gt_nan = atof(sbuf);
+	  user_input_gt_nan = 1;
+	  break;
 	case 'e': case 'E':
 	  strncpy(sbuf, &argv[i][2], (sizeof(sbuf)-1));
 	  nan_value = atof(sbuf);
@@ -553,6 +593,12 @@ void HelpMessage()
     std::cout << "\n";
     std::cout << "Usage3 - Define an input exception value and a replacment exception value:" << "\n";
     std::cout << "         " << process_name << " -n\"-999\" -e\"9.999e+20\" filename  num_points timestep num_elements run_len" << "\n";
+    std::cout << "Usage4 - Define an input exception less than specified value:" << "\n";
+    std::cout << "         " << process_name << " -l\"-1000\" filename  num_points timestep num_elements run_len" << "\n";
+    std::cout << "Usage5 - Define an input exception greater than specified value:" << "\n";
+    std::cout << "         " << process_name << " -g\"1000\" filename  num_points timestep num_elements run_len" << "\n";
+    std::cout << "Usage6 - Define an input exception value range:" << "\n";
+    std::cout << "         " << process_name << "-l\"-1000\" -g\"1000\" filename  num_points timestep num_elements run_len" << "\n";
     std::cout << "\n";
     std::cout << "\n";
 }

@@ -76,9 +76,9 @@ export err=$?; err_chk
 #    ${NWPSdir}/ush/make_psurge_final.sh  mfl 3600
 cd ${RUNdir}
 ##Running 24 tasks, 6 per node (on a total of 4 nodes)
-#aprun -n24 -N6 -j1 -d1 cfp ${RUNdir}/wfo_cmdfile
+aprun -n24 -N6 -j1 -d1 cfp ${RUNdir}/wfo_cmdfile
 #Running 24 tasks, 12 per node (on a total of 2 nodes)
-aprun -n24 -N12 -j1 -d1 cfp ${RUNdir}/wfo_cmdfile
+#aprun -n24 -N12 -j1 -d1 cfp ${RUNdir}/wfo_cmdfile
 export err=$?; err_chk
 
 #Log file

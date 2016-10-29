@@ -3,7 +3,6 @@ date
 export PS4='$SECONDS ${0/\/nw.*\/nwps.*\/} + '
 set -xa
 
-export DBNROOT=${UTILROOT}/para_dbn
 # #### 04/01/15 ###############################
 # SETUP NWPS SHELL VARIABLES
 # #############################################
@@ -30,7 +29,7 @@ export SENDDBN=${SENDDBN:-YES}
 ####################################
 # Specify Execution Areas
 ####################################
-export HOMEnwps=${NWROOT}/${model}.${nwps_ver}
+export HOMEnwps=${HOMEnwps:-${NWROOT}/${model}.${nwps_ver}}
 export FIXnwps=${FIXnwps:-${HOMEnwps}/fix}
 export EXECnwps=${EXECnwps:-${HOMEnwps}/exec}
 export SORCnwps=${SORCnwps:-${HOMEnwps}/sorc}
@@ -70,21 +69,13 @@ setpdy.sh
 ##############################################
 # Define COM directory
 ##############################################
-export COMROOTp2=/com2
-export COMIN=${COMROOT}/${NET}/${envir}/${OFS}.${PDY}
-export COMINm1=${COMROOT}/${NET}/${envir}/${WFO}.${PDYm1}
-export COMINm2=${COMROOT}/${NET}/${envir}/${WFO}.${PDYm2}
-export COMINm3=${COMROOT}/${NET}/${envir}/${WFO}.${PDYm3}
 export COMOUT=${COMOUT:-${COMROOT}/${NET}/${envir}/${OFS}.${PDY}}
 export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
-#export COMINgfs=${COMROOT}/gfs/prod/gfs.${PDY}
-export COMINwave=${COMROOTp1}/wave/prod
 export COMINestofs=${COMROOTp1}/estofs/prod/estofs.${PDY}
 export COMINestofspac=${COMROOTp1}/estofs/prod/estofs_pac.${PDY}
 export COMINrtofs=${COMROOTp1}/rtofs/prod/rtofs.${PDY}
 export COMINsice=${COMROOTp1}/omb/prod/sice.${PDY}
 export COMINsicem1=${COMROOTp1}/omb/prod/sice.${PDYm1}
-export dcom=${dcom:-/dcom/us007003}
 #export COMINpsurge=${COMROOTp2}/nhc/${envir}/psurge.${PDY}
 export COMINpsurge=${COMROOTp2}/nhc/prod/psurge.${PDY}
 #
@@ -93,7 +84,7 @@ if [ "${SENDCOM}" = YES ]; then
     mkdir -p $COMOUT
 fi
 
-mkdir -p $COMIN $LOGdir $RUNdir $TMPdir $OUTPUTdir $ARCHdir $DATAdir $INPUTdir $VARdir $GESOUT
+mkdir -p $LOGdir $RUNdir $TMPdir $OUTPUTdir $ARCHdir $DATAdir $INPUTdir $VARdir $GESOUT
 
 ##############################################
 # Execute the script

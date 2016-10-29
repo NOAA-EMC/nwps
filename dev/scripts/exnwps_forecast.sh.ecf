@@ -41,6 +41,8 @@ ${USHnwps}/nwps_coremodel_cg${N,,}.pl
 export err=$?; err_chk
 
 # Copy any final forecaster warnings out to COMOUT and GESOUT
+hh=`cat ${RUNdir}/CYCLE`
+export COMOUTCYC="${COMOUT}/${hh}"
 mkdir -p $COMOUTCYC $GESOUT/warnings
 cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${COMOUTCYC}/Warn_Forecaster_${SITEID}.${PDY}.txt
 cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${GESOUT}/warnings/Warn_Forecaster_${SITEID}.${PDY}.txt

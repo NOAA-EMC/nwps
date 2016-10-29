@@ -112,7 +112,7 @@ export STATN3="NON"
 #   "name1:lat1:lon1 name2:lat2:lon2 name3:lat3:lon3 name4:lat4:lon4 ...."
 #
 # Just our buoys for now... may want to add Tumon Bay and other tourist hot spots later
-export SPECPOINTS="52200:13.354:215.212 APRP7:13.444:215.343 52211:15.267:214.338" 
+export SPECPOINTS="52200:13.350:215.210 APRP7:13.444:215.343 52211:15.267:214.338 52202:13.682:215.189" 
 ### export SPECPOINTS="Ipan:13.35:144.79 Ritidian:13.68:144.81 Tanapag:15.27:145.66"
 ### model reads 360-lon, so to get 144.788 I have to give it 215.212
 ### and so on. Coordinates taken from NDBC website.
@@ -139,13 +139,13 @@ export NELATWT="16.81"
 export NELONWT="211.71"
 export SWLATWT="12.34"
 export SWLONWT="216.33"
-export GEORESWT="5.0"
+export GEORESWT="7.5"
 #
 # PARAMETERS FOR TRACKING ALGORITHM for WVTONCG=0 or =1 THIS IS ALWAYS READ
 # *CAUTION* CHANGE THEM ONLY IF YOU KNOW WHAT YOU ARE DOING
 # RECOMENDED VALUES WVTRKPA="10. 1. 0.25 0.1 10. 1."
 #               dirKnob, perKnob, hsKnob, wetPts, dirTimeKnob, tpTimeKnob
-export WVTRKPA="10. 1. 0.25 0.1 10. 1."
+export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 #
 #========================================================================
 #                   CURRENTS DEFINITION (SEE SWAN MANUAL)               =

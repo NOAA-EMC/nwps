@@ -103,7 +103,7 @@ export STATN2="STA"
 # Spectra points defined as space delimited list of:
 #   "name1:lat1:lon1 name2:lat2:lon2 name3:lat3:lon3 name4:lat4:lon4 ...."
 #
-export SPECPOINTS="44033:44.060:-69.000"
+export SPECPOINTS="44033:44.060:-69.000 44007:43.525:-70.141 44032:43.716:-69.355"
 #
 #========================================================================
 #                    WAVE TRACKING (and WAVE PARTITION) ON/OFF          =
@@ -133,7 +133,7 @@ export GEORESWT="3.5"
 # *CAUTION* CHANGE THE ONLY IF YOU KNOW WHAT YOU ARE DOING
 # RECOENDED VALUES WVTRKPA="10. 1. 0.25 0.1 10. 1."
 #               dirKnob, perKnob, hsKnob, wetPts, dirTimeKnob, tpTimeKnob
-export WVTRKPA="10. 1. 0.25 0.1 10. 1."
+export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 #
 #========================================================================
 #                   CURRENTS DEFINITION (SEE SWAN ANUAL)               =

@@ -25,26 +25,11 @@
 date
 export PS4='$SECONDS ${0/\/nw.*\/nwps.*\/} + '
 set -xa
-# #### 04/01/15 ###############################
-# SETUP NWPS SHELL VARIABLES
-# #############################################
-#export DATA=${DATA:-${DATAROOT}/${jobid}}
-#export DATA=$DATAROOT/p${model}_${WFO}_${envir}
-#if [ "$envir" = 'prod' ] || [ "$envir" = 'test' ] || [ "$envir" = 'para' ]; then
-#  export DATA=$DATAROOT/p${model}_${WFO}_${envir}
-#else
-  export DATA=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/ofs
-  #export COMROOT=${DATA}/com
-  export COMROOTp2=/gpfs/hps/nco/ops/com
-  export GESROOT=${DATA}/nwges
 
-#fi
-
-mkdir -p $DATA
-cd $DATA
 # time step in Psurge data
 #export TS_f=21600
 export TS_f=3600
+
 curhour=$(date -u +%H)
 if [ $curhour -lt 12 ]; then CYCLE="00"; fi
 if [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
@@ -54,6 +39,24 @@ echo ""
 echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
 export cyc=${CYCLE}
 export cycle=t${cyc}z
+export pgmout=OUTPUT.$$
+
+export utilscript=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.3/ush
+export USHutil=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.3/ush
+sh $utilscript/setpdy.sh
+
+. ./PDY
+
+sh $utilscript/setup.sh
+export pgm="ofs.psurge"
+
+export DATA=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/ofs.${PDY}
+#export COMROOT=${DATA}/com
+export COMROOTp2=/gpfs/hps/nco/ops/com
+export GESROOT=${DATA}/nwges
+
+mkdir -p $DATA
+cd $DATA
 
 ####################################
 # Specify NET and RUN Name and model
@@ -99,15 +102,6 @@ export DEBUG_LEVEL=${DEBUG_LEVEL:-1}
 export ISPRODUCTION=${ISPRODUCTION:-TRUE}
 export SITETYPE=${SITETYPE:-EMC}
 
-export pgmout=OUTPUT.$$
-export utilscript=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.3/ush
-export USHutil=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.3/ush
-sh $utilscript/setpdy.sh
-. ./PDY
-
-sh $utilscript/setup.sh
-export pgm="ofs.psurge"
-
 ##############################################
 # Define COM directory
 ##############################################
@@ -133,12 +127,12 @@ export COMINsicem1=${COMROOTp1}/omb/prod/sice.${PDYm1}
 #export COMINpsurge=$COMROOTp2/nhc/test/psurge.20150507/
 #--------------------------------------------------
 # TEST 4
-export COMINpsurge=${COMROOTp2}/nhc/para/psurge.20160406
+#export COMINpsurge=${COMROOTp2}/nhc/para/psurge.20160406
 #--------------------------------------------------
 # PRODUCTION
 # To work with the latest Psurge fields
 #export COMINpsurge=$COMROOTp2/nhc/test/psurge.PDY
-
+export COMINpsurge=${COMROOTp2}/nhc/prod/psurge.${PDY}
 
 export dcom=${dcom:-/dcom/us007003}
 export PCOM=/pcom/${envir}/${NET}

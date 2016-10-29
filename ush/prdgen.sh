@@ -297,7 +297,7 @@ YMDH=${PDY}
       echo "   Run tocgrib2"
       export pgm=tocgrib2
       export pgmout="tocgrib2_${grdID}.out"
-      . ./prep_step
+      . prep_step
 
       export FORT11="gribfile.$grdID"
       export FORT31="gribindex.$grdID"

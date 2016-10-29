@@ -32,9 +32,8 @@ export TZ=UTC
 # Script variables
 # ===========================================================
 # Set our top level data processing directory
-DATAdir="${COMOUT}/estofs"
-PRODUCTdir="${DATAdir}/ncep_hourly"
-SPOOLdir="${DATAdir}/ncep_hourly.spool"
+PRODUCTdir="${RUNdir}/ncep_hourly"
+SPOOLdir="${RUNdir}/ncep_hourly.spool"
 
 # NOTE: This is our final out DIR
 # NOTE: Change this to the FTP/HTTP server download path
@@ -66,7 +65,7 @@ function MakeClip() {
     if [ ! -e ${CLIPdir}/${clip_file} ];then
 	    echo "Clip and reproject to LAT/LON grid" 
 	    echo "${WGRIB2} ${DIR}/${FILE} -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/${clip_file}" 
-	    ${WGRIB2} ${DIR}/${FILE} -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/${clip_file} 
+	    ${WGRIB2} ${DIR}/${FILE} -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/${clip_file}
     fi
 
     swan_wl_ofile_fname="wave_estofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
@@ -118,8 +117,8 @@ function process_wfolist() {
        hasdownload_000=${hasDL[5]}
      fi
 #................................................
-    OUTPUTdir="${DATAdir}/${wfo}_output"
-    CLIPdir="${DATAdir}/${wfo}_hourly"
+    OUTPUTdir="${RUNdir}/${wfo}_output"
+    CLIPdir="${RUNdir}/${wfo}_hourly"
     INGESTdir="${INGESTdir_org}/${wfo}"
     if [ ! -e ${OUTPUTdir} ]; then mkdir -p ${OUTPUTdir}; fi
     if [ ! -e ${CLIPdir} ]; then mkdir -p ${CLIPdir}; fi
@@ -203,11 +202,11 @@ function process_wfolist() {
 
                if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
                    sleep 2
-                   echo "ERROR - downling file ${PRODUCTdir}/${file}" 
+                   echo "ERROR - downling file ${PRODUCTdir}/${icefile}" 
                fi
                cp -rp ${COMINsice}/${icefile} .
                if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
-                   echo "ERROR - downling file ${PRODUCTdir}/${file}"
+                   echo "ERROR - downling file ${PRODUCTdir}/${icefile}"
                    export err=1; err_chk
                fi
 
@@ -218,13 +217,17 @@ function process_wfolist() {
 
                if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
                    sleep 2
-                   echo "ERROR - downling file ${PRODUCTdir}/${file}" 
+                   echo "ERROR - downling file ${PRODUCTdir}/${icefile}" 
                fi
                cp -rp ${COMINsicem1}/${icefile} .
                if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
-                   echo "ERROR - downling file ${PRODUCTdir}/${file}"
+                   echo "ERROR - downling file ${PRODUCTdir}/${icefile}"
                    export err=1; err_chk
                fi
+            else
+                echo "FATAL ERROR - Sea ice file ${PRODUCTdir}/${icefile} not available today or yesterday."
+                ls -l ${COMINsicem1}/${icefile} ${COMINsice}/${icefile}
+                export err=1; err_chk
             fi
         fi
 
@@ -236,15 +239,30 @@ function process_wfolist() {
     then
        echo "Using sea ice to mask ESTOFS area with high ice density"
        echo "Clip and reproject to sea ice grid"
-       echo "${WGRIB2} ${SPOOLdir}/${icefile} -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/ice.grib2"
-       ${WGRIB2} ${SPOOLdir}/${icefile} -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/ice.grib2
+       #--- Make local copy of input file and check size -----------
+       cp ${SPOOLdir}/${icefile} ${CLIPdir}/${icefile}
+       $WGRIB2 -count ${CLIPdir}/${icefile} > ${CLIPdir}/filechk
+       nrecords=`wc -l ${CLIPdir}/filechk | cut -c1`
+       while [ ${nrecords} -ne 1 ]; do
+          echo "Repeating GRIB2 ice file copy for ${wfo}"
+          cp ${SPOOLdir}/${icefile} ${CLIPdir}/${icefile}
+          $WGRIB2 -count ${CLIPdir}/${icefile} > ${CLIPdir}/filechk
+          nrecords=`wc -l ${CLIPdir}/filechk | cut -c1`
+       done
+       #------------------------------------------------------------
+       echo "${WGRIB2} ${CLIPdir}/${icefile} -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/ice.grib2"
+       ${WGRIB2} ${CLIPdir}/${icefile} -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/ice.grib2
        PARM="ICEC"
        echo "Extract ${PARM} data"
        echo "${WGRIB2} -no_header -match ${PARM} -bin ${CLIPdir}/ice.bin ${CLIPdir}/ice.grib2"
        ${WGRIB2} -no_header -match ${PARM} -bin ${CLIPdir}/ice.bin ${CLIPdir}/ice.grib2
     fi
 
-    epoc_time=`${WGRIB2} -unix_time ${SPOOLdir}/${file} | grep "1:4:unix" | awk -F= '{ print $3 }'`
+    while [ "${epoc_time}" == "" ]; do
+       echo "Extracting epoc time for ${wfo}"
+       epoc_time=`${WGRIB2} -unix_time ${SPOOLdir}/${file} | grep "1:4:unix" | awk -F= '{ print $3 }'`
+    done
+    #epoc_time=`${WGRIB2} -unix_time ${SPOOLdir}/${file} | grep "1:4:unix" | awk -F= '{ print $3 }'`
     date_str=`echo ${epoc_time} | awk '{ print strftime("%Y%m%d", $1) }'`
     echo ${epoc_time} > ${OUTPUTdir}/estofs_waterlevel_start_time.txt
     echo "ESTOFSDOMAIN:${ESTOFSDOMAIN}" > ${OUTPUTdir}/estofs_waterlevel_domain.txt
@@ -259,7 +277,19 @@ function process_wfolist() {
     swan_wl_ofile="${OUTPUTdir}/${swan_wl_ofile_fname}"
 
     if [ ! -e ${swan_wl_ofile} ];then
-        MakeClip ${SPOOLdir} ${file} 0 ${WFO}    
+        #MakeClip ${SPOOLdir} ${file} 0 ${WFO}
+        #--- Make local copy of input file and check size -----------
+        cp ${SPOOLdir}/${file} ${CLIPdir}/${file}
+        $WGRIB2 -count ${CLIPdir}/${file} > ${CLIPdir}/filechk
+        nrecords=`wc -l ${CLIPdir}/filechk | cut -c1`
+        while [ ${nrecords} -ne 3 ]; do
+           echo "Repeating GRIB2 file copy for ${wfo} f000"
+           cp ${SPOOLdir}/${file} ${CLIPdir}/${file}
+           $WGRIB2 -count ${CLIPdir}/${file} > ${CLIPdir}/filechk
+           nrecords=`wc -l ${CLIPdir}/filechk | cut -c1`
+        done
+        MakeClip ${CLIPdir} ${file} 0 ${WFO}
+        #------------------------------------------------------------
     	export err=$?; err_chk
         swan_wl_ifname="wave_estofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
         if [ ${WFO} != "NHC" -a ${WFO} != "OPC" ]
@@ -334,8 +364,20 @@ function process_wfolist() {
     	    fi
     	fi
     	touch ${VARdir}/hasestofsdownload_${CYCLE}z.${ESTOFS_BASIN}.${ESTOFS_REGION}.f${FF}
-    
-    	MakeClip ${PRODUCTdir} ${file} ${end} ${WFO}
+
+        #--- Make local copy of input file and check size -----------
+        cp ${PRODUCTdir}/${file} ${CLIPdir}/${file}
+        $WGRIB2 -count ${CLIPdir}/${file} > ${CLIPdir}/filechk
+        nrecords=`wc -l ${CLIPdir}/filechk | cut -c1`
+        while [ ${nrecords} -ne 3 ]; do
+           echo "Repeating GRIB2 file copy for ${wfo} f${FF}"
+           cp ${PRODUCTdir}/${file} ${CLIPdir}/${file}
+           $WGRIB2 -count ${CLIPdir}/${file} > ${CLIPdir}/filechk
+           nrecords=`wc -l ${CLIPdir}/filechk | cut -c1`
+        done
+        MakeClip ${CLIPdir} ${file} ${end} ${WFO}
+        #------------------------------------------------------------
+    	#MakeClip ${PRODUCTdir} ${file} ${end} ${WFO}
     	export err=$?; err_chk
         swan_wl_ifname="wave_estofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
         if [ ${WFO} != "NHC" -a ${WFO} != "OPC" ]
@@ -351,13 +393,18 @@ function process_wfolist() {
 #        fi
     done
     rm ${OUTPUTdir}/LOCKFILE
+    #--- Copy WFO output to COMOUT
+    mkdir -p ${COMOUT}/estofs/${wfo}_output
+    cp ${OUTPUTdir}/wave_estofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f*.dat ${COMOUT}/estofs/${wfo}_output/
+    cp ${OUTPUTdir}/estofs_waterlevel_domain.txt ${COMOUT}/estofs/${wfo}_output/
+    cp ${OUTPUTdir}/estofs_waterlevel_start_time.txt ${COMOUT}/estofs/${wfo}_output/
 }
 
 # Make any of the following directories if needed
-mkdir -p ${DATAdir}
 mkdir -p ${PRODUCTdir}
 mkdir -p ${SPOOLdir}
 mkdir -p ${VARdir}
+mkdir -p ${COMOUT}/estofs/
 
 # Cleanup
 echo "Clean up working directory ${VARdir}..."
@@ -385,12 +432,15 @@ echo "ESTOFSHOURS = ${ESTOFSHOURS}"
 echo "ESTOFSTIMESTEP = ${ESTOFSTIMESTEP}" 
 INGESTdir_org="${INGESTdir}"
 
+if [ -e ${RUNdir}/cgn_cmdfile ];then
+    rm ${RUNdir}/cgn_cmdfile
+fi
 for site in ${WFOLIST};do
-    #echo "export site=${site}; process_wfolist " >> ${RUNdir}/cgn_cmdfile
-    export site=${site}; process_wfolist
+    echo "export site=${site}; process_wfolist " >> ${RUNdir}/cgn_cmdfile
+    #export site=${site}; process_wfolist
 done
 
-#mpirun.lsf cfp ${RUNdir}/cgn_cmdfile
+aprun -n36 -N18 -j1 -d1 cfp ${RUNdir}/cgn_cmdfile
 
 datetime=`date -u`
 echo "Ending download at $datetime UTC" 

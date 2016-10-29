@@ -43,19 +43,14 @@ export TZ=UTC
 
 # Script variables
 # ===========================================================
-BINdir="${UShnwps}/rtofs/bin"
+#BINdir="${UShnwps}/rtofs/bin"
 LOGfile="${LOGdir}/make_rtofs_sector.log"
 myPWD=$(pwd)
 
 # Set top level our data processing directory
-DATAdir="${COMOUT}/rtofs"
-PRODUCTdir="${DATAdir}/ncep_hourly"
-SPOOLdir="${DATAdir}/ncep_hourly.spool"
+PRODUCTdir="${RUNdir}/ncep_hourly"
+SPOOLdir="${RUNdir}/ncep_hourly.spool"
 CLIPdir="${VARdir}/rtofs"
-
-# NOTE: This is our final out DIR
-# NOTE: Change this to the FTP/HTTP server download path
-INGESTdir="${COMIN}/rtofs"
 
 # Set our purging varaibles
 RTOFSPURGEdays="5"
@@ -140,17 +135,16 @@ mkdir -p ${PRODUCTdir}
 mkdir -p ${SPOOLdir}
 mkdir -p ${VARdir}
 mkdir -p ${LOGdir}
-mkdir -p ${INGESTdir}
 mkdir -p ${CLIPdir}
+mkdir -p ${RUNdir}
+mkdir -p ${COMOUT}/rtofs/
 
 ## Starting purging here
 #echo "Purging any RTOFS data older than ${RTOFSPURGEdays} days old" | tee -a ${LOGfile}
 #find ${DATAdir} -type f -mtime +${RTOFSPURGEdays} | xargs rm -f
-#find ${INGESTdir} -type f -mtime +${RTOFSPURGEdays} | xargs rm -f
 #find ${VARdir} -name "hasrtofsdownload*" -print | xargs rm -f
 #find ${SPOOLdir} -type f -mtime +${RTOFSPURGEdays} | xargs rm -f
 #find ${CLIPdir} -type f -mtime +${RTOFSPURGEdays} | xargs rm -f
-#find ${INGESTdir} -type f -mtime +${RTOFSPURGEdays} | xargs rm -f
 #find ${PRODUCTdir} -type f -mtime +${RTOFSPURGEdays} | xargs rm -f
 
 function MakeClip() {
@@ -183,22 +177,19 @@ function MakeClip() {
     cat ${CLIPdir}/VOGRD.dat >> ${CLIPdir}/cur.dat
     ${HOMEnwps}/exec/fix_ascii_point_data ${CLIPdir}/cur.dat 9.999e+20 0.0 ${swan_cur_ofile}
     
-    if [ "${IS_LDMSERVER}" == "TRUE" ]
-    then
-	cd ${OUTPUTdir}
-	swan_dist_file="${OUTPUTdir}/rtofs_swan_${epoc_time}_${date_str}_t${CYCLE}z_f${FF}_${REGION}.tar.gz" 
-	if [ ! -e ${swan_dist_file} ]
-	then 
-	    echo "Creating SWAN distrib file ${swan_dist_file}" | tee -a ${LOGfile}
-	    cd ${OUTPUTdir}
-	    tar cvfz ${swan_dist_file} ${swan_cur_ofile_fname} rtofs_current_start_time.txt rtofs_current_domain.txt 
-	    cd ${CLIPdir}
-	    if [ -e ${ldm_server_script} ]; then source ${ldm_server_script}; fi 
-	fi
-    else
-	echo "Copying SWAN input files ${INGESTdir}" | tee -a ${LOGfile}
-	cp -pfv ${swan_cur_ofile} ${INGESTdir}/. | tee -a ${LOGfile}
-    fi
+    #if [ "${IS_LDMSERVER}" == "TRUE" ]
+    #then
+    #	cd ${OUTPUTdir}
+    #   swan_dist_file="${OUTPUTdir}/rtofs_swan_${epoc_time}_${date_str}_t${CYCLE}z_f${FF}_${REGION}.tar.gz" 
+    #   if [ ! -e ${swan_dist_file} ]
+    #   then
+    #       echo "Creating SWAN distrib file ${swan_dist_file}" | tee -a ${LOGfile}
+    #       cd ${OUTPUTdir}
+    #       tar cvfz ${swan_dist_file} ${swan_cur_ofile_fname} rtofs_current_start_time.txt rtofs_current_domain.txt 
+    #       cd ${CLIPdir}
+    #       if [ -e ${ldm_server_script} ]; then source ${ldm_server_script}; fi 
+    #   fi
+    #fi
 }
 
 datetime=`date -u`
@@ -207,7 +198,6 @@ echo "Our spool DIR for FTP data is: ${SPOOLdir}" | tee -a ${LOGfile}
 echo "Our spool DIR for FTP forecast data is: ${PRODUCTdir}" | tee -a ${LOGfile}  
 echo "RTOFSHOURS = ${RTOFSHOURS}" | tee -a ${LOGfile}
 echo "RTOFSTIMESTEP = ${RTOFSTIMESTEP}" | tee -a ${LOGfile}
-INGESTdir_org="${INGESTdir}"
 CLIPdir_org="${CLIPdir}"
 
 # Create WFO list to make init files for
@@ -271,12 +261,10 @@ do
     WFO=$(echo ${site} | tr [:lower:] [:upper:])
     wfo=$(echo ${site} | tr [:upper:] [:lower:])
     source ${FIXnwps}/configs/${wfo}_ncep_config.sh    
-    OUTPUTdir="${DATAdir}/${wfo}_output"
+    OUTPUTdir="${RUNdir}/${wfo}_output"
     CLIPdir="${CLIPdir_org}/${wfo}"
-    INGESTdir="${INGESTdir_org}/${wfo}"
     if [ ! -e ${OUTPUTdir} ]; then mkdir -p ${OUTPUTdir}; fi
     if [ ! -e ${CLIPdir} ]; then mkdir -p ${CLIPdir}; fi
-    if [ ! -e ${INGESTdir} ]; then mkdir -p ${INGESTdir}; fi
 
     #echo 'Invoking touch. File is:'
     #echo ${OUTPUTdir}/LOCKFILE
@@ -404,9 +392,8 @@ do
     wfo=$(echo ${site} | tr [:upper:] [:lower:])
     source ${FIXnwps}/configs/${wfo}_ncep_config.sh    
     RTOFSSECTOR=$(echo ${RTOFSSECTOR} | tr [:upper:] [:lower:])
-    OUTPUTdir="${DATAdir}/${wfo}_output"
+    OUTPUTdir="${RUNdir}/${wfo}_output"
     CLIPdir="${CLIPdir_org}/${wfo}"
-    INGESTdir="${INGESTdir_org}/${wfo}"
 
     # Set our script variables from the WFO config
     NX=${RTOFSNX}
@@ -446,7 +433,13 @@ do
 	MakeClip ${end}
 	let end+=$TIMESTEP
     done
+
     #rm ${OUTPUTdir}/LOCKFILE
+    #--- Copy WFO output to COMOUT
+    mkdir -p ${COMOUT}/rtofs/${wfo}_output
+    cp ${OUTPUTdir}/wave_rtofs_uv_${epoc_time}_${date_str}_${CYCLE}_f*.dat ${COMOUT}/rtofs/${wfo}_output/
+    cp ${OUTPUTdir}/rtofs_current_domain.txt ${COMOUT}/rtofs/${wfo}_output/
+    cp ${OUTPUTdir}/rtofs_current_start_time.txt ${COMOUT}/rtofs/${wfo}_output/
 done
 
 cd ${SPOOLdir}
@@ -457,34 +450,19 @@ find ${SPOOLdir} -name "*.out" -print | xargs rm -fv
 datetime=`date -u`
 echo "Ending RTOFS make clips at $datetime UTC" | tee -a ${LOGfile}
 
-for site in ${WFOLIST}
-do
-    WFO=$(echo ${site} | tr [:lower:] [:upper:])
-    wfo=$(echo ${site} | tr [:upper:] [:lower:])
-    source ${FIXnwps}/configs/${wfo}_ncep_config.sh    
-    OUTPUTdir="${DATAdir}/${wfo}_output"
-    echo "Purging previous run from ${OUTPUTdir}" | tee -a ${LOGfile} 2>&1
-    ${BINdir}/purge_rtofs.sh ${OUTPUTdir} ${RTOFSHOURS} | tee -a ${LOGfile}
-done
+#for site in ${WFOLIST}
+#do
+#    WFO=$(echo ${site} | tr [:lower:] [:upper:])
+#    wfo=$(echo ${site} | tr [:upper:] [:lower:])
+#    source ${FIXnwps}/configs/${wfo}_ncep_config.sh    
+#    OUTPUTdir="${RUNdir}/${wfo}_output"
+#    echo "Purging previous run from ${OUTPUTdir}" | tee -a ${LOGfile} 2>&1
+#    ${BINdir}/purge_rtofs.sh ${OUTPUTdir} ${RTOFSHOURS} | tee -a ${LOGfile}
+#done
  
 if [ $end -ge ${RTOFSHOURS} ]
 then 
     echo "We completed the download out to ${HOURS}" | tee -a ${LOGfile} 2>&1
-
-    for site in ${WFOLIST}
-    do
-	WFO=$(echo ${site} | tr [:lower:] [:upper:])
-	wfo=$(echo ${site} | tr [:upper:] [:lower:])
-	source ${FIXnwps}/configs/${wfo}_ncep_config.sh    
-	OUTPUTdir="${DATAdir}/${wfo}_output"
-	INGESTdir="${INGESTdir_org}/${wfo}"
-	cat ${OUTPUTdir}/rtofs_current_start_time.txt > ${INGESTdir}/rtofs_current_start_time.txt
-	cat ${OUTPUTdir}/rtofs_current_domain.txt  > ${INGESTdir}/rtofs_current_domain.txt   
-	echo "Purging previous run from ${INGESTdir}" | tee -a ${LOGfile} 2>&1
-	${BINdir}/purge_rtofs.sh ${INGESTdir} ${RTOFSHOURS} | tee -a ${LOGfile}
-	echo "$RSYNC -av --force ${OUTPUTdir}/*.dat ${INGESTdir}/." | tee -a ${LOGfile} 2>&1
-	$RSYNC -av --force ${OUTPUTdir}/*.dat ${INGESTdir}/.  | tee -a ${LOGfile} 2>&1
-    done
 fi
 
 echo "Processing complete" | tee -a ${LOGfile}

@@ -373,70 +373,25 @@ fi
 echo "Done" | tee -a $logfile
 
 echo " " | tee -a $logfile
-################################################################### 
-# NOTE: Add all output DIRs to archive here
-OUTPUTdirs="grib2 hdf5 netCdf partition spectra"
-
-for dir in $OUTPUTdirs
-do 
-    echo "Archive ${dir} output to ${ARCHdir}:"   | tee -a $logfile
-    for i in $(ls -1d ${OUTPUTdir}/${dir}/CG[0-9])
-    do
-	BASEDIR=$(basename $i)
-	cd $i
-	for j in $(ls -1 * | head -n $TRIM)
-	do
-	    test -d ${ARCHdir}/${dir}/$BASEDIR || mkdir -vp ${ARCHdir}/${dir}/$BASEDIR | tee -a $logfile
-	    echo -n ": " | tee -a $logfile
-	    cp -fvp $j ${ARCHdir}/${dir}/$BASEDIR/ | tee -a $logfile
-	done
-    done
-    echo "Done" | tee -a $logfile
-done
-
-echo " " | tee -a $logfile
-################################################################### 
-for dir in $OUTPUTdirs
-do 
-    echo "Cleaning ${ARCHdir} DIR CG# files" | tee -a $logfile
-    for i in $(ls -1d ${ARCHdir}/${dir}/CG[0-9])
-    do
-	cd $i
-	KEEP=7
-	COUNT=$(ls -1 * | wc -l)
-	TRIM=$(expr $COUNT - $KEEP)
-	if [[ $TRIM -gt 0 ]]
-	then
-	    echo "Removing old files in $i ... " | tee -a $logfile
-	    for j in $(ls -1 * | head -n $TRIM)
-	    do
-		echo -n ": " | tee -a $logfile
-		rm -fv $j     | tee -a $logfile
-	    done
-	fi
-    done
-    echo "Done" | tee -a $logfile
-done
-
-echo " " | tee -a $logfile
-
-################################################################### 
 echo "Cleaning out netcdf/CG directories:"           | tee -a $logfile
-cd ${OUTPUTdir}/netCdf/CG1
-KEEP=2
-COUNT=$(ls -1 | wc -l)
-TRIM=$(expr $COUNT - $KEEP)
-if [[ $TRIM -gt 0 ]]
+if [ -e ${OUTPUTdir}/netCdf/CG1 ]
 then
+  cd ${OUTPUTdir}/netCdf/CG1
+  KEEP=2
+  COUNT=$(ls -1 | wc -l)
+  TRIM=$(expr $COUNT - $KEEP)
+  if [[ $TRIM -gt 0 ]]
+  then
     for i in $(ls -1 | head -n $TRIM)
     do
         echo -n ": "                        | tee -a $logfile
         rm -vf $i                           | tee -a $logfile
     done
-fi
-echo "Done" | tee -a $logfile
+  fi
+  echo "Done" | tee -a $logfile
 
-echo " " | tee -a $logfile
+  echo " " | tee -a $logfile
+fi
 
 if [ -e ${OUTPUTdir}/netCdf/CG2 ]
 then
@@ -610,22 +565,24 @@ fi
 
 ################################################################### 
 echo "Cleaning out hdf5/CG directories:"           | tee -a $logfile
-cd ${OUTPUTdir}/hdf5/CG1
-KEEP=2
-COUNT=$(ls -1 | wc -l)
-TRIM=$(expr $COUNT - $KEEP)
-if [[ $TRIM -gt 0 ]]
+if [ -e ${OUTPUTdir}/hdf5/CG1 ]
 then
+  cd ${OUTPUTdir}/hdf5/CG1
+  KEEP=2
+  COUNT=$(ls -1 | wc -l)
+  TRIM=$(expr $COUNT - $KEEP)
+  if [[ $TRIM -gt 0 ]]
+  then
     for i in $(ls -1 | head -n $TRIM)
     do
         echo -n ": "                        | tee -a $logfile
         rm -vf $i                           | tee -a $logfile
     done
+  fi
+  echo "Done" | tee -a $logfile
+
+  echo " " | tee -a $logfile
 fi
-echo "Done" | tee -a $logfile
-
-echo " " | tee -a $logfile
-
 if [ -e ${OUTPUTdir}/hdf5/CG2 ]
 then
 cd ${OUTPUTdir}/hdf5/CG2

@@ -12,14 +12,14 @@ if $(cd $HOMEnwps/sorc); then
         make
         make install
         export GEOS_DIR=${HOMEnwps}/lib/basemap
-        ln -sf ${HOMEnwps}/lib/basemap ${HOMEnwps}/lib/basemap/lib
-        ln -sf ${HOMEnwps}/lib/basemap ${HOMEnwps}/lib/basemap/include
+        ln -sf ../../lib/basemap ../../../lib/basemap/lib
+        ln -sf ../../lib/basemap ../../../lib/basemap/include
         make clean
         
         #Make BASEMAP
-        python setup.py clean -a
         cd $HOMEnwps/sorc/basemap-1.0.7
-        python setup.py install -f --prefix=${GEOS_DIR} --install-lib=${GEOS_DIR}
+        python -W ignore::UserWarning:distutils.dist setup.py clean -a
+        python -W ignore::UserWarning:distutils.dist setup.py install -f --prefix=${GEOS_DIR} --install-lib=${GEOS_DIR}
     fi
 else
     echo "\$HOMEnwps is not defined"

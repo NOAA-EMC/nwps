@@ -3,7 +3,6 @@ date
 export PS4='$SECONDS ${0/\/nw.*\/nwps.*\/} + '
 set -xa
 
-export DBNROOT=${UTILROOT}/para_dbn
 # #### 04/01/15 ###############################
 # SETUP NWPS SHELL VARIABLES
 # #############################################
@@ -41,7 +40,7 @@ export SENDDBN=${SENDDBN:-NO}
 ####################################
 # Specify Execution Areas
 ####################################
-export HOMEnwps=${NWROOT}/${model}.${nwps_ver}
+export HOMEnwps=${HOMEnwps:-${NWROOT}/${model}.${nwps_ver}}
 export FIXnwps=${FIXnwps:-${HOMEnwps}/fix}
 export EXECnwps=${EXECnwps:-${HOMEnwps}/exec}
 export SORCnwps=${SORCnwps:-${HOMEnwps}/sorc}
@@ -90,22 +89,9 @@ export COMINm2=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm2}/${WFO}
 export COMINm3=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm3}/${WFO}
 export COMOUT=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
 export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
-#export COMINgfs=${COMROOT}/gfs/prod/gfs.${PDY}
-#----Parallel feed for adjusted WW3 Multi_1 Boundary Conditions------------------
-#export COMINwave=${COMROOTp1}/wave/prod
 export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )
-export COMINwave=/gpfs/${WCOSS_SYSTEM}d1/emc/marine/noscrub/wavepa/COM_DEV/
-#----Suggested paths for OFS PREP output (see get_ncep_initfiles.sh)-------
-export COMINestofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/estofs/${WFO}_output
-export COMINestofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/estofs/${WFO}_output
-export COMINrtofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/rtofs/${WFO}_output
-export COMINrtofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/rtofs/${WFO}_output
-export COMINpsurge=${COMROOT}/${NET}/${envir}/ofs.${PDY}/psurge/${WFO}_output
-export COMINpsurgem1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/psurge/${WFO}_output
 #--------------------------------------------------------------------------
-#export dcom=${dcom:-/dcom/us007003}
 export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )
-export dcom=${dcom:-/gpfs/${WCOSS_SYSTEM}p1/dcomdev/us007003}
 export PCOM=${PCOMROOT}/${NET}
 # make sure NWPS COM directory exists
 if [ "${SENDCOM}" = YES ]; then
