@@ -1,7 +1,0 @@
-SweepLineEvent.lo: SweepLineEvent.cpp \
-  ../../../include/geos/index/sweepline/SweepLineEvent.h \
-  ../../../include/geos/export.h
-
-../../../include/geos/index/sweepline/SweepLineEvent.h:
-
-../../../include/geos/export.h:

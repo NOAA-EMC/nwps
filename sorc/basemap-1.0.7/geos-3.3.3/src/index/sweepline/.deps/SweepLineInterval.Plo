@@ -1,7 +1,0 @@
-SweepLineInterval.lo: SweepLineInterval.cpp \
-  ../../../include/geos/index/sweepline/SweepLineInterval.h \
-  ../../../include/geos/export.h
-
-../../../include/geos/index/sweepline/SweepLineInterval.h:
-
-../../../include/geos/export.h:

@@ -1,7 +1,0 @@
-BoundaryNodeRule.lo: BoundaryNodeRule.cpp \
-  ../../include/geos/algorithm/BoundaryNodeRule.h \
-  ../../include/geos/export.h
-
-../../include/geos/algorithm/BoundaryNodeRule.h:
-
-../../include/geos/export.h:
