@@ -53,9 +53,6 @@ cd ${NWPSdir}/sorc
 #PYTHON MODULES (Basemap and Matplotlib)
 ./make_python_modules.sh
 
-#BASEMAP FOR PYTHON
-./make_basemap.sh
-
 #FOR PSURGE2NWPS
 #The following will generate the executables: psurge2nwps_64, psurge_identify.exe and  psoutTOnwps.exe.
 ./make_Psurge2NWPS.sh
