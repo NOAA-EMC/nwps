@@ -52,7 +52,6 @@ export pgm="ofs.psurge"
 
 export DATA=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/ofs.${PDY}
 #export COMROOT=${DATA}/com
-export COMROOTp2=/gpfs/hps/nco/ops/com
 export GESROOT=${DATA}/nwges
 
 mkdir -p $DATA
@@ -113,8 +112,10 @@ export COMINwave=${COMROOTp1}/wave/prod
 export COMINestofs=${COMROOTp1}/estofs/prod/estofs.${PDY}
 export COMINestofspac=${COMROOTp1}/estofs/prod/estofs_pac.${PDY}
 export COMINrtofs=${COMROOTp1}/rtofs/prod/rtofs.${PDY}
-export COMINsice=${COMROOTp1}/omb/prod/sice.${PDY}
-export COMINsicem1=${COMROOTp1}/omb/prod/sice.${PDYm1}
+export COMINsice=${COMROOTp2}/omb/prod/sice.${PDY}
+export COMINsicem1=${COMROOTp2}/omb/prod/sice.${PDYm1}
+
+export COMROOTp2=/gpfs/hps/nco/ops/com
 
 # TEST 1  (See ush/make_psurge_para.sh) 
 #export COMINpsurge=${NWROOT}/com2/nhc/para
