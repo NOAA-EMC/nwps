@@ -33,7 +33,7 @@ export NELON="-85.90"
 export SWLAT="28.50"
 export SWLON="-89.10"
 export RES="1.8"
-export TSTEP="3"
+export TSTEP="1"
 #
 #========================================================================
 #                  NESTED GRID CONFIGURATION                              =
@@ -78,31 +78,34 @@ export NELONN1="-87.65"
 export SWLATN1="30.15"
 export SWLONN1="-88.45"
 export RESN1=".75"
-export TSTEPN1="3"
+export TSTEPN1="1"
 export STATN1="NON"
+#
 # NEST 2...Perdido Bay
 export NELATN2="30.55"
 export NELONN2="-87.20"
 export SWLATN2="30.08"
 export SWLONN2="-87.68"
 export RESN2=".75"
-export TSTEPN2="3"
+export TSTEPN2="1"
 export STATN2="NON"
+#
 # NEST 3...Escam/Pens. Bays
 export NELATN3="30.65"
 export NELONN3="-86.78"
 export SWLATN3="30.10"
 export SWLONN3="-87.32"
 export RESN3=".75"
-export TSTEPN3="3"
+export TSTEPN3="1"
 export STATN3="NON"
+#
 # NEST 4...Choct Bay
 export NELATN4="30.55"
 export NELONN4="-86.07"
 export SWLATN4="30.15"
 export SWLONN4="-86.80"
 export RESN4=".75"
-export TSTEPN4="3"
+export TSTEPN4="1"
 export STATN4="NON"
 #
 #

@@ -21,8 +21,6 @@ module load grib_util/1.0.3
 module load PrgEnv-intel
 module load cfp-intel-sandybridge
 module load netcdf4-python
-module use ${NWROOT}/lib/python/modulefiles
-module load nwps_python
 #----------------------------------------------------------------
 export FORT_BUFFERED=true
 export NWPSplatform="WCOSS"

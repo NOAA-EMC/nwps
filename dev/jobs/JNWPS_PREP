@@ -35,15 +35,15 @@ if [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
 if [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
 if [ $curhour -ge 22 ]; then CYCLE="18"; fi
 echo ""
-echo "INFO - Current hour is ${curhour}, setting mo /dcom/us007003/YYYYMMDD/wtxtbul/nhc_nwps_bc/del cycle to ${CYCLE}"
+echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
 
 export cyc=${CYCLE}
 export cycle=t${cyc}z
 export pgmout=OUTPUT.$$
 
-export UTILROOT=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.3
+export UTILROOT=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.12
 
-cd /gpfs/hps/ptmp/${DEVWCOSS_USER}/data/
+cd /gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/
 
 export utilscript=${UTILROOT}/ush
 export USHutil=${UTILROOT}/ush
@@ -54,8 +54,8 @@ mv PDY PDY.${WFO}
 sh $utilscript/setup.sh
 export pgm="NWPS"
 
-export DATA=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/${WFO}.${PDY}
-export GESROOT=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/nwges
+export DATA=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/${WFO}.${PDY}
+export GESROOT=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/nwges
 
 mkdir -p $DATA
 cd $DATA
@@ -105,6 +105,7 @@ export GEN_HDF5=${GEN_HDF5:-FALSE}
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOMEnwps}/lib/szip:${HOMEnwps}/lib/proj
 
 # Set NWPS run conditions
+export RETROSPECTIVE=${RETROSPECTIVE:-FALSE}
 export DEBUGGING=${DEBUGGING:-TRUE}
 export DEBUG_LEVEL=${DEBUG_LEVEL:-1}
 export ISPRODUCTION=${ISPRODUCTION:-TRUE}
@@ -129,7 +130,8 @@ export GESOUTm2=${GESROOT}/${envir}/${NET}.${PDYm2}
 export GESIN=${GESROOT}/${envir}/${NET}.${PDY}
 export GESINm1=${GESROOT}/${envir}/${NET}.${PDYm1}
 export GESINm2=${GESROOT}/${envir}/${NET}.${PDYm2}
-#export COMINgfs=${COMROOT}/gfs/prod/gfs.${PDY}
+
+export COMINgfs=${COMROOTp2}/gfs/prod/gfs.${PDY}
 export COMINwave=${COMROOTp1}/wave/prod
 export COMINestofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/estofs/${WFO}_output
 export COMINestofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/estofs/${WFO}_output
@@ -138,7 +140,7 @@ export COMINrtofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/rtofs/${WFO}_output
 export COMINpsurge=${COMROOT}/${NET}/${envir}/ofs.${PDY}/psurge/${WFO}_output
 export COMINpsurgem1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/psurge/${WFO}_output
 export dcom=${dcom:-${DCOMROOT}/us007003}
-export COMINwaveTAFB=$dcom
+#AW export COMINwaveTAFB=$dcom
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 export COM_nwps_R_ES_TOFS="/com"
 export PCOM=${PCOMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}

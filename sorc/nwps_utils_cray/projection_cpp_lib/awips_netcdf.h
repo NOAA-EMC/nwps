@@ -6,7 +6,7 @@
 // C++ Compiler Used: MSVC, GCC
 // Produced By: Douglas.Gaer@noaa.gov
 // File Creation Date: 06/14/2011
-// Date Last Modified: 04/18/2013
+// Date Last Modified: 01/04/2017
 // ---------------------------------------------------------------- // 
 // ------------- Include File Description and Details ------------- // 
 // ---------------------------------------------------------------- // 
@@ -110,8 +110,12 @@ struct netCDFVariables {
 // Standalone functions shared by all classes 
 int ParseNCDumpVars(char *fname, NCDumpStrings &nc);
 gxString *GetVars(NCDumpStrings &nc, const gxString &var_str_name, unsigned &numvars);
-int WriteNCDumpData(char *netcdf_filename, const gxString &data_var_name, const gxString &output_bin_filename,
+int WriteNCDumpData(char *netcdf_filename, const gxString &data_var_name, 
+		    const gxString &output_bin_filename,
 		    unsigned &num_points, gxString &error_string);
+float *WriteNCDumpDataToMembuf(char *netcdf_filename, const gxString &data_var_name, 
+			       float *mbuf, const int &expected_num_points,
+			       int &read_num_points, gxString &error_string);
 
 #endif // __M_AWIPS_NETCDF_HEADERS_HPP__
 // ----------------------------------------------------------- //

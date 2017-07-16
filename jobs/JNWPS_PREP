@@ -63,10 +63,9 @@ export LOGdir=${LOGdir:-${DATA}/logs}
 export GEN_NETCDF=${GEN_NETCDF:-FALSE}
 export GEN_HDF5=${GEN_HDF5:-FALSE}
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOMEnwps}/lib/szip:${HOMEnwps}/lib/proj
-export PYTHONPATH=${HOMEnwps}/lib/python/python_modules/lib64/python2.6/site-packages:${HOMEnwps}/lib/basemap:${PYTHONPATH}
-export PYTHON=python
 
 # Set NWPS run conditions
+export RETROSPECTIVE=${RETROSPECTIVE:-FALSE}
 export DEBUGGING=${DEBUGGING:-TRUE}
 export DEBUG_LEVEL=${DEBUG_LEVEL:-1}
 export ISPRODUCTION=${ISPRODUCTION:-TRUE}
@@ -95,20 +94,17 @@ export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
 export GESOUTm1=${GESROOT}/${envir}/${NET}.${PDYm1}
 export GESOUTm2=${GESROOT}/${envir}/${NET}.${PDYm2}
 
-#----Parallel feed for adjusted WW3 Multi_1 Boundary Conditions-----------
+export COMINgfs=${COMROOTp2}/gfs/prod/gfs.${PDY}
 export COMINwave=${COMROOTp1}/wave/prod
-
-export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )
-
 #----Suggested paths for OFS PREP output (see get_ncep_initfiles.sh)-------
 export COMINestofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/estofs/${WFO}_output
 export COMINestofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/estofs/${WFO}_output
-export COMINrtofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/rtofs/${WFO}_output
-export COMINrtofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/rtofs/${WFO}_output
+export COMINrtofs=${COMROOT}/${NET}/prod/ofs.${PDY}/rtofs/${WFO}_output
+export COMINrtofsm1=${COMROOT}/${NET}/prod/ofs.${PDYm1}/rtofs/${WFO}_output
 export COMINpsurge=${COMROOT}/${NET}/${envir}/ofs.${PDY}/psurge/${WFO}_output
 export COMINpsurgem1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/psurge/${WFO}_output
 #--------------------------------------------------------------------------
-export dcom=${dcom:-/gpfs/${WCOSS_SYSTEM}p1/nco/ops/dcom/us007003}
+export dcom=${dcom:-${DCOMROOT}/us007003}
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 export PCOM=${PCOMROOT}/${NET}
 # make sure NWPS COM directory exists
@@ -117,6 +113,8 @@ if [ "${SENDCOM}" = YES ]; then
 fi
 
 mkdir -p $COMIN $COMOUT $LOGdir $RUNdir $TMPdir $OUTPUTdir $ARCHdir $DATAdir $INPUTdir $VARdir $GESOUT
+
+env
 
 ##############################################
 # Execute the script

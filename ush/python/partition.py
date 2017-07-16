@@ -34,9 +34,13 @@ def read_controlFile(cfile):
             run  = words[3]
             fhr  = run[0:2]
             step = int(words[4][0])
+            yyyy = int(words[5])
+            mm = int(words[6])
+            dd = int(words[7])
+            hh = int(words[8])
         else:
             continue
-    return file,xcol,rows,yval,prts,cols,run,fhr,step,undef
+    return file,xcol,rows,yval,prts,cols,run,fhr,step,undef,yyyy,mm,dd,hh
 
 #===========================================
 #---- MAIN SCRIPT --------- MAIN SCRIPT ----
@@ -66,19 +70,23 @@ cWind = open('windforhansonplots.ctl','r')    	# Control file
 #----------------------------------------------
 #--- Read Wave Partition binary & control file
 #----------------------------------------------
-fwave,waveXcol,waveRows,waveYval,wavePrts,waveCols,waveRun,waveFhr,waveStep,missing_val = read_controlFile(cWave)
+fwave,waveXcol,waveRows,waveYval,wavePrts,waveCols,waveRun,waveFhr,waveStep,missing_val,YYYY,MM,DD,HH = read_controlFile(cWave)
 bWave = open(fwave,'r')        	# Binary 1D Spectrum file
 
-print(fwave,waveXcol,waveRows,waveYval,wavePrts,waveCols,waveRun,waveFhr,waveStep)
+print(fwave,waveXcol,waveRows,waveYval,wavePrts,waveCols,waveRun,waveFhr,waveStep,YYYY,MM,DD,HH)
 
 waveRun = waveRun.upper()
 
 waveXvals = arange(0,waveCols,1)
+waveXdates = [datetime.datetime(YYYY, MM, DD, HH, 00) + datetime.timedelta(hours=x) for x in range(0, waveCols)]
 waveYvals = np.linspace(0, 25, num=waveRows)	# Frequency [Hz]
 
+#waveXticks = []
+#for xt in waveXvals:
+#    waveXticks.append(str(xt*1))
 waveXticks = []
-for xt in waveXvals:
-    waveXticks.append(str(xt*3))
+for d in waveXdates:
+    waveXticks.append(d.strftime("%m/%d\n%HZ"))
     
 data = np.fromfile(bWave, dtype=np.float32) # read the binary data
 data = data.reshape((wavePrts*2,waveCols,waveRows)) # reshape the data file (2*components u,v)
@@ -90,7 +98,7 @@ bWave.close()
 #----------------------------------------------
 #--- Read Wind Partition binary & control file
 #----------------------------------------------
-fwind,windXcol,windRows,windYval,windPrts,windCols,windRun,windFhr,windStep,missing_val = read_controlFile(cWind)
+fwind,windXcol,windRows,windYval,windPrts,windCols,windRun,windFhr,windStep,missing_val,YYYY,MM,DD,HH = read_controlFile(cWind)
 bWind = open(fwind,'r')        	# Binary 1D Spectrum file
 
 windData = np.fromfile(bWind, dtype=np.float32) # read the binary data
@@ -121,7 +129,7 @@ timeSteps = wavePrts	# (2*components u,v)
 if timeSteps > 20:
     XtickSpacing = 2
 elif timeSteps >= 36:
-    XtickSpacing = 4
+    XtickSpacing = 8
 else:
     XtickSpacing = 1
 
@@ -163,6 +171,8 @@ timeSteps = min(9,timeSteps)          ## Limit plot to 9 wave systems
 for i in range(0,timeSteps,1):
     
     subplot(6,1,(1,4))
+    ## 12/23/16 AW: With model output now hourly, thin out quiver plot to 3-hourly again
+    #Qwave = quiver(x[:,0::3],y[:,0::3],UWave[i,:,0::3],VWave[i,:,0::3],scale=int(np.round(mxUVwave,1)*15),color=VectorColors[i])
     Qwave = quiver(x,y,UWave[i,:,:],VWave[i,:,:],scale=int(np.round(mxUVwave,1)*15),color=VectorColors[i])
     
     ax=gca()
@@ -173,10 +183,10 @@ for i in range(0,timeSteps,1):
     ax.tick_params( labelsize='x-small')
     ax.set_ylabel('Peak Wave Period [s]',labelpad = 12)
 
-    xticks(waveXvals,waveXticks)
+    xticks(waveXvals[0::12],waveXticks[0::12])
     xlim(0,waveXvals[-1])
     title('Gerling-Hanson Plot for '+LocName+' ('+lon+'$^\circ$,'+lat+'$^\circ$) '+'\nNWPS RUN: '+waveRun)
-    xlabel('Z-Time [hours from '+waveRun+']')
+    xlabel('Time [UTC]',labelpad=2)
     
     if i == (timeSteps-1):
 	annotate(' NWPSystem\n\nWave\nPartition', xy=(1.1, 0.925), xycoords='axes fraction', color='k', horizontalalignment='center')
@@ -185,6 +195,8 @@ for i in range(0,timeSteps,1):
 
     
 subplot(6,1,(5,6))
+## 12/23/16 AW: With model output now hourly, thin out quiver plot to 3-hourly again 
+#Qwind = quiver(Xwnd[:,0::3],Ywnd[:,0::3],UWind[:,0::3],VWind[:,0::3],scale=np.round(mxUVwind,1)*10,width=0.0025, color=VectorColors[0])
 Qwind = quiver(Xwnd,Ywnd,UWind,VWind,scale=np.round(mxUVwind,1)*10,width=0.0025, color=VectorColors[0])
 
 ax1=gca()
@@ -194,7 +206,7 @@ ax1.yaxis.set_major_locator(MultipleLocator(int(np.round(mxUVwind*1.94,0))/2))
 ax1.yaxis.grid(b=True, which='major', color='#C0C0C0', linestyle=':')
 ax1.tick_params( labelsize='x-small')
 
-xticks(waveXvals,waveXticks)
+xticks(waveXvals[0::12],waveXticks[0::12])
 xlim(0,waveXvals[-1])
 ylabel('Wind Speed [kts]')
 ylim(int(np.round(mxUVwind*1.94,0))*-1,int(np.round(mxUVwind*1.94,0)))

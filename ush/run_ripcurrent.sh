@@ -53,11 +53,89 @@ else
     export err=1; err_chk
 fi
 
+ndata=1
+while read p; do
+  echo ${ndata} $p
+   if [ ${ndata} -eq 1 ]; then
+    NWPSdir=$p;
+   fi
+   if [ ${ndata} -eq 2 ]; then
+     ISPRODUCTIO=$p;
+   fi
+   if [ ${ndata} -eq 3 ]; then
+     DEBUGGING=$p;
+   fi
+   if [ ${ndata} -eq 4 ]; then
+     DEBUG_LEVEL=$p;
+   fi
+   if [ ${ndata} -eq 5 ]; then
+     BATHYdb=$p;
+   fi
+   if [ ${ndata} -eq 6 ]; then
+     SHAPEFILEdb=$p;
+   fi
+   if [ ${ndata} -eq 7 ]; then
+     ARCHdir=$p;
+   fi
+   if [ ${ndata} -eq 8 ]; then
+    DATAdir=$p;
+   fi
+   if [ ${ndata} -eq 9 ]; then
+    INPUTdir=$p;
+   fi
+   if [ ${ndata} -eq 10 ]; then
+     LOGdir=$p;
+   fi
+   if [ ${ndata} -eq 11 ]; then
+     VARdir=$p;
+   fi
+   if [ ${ndata} -eq 12 ]; then
+     OUTPUTdir=$p;
+   fi
+   if [ ${ndata} -eq 13 ]; then
+     RUNdir=$p;
+   fi
+   if [ ${ndata} -eq 14 ]; then
+     TMPdir=$p;
+   fi
+   if [ ${ndata} -eq 15 ]; then
+     RUNLEN=$p;
+   fi
+   if [ ${ndata} -eq 16 ]; then
+     WNA=$p;
+   fi
+   if [ ${ndata} -eq 17 ]; then
+     NEST=$p;
+   fi
+   if [ ${ndata} -eq 18 ]; then
+     RTOFS=$p;
+   fi
+   if [ ${ndata} -eq 19 ]; then
+     ESTOFS=$p;
+   fi
+   if [ ${ndata} -eq 20 ]; then
+     WINDS=$p;
+   fi
+   if [ ${ndata} -eq 21 ]; then
+     WEB=$p;
+   fi
+   if [ ${ndata} -eq 22 ]; then
+     export PLOT=$p;
+   fi
+   if [ ${ndata} -eq 23 ]; then
+     SITEID=$p;
+   fi
+   if [ ${ndata} -eq 24 ]; then
+    MODELCORE=$p;
+   fi
+  ndata=$(( $ndata + 1 ))
+done < ${RUNdir}/info_to_nwps_coremodel.txt
+
 if [ "$1" != "" ]; then CGnumber="$1"; fi
 
 if [ "${CGnumber}" == "" ]
     then
-    msg="FATAL ERROR: Rip current program: No CGNUM was specified. Minimum usage is run_nos.sh [CGnumber] [Contour]"
+    msg="FATAL ERROR: Rip current program: No CGNUM was specified. Minimum usage is run_ripcurrent.sh [CGnumber] [Contour]"
     postmsg $jlogfile "$msg"
     export err=1; err_chk
 fi
@@ -200,9 +278,10 @@ while read line; do
    fi
    # Get the current model data
    if [[ -f ${RIPDATA}/${CONT}m_contour_${CG}.${INIT_DATE}_${SITEID} ]]; then
+      let ntimes=${RUNLEN}+1
       cat ${RIPDATA}/${CONT}m_contour_${CG}.${INIT_DATE}_${SITEID} | \
       awk "/${LAT}/ && /${LON}/" | \
-      head -103 >> fort.20
+      head -${ntimes} >> fort.20
    fi
    # Get the data for the previous three days (just the first 24h for each run)
    if [ -f fort.22 ]; then

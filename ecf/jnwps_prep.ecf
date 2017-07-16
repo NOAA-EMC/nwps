@@ -16,6 +16,7 @@ module load %MODULES%
 module use /gpfs/hps/nco/ops/nwpara/modulefiles
 module load prod_envir
 module load prod_util
+module load grib_util/1.0.3
 module load PrgEnv-intel
 #----------------------------------------------------------------
 export FORT_BUFFERED=true

@@ -34,7 +34,7 @@ fi
 #loading the necessary modules 
 #module purge
 #module load ncep
-#module load ../modulefiles/NWPS/v1.1.0
+#module load ../modulefiles/NWPS/v1.2.0
 #module list
 
 # We can only use the GNU compiler or the Jasper/JPEG compression library will not work properly

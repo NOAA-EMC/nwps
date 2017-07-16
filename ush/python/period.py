@@ -55,6 +55,11 @@ if os.path.isfile("swan.ctl"):
    dummy2 = dummy.split(" ")
    TDEF = int(dummy2[1])
    TINCR = int(dummy2[4].rstrip("hr\n"))
+   #----- Default to a plotting interval of 3h; adjust TDEF accordingly -----
+   TINCR_OLD = TINCR
+   TINCR = 3
+   TDEF = (TDEF-1)/(TINCR/TINCR_OLD)+1
+   #-------------------------------------------------------------------------
 else:
    print '*** TERMINATING ERROR: Missing control file: swan.ctl'
    sys.exit()
@@ -80,7 +85,7 @@ for tstep in range(1, (TDEF+1)):
    os.system(command)
 
    # Primary wave direction
-   grib2dump = 'DIRPW_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
+   grib2dump = 'DIRPWPER_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
    if tstep == 1:
       command = '$WGRIB2 '+DSET+' -s | grep "DIRPW:surface:anl" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
    else:
@@ -150,7 +155,7 @@ for tstep in range(1, (TDEF+1)):
    par[np.where(par==-9999)] = np.nan
 
    # Primary wave direction
-   grib2dump = 'DIRPW_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
+   grib2dump = 'DIRPWPER_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
    data=np.loadtxt(grib2dump,delimiter=',',comments='l') 
 
    # Set up parameter field
@@ -182,10 +187,11 @@ for tstep in range(1, (TDEF+1)):
 
    # There is an issue with plotting m.fillcontinents with inland lakes, so omitting it in
    # the case of WFO-GYX, CG2 and CG3 (Lakes Sebago and Winni)
-   if (not ((SITEID == 'gyx') & (CGNUMPLOT == '2'))) & \
+   if (not ((SITEID == 'mfl') & (CGNUMPLOT == '3'))) & \
+      (not ((SITEID == 'gyx') & (CGNUMPLOT == '2'))) & \
       (not ((SITEID == 'gyx') & (CGNUMPLOT == '3'))):
       m.fillcontinents()
-      m.drawcoastlines()
+      m.drawcoastlines() 
    m.drawmeridians(np.arange(lons.min(),lons.max(),dlon),labels=[0,0,0,dlon],dashes=[1,3],color='0.50',fontsize=7)   
    m.drawparallels(np.arange(lats.min(),lats.max(),dlat),labels=[dlat,0,0,0],dashes=[1,3],color='0.50',fontsize=7)
 
@@ -230,5 +236,5 @@ for tstep in range(1, (TDEF+1)):
    plt.clf()
 
 # Clean up text dump files
-os.system('rm *f???.txt')
-
+os.system('rm PERPW_extract*f???.txt')
+os.system('rm DIRPWPER_extract*f???.txt')

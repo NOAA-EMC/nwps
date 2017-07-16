@@ -69,7 +69,7 @@ sub cleanUp {
     &removeFiles('CGRID',"${OUTPUTdir}/grid");
     &removeFiles('WIND|enp|CG|CW|INPUT|PRINT|log',"${ARCHdir}/pen");
     &removeFiles('WIND|enp|CG|CW|INPUT|PRINT|log',"${ARCHdir}/extract");
-    &removeFiles('wnd|enp|CGRID|spec|TAB|INPUT.CG|WIND|PRINT|NGRID|Errfile',"${RUNdir}");
+    &removeFiles('wnd|enp|CGRID|spec|TAB|INPUT.CG|WIND|PRINT|NGRID|UNSTRUC|Errfile',"${RUNdir}");
     &removeFiles('txt|spec|TAB|20',"${OUTPUTdir}/spectra");
     #&removeFiles('wnd|txt$',"${INPUTdir}/wind");
     #&removeFiles('WIND',"${INPUTdir}/wind"); 

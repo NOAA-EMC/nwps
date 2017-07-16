@@ -90,16 +90,18 @@ echo $$ > /${TMPdir}/${USERNAME}/nwps/8889_gen_waterlevel_sh.pid
 
 myPWD=`pwd`
 
+if [ "${RETROSPECTIVE}" == "FALSE" ]; then    #RETROSPECTIVE
+
 if [ ! -e ${INPUTdir}/estofs_waterlevel_start_time.txt ] || [ ! -e ${INPUTdir}/estofs_waterlevel_domain.txt ]
     then
     echo "INFO - No ESTOFS data to process" | tee -a ${LOGfile}
     echo "INFO - Will try to copy files from ${LDMdir}" | tee -a ${LOGfile}
     if [ ! -e ${LDMdir}/estofs_waterlevel_start_time.txt ]
     then
-    echo "ERROR - No ESTOFS data to process" | tee -a ${LOGfile}
-    echo "ERROR - Missing ESTOFS start time file ${LDMdir}/estofs_waterlevel_start_time.txt" | tee -a ${LOGfile}
-    #RemoveLockFile
-    export err=1; err_chk
+       echo "ERROR - No ESTOFS data to process" | tee -a ${LOGfile}
+       echo "ERROR - Missing ESTOFS start time file ${LDMdir}/estofs_waterlevel_start_time.txt" | tee -a ${LOGfile}
+       #RemoveLockFile
+       export err=1; err_chk
     fi
     rsync -av --force --stats --progress ${LDMdir}/*waterlevel* ${INPUTdir}/.
 fi
@@ -142,6 +144,8 @@ if [ -e ${LDMdir}/estofs_waterlevel_start_time.txt ]
     fi
 fi
 
+fi     #RETROSPECTIVE
+
 if [ ! -e ${INPUTdir}/estofs_waterlevel_domain.txt ]
 then 
     echo "ERROR - No domain info found with this data set"
@@ -159,12 +163,14 @@ fi
 ESTOFSDOMAIN=$(grep ^ESTOFSDOMAIN ${INPUTdir}/estofs_waterlevel_domain.txt | awk -F: '{ print $2 }')
 cd ${LDMdir}
 
-echo "INFO - Checking ${LDMdir} for updates" | tee -a ${LOGfile}
-diff ${INPUTdir}/estofs_waterlevel_start_time.txt ${LDMdir}/estofs_waterlevel_start_time.txt
-if [ "$?" == "0" ]
-then
-    echo "INFO - We have no more forecast hours to add to this data set" | tee -a ${LOGfile}
-fi
+if [ "${RETROSPECTIVE}" == "FALSE" ]; then    #RETROSPECTIVE
+   echo "INFO - Checking ${LDMdir} for updates" | tee -a ${LOGfile}
+   diff ${INPUTdir}/estofs_waterlevel_start_time.txt ${LDMdir}/estofs_waterlevel_start_time.txt
+   if [ "$?" == "0" ]
+   then
+       echo "INFO - We have no more forecast hours to add to this data set" | tee -a ${LOGfile}
+   fi
+fi     #RETROSPECTIVE
 
 cd ${myPWD}
 #Don't clean, we can have Psurge files already
@@ -178,13 +184,13 @@ cd ${myPWD}
 #  rm -f ${file}
 #done
 
-echo "Purging any old model ingest" | tee -a ${LOGfile}
-last_hour="${ESTOFSHOURS}"
-${BINdir}/purge_estofs.sh ${INPUTdir} ${last_hour}
+#AW echo "Purging any old model ingest" | tee -a ${LOGfile}
+#AW last_hour="${ESTOFSHOURS}"
+#AW ${BINdir}/purge_estofs.sh ${INPUTdir} ${last_hour}
 
-estofs_waterlevel_start_time=`cat ${INPUTdir}/estofs_waterlevel_start_time.txt`
-estofs_date_str=`echo ${estofs_waterlevel_start_time} | awk '{ print strftime("%Y%m%d", $1) }'`
-estofs_model_cycle=`echo ${estofs_waterlevel_start_time} | awk '{ print strftime("%H", $1) }'`
+#AW estofs_waterlevel_start_time=`cat ${INPUTdir}/estofs_waterlevel_start_time.txt`
+#AW estofs_date_str=`echo ${estofs_waterlevel_start_time} | awk '{ print strftime("%Y%m%d", $1) }'`
+#AW estofs_model_cycle=`echo ${estofs_waterlevel_start_time} | awk '{ print strftime("%H", $1) }'`
 if [ "$1" != "" ]
     then 
     YYYYMMDDHH=${1}
@@ -207,6 +213,13 @@ HH=`echo ${YYYYMMDDHH} | cut -b9-10`
 
 time_str="${YYYY} ${MM} ${DD} ${HH} 00 00"
 model_start_time=`echo ${time_str} | awk -F: '{ print mktime($1 $2 $3 $4 $5 $6) }'`
+
+# Find most recent water level file by comparing the model init epoch time 
+# to those of all available ESTOFS files (ignoring estofs_waterlevel_start_time.txt)
+# This allows the same water level file to be used in case of a model rerun.
+estofs_waterlevel_start_time=`ls ${INPUTdir}/wave_estofs_waterlevel* | xargs -n1 basename | cut -b24-33 | sort | uniq | awk -v thresh=$model_start_time '$1 <= thresh' | tail -1`
+estofs_date_str=`echo ${estofs_waterlevel_start_time} | awk '{ print strftime("%Y%m%d", $1) }'`
+estofs_model_cycle=`echo ${estofs_waterlevel_start_time} | awk '{ print strftime("%H", $1) }'`
 
 echo "ESTOFS start UNIX time: ${estofs_waterlevel_start_time}" | tee -a ${LOGfile}
 echo "Model start UNIX time: ${model_start_time}" | tee -a ${LOGfile}
@@ -264,6 +277,9 @@ lencheck=$FCSTLENGTH
 let lencheck*=3600
 timecheck=model_start_time
 let timecheck-=estofs_waterlevel_start_time
+
+echo "ESTOFSHOURS: ${ESTOFSHOURS}" | tee -a ${LOGfile}
+echo "FCSTLENGTH: ${FCSTLENGTH}" | tee -a ${LOGfile}
 
 # Max hours old our waterlevel data can be
 maxage=60

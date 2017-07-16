@@ -33,7 +33,7 @@ export NELON="-79.30"
 export SWLAT="28.70"
 export SWLON="-81.70"
 export RES="1.8"
-export TSTEP="3"
+export TSTEP="1"
 #
 #========================================================================
 #                  NESTED GRID CONFIGURATION                              =
@@ -78,32 +78,35 @@ export NELONN1="-81.25"
 export SWLATN1="30.93"
 export SWLONN1="-81.47"
 export RESN1=".5"
-export TSTEPN1="3"
-export STATN1="STA"
+export TSTEPN1="1"
+export STATN1="NON"
+#
 # NEST 2 = CG3 DOMAIN @ KINGS BAY/ST MARYS ENTRANCE
 export NELATN2="30.78"
 export NELONN2="-81.26"
 export SWLATN2="30.62"
 export SWLONN2="-81.49"
 export RESN2=".2"
-export TSTEPN2="3"
-export STATN2="STA"
+export TSTEPN2="1"
+export STATN2="NON"
+#
 # NEST 3 = CG4 DOMAIN @ MAYPORT
 export NELATN3="30.43"
 export NELONN3="-81.36"
 export SWLATN3="30.38"
 export SWLONN3="-81.43"
 export RESN3=".2"
-export TSTEPN3="3"
-export STATN3="STA"
+export TSTEPN3="1"
+export STATN3="NON"
+#
 # NEST 4 = CG5 DOMAIN @ ST AUGUSTINE
 export NELATN4="29.96"
 export NELONN4="-81.24"
 export SWLATN4="29.87"
 export SWLONN4="-81.32"
 export RESN4=".3"
-export TSTEPN4="3"
-export STATN4="STA"
+export TSTEPN4="1"
+export STATN4="NON"
 #
 #========================================================================
 #                    SPECTRA OUTPUT LOCATIONS     

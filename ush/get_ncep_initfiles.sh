@@ -37,6 +37,14 @@ if [ "${USHnwps}" == "" ]
     export err=1; err_chk
 fi
 
+if [ -e ${USHnwps}/psurge_config.sh ]
+then
+    source ${USHnwps}/psurge_config.sh
+else
+    echo "ERROR - Cannot find ${USHnwps}/psurge_config.sh"
+    export err=1; err_chk
+fi
+
 if [ -e ${USHnwps}/nwps_config.sh ]
 then
     source ${USHnwps}/nwps_config.sh
@@ -83,15 +91,6 @@ echo "Downloading NCEP init files for NWPS"
 
 /bin/mkdir -p ${LDMdir}/rtofs ${LDMdir}/estofs ${LDMdir}/psurge
 
-# Adjust to the correct cycle
-curhour=$(date -u +%H)
-if [ $curhour -lt 12 ]; then CYCLE="00"; fi
-if [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
-if [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
-if [ $curhour -ge 22 ]; then CYCLE="18"; fi
-echo ""
-echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
-
 if [ $1 == "RTOFS" ]
 then
    cd ${LDMdir}/rtofs
@@ -112,7 +111,21 @@ then
    DD=`echo ${PDY} | cut -b7-8`
    time_str="${YYYY} ${MM} ${DD} 00 00 00"
    pdy_time=`echo ${time_str} | awk -F: '{ print mktime($1 $2 $3 $4 $5 $6) }'`
-   model_start_time=`grep Wind_Mag_SFC:validTimes ${INPUTdir}/wind/*WIND.txt | cut -c29-38 | tail -1`
+   #AW model_start_time=`grep Wind_Mag_SFC:validTimes ${INPUTdir}/wind/*WIND.txt | cut -c29-38 | tail -1`
+   windsource=`cat ${RUNdir}/windsource.flag`
+   if [ "$windsource" == "FORECASTWINDGRIDS" ]; then
+      model_start_time=`grep Wind_Mag_SFC:validTimes ${INPUTdir}/wind/*WIND.txt | cut -c29-38 | tail -1`
+   elif [ "$windsource" == "GFS" ]; then
+      NewestWind=$(basename $(ls -t ${VARdir}/gfe_grids_test/NWPSWINDGRID_${siteid}* | head -1))
+      if [ "$NewestWind" != "" ]; then
+         YYYY=$(echo $NewestWind|cut -c18-21)
+         MM=$(echo $NewestWind|cut -c22-23)
+         DD=$(echo $NewestWind|cut -c24-25)
+         windhour=$(echo $NewestWind|cut -c26-27)
+         time_str="${YYYY} ${MM} ${DD} ${windhour} 00 00"
+         model_start_time=`echo ${time_str} | awk -F: '{ print mktime($1 $2 $3 $4 $5 $6) }'`
+      fi
+   fi
    echo "PDY in UNIX time: ${pdy_time}" | tee -a ${LOGfile}
    echo "Model start UNIX time: ${model_start_time}" | tee -a ${LOGfile}
 
@@ -246,7 +259,7 @@ then
          init_time=`echo $i | cut -c24-33`
          fhour=`echo $i | cut -c56-58`
          echo "Processing $i $init_time $start_time $fhour $cycle"
-         if [ $init_time -lt $start_time ]  && [ -e wave_psurge_waterlevel_${start_time}_${cycle}_*_*_f078.dat ]
+         if [ $init_time -lt $start_time ]  && [ -e wave_psurge_waterlevel_${start_time}_${cycle}_*_*_f102.dat ]
          then
             echo "Removing $i"
             rm -f $i

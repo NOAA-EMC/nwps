@@ -23,8 +23,6 @@ module load iobuf
 export IOBUF_PARAMS="*:count=4:size=32M:prefetch=1:preflush=1"
 export FORT_BUFFERED=TRUE
 module load netcdf4-python
-module use ${NWROOT}/lib/python/modulefiles
-module load nwps_python
 #----------------------------------------------------------------
 export FORT_BUFFERED=true
 export NWPSplatform="WCOSS"

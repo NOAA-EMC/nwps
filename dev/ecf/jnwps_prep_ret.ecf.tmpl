@@ -1,0 +1,101 @@
+#!/bin/bash --login
+# ----------------------------------------------------------- 
+# UNIX Shell Script File
+# Tested Operating System(s): RHEL 5,6
+# Tested Run Level(s): 3, 5
+# Shell Used: BASH shell
+# Original Author(s): Roberto Padilla-Hernandez
+# File Creation Date: 02/01/2015
+# Date Last Modified: 06/30/2016
+#
+# Version control: 1.14
+#
+# Support Team:
+#
+# Contributors: Floyd fayton, Andre van der Westhuysen
+#
+# ----------------------------------------------------------- 
+# ------------- Program Description and Details ------------- 
+# ----------------------------------------------------------- 
+#
+# Job Card to set the resources required for a NWPS run
+#
+# ----------------------------------------------------------- 
+
+#BSUB -J %WFO%_prep_r
+#BSUB -oo /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/retro/com/nwps/para/NWPS_%WFO%_prep.o
+#     -e /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/retro/com/nwps/para/NWPS_%WFO%_prep.o
+#BSUB -q "dev"
+#BSUB -W 0:45
+#BSUB -R rusage[mem=1700]
+#BSUB -P NWPS-T2O
+
+module use /gpfs/hps/nco/ops/nwpara/modulefiles
+module load prod_envir
+module load prod_util
+module load PrgEnv-intel
+#export IOBUF_PARAMS="*:count=4:size=32M:prefetch=1:preflush=1"
+
+module list
+
+export FORT_BUFFERED=true
+export NWPSplatform="DEVWCOSS"
+export MP_PGMMODEL=mpmd
+export MP_CSS_INTERRUPT=yes
+export WFO="%WFO%"
+export siteid=${WFO}
+export SITEID=${WFO^^}
+export KEEPDATA="YES"
+export model="nwps"
+export MODEL=${model^^}
+
+export envir="para"
+
+export DEVWCOSS_USER=$(whoami)
+export COMROOT=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/retro/com
+
+#Dev environment value for $job and $jobid
+export job=pnwps_${WFO}_prep_ret
+export jobid=pnwps_${WFO}_prep_ret.$$
+
+#Dev environment jlogfile
+mkdir -p ${COMROOT}/logs/${envir}
+export jlogfile=${COMROOT}/logs/${envir}/jlogfile.${job}
+
+#Set platform
+export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )d1
+export WCOSS_SYSTEM_COM=$( echo $COMROOTp1 | cut -c7-9 )
+
+export NWROOT=${NWPSdir}
+
+VERSION_FILE=${NWROOT}/dev/nwps_test.ver
+if [ -f $VERSION_FILE ]; then
+  . $VERSION_FILE
+else
+  ECFNAME="jnwps_prep.ecf"
+  echo "***JOB ${ECFNAME} ERROR: Version File $VERSION_FILE does not exist ***"
+  exit
+fi
+
+${NWROOT}/dev/jobs/J${MODEL}_PREP_RET
+
+#%include <tail.h>
+
+#%manual
+################################################################################
+#TASKSCRIPT DOCUMENTATION BLOCK
+#TASKSCRIPT:     jnwps_%WFO%_prep
+#LAST MODIFIER:  Roberto Padilla
+#ORGANIZATION:   NP11
+#DATE:           SEP 2014
+#FULL NAME:    /nwps_para/nwps/SR/j%WFO%
+#PURPOSE:  To execute the job that creates NWPS %WFO% GRIB output files
+#JOB SCRIPT CALLED: ${NWROOT}/jobs/JNWPS ==>
+#                            ${NWROOT}/scripts/exnwps_prep.sh.ecf
+#################################################################################
+######################################################################
+# Job specific troubleshooting instructions:
+#  see generic troubleshoot manual page
+#
+######################################################################
+#%end

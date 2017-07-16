@@ -49,6 +49,11 @@ if os.path.isfile("swan.ctl"):
    dummy2 = dummy.split(" ")
    TDEF = int(dummy2[1])
    TINCR = int(dummy2[4].rstrip("hr\n"))
+   #----- Default to a plotting interval of 3h; adjust TDEF accordingly -----
+   TINCR_OLD = TINCR
+   TINCR = 3
+   TDEF = (TDEF-1)/(TINCR/TINCR_OLD)+1
+   #-------------------------------------------------------------------------
 else:
    print '*** TERMINATING ERROR: Missing control file: swan.ctl'
    sys.exit()
@@ -179,34 +184,37 @@ for tstep in range(1, (TDEF+1)):
    u = par*u
    v = par*v
 
-   if (not (SITEID == 'afg')) & (not (SITEID == 'alu')):
-      norm = matplotlib.colors.Normalize(vmin=0.,vmax=(int(unitconvert*maxval)+1))
-      m.streamplot(x,y,u,v,color=par,density=4,linewidth=0.75,arrowsize=1.5,norm=norm)
-      m.colorbar(location='right',size='2.5%',pad='7%')
-   else:
-   # Basemap streamplot does not plot correctly at higher latitudes (WFOs AFG and ALU). Do surface plot and vectors instead
-      par[np.where(par==0.)] = np.nan
-      culim = int(unitconvert*maxval)+1
-      if (culim > 2):
-         clevs = np.arange(0, culim+0.5, 0.5)      #Have to add an additional 0.5 to get the right array upper limit
+   # To avoid error in streamplot, only plot currents when the field in nonzero
+   if (maxval > 0.):
+      if (not (SITEID == 'afg')) & (not (SITEID == 'alu')):
+         norm = matplotlib.colors.Normalize(vmin=0.,vmax=(int(unitconvert*maxval)+1))
+         m.streamplot(x,y,u,v,color=par,density=4,linewidth=0.75,arrowsize=1.5,norm=norm)
+         m.colorbar(location='right',size='2.5%',pad='7%')
       else:
-         clevs = np.arange(0, culim+0.2, 0.2)      #Have to add an additional 0.2 to get the right array upper limit
+      # Basemap streamplot does not plot correctly at higher latitudes (WFOs AFG and ALU). Do surface plot and vectors instead
+         par[np.where(par==0.)] = np.nan
+         culim = int(unitconvert*maxval)+1
+         if (culim > 2):
+            clevs = np.arange(0, culim+0.5, 0.5)      #Have to add an additional 0.5 to get the right array upper limit
+         else:
+            clevs = np.arange(0, culim+0.2, 0.2)      #Have to add an additional 0.2 to get the right array upper limit
 
-      m.contourf(x,y,par,clevs,cmap=plt.cm.jet)
-      m.colorbar(location='right',size='2.5%',pad='7%')
+         m.contourf(x,y,par,clevs,cmap=plt.cm.jet)
+         m.colorbar(location='right',size='2.5%',pad='7%')
 
-      rowskip=np.floor(par2.shape[0]/20)
-      colskip=np.floor(par2.shape[1]/20)
-      m.quiver(x[0::rowskip,0::colskip],y[0::rowskip,0::colskip],\
-          u[0::rowskip,0::colskip],v[0::rowskip,0::colskip], \
-          color='black',pivot='middle',alpha=0.7,scale=6.,width=0.015,units='inches')
+         rowskip=np.floor(par2.shape[0]/20)
+         colskip=np.floor(par2.shape[1]/20)
+         m.quiver(x[0::rowskip,0::colskip],y[0::rowskip,0::colskip],\
+             u[0::rowskip,0::colskip],v[0::rowskip,0::colskip], \
+             color='black',pivot='middle',alpha=0.7,scale=6.,width=0.015,units='inches')
 
    # There is an issue with plotting m.fillcontinents with inland lakes, so omitting it in
    # the case of WFO-GYX, CG2 and CG3 (Lakes Sebago and Winni)
-   if (not ((SITEID == 'gyx') & (CGNUMPLOT == '2'))) & \
+   if (not ((SITEID == 'mfl') & (CGNUMPLOT == '3'))) & \
+      (not ((SITEID == 'gyx') & (CGNUMPLOT == '2'))) & \
       (not ((SITEID == 'gyx') & (CGNUMPLOT == '3'))):
       m.fillcontinents()
-      m.drawcoastlines()
+      m.drawcoastlines() 
    m.drawmeridians(np.arange(lons.min(),lons.max(),dlon),labels=[0,0,0,dlon],dashes=[1,3],color='0.50',fontsize=7)   
    m.drawparallels(np.arange(lats.min(),lats.max(),dlat),labels=[dlat,0,0,0],dashes=[1,3],color='0.50',fontsize=7)
 
@@ -251,5 +259,6 @@ for tstep in range(1, (TDEF+1)):
    plt.clf()
 
 # Clean up text dump files
-os.system('rm *f???.txt')
+os.system('rm SPC_extract*f???.txt')
+os.system('rm DIRC_extract*f???.txt')
 

@@ -29,7 +29,7 @@ export NELON="-66.30"
 export SWLAT="43.30"
 export SWLON="-69.2"
 export RES="1.8"
-export TSTEP="3"
+export TSTEP="1"
 #
 #========================================================================
 #                  NESTED GRID CONFIGURATION                            =
@@ -54,7 +54,7 @@ export SWLATN1="44.27"
 export SWLONN1="-68.17"
 export RESN1=".1"
 export TSTEPN1="1"
-export STATN1="STA"
+export STATN1="NON"
 #
 export NELATN2="44.30"
 export NELONN2="-68.22"
@@ -62,23 +62,23 @@ export SWLATN2="44.16"
 export SWLONN2="-68.42"
 export RESN2=".1"
 export TSTEPN2="1"
-export STATN2="STA"
+export STATN2="NON"
 #
 #export NELATN3="26.37"
 #export NELONN3="-80.00"
 #export SWLATN3="26.25"
 #export SWLONN3="-80.09"
 #export RESN3=".5"
-#export TSTEPN3="3"
-#export STATN3="STA"
+#export TSTEPN3="1"
+#export STATN3="NON"
 #
 #export NELATN4="25.87"
 #export NELONN4="-80.04"
 #export SWLATN4="25.75"
 #export SWLONN4="-80.13"
 #export RESN4=".5"
-#export TSTEPN4="3"
-#export STATN4="STA"
+#export TSTEPN4="1"
+#export STATN4="NON"
 #
 #========================================================================
 #                    SPECTRA OUTPUT LOCATIONS                           =
@@ -145,26 +145,200 @@ export WAVECPS="multi_1.NW-CAR57.spec.swan,multi_1.NW-CAR64.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#BOUN SEG XY 290.80 43.30 293.70 43.30 VAR FILE 0.00 'multi_1.NW-CAR57.spec.swan'    1 &
-#                         0.50 'multi_1.NW-CAR56.spec.swan'    1 &
-#                         1.00 'multi_1.NW-CAR55.spec.swan'    1 &
-#                         1.50 'multi_1.NW-CAR54.spec.swan'    1 &
-#                         2.00 'multi_1.NW-CAR53.spec.swan'    1 &
-#                         2.50 'multi_1.NW-CAR52.spec.swan'    1 &
-#                         3.00 'multi_1.NW-CAR51.spec.swan'    1
+#$UNSTR SWAN BOUNDARY COMMAND LINES - SITE NW-CAR
+#$ W OPEN GRID BOUNDARY
+#BOUNDspec SIDE 1 CCW CON FILE 'multi_1.NW-CAR65.spec.swan' 1
+#BOUNDspec SIDE 2 CCW CON FILE 'multi_1.NW-CAR66.spec.swan' 1
+#$ S OPEN GRID BOUNDARY
+#BOUNDspec SIDE 3 CCW CON FILE 'multi_1.NW-CAR51.spec.swan' 1
+#BOUNDspec SIDE 4 CCW CON FILE 'multi_1.NW-CAR52.spec.swan' 1
+#BOUNDspec SIDE 5 CCW CON FILE 'multi_1.NW-CAR53.spec.swan' 1
+#BOUNDspec SIDE 6 CCW CON FILE 'multi_1.NW-CAR54.spec.swan' 1
+#BOUNDspec SIDE 7 CCW CON FILE 'multi_1.NW-CAR55.spec.swan' 1
+#BOUNDspec SIDE 8 CCW CON FILE 'multi_1.NW-CAR56.spec.swan' 1
+#BOUNDspec SIDE 9 CCW CON FILE 'multi_1.NW-CAR57.spec.swan' 1
+#$ E OPEN GRID BOUNDARY
+#BOUNDspec SIDE 10 CCW CON FILE 'multi_1.NW-CAR58.spec.swan' 1
+#BOUNDspec SIDE 11 CCW CON FILE 'multi_1.NW-CAR59.spec.swan' 1
+#BOUNDspec SIDE 12 CCW CON FILE 'multi_1.NW-CAR60.spec.swan' 1
+#BOUNDspec SIDE 13 CCW CON FILE 'multi_1.NW-CAR61.spec.swan' 1
+#BOUNDspec SIDE 14 CCW CON FILE 'multi_1.NW-CAR62.spec.swan' 1
+#BOUNDspec SIDE 15 CCW CON FILE 'multi_1.NW-CAR63.spec.swan' 1
+#BOUNDspec SIDE 16 CCW CON FILE 'multi_1.NW-CAR64.spec.swan' 1
+#$END BOUNSEG for UNSTR SWAN
+#
+#
+#========================================================================
+#                    RIP CURRENT PROGRAM (SEE NWPS MANUAL)              =
+#========================================================================
+# IF RIP CURRENT PROGRAM WILL BE RUN, then RIPCONT=1, Otherwise =0;
+# Setting up RIPCONT here to zero will permanently disable RIP program.
+#
+export RIPPROG="1"
+export RIPDOMAIN="CG1"
+export RIPCONT="5m"
+#
+#___________________________________________________________________________
+# RAY Section: Define a pair of rays to drop data out along critical contours
+#              for rip current program.
+#
+# Example: for data output every 2km along a 5m bathy contour
+#
+# RAY 'rayname' xp yp xq yq int xp yp xq yq
+#
+# RAY 'ray1' 282.85 34.628 282.85 34.62 2000 283.00 34.655 283.00 34.62
+#
+# ISOLINE '5mcont' 'ray1' BOTtom 10
+# TABLE '5mcont' HEAD '5mtable' HSIGN TPS PDIR OUTPUT 20110825.1200 3.0 HR
+#_____________________________________________________________________________
+#
+# THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD RIP COMMAND LINES FOR YOUR
+# DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE RIP
+# CURRENTS (RIPCONT="0") THEY WILL REMAIN AS A COMMENTED LINES. IF YOU DECIDE TO USE
+# BOUNDARY CONDITIONS (BOUNCOND="1") NWPS WILL INCLUDE THE INFORMATION IN THE ACTUAL
+# INPUT FILES WITH NOT COMMENT CHARACTER
+# POIN '5mcont' 279.887  25.8725 
 #$
-#BOUN SEG XY 293.70 45.05 293.70 43.30 VAR FILE 0.00 'multi_1.NW-CAR64.spec.swan'    1 &
-#                         0.25 'multi_1.NW-CAR63.spec.swan'    1 &
-#                         0.50 'multi_1.NW-CAR62.spec.swan'    1 &
-#                         0.75 'multi_1.NW-CAR61.spec.swan'    1 &
-#                         1.00 'multi_1.NW-CAR60.spec.swan'    1 &
-#                         1.25 'multi_1.NW-CAR59.spec.swan'    1 &
-#                         1.50 'multi_1.NW-CAR58.spec.swan'    1 &
-#                         1.75 'multi_1.NW-CAR57.spec.swan.cp' 1
+#RAY 'ray1' 288.80 41.95 289.68 41.95 100 288.80 43.15 289.68 43.15
+#ISOLINE '5mcont' 'ray1' BOTtom 5
+#
+#$RIP LINES
+#$ Points along ~ 5m contour.
 #$
-#BOUN SEG XY 290.80 45.05 290.80 43.30 VAR FILE 0.00 'multi_1.NW-CAR67.spec.swan'    1 &
-#                         0.25 'multi_1.NW-CAR66.spec.swan'    1 &
-#                         0.50 'multi_1.NW-CAR65.spec.swan'    1 &
-#                         0.75 'multi_1.NW-CAR64.spec.swan.cp' 1
-#$END BOUNSEG
+#POINTS '5mcont' &
+#292.519 44.6078 &
+#292.517 44.6085 &
+#292.515 44.6082 &
+#292.513 44.6076 &
+#292.511 44.6069 &
+#291.957 44.3402 &
+#291.957 44.3385 &
+#291.956 44.3369 &
+#291.955 44.3349 &
+#291.954 44.3333 &
+#291.953 44.3318 &
+#291.951 44.3319 &
+#291.950 44.3334 &
+#291.949 44.3342 &
+#291.948 44.3355 &
+#291.946 44.3366 &
+#291.945 44.3355 &
+#291.944 44.3344 &
+#291.943 44.3324 &
+#291.941 44.3314 &
+#291.939 44.3318 &
+#291.938 44.3320 &
+#291.937 44.3325 &
+#291.935 44.3333 &
+#291.934 44.3342 &
+#291.933 44.3352 &
+#291.931 44.3367 &
+#291.931 44.3383 &
+#291.930 44.3398 &
+#291.824 44.3404 &
+#291.825 44.3377 &
+#291.825 44.3351 &
+#291.826 44.3324 &
+#291.827 44.3299 &
+#291.827 44.3277 &
+#291.824 44.3254 &
+#291.820 44.3260 &
+#291.818 44.3277 &
+#291.817 44.3254 &
+#291.815 44.3226 &
+#291.813 44.3200 &
+#291.812 44.3177 &
+#291.812 44.3148 &
+#291.813 44.3124 &
+#291.812 44.3099 &
+#291.812 44.3072 &
+#291.810 44.3059 &
+#291.807 44.3070 &
+#291.805 44.3099 &
+#291.802 44.3095 &
+#291.801 44.3068 &
+#291.800 44.3047 &
+#291.799 44.3018 &
+#291.796 44.2994 &
+#291.793 44.2975 &
+#291.790 44.2964 &
+#291.701 44.2675 &
+#291.702 44.2663 &
+#291.703 44.2648 &
+#291.704 44.2637 &
+#291.706 44.2631 &
+#291.707 44.2619 &
+#291.707 44.2604 &
+#291.708 44.2591 &
+#291.709 44.2574 &
+#291.709 44.2559 &
+#291.709 44.2543 &
+#291.710 44.2531 &
+#291.711 44.2517 &
+#291.711 44.2501 &
+#291.711 44.2484 &
+#291.712 44.2470 &
+#291.713 44.2452 &
+#291.713 44.2435 &
+#291.711 44.2440 &
+#291.710 44.2439 &
+#291.708 44.2437 &
+#291.707 44.2432 &
+#291.706 44.2423 &
+#291.704 44.2426 &
+#291.703 44.2413 &
+#291.702 44.2400 &
+#291.702 44.2380 &
+#291.700 44.2365 &
+#291.699 44.2356 &
+#291.698 44.2349 &
+#291.696 44.2346
+#TABLE '5mcont' HEAD '5m_contour_CG1' TIME XP YP HSIGN TPS DIR DSPR VEL WATL WIND OUTPUT 20141030.0000 1.0 HR
+#$
+#$END RIP
+#
+#========================================================================
+#                    RUNUP PROGRAM (SEE NWPS MANUAL)              =
+#========================================================================
+# IF RUNUP PROGRAM WILL BE RUN, then RIPCONT=1, Otherwise =0;
+# Setting up RIPCONT here to zero will permanently disable RIP program.
+#
+export RUNUPPROG="1"
+export RUNUPDOMAIN="CG1"
+export RUNUPCONT="20m"
+#
+#___________________________________________________________________________
+# RAY Section: Define a pair of rays to drop data out along critical contours
+#              for rip current program.
+#
+# Example: SEE ABOVE FOR RIPCURRENT
+#_____________________________________________________________________________
+#
+# THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD RUNUP COMMAND LINES FOR YOUR
+# DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE
+# RUNUP (RUNUPCONT="0") THEY WILL REMAIN AS A COMMENTED LINES. IF YOU DECIDE TO USE
+# IT NWPS WILL INCLUDE THE INFORMATION IN THE ACTUAL
+# INPUT FILES WITH NOT COMMENT CHARACTER
+# POIN '20mcont' 279.887  25.8725 
+#
+#$RUNUP LINES
+#$ Ray for 20m contour data.
+#$
+#POINTS '20mcont' &
+#291.808 44.3046 &
+#291.810 44.3042 &
+#291.813 44.3051 &
+#291.822 44.3211 &
+#291.822 44.3239 &
+#291.824 44.3251 &
+#291.941 44.3301 &
+#291.943 44.3299 &
+#291.944 44.3295 &
+#292.520 44.5455 &
+#292.528 44.5450 &
+#292.530 44.5450 &
+#292.533 44.5453
+#TABLE '20mcont' HEAD '20m_contour_CG1' TIME XP YP HSIGN TPS DIR VEL WATL WIND OUTPUT 20110825.1200 1.0 HR
+#$
+#$END RUNUP
 #

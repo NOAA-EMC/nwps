@@ -32,7 +32,7 @@ export NELON="-67.85"
 export SWLAT="42.40"
 export SWLON="-71.75"
 export RES="2.5"
-export TSTEP="3"
+export TSTEP="1"
 #========================================================================
 #                  NESTED GRID CONFIGURATION                              =
 #                                                                         =
@@ -77,7 +77,7 @@ export SWLATN1="43.76"
 export SWLONN1="-70.64"
 export RESN1=".1"
 export TSTEPN1="1"
-export STATN1="STA"
+export STATN1="NON"
 #
 NEST 2 - Lake Winnipesaukee grid
 export NELATN2="43.73"
@@ -86,7 +86,7 @@ export SWLATN2="43.47"
 export SWLONN2="-71.50"
 export RESN2=".1"
 export TSTEPN2="1"
-export STATN2="STA"
+export STATN2="NON"
 #
 #
 #========================================================================

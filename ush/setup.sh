@@ -144,12 +144,12 @@ function get_rid () {
 function get_modeltype () {
     clear
     MODEL=NONE
-    while [[ "$MODEL" != "SWAN" && "$MODEL" != "WW3" ]]
+    while [[ "$MODEL" != "SWAN" && "$MODEL" != "UNSWAN" && "$MODEL" != "WW3" ]]
     do
        logit " "
        logit " "
        logit "---------------------------------------------------------------------"
-       logit "Enter the name of the Wave Model you want to run (SWAN or WW3).  Example:SWAN "
+       logit "Enter the name of the Wave Model you want to run (SWAN, UNSWAN or WW3).  Example:SWAN "
        logit " "
        read -p ": " BLAH
     
@@ -372,6 +372,66 @@ function get_coord_spc1d () {
     logit "LONGITUDES: ${spclons[*]}  "
     logit "LATITUDES : ${spclats[*]}  "
     logit "LOC. NAMES: ${spcnames[*]}  "
+}
+
+################################################################################
+#funcion edit_input_for_blockout                                               #
+#Goal: To include block output lines. In the case of regular grids, this is    #
+#      done with a frame with dimensions of the COMPGRID. For unstructured     #
+#      meshes, this is written to the native mesh COMPGRID in netcdf4 format.  #
+#                                                                              #
+#Written by   :  Andre van der Westhuysen  EMC/NCEP/MMAB/IMSG                  #
+#Base on      :                                                                #
+#Explanation:                                                                  #
+# The ouput locations (names, longs and lats) command lines are introduced     #
+# to the wave input file (inputCG#)                                            #
+#                                                                              #
+#first written: 05/12/17                                                       #
+#last update: 05/12/2017
+#                                                                              #
+################################################################################
+function edit_inputCG_for_blockout () {
+    if [ "${MODELCORE}" == "UNSWAN" ]; then
+       # For UNSTRUC mode we output the mesh in netCDF format, and extract the AWIPS grids with swn_reginterpCG1.py
+       # In the postproc step (GraphicOutput.pm) we will pack this mesh at the FRAMECG1 resolution.
+       lineprt1="BLOCK 'COMPGRID' NOHEAD 'CG_UNSTRUC.nc' LAY 3 XP YP HSIG WIND TPS DIR PDIR VEL WATL HSWE WLEN DEPTH \&"
+       lineprt2="OUTPUT 20100301.1800 #TSTEP#.0 HR"
+       lineprt3="$ FRAMECG1 'OUTGRID' #SWLONCIRC# #SWLAT# 0. #XLENC# #YLENC# #MESHLON# #MESHLAT#"
+       lineprt4="$ FRAMECG2 'OUTGRID' #SWLONCIRCN1# #SWLATN1# 0. #XLENCN1# #YLENCN1# #MESHLONN1# #MESHLATN1#"
+       lineprt5="$ FRAMECG3 'OUTGRID' #SWLONCIRCN2# #SWLATN2# 0. #XLENCN2# #YLENCN2# #MESHLONN2# #MESHLATN2#"
+       lineprt6="$ FRAMECG4 'OUTGRID' #SWLONCIRCN3# #SWLATN3# 0. #XLENCN3# #YLENCN3# #MESHLONN3# #MESHLATN3#"
+       lineprt7="$ FRAMECG5 'OUTGRID' #SWLONCIRCN4# #SWLATN4# 0. #XLENCN4# #YLENCN4# #MESHLONN4# #MESHLATN4#"
+       sed -i "s/$ BLOCK UNSTRUC LINE01/${lineprt1}/g" inputCG1
+       sed -i "s/$ BLOCK UNSTRUC LINE02/${lineprt2}/g" inputCG1
+       sed -i "s/$ BLOCK UNSTRUC LINE03/${lineprt3}/g" inputCG1
+       sed -i "s/$ BLOCK UNSTRUC LINE04/${lineprt4}/g" inputCG1
+       sed -i "s/$ BLOCK UNSTRUC LINE05/${lineprt5}/g" inputCG1
+       sed -i "s/$ BLOCK UNSTRUC LINE06/${lineprt6}/g" inputCG1
+       sed -i "s/$ BLOCK UNSTRUC LINE07/${lineprt7}/g" inputCG1
+    else
+       lineprt1="FRAME 'OUTGRID' #SWLONCIRC# #SWLAT# 0. #XLENC# #YLENC# #MESHLON# #MESHLAT#"
+       lineprt2="BLOCK 'OUTGRID' NOHEAD 'HSIG.CG1.CGRID' LAY 3 HSIG OUTPUT 20100301.1800 #TSTEP#.0 HR"
+       lineprt3="BLOCK 'OUTGRID' NOHEAD 'WIND.CG1.CGRID' LAY 3 WIND OUTPUT 20100301.1800 #TSTEP#.0 HR"
+       lineprt4="BLOCK 'OUTGRID' NOHEAD 'TPS.CG1.CGRID' LAY 3 TPS OUTPUT 20100301.1800 #TSTEP#.0 HR"
+       lineprt5="BLOCK 'OUTGRID' NOHEAD 'DIR.CG1.CGRID' LAY 3 DIR OUTPUT 20100301.1800 #TSTEP#.0 HR"
+       lineprt6="BLOCK 'OUTGRID' NOHEAD 'PDIR.CG1.CGRID' LAY 3 PDIR OUTPUT 20100301.1800 #TSTEP#.0 HR"
+       lineprt7="BLOCK 'OUTGRID' NOHEAD 'VEL.CG1.CGRID' LAY 3 VEL OUTPUT 20100301.1800 #TSTEP#.0 HR"
+       lineprt8="BLOCK 'OUTGRID' NOHEAD 'WATL.CG1.CGRID' LAY 3 WATL OUTPUT 20100301.1800 #TSTEP#.0 HR"
+       lineprt9="BLOCK 'OUTGRID' NOHEAD 'HSWE.CG1.CGRID' LAY 3 HSWE OUTPUT 20100301.1800 #TSTEP#.0 HR"
+       lineprt10="BLOCK 'OUTGRID' NOHEAD 'WLEN.CG1.CGRID' LAY 3 WLEN OUTPUT 20100301.1800 #TSTEP#.0 HR"
+       lineprt11="BLOCK 'OUTGRID' NOHEAD 'DEPTH.CG1.CGRID' LAY 3 DEPTH OUTPUT 20100301.1800 #TSTEP#.0 HR"
+       sed -i "s/$ BLOCK REG LINE01/${lineprt1}/g" inputCG1
+       sed -i "s/$ BLOCK REG LINE02/${lineprt2}/g" inputCG1
+       sed -i "s/$ BLOCK REG LINE03/${lineprt3}/g" inputCG1
+       sed -i "s/$ BLOCK REG LINE04/${lineprt4}/g" inputCG1
+       sed -i "s/$ BLOCK REG LINE05/${lineprt5}/g" inputCG1
+       sed -i "s/$ BLOCK REG LINE06/${lineprt6}/g" inputCG1
+       sed -i "s/$ BLOCK REG LINE07/${lineprt7}/g" inputCG1
+       sed -i "s/$ BLOCK REG LINE08/${lineprt8}/g" inputCG1
+       sed -i "s/$ BLOCK REG LINE09/${lineprt9}/g" inputCG1
+       sed -i "s/$ BLOCK REG LINE10/${lineprt10}/g" inputCG1
+       sed -i "s/$ BLOCK REG LINE11/${lineprt11}/g" inputCG1
+    fi
 }
 
 ################################################################################
@@ -777,7 +837,7 @@ function auto_run()
             SWLATN[$j]=${SWLATN5}
             SWLONN[$j]=${SWLONN5}
             RESN[$j]=${RESN5}
-           TSTEPN[$j]=${TSTEPN5}
+            TSTEPN[$j]=${TSTEPN5}
             STATN[$j]=${STATN5}
 
          elif [ $j -eq 6 ]
@@ -1127,7 +1187,7 @@ if [ "${DOMAINFILE}" != "" ]
 
     if [ "${MODELCORE}" == "" ]
 	then
-	echo "ERROR - You must specify a MODELCORE argument (SWAN or WW3)"
+	echo "ERROR - You must specify a MODELCORE argument (SWAN, UNSWAN or WW3)"
 	export err=1; err_chk
     fi
 
@@ -1321,6 +1381,7 @@ then
 fi
 
 edit_inputCG_for_partition;
+edit_inputCG_for_blockout;
 edit_inputCG_for_currents;
 #Code to include the nested grids in the CGinclude.pm file
 #file Nest_info_CGinclude is included in CGinclude.pm
@@ -1349,23 +1410,25 @@ done
 fi
 cat /dev/null > ${RUNdir}/cgn_cmdfile
     if [ "${NESTGRIDS}" -gt "0" ] && [ "${NESTCG}" == "Yes" ]
-      then
-      echo " ADDING THE NESTED GRIDS INFO"
-      for (( j = 1 ; j < ${NESTGRIDS}+1 ; j++ ))
-         do
-         echo " NESTED GRID NUMBER: ${j}"
+    then
+       echo " ADDING THE NESTED GRIDS INFO"
+       for (( j = 1 ; j < ${NESTGRIDS}+1 ; j++ ))
+       do
+          echo " NESTED GRID NUMBER: ${j}"
           cgrid=$(( $j + 1))
-          line2nest="NESTOUT 'NEST$j' 'bc_CG$cgrid' OUTPUT 20100301.1800 #TSTEP#.0 HR"
-          sed -i "/$NESTGRID DATA/ a $line2nest" inputCG1
-          
-          line1nest="NGRID 'NEST$j' ${SWLONCIRCN[j]} ${SWLATN[j]} 0. ${XLENCN[j]} ${YLENCN[j]}"
-          echo "$line1nest"
 
-#          lineprt1="NGRID 'NEST$j' $SWLONCIRCN$j $SWLATN$j 0. $XLENCN$j $YLENCN$j"
-          sed -i "/$NESTGRID DATA/ a $line1nest" inputCG1
-#  Creating the comand file to run nested grid in a "parallel way"
-     echo "${USHnwps}/run_posproc_cgn_parallel.sh $cgrid " >> ${RUNdir}/cgn_cmdfile
-      done
+          # Add nested grids NGRID only in case of SWAN model core (not UNSWAN)
+          if [ "${MODELCORE}" == "SWAN" ]
+          then
+             line2nest="NESTOUT 'NEST$j' 'bc_CG$cgrid' OUTPUT 20100301.1800 #TSTEP#.0 HR"
+             sed -i "/$NESTGRID DATA/ a $line2nest" inputCG1          
+             line1nest="NGRID 'NEST$j' ${SWLONCIRCN[j]} ${SWLATN[j]} 0. ${XLENCN[j]} ${YLENCN[j]}"
+             sed -i "/$NESTGRID DATA/ a $line1nest" inputCG1
+          fi
+
+          # Creating the command file to postprocess nested grids in a "parallel way"
+          echo "${USHnwps}/run_posproc_cgn_parallel.sh $cgrid " >> ${RUNdir}/cgn_cmdfile
+       done
     fi
 
 for i in $(ls -1)
@@ -1401,6 +1464,14 @@ do
           sed -i "s/#SWLONCIRCN$j#/${SWLONCIRCN[j]}/g" $i
           sed -i "s/#XLENCN$j#/${XLENCN[j]}/g" $i
           sed -i "s/#YLENCN$j#/${YLENCN[j]}/g" $i
+          if [ "${SITEID}" == "GUM" ] && [ "${i}" == "inputCG3" ]
+          then
+             sed -i "s/\\$<< PUT NUM LIMITER HERE >>/NUM DIRimpl cdd=1 cdlim=2/g" $i
+          fi
+          if [ "${SITEID}" == "AER" ] && [ "${i}" == "inputCG3" ]
+          then
+             sed -i "s/\\$<< PUT NUM LIMITER HERE >>/NUM DIRimpl cdd=1 cdlim=2/g" $i
+          fi
       done
     fi
 # TRACKING ON/OFF AND FRAME COMMAND
@@ -1442,7 +1513,7 @@ if [[ $BOUNCOND == "1" ]]
 
    #rm ${NWPSdir}/parm/templates/${LSID}/BounCommandLines.txt
 
-   if [ ${MODELCORE} == "SWAN" ] || [ ${MODELCORE} == "swan" ]
+   if [ ${MODELCORE} == "SWAN" ] || [ ${MODELCORE} == "swan" ] || [ ${MODELCORE} == "UNSWAN" ]
    then
       echo " **********************************************"
       echo " BOUNDARY CONDITIONS BEING ADDED TO INPUTCG1  *"

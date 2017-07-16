@@ -187,7 +187,7 @@
         PRTEST = PRINTF
         TSTFIL = '    '
         SCREEN = 6
-        IUNMAX = 1024
+        IUNMAX = 9999
 !/SGI        IUNMAX = 199
 !       TABC is the Tab character (interpreted as blank in command reading)
         TABC = CHAR(9)                                                    40.69

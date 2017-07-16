@@ -6,9 +6,9 @@
 # Shell Used: BASH shell
 # Original Author(s): Alex Gibbs, Tony Freeman, Pablo Santos, Douglas Gaer
 # File Creation Date: 06/01/2009
-# Date Last Modified: 09/12/2014
+# Date Last Modified: 12/12/2016
 #
-# Version control: 1.00
+# Version control: 1.01
 #
 # Support Team:
 #
@@ -203,6 +203,57 @@ echo " " | tee -a $logrunup
             ${DBNROOT}
         fi
      fi
+
+     # TODO: 12/08/2016 - Testing RUNUP GRIB2 encoding
+     gribfile=$(ls ${DATA}/output/grib2/CG${CGNUM}/*CG${CGNUM}*grib2 | xargs -n 1 basename | tail -n 1)
+     fullname=`echo $gribfile | cut -c14-26`
+     GRIB2file=${NWPSDATA}/output/grib2/CG${CGNUM}/${gribfile}
+     WAVE_RUNUP_TO_BIN="${EXECnwps}/wave_runup_to_bin"
+     cgnCLON1=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lon | grep to | grep by | awk '{ print $2 }')
+     cgnLON1=$(echo "${cgnCLON1} - 360" | bc)
+     cgnCLON2=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lon | grep to | grep by | awk '{ print $4 }')
+     cgnLON2=$(echo "${cgnCLON2} - 360" | bc)
+     cgnNX=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat-lon | grep grid | grep x | awk '{ print $2 }' | sed s/'grid:('//g)
+     cgnLAT1=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat | grep to | grep by | awk '{ print $2 }')
+     cgnLAT2=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat | grep to | grep by | awk '{ print $4 }')
+     cgnNY=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat-lon | grep grid | grep x | awk '{ print $4 }' | sed s/')'//g)
+     SWAN_RUNUP_OUTPUT_FILE="${OUTDIRrunup}/${FORT22}"
+     RUNUPparms="erosion_flag owash_flag"
+     RUNUPerrors=0
+     for parm in ${RUNUPparms}
+     do
+	 cat ${FIXnwps}/templates/${parm}.meta > ${parm}.meta
+	 sed -i s/'<< SET NX >>'/${cgnNX}/g ${parm}.meta
+	 sed -i s/'<< SET NY >>'/${cgnNY}/g ${parm}.meta
+	 sed -i s/'<< SET LA1 >>'/${cgnLAT1}/g ${parm}.meta
+	 sed -i s/'<< SET LA2 >>'/${cgnLAT2}/g ${parm}.meta
+	 sed -i s/'<< SET LO1 >>'/${cgnLON1}/g ${parm}.meta
+	 sed -i s/'<< SET LO2 >>'/${cgnLON2}/g ${parm}.meta
+	 echo "${WAVE_RUNUP_TO_BIN} -v -d -c ${SWAN_RUNUP_OUTPUT_FILE} ${parm} ${parm}.meta ${parm}_templates.grib2 ${parm}_points.bin"
+	 ${WAVE_RUNUP_TO_BIN} -v -d -c ${SWAN_RUNUP_OUTPUT_FILE} ${parm} ${parm}.meta ${parm}_templates.grib2 ${parm}_points.bin
+	 if [ $? -eq 0 ]; then
+	     echo "${WGRIB2} ${parm}_templates.grib2  -no_header -import_bin ${parm}_points.bin -grib_out ${parm}_final_runup.grib2"
+	     ${WGRIB2} ${parm}_templates.grib2  -no_header -import_bin ${parm}_points.bin -grib_out ${parm}_final_runup.grib2
+	 else
+	     RUNUPerrors=1
+	     break
+	 fi
+     done
+     
+     if [ ${RUNUPerrors} -eq 0 ]; then
+	 cat /dev/null > final_runup.grib2
+	 for parm in ${RUNUPparms}
+	 do
+	     cat ${parm}_final_runup.grib2 >> final_runup.grib2
+	     cp -f final_runup.grib2 ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+	     cp -f final_runup.grib2 ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+	 done
+         #AW052917 Do not include runup output in general GRIB2 output, because it won't go over SBN yet.
+         #cat final_runup.grib2 >> ${GRIB2file}
+     else 
+	 echo "ERROR - ${WAVE_RUNUP_TO_BIN} program error, no RUNUP GRIB2 file generated for this run"
+     fi
+
   fi
 #_________________________RIP CURRENT PROGRAM____________________________________________
 #Run Program 
@@ -216,7 +267,7 @@ echo " " | tee -a $logrunup
      dptcontour=${RIPCONT:0:1}
      echo " CG domain for rip currents: ${RIPDOMAIN}"
      echo " Depth contour used        : ${dptcontour} m"
-     source ${USHnwps}/run_ripcurrent.sh ${RIPDOMAIN} ${dptcontour}
+     source ${USHnwps}/run_ripcurrent.sh ${RIPDOMAIN} ${dptcontour} ${RUNLEN}
      export err=$?; err_chk     
 
      # Copy results to output directories
@@ -228,6 +279,43 @@ echo " " | tee -a $logrunup
 
      mkdir -p $GESOUT/riphist/${SITEID}
      cp -fv  ${RIPDATA}/${CGCONT} ${GESOUT}/riphist/${SITEID}/${CGCONT}
+
+     # TODO: 11/29/2016 - Tesing RIP GRIB2 encoding below
+     SWAN_RIP_OUTPUT_FILE="${RIPDATA}/${FORT23}"
+     rip_current_meta_template="${FIXnwps}/templates/RIP.meta"
+     rip_current_meta="${RIPDATA}/RIP.meta"
+     cat ${rip_current_meta_template} > ${rip_current_meta}
+     RIP_CURRENT_TO_BIN="${EXECnwps}/rip_current_to_bin"
+     gribfile=$(ls ${DATA}/output/grib2/CG${CGNUM}/*CG${CGNUM}*grib2 | xargs -n 1 basename | tail -n 1)
+     fullname=`echo $gribfile | cut -c14-26`
+     GRIB2file=${NWPSDATA}/output/grib2/CG${CGNUM}/${gribfile}
+     cgnCLON1=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lon | grep to | grep by | awk '{ print $2 }')
+     cgnLON1=$(echo "${cgnCLON1} - 360" | bc)
+     cgnCLON2=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lon | grep to | grep by | awk '{ print $4 }')
+     cgnLON2=$(echo "${cgnCLON2} - 360" | bc)
+     cgnNX=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat-lon | grep grid | grep x | awk '{ print $2 }' | sed s/'grid:('//g)
+     cgnLAT1=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat | grep to | grep by | awk '{ print $2 }')
+     cgnLAT2=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat | grep to | grep by | awk '{ print $4 }')
+     cgnNY=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat-lon | grep grid | grep x | awk '{ print $4 }' | sed s/')'//g)
+     sed -i s/'<< SET NX >>'/${cgnNX}/g ${rip_current_meta}
+     sed -i s/'<< SET NY >>'/${cgnNY}/g ${rip_current_meta}
+     sed -i s/'<< SET LA1 >>'/${cgnLAT1}/g ${rip_current_meta}
+     sed -i s/'<< SET LA2 >>'/${cgnLAT2}/g ${rip_current_meta}
+     sed -i s/'<< SET LO1 >>'/${cgnLON1}/g ${rip_current_meta}
+     sed -i s/'<< SET LO2 >>'/${cgnLON2}/g ${rip_current_meta}
+     echo "${RIP_CURRENT_TO_BIN} -v -d -c ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin"
+     ${RIP_CURRENT_TO_BIN} -v -d -c ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin
+     if [ $? -eq 0 ]; then
+	 # Only create the GRIB2 file if the encoding process is successful
+	 echo "${WGRIB2} ${RIPDATA}/templates.grib2 -no_header -import_bin ${RIPDATA}/points.bin -grib_out ${RIPDATA}/final_rip.grib2"
+	 ${WGRIB2} ${RIPDATA}/templates.grib2 -no_header -import_bin ${RIPDATA}/points.bin -grib_out ${RIPDATA}/final_rip.grib2
+         #AW052917 Do not include runup output in general GRIB2 output, because it won't go over SBN yet.
+         #cat ${RIPDATA}/final_rip.grib2 >> ${GRIB2file}
+	 #cp -f ${RIPDATA}/final_rip.grib2 ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+         cat ${RIPDATA}/final_rip.grib2 >> ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+         cat ${RIPDATA}/final_rip.grib2 >> ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+     fi
+     # TODO: 11/29/2016 - Tesing RIP GRIB2 encoding above
   else
      echo " Rip current calculation not activated for this domain (CG${CGNUM})"
   fi
@@ -285,6 +373,13 @@ cd ${DATA}/output/grib2/CG${CGNUM}
      if [ "${SENDCOM}" == "YES" ]; then
         mkdir -p $COMOUTCYC
         cp -fv  ${grib2File} ${COMOUTCYC}/${grib2File}
+        # Restart and other input files
+        cp -fv  ${RUNdir}/inputCG${CGNUM} ${COMOUTCYC}/
+        cp -fv  ${RUNdir}/${date_stamp}${cycle}.wnd ${COMOUTCYC}/
+        cp -fv  ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.wlev ${COMOUTCYC}/
+        cp -fv  ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.cur ${COMOUTCYC}/
+        cp -fv  ${RUNdir}/bc_CG${CGNUM} ${COMOUTCYC}/
+
         if [ "${SENDDBN}" == "YES" ]; then
             ${DBNROOT}/bin/dbn_alert MODEL NWPS_GRIB $job ${COMOUTCYC}/${grib2File}
         fi

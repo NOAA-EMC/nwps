@@ -7,9 +7,9 @@ set -xa
 # Shell Used: BASH shell
 # Original Author(s): Douglas.Gaer@noaa.gov
 # File Creation Date: 02/05/2011
-# Date Last Modified: 11/18/2014
+# Date Last Modified: 05/24/2017
 #
-# Version control: 1.35
+# Version control: 1.37
 #
 # Support Team:
 #
@@ -132,11 +132,30 @@ if [ "${SENDLDADALERTS}" == "" ]; then export SENDLDADALERTS="FALSE"; fi
 echo "Setting up our NWPS environment for $SITEID"
 
 # Include files required to complete model setup 
+# 03/15/2016: Modified to setup the site using our domain file info.
+# 03/15/2016: This allows the nwps_config.sh script to be called before 
+# 03/15/2016: the domain setup.sh script.
 if [ ! -e ${DATA}/parm/templates/${siteid}/siteid.sh ]
     then
-    echo "ERROR - Missing ${DATA}/parm/templates/${siteid}/siteid.sh"
-    echo "ERROR - You must setup a domain for this site"
-    export err=1; err_chk
+    if [ ! -e ${FIXnwps}/domains/${SITEID} ]
+    then
+	echo "FATAL ERROR: Cannot find domain file ${FIXnwps}/domains/${SITEID}"
+	echo "Exiting model run"
+	export err=1; err_chk
+    fi
+    source ${FIXnwps}/domains/${SITEID}
+    mkdir -p ${DATA}/parm/templates/${siteid}
+    cat /dev/null > ${DATA}/parm/templates/${siteid}/siteid.sh
+    REGIONID=$(echo ${REGIONID} | tr [:upper:] [:lower:])
+    regionid=$(echo ${REGIONID} | tr [:lower:] [:upper:])
+    echo "#!/bin/bash" >> ${DATA}/parm/templates/${siteid}/siteid.sh
+    echo "export SITEID=$SITEID" >> ${DATA}/parm/templates/${siteid}/siteid.sh
+    echo "export siteid=$siteid" >> ${DATA}/parm/templates/${siteid}/siteid.sh
+    echo "export REGIONID=$REGIONID" >> ${DATA}/parm/templates/${siteid}/siteid.sh
+    echo "export regionid=$regionid" >> ${DATA}/parm/templates/${siteid}/siteid.sh
+    echo 'export DOMAINFILE=${FIXnwps}/domains/${SITEID}' >> ${DATA}/parm/templates/${siteid}/siteid.sh
+    echo ""  >> ${DATA}/parm/templates/${siteid}/siteid.sh
+    chmod 775 ${DATA}/parm/templates/${siteid}/siteid.sh
 fi
 source ${DATA}/parm/templates/${siteid}/siteid.sh
 
@@ -194,7 +213,7 @@ if [ "${RTOFSSOURCE}" == "" ]; then export RTOFSSOURCE="${DEFAULT_RTOFSSOURCE}";
 export DEFAULT_RTOFSLON="262.00 282.00"
 export DEFAULT_RTOFSLAT="23.0 33.00"
 export DEFAULT_RTOFSDATFILE="pdef_ncep_global.gz"
-export DEFAULT_RTOFSHOURS="144"
+export DEFAULT_RTOFSHOURS="180"
 export DEFAULT_RTOFSTIMESTEP="3"
 
 if [ "${RTOFSLON}" == "" ]; then export RTOFSLON=${DEFAULT_RTOFSLON}; fi
@@ -210,7 +229,7 @@ export DEFAULT_ESTOFS_REGION="conus"
 export DEFAULT_ESTOFSDOMAIN="262.00 23.0 0. 682 370 0.029326 0.027027"
 export DEFAULT_ESTOFSNX="683"
 export DEFAULT_ESTOFSNY="371"
-export DEFAULT_ESTOFSHOURS="144"
+export DEFAULT_ESTOFSHOURS="180"
 export DEFAULT_ESTOFSTIMESTEP="1"
 
 if [ "${ESTOFS_REGION}" == "" ]; then export ESTOFS_REGION="${DEFAULT_ESTOFS_REGION}"; fi
@@ -219,15 +238,15 @@ if [ "${ESTOFSNX}" == "" ]; then export ESTOFSNX=${DEFAULT_ESTOFSNX}; fi
 if [ "${ESTOFSNY}" == "" ]; then export ESTOFSNY=${DEFAULT_ESTOFSNY}; fi
 if [ "${ESTOFSHOURS}" == "" ]; then export ESTOFSHOURS=${DEFAULT_ESTOFSHOURS}; fi
 if [ "${ESTOFSTIMESTEP}" == "" ]; then export ESTOFSTIMESTEP=${DEFAULT_ESTOFSTIMESTEP}; fi
-#FOR PSURGE
-export PSURGEHOURS="78"
+#AW #FOR PSURGE
+#AW export PSURGEHOURS="102"
 
 # GFS wind domain settings
 # GFSWINDDOMAIN="LON LAT 0. NX NY EW-RESOLUTION NS-RESOLUTION"
 export DEFAULT_GFSWINDDOMAIN="262.00 23.0 0. 681 369 0.029369 0.0271"
 export DEFAULT_GFSWINDNX="682"
 export DEFAULT_GFSWINDNY="370"
-export DEFAULT_GFSHOURS="144"
+export DEFAULT_GFSHOURS="180"
 export DEFAULT_GFSTIMESTEP="3"
 
 if [ "${GFSWINDDOMAIN}" == "" ]; then export GFSWINDDOMAIN="${DEFAULT_GFSWINDDOMAIN}"; fi

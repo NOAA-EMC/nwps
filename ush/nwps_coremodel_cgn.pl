@@ -37,10 +37,12 @@ use lib ("$ENV{'PMnwps'}");
 use lib ("$ENV{'USHnwps'}");
 use lib ("$ENV{'RUNdir'}");
 use lib ("$ENV{'DATA'}");
-use WaveInput qw(waveInputProcessing);
-use WindInput qw(windInputProcessing);
-use GraphicOutput qw(graphicOutputProcessing);
-use RunSwan qw(makeSwanRun);
+#AW111416 use WaveInput qw(waveInputProcessing);
+#AW111416 use WindInput qw(windInputProcessing);
+#AW111416 use GraphicOutput qw(graphicOutputProcessing);
+#AW111416 use RunSwan qw(makeSwanRun);
+use SetupCG qw(makeSwanRun);
+use RunSwan qw(runModel);
 use CommonSub qw(removeFiles removeOldFiles mvFiles renameFilesWithSuffix giveDate);
 use ArraySub qw(inArray);
 use ConfigSwan;
@@ -264,5 +266,19 @@ for $i (1..$numcgrids-1){
   my $CG = @CGSS{$columns[$i]}; # 6,1,3
     %CG = %{$CG};
     $dateSuffix = &makeSwanRun($date,$inpGrid,$filename,%CG);
+} 
+
+#AW11416: Created new separate call to runModel from RunSwan.pm here, to split preprocessing and postprocessing
+
+#foreach my $CG (sort(values(%ConfigSwan::CGS))) {
+#foreach my $CG ( reverse sort values  %ConfigSwan::CGS) {
+#Give the names of the hashes that contains the CG information
+my @columns = qw(CG1 CG2 CG3 CG4 CG5);
+#Loop over the actual umber of Comp. Grids, in spite of nymber of elemnts in @columns 
+for $i (1..$numcgrids-1){
+  # Get a slice of the Config hash
+  my $CG = @CGSS{$columns[$i]}; # 6,1,3
+    %CG = %{$CG};
+    $dateSuffix = &runModel($date,$inpGrid,$filename,%CG);
 } 
 #Break here for WCOSS_main_03

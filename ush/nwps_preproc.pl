@@ -39,8 +39,9 @@ use lib ("$ENV{'PMnwps'}");
 use lib ("$ENV{'RUNdir'}");
 use WaveInput qw(waveInputProcessing);
 use WindInput qw(windInputProcessing);
-use GraphicOutput qw(graphicOutputProcessing);
-use RunSwan qw(makeSwanRun);
+#AW111416 use GraphicOutput qw(graphicOutputProcessing);
+#AW111416 use RunSwan qw(makeSwanRun);
+use SetupCG qw(makeSwanRun);
 use CommonSub qw(removeFiles removeOldFiles mvFiles renameFilesWithSuffix giveDate);
 use ArraySub qw(inArray);
 use ConfigSwan;
@@ -67,6 +68,7 @@ my $USHnwps = $ENV{'USHnwps'};
 my $ISPRODUCTION = $ENV{'ISPRODUCTION'};
 my $DEBUGGING = $ENV{'DEBUGGING'};
 my $DEBUG_LEVEL = $ENV{'DEBUG_LEVEL'};
+my $RETROSPECTIVE = $ENV{'RETROSPECTIVE'};
 
 # Setup our processing DIRs
 my $BATHYdb = $ENV{'BATHYdb'};
@@ -131,14 +133,22 @@ if ($DEBUGGING eq "TRUE") {
 Logs::run("Cleanup directory structure and kill any running swan processes.");
 &cleanUp();
 
-if(&isRunFromArchive()) {
-    Logs::run("RUN FROM ARCHIVE: this run will use archived wind and wave data from the file: ".RUNFROMARCHIVE);
-    &extractArchive();
+#if(&isRunFromArchive()) {
+#    Logs::run("RUN FROM ARCHIVE: this run will use archived wind and wave data from the file: ".RUNFROMARCHIVE);
+#    &extractArchive();
+#}
+if ($RETROSPECTIVE eq "TRUE") {
+    #system("${USHnwps}/extract_archive.sh");
+    #Tarball already exists in archive, just untar it
+    system("${USHnwps}/extract_archive_waves.sh");
 }
+
+if ($RETROSPECTIVE eq "FALSE") {
 if ($WNA eq "WNAWave" || $WNA eq "HURWave") {
     print "======   Download and pre-process wave data =====\n";
     Logs::run("Download and pre-process wave data.");
     &waveInputProcessing();
+}
 }
 
 Logs::run("Pre-process wind data.");
@@ -168,7 +178,7 @@ if(-e "${RUNdir}/nopsurge") {
 print " ============ In nwps_preproc.pl ==============\n";
 print "RTOFS: $RTOFS,  ESTOFS: $ESTOFS,  PSURGE: $PSURGE   date:${date}\n";
 
-
+#if ($RETROSPECTIVE eq "FALSE") {
 if ($RTOFS eq "YES") {
   if (-e "${USHnwps}/rtofs/bin/gen_current.sh" ) {
     system("${USHnwps}/rtofs/bin/gen_current.sh ${date} $ARGV[0]");
@@ -188,7 +198,7 @@ if ($WATERLEVELS eq "ESTOFS" && $ESTOFS eq "YES") {
     Logs::run("Proceeding without water level interactions.");
   }
 }
-elsif ($WATERLEVELS eq "PSURGE"&& $PSURGE eq "YES") {
+elsif ($WATERLEVELS eq "PSURGE" && $PSURGE eq "YES") {
   if (-e "${USHnwps}/psurge/bin/gen_waterlevel.sh" ) {
      open (FILE, '${RUNdir}/PEXCD');
      chomp ($EXCD = (<FILE>));
@@ -197,14 +207,59 @@ elsif ($WATERLEVELS eq "PSURGE"&& $PSURGE eq "YES") {
      system("${USHnwps}/psurge/bin/gen_waterlevel.sh ${date}");
      # If Psurge is used, then it is necessary to add ESTOFS fields
      # for the end of the run as Psurge has only 78 hrs.. We need 102
-     if ($ESTOFS eq "YES") {
+     #if ($ESTOFS eq "YES") {
         system("${USHnwps}/estofs/bin/gen_waterlevel.sh ${date}");
-     }
+     #}
   }
   else {
     Logs::run("You do not have the water level processing scripts installed.");
     Logs::run("Proceeding without water level interactions.");
   }
+}
+#}
+
+#AW11416: Added call to makeSwanRun from RunSwan.pm here, to unify preprocessing
+
+if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
+    my $infoFile01 = "${RUNdir}/info_to_makeSwanRun.txt";
+    open IN, "<$infoFile01"  or die "Cannot open: $!";
+    my $ndata=0;
+    while (<IN>) {
+	$ndata+=1;
+	$count++;
+	print "ndata= $ndata\n";
+	if ($ndata ==1) {
+	    $date=$_;
+	    print "$data\n";
+	}
+	if ($ndata ==2) {
+	    $inpGrid=$_;
+	    print "$inpGrid\n";
+	}
+	if ($ndata ==3) {
+	    $filename=$_;
+	    print "$filename\n";
+	}
+    }
+    close IN;
+}
+
+#Get the CGS hash
+my %CGSS = %ConfigSwan::CGS;
+#Get the number of hashes (Number of computational grids) in the hash CGS
+my $numcgrids += scalar keys %CGSS; 
+print "Number of Computational grids:  " . keys( %CGSS). "\n";
+
+#foreach my $CG (sort(values(%ConfigSwan::CGS))) {
+#foreach my $CG ( reverse sort values  %ConfigSwan::CGS) {
+#Give the names of the hashes that contains the CG information
+my @columns = qw(CG1 CG2 CG3 CG4 CG5);
+#Loop over the actual umber of Comp. Grids, in spite of nymber of elemnts in @columns 
+for $i (0..0){
+  # Get a slice of the Config hash
+  my $CG = @CGSS{$columns[$i]}; # 6,1,3
+    %CG = %{$CG};
+    $dateSuffix = &makeSwanRun($date,$inpGrid,$filename,%CG);
 }
 # ----------------------------------------------------------- 
 # ******************************* 

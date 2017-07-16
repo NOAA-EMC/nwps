@@ -29,27 +29,29 @@ set -xa
 # SETUP NWPS SHELL VARIABLES
 # #############################################
 
-curhour=$(date -u +%H)
-if [ $curhour -lt 12 ]; then CYCLE="00"; fi
-if [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
-if [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
-if [ $curhour -ge 22 ]; then CYCLE="18"; fi
-echo ""
-echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
+#AWcurhour=$(date -u +%H)
+#AWif [ $curhour -lt 12 ]; then CYCLE="00"; fi
+#AWif [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
+#AWif [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
+#AWif [ $curhour -ge 22 ]; then CYCLE="18"; fi
+#AWecho ""
+#AWecho "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
 
-export cyc=${CYCLE}
-export cycle=t${cyc}z
+#AWexport cyc=${CYCLE}
+#AWexport cycle=t${cyc}z
 
-export UTILROOT=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.3
+export UTILROOT=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.12
 
 export utilscript=${UTILROOT}/ush
 export USHutil=${UTILROOT}/ush
+
+cd /gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/
 . ./PDY.${WFO}
 
 export pgm="NWPS"
 
-export DATA=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/${WFO}.${PDY}
-export GESROOT=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/nwges
+export DATA=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/${WFO}.${PDY}
+export GESROOT=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/nwges
 
 mkdir -p $DATA
 cd $DATA
@@ -98,6 +100,11 @@ export GEN_NETCDF=${GEN_NETCDF:-FALSE}
 export GEN_HDF5=${GEN_HDF5:-FALSE}
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOMEnwps}/lib/szip:${HOMEnwps}/lib/proj
 
+# Set paths for local Python modules (mesh interpolation)
+#export PYTHONPATH=${HOMEnwps}/lib/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
+export PYTHONPATH=${HOMEnwps}/lib64/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
+export PYTHON=python
+
 # Set NWPS run conditions
 export DEBUGGING=${DEBUGGING:-TRUE}
 export DEBUG_LEVEL=${DEBUG_LEVEL:-1}
@@ -106,6 +113,7 @@ export SITETYPE=${SITETYPE:-EMC}
 export MODELTYPE="SWAN"
 export pgmout=${RUNdir}/PRINT-001
 export errfile=${RUNdir}/Errfile-001
+export MODELCORE=`grep SWAN ${RUNdir}/info_to_nwps_coremodel.txt`
 
 # Determine WFO's Region
 export REGION=$( grep ${WFO,,} ${PARMnwps}/wfo.tbl | cut -c1-2 | tr '[:upper:]' '[:lower:]' )

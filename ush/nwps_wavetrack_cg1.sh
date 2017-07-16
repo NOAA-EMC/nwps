@@ -24,6 +24,8 @@ if [ "${hastracking}" == "TRUE" ]
    date -u                                             | tee -a $logfile
    cd ${RUNdir}
    pwd                                                 | tee -a $logfile
+   #AW echo 'Removing empty lines in partition.raw file...'
+   #AW sed -i.bak '/ 0.0  0.0 270.0  0.0   0.0/,+1d' ${RUNdir}/swan_part.CG1.raw
    echo "perl -I${PMnwps} -I${RUNdir} ${USHnwps}/waveTracking.pl" | tee -a $logfile    
    perl -I${PMnwps} -I${RUNdir} ${USHnwps}/waveTracking.pl | tee -a $logfile
    export err=$?; err_chk

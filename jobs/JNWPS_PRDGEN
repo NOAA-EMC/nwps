@@ -33,16 +33,6 @@ export DATA=${DATA:-$DATAROOT/p${model}_${WFO}_${envir}}
 mkdir -p $DATA
 cd $DATA
 
-curhour=$(date -u +%H)
-if [ $curhour -lt 12 ]; then CYCLE="00"; fi
-if [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
-if [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
-if [ $curhour -ge 22 ]; then CYCLE="18"; fi
-echo ""
-echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
-export cyc=${CYCLE}
-export cycle=t${cyc}z
-
 ####################################
 # Specify NET and RUN Name and model
 ####################################
@@ -85,8 +75,6 @@ export LOGdir=${LOGdir:-${DATA}/logs}
 export GEN_NETCDF=${GEN_NETCDF:-FALSE}
 export GEN_HDF5=${GEN_HDF5:-FALSE}
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
-export PYTHONPATH=${HOMEnwps}/lib/python/python_modules/lib64/python2.6/site-packages:${HOMEnwps}/lib/basemap:${PYTHONPATH}
-export PYTHON=python
 export GRIB2dir=${GRIB2dir:-${DATA}/output/grib2}
 export PARMwmo="${PARMnwps}/wmo_headers"
 # Set NWPS run conditions
@@ -127,6 +115,8 @@ if [ "${SENDCOM}" = YES ]; then
 fi
 
 mkdir -p $COMIN $LOGdir $RUNdir $TMPdir $OUTPUTdir $ARCHdir $DATAdir $INPUTdir $VARdir $GESOUT $PCOM
+
+env
 
 ##############################################
 # Execute the script

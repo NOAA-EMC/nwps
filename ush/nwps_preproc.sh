@@ -329,6 +329,7 @@ if [ "${NESTS}" == "YES" ] && [ "${NEST4INCG1}" == "NO" ]
 fi
 
 cp -vfp ${DATA}/parm/templates/${siteid}/inputCG1 ${RUNdir}/inputCG1 | tee -a $logfile
+
 ### Initialize with WNAwaves/HURWave/TAFB-NWPS:
 if [ "${WNA}" == "WNAWave" ] || [ "${WNA}" == "HURWave" ] || [ "${WNA}" == "TAFB-NWPS" ]
 then
@@ -342,11 +343,13 @@ then
 	echo "Changing multi_1 to multi_2 in ${RUNdir}/inputCG1" | tee -a $logfile
 	sed -i s/multi_1/multi_2/g ${RUNdir}/inputCG1
     fi
-    echo "==============================================="
-    echo " In nwps_preproc  get_wna.sh added !!!  "
-    ${USHnwps}/get_wna.sh
-    export err=$?; err_chk
-    echo "==============================================="
+    if [ "${RETROSPECTIVE}" == "FALSE" ]; then     #RETROSPECTIVE
+        echo "==============================================="
+        echo " In nwps_preproc  get_wna.sh added !!!  "
+        ${USHnwps}/get_wna.sh
+        export err=$?; err_chk
+        echo "==============================================="
+    fi     #RETROSPECTIVE
 else
     export WNA="NO"
     echo "WW3 bounary conditions will NOT be used" | tee -a $logfile
@@ -359,6 +362,8 @@ if [ "${WNA}" == "TAFB-NWPS" ]
    rm ${RUNdir}/bc_*
    echo "INFO - TAFB-NWPS boundary conditions has been chosen" | tee -a $logfile
 fi
+
+if [ "${RETROSPECTIVE}" == "FALSE" ]; then     #RETROSPECTIVE
 
 #====================================================================================
 # Initialize ESTOFS:
@@ -399,13 +404,14 @@ then
    export err=$?; err_chk
     
    #if [ -e ${RUNdir}/nopsurge ] && [ ! -e ${RUNdir}/noestofs ]
+   #then
    #   export WATERLEVELS="ESTOFS"
    #   export ESTOFS="YES"
    #   export PSURGE="NO"
    #   echo " Initializing WATERLEVELS from ESTOFS"
    #   echo "WATERLEVELS: ${WATERLEVELS},  ESTOFS: ${ESTOFS}" 
-   #   echo "Setting up Waterlevels from ESTOFS to be added after Psurge" | tee -a $logfile 
-   #   ${USHnwps}/get_ncep_initfiles.sh ESTOFS 
+      echo "Setting up Waterlevels from ESTOFS to be added after Psurge" | tee -a $logfile 
+      ${USHnwps}/get_ncep_initfiles.sh ESTOFS 
    #fi
    # To complete the 102 hrs run including water levels it is necessary to add
    #estofswater levels, for Psurge covers only 78 hrs.
@@ -423,11 +429,13 @@ else
 fi
 #==========================================================================================
 
+fi   #RETROSPECTIVE
+
 echo "Setting up BATHY data for ${REGIONID} region or ${SITEID} site"
 HASBATHY="FALSE"
 BATHYdir=""
 
-if [ "${MODELCORE}" == "SWAN" ]
+if [ "${MODELCORE}" == "SWAN" ] || [ "${MODELCORE}" == "UNSWAN" ]
    then
 # Look for regional BATHY file
    if [ -e ${BATHYdb}/${regionid}/bathyCG1 ]

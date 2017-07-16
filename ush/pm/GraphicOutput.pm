@@ -4,9 +4,9 @@
 # PERL Version(s): 5
 # Original Author(s): Eve-Marie Devalire for WFO-Eureka 
 # File Creation Date: 04/20/2004
-# Date Last Modified: 09/15/2016
+# Date Last Modified: 01/06/2017
 #
-# Version control: 2.55
+# Version control: 2.56
 #
 # Support Team:
 #
@@ -435,7 +435,28 @@ sub graphicOutputProcessing (%){
     print G2LOG "g2HOUR = $g2HOUR\n";
     print G2LOG "g2MINUTE = $g2MINUTE\n";
     print G2LOG "g2SECOND = $g2SECOND\n";
-    
+
+    # Copy over our GRIB2 template and write a GRIB2 template file for this parameter
+    system("cp -pfv ${DATA}/parm/templates/${siteid}/*.meta .  >> ${g2logfname}");
+    system("sed -i 's/<< SET START YEAR >>/${g2YEAR}/g' *.meta >> ${g2logfname}");
+    system("sed -i 's/<< SET START MONTH >>/${g2MONTH}/g' *.meta >> ${g2logfname}");
+    system("sed -i 's/<< SET START DAY >>/${g2DAY}/g' *.meta >> ${g2logfname}");
+    system("sed -i 's/<< SET START HOUR >>/${g2HOUR}/g' *.meta >> ${g2logfname}");
+    system("sed -i 's/<< SET START MINUTE >>/${g2MINUTE}/g' *.meta >> ${g2logfname}");
+    system("sed -i 's/<< SET START SECOND >>/${g2SECOND}/g' *.meta >> ${g2logfname}");
+    system("sed -i 's/<< SET NUM POINTS >>/${g2_num_data_points}/g' *.meta >> ${g2logfname}");
+    system("sed -i 's/<< SET NX >>/${g2NX}/g' *.meta >> ${g2logfname}");
+    system("sed -i 's/<< SET NY >>/${g2NY}/g' *.meta >> ${g2logfname}");
+    system("sed -i 's/<< SET LA1 >>/${g2LA1}/g' *.meta >> ${g2logfname}");
+    system("sed -i 's/<< SET LO1 >>/${g2LO1}/g' *.meta >> ${g2logfname}");
+    system("sed -i 's/<< SET LA2 >>/${g2LA2}/g' *.meta >> ${g2logfname}");
+    system("sed -i 's/<< SET LO2 >>/${g2LO2}/g' *.meta >> ${g2logfname}");
+    system("sed -i 's/<< SET DX >>/${g2DX}/g' *.meta >> ${g2logfname}");
+    system("sed -i 's/<< SET DY >>/${g2DY}/g' *.meta >> ${g2logfname}");
+
+    system("cat /dev/null > templates.grib2");
+    system("cat /dev/null > output.bin");
+        
     foreach (@{$CG{OUTPUTDATATYPES}}) {
 	print G2LOG "Processing GRIB2 dataType $_\n";
 	my $g2DataType=$_;
@@ -513,7 +534,7 @@ sub graphicOutputProcessing (%){
 	    $set_exception_lt_value = 0;
 	    $set_exception_value = 0;
 	}
-	
+
 	# Process the SWAN raw output in ASCII point file format
 	# Example file: HSIG.CG1.CGRID.YY11.MO01.DD25.HH00
 	my $SWANCGIDFILE = "${g2DataType}.CG${cgnum}.CGRID.YY${g2YY}.MO${g2MONTH}.DD${g2DAY}.HH${g2HOUR}";
@@ -521,138 +542,36 @@ sub graphicOutputProcessing (%){
 
 	# Call C program that will convert the ASCII point file for all hours to an hourly BIN file per forecast hour
 	# The BIN file is sequence of floating point values readable by GRADS, WGRIB2, CDO, DEGRIB, C and Fortran processing programs
-	# Example command 1:  swan_out_to_bin HSIG.CG1.CGRID.YY11.MO01.DD25.HH00 627 3 1 24 
-	# Example command 2:  swan_out_to_bin WIND.CG1.CGRID.YY11.MO01.DD25.HH00 627 3 2 24 dir mag speeddir
 	if ($num_componets == 1) {
 	    if($set_exception_value == 1) {
-		print G2LOG "System call: swan_out_to_bin -v -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} \
->> ${g2logfname}\n";
-		system("swan_out_to_bin -v -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} >> ${g2logfname}" );
+		system("swan_out_to_bin -v --meta-template=${g2DataType}.meta -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} >> ${g2logfname}" );
 	    }
 	    elsif($set_exception_lt_value == 1) {
-		print G2LOG "System call: swan_out_to_bin -v -l\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} \
->> ${g2logfname}\n";
-		system("swan_out_to_bin -v -l\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} >> ${g2logfname}" );
+		system("swan_out_to_bin -v --meta-template=${g2DataType}.meta -l\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} >> ${g2logfname}" );
 	    }
 	    else {
-		print G2LOG "System call: swan_out_to_bin -v ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} \
->> ${g2logfname}\n";
-		system("swan_out_to_bin -v ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} >> ${g2logfname}" );
+		system("swan_out_to_bin -v --meta-template=${g2DataType}.meta ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} >> ${g2logfname}" );
 	    }
 	}
-	else {
+	else { # WIND and VEL
 	    if($set_exception_value == 1) {
-		print G2LOG "System call: swan_out_to_bin -v -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir \
->> ${g2logfname}\n";
-		system("swan_out_to_bin -v -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir >> ${g2logfname}" );
+		system("swan_out_to_bin -v --meta-template1=${g2DataType}_dir.meta --meta-template2=${g2DataType}_mag.meta -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir >> ${g2logfname}" );
 	    }
 	    elsif($set_exception_lt_value == 1) {
-		print G2LOG "System call: swan_out_to_bin -v -l\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir \
->> ${g2logfname}\n";
-		system("swan_out_to_bin -v -l\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir >> ${g2logfname}" );
+		system("swan_out_to_bin -v --meta-template1=${g2DataType}_dir.meta --meta-template2=${g2DataType}_mag.meta -l\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir >> ${g2logfname}" );
 	    }
 	    else {
-		print G2LOG "System call: swan_out_to_bin -v ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir \
->> ${g2logfname}\n";
-		system("swan_out_to_bin -v ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir >> ${g2logfname}" );
+		system("swan_out_to_bin -v --meta-template1=${g2DataType}_dir.meta --meta-template2=${g2DataType}_mag.meta ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir >> ${g2logfname}" );
 	    }
 	}
-	
-	for(my $comp_count = 0; $comp_count <  $num_componets; $comp_count++) {
-	    my $g2tempval = $g2DataType;
-	    
-	    if(($num_componets == 2) && ($comp_count == 0)) {
-		$g2DataType = "${g2tempval}_dir";
-		print G2LOG "Processing dir element of $g2DataType\n";
-	    }
-	    elsif (($num_componets == 2) && ($comp_count == 1)) {
-		$g2DataType = "${g2tempval}_mag";
-		print G2LOG "Processing mag element of $g2DataType\n";
-	    }
-	    else {
-		$g2DataType = ${g2tempval};
-	    }
-	    
-	    # Copy over our GRIB2 template and write a GRIB2 template file for this parameter
-	    system("cp -pfv ${DATA}/parm/templates/${siteid}/${g2DataType}.meta  ${g2DataType}.meta  >> ${g2logfname}");
-	    system("sed -i 's/<< SET START YEAR >>/${g2YEAR}/g' ${g2DataType}.meta >> ${g2logfname}");
-	    system("sed -i 's/<< SET START MONTH >>/${g2MONTH}/g' ${g2DataType}.meta >> ${g2logfname}");
-	    system("sed -i 's/<< SET START DAY >>/${g2DAY}/g' ${g2DataType}.meta >> ${g2logfname}");
-	    system("sed -i 's/<< SET START HOUR >>/${g2HOUR}/g' ${g2DataType}.meta >> ${g2logfname}");
-	    system("sed -i 's/<< SET START MINUTE >>/${g2MINUTE}/g' ${g2DataType}.meta >> ${g2logfname}");
-	    system("sed -i 's/<< SET START SECOND >>/${g2SECOND}/g' ${g2DataType}.meta >> ${g2logfname}");
-	    system("sed -i 's/<< SET NUM POINTS >>/${g2_num_data_points}/g' ${g2DataType}.meta >> ${g2logfname}");
-	    system("sed -i 's/<< SET NX >>/${g2NX}/g' ${g2DataType}.meta >> ${g2logfname}");
-	    system("sed -i 's/<< SET NY >>/${g2NY}/g' ${g2DataType}.meta >> ${g2logfname}");
-	    system("sed -i 's/<< SET LA1 >>/${g2LA1}/g' ${g2DataType}.meta >> ${g2logfname}");
-	    system("sed -i 's/<< SET LO1 >>/${g2LO1}/g' ${g2DataType}.meta >> ${g2logfname}");
-	    system("sed -i 's/<< SET LA2 >>/${g2LA2}/g' ${g2DataType}.meta >> ${g2logfname}");
-	    system("sed -i 's/<< SET LO2 >>/${g2LO2}/g' ${g2DataType}.meta >> ${g2logfname}");
-	    system("sed -i 's/<< SET DX >>/${g2DX}/g' ${g2DataType}.meta >> ${g2logfname}");
-	    system("sed -i 's/<< SET DY >>/${g2DY}/g' ${g2DataType}.meta >> ${g2logfname}");
-	    
-	    print G2LOG "Processing GRIB2 output for: $_ CG$cgnum $g2DataType $num_componets $dimTimeStep\n";
-	    
-	    my $g2_curr_fhour = 0;
-	    my $g2_num_timesteps = $dimTimeStep-1;
-	    if($g2_num_timesteps <= 0) { $g2_num_timesteps = 1; }
-	    for(my $g2TS = 0; $g2TS < ($g2_num_timesteps+1); $g2TS++) {
-		system("cp -pfv ${g2DataType}.meta ${g2DataType}.meta.current_hour >> ${g2logfname}");
-		$g2_curr_fhour = $g2_time_step * $g2TS;
-		system("sed -i 's/<< SET FORECAST HOUR >>/${g2_curr_fhour}/g' ${g2DataType}.meta.current_hour >> ${g2logfname}");
-		
-		# Write a GRIB2 template file
-		# Example: g2_write_template varname.meta outfile.grb2
-		system("g2_write_template ${g2DataType}.meta.current_hour ${g2DataType}_template.grib2 >> ${g2logfname}");
-		
-		# Get my BIN file for this GRIB2 variable
-		my $BINFILE="${g2_curr_fhour}_${SWANCGIDFILE}.bin";
-		if(($num_componets == 2) && ($comp_count == 0)) {
-		    $BINFILE="${g2_curr_fhour}_direction_${SWANCGIDFILE}.bin";
-		}
-		elsif (($num_componets == 2) && ($comp_count == 1)) {
-		    $BINFILE="${g2_curr_fhour}_speed_${SWANCGIDFILE}.bin";
-		}
-		else {
-		    ;
-		}
-		print G2LOG "Processing file $BINFILE\n";
-		
-		# Enode the SWAN output into a GRIB2 file
-		# Example wgrib2 HSIG_template.grib2 -no_header -import_bin point_values.bin -grib_out HSIG.grib2
-		my $g2out = "${siteid}_nwps_CG${cgnum}_${g2DataType}_${g2YEAR}${g2MONTH}${g2DAY}_f${g2_curr_fhour}.grib2";
-		print G2LOG "System call: ${WGRIB2} ${g2DataType}_template.grib2 -no_header -import_bin ${BINFILE} -grib_out ${g2out}\n";
-		system("${WGRIB2} ${g2DataType}_template.grib2 -no_header -import_bin ${BINFILE} -grib_out ${g2out} >> ${g2logfname}");
-	    }
-	    $g2DataType =  $g2tempval;
-	}
+
+	system("cat ${SWANCGIDFILE}.bin >> output.bin");
+	system("cat ${SWANCGIDFILE}_template.grib2 >> templates.grib2");
     }
-    
-    #  Cat all grib2 files into a single file for each CG by f${hour}
-    my $g2_curr_fhour = 0;
-    my $g2_num_timesteps = $dimTimeStep-1;
+
     my $g2out = "${siteid}_nwps_CG${cgnum}_${g2YEAR}${g2MONTH}${g2DAY}_${g2HOUR}${g2MINUTE}.grib2";
     print G2LOG "Creating GRIB2 output file: ${OUTPUTdir}/grib2/CG${cgnum}/${g2out}\n";
-    system ("cat /dev/null > ${OUTPUTdir}/grib2/CG${cgnum}/${g2out}");
-    my $g2infile = "NULL";
-    if($g2_num_timesteps <= 0) { $g2_num_timesteps = 1; }
-    
-    # TODO: Ensure all GRIB2 variables are included in the array below
-    my @g2_variables = ("HSIG","DEPTH","PDIR", "TPS", "WLEN", "DISSU", "HSWE", "WATL", "VEL_dir", "VEL_mag", "WIND_dir", "WIND_mag");
-    for(my $g2TS = 0; $g2TS < ($g2_num_timesteps+1); $g2TS++) {
-	$g2_curr_fhour = $g2_time_step * $g2TS;
-	foreach (@g2_variables) { 
-	    my $g2DataType = $_; 
-	    print G2LOG "Adding: ${g2DataType} for forecast hour ${g2_curr_fhour}\n";
-	    $g2infile = "${siteid}_nwps_CG${cgnum}_${g2DataType}_${g2YEAR}${g2MONTH}${g2DAY}_f${g2_curr_fhour}.grib2";
-	    if( -e $g2infile ) {
-		system ("cat ${g2infile} >> ${OUTPUTdir}/grib2/CG${cgnum}/${g2out}");
-	    }
-	    else {
-		print G2LOG "WARNING - Input file does not exist: ${g2infile}\n";
-	    }
-	}
-    }
+    system("${WGRIB2} templates.grib2 -no_header -import_bin output.bin -grib_out ${OUTPUTdir}/grib2/CG${cgnum}/${g2out} >> ${g2logfname}");
     
     chdir ("${OUTPUTdir}/grib2/");
     if(${DEBUGGING} ne 'TRUE') {
@@ -667,75 +586,76 @@ sub graphicOutputProcessing (%){
     close(G2LOG);
     Logs::bug("GRIB2 encoding complete",1);
     
-    #RPH specta 1d changes
-    Logs::bug("Starting specta 1d processing",1);
+    # Process wave spectra. In the case of UNSWAN, these only exist for the unstructured (CG1) mesh.
+    if( $MODELCORE eq 'SWAN' || ( $MODELCORE eq 'UNSWAN' && $cgnum eq '1' ) ) {
+        Logs::bug("Starting specta 1d processing",1);
     
-    my $spectralogfname = "${LOGdir}/spectra1d_encoding.log";
-    Logs::bug("Creating spectra 1d files, logging results to ${spectralogfname}",6);
-    my $spclog = open(SPCLOG, ">>${spectralogfname}");
-    if( ! $spclog ){
-	Logs::bug("ERROR - Cannot create file ${spectralogfname}",6);
-    }
-    system("date +%s > ${VARdir}/spectra1d_start_secs.txt");
-    print SPCLOG "Startring spectra 1d encoding process for raw SWAN output\n";
+        my $spectralogfname = "${LOGdir}/spectra1d_encoding.log";
+        Logs::bug("Creating spectra 1d files, logging results to ${spectralogfname}",6);
+        my $spclog = open(SPCLOG, ">>${spectralogfname}");
+        if( ! $spclog ){
+     	    Logs::bug("ERROR - Cannot create file ${spectralogfname}",6);
+        }
+        system("date +%s > ${VARdir}/spectra1d_start_secs.txt");
+        print SPCLOG "Startring spectra 1d encoding process for raw SWAN output\n";
     
-    chdir("${RUNdir}");
-    my $spc1DName;
-    $spc1dYorN="NO";
-    $hasspcerror="FALSE"; 
-    @spc1DFileNames = &getSpc1DFileNames("CG$cgnum");
+        chdir("${RUNdir}");
+        my $spc1DName;
+        $spc1dYorN="NO";
+        $hasspcerror="FALSE"; 
+        @spc1DFileNames = &getSpc1DFileNames("CG$cgnum");
 
-    if( $spc1dYorN eq 'YES' && $hasspcerror eq 'FALSE' ) { 
-	print SPCLOG "We have spectra 1d raw SWAN output for this run\n";
-	print SPCLOG "Starting spectra 1d processing for raw SWAN output\n";
-	($numOfFreq)=&getFreqValueFromCommandFile("CG$cgnum");
-	print SPCLOG "Number of frequencies = $numOfFreq\n";
-	system("mkdir -p ${OUTPUTdir}/spectra/CG${cgnum}");
-	chdir("${OUTPUTdir}/spectra/CG${cgnum}");
-	my (undef,$spcyear,$spcmonth,$spcday,undef,$spchour)=unpack"A2 A2 A2 A2 A A2",$filename;
-	my $spcdateSuffix="YY".$spcyear.".MO".$spcmonth.".DD".$spcday.".HH".$spchour;
-	system("rm -f ${OUTPUTdir}/spectra/CG${cgnum}/SPC1D*.*");
-        #------- SPC2D -------
-        system("rm -f ${OUTPUTdir}/spectra/CG${cgnum}/SPC2D*.*");
-        #------- SPC2D -------
-	foreach $spc1DName (@spc1DFileNames) {
-	    system("mv -f ${RUNdir}/${spc1DName} ${OUTPUTdir}/spectra/CG${cgnum}/${spc1DName}.${spcdateSuffix}");
+        if( $spc1dYorN eq 'YES' && $hasspcerror eq 'FALSE' ) { 
+    	    print SPCLOG "We have spectra 1d raw SWAN output for this run\n";
+	    print SPCLOG "Starting spectra 1d processing for raw SWAN output\n";
+	    ($numOfFreq)=&getFreqValueFromCommandFile("CG$cgnum");
+	    print SPCLOG "Number of frequencies = $numOfFreq\n";
+	    system("mkdir -p ${OUTPUTdir}/spectra/CG${cgnum}");
+	    chdir("${OUTPUTdir}/spectra/CG${cgnum}");
+	    my (undef,$spcyear,$spcmonth,$spcday,undef,$spchour)=unpack"A2 A2 A2 A2 A A2",$filename;
+	    my $spcdateSuffix="YY".$spcyear.".MO".$spcmonth.".DD".$spcday.".HH".$spchour;
+	    system("rm -f ${OUTPUTdir}/spectra/CG${cgnum}/SPC1D*.*");
             #------- SPC2D -------
-            my $fragment = substr $spc1DName, 5;
-            my $spc2DName = "SPC2D".$fragment;
-            print SPCLOG "Copying 2D spectra data file ${spc2DName} to ${OUTPUTdir}/spectra/CG${cgnum}/\n";
-            system("mv -f ${RUNdir}/${spc2DName} ${OUTPUTdir}/spectra/CG${cgnum}/${spc2DName}.${spcdateSuffix}");
+            system("rm -f ${OUTPUTdir}/spectra/CG${cgnum}/SPC2D*.*");
             #------- SPC2D -------
-	    print SPCLOG "Create spectra data file for ${spc1DName} CG${cgnum}\n";
-	    &createDataSpc1D('spc1d', ${spc1DName}, "CG${cgnum}");
-	    if($hasspcerror eq 'TRUE' ) { 
-		print SPCLOG "ERROR - Fatal error processing ${OUTPUTdir}/spectra/CG${cgnum}/${spc1DName}.${spcdateSuffix}\n";
-		print SPCLOG "ERROR - Will not be creating any spectra-1d output for CG${cgnum}\n";
-		next;
+	    foreach $spc1DName (@spc1DFileNames) {
+  	        system("cp -f ${RUNdir}/${spc1DName} ${OUTPUTdir}/spectra/CG${cgnum}/${spc1DName}.${spcdateSuffix}");
+                #------- SPC2D -------
+                my $fragment = substr $spc1DName, 5;
+                my $spc2DName = "SPC2D".$fragment;
+                print SPCLOG "Copying 2D spectra data file ${spc2DName} to ${OUTPUTdir}/spectra/CG${cgnum}/\n";
+                system("cp -f ${RUNdir}/${spc2DName} ${OUTPUTdir}/spectra/CG${cgnum}/${spc2DName}.${spcdateSuffix}");
+                #------- SPC2D -------
+	        print SPCLOG "Create spectra data file for ${spc1DName} CG${cgnum}\n";
+	        &createDataSpc1D('spc1d', ${spc1DName}, "CG${cgnum}");
+	        if($hasspcerror eq 'TRUE' ) { 
+		    print SPCLOG "ERROR - Fatal error processing ${OUTPUTdir}/spectra/CG${cgnum}/${spc1DName}.${spcdateSuffix}\n";
+		    print SPCLOG "ERROR - Will not be creating any spectra-1d output for CG${cgnum}\n";
+		    next;
+	        }
 	    }
-	}
 	
-	if($hasspcerror eq 'TRUE' ) { 
-	    $freqArray[0] = "ERROR, ";
-	}
-	chdir ("${DATA}");
-	&addSpectraInfoToConfigSwan;
-    }
-    else {
-	print SPCLOG "We have no spectra 1d raw SWAN output for this run\n";
-	print SPCLOG "No spectra 1d file processed\n";
-    }
+	    if($hasspcerror eq 'TRUE' ) { 
+	        $freqArray[0] = "ERROR, ";
+	    }
+	    chdir ("${DATA}");
+	    &addSpectraInfoToConfigSwan;
+        }
+        else {
+	    print SPCLOG "We have no spectra 1d raw SWAN output for this run\n";
+	    print SPCLOG "No spectra 1d file processed\n";
+        }
 
-    if( $spc1dYorN eq 'YES' && $hasspcerror eq 'FALSE' ) { 
-	print SPCLOG "Plotting spectra-1d images\n";
-	#system("${NWPSdir}/ush/grads/bin/plot_specta.sh ${cgnum} >> ${LOGdir}/spectra1d_encoding.log 2>&1"); 
-	system("${NWPSdir}/ush/python/plot_specta.sh ${cgnum} >> ${LOGdir}/spectra1d_encoding.log 2>&1"); 
+        if( $spc1dYorN eq 'YES' && $hasspcerror eq 'FALSE' ) { 
+	    print SPCLOG "Plotting spectra-1d images\n";
+	    #system("${NWPSdir}/ush/grads/bin/plot_specta.sh ${cgnum} >> ${LOGdir}/spectra1d_encoding.log 2>&1"); 
+	    #AW020117 system("${NWPSdir}/ush/python/plot_specta.sh ${cgnum} >> ${LOGdir}/spectra1d_encoding.log 2>&1"); 
+        }
+        system("date +%s > ${VARdir}/spectra1d_end_secs.txt");
+        print SPCLOG "Specta 1d processing complete\n";
+        close(SPCLOG);
+        Logs::bug("Specta 1d processing complete",1);
     }
-    system("date +%s > ${VARdir}/spectra1d_end_secs.txt");
-    print SPCLOG "Specta 1d processing complete\n";
-    close(SPCLOG);
-    Logs::bug("Specta 1d processing complete",1);
-    #RPH specta 1d changes
 #xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 #xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     # Partition addition BEGIN
@@ -861,8 +781,15 @@ sub getValuesFromCommandFile
     #declare all the following variables
     my $pwd=`pwd`;
     chdir "${RUNdir}";
-    open (INPUT,"input$_[0]") or &report ("open file issue\ncan't open the
-                file input$_[0]",2);
+    if ($MODELCORE eq "SWAN") {
+       open (INPUT,"input$_[0]") or &report ("open file issue\ncan't open the
+                   file input$_[0]",2);
+    }
+    #in the case of UNSWAN the output frame info is all stored in inputCG1
+    if ($MODELCORE eq "UNSWAN") {
+       open (INPUT,"inputCG1") or &report ("open file issue\ncan't open the
+                   file inputCG1",2);
+    }
     @input=<INPUT>;
     close INPUT;
     chomp (@input);
@@ -870,23 +797,47 @@ sub getValuesFromCommandFile
     #capture domainOrigin from inputCGx file as well as the number of time
     #steps and number of spatial steps in X and Y(same number because
     #the grid is a square)
-    my $lineNum; 	
-    $lineNum=&giveNextEntryLine("CGRID",1,\@input);
+    my $lineNum;
+    print "Model core: $MODELCORE\n";
+    if ($MODELCORE eq "SWAN") {
+       $lineNum=&giveNextEntryLine("CGRID",1,\@input);
+    }
+    if ($MODELCORE eq "UNSWAN") {
+       $lineNum=&giveNextEntryLine("FRAME$_[0]",1,\@input);
+    }
     my @domainValues=split / /,$input[$lineNum];
+    my $dimRecord;
+    my $dimXY;
     # the values indicates the number of spaces between values in the input
     #file, so we have to had one for each value, then '*8" is for the
     #timeSteps (recordNumber * timeStep)
-    my ($dimRecord,$dimXY)=(($domainValues[7]+1),$domainValues[6]+1);
-    
+    if ($MODELCORE eq "SWAN") {
+       ($dimRecord,$dimXY)=(($domainValues[7]+1),$domainValues[6]+1);
+    }
+    if ($MODELCORE eq "UNSWAN") {
+       ($dimRecord,$dimXY)=(($domainValues[9]+1),$domainValues[8]+1);
+    }
+
     #in the following part we transform the lat/lon to AWIPS coordonate and
     #then back to lat/lon to be able to calculate the lat/lon for the center.
     #domain extent is not this value but we'll need the difference between
     #these values of domainExtent and domainOrigin to find the real
     #domainExtent. The difference itself can't be calculated because the
     #numbers are too small and consequently not supported by AWIPS format
-    my ($lonOrigin,$latOrigin,$lonExtent,$latExtent)=($domainValues[1],
-						      $domainValues[2],$domainValues[4]+$domainValues[1],
+    my $lonOrigin;
+    my $latOrigin;
+    my $lonExtent;
+    my $latExtent;
+    if ($MODELCORE eq "SWAN") {
+       ($lonOrigin,$latOrigin,$lonExtent,$latExtent)=($domainValues[1],
+					              $domainValues[2],$domainValues[4]+$domainValues[1],
 						      $domainValues[5]+$domainValues[2]);
+    }
+    if ($MODELCORE eq "UNSWAN") {
+       ($lonOrigin,$latOrigin,$lonExtent,$latExtent)=($domainValues[3],
+						      $domainValues[4],$domainValues[6]+$domainValues[3],
+						      $domainValues[7]+$domainValues[4]);
+    }
     $lonOrigin=$lonOrigin-360;#we have the latitude from the east and want it from west 
     $lonExtent=$lonExtent-360;
     
@@ -1718,7 +1669,8 @@ sub getPrtNamesLonLat {
     my ($domain)=@_;
     $sought1="POINTS";
     $numOfPartLoc=0;
-    open (DATA,"input$_[0]");
+    system("sed -e \"/POINTS '5mcont'/d\" -e \"/POINTS '20mcont'/d\" inputCG1 > inputCG1.temp");
+    open (DATA,"input$_[0].temp");
     if(! DATA ) {
 	$partitionYorN = "NO";
 	system("echo \"**Input file : input$_[0] could not be opened\" >> ${LOGdir}/partition_encoding.log");

@@ -29,7 +29,7 @@ export NELON="-75.40"
 export SWLAT="36.75"
 export SWLON="-77.80"
 export RES="2.0"
-export TSTEP="3"
+export TSTEP="1"
 #
 #========================================================================
 #                  NESTED GRID CONFIGURATION                            =
@@ -53,7 +53,7 @@ export NELONN1=""
 export SWLATN1=""
 export SWLONN1=""
 export RESN1=".1"
-export TSTEPN1="3"
+export TSTEPN1="1"
 export STATN1="NON"
 #
 #========================================================================

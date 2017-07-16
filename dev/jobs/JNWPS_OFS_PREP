@@ -41,8 +41,8 @@ export cyc=${CYCLE}
 export cycle=t${cyc}z
 export pgmout=OUTPUT.$$
 
-export utilscript=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.3/ush
-export USHutil=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.3/ush
+export utilscript=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.12/ush
+export USHutil=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.12/ush
 sh $utilscript/setpdy.sh
 
 . ./PDY
@@ -50,7 +50,7 @@ sh $utilscript/setpdy.sh
 sh $utilscript/setup.sh
 export pgm="ofs.psurge"
 
-export DATA=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/ofs.${PDY}
+export DATA=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/ofs.${PDY}
 #export COMROOT=${DATA}/com
 export GESROOT=${DATA}/nwges
 
@@ -109,7 +109,7 @@ export COMOUT=${COMROOT}/${NET}/${envir}/${OFS}.${PDY}
 export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
 #export COMINgfs=${COMROOT}/gfs/prod/gfs.${PDY}
 export COMINwave=${COMROOTp1}/wave/prod
-export COMINestofs=${COMROOTp1}/estofs/prod/estofs.${PDY}
+export COMINestofs=/gpfs/hps/nco/ops/com/estofs/prod/estofs_atl.${PDY}
 export COMINestofspac=${COMROOTp1}/estofs/prod/estofs_pac.${PDY}
 export COMINrtofs=${COMROOTp1}/rtofs/prod/rtofs.${PDY}
 export COMINsice=${COMROOTp2}/omb/prod/sice.${PDY}
@@ -133,7 +133,13 @@ export COMROOTp2=/gpfs/hps/nco/ops/com
 # PRODUCTION
 # To work with the latest Psurge fields
 #export COMINpsurge=$COMROOTp2/nhc/test/psurge.PDY
-export COMINpsurge=${COMROOTp2}/nhc/prod/psurge.${PDY}
+#export COMINpsurge=${COMROOTp2}/nhc/prod/psurge.${PDY}
+export COMINpsurge=/gpfs/hps/nco/ops/com/psurge/${envir}/psurge.${PDY}
+#------------------------
+# TEST 5
+#export COMINpsurge=/gpfs/hps/nco/ops/com/psurge/para/psurge.20170403
+#export COMINpsurge=/gpfs/hps/nco/ops/com/psurge/para/psurge.20170404
+#------------------------
 
 export dcom=${dcom:-/dcom/us007003}
 export PCOM=/pcom/${envir}/${NET}

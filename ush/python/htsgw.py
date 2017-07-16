@@ -49,6 +49,11 @@ if os.path.isfile("swan.ctl"):
    dummy2 = dummy.split(" ")
    TDEF = int(dummy2[1])
    TINCR = int(dummy2[4].rstrip("hr\n"))
+   #----- Default to a plotting interval of 3h; adjust TDEF accordingly -----
+   TINCR_OLD = TINCR
+   TINCR = 3
+   TDEF = (TDEF-1)/(TINCR/TINCR_OLD)+1
+   #-------------------------------------------------------------------------
 else:
    print '*** TERMINATING ERROR: Missing control file: swan.ctl'
    sys.exit()
@@ -177,7 +182,8 @@ for tstep in range(1, (TDEF+1)):
       x,y=m(reflon,reflat)
    culim = int(unitconvert*maxval)+1
    if (not ((SITEID == 'gyx') & (CGNUMPLOT == '2'))) & \
-      (not ((SITEID == 'gyx') & (CGNUMPLOT == '3'))):
+      (not ((SITEID == 'gyx') & (CGNUMPLOT == '3'))) & \
+      (not ((SITEID == 'mfl') & (CGNUMPLOT == '3'))):
       if (culim > 5):
          clevs = np.arange(0, culim+1)      #Have to add an additional 1 to get the right array upper limit
       else:
@@ -198,10 +204,11 @@ for tstep in range(1, (TDEF+1)):
 
    # There is an issue with plotting m.fillcontinents with inland lakes, so omitting it in
    # the case of WFO-GYX, CG2 and CG3 (Lakes Sebago and Winni)
-   if (not ((SITEID == 'gyx') & (CGNUMPLOT == '2'))) & \
+   if (not ((SITEID == 'mfl') & (CGNUMPLOT == '3'))) & \
+      (not ((SITEID == 'gyx') & (CGNUMPLOT == '2'))) & \
       (not ((SITEID == 'gyx') & (CGNUMPLOT == '3'))):
       m.fillcontinents()
-      m.drawcoastlines()
+      m.drawcoastlines()  
    m.drawmeridians(np.arange(lons.min(),lons.max(),dlon),labels=[0,0,0,dlon],dashes=[1,3],color='0.50',fontsize=7)   
    m.drawparallels(np.arange(lats.min(),lats.max(),dlat),labels=[dlat,0,0,0],dashes=[1,3],color='0.50',fontsize=7)
 
@@ -246,5 +253,6 @@ for tstep in range(1, (TDEF+1)):
    plt.clf()
 
 # Clean up text dump files
-os.system('rm *f???.txt')
+os.system('rm HTSGW_extract*f???.txt')
+os.system('rm DIRPW_extract*f???.txt')
 

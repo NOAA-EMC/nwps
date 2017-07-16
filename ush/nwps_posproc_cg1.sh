@@ -135,8 +135,8 @@ echo " " | tee -a $logrunup
   then
      echo "RUNUP WILL BE PROCESSED" | tee -a $logrunup
      dpt_runup_contour=${RUNUPCONT}
-     echo " CG domain for wave runup        : ${RUNUPDOMAIN}" | tee -a $logrunup
-     echo " Depth contour used for runup    : ${dpt_runup_contour}" | tee -a $logrunup
+     echo " Domain for Runup                : ${RUNUPDOMAIN}" | tee -a $logrunup
+     echo " Depth-contour used for runup    : ${dpt_runup_contour}" | tee -a $logrunup
 
      inputparm="${RUNdir}/inputCG${CGNUM}"
      if [ ! -e ${inputparm} ]
@@ -145,11 +145,11 @@ echo " " | tee -a $logrunup
         postmsg $jlogfile "$msg"        
         export err=1; err_chk
      fi
-     #Moving input files and programs to teh temporary directoy
+     #Moving input files and programs to the temporary directory
      export TEMPDIRrunup=${VARdir}/${siteid}.tmp/CG${CGNUM}/runup
      mkdir -p ${TEMPDIRrunup}
      cd ${TEMPDIRrunup}
-     #Copying all needed data, input and programs here to execute run_runup.sh
+     #Copying all needed data; input and programs here to run run_runup.sh
      # in ${VARdir}/${siteid}.tmp/CG${CGNUM}/runup
      cp ${inputparm} .
      grep "^INPGRID WIND" inputCG${CGNUM} > blah1
@@ -170,31 +170,89 @@ echo " " | tee -a $logrunup
      date_stamp="${yyyy}${mon}${dd}"
      echo "date_stamp: ${date_stamp}"  | tee -a $logrunup
      CYCLErunup="${hh}${mm}" 
-     # nomenclature in[ut file for run_runup.sh e.g 20m_contour_CG2.20150202_0000_MHX
+     CYCLErunupout="${hh}"
+     # nomenclature input file for run_runup.sh e.g 20m_contour_CG2.20150202_0000_MHX
      fileor="${dpt_runup_contour}_contour_CG${CGNUM}"
      filein="${dpt_runup_contour}_contour_CG${CGNUM}.${yyyy}${mon}${dd}_${CYCLErunup}_${SITEID}"
-     fileout="${dpt_runup_contour}_CG${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}_${SITEID}.txt"
+     #fileout="${dpt_runup_contour}_CG${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}_${SITEID}.txt"
+     #fileout="${WFO}_${NET}_${dpt_runup_contour}_CG${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}"
      echo "filein: ${filein}"  | tee -a $logrunup
      cp -fvp ${RUNdir}/${fileor} .
      cp ${fileor} ${filein}    | tee -a $logrunup
      cp -fvp ${FIXnwps}/beach_slope_db/CG${CGNUM}.${SITEID}_slopes.txt .   | tee -a $logrunup
-     cp ${HOMEnwps}/exec/runupforecast.exe .   | tee -a $logrunup
-     cp ${USHnwps}/run_runup.sh .   | tee -a $logrunup
+     #cp ${HOMEnwps}/exec/runupforecast.exe .   | tee -a $logrunup
+     #cp ${USHnwps}/run_runup.sh .   | tee -a $logrunup
      ls -lt  | tee -a $logrunup
-     source run_runup.sh  ${CYCLErunup} ${date_stamp}
+     source ${USHnwps}/run_runup.sh  ${CYCLErunup} ${date_stamp}  
      export err=$?; err_chk
      
      #Make output directory
      OUTDIRrunup=${DATA}/output/runup/CG${CGNUM}/
      mkdir -p ${OUTDIRrunup}
-     cp -fv  ${dpt_runup_contour}_CG${CGNUM}_runup.txt ${OUTDIRrunup}/${fileout}
+     cp -fv  ${filein} ${OUTDIRrunup}/${filein}
+     cp -fv  ${FORT22} ${OUTDIRrunup}/${FORT22}
 
      cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
      COMOUTCYC="${COMOUT}/${cycle}/CG${CGNUM}"
      if [ "${SENDCOM}" == "YES" ]; then
         mkdir -p $COMOUTCYC
-        cp -fv  ${OUTDIRrunup}/${fileout} ${COMOUTCYC}/${fileout}
+        cp -fv  ${OUTDIRrunup}/${filein} ${COMOUTCYC}/${filein}
+        cp -fv  ${OUTDIRrunup}/${FORT22} ${COMOUTCYC}/${FORT22}
+        if [ "${SENDDBN}" == "YES" ]; then
+            ${DBNROOT}
+        fi
      fi
+
+     # TODO: 12/08/2016 - Testing RUNUP GRIB2 encoding
+     gribfile=$(ls ${DATA}/output/grib2/CG${CGNUM}/*CG${CGNUM}*grib2 | xargs -n 1 basename | tail -n 1)
+     fullname=`echo $gribfile | cut -c14-26`
+     GRIB2file=${NWPSDATA}/output/grib2/CG${CGNUM}/${gribfile}
+     WAVE_RUNUP_TO_BIN="${EXECnwps}/wave_runup_to_bin"
+     cgnCLON1=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lon | grep to | grep by | awk '{ print $2 }')
+     cgnLON1=$(echo "${cgnCLON1} - 360" | bc)
+     cgnCLON2=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lon | grep to | grep by | awk '{ print $4 }')
+     cgnLON2=$(echo "${cgnCLON2} - 360" | bc)
+     cgnNX=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat-lon | grep grid | grep x | awk '{ print $2 }' | sed s/'grid:('//g)
+     cgnLAT1=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat | grep to | grep by | awk '{ print $2 }')
+     cgnLAT2=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat | grep to | grep by | awk '{ print $4 }')
+     cgnNY=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat-lon | grep grid | grep x | awk '{ print $4 }' | sed s/')'//g)
+     SWAN_RUNUP_OUTPUT_FILE="${OUTDIRrunup}/${FORT22}"
+     RUNUPparms="erosion_flag owash_flag"
+     RUNUPerrors=0
+     for parm in ${RUNUPparms}
+     do
+	 cat ${FIXnwps}/templates/${parm}.meta > ${parm}.meta
+	 sed -i s/'<< SET NX >>'/${cgnNX}/g ${parm}.meta
+	 sed -i s/'<< SET NY >>'/${cgnNY}/g ${parm}.meta
+	 sed -i s/'<< SET LA1 >>'/${cgnLAT1}/g ${parm}.meta
+	 sed -i s/'<< SET LA2 >>'/${cgnLAT2}/g ${parm}.meta
+	 sed -i s/'<< SET LO1 >>'/${cgnLON1}/g ${parm}.meta
+	 sed -i s/'<< SET LO2 >>'/${cgnLON2}/g ${parm}.meta
+	 echo "${WAVE_RUNUP_TO_BIN} -v -d -c ${SWAN_RUNUP_OUTPUT_FILE} ${parm} ${parm}.meta ${parm}_templates.grib2 ${parm}_points.bin"
+	 ${WAVE_RUNUP_TO_BIN} -v -d -c ${SWAN_RUNUP_OUTPUT_FILE} ${parm} ${parm}.meta ${parm}_templates.grib2 ${parm}_points.bin
+	 if [ $? -eq 0 ]; then
+	     echo "${WGRIB2} ${parm}_templates.grib2  -no_header -import_bin ${parm}_points.bin -grib_out ${parm}_final_runup.grib2"
+	     ${WGRIB2} ${parm}_templates.grib2  -no_header -import_bin ${parm}_points.bin -grib_out ${parm}_final_runup.grib2
+	 else
+	     RUNUPerrors=1
+	     break
+	 fi
+     done
+     
+     if [ ${RUNUPerrors} -eq 0 ]; then
+	 cat /dev/null > final_runup.grib2
+	 for parm in ${RUNUPparms}
+	 do
+	     cat ${parm}_final_runup.grib2 >> final_runup.grib2
+	     cp -f final_runup.grib2 ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+	     cp -f final_runup.grib2 ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+	 done
+         #AW052917 Do not include runup output in general GRIB2 output, because it won't go over SBN yet.
+         #cat final_runup.grib2 >> ${GRIB2file}
+     else 
+	 echo "ERROR - ${WAVE_RUNUP_TO_BIN} program error, no RUNUP GRIB2 file generated for this run"
+     fi
+
   fi
 #_________________________RIP CURRENT PROGRAM____________________________________________
 #Run Program 
@@ -207,9 +265,9 @@ echo " " | tee -a $logrunup
      echo "RIP CURRENT PROBABILITY WILL BE COMPUTED" 
      dptcontour=${RIPCONT:0:1}
      echo " CG domain for rip currents: ${RIPDOMAIN}"
-     echo " Depth contour used     : ${dptcontour} m"
-     source ${USHnwps}/run_ripcurrent.sh ${RIPDOMAIN} ${dptcontour}
-     export err=$?; err_chk
+     echo " Depth contour used        : ${dptcontour} m"
+     source ${USHnwps}/run_ripcurrent.sh ${RIPDOMAIN} ${dptcontour} ${RUNLEN}
+     export err=$?; err_chk     
 
      # Copy results to output directories
      cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
@@ -220,6 +278,43 @@ echo " " | tee -a $logrunup
 
      mkdir -p $GESOUT/riphist/${SITEID}
      cp -fv  ${RIPDATA}/${CGCONT} ${GESOUT}/riphist/${SITEID}/${CGCONT}
+
+     # TODO: 11/29/2016 - Tesing RIP GRIB2 encoding below
+     SWAN_RIP_OUTPUT_FILE="${RIPDATA}/${FORT23}"
+     rip_current_meta_template="${FIXnwps}/templates/RIP.meta"
+     rip_current_meta="${RIPDATA}/RIP.meta"
+     cat ${rip_current_meta_template} > ${rip_current_meta}
+     RIP_CURRENT_TO_BIN="${EXECnwps}/rip_current_to_bin"
+     gribfile=$(ls ${DATA}/output/grib2/CG${CGNUM}/???_nwps_CG${CGNUM}_????????_????.grib2 | xargs -n 1 basename | tail -n 1)
+     fullname=`echo $gribfile | cut -c14-26`
+     GRIB2file=${NWPSDATA}/output/grib2/CG${CGNUM}/${gribfile}
+     cgnCLON1=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lon | grep to | grep by | awk '{ print $2 }')
+     cgnLON1=$(echo "${cgnCLON1} - 360" | bc)
+     cgnCLON2=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lon | grep to | grep by | awk '{ print $4 }')
+     cgnLON2=$(echo "${cgnCLON2} - 360" | bc)
+     cgnNX=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat-lon | grep grid | grep x | awk '{ print $2 }' | sed s/'grid:('//g)
+     cgnLAT1=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat | grep to | grep by | awk '{ print $2 }')
+     cgnLAT2=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat | grep to | grep by | awk '{ print $4 }')
+     cgnNY=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat-lon | grep grid | grep x | awk '{ print $4 }' | sed s/')'//g)
+     sed -i s/'<< SET NX >>'/${cgnNX}/g ${rip_current_meta}
+     sed -i s/'<< SET NY >>'/${cgnNY}/g ${rip_current_meta}
+     sed -i s/'<< SET LA1 >>'/${cgnLAT1}/g ${rip_current_meta}
+     sed -i s/'<< SET LA2 >>'/${cgnLAT2}/g ${rip_current_meta}
+     sed -i s/'<< SET LO1 >>'/${cgnLON1}/g ${rip_current_meta}
+     sed -i s/'<< SET LO2 >>'/${cgnLON2}/g ${rip_current_meta}
+     echo "${RIP_CURRENT_TO_BIN} -v -d -c ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin"
+     ${RIP_CURRENT_TO_BIN} -v -d -c ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin
+     if [ $? -eq 0 ]; then
+	 # Only create the GRIB2 file if the encoding process is successful
+	 echo "${WGRIB2} ${RIPDATA}/templates.grib2 -no_header -import_bin ${RIPDATA}/points.bin -grib_out ${RIPDATA}/final_rip.grib2"
+	 ${WGRIB2} ${RIPDATA}/templates.grib2 -no_header -import_bin ${RIPDATA}/points.bin -grib_out ${RIPDATA}/final_rip.grib2
+         #AW052917 Do not include runup output in general GRIB2 output, because it won't go over SBN yet.
+         #cat ${RIPDATA}/final_rip.grib2 >> ${GRIB2file}
+	 #cp -f ${RIPDATA}/final_rip.grib2 ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+         cat ${RIPDATA}/final_rip.grib2 >> ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+         cat ${RIPDATA}/final_rip.grib2 >> ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+     fi
+     # TODO: 11/29/2016 - Tesing RIP GRIB2 encoding above
   else
      echo " Rip current calculation not activated for this domain (CG${CGNUM})"
   fi
@@ -276,6 +371,66 @@ cd ${DATA}/output/grib2/CG${CGNUM}
      if [ "${SENDCOM}" == "YES" ]; then
         mkdir -p $COMOUTCYC
         cp -fv  ${grib2File} ${COMOUTCYC}/${grib2File}
+
+        # Archive restart and other processed input files
+        cd ${RUNdir}
+        #cp -fv  ${INPUTdir}/*.ctl ${COMOUTCYC}/
+        #cp -fv  ${RUNdir}/info* ${COMOUTCYC}/
+        #cp -fv  ${RUNdir}/*.pm ${COMOUTCYC}/
+        if [ "${MODELCORE}" == "SWAN" ]; then
+           cp -fv  ${RUNdir}/${date_stamp}.${cycle}00* ${COMOUTCYC}/
+        elif [ "${MODELCORE}" == "UNSWAN" ]; then
+           for i in {0..9}; do
+              mkdir -p ${COMOUTCYC}/PE000${i}/
+              cp -fv  ${RUNdir}/PE000${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE000${i}/
+           done
+           for i in {10..15}; do
+              mkdir -p ${COMOUTCYC}/PE00${i}/
+              cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+           done
+           # Additional copies for domains running on 48 cores
+           if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CAR" ] || [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "TBW" ] || [ "${SITEID}" == "BOX" ] || [ "${SITEID}" == "SGX" ] || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "AKQ" ] || [ "${SITEID}" == "OKX" ]
+           then
+              for i in {16..47}; do
+                 mkdir -p ${COMOUTCYC}/PE00${i}/
+                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+              done
+           fi
+        fi
+        cp -fv  ${RUNdir}/inputCG${CGNUM} ${COMOUTCYC}/
+        cp -fv  ${RUNdir}/${date_stamp}${cycle}.wnd ${COMOUTCYC}/
+        cp -fv  ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.wlev ${COMOUTCYC}/
+        cp -fv  ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.cur ${COMOUTCYC}/
+        tar -cf ${date_stamp}${cycle}.spec.swan.tar *.spec.swan*
+        cp -fv  ${RUNdir}/${date_stamp}${cycle}.spec.swan.tar ${COMOUTCYC}/
+
+        # Archive raw input files
+        # a. Wind fields and control file from GFE
+        cd ${INPUTdir}
+        NewestWind=$(basename `ls -t ${INPUTdir}/NWPSWINDGRID_${siteid}* | head -1`)
+        cp ${INPUTdir}/${NewestWind} ${COMOUTCYC}/
+        # b. ESTOFS water level fields (if available)
+        if [ -e ${INPUTdir}/estofs/estofs_waterlevel_start_time.txt ]; then
+           cd ${INPUTdir}/estofs
+           waterlevel_start_time=`cat ${INPUTdir}/estofs/estofs_waterlevel_start_time.txt`
+           tar -cf wave_estofs_waterlevel_${waterlevel_start_time}.tar *.txt wave_estofs_waterlevel_${waterlevel_start_time}*.dat
+           mv  ${INPUTdir}/estofs/wave_estofs_waterlevel_${waterlevel_start_time}.tar ${COMOUTCYC}/
+        fi
+        # b. P-Surge water level fields (if available)
+        if [ -e ${INPUTdir}/psurge/psurge_waterlevel_start_time.txt ]; then
+           cd ${INPUTdir}/psurge
+           waterlevel_start_time=`cat ${INPUTdir}/psurge/psurge_waterlevel_start_time.txt`
+           tar -cf wave_psurge_waterlevel_${waterlevel_start_time}.tar *.txt wave_psurge_waterlevel_${waterlevel_start_time}*.dat
+           mv ${INPUTdir}/psurge/wave_psurge_waterlevel_${waterlevel_start_time}.tar ${COMOUTCYC}/
+        fi
+        # c. RTOFS current fields (if available)
+        if [ -e ${INPUTdir}/rtofs/rtofs_current_start_time.txt ]; then
+           cd ${INPUTdir}/rtofs
+           current_start_time=`cat ${INPUTdir}/rtofs/rtofs_current_start_time.txt`
+           tar -cf wave_rtofs_current_${current_start_time}.tar *.txt wave_rtofs_uv_${waterlevel_start_time}*.dat
+           mv ${INPUTdir}/rtofs/wave_rtofs_current_${current_start_time}.tar ${COMOUTCYC}/
+        fi
+
         if [ "${SENDDBN}" == "YES" ]; then
             ${DBNROOT}/bin/dbn_alert MODEL NWPS_GRIB $job ${COMOUTCYC}/${grib2File}
         fi
@@ -313,7 +468,28 @@ then
 fi
 #rm -vf ${INPUTdir}/hotstart/* >> ${LOGdir}/hotstart.log 2>&1
 cd ${RUNdir}/
-mv -vf ${RUNdir}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/. >> ${LOGdir}/hotstart.log 2>&1
+if [ "${MODELCORE}" == "SWAN" ]
+   then
+   mv -vf ${RUNdir}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/. >> ${LOGdir}/hotstart.log 2>&1
+elif [ "${MODELCORE}" == "UNSWAN" ]
+   then
+   for i in {0..9}; do
+      mkdir -p ${HOTdir}/PE000${i}
+      mv -vf ${RUNdir}/PE000${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE000${i}/ >> ${LOGdir}/hotstart.log 2>&1
+   done
+   for i in {10..15}; do
+      mkdir -p ${HOTdir}/PE00${i}
+      mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+   done
+   # Additional copies for domains running on 48 cores
+   if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CAR" ] || [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "TBW" ] || [ "${SITEID}" == "BOX" ] || [ "${SITEID}" == "SGX" ] || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "AKQ" ] || [ "${SITEID}" == "OKX" ]
+   then
+      for i in {16..47}; do
+         mkdir -p ${HOTdir}/PE00${i}
+         mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+      done
+   fi
+fi
 
 echo "CLEANING OLD HOTSTART FILES" | tee -a ${LOGdir}/hotstart.log
 cd ${INPUTdir}/hotstart/

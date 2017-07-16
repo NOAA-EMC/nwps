@@ -33,7 +33,7 @@ export NELON="-90.43"
 export SWLAT="27.41"
 export SWLON="-95.03"
 export RES="1.8"
-export TSTEP="3"
+export TSTEP="1"
 #
 #========================================================================
 #                  NESTED GRID CONFIGURATION                              =
@@ -78,7 +78,7 @@ export NELONN1="-91.60"
 export SWLATN1="29.43"
 export SWLONN1="-92.30"
 export RESN1=".5"
-export TSTEPN1="3"
+export TSTEPN1="1"
 export STATN1="NON"
 #
 # NEST 2
@@ -87,8 +87,8 @@ export NELONN2="-79.98"
 export SWLATN2="26.40"
 export SWLONN2="-80.07"
 export RESN2=".5"
-export TSTEPN2="3"
-export STATN2="STA"
+export TSTEPN2="1"
+export STATN2="NON"
 #
 # NEST 3
 export NELATN3="26.37"
@@ -96,8 +96,8 @@ export NELONN3="-80.00"
 export SWLATN3="26.25"
 export SWLONN3="-80.09"
 export RESN3=".5"
-export TSTEPN3="3"
-export STATN3="STA"
+export TSTEPN3="1"
+export STATN3="NON"
 #
 # NEST 4
 export NELATN4="25.87"
@@ -105,8 +105,8 @@ export NELONN4="-80.04"
 export SWLATN4="25.75"
 export SWLONN4="-80.13"
 export RESN4=".5"
-export TSTEPN4="3"
-export STATN4="STA"
+export TSTEPN4="1"
+export STATN4="NON"
 #
 #========================================================================
 #                    SPECTRA OUTPUT LOCATIONS     

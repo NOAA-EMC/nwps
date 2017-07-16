@@ -157,8 +157,13 @@ for parm in ${SWANPARMS}
 
   SITEID=$(echo ${SITEID} | tr [:upper:] [:lower:])
 
-  files=$(ls -1t ${GRAPHICOUTPUTDIRECTORY})
+  files=$(ls -1t ${GRAPHICOUTPUTDIRECTORY}/???_nwps_CG?_????????_????.grib2)
   file=$(echo ${files} | awk '{ print $1 }')
+  if [ CG"${CGNUMPLOT}" == "${RIPDOMAIN}" ] || [ CG"${CGNUMPLOT}" == "${RUNUPDOMAIN}" ]
+  then
+     files_riprunup=$(ls -1t ${GRAPHICOUTPUTDIRECTORY}/???_nwps_CG?_????????_????_RipRunup.grib2)
+     file_riprunup=$(echo ${files_riprunup} | awk '{ print $1 }')
+  fi
   TEMPDIR=${VARdir}/${SITEID}.tmp/CG${CGNUM}
   mkdir -p ${TEMPDIR}
   echo "Writing all temp files to ${TEMPDIR}"
@@ -170,9 +175,15 @@ for parm in ${SWANPARMS}
   find ${TEMPDIR} -name "*.png" -print | xargs rm -f
   find ${GRAPHICSdir} -name "*.png" -print | xargs rm -f
 
-  echo "Copying ${GRAPHICOUTPUTDIRECTORY}/${file} grib2 file for processing"
-  cp -f ${GRAPHICOUTPUTDIRECTORY}/${file} ${TEMPDIR}/swan.grib2
-
+  #echo "Copying ${GRAPHICOUTPUTDIRECTORY}/${file} grib2 file for processing"
+  #cp -f ${GRAPHICOUTPUTDIRECTORY}/${file} ${TEMPDIR}/swan.grib2
+  echo "Copying ${file} grib2 file for processing"
+  cp -f ${file} ${TEMPDIR}/swan.grib2
+  if [ CG"${CGNUMPLOT}" == "${RIPDOMAIN}" ] || [ CG"${CGNUMPLOT}" == "${RUNUPDOMAIN}" ]
+  then
+     echo "Copying ${file_riprunup} grib2 file for processing"
+     cp -f ${file_riprunup} ${TEMPDIR}/swan_riprunup.grib2
+  fi
 
   if [ ! -e "${ETCdir}/default" ]
   then
@@ -229,6 +240,10 @@ for parm in ${SWANPARMS}
   echo "Creating GRADS control file, used by Python"
   echo "${YYYY}${MM}${DD}_${HH}${MIN}" > ${TEMPDIR}/datelab.txt
   cat /dev/null > ${TEMPDIR}/swan.ctl
+  if [ CG"${CGNUMPLOT}" == "${RIPDOMAIN}" ] || [ CG"${CGNUMPLOT}" == "${RUNUPDOMAIN}" ]
+  then
+     cat /dev/null > ${TEMPDIR}/swan_riprunup.ctl
+  fi
   
   echo "Creating PYTHON graphics for $file"
   
@@ -289,6 +304,25 @@ for parm in ${SWANPARMS}
   echo "var10255255sfc=>wlen   0,1,0   10,255,255 ** surface mean wave length (m)" >> ${TEMPDIR}/swan.ctl
   echo "ENDVARS" >> ${TEMPDIR}/swan.ctl
 
+  #AW052917 Write a separate control file for runup and rips until we can pack then into same grib2 file
+  if [ CG"${CGNUMPLOT}" == "${RIPDOMAIN}" ] || [ CG"${CGNUMPLOT}" == "${RUNUPDOMAIN}" ]
+  then
+     echo "DSET swan_riprunup.grib2" >> ${TEMPDIR}/swan_riprunup.ctl
+     echo "index swan.idx" >> ${TEMPDIR}/swan_riprunup.ctl
+     echo "DTYPE ${DTYPE}" >> ${TEMPDIR}/swan_riprunup.ctl
+     echo "TITLE ${TITLE}" >> ${TEMPDIR}/swan_riprunup.ctl
+     echo "UNDEF ${UNDEF}" >> ${TEMPDIR}/swan_riprunup.ctl
+     echo "XDEF ${XDEF}" >> ${TEMPDIR}/swan_riprunup.ctl
+     echo "YDEF ${YDEF}" >> ${TEMPDIR}/swan_riprunup.ctl
+     echo "ZDEF ${ZDEF}" >> ${TEMPDIR}/swan_riprunup.ctl
+     echo "TDEF ${TDEF}" >> ${TEMPDIR}/swan_riprunup.ctl
+     echo "VARS 11" >> ${TEMPDIR}/swan_riprunup.ctl
+     echo "EROSIONsfc=>htsgw        0,1,0   10,2,3 ** surface Erosion probability [%]" >> ${TEMPDIR}/swan_riprunup.ctl
+     echo "OWASHsfc=>wavedir        0,1,0   10,2,3 ** surface Overwash probability [%]" >> ${TEMPDIR}/swan_riprunup.ctl
+     echo "RIPsfc=>waveper          0,1,0   10,2,3 ** surface Rip current probability [%]" >> ${TEMPDIR}/swan_riprunup.ctl
+     echo "ENDVARS" >> ${TEMPDIR}/swan_riprunup.ctl
+  fi
+
   cd ${TEMPDIR}
 
   #echo "Creating GRIB2 index map"
@@ -309,7 +343,7 @@ for parm in ${SWANPARMS}
       echo 'echo "PYTHON IN elements: ${PYTHONPATH}"' >> ${TEMPDIR}/python_grib2_elements.sh
 #============================================================
       echo 'echo "Creating PYTHON plot for Wind"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} wind.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "(${PYTHON} wind.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
       echo "" >> ${TEMPDIR}/python_grib2_elements.sh
       echo '##echo "Creating PYTHON plot for 4 Panel"' >> ${TEMPDIR}/python_grib2_elements.sh
       echo "##${PYTHON} 4panel_grib2.py" >> ${TEMPDIR}/python_grib2_elements.sh
@@ -318,32 +352,51 @@ for parm in ${SWANPARMS}
       echo "##${PYTHON} 6panel_grib2.py" >> ${TEMPDIR}/python_grib2_elements.sh
       echo "" >> ${TEMPDIR}/python_grib2_elements.sh
       echo 'echo "Creating PYTHON plot for Depth"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} depth.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "(${PYTHON} depth.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
       echo "" >> ${TEMPDIR}/python_grib2_elements.sh
       echo 'echo "Creating PYTHON plot for Wave Height"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} htsgw.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "(${PYTHON} htsgw.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
       echo "" >> ${TEMPDIR}/python_grib2_elements.sh
       echo 'echo "Creating PYTHON plot for Period"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} ./period.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "(${PYTHON} period.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
       echo "" >> ${TEMPDIR}/python_grib2_elements.sh
       echo 'echo "Creating PYTHON plot for Wave Length"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} ./wlen.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "(${PYTHON} wlen.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
       echo "" >> ${TEMPDIR}/python_grib2_elements.sh
       echo 'echo "Creating PYTHON plot for Current"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} ./cur.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "(${PYTHON} cur.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
       echo "" >> ${TEMPDIR}/python_grib2_elements.sh
       echo 'echo "Creating PYTHON plot for water level"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} ./wlev.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "(${PYTHON} wlev.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
       echo "" >> ${TEMPDIR}/python_grib2_elements.sh
       echo 'echo "Creating PYTHON plot for swell"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} ./swell.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "(${PYTHON} swell.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "" >> ${TEMPDIR}/python_grib2_elements.sh
+      if [ CG"${CGNUMPLOT}" == "${RIPDOMAIN}" ]
+      then
+         echo 'echo "Creating PYTHON plot for rip currents"' >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "(${PYTHON} rip.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "" >> ${TEMPDIR}/python_grib2_elements.sh
+      fi
+      if [ CG"${CGNUMPLOT}" == "${RUNUPDOMAIN}" ]
+      then
+         echo 'echo "Creating PYTHON plot for erosion"' >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "(${PYTHON} erosion.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo 'echo "Creating PYTHON plot for overwash"' >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "(${PYTHON} owash.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "" >> ${TEMPDIR}/python_grib2_elements.sh
+      fi
+      echo 'echo "Wait for all processes to finish"' >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "wait" >> ${TEMPDIR}/python_grib2_elements.sh
       echo "" >> ${TEMPDIR}/python_grib2_elements.sh
       echo '##echo "Creating PYTHON plot for Specific Locations"' >> ${TEMPDIR}/python_grib2_elements.sh
       echo "##${PYTHON} graph-dvd.py" >> ${TEMPDIR}/python_grib2_elements.sh
 #  fi
 
   echo "Sourcing ${TEMPDIR}/python_grib2_elements.sh"
-  source ${TEMPDIR}/python_grib2_elements.sh
+  bash ${TEMPDIR}/python_grib2_elements.sh
+  export err=$?; err_chk 
 
   echo "Copying PNG images to ${GRAPHICSdir}"
   if [ "${HASHOTSTART}" == "TRUE" ]
@@ -353,25 +406,6 @@ for parm in ${SWANPARMS}
       echo "No HOTSTART was used for this run, removing hours 0-9 for CG${CGNUM}."
 ##      rm -vf *hr00[0-9].png
   fi
-
-#_________________________RIP CURRENT PROGRAM____________________________________________
-##Run Program 
-#  SITEID=${SITEID^^}
-#  source ${NWPSDATA}/parm/templates/${siteid}/${SITEID}
-##  source ${DOMAINFILE}
-#  ripcg=${RIPDOMAIN:2:1}
-#  if [ ${RIPPROG} -eq "1" ] && [ ${ripcg} == ${CGNUM} ]
-#  then
-#     echo "RIP-CURRENT PROBABILITY WILL BE COMPUTED" 
-#     dptcontour=${RIPCONT:0:1}
-#     echo " Domain for Rip-Currents: ${RIPDOMAIN}"
-#     echo " Depth-contour used     : ${dptcontour} m"
-#     ${USHnwps}/rip_current_program/run_nos.sh ${RIPDOMAIN} ${dptcontour}
-#     #cp -vpf ripprob.png ${GRAPHICSdir}/.
-#  else
-#     echo " NO 	rip-current program for this Domain (CG${CGNUM})"
-#  fi
-##_______________________________________________________________________________________
 
   rm *logo* *Logo*
   cp -vpf *.png ${GRAPHICSdir}/.

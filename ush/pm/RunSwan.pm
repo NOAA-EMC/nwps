@@ -26,9 +26,7 @@
 #               The subroutines implemented here are the following:            #
 ################################################################################
 ##createSwanCommandFiles                                                       #
-##makeInputCGx                                                                 #
-##fixDate                                                                      #
-##fixComputationDate                                                           #
+##runWaveModel                                                                 #
 #
 ##getWW3Files                                                        #
 ################################################################################
@@ -101,7 +99,7 @@ giveMaxDoubleArray giveSumDoubleArray reverseDoubleArray printDoubleArrayIn inAr
 use Archive qw(archiveFiles);
 require Exporter;
 @ISA=qw(Exporter);
-@EXPORT=qw(makeSwanRun);
+@EXPORT=qw(runModel);
 use ConfigSwan;
 use Logs;
 use Data::Dumper;
@@ -216,18 +214,17 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
 ######################################################
 
 ################################################################################
-# NAME: &makeSwanRun
-# CALL: &makeSwanRun($date,$inpGrid,$filename)
-# GOAL: for each domain, it creates the inputCGx files, the command files for
-#       the swan model, moves the files appropriately, run the model and moves
+# NAME: &runModel
+# CALL: &runModel($date,$inpGrid,$filename)
+# GOAL: For a given CG domain this subroutine runs the model and moves
 #       the SWAN's output files globally at the end (less function calls)
 #       inputCGx are command files from the past run used as templates
 ################################################################################
 
-sub makeSwanRun ($$$%){
+sub runModel ($$$%){
 	local ($date,$inpGrid,$fileName,%CG) = @_;
-	Logs::run("Creating swan command file.");
-	Logs::bug("begin makeSwanRun",1);
+	Logs::run("Running main wave model.");
+	Logs::bug("begin runModel",1);
         local $readInpWind="READINP WIND 1.0 '".$fileName."' 3 0 0 0 FREE";
 	local ($century,$year,$month,$day,$hour)=unpack"A2 A2 A2 A2 A2",$date;
 	$date=$century.$year.$month.$day.".".$hour."00";
@@ -240,7 +237,9 @@ sub makeSwanRun ($$$%){
 #coderunSwansh01
         $numofGrids=scalar keys %ConfigSwan::CGS;
 
-	&makeInputCGx(%CG);	
+#AW111416        &makeInputCGx(%CG);
+
+        &runWaveModel(%CG);
 
         &renameFilesWithSuffix($dateSuffix,"PRT|spec2d|TAB|CGRID");
 	# 06/24/2011: Moving SWAN ouput files for ${OUTPUTdir}/partition directory 
@@ -249,11 +248,11 @@ sub makeSwanRun ($$$%){
 #        &mvFiles("${OUTPUTdir}/partition/${cgxx}","PRT"); 
         &mvFiles("${OUTPUTdir}/spectra/","spec2d");
 
-	# 05/17/2011: Moving SWAN ouptu files for ${OUTPUTdir}/grid directory
+	# 05/17/2011: Moving SWAN output files for ${OUTPUTdir}/grid directory
         &mvFiles("${OUTPUTdir}/grid/","CGRID");
 
         &archiveFiles("PRINT","${RUNdir}");
-	Logs::bug("end makeSwanRun",1);
+	Logs::bug("end runModel",1);
 	return $dateSuffix;
 }
 
@@ -386,6 +385,8 @@ sub makeInputCGx (%){
 # 
 ###############################################################################################
 #    if($HOTSTART eq 'TRUE') {
+    if ($MODELCORE eq "SWAN") {
+        system("echo Setting up hotfiles for model core ${MODELCORE}... >> ${LOGdir}/hotstart.log");
 	$hotfilelocation="${INPUTdir}/hotstart/${hottime[0]}*";
 	$newhotfilelocation='${RUNdir}/';
 	system("cp -pfv $hotfilelocation $newhotfilelocation >> ${LOGdir}/hotstart.log 2>&1");
@@ -400,7 +401,7 @@ sub makeInputCGx (%){
 	    Logs::run("GrADS plots will include all images.", 1);
 	} 
 	else {
-	    system("echo No hotstart file was used for this run. Do not use the first 12 hrs of this run. >> ${LOGdir}/hotstart.log");
+	    system("echo No hotstart file was used for this SWAN run. Do not use the first 12 hrs of this run. >> ${LOGdir}/hotstart.log");
 	    system("echo FALSE > ${RUNdir}/hotstart.flag");
 	    Logs::run("GrADS plots will exclude the first 12 hrs of images for model spin-up.", 1);
 	#    $HOTSTART = "FALSE";
@@ -422,6 +423,59 @@ sub makeInputCGx (%){
 	#    $HOTSTART = "FALSE";
 	    }
 	}
+    }   #SWAN
+    if ($MODELCORE eq "UNSWAN") {
+        system("echo Setting up hotfiles for model core ${MODELCORE} (PE directories)... >> ${LOGdir}/hotstart.log");
+        for (my $core=0; $core<10; $core++){
+	   $hotfilelocation="${INPUTdir}/hotstart/PE000${core}/${hottime[0]}";
+	   $newhotfilelocation='${RUNdir}/PE000${core}/';
+	   system("cp -pfv $hotfilelocation $newhotfilelocation >> ${LOGdir}/hotstart.log 2>&1");
+        }
+        for (my $core=10; $core<16; $core++){
+	   $hotfilelocation="${INPUTdir}/hotstart/PE00${core}/${hottime[0]}";
+	   $newhotfilelocation='${RUNdir}/PE00${core}/';
+	   system("cp -pfv $hotfilelocation $newhotfilelocation >> ${LOGdir}/hotstart.log 2>&1");
+        }
+        if ( ("${SITEID}" eq "MHX") || ("${SITEID}" eq "CAR") || ("${SITEID}" eq "MFL") || ("${SITEID}" eq "TBW") || ("${SITEID}" eq "BOX") || ("${SITEID}" eq "SGX") || ("${SITEID}" eq "SJU") || ("${SITEID}" eq "AKQ") || ("${SITEID}" eq "OKX") ) {
+           for (my $core=16; $core<48; $core++){
+	      $hotfilelocation="${INPUTdir}/hotstart/PE00${core}/${hottime[0]}";
+      	      $newhotfilelocation='${RUNdir}/PE00${core}/';
+	      system("cp -pfv $hotfilelocation $newhotfilelocation >> ${LOGdir}/hotstart.log 2>&1");
+           }
+        }
+	system("echo OFF > ${RUNdir}/hotstart.flag");
+	#if(-e "${RUNdir}/PE0000/${hottime[0]}") {
+	#    system("cp -pfv ${INPUTdir}/hotstart/${hottime[0]}-001 ${RUNdir}/${hottime[0]} >> ${LOGdir}/hotstart.log 2>&1");
+	#}
+
+	if (-e "${RUNdir}/PE0000/${hottime[0]}" ) {
+	    system("echo Hotstart file ${hottime[0]} was used to initialize this run. >> ${LOGdir}/hotstart.log");
+	    system("echo TRUE > ${RUNdir}/hotstart.flag");
+	    Logs::run("GrADS plots will include all images.", 1);
+	} 
+	else {
+	    system("echo No hotstart file was used for this UNSWAN run. Do not use the first 12 hrs of this run. >> ${LOGdir}/hotstart.log");
+	    system("echo FALSE > ${RUNdir}/hotstart.flag");
+	    Logs::run("GrADS plots will exclude the first 12 hrs of images for model spin-up.", 1);
+	#    $HOTSTART = "FALSE";
+	}
+	if (( -e "${RUNdir}/PE0000/${hottime[0]}" ) && ( int( -M "${RUNdir}/PE0000/${hottime[0]}" ) < 1 )) {
+	    if ($inputFile eq "inputCG1") {
+		$inputCGx[@inputCGx]="\$";
+		$inputCGx[@inputCGx]="\$";
+		$inputCGx[@inputCGx]="\$ SWAN will use the latest hotstart file.";
+		$inputCGx[@inputCGx]="\$";
+		$inputCGx[@inputCGx]="INITial HOTStart MULTiple '" . $hottime[0] . "'";
+		$inputCGx[@inputCGx]="\$";
+		Logs::run("This run will use the latest hotstart file available.", 1);
+	    } else {
+	    Logs::run("The latest hotstart file does not exist, too old to use or this is an inner nest.", 1);
+	    Logs::run("GrADS plots will exclude the first 12 hrs of images for model spin-up.", 1);
+	    system("echo FALSE > ${RUNdir}/hotstart.flag");
+	#    $HOTSTART = "FALSE";
+	    }
+	}
+    }   #UNSWAN
 #    }
 
 ###############################################################################################
@@ -474,23 +528,64 @@ sub makeInputCGx (%){
     system("cp $inputFile $archInputFile")==0 or &Logs::err("Couldn't copy file $inputFile to $archInputFile : $!",2);
     &archiveFiles($archInputFile,"${RUNdir}");
     
-#xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    Logs::bug("end makeInputCGx",1);
+}
+
+################################################################################
+# NAME: &runWaveModel
+# CALL: &runWaveModel(%CG);
+# GOAL: Here is where the CORE WAVE model (SWAN or WWIII) run starts
+################################################################################
+
+sub runWaveModel (%){
+    # 04/23/2010: Add flag to signal a SWAN.EXE crash to the Perl/BASH interface
+    # Clean up any existing flag files
+    `rm -f SWAN_EXE_HAS_CRASHED > /dev/null 2>&1`; 
+
+    Logs::bug("begin runWaveModel",1);
+    my %CG = @_;
+    my $timeStepLength = $CG{LENGTHTIMESTEP};
+    Logs::bug("timeStepLength=$timeStepLength",9);
+    local $suffix=" ".$timeStepLength.".0 HR";
+    my ($thisHour,$thisDay,$thisMonth,$thisYear)= ($todayHour,$todayDay,$todayMonth,$todayYear);
+    foreach $i (1 .. floor(SWANFCSTLENGTH/$timeStepLength)){
+	($thisHour,$thisDay,$thisMonth,$thisYear)=&goForward($thisHour,
+							     $thisDay,$thisMonth,$thisYear,$timeStepLength);
+	my $time=$thisYear.$thisMonth.$thisDay.".".$thisHour."00";
+	$time[$i]=$time;
+    }
+
+    # replace the CGRID line for unstructured mode
+    if ($MODELCORE eq "UNSWAN") {
+       print "Configure the unstructured INPUT file for SWAN\n";
+       my $pattern=`grep "^CGRID" inputCG1`;
+       chomp ($pattern);
+       system("sed -i 's/$pattern/CGRID UNSTRUCTURED CIRCLE 36 0.05 1.5/g' inputCG1");
+       system("sed -i 's/\$ << UNSTR GRID >>/READ UNSTRUCTURED ADCIRC/g' inputCG1");
+    }
+
+    #swan need the input file to be called INPUT (as we need also to archive it, we copy it first)
+    untie @inputCGx;
+    my $inputFile="inputCG".$CG{CGNUM};
+    my $archInputFile="INPUT.CG".$CG{CGNUM}.".$dateSuffix";
+    my $swanInputFile="INPUT";
+    &copyFile($inputFile,$swanInputFile);
+    #put it in swanInput directory (where the swan executable is)
+    &mvFiles("${RUNdir}/",$swanInputFile);
+    #to archive the file, include date in name to recognize it
+    system("cp $inputFile $archInputFile")==0 or &Logs::err("Couldn't copy file $inputFile to $archInputFile : $!",2);
+    &archiveFiles($archInputFile,"${RUNdir}");
+
     # NOTE: Here is where the CORE WAVE model (SWAN or WWIII) run starts
     my $CGinProg=$CG{CGNUM};
     print "Model core: $MODELCORE\n";
     print "Multi Processor Mode: $MPMODE\n";
-    if ($MODELCORE eq "SWAN") {
+    if ( ($MODELCORE eq "SWAN") || ($MODELCORE eq "UNSWAN") ) {
        # Start the SWAN.EXE here
        Logs::run("Begin SWAN model run for CG".$CG{CGNUM}.".");
        system("date +%s > ${VARdir}/modelrun_start_secs.txt");
-
-       system("${USHnwps}/swanexe.sh > swan.log 2> ${LOGdir}/swan_exe_error.log");
-       #AW>system("${USHnwps}/swanexe.sh >> ${pgmout} 2> ${LOGdir}/swan_exe_error.log");
-
+       system("${USHnwps}/swanexe.sh ".$CG{CGNUM}." > swan.log 2> ${LOGdir}/swan_exe_error.log");
        system("date +%s > ${VARdir}/modelrun_end_secs.txt");
-# = =RPH ADDED to get the bathymetry for every site (wfo) in RunSwan.pm
-# Change filename accordingly and   REMOVE IT WHEN DONE
-       #system("mv  /export/emc-lw-rpadilla/wd20rp1/data/nwps/run/DEPTH_TXX_LowRes_for_ww3.bot ~/NWPS_dev/BATHYMETRY/");
     }
     else {
 	if ($CG{CGNUM} eq $numofGrids) {
@@ -514,10 +609,9 @@ sub makeInputCGx (%){
 	}
     }
 
-# TRACKING FOR CG1 ONLY
-#   my $sysTrcktFileName="swan_part.CG".$CG{CGNUM}.".raw";
+    # TRACKING FOR CG1 ONLY
+    #my $sysTrcktFileName="swan_part.CG".$CG{CGNUM}.".raw";
     my $sysTrcktFileName="swan_part.CG1.raw";
-#xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
     Logs::run("End Wave model run for CG".$CG{CGNUM}.".");
     #&ReadMetadataFile($archInputFile,%CG);
@@ -592,8 +686,7 @@ sub makeInputCGx (%){
 
     system("cp -f $swanPrintFile $LOGdir");
 
-
-    Logs::bug("end makeInputCGx",1);
+    Logs::bug("end runWaveModel",1);
 }
 
 ################################################################################

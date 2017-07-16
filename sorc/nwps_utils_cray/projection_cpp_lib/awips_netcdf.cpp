@@ -6,7 +6,7 @@
 // Compiler Used: MSVC, GCC
 // Produced By: Douglas.Gaer@noaa.gov
 // File Creation Date: 06/14/2011
-// Date Last Modified: 04/18/2012
+// Date Last Modified: 01/04/2017
 // ----------------------------------------------------------- // 
 // ------------- Program Description and Details ------------- // 
 // ----------------------------------------------------------- // 
@@ -630,6 +630,155 @@ int WriteNCDumpData(char *netcdf_filename, const gxString &data_var_name, const 
   return 1;
 }
 
+float *WriteNCDumpDataToMembuf(char *netcdf_filename, const gxString &data_var_name, 
+			       float *mbuf, const int &expected_num_points,
+			       int &read_num_points, gxString &error_string)
+{
+  char sbuf[1024];
+  gxString data_var_name_str;
+  DiskFileB dfile;
+  read_num_points = 0;
+  error_string.Clear();
+
+  // Open the current product file
+  dfile.df_Open(netcdf_filename);
+  if(!dfile) {
+    error_string << clear << "ERROR - Cannot open product input file: " 
+		 << netcdf_filename;
+    return 0;
+  }
+
+  if(!mbuf) {
+    mbuf = new float[expected_num_points*sizeof(float)];
+    if(!mbuf) {
+      error_string << clear << "ERROR - Cannot allocate memory for grid point buffer"; 
+      return 0;
+    }
+  }
+  memset(mbuf, 0, (expected_num_points*sizeof(float)));
+  read_num_points = 0;
+  
+  data_var_name_str << clear << data_var_name << " =";
+  error_string.Clear();
+
+
+  int has_start = 0;
+  int has_end = 0;
+  int has_data_section = 0;
+  int data_start = 0;
+  int line_number = 0;
+  gxString *vals = 0;
+  gxString delimiter = ",";
+  unsigned num_arr = 0;
+  unsigned i = 0;
+
+  while(!dfile.df_EOF()) {
+    // Get each line of the file and trim the line feeds
+    dfile.df_GetLine(sbuf, sizeof(sbuf), '\n');
+    if(dfile.df_GetError() != DiskFileB::df_NO_ERROR) {
+      error_string << clear << "ERROR - Fatal I/O error occurred reading " << netcdf_filename;
+      delete[] mbuf;
+      return 0;
+    }
+    line_number++;
+
+    UString info_line(sbuf);
+    info_line.FilterChar('\n');
+    info_line.FilterChar('\r');
+    info_line.TrimLeadingSpaces();
+    info_line.TrimTrailingSpaces();
+
+    if(info_line.is_null()) continue;
+    if((data_start) > 0 && (has_data_section > 0)) {
+      if(info_line.Find(";") != -1) {
+	info_line.TrimLeading(',');
+	info_line.TrimTrailing(',');
+	info_line.FilterChar(';');
+	vals = ParseStrings(info_line, delimiter, num_arr, 1, 1);
+	for(i = 0; i < num_arr; i++) {
+	  if(read_num_points >= expected_num_points) {
+	    error_string << clear << "ERROR - Expected " << expected_num_points << " points, read " << read_num_points << " points"; 
+	    delete[] mbuf;
+	    return 0;
+	  }
+	  float f = 0;
+	  sscanf(vals[i].c_str(), "%f", &f);
+	  mbuf[read_num_points] = f;
+	  read_num_points++;
+	}
+	if(vals) { 
+	  delete[] vals;
+	  vals = 0;
+	}
+	has_end = line_number;
+	data_start = 0;
+	break;
+      }
+    }
+
+    // Check to make sure we have a data section 
+    if(info_line.Find("data:") != -1) {
+      has_data_section = line_number;
+    }
+
+    // Check for the specified data array
+    if(info_line.Find(data_var_name_str) != -1) {
+      gxString exact_var_name = info_line;
+      gxString var_name = data_var_name_str;
+      exact_var_name.DeleteAfterIncluding("=");
+      exact_var_name.FilterString(" ");
+      exact_var_name.FilterString("\n"); exact_var_name.FilterString("\r");
+      var_name.DeleteAfterIncluding("=");
+      var_name.FilterString(" ");
+      if(exact_var_name == var_name) {
+	has_start = line_number;
+	data_start = line_number;
+	continue;
+      }
+    }
+    if((data_start) > 0 && (has_data_section > 0)) {
+      info_line.TrimLeading(',');
+      info_line.TrimTrailing(',');
+      info_line.FilterChar(';');
+      vals = ParseStrings(info_line, delimiter, num_arr, 1, 1);
+      for(i = 0; i < num_arr; i++) {
+	if(read_num_points >= expected_num_points) {
+	  error_string << clear << "ERROR - Expected " << expected_num_points << " points, read " << read_num_points << " points"; 
+	  delete[] mbuf;
+	  return 0;
+	}
+	float f = 0;
+	sscanf(vals[i].c_str(), "%f", &f);
+	mbuf[read_num_points] = f;
+	read_num_points++;
+      }
+      if(vals) { 
+	delete[] vals;
+	vals = 0;
+      }
+    }
+  }
+  dfile.df_Close();
+
+  if(!has_start) {
+    error_string << clear << "ERROR - Error parsing ncdump file. No start tag " 
+		 << data_var_name_str.c_str() << " found";
+    delete[] mbuf;
+    return 0;
+  }
+  if(!has_end) {
+    error_string << clear << "ERROR - Error parsing ncdump file. No end tag ; found";
+    delete[] mbuf;
+    return 0;
+  }
+  if(!has_data_section) {
+    error_string << clear << "ERROR - Error parsing ncdump file. No end tag data: section";
+    delete[] mbuf;
+    return 0;
+  }
+
+  return mbuf;
+}
 // ----------------------------------------------------------- //
 // ------------------------------- //
 // --------- End of File --------- //

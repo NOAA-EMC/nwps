@@ -49,8 +49,8 @@ echo "% " >> $FORT22
 grep SWAN ${CONTOUR}_contour_${CG}.${INIT_DATE}_${SITEID} >> $FORT22
 echo "% Runup Code Version:1.0" >> $FORT22
 echo "% NOTE:  X,Y locations refer to shoreline location projected from the 20m contour" >> $FORT22
-echo "% " >> $FORT22
-echo "%DATE              Xp [m]        Yp [m]    Hs [m]     pp [s]      slope     twl [m]     twl95 [m]    twl05 [m]     runup [m]     runup95 [m]     runup05 [m]     setup [m]     swash [m]     inc. swash [m]     infrag. swash [m]" >> $FORT22
+echo "% NOTE:  twl, twl95, twl05, dune crest and dune toe elevations all relative to MSL" >> $FORT22
+echo "%DATE              Xp [m]        Yp [m]    Hs [m]     pp [s]      slope     twl [m]     twl95 [m]    twl05 [m]     runup [m]     runup95 [m]     runup05 [m]     setup [m]     swash [m]     inc. swash [m]     infrag. swash [m]     dune crest [m]    dune toe [m]   50% overwash [m]  50% erosion [m]   owash excd [%]   erosion excd [%]" >> $FORT22
 
 # ======================================================================
 # Loop over the stations

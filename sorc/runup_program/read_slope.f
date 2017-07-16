@@ -1,5 +1,5 @@
       subroutine read_slope(funin,ninput,istart,xpos,ypos,sxpos,sypos,
-     1                     slope,slope95,slope05,nobs,ier)
+     1                     slope,slope95,slope05,dhigh,dlow,nobs,ier)
 !
 !	This subroutine reads the beach slope file rovided by the USGS St. Petersburg Coastal and Marine
 !   Science Center) which contains the following for each desired output location:
@@ -10,6 +10,7 @@
 !                     - average (temporal and spatial) beach slope at shoreline location
 !                     - upper 95% percentile beach slope (from variance of spatial and temporal slope distribution) at shoreline location
 !                     - upper 95% percentile beach slope (from variance of spatial and temporal slope distribution) at shoreline location
+!                     - dune crest height
 !
       implicit none
 !        Input/Output Variables
@@ -18,6 +19,7 @@
       integer, intent(inout) :: ier,nobs
       real, intent(inout), dimension(ninput) :: xpos,ypos,sxpos,sypos
       real, intent(inout), dimension(ninput) :: slope,slope05,slope95
+      real, intent(inout), dimension(ninput) :: dhigh,dlow
 !        Internal Variables
       integer :: i,j
       character(len=158) :: ctemp
@@ -40,9 +42,9 @@
          else
             j=j+1
             read(ctemp,105)xpos(j),ypos(j),sxpos(j),sypos(j),
-     1           slope(j),slope95(j),slope05(j)
+     1           slope(j),slope95(j),slope05(j),dhigh(j),dlow(j)
  105        format(F7.3,1X,F7.4,1X,F7.3,1X,F7.4,1X,
-     1             F6.4,1X,F6.4,1X,F6.4)
+     1             F6.4,1X,F6.4,1X,F6.4,1X,F6.4,1X,F6.4)
             if(J.eq.1)then
             endif
          endif

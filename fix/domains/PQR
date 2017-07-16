@@ -29,7 +29,7 @@ export NELON="-123.30"
 export SWLAT="43.50"
 export SWLON="-126.28"
 export RES="2.0"
-export TSTEP="3"
+export TSTEP="1"
 #
 #========================================================================
 #                  NESTED GRID CONFIGURATION                            =
@@ -54,7 +54,7 @@ export NELONN1="-124.10"
 export SWLATN1="46.84"
 export SWLONN1="-124.26"
 export RESN1="0.5"
-export TSTEPN1="3"
+export TSTEPN1="1"
 export STATN1="NON"
 #
 # Columbia River Bar
@@ -63,7 +63,7 @@ export NELONN2="-123.95"
 export SWLATN2="46.13"
 export SWLONN2="-124.20"
 export RESN2="0.5"
-export TSTEPN2="3"
+export TSTEPN2="1"
 export STATN2="NON"
 #
 # Tillamok
@@ -72,7 +72,7 @@ export NELONN3="-123.90"
 export SWLATN3="45.37"
 export SWLONN3="-124.20"
 export RESN3="0.5"
-export TSTEPN3="3"
+export TSTEPN3="1"
 export STATN3="NON"
 #
 # Wind-only domain
@@ -82,7 +82,7 @@ export NELONN4="-123.30"
 export SWLATN4="43.50"
 export SWLONN4="-126.28"
 export RESN4="5.0"
-export TSTEPN4="3"
+export TSTEPN4="1"
 export STATN4="NON"
 #
 #========================================================================

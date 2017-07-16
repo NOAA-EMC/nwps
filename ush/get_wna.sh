@@ -72,59 +72,84 @@ RSYNC="rsync"
 WGET="wget"
 
 # The forecast cycle, default to 00
-CYCLE="00"	
-# Check for command line CYCLE
-if [ "$1" != "" ]; then CYCLE="$1"; fi
+bcCYCLE="00"	
+# Check for command line bcCYCLE
+if [ "$1" != "" ]; then bcCYCLE="$1"; fi
+
+#AW # Set the date stamp using the system Z time
+#AW YYYY=$(echo $PDY|cut -c1-4)
+#AW MM=$(echo $PDY|cut -c5-6)
+#AW DD=$(echo $PDY|cut -c7-8)
+
+windsource=`cat ${RUNdir}/windsource.flag`
+if [ "$windsource" == "FORECASTWINDGRIDS" ]; then
+   export model_start_time=`grep Wind_Mag_SFC:validTimes ${INPUTdir}/wind/*WIND.txt | cut -c29-38 | tail -1`
+   YYYY=$(date -d @$model_start_time +"%Y")
+   MM=$(date -d @$model_start_time +"%m")
+   DD=$(date -d @$model_start_time +"%d")
+   windhour=$(date -d @$model_start_time +"%H")
+elif [ "$windsource" == "GFS" ]; then
+   #export model_start_time=`cat ${LDMdir}/gfswind/gfswind_start_time.txt`
+   NewestWind=$(basename $(ls -t ${VARdir}/gfe_grids_test/NWPSWINDGRID_${siteid}* | head -1))
+   if [ "$NewestWind" != "" ]; then
+      YYYY=$(echo $NewestWind|cut -c18-21)
+      MM=$(echo $NewestWind|cut -c22-23)
+      DD=$(echo $NewestWind|cut -c24-25)
+      windhour=$(echo $NewestWind|cut -c26-27)
+      time_str="${YYYY} ${MM} ${DD} ${windhour} 00 00"
+      model_start_time=`echo ${time_str} | awk -F: '{ print mktime($1 $2 $3 $4 $5 $6) }'`
+   fi
+fi
 
 # Adjust to the correct cycle
-curhour=$(date -u +%H)
-if [ $curhour -ge  5 ] && [ $curhour -lt 11 ]; then CYCLE="00"; fi
-if [ $curhour -ge 11 ] && [ $curhour -lt 17 ]; then CYCLE="06"; fi
-if [ $curhour -ge 17 ] && [ $curhour -lt 23 ]; then CYCLE="12"; fi
-if [ $curhour -ge 23 ]; then CYCLE="18"; fi
+if [ $windhour -ge  5 ] && [ $windhour -lt 11 ]; then bcCYCLE="00"; fi
+if [ $windhour -ge 11 ] && [ $windhour -lt 17 ]; then bcCYCLE="06"; fi
+if [ $windhour -ge 17 ] && [ $windhour -lt 23 ]; then bcCYCLE="12"; fi
+if [ $windhour -ge 23 ]; then bcCYCLE="18"; fi
 
-# Set the date stamp using the system Z time
-YYYY=$(echo $PDY|cut -c1-4)
-MM=$(echo $PDY|cut -c5-6)
-DD=$(echo $PDY|cut -c7-8)
-
-YYYYMMDD="${YYYY}${MM}${DD}"
-if [ $curhour -ge 0 ] && [ $curhour -lt 5 ] 
+bcYYYYMMDD="${YYYY}${MM}${DD}"
+if [ $windhour -ge 0 ] && [ $windhour -lt 5 ] 
 then 
-  date=`date +%Y%m%d --date=yesterday`
-  YYYYMMDD="$date"
-  CYCLE="18" 
+  #AW date=`date +%Y%m%d --date=yesterday`
+  #AW YYYYMMDD="$date"
+  let model_start_time_m1=$model_start_time-3600*24
+  bcYYYYMMDD=$(date -d @$model_start_time_m1 +"%Y%m%d")
+  bcCYCLE="18" 
 fi
 
 # Set another date stamp of one cycle (6h) ago, for in case current BC are not available
-curhour=$(date -u +%H)
-if [ $curhour -ge 11 ] && [ $curhour -lt 17 ]; then OLDCYCLE="00"; fi
-if [ $curhour -ge 17 ] && [ $curhour -lt 23 ]; then OLDCYCLE="06"; fi
-if [ $curhour -ge 23 ]; then OLDCYCLE="12"; fi
-OLDYYYYMMDD=$YYYYMMDD
-if [ $curhour -ge  0 ] && [ $curhour -lt 5 ]
+#AW curhour=$(date -u +%H)
+if [ $windhour -ge 11 ] && [ $windhour -lt 17 ]; then bcOLDCYCLE="00"; fi
+if [ $windhour -ge 17 ] && [ $windhour -lt 23 ]; then bcOLDCYCLE="06"; fi
+if [ $windhour -ge 23 ]; then bcOLDCYCLE="12"; fi
+bcOLDYYYYMMDD=$bcYYYYMMDD
+if [ $windhour -ge  0 ] && [ $windhour -lt 5 ]
 then
-   date=`date +%Y%m%d --date=yesterday`
-   OLDYYYYMMDD="$date"
-   OLDCYCLE="12" 
+   #AW date=`date +%Y%m%d --date=yesterday`
+   #AW OLDYYYYMMDD="$date"
+   let model_start_time_m1=$model_start_time-3600*24
+   bcOLDYYYYMMDD=$(date -d @$model_start_time_m1 +"%Y%m%d")
+   bcOLDCYCLE="12" 
 fi
-if [ $curhour -ge  5 ] && [ $curhour -lt 11 ]
+if [ $windhour -ge  5 ] && [ $windhour -lt 11 ]
 then
-   date=`date +%Y%m%d --date=yesterday`
-   OLDYYYYMMDD="$date"
-   OLDCYCLE="18" 
+   #AW date=`date +%Y%m%d --date=yesterday`
+   #AW OLDYYYYMMDD="$date"
+   let model_start_time_m1=$model_start_time-3600*24
+   bcOLDYYYYMMDD=$(date -d @$model_start_time_m1 +"%Y%m%d")
+   bcOLDCYCLE="18" 
 fi
 
 echo ""
-echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE} ON ${YYYYMMDD}"
-echo "INFO - Current hour is ${curhour}, setting previous model cycle to ${OLDCYCLE} ON ${OLDYYYYMMDD}"
+echo "INFO - Wind source hour is ${windhour}, setting wave BC cycle to ${bcCYCLE} ON ${bcYYYYMMDD}"
+echo "INFO - Wind source hour is ${windhour}, setting previous wave BC cycle to ${bcOLDCYCLE} ON ${bcOLDYYYYMMDD}"
 
 # Optional ARGS used to override the default settings
 if [ "$2" != "" ]
     then 
-    YYYYMMDD="$2"
+    bcYYYYMMDD="$2"
     # Override the auto cycle if user has specifed a date
-    if [ "$1" != "" ]; then CYCLE="$1"; fi
+    if [ "$1" != "" ]; then bcCYCLE="$1"; fi
 fi
 
 #source ${USHnwps}/process_lock.sh
@@ -150,7 +175,7 @@ echo "Purging any WNA data older than ${WNAPURGEdays} days old" | tee -a ${LOGfi
 find ${INGESTdir} -type f -mtime +${WNAPURGEdays} | xargs rm -f
 find ${SWANINPUTfiles} -type f -mtime +${WNAPURGEdays} | xargs rm -f
 
-##url="ftp://ftp.ncep.noaa.gov/pub/data/nccf/com/wave/prod/wave.${YYYYMMDD}/bulls.t${CYCLE}z"
+##url="ftp://ftp.ncep.noaa.gov/pub/data/nccf/com/wave/prod/wave.${bcYYYYMMDD}/bulls.t${bcCYCLE}z"
 
 wna_config="${DATA}/parm/templates/${siteid}/wna_input.cfg"
 
@@ -158,7 +183,7 @@ wna_config="${DATA}/parm/templates/${siteid}/wna_input.cfg"
 echo "Our ingest DIR for FTP data is: ${INGESTdir}" | tee -a ${LOGfile}  
 
 echo "NWPS Site ID = ${siteid}" | tee -a ${LOGfile}
-echo "CYCLE = ${CYCLE}" | tee -a ${LOGfile}
+echo "bcCYCLE = ${bcCYCLE}" | tee -a ${LOGfile}
 echo "Download URL: ${url}" | tee -a ${LOGfile}
 
 if [ ! -e ${wna_config} ]
@@ -207,14 +232,14 @@ echo "WNA:      ${WNA}"
 if [ "${WNA^^}" = "WNAWAVE" ]
 then
    bc_option="multi_1" 
-   bctarfile="${bc_option}.t${CYCLE}z.spec_tar.gz"
-   url="${COMINwave}/${bc_option}.${YYYYMMDD}"
+   bctarfile="${bc_option}.t${bcCYCLE}z.spec_tar.gz"
+   url="${COMINwave}/${bc_option}.${bcYYYYMMDD}"
 
 elif [ "${WNA^^}" = "HURWAVE" ]
    then
    bc_option="multi_2"
-   bctarfile="${bc_option}.t${CYCLE}z.spec_tar.gz"
-   url="${COMINwave}/${bc_option}.${YYYYMMDD}"
+   bctarfile="${bc_option}.t${bcCYCLE}z.spec_tar.gz"
+   url="${COMINwave}/${bc_option}.${bcYYYYMMDD}"
 
 elif [ "${WNA^^}" = "TAFB-NWPS" ]
    then
@@ -225,8 +250,8 @@ elif [ "${WNA^^}" = "TAFB-NWPS" ]
    #url="$dcom/$PDY/wtxtbul/nhc_nwps_bc/"
 
    bc_option="multi_2"
-   bctarfile="${bc_option}.t${CYCLE}z.spec_tar.gz"
-   url="${COMINwave}/${bc_option}.${YYYYMMDD}"
+   bctarfile="${bc_option}.t${bcCYCLE}z.spec_tar.gz"
+   url="${COMINwave}/${bc_option}.${bcYYYYMMDD}"
 
 elif [ "${WNA^^}" = "NO" ]
    then
@@ -248,7 +273,7 @@ cd ${DATA}
 
 
 if [ -e "${url}/${bctarfile}" ];then
-    DATABCdir="${GESOUT}/databc/${bc_option}.${YYYYMMDD}_t${CYCLE}z"
+    DATABCdir="${GESOUT}/databc/${bc_option}.${bcYYYYMMDD}_t${bcCYCLE}z"
     file="${bc_option}.${FTPPAT2}"
     if [ ! -e ${DATABCdir}/${bctarfile} ]
     then
@@ -310,14 +335,14 @@ if [ -e "${url}/${bctarfile}" ];then
         #RemoveLockFile
         export err=1; err_chk
     fi
-elif [ -e "${COMINwave}/${bc_option}.${OLDYYYYMMDD}/${bc_option}.t${OLDCYCLE}z.spec_tar.gz" ];then
+elif [ -e "${COMINwave}/${bc_option}.${bcOLDYYYYMMDD}/${bc_option}.t${bcOLDCYCLE}z.spec_tar.gz" ];then
     # Use BCs from one cycle ago (e.g. WW3_multi_2/HURwave is a late run)
-    bctarfile="${bc_option}.t${OLDCYCLE}z.spec_tar.gz"
-    url="${COMINwave}/${bc_option}.${OLDYYYYMMDD}"
-    DATABCdir="${GESOUT}/databc/${bc_option}.${OLDYYYYMMDD}_t${OLDCYCLE}z"
+    bctarfile="${bc_option}.t${bcOLDCYCLE}z.spec_tar.gz"
+    url="${COMINwave}/${bc_option}.${bcOLDYYYYMMDD}"
+    DATABCdir="${GESOUT}/databc/${bc_option}.${bcOLDYYYYMMDD}_t${bcOLDCYCLE}z"
     file="${bc_option}.${FTPPAT2}"
 
-    echo "WARNING: Using wave boundary conditions from previous cycle (${OLDYYYYMMDD}_${OLDCYCLE}z)." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+    echo "WARNING: Using wave boundary conditions from previous cycle (${bcOLDYYYYMMDD}_${bcOLDCYCLE}z)." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
 
     if [ ! -e ${DATABCdir}/${bctarfile} ]
     then

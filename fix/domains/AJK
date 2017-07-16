@@ -29,7 +29,7 @@ export NELON="-130.00"
 export SWLAT="53.90"
 export SWLON="-144.50"
 export RES="4"
-export TSTEP="3"
+export TSTEP="1"
 #
 #========================================================================
 #                  NESTED GRID CONFIGURATION                            =
@@ -52,7 +52,7 @@ export NELONN1="-132.5"
 export SWLATN1="57.0"
 export SWLONN1="-137.4"
 export RESN1="1"
-export TSTEPN1="3"
+export TSTEPN1="1"
 export STATN1="NON"
 #
 #export NELATN1="59.5"
@@ -60,7 +60,7 @@ export STATN1="NON"
 #export SWLATN1="57.0"
 #export SWLONN1="-137.4"
 #export RESN1="1"
-#export TSTEPN1="3"
+#export TSTEPN1="1"
 #export STATN1="NON"
 #
 # AJK Nest CG3
@@ -69,7 +69,7 @@ export NELONN2="-130.0"
 export SWLATN2="54.5"
 export SWLONN2="-136.0"
 export RESN2="1"
-export TSTEPN2="3"
+export TSTEPN2="1"
 export STATN2="NON"
 #
 #export NELATN2="57.25"
@@ -77,7 +77,7 @@ export STATN2="NON"
 #export SWLATN2="54.7"
 #export SWLONN2="-136.0"
 #export RESN2="1"
-#export TSTEPN2="3"
+#export TSTEPN2="1"
 #export STATN2="NON"
 #
 #========================================================================

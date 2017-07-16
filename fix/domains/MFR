@@ -29,7 +29,7 @@ export NELON="-123.65"
 export SWLAT="41.00"
 export SWLON="-127.30"
 export RES="2.0"
-export TSTEP="3"
+export TSTEP="1"
 #
 #========================================================================
 #                  NESTED GRID CONFIGURATION                            =
@@ -54,7 +54,7 @@ export NELONN1="-124.10"
 export SWLATN1="43.15"
 export SWLONN1="-124.70"
 export RESN1=".4"
-export TSTEPN1="3"
+export TSTEPN1="1"
 export STATN1="NON"
 #
 # Cape Blanco, CG3: [42.2167 -125.10 43.0333 -124.25]
@@ -63,7 +63,7 @@ export NELONN2="-124.25"
 export SWLATN2="42.2167"
 export SWLONN2="-125.10"
 export RESN2=".5"
-export TSTEPN2="3"
+export TSTEPN2="1"
 export STATN2="NON"
 #
 # Brookings, CG4: [42.0 -124.45 42.15 -124.1833]
@@ -72,7 +72,7 @@ export NELONN3="-124.1833"
 export SWLATN3="42.0"
 export SWLONN3="-124.45"
 export RESN3=".3"
-export TSTEPN3="3"
+export TSTEPN3="1"
 export STATN3="NON"
 #
 # Wind-only domain
@@ -82,7 +82,7 @@ export NELONN4="-123.65"
 export SWLATN4="41.00"
 export SWLONN4="-127.30"
 export RESN4="5.0"
-export TSTEPN4="3"
+export TSTEPN4="1"
 export STATN4="NON"
 #
 #========================================================================

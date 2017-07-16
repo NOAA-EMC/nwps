@@ -37,10 +37,10 @@ use lib ("$ENV{'PMnwps'}");
 use lib ("$ENV{'USHnwps'}");
 use lib ("$ENV{'RUNdir'}");
 use lib ("$ENV{'DATA'}");
-use WaveInput qw(waveInputProcessing);
-use WindInput qw(windInputProcessing);
-use GraphicOutput qw(graphicOutputProcessing);
-use RunSwan qw(makeSwanRun);
+#use WaveInput qw(waveInputProcessing);
+#use WindInput qw(windInputProcessing);
+#use GraphicOutput qw(graphicOutputProcessing);
+use RunSwan qw(runModel);
 use CommonSub qw(removeFiles removeOldFiles mvFiles renameFilesWithSuffix giveDate);
 use ArraySub qw(inArray);
 use ConfigSwan;
@@ -263,6 +263,6 @@ for $i (0..0){
   # Get a slice of the Config hash
   my $CG = @CGSS{$columns[$i]}; # 6,1,3
     %CG = %{$CG};
-    $dateSuffix = &makeSwanRun($date,$inpGrid,$filename,%CG);
+    $dateSuffix = &runModel($date,$inpGrid,$filename,%CG);
 } 
 #Break here for WCOSS_main_03

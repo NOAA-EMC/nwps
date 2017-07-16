@@ -31,7 +31,7 @@ export NELON="211.71"
 export SWLAT="12.34"
 export SWLON="216.33"
 export RES="4."
-export TSTEP="3"
+export TSTEP="1"
 #
 # NELON=147.6; SWLON=143.49
 #
@@ -74,7 +74,7 @@ export NELONN1="214.02"
 export SWLATN1="14.72"
 export SWLONN1="214.68"
 export RESN1="1.0"
-export TSTEPN1="3"
+export TSTEPN1="1"
 export STATN1="NON"
 #
 # CG3: Guam
@@ -84,7 +84,7 @@ export NELONN2="214.92"
 export SWLATN2="13.12"
 export SWLONN2="215.48"
 export RESN2="1.0"
-export TSTEPN2="3"
+export TSTEPN2="1"
 export STATN2="NON"
 #
 # CG4: Rota
@@ -94,7 +94,7 @@ export NELONN3="214.62"
 export SWLATN3="14.02"
 export SWLONN3="214.98"
 export RESN3="1.0"
-export TSTEPN3="3"
+export TSTEPN3="1"
 export STATN3="NON"
 #
 #========================================================================

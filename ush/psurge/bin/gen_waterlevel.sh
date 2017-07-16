@@ -81,16 +81,18 @@ echo "Starting processing at at $datetime UTC" | tee -a ${LOGfile}
 
 myPWD=`pwd`
 
+if [ "${RETROSPECTIVE}" == "FALSE" ]; then    #RETROSPECTIVE
+
 if [ ! -e ${INPUTdir}/psurge_waterlevel_start_time.txt ] || [ ! -e ${INPUTdir}/psurge_waterlevel_domain_${siteid}.txt ]
     then
     echo "INFO - No PSURGE data to process" | tee -a ${LOGfile}
     echo "INFO - Will try to copy files from ${LDMdir}" | tee -a ${LOGfile}
     if [ ! -e ${LDMdir}/psurge_waterlevel_start_time.txt ]
     then
-    echo "ERROR - No PSURGE data to process" | tee -a ${LOGfile}
-    echo "ERROR - Missing PSURGE start time file ${LDMdir}/psurge_waterlevel_start_time.txt" | tee -a ${LOGfile}
-    ##RemoveLockFile
-    export err=1; err_chk
+       echo "ERROR - No PSURGE data to process" | tee -a ${LOGfile}
+       echo "ERROR - Missing PSURGE start time file ${LDMdir}/psurge_waterlevel_start_time.txt" | tee -a ${LOGfile}
+       ##RemoveLockFile
+       export err=1; err_chk
     fi
     rsync -av --force --stats --progress ${LDMdir}/*waterlevel* ${INPUTdir}/.
 fi
@@ -133,6 +135,8 @@ if [ -e ${LDMdir}/psurge_waterlevel_start_time.txt ]
     fi
 fi
 
+fi    #RETROSPECTIVE
+
 if [ ! -e ${INPUTdir}/psurge_waterlevel_domain_${siteid}.txt ]
 then 
     echo "ERROR - No domain info found with this data set"
@@ -150,12 +154,14 @@ fi
 PSURGEDOMAIN=$(grep ^PSURGEDOMAIN ${INPUTdir}/psurge_waterlevel_domain_${siteid}.txt | awk -F: '{ print $2 }')
 cd ${LDMdir}
 
-echo "INFO - Checking ${LDMdir} for updates" | tee -a ${LOGfile}
-diff ${INPUTdir}/psurge_waterlevel_start_time.txt ${LDMdir}/psurge_waterlevel_start_time.txt
-if [ "$?" == "0" ]
-then
-    echo "INFO - We have no more forecast hours to add to this data set" | tee -a ${LOGfile}
-fi
+if [ "${RETROSPECTIVE}" == "FALSE" ]; then    #RETROSPECTIVE
+   echo "INFO - Checking ${LDMdir} for updates" | tee -a ${LOGfile}
+   diff ${INPUTdir}/psurge_waterlevel_start_time.txt ${LDMdir}/psurge_waterlevel_start_time.txt
+   if [ "$?" == "0" ]
+   then
+       echo "INFO - We have no more forecast hours to add to this data set" | tee -a ${LOGfile}
+   fi
+fi    #RETROSPECTIVE
 
 cd ${myPWD}
 
@@ -170,7 +176,7 @@ for file in ${files}
 done
 
 echo "Purging any old model ingest" | tee -a ${LOGfile}
-last_hour=78
+last_hour=${PSURGEHOURS}
 ${BINdir}/purge_psurge.sh ${INPUTdir} ${last_hour}
 
 psurge_waterlevel_start_time=`cat ${INPUTdir}/psurge_waterlevel_start_time.txt`
@@ -178,7 +184,7 @@ psurge_date_str=`echo ${psurge_waterlevel_start_time} | awk '{ print strftime("%
 psurge_end_time=${psurge_waterlevel_start_time}
 
 let fin=psurge_waterlevel_start_time
-fin1=$(echo " 78* 3600" | bc -l)
+fin1=$(echo " ${PSURGEHOURS}* 3600" | bc -l)
 let fin+=fin1
 psurge_end_time_str=`echo ${fin} | awk '{ print strftime("%Y%m%d%H", $1) }'`
 
@@ -283,9 +289,9 @@ let maxhours-=timecheck
 if [ $lencheck -gt $maxhours ]
     then 
     lencheck=$maxhours
-    let lencheck/=3600
-    echo "WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available PSURGE water level data. Persistence will be applied after $lencheck h." | tee -a ${LOGfile}
-    echo "WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available PSURGE water level data. Persistence will be applied after $lencheck h."| tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+    let lencheckhours=$lencheck/3600
+    echo "WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available PSURGE water level data. Persistence will be applied after $lencheckhours h." | tee -a ${LOGfile}
+    echo "WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available PSURGE water level data. Persistence will be applied after $lencheckhours h."| tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
     #AW: This warning message to the jlogfile/SDM is perhaps too verbose, since 
     #    it will occur regularly and doesn't require any action.
     #msg="WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available PSURGE water level data. Persistence will be applied after $lencheck h."
@@ -303,6 +309,8 @@ if [ $lencheck -gt $maxhours ]
     #SendAWIPSMessage ${VARdir} "THE FORECAST LENGTH HAS EXCEEDED THE MAX HOURS OF WATERLEVEL DATA" \
 	#"TRUNCATING THE FORECAST LENGTH FROM $FCSTLENGTH TO $lencheck" | tee -a ${LOGfile} 2>&1
 fi
+
+let lencheck/=3600
 
 # Generate the waterlevel data for SWAN and update all inputCG files
 SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/psurge_match.pl`

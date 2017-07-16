@@ -22,12 +22,12 @@
 #
 # ----------------------------------------------------------- 
 #BSUB -J %WFO%_wt_cg1
-#BSUB -oo /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_wavetrack_cg1.o
-#     -e  /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_wavetrack_cg1.o
+#BSUB -oo /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_wavetrack_cg1.o
+#     -e  /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_wavetrack_cg1.o
 #BSUB -q "dev"
 #     -cwd /tmpnwprd1
 ##BSUB -W 0:30
-#BSUB -W 2:55
+#BSUB -W 5:15
 #BSUB -M 1700
 #BSUB -P NWPS-T2O
 #BSUB -extsched 'CRAYLINUX[]'
@@ -42,8 +42,8 @@ module load iobuf
 export IOBUF_PARAMS="*:count=4:size=32M:prefetch=1:preflush=1"
 export FORT_BUFFERED=TRUE
 module load netcdf4-python
-module use ${NWPSdir}/lib/python/modulefiles
-module load nwps_python
+#module use ${NWPSdir}/lib/python/modulefiles
+#module load nwps_python
 module list
 
 export FORT_BUFFERED=true
@@ -61,7 +61,7 @@ export MODEL=${model^^}
 export envir="para"
 
 export DEVWCOSS_USER=$(whoami)
-export COMROOT=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/com
+export COMROOT=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/com
 
 #Dev environment value for $job
 export job=pnwps_${WFO}_wt_cg1

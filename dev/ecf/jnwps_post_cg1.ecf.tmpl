@@ -23,12 +23,12 @@
 # ----------------------------------------------------------- 
 
 #BSUB -J %WFO%_po_cg1
-#BSUB -oo /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_post_cg1.o
-# -e   /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_post_cg1.o
+#BSUB -oo /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_post_cg1.o
+# -e   /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_post_cg1.o
 #BSUB -q "dev"
 ##BSUB -W 0:30
-#BSUB -W 2:15
-#BSUB -M 1700
+#BSUB -W 4:45
+#BSUB -M 3000
 #BSUB -P NWPS-T2O
 
 #module load %MODULES%
@@ -40,8 +40,8 @@ module load PrgEnv-intel
 #module load iobuf
 #export IOBUF_PARAMS="*:count=4:size=32M:prefetch=1:preflush=1"
 module load netcdf4-python
-module use ${NWPSdir}/lib/python/modulefiles
-module load nwps_python
+#module use ${NWPSdir}/lib/python/modulefiles
+#module load nwps_python
 
 module list
 
@@ -60,7 +60,7 @@ export MODEL=${model^^}
 export envir="para"
 
 export DEVWCOSS_USER=$(whoami)
-export COMROOT=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/com
+export COMROOT=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/com
 
 #Dev environment value for $job
 export job=pnwps_${WFO}_po_cg1

@@ -29,19 +29,19 @@ set -xa
 # SETUP NWPS SHELL VARIABLES
 # #############################################
 
-curhour=$(date -u +%H)
-if [ $curhour -lt 12 ]; then CYCLE="00"; fi
-if [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
-if [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
-if [ $curhour -ge 22 ]; then CYCLE="18"; fi
-echo ""
-echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
+#AWcurhour=$(date -u +%H)
+#AWif [ $curhour -lt 12 ]; then CYCLE="00"; fi
+#AWif [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
+#AWif [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
+#AWif [ $curhour -ge 22 ]; then CYCLE="18"; fi
+#AWecho ""
+#AWecho "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
 
-export cyc=${CYCLE}
-export cycle=t${cyc}z
+#AWexport cyc=${CYCLE}
+#AWexport cycle=t${cyc}z
 export pgmout=OUTPUT.$$
 
-export UTILROOT=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.3
+export UTILROOT=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.12
 
 export utilscript=${UTILROOT}/ush
 export USHutil=${UTILROOT}/ush
@@ -49,9 +49,9 @@ export USHutil=${UTILROOT}/ush
 
 export pgm="NWPS"
 
-export DATA=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/${WFO}.${PDY}
-export PCOMROOT=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/pcom
-export GESROOT=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/nwges
+export DATA=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/${WFO}.${PDY}
+export PCOMROOT=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/pcom
+export GESROOT=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/nwges
 
 mkdir -p $DATA
 cd $DATA

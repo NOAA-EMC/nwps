@@ -1,14 +1,14 @@
 #!/bin/bash
 # -----------------------------------------------------------
 # UNIX Shell Script
-# Tested Operating System(s): RHEL 5, 6
+# Tested Operating System(s): RHEL 5, 6, 7
 # Tested Run Level(s): 3, 5
 # Shell Used: BASH shell
 # Original Author(s): Douglas.Gaer@noaa.gov
 # File Creation Date: 01/15/2013
-# Date Last Modified: 07/29/2014
+# Date Last Modified: 12/05/2016
 #
-# Version control: 1.07
+# Version control: 1.13
 #
 # Support Team:
 #
@@ -18,10 +18,9 @@
 # ------------- Program Description and Details -------------
 # -----------------------------------------------------------
 #
-# Script used to download .5 degree GFS 10m U/V winds from NCEP.
+# Script used to process .25 degree GFS 10m U/V winds
 #
-# NOTE: This script is used on standalone workstations
-#
+# NOTE: This script is modified for use with WCOSS versions 
 #
 # -----------------------------------------------------------
 
@@ -30,12 +29,14 @@ if [ "${SITEID}" == "" ]
     then
     echo "ERROR - Your SITEID variable is not set"
     export err=1; err_chk
+    exit 1
 fi
 
 if [ "${HOMEnwps}" == "" ]
     then 
     echo "ERROR - Your HOMEnwps variable is not set"
     export err=1; err_chk
+    exit 1
 fi
 
 if [ -e ${USHnwps}/nwps_config.sh ]
@@ -44,6 +45,7 @@ then
 else
     echo "ERROR - Cannot find ${USHnwps}/nwps_config.sh"
     export err=1; err_chk
+    exit 1
 fi
 
 # NOTE: Data is processed on the server in UTC
@@ -52,12 +54,12 @@ export TZ=UTC
 # Script variables
 # ===========================================================
 BINdir="${USHnwps}/gfswind/bin"
-LOGfile="${LOGdir}/gfswind_download.log"
+LOGfile="${LOGdir}/get_gfswind.log"
 myPWD=$(pwd)
 
 # Setup our Regional domain here based on our NWPS site's region
-REGION=$(echo "${REGIONID}" | tr [:lower:] [:upper:])
-region=$(echo "${regionid}" | tr [:upper:] [:lower:])
+REGION=$(echo "${REGION^^}")
+region=$(echo "${REGION,,}")
 
 # Set our data processing directory
 DATAdir="${DATAdir}/gfswind"
@@ -77,19 +79,9 @@ SWANINPUTfiles="${INPUTdir}/gfswind"
 INGESTdir="${LDMdir}/gfswind"
 
 # Set our purging varaibles
-GFSWINDPURGEdays="8"
-
-# Set our locking variables
-PROGRAMname="$0"
-LOCKfile="$VARdir/get_gfswind.lck"
-MINold="60"
-
-# NOTE: Add WGET --no-remove-listing option for FTP downloads
+GFSWINDPURGEdays="1"
 RSYNC="/usr/bin/rsync"
-DOWNLOADRETRIES="5"
-if [ "$5" != "" ]; then DOWNLOADRETRIES="$5"; fi 
-WGETargs="-N -nv --tries=${DOWNLOADRETRIES} --no-remove-listing --append-output=${LOGfile}"
-WGET="/usr/bin/wget"
+RSYNCargs="-av --force --stats --progress"
 
 if [ "$1" == "--help" ]
 then 
@@ -107,67 +99,92 @@ then
     exit 2
 fi
 
-# The forecast cycle, default to 00
-CYCLE="00"	
-# Check for command line CYCLE
-if [ "$1" != "" ]; then CYCLE="$1"; fi
-
-# Adjust to the correct cycle if the user has not specified a date for arg 4
-if [ "$4" == "" ]
+# Read our WFO config
+if [ ! -e ${FIXnwps}/configs/${siteid}_ncep_config.sh ]
 then
-    curhour=$(date -u +%H)
-    if [ $curhour -lt 12 ]; then CYCLE="00"; fi
-    if [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
-    if [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
-    if [ $curhour -ge 22 ]; then CYCLE="18"; fi
-    echo ""
-    echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
+    echo "ERROR - No config file found for ${SITEID}"
+    echo "ERROR - Missing ${FIXnwps}/configs/${siteid}_ncep_config.sh"
+    export err=1; err_chk
+    exit 1
 fi
 
-HOURS="${GFSHOURS}"
-if [ "$2" != "" ]; then HOURS="$2"; fi
+unset GFSWINDDOMAIN
+unset GFSWINDNX
+unset GFSWINDNY
 
-TIMESTEP="${GFSTIMESTEP}"
-if [ "$3" != "" ]; then TIMESTEP="$3"; fi
-
-# Set the date stamp using the system Z time
-YYYY=$(echo $PDY|cut -c1-4)
-MM=$(echo $PDY|cut -c5-6)
-DD=$(echo $PDY|cut -c7-8)
-
-# Optional ARGS used to override the default settings
-YYYYMMDD="${YYYY}${MM}${DD}"
-if [ "$4" != "" ]
-    then 
-    YYYYMMDD="$4"
-    # Override the auto cycle if user has specifed a date
-    if [ "$1" != "" ]; then CYCLE="$1"; fi
-fi
-
-# Use the current date
-if [ "${YYYYMMDD}" == "DEFAULT" ]; then YYYYMMDD="${YYYY}${MM}${DD}"; fi
-
-# Read our NWPS config
-if [ -e ${USHnwps}/${region}_nwps_config.sh ]
-then
-    HAS_REGIONAL_CONFIG="TRUE"
-else
-    echo "WARNING - ${USHnwps}/${region}_nwps_config.sh file does not exist"
-    echo "WARNING - will use ${USHnwps}/nwps_config.sh default setting for GFSWIND data"
-    HAS_REGIONAL_CONFIG="FALSE"
-fi
+source ${FIXnwps}/configs/${siteid}_ncep_config.sh
 
 if [ "${GFSWINDDOMAIN}" == "" ] || [ "${GFSWINDNX}" == "" ] || [ "${GFSWINDNY}" == "" ]
 then
     echo "ERROR - Your GFSWIND domain is not set"
     echo "ERROR - Need to set GFSWINDDOMAIN, GFSWINDNX, and GFSWINDNY vars"
-    echo "ERROR - Check your ${USHnwps}/${region}_nwps_config.sh config"
+    echo "ERROR - Check your ${FIXnwps}/configs/${siteid}_ncep_config.sh config"
     export err=1; err_chk
+    exit 1
 fi
 
-if [ "${HAS_REGIONAL_CONFIG}" == "TRUE" ]
-then
-    echo "GFSWIND domain set by NWPS ${USHnwps}/${region}_nwps_config.sh"
+if [ "${GFSHOURS}" == "" ]; then export GFSHOURS="192"; fi
+if [ "${GFSTIMESTEP}" == "" ]; then export GFSTIMESTEP="3"; fi
+
+if [ -z ${WGRIB2} ]; then
+    echo "ERROR - WGRIB2 var is not defined"
+    export err=1; err_chk
+    exit 1
+fi
+
+# The forecast cycle, default to 00
+CYCLE="00"	
+
+# Check for command line CYCLE
+if [ $# -ge 1 ]; then CYCLE="$1"; fi
+
+#AW # Adjust to the correct cycle if the user has not specified a date for arg 4
+#AW if [ $# -lt 4 ]
+#AW then
+#AW     curhour=$(date -u +%H)
+#AW     if [ $curhour -lt 12 ]; then CYCLE="00"; fi
+#AW     if [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
+#AW     if [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
+#AW     if [ $curhour -ge 22 ]; then CYCLE="18"; fi
+#AW     echo ""
+#AW     echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
+#AW fi
+
+HOURS="${GFSHOURS}"
+if [ $# -ge 2 ]; then HOURS="$2"; fi
+
+TIMESTEP="${GFSTIMESTEP}"
+if [ $# -ge 3 ]; then TIMESTEP="$3"; fi
+
+if [ -z ${PDY} ]; then export PDY=$(date +%Y%m%d); fi
+
+# Set the date stamp using the system Z time
+YYYY=$(echo $PDY|cut -c1-4)
+MM=$(echo $PDY|cut -c5-6)
+DD=$(echo $PDY|cut -c7-8)
+YYYYMMDD="${YYYY}${MM}${DD}"
+
+# Optional ARGS used to override the default settings
+if [ $# -ge 4 ]
+    then 
+    YYYYMMDD="$4"
+    # Override the auto cycle if user has specifed a date
+    if [ $# -ge 1 ]; then CYCLE="$1"; fi
+fi
+
+# Use the current date
+if [ "${YYYYMMDD}" == "DEFAULT" ]; then YYYYMMDD="${YYYY}${MM}${DD}"; fi
+
+# If available, use the HH on the GFE tarball to find recent GFS input
+NewestWind=$(basename $(ls -t ${VARdir}/gfe_grids_test/NWPSWINDGRID_${siteid}* | head -1))
+if [ "$NewestWind" != "" ]; then
+   windhour=$(echo $NewestWind|cut -c26-27)
+   if [ $windhour -lt 12 ]; then gfeCYCLE="00"; fi
+   if [ $windhour -ge 12 ] && [ $windhour -lt 18 ]; then gfeCYCLE="06"; fi
+   if [ $windhour -ge 18 ] && [ $windhour -lt 22 ]; then gfeCYCLE="12"; fi
+   if [ $windhour -ge 22 ]; then gfeCYCLE="18"; fi
+   echo ""
+   echo "INFO - GFE wind hour is ${windhour}, setting wind cycle to ${gfeCYCLE}"
 fi
 
 # Set our script variables from the global config
@@ -180,31 +197,25 @@ DY=$(echo ${GFSWINDDOMAIN} | awk '{ print $7}')
 
 echo "GFSHOURS = ${GFSHOURS}"
 echo "GFSTIMESTEP = ${GFSTIMESTEP}"
-echo "GFSWIND_REGION = ${GFSWIND_REGION}"
 echo "GFSWINDDOMAIN = ${GFSWINDDOMAIN}"
 echo "NX = ${GFSWINDNX}"
 echo "NY = ${GFSWINDNY}"
-echo "LL_LON= ${LL_LON}"
-echo "LL_LAT= ${LL_LAT}"
+echo "LL_LON = ${LL_LON}"
+echo "LL_LAT = ${LL_LAT}"
 echo "DX = ${DX}"
 echo "DY = ${DY}"
 
-#source ${USHnwps}/process_lock.sh
-
 echo "Starting GFSWIND data processing"
-#echo "Checking for lock files"
-#LockFileCheck $MINold
-#CreateLockFile
 
 # Make any of the following directories if needed
-mkdir -p ${PRODUCTdir}
-mkdir -p ${OUTPUTdir}
-mkdir -p ${SPOOLdir}
-mkdir -p ${VARdir}
-mkdir -p ${LOGdir}
-mkdir -p ${CLIPdir}
-mkdir -p ${INGESTdir}
-mkdir -p ${SWANINPUTfiles}
+mkdir -pv ${PRODUCTdir}
+mkdir -pv ${OUTPUTdir}
+mkdir -pv ${SPOOLdir}
+mkdir -pv ${VARdir}
+mkdir -pv ${LOGdir}
+mkdir -pv ${CLIPdir}
+mkdir -pv ${INGESTdir}
+mkdir -pv ${SWANINPUTfiles}
 
 # Starting processing logging here
 cat /dev/null > ${LOGfile}
@@ -231,9 +242,13 @@ function MakeClip() {
 
     clip_file="${REGION}SWAN_gfswind.t${CYCLE}z.f${FFHOUR}.grib2"
     echo "Clip and reproject to LAT/LON grid" | tee -a ${LOGfile} 2>&1
-    echo "${WGRIB2} ${DIR}/${FILE} -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/${clip_file}" | tee -a ${LOGfile} 
-    ${WGRIB2} ${DIR}/${FILE} -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/${clip_file} | tee -a ${LOGfile} 2>&1
 
+    ${WGRIB2} ${DIR}/${FILE} -match "UGRD:10 m above ground" -grib ${DIR}/u.g2
+    ${WGRIB2} ${DIR}/${FILE} -match "VGRD:10 m above ground" -grib ${DIR}/v.g2
+    cat ${DIR}/u.g2 > ${DIR}/uv.g2
+    cat ${DIR}/v.g2 >> ${DIR}/uv.g2
+    ${WGRIB2} ${DIR}/uv.g2 -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/${clip_file}
+    rm -f  ${DIR}/u.g2  ${DIR}/v.g2  ${DIR}/uv.g2
 
     FF=`echo $HOUR`
     if [ $HOUR -le 99 ]
@@ -269,38 +284,98 @@ function MakeClip() {
     if [ -e ${PRODUCTdir}/${file} ]; then rm -f ${PRODUCTdir}/${file}; fi
 }
 
-# Set our download URL
-#url="ftp://ftp.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/gfs.${YYYYMMDD}${CYCLE}"
-
 # Get the first forecast cycle
 cd ${SPOOLdir}
 echo "Our spool DIR for FTP data is: ${SPOOLdir}" | tee -a ${LOGfile}  
+echo "Our GFS input drectory: ${COMINgfs}"
+echo "Current PDY: ${PDY}"
+echo "Previous PDY: ${PDYm1}"
+
+if [ "${COMINgfs}" == "" ]
+then
+    echo "ERROR - COMINgfs env var not set, exiting"
+    export err=1; err_chk
+    exit 1
+fi
+
+GFSdir=${COMINgfs} 
+echo "GFS directory: ${GFSdir}"
+if [ "${gfeCYCLE}" -eq 18 ]; then
+   CYCLES="18 12 06 00"
+elif [ "${gfeCYCLE}" -eq 12 ]; then
+   CYCLES="12 06 00"
+elif [ "${gfeCYCLE}" -eq 06 ]; then
+   CYCLES="06 00"
+else
+   CYCLES="00"
+fi
+
+echo "Checking GFSdir: ${GFSdir}"
+for CYCLE in ${CYCLES}
+do
+    echo "CYCLE = ${CYCLE}"
+    firstfile="gfs.t${CYCLE}z.pgrb2.0p25.f000"
+    lastfile="gfs.t${CYCLE}z.pgrb2.0p25.f${GFSHOURS}"
+    if [ -e ${GFSdir}/${firstfile} ] && [ -e ${GFSdir}/${lastfile} ]
+    then
+	echo "INFO - We have ${GFSHOURS} for the ${CYCLE} on ${PDY}"
+	break
+    fi
+done
+
+CYCLES="18 12 06 00"
+if [ ! -e ${GFSdir}/${firstfile} ] || [ ! -e ${GFSdir}/${lastfile} ]
+then
+    echo "WARNING- We do not have current day ${GFSHOURS} for the ${CYCLE} on ${PDY}"
+    echo "${PDY} GFS not avalible, checking for prevous GFS run"
+    GFSdir=$(echo ${GFSdir} | sed s/${PDY}/${PDYm1}/g)
+
+    for CYCLE in ${CYCLES}
+    do
+	echo "CYCLE = ${CYCLE}"
+	firstfile="gfs.t${CYCLE}z.pgrb2.0p25.f000"
+	lastfile="gfs.t${CYCLE}z.pgrb2.0p25.f${GFSHOURS}"
+	if [ -e ${GFSdir}/${firstfile} ] && [ -e ${GFSdir}/${lastfile} ]
+	then
+	    echo "INFO - We have ${GFSHOURS} for the ${CYCLE} on ${PDYm1}"
+	    break
+	fi
+    done
+
+    if [ ! -e ${GFSdir}/${firstfile} ] || [ ! -e ${GFSdir}/${lastfile} ]
+    then
+	echo "ERROR - We do not have prev day ${GFSHOURS} for the ${CYCLE} on ${PDYm1}"
+	echo "${PDY} GFS not avalible, checking for prevous GFS run"
+	echo "${PDYm1} GFS not avalible"
+	echo "ERROR - No GFS winds available"
+	export err=1; err_chk
+	exit 1
+    fi
+fi
 
 FF="000"
-file="gfs.t${CYCLE}z.master.grbf${FF}.10m.uv.grib2"
-echo "Copying $COMGFS/$file " | tee -a ${LOGfile}
-##echo "$WGET ${WGETargs} ${url}/${file}" | tee -a ${LOGfile} 2>&1
-#echo "$WGET ${WGETargs} ${url}/${file}"
+file="gfs.t${CYCLE}z.pgrb2.0p25.f${FF}"
 
-cp -pr $COMGFS/$file ./
+echo "Copying ${GFSdir}/${file}" | tee -a ${LOGfile}
+if [ ! -e ${GFSdir}/${file} ]
+then
+    echo "INFO - ${GFSdir}/${file} not available et"
+    echo "Exiting"
+    export err=1; err_chk
+    exit 1
+fi
 
+${RSYNC} ${RSYNCargs} ${GFSdir}/${file} ${SPOOLdir}/${file}
 if [ "$?" != "0" ] 
 then
-    echo "ERROR - copying file ${COMGFS}/${file}"
-    rm -f ${file}
-    #RemoveLockFile
+    echo "ERROR - copying file ${GFSdir}/${file}"
+    if [ -e ${SPOOLdir}/${file} ]; then rm -fv ${SPOOLdir}/${file}; fi
     export err=1; err_chk
-fi
-if [ ! -e ${outfile} ]
-then
-    echo "INFO - ${COMGFS}/${file} not available for copy yet"
-    echo "Exiting"
-    #RemoveLockFile
-    export err=1; err_chk
+    exit 1
 fi
 
-epoc_time=`${WGRIB2} -unix_time ${SPOOLdir}/${file} | grep "1:0:unix" | awk -F= '{ print $3 }'`
-date_str=`echo ${epoc_time} | awk '{ print strftime("%Y%m%d", $1) }'`
+epoc_time=$(${WGRIB2} -d 1 -unix_time ${SPOOLdir}/${file} | grep "1:0:unix" | awk -F= '{ print $3 }')
+date_str=$(echo ${epoc_time} | awk '{ print strftime("%Y%m%d", $1) }')
 swan_uv_ofile_fname="gfswind_${epoc_time}_${date_str}_${CYCLE}_f000.dat"
 swan_uv_ofile="${OUTPUTdir}/${swan_uv_ofile_fname}"
 echo ${epoc_time} > ${OUTPUTdir}/gfswind_start_time.txt
@@ -348,35 +423,29 @@ until [ $end -gt $HOURS ]; do
 	continue
     fi
 
-    #file="gfs.t${CYCLE}z.master.grbf${FHOUR}.10m.uv.grib2"
-    file="gfs.t${CYCLE}z.master.grbf${FF}.10m.uv.grib2"
+    file="gfs.t${CYCLE}z.pgrb2.0p25.f${FF}"
     outfile="${file}"
     cd ${PRODUCTdir}
-    echo "Copying $COMGFS/$file " | tee -a ${LOGfile}
-##    echo "$WGET ${WGETargs} ${url}/${file}" | tee -a ${LOGfile} 2>&1
-##    $WGET ${WGETargs} ${url}/${file} | tee -a ${LOGfile} 2>&1
+    echo "Copying ${GFSdir}/${file}" | tee -a ${LOGfile}
 
-cp -pr $COMGFS/$file ./
+    if [ ! -e ${GFSdir}/${file} ]
+    then
+	echo "INFO - ${GFSdir}/${file} not available yet"
+	echo "Exiting"
+	export err=1; err_chk
+	exit 1
+    fi
 
+    ${RSYNC} ${RSYNCargs} ${GFSdir}/${file} ${PRODUCTdir}/${file}
     if [ "$?" != "0" ] 
     then
-	echo "ERROR - copying file ${COMGFS}/${file}"
-	rm -f ${file}
-	#RemoveLockFile
+	echo "ERROR - copying file ${GFSdir}/${file}"
+	if [ -e ${PRODUCTdir}/${file} ]; then rm -fv ${PRODUCTdir}/${file}; fi
 	export err=1; err_chk
+	exit 1
     fi
-    if [ ! -e ${outfile} ]
-    then
-	echo "INFO - ${COMGFS}/${file} not available for copy yet"
-	echo "Exiting"
-	#RemoveLockFile
-	export err=1; err_chk
-    fi
-
     MakeClip ${PRODUCTdir} ${file} ${end}
-
     let end+=$TIMESTEP
-
 done
 
 datetime=`date -u`
@@ -392,8 +461,8 @@ then
     echo "GFSWINDDOMAIN:${GFSWINDDOMAIN}" > ${INGESTdir}/gfswind_domain.txt
     echo "Purging previous run from ${INGESTdir}" | tee -a ${LOGfile} 2>&1
     ${BINdir}/purge_gfswind.sh ${INGESTdir} ${GFSHOURS} | tee -a ${LOGfile}
-    echo "$RSYNC -av --force ${OUTPUTdir}/*.dat ${INGESTdir}/." | tee -a ${LOGfile} 2>&1
-    $RSYNC -av --force ${OUTPUTdir}/*.dat ${INGESTdir}/.  | tee -a ${LOGfile} 2>&1
+    echo "${RSYNC} ${RSYNCargs} ${OUTPUTdir}/*.dat ${INGESTdir}/." | tee -a ${LOGfile} 2>&1
+    ${RSYNC} ${RSYNCargs} ${OUTPUTdir}/*.dat ${INGESTdir}/.  | tee -a ${LOGfile} 2>&1
 fi
 
 echo "Processing complete" | tee -a ${LOGfile}
@@ -401,7 +470,6 @@ echo "Processing complete" | tee -a ${LOGfile}
 cd ${myPWD}
 echo "Exiting..." | tee -a ${LOGfile}
 
-#RemoveLockFile
 exit 0
 # -----------------------------------------------------------
 # *******************************

@@ -33,7 +33,7 @@ export NELON="-82.60"
 export SWLAT="28.35"
 export SWLON="-87.35"
 export RES="1.8"
-export TSTEP="3"
+export TSTEP="1"
 #
 #========================================================================
 #                  NESTED GRID CONFIGURATION                              =
@@ -78,8 +78,8 @@ export NELONN1="-85.37"
 export SWLATN1="29.95"
 export SWLONN1="-85.87"
 export RESN1=".6"
-export TSTEPN1="3"
-export STATN1="STA"
+export TSTEPN1="1"
+export STATN1="NON"
 #
 # nest 2: san blas/apalachicola
 export NELATN2="29.95"
@@ -87,8 +87,8 @@ export NELONN2="-84.85"
 export SWLATN2="29.60"
 export SWLONN2="-85.46"
 export RESN2=".6"
-export TSTEPN2="3"
-export STATN2="STA"
+export TSTEPN2="1"
+export STATN2="NON"
 #
 # nest 3: St Marks
 export NELATN3="30.15"
@@ -96,8 +96,8 @@ export NELONN3="-83.65"
 export SWLATN3="29.85"
 export SWLONN3="-84.50"
 export RESN3=".6"
-export TSTEPN3="3"
-export STATN3="STA"
+export TSTEPN3="1"
+export STATN3="NON"
 #
 # nest 4: cedar key
 export NELATN4="29.60"
@@ -105,8 +105,8 @@ export NELONN4="-82.75"
 export SWLATN4="29.00"
 export SWLONN4="-83.55"
 export RESN4=".75"
-export TSTEPN4="3"
-export STATN4="STA"
+export TSTEPN4="1"
+export STATN4="NON"
 #
 #
 #========================================================================

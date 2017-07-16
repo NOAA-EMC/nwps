@@ -40,8 +40,8 @@ if [ "${SITETYPE}" == "" ]; then export SITETYPE="DEV"; fi
 # Set user name that started the NWPS processes
 if [ "${USERNAME}" == "" ]; then export USERNAME=$(whoami); fi
 
-export PSURGEHOURS="78"
-export PSURGETIMESTEP="1"
+export PSURGEHOURS=${PSURGEHOURS:-102}
+export PSURGETIMESTEP=${PSURGETIMESTEP:-1}
 
 # Set our default processing DIRs here
 if [ "${ARCHdir}" == "" ]; then export ARCHdir=${DATAdir}/archive; fi

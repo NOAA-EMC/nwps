@@ -23,11 +23,11 @@
 # ----------------------------------------------------------- 
 
 #BSUB -J %WFO%_pd_cg0
-#BSUB -oo /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_prdgen_cg0.o
-#     -e /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_prdgen_cg0.o
+#BSUB -oo /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_prdgen_cg0.o
+#     -e /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_prdgen_cg0.o
 #BSUB -q "dev"
 ##BSUB -W 0:10
-#BSUB -W 3:05
+#BSUB -W 5:15
 #BSUB -R rusage[mem=1700]
 #BSUB -P NWPS-T2O
 
@@ -53,7 +53,7 @@ export MODEL=${model^^}
 export envir="para"
 
 export DEVWCOSS_USER=$(whoami)
-export COMROOT=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/com
+export COMROOT=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/com
 
 #Dev environment value for $job
 export job=pnwps_${WFO}_pd_cg0

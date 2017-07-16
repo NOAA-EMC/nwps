@@ -29,7 +29,7 @@ export NELON="-120.74"
 export SWLAT="35.00"
 export SWLON="-125.80"
 export RES="4.0"
-export TSTEP="3"
+export TSTEP="1"
 #
 #========================================================================
 #                  NESTED GRID CONFIGURATION                            =
@@ -54,7 +54,7 @@ export NELONN1="-122.3"
 export SWLATN1="37.3"
 export SWLONN1="-123.3"
 export RESN1="1."
-export TSTEPN1="3"
+export TSTEPN1="1"
 export STATN1="NON"
 #
 # Greater Monterey Bay Area Nest
@@ -63,7 +63,7 @@ export NELONN2="-121.7"
 export SWLATN2="36.2"
 export SWLONN2="-122.2"
 export RESN2="0.5"
-export TSTEPN2="3"
+export TSTEPN2="1"
 export STATN2="NON"
 #
 # Wind-only domain
@@ -73,7 +73,7 @@ export NELONN3="-120.74"
 export SWLATN3="35.00"
 export SWLONN3="-125.80"
 export RESN3="5.0"
-export TSTEPN3="3"
+export TSTEPN3="1"
 export STATN3="NON"
 #
 #========================================================================

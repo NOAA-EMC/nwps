@@ -70,8 +70,7 @@ export GESOUTm1=${GESROOT}/${envir}/${NET}.${PDYm1}
 export dcom_hist="$GESOUT/dcom_hist.txt"
 export dcom_histm1="$GESOUTm1/dcom_hist.txt"
 export web_status_file="$GESOUT/status_file.txt"
-export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )
-export dcom=${dcom:-/gpfs/${WCOSS_SYSTEM}p1/nco/ops/dcom/us007003}
+export dcom=${dcom:-${DCOMROOT}/us007003}
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 
 # Establish rsync timeout and retry limits
@@ -83,12 +82,15 @@ if [ "${SENDCOM}" = YES ]; then
     mkdir -p $GESOUT $GESOUT/warnings
 fi
 
+env
+
 ##############################################
 # Execute the script
 ${HOMEnwps}/scripts/exnwps_datachk.sh.ecf
 export err=$?; err_chk
 
-if [ $(hostname |cut -c1) = 's'  ]; then
+# JY if [ $(hostname |cut -c1) = 's'  ]; then
+if [ $(echo $SITE |cut -c1) = 'S'  ]; then
     export machine=surge
 else
     export machine=luna

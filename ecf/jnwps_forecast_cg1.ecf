@@ -7,7 +7,7 @@
 #BSUB -W 3:00
 #BSUB -M 1700
 #BSUB -P NWPS-%PROJ%
-export NODES=1
+export NODES=2
 
 %include <head.h>
 
@@ -19,6 +19,14 @@ module load prod_util
 module load PrgEnv-intel
 module load iobuf
 export IOBUF_PARAMS="*:count=4:size=32M:prefetch=1:preflush=1"
+module load HDF5-serial-intel-haswell/1.8.9
+module load NetCDF-intel-haswell/4.2
+module load netcdf4-python/1.2.2
+module load jasper-gnu-haswell/1.900.1
+module load png-intel-haswell/1.2.49
+module load zlib-intel-haswell/1.2.7
+module load nco-gnu-haswell/4.4.4 
+module load cfp-intel-sandybridge
 #----------------------------------------------------------------
 export FORT_BUFFERED=true
 export NWPSplatform="WCOSS"

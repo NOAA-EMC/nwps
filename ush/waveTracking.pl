@@ -272,8 +272,8 @@ for $i (0..0){
 
 ##   system("mv -f ${sysTrcktFileName} partition.raw");
    system("cp -f ${sysTrcktFileName} partition.raw");
-   # Remove any exception values in partition file produced by SWAN, in particular wind speed
-   system("sed -i 's/\\*\\*\\*\\*\\*/  0.0/g' partition.raw");
+   #AW # Remove any exception values in partition file produced by SWAN, in particular wind speed
+   #AW system("sed -i 's/\\*\\*\\*\\*\\*/  0.0/g' partition.raw");
    system("date +%s > ${VARdir}/wavetrackrun_start_secs.txt");
    system("${USHnwps}/ww3_systrackexe.sh > ${LOGdir}/run_ww3_systrk.log 2> ${LOGdir}/run_ww3_systrk_exe_error.log");
    system("date +%s > ${VARdir}/wavetrackrun_end_secs.txt");
@@ -964,38 +964,38 @@ sub ReadPRTLocNames($%) {
              $RunValues{"COORD"}=$temp[1];   #total elements: 11 
              undef $keyfound, @temp;
            }
-           if ($comline =~/^CGRID/)  {
-             #print " Searching for:  CGRID\n";
-             $keyfound=$_;
-	        chomp $keyfound;
-             @temp=split /\s+/,$_;
-             #$RunValues{"xpc"   } =$temp[1];
-             #$RunValues{"ypc"   } =$temp[2];
-             $RunValues{"alpc"  } =$temp[3];
-             $RunValues{"xlenc" } =$temp[4];
-             $RunValues{"ylenc" } =$temp[5];
-#            for ww3 is the numb of points instead numb of meshes
-             $RunValues{"npxc"  } =$temp[6]+1;
-             $RunValues{"npyc"  } =$temp[7]+1;
-#            WW3 has an extended comp. grid in all boundaries
-             $RunValues{"npxcww3"  } =$temp[6]+1;
-             $RunValues{"npycww3"  } =$temp[7]+1;
-#            In WW3 the output is from 2 to npxc-1 and 2-> npyc-1
-             $RunValues{"npxout"  } =$temp[6]+1;
-             $RunValues{"npyout"  } =$temp[7]+1;
-             $RunValues{"CGnpxnpy"}= $RunValues{"npxc"}*$RunValues{"npyc"};
-             $RunValues{"delxc" }= $temp[4]/$temp[6];
-             $RunValues{"delyc" }= $temp[5]/$temp[7];
-             $RunValues{"xpc"   } =$temp[1]-$RunValues{"delxc" };
-             $RunValues{"ypc"   } =$temp[2]-$RunValues{"delyc" };
-             $RunValues{"CIRCLE"} =$temp[8];
-             $RunValues{"npdc"  } =$temp[9]+1;
-             $RunValues{"flow"  } =$temp[10];
-             $RunValues{"fhigh" } =$temp[11]; 
-             $RunValues{"npsc"   }=int(log($temp[11]/$temp[10])/log(1.1)+0.5)+1;  #25
-
-             undef $keyfound, @temp;
-           }
+#AW           if ($comline =~/^CGRID/)  {
+#AW             #print " Searching for:  CGRID\n";
+#AW             $keyfound=$_;
+#AW	        chomp $keyfound;
+#AW             @temp=split /\s+/,$_;
+#AW             #$RunValues{"xpc"   } =$temp[1];
+#AW             #$RunValues{"ypc"   } =$temp[2];
+#AW             $RunValues{"alpc"  } =$temp[3];
+#AW             $RunValues{"xlenc" } =$temp[4];
+#AW             $RunValues{"ylenc" } =$temp[5];
+#AW#            for ww3 is the numb of points instead numb of meshes
+#AW             $RunValues{"npxc"  } =$temp[6]+1;
+#AW             $RunValues{"npyc"  } =$temp[7]+1;
+#AW#            WW3 has an extended comp. grid in all boundaries
+#AW             $RunValues{"npxcww3"  } =$temp[6]+1;
+#AW             $RunValues{"npycww3"  } =$temp[7]+1;
+#AW#            In WW3 the output is from 2 to npxc-1 and 2-> npyc-1
+#AW             $RunValues{"npxout"  } =$temp[6]+1;
+#AW             $RunValues{"npyout"  } =$temp[7]+1;
+#AW             $RunValues{"CGnpxnpy"}= $RunValues{"npxc"}*$RunValues{"npyc"};
+#AW             $RunValues{"delxc" }= $temp[4]/$temp[6];
+#AW             $RunValues{"delyc" }= $temp[5]/$temp[7];
+#AW             $RunValues{"xpc"   } =$temp[1]-$RunValues{"delxc" };
+#AW             $RunValues{"ypc"   } =$temp[2]-$RunValues{"delyc" };
+#AW             $RunValues{"CIRCLE"} =$temp[8];
+#AW             $RunValues{"npdc"  } =$temp[9]+1;
+#AW             $RunValues{"flow"  } =$temp[10];
+#AW             $RunValues{"fhigh" } =$temp[11]; 
+#AW             $RunValues{"npsc"   }=int(log($temp[11]/$temp[10])/log(1.1)+0.5)+1;  #25
+#AW
+#AW             undef $keyfound, @temp;
+#AW           }
            if ($comline =~/^INPGRID BOTTOM/)  {
                #print " Searching for:  INPGRID BOTTOM\n";;
              $keyfound=$_;

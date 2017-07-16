@@ -1,0 +1,123 @@
+#!/bin/bash
+# ----------------------------------------------------------- 
+# UNIX Shell Script File
+# Tested Operating System(s): RHEL 5,6
+# Tested Run Level(s): 3, 5
+# Shell Used: BASH shell
+# Original Author(s): Roberto Padilla-Hernandez
+# File Creation Date: 02/01/2015
+# Date Last Modified:
+#
+# Version control: 1.14
+#
+# Support Team:
+#
+# Contributors: Floyd fayton
+#
+# ----------------------------------------------------------- 
+# ------------- Program Description and Details ------------- 
+# ----------------------------------------------------------- 
+#
+# Job Card to set the resources required for a NWPS run
+#
+# ----------------------------------------------------------- 
+#BSUB -J %WFO%_fc_cnr
+#BSUB -oo /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/retro/com/nwps/para/NWPS_%WFO%_forecast_cgn.o
+#     -e  /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/retro/com/nwps/para/NWPS_%WFO%_forecast_cgn.o
+#BSUB -q "dev"
+#     -cwd /tmpnwprd1
+##BSUB -W 2:00
+#BSUB -W 5:30
+#BSUB -M 3000
+#BSUB -P NWPS-T2O
+#BSUB -extsched 'CRAYLINUX[]'
+export NODES=2
+
+module use /gpfs/hps/nco/ops/nwpara/modulefiles
+module load prod_envir
+module load prod_util
+module load grib_util
+module load PrgEnv-intel
+module load iobuf
+export IOBUF_PARAMS="*:count=4:size=32M:prefetch=1:preflush=1"
+
+module load netcdf4-python/1.2.2
+module load cfp-intel-sandybridge
+module list
+
+export FORT_BUFFERED=true
+export NWPSplatform="DEVWCOSS"
+export MP_PGMMODEL=mpmd
+export MP_CSS_INTERRUPT=yes
+export WFO="%WFO%"
+export siteid=${WFO}
+export SITEID=${WFO^^}
+export N="n"
+export KEEPDATA="YES"
+export model="nwps"
+export MODEL=${model^^}
+
+export envir="para"
+
+export DEVWCOSS_USER=$(whoami)
+export COMROOT=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/retro/com
+
+#Dev environment value for $job
+export job=pnwps_${WFO}_fc_cgn_ret
+export jobid=pnwps_${WFO}_fc_cgn_ret.$$
+
+#Dev environment jlogfile
+mkdir -p ${COMROOT}/logs/${envir}
+export jlogfile=${COMROOT}/logs/${envir}/jlogfile.${job}
+
+#Set platform
+export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )d1
+export WCOSS_SYSTEM_COM=$( echo $COMROOTp1 | cut -c7-9 )
+
+export NWROOT=${NWPSdir}
+
+VERSION_FILE=${NWROOT}/dev/nwps_test.ver
+if [ -f $VERSION_FILE ]; then
+  . $VERSION_FILE
+else
+  ECFNAME="jnwps_prep.ecf"
+  echo "***JOB ${ECFNAME} ERROR: Version File $VERSION_FILE does not exist ***"
+  exit
+fi
+
+# Wait for upstream component job to finish
+while [ -z $(grep 'COMPLETED NORMALLY' ${COMROOT}/logs/${envir}/jlogfile.pnwps_%WFO%_pd_cg0_ret | awk '{print $1}') ]
+do
+   if [ ! -z $(grep 'FAILED' ${COMROOT}/logs/${envir}/jlogfile.pnwps_%WFO%_pd_cg0_ret | awk '{print $1}') ]
+   then
+       msg="FATAL ERROR: Upstream job pnwps_%WFO%_pd_cg0_ret failed"
+       postmsg "$jlogfile" "$msg"
+       export err=1; err_chk
+   fi
+   echo 'Waiting for pnwps_%WFO%_pd_cg0 to complete, at date'
+   date
+   sleep 60
+done
+
+${NWROOT}/dev/jobs/J${MODEL}_FORECAST_RET
+
+#%include <tail.h>
+
+#%manual
+################################################################################
+#TASKSCRIPT DOCUMENTATION BLOCK
+#TASKSCRIPT:     jnwps_%FAMILY1%_forecast_cg%N%
+#LAST MODIFIER:  Floyd Fayton
+#ORGANIZATION:   NP11
+#DATE:           SEP 2014
+#FULL NAME:    /nwps_para/nwps/SR/j%WFO%
+#PURPOSE:  To execute the job that creates NWPS %WFO% GRIB output files
+#JOB SCRIPT CALLED: /nwprod/nwps.${nwps_ver}/jobs/JNWPS ==>
+#                            /nwprod/nwps.${nwps_ver}/scripts/exnwps_forecast_cg%N%.sh.ecf
+#################################################################################
+######################################################################
+# Job specific troubleshooting instructions:
+#  see generic troubleshoot manual page
+#
+######################################################################
+#%end

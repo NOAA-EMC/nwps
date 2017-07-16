@@ -79,7 +79,7 @@ else
     #${MPIRUN} -n8 -N8 -j1 -d1 ${EXECnwps}/ww3_systrk_mpi > ${RUNdir}/ww3_systrk.out 2> ${RUNdir}/ww3_systrk.err
     echo " In ww3_systrackexe.sh, calling aprun" 
     #bsub < ${NWPSdir}/dev/ecf/jnwps_wtcore_cg1.ecf.${siteid}  >> ${NWPSdir}/dev/ecf/jobids_${siteid}.log;
-    aprun -n8 -N8 -j1 -d1 ${EXECnwps}/ww3_systrk_mpi > ${RUNdir}/ww3_systrk.out 2> ${RUNdir}/ww3_systrk.err
+    aprun -n16 -N16 -j1 -d1 ${EXECnwps}/ww3_systrk_mpi > ${RUNdir}/ww3_systrk.out 2> ${RUNdir}/ww3_systrk.err
     export err=$?
     if [ "${err}" != "0" ];then
         echo " ============  E R R O R ==============="                  | tee -a ${LOGdir}/systrk_info.log 

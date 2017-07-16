@@ -38,7 +38,8 @@
 !             yvel = Meridional component of the ambient current.
 !
       implicit none
-      integer, parameter :: ninput=200
+      integer, parameter :: ninput=300
+      integer, parameter :: nobsread=2000
       integer, parameter :: funwps=20
       integer, parameter :: fushore=21
       integer, parameter :: fupast=22
@@ -48,13 +49,14 @@
       integer :: ier,nobs,nhs,timestep,npast72,nall,nshore
       real :: shorelinedir
       real*8, dimension(ninput) :: ftime
-      real, dimension(ninput) :: xpos,ypos,sxpos,sypos
+      real, dimension(ninput) :: xpos,ypos
       real, dimension(ninput) :: hsig,hspast72,pwp,mwd,mwdsn
       real, dimension(ninput) :: xvel,yvel,watlev
       real, dimension(ninput) :: uwind,vwind
-      real, dimension(ninput) :: prob,shore
+      real, dimension(ninput) :: prob
 !      logical, dimension(ninput) :: eventout
       integer, dimension(ninput) :: eventout
+      real, dimension(nobsread) :: sxpos,sypos,shore
 
 !
 !        Banner
@@ -72,7 +74,7 @@
       nhs=0
       npast72=0
       nshore=0
-      timestep=3
+      timestep=1
 !      eventout(:)=.false.
       eventout(:)=0
       ftime(:)=-9999.
@@ -107,7 +109,7 @@
 !
 !        read the shoreline direction file
 !
-      call read_shore(fushore,ninput,nshore,sxpos,sypos,shore,
+      call read_shore(fushore,nobsread,nshore,sxpos,sypos,shore,
      1               nshore,ier)
       do i=1,nshore
          if((xpos(1).eq.sxpos(i)).and.(ypos(1).eq.sypos(i))) then
@@ -121,13 +123,19 @@
       call eventcalc(nhs,npast72,hspast72,hsig,timestep,eventout)
 !
       mwdsn=mwd-shorelinedir
+!     check for condition due to circular boundary at N
+      do i=1,nhs
+         if(mwdsn(i).lt.-180.) then
+            mwdsn(i)=mwdsn(i)+360.
+         endif
+      end do
 !
       open(UNIT=fuprob,ACCESS='APPEND',STATUS='OLD')
       call bulkmodel(nhs,hsig,mwdsn,eventout,watlev,prob)
       do i=1,nhs
          write(fuprob,100)ftime(i),xpos(i),ypos(i),prob(i),hsig(i),
      1         pwp(i),mwdsn(i),watlev(i),1*eventout(i)
- 100   format(F14.4,4X,F8.4,4X,F8.4,4X,F5.3,4X,F6.4,4X,F7.3,
+ 100   format(F14.4,4X,F8.4,4X,F8.4,4X,F5.1,4X,F6.4,4X,F7.3,
      1        4X,F8.3,4X,F5.2,2X,I1)
       end do
       close(fuprob)

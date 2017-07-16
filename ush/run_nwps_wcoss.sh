@@ -2,14 +2,14 @@
 set -xa
 # ----------------------------------------------------------- 
 # UNIX Shell Script File
-# Tested Operating System(s): RHEL 5,6
+# Tested Operating System(s): RHEL 5,6,7
 # Tested Run Level(s): 3, 5
 # Shell Used: BASH shell
 # Original Author(s): Douglas.Gaer@noaa.gov, Roberto.Padilla@noaa.gov
 # File Creation Date: 08/22/2011
-# Date Last Modified: 04/06/2015
+# Date Last Modified: 05/26/2017
 #
-# Version control: 1.17
+# Version control: 1.30
 #
 # Support Team:
 #
@@ -20,6 +20,7 @@ set -xa
 #
 # Script used to run the NWPS model from the command line
 #
+# 05/2017 - Added GFS wind fail over
 # ----------------------------------------------------------- 
 
 # Setup our NWPS environment                                                    
@@ -56,7 +57,7 @@ function HelpMessage()
     echo " --web                    Enable send to Web for output plots"
     echo " --plot                   Plot output without send to Web option"
     echo " --winds source           Set input wind source for this run"
-    echo "                          choices: forecaster, gfs, nam, custom"
+    echo "                          choices: forecaster or gfs"
     echo " --nohotstart             Disables hotstart"
     echo " --nodownload             Do not re-download Regional, NDFD, or GFS winds"
     echo ""
@@ -67,7 +68,7 @@ function HelpMessage()
     echo " --windfile filename.txt  Start model run using archived wind file" 
     echo " --sitename XXX           Run as this site, assuming we have templates"
     echo " --domainsetup filename   Setup new domain and run model"
-    echo " --wavemodel WaveModel   Specify the wave model to be used, SWAN or WW3"
+    echo " --wavemodel WaveModel   Specify the wave model to be used, SWAN, UNSWAN or WW3"
     echo ""
     echo "Debug options:"
     echo " -d                       Enable verbose debugging"
@@ -133,287 +134,380 @@ fi
 #Do not call nwps_config.sh here as siteid.sh has not been created
 ## source ${USHnwps}/nwps_config.sh
 
+# Source domain setup to get the setting for NESTGRIDS
+# (i.e. whether nests have been defined for this domain or not)
+if [ -z "${DOMAINSETUP}" ]; then export DOMAINSETUP="${FIXnwps}/domains/${SITEID}"; fi
+source ${DOMAINSETUP}
+
+warnings="NO"
+
+# Set our default values that will always override forecaster values
+Default_RUNLEN="144"       
+Default_USERDELTAC="600"
+Default_WAVEMODEL="swan"
+Default_NESTS="Yes"
+Default_PLOT="Yes"
+
+# Set all other default values
+Default_WINDS="forecaster"
+Default_SWELLS="WNAWave"
+Default_RTOFS="Yes"
+Default_WEB="NO"
+Default_HOTSTART="TRUE"
+Default_WATERLEVELS="ESTOFS"
+Default_EXCD="10"
+
+# Check for unset ENV vars
+if [ -z "${RETROSPECTIVE}" ]; then RETROSPECTIVE="FALSE"; fi
+
+# Forecaster warning log file
+. ${DATA}/PDY
+cat /dev/null > ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+date_hh_mm_ss=$(date)
+echo "NWPS run started on ${date_hh_mm_ss}" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+
+# Do any cleanup from previous run here
+if [ -e ${INPUTdir}/${siteid}_inp_args.ctl ]; then rm -f ${INPUTdir}/${siteid}_inp_args.ctl; fi
+
+if [ "${RETROSPECTIVE}" == "TRUE" ]; then
+    echo "Using forecaster wind file from archive" >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+    echo "Using forecaster wind file from archive" | tee -a ${LOGdir}/run_nwps.log 
+    echo "GFS wind forcing will be disabled" | tee -a ${LOGdir}/run_nwps.log  
+    WINDS="forecaster"
+fi
+
 #------------------------------------------------------------
-#-----  SELECT WIND FILES WITH WHICH TO FORCE THE MODEL -----
+#-----  SET WIND SOURCE WITH WHICH TO FORCE THE MODEL -----
 #------------------------------------------------------------
 WINDS=$(echo ${WINDS} | tr [:upper:] [:lower:])
-if [ "${WINDS}" == "gfs" ] || [ "${WINDS}" == "nam" ]
-then
-    echo "User has requested external wind source ${WINDS}" | tee -a ${LOGdir}/run_nwps.log 
-    echo "Starting model with ${WINDS} wind source" | tee -a ${LOGdir}/run_nwps.log 
-#    if [ "${NODOWNLOAD}" == "TRUE" ]
-#    then
-#	echo "Skipping forcing winds download from ${WINDS}" | tee -a ${LOGdir}/run_nwps.log 
-     ${USHnwps}/get_${WINDS}_winds.sh 
-#    else
-#	${USHnwps}/get_${WINDS}_winds.sh ${NODOWNLOAD}
-	if [ "$?" != "0" ] 
+if [ "${WINDS,,}" != "gfs" ] || [ "${WINDS,,}" != "forecaster" ]; then WINDS="forecaster"; fi
+ 
+# 05/19/2017: Added to check GFE winds from forecast office
+if [ "${WINDS,,}" == "forecaster" ]; then
+    if [ "${RETROSPECTIVE^^}" != "TRUE" ]; then
+	echo "Wind forcing setup to forecaster" | tee -a ${LOGdir}/run_nwps.log 
+	echo "RETROSPECTIVE mode is set to ${RETROSPECTIVE}" | tee -a ${LOGdir}/run_nwps.log 
+	echo "Checking the GFE wind file sent by forecast office" | tee -a ${LOGdir}/run_nwps.log 
+	NewestWind=$(basename $(ls -t ${FORECASTWINDdir}/NWPSWINDGRID_${siteid}* | head -1))
+	if [ "${NewestWind}" == "" ]; then
+	    warnings="YES"
+	    echo "WARNING - Cannot find any current GFE wind files, switching to GFS" | tee -a ${LOGdir}/run_nwps.log
+	    echo "WARNING: Cannot find any current GFE wind files, switching to GFS" >>  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+	    WINDS="gfs"
+	else
+	    echo "Testing the GFE forecaster grid inputs" | tee -a ${LOGdir}/run_nwps.log
+	    # NOTE: Future builds will include GFE wind grids and GFE water levels
+	    # NOTE: This build will only use GFE wind grids
+	    if [ -d ${VARdir}/gfe_grids_test ]; then rm -f ${VARdir}/gfe_grids_test/*; fi
+	    mkdir -pv ${VARdir}/gfe_grids_test
+            #AW
+            cp -fv ${FORECASTWINDdir}/${NewestWind} ${VARdir}/gfe_grids_test/.
+            #AW
+	    tar xvfz ${FORECASTWINDdir}/${NewestWind} -C ${VARdir}/gfe_grids_test
+	    windfile=$(ls -1t --color=none ${VARdir}/gfe_grids_test/${siteid}*WIND.txt | head -1)
+	    # We still need a copy of our CTL file, even if we fail over to GFS wind init. First check contents, then copy.
+	    ctlfile=$(ls -1t --color=none ${VARdir}/gfe_grids_test/${siteid}_inp_args.ctl | head -1)
+            numlines=$(cat ${ctlfile} | wc -l)
+            numchars=$(cat ${ctlfile} | wc -c)
+            if [ "$numlines" -ne 1 ] || [ "$numchars" -lt 51 ] || [ "$numchars" -gt 76 ]
+            then
+               echo "FATAL ERROR: CTL file from AWIPS is corrupt. NWPS will not be executed." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+               msg="FATAL ERROR: CTL file from AWIPS is corrupt. NWPS will not be executed."
+               postmsg "$jlogfile" "$msg"
+               cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${GESOUT}/warnings/Warn_Forecaster_${SITEID}.${PDY}.txt
+               echo "ABORTED $FORECASTWINDdir/${NewestWind} AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
+               export err=1; err_chk
+            else
+	       cp -fpv ${ctlfile} ${INPUTdir}/${siteid}_inp_args.ctl
+            fi
+	    let minwindhours=${Default_RUNLEN}+1 # NOTE: We need to have the 1 extra hour to nested grids
+	    #AW ${EXECnwps}/check_awips_windfile --max-speed 199. --verbose --debug ${windfile} > ${LOGdir}/gfe_wind_file_check.log
+	    ${EXECnwps}/check_awips_windfile --verbose --debug ${windfile} > ${LOGdir}/gfe_wind_file_check.log
+	    if [ $? -ne 0 ]; then
+		warnings="YES"
+		echo "WARNING - We received bad GFE wind file, forecaster wind file has bad values" | tee -a ${LOGdir}/run_nwps.log
+		echo "WARNING: We received bad GFE wind file, forecaster wind file has bad values" >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+		WINDS="gfs"
+	    else
+		echo "GFE wind grid passed wind file check" | tee -a ${LOGdir}/run_nwps.log
+		echo "Checking number of GFE wind fields" | tee -a ${LOGdir}/run_nwps.log
+	    	Num_wind_fields=$(grep -i 'Wind_Mag_SFC(DIM_' ${windfile} | awk -F'(' '{ print $2 }' | awk -F',' '{ print $1 }' | awk -F'_' '{ print $2 }')
+		echo "Number of wind fields on file: ${Num_wind_fields}" | tee -a ${LOGdir}/run_nwps.log
+		if [ "$Num_wind_fields" == "" ]
+		then
+		    echo "WARNING - Wind file ${NewestWind} is empty" | tee -a ${LOGdir}/run_nwps.log
+		    echo "WARNING: Wind file ${NewestWind} is empty" >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+		    warnings="YES"
+		    WINDS="gfs"
+		else 
+		    if [ ${Num_wind_fields} -lt ${minwindhours} ]; then
+			echo "WARNING - Wind fields = ${Num_wind_fields}, must be >= ${minwindhours}" | tee -a ${LOGdir}/run_nwps.log
+			echo "WARNING: Wind fields = ${Num_wind_fields}, must be >= ${minwindhours}" >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+			warnings="YES"
+			WINDS="gfs"
+		    else
+			echo "GFE wind grid has ${Num_wind_fields} wind fields" | tee -a ${LOGdir}/run_nwps.log
+		    fi
+		fi
+	    fi
+	fi
+    fi
+fi
+
+# Check to ensure that we can unpack the GFE wind file in our ${INPUTdir}
+if [ "${WINDS,,}" == "forecaster" ]; then
+    NewestWind=$(basename `ls -t ${FORECASTWINDdir}/NWPSWINDGRID_${siteid}* | head -1`)
+    echo "Most Recent wind file for ${SITEID}: ${NewestWind}" | tee -a ${LOGdir}/run_nwps.log
+    cd ${INPUTdir}/
+    # Delete previous wind files, and copy newest input file
+    if [ "${RETROSPECTIVE^^}" != "TRUE" ]; then
+        rm -fv *.tar.gz ${siteid}*WIND.txt
+        cp -fv ${FORECASTWINDdir}/${NewestWind} ${INPUTdir}/.
+	tar xvfz ${INPUTdir}/${NewestWind}
+	WindFileName=`ls -t ${siteid}*WIND.txt | head -1`
+	if [ ! -f "${WindFileName}" ]
 	then
-	    echo "FATAL ERROR: Could not locate wind source" | tee -a ${LOGdir}/run_nwps.log
+	    echo "WARNING - Wind file ${WindFileName} not transmitted." | tee -a ${LOGdir}/run_nwps.log
+	    echo "WARNING: Wind file ${WindFileName} not transmitted." >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+	    warnings="YES"
+	    WINDS="gfs"
+	fi 
+    fi
+fi
+
+# Set the Wind file name for archive case runs
+if [ "${WINDS,,}" == "forecaster" ] && [ "${RETROSPECTIVE^^}" == "TRUE" ]; then
+    # Use wind file from Archive
+    rm ${RUNdir}/*.wnd
+    NewestWind=$(basename `ls -t ${INPUTdir}/NWPSWINDGRID_${siteid}* | head -1`)
+    if [ -f ${INPUTdir}/${NewestWind} ]; then tar xvfz ${INPUTdir}/${NewestWind}; fi
+fi
+
+# Read our contol file here
+if [ ! -e ${INPUTdir}/${siteid}_inp_args.ctl ]
+then
+    if [ "${RUNLEN}" == "" ]; then export RUNLEN="${Default_RUNLEN}"; fi
+    if [ "${SWELLS}" == "" ]; then export SWELLS="${Default_SWELLS}"; fi
+    if [ "${NESTS}" == "" ]; then export NESTS="${Default_NESTS}"; fi
+    if [ "${RTOFS}" == "" ]; then export RTOFS="NO"; fi
+    if [ "${WINDS}" == "" ]; then export WINDS="${WINDS}"; fi
+    if [ "${WEB}" == "" ]; then export WEB="${Default_WEB}"; fi
+    if [ "${PLOT}" == "" ]; then export PLOT="${Default_PLOT}"; fi
+    if [ "${USERDELTAC}" == "" ]; then export USERDELTAC="${Default_USERDELTAC}"; fi
+    if [ "${HOTSTART}" == "" ]; then export HOTSTART="${Default_HOTSTART}"; fi
+    if [ "${WATERLEVELS}" == "" ]; then export WATERLEVELS="NO"; fi
+    if [ "${WAVEMODEL}" == "" ]; then export WAVEMODEL="${Default_WAVEMODEL}"; fi
+    if [ "${EXCD}" == "" ]; then export EXCD="${Default_EXCD}"; fi
+    INPARGS="${RUNLEN}:${SWELLS}:${NESTS}:${RTOFS}:${WINDS}:${WEB}:${PLOT}:${USERDELTAC}:${HOTSTART}:${WATERLEVELS}:${WAVEMODEL}:${EXCD}"
+    echo "INFO - Creating default ${INPUTdir}/${siteid}_inp_args.ctl" | tee -a ${LOGdir}/run_nwps.log 
+    echo "INPUTARGS->${INPARGS}" | tee -a ${LOGdir}/run_nwps.log 
+    echo "${INPARGS}" > ${INPUTdir}/${siteid}_inp_args.ctl
+fi
+
+while read line
+do
+    p=$line
+done <${INPUTdir}/${siteid}_inp_args.ctl
+
+echo "line p=$p"
+arr=$(echo $p | tr ":" "\n")
+x=0
+for xa in $arr
+do
+    fromgui[$x]=$xa
+    x=$(( $x + 1 ))
+done
+# Assign run variables from AWIPS GUI, adjusting string formats 
+# to ensure uniformity despite input from different AWIPS releases.
+export RUNLEN="${fromgui[0]}"
+export WNA="${fromgui[1]}"
+export NESTS="${fromgui[2],,}"
+export NESTS="${NESTS^}"
+export RTOFS="${fromgui[3],,}"
+export RTOFS="${RTOFS^}"
+# NOTE: Only use the GUI wind input if we passed our GFE wind file checks
+if [ "${WINDS,,}" == "forecaster" ]; then export WINDS="${fromgui[4]}"; fi
+# NOTE: The GUI will use ForecastWindGrids string for forecaster grids
+if [ "${WINDS}" == "ForecastWindGrids" ]; then WINDS="forecaster"; fi
+export WEB="${fromgui[5],,}"
+export WEB="${WEB^}"
+export PLOT="${fromgui[6],,}"
+export PLOT="${PLOT^}"
+export USERDELTAC="${fromgui[7]}"
+hotstart="${fromgui[8]}"
+export HOTSTART=${hotstart^^}
+export WATERLEVELS="${fromgui[9]}"
+export CORE="${fromgui[10]}"
+export EXCD="${fromgui[11]}"
+
+if [ "${WINDS,,}" == "gfs" ]
+then
+    echo "Starting model run with ${WINDS} winds" | tee -a ${LOGdir}/run_nwps.log 
+    echo "Starting model run with ${WINDS} winds" >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+
+    # Check to see if our COMINgfs VAR is set
+    if [ -z ${COMINgfs} ]; then
+	if [ -z ${COMROOTp2} ]; then
+	    echo "FATAL ERROR: COMROOTp2 not set in ENV, cannot locate GFS winds" | tee -a ${LOGdir}/run_nwps.log
 	    echo "Exiting model run with fatal error" | tee -a ${LOGdir}/run_nwps.log 
 	    export err=1; err_chk
 	fi
-#    fi
-elif [ "${WINDS}" == "custom" ]
-then
-    echo "User has requested external wind source ${WINDS}" | tee -a ${LOGdir}/run_nwps.log 
-    echo "Starting model with ${WINDS} user defined wind source" | tee -a ${LOGdir}/run_nwps.log 
-    if [ ! -e ${PARMnwps}/templates/${siteid}/gen_${WINDS}_winds.sh ]
-	then 
-	echo "FATAL ERROR: Missing custom generate script ${PARMnwps}/templates/${siteid}/gen_${WINDS}_winds.sh" | tee -a ${LOGdir}/run_nwps.log 
+	export COMINgfs=${COMROOTp2}/gfs/prod/gfs.${PDY}
+    fi
+
+    # Check for today's GFS run, if not available use yesterday's run
+    if [ ! -d ${COMINgfs} ]
+    then
+	export COMINgfs=${COMROOTp2}/gfs/prod/gfs.${PDYm1}
+    fi
+
+    # Get our latest GFS wind files
+    ${USHnwps}/gfswind/bin/get_gfswind.sh
+    if [ "$?" != "0" ] 
+    then
+	echo "FATAL ERROR: Could not init ${WINDS} winds" | tee -a ${LOGdir}/run_nwps.log
 	echo "Exiting model run with fatal error" | tee -a ${LOGdir}/run_nwps.log 
 	export err=1; err_chk
     fi
-    if [ "${NODOWNLOAD}" == "TRUE" ]
-    then
-	echo "Skipping forcing winds download from ${WINDS}" | tee -a ${LOGdir}/run_nwps.log 
-    else
-	if [ ! -e ${PARMnwps}/templates/${siteid}/get_${WINDS}_winds.sh ]
-	then 
-	    echo "FATAL ERROR: Missing custom download script ${PARMnwps}/templates/${siteid}/get_${WINDS}_winds.sh" | tee -a ${LOGdir}/run_nwps.log 
-	    echo "Exiting model run with fatal error" | tee -a ${LOGdir}/run_nwps.log 
-	    export err=1; err_chk
-	fi
-	${PARMnwps}/templates/${siteid}/get_${WINDS}_winds.sh
-	if [ "$?" != "0" ] 
-	then
-	    echo "FATAL ERROR: Could not locate wind source" | tee -a ${LOGdir}/run_nwps.log
-	    echo "Exiting model run with fatal error" | tee -a ${LOGdir}/run_nwps.log 
-	    export err=1; err_chk
-	fi
-    fi
 else
     echo "Starting model run with forecaster winds from GFE" | tee -a ${LOGdir}/run_nwps.log 
+    echo "Starting model run with forecaster winds from GFE" >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
     WINDS="forecaster"
-    . ${DATA}/PDY
 
-    # Forecaster warning log file
-    cat /dev/null > ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-    date_hh_mm_ss=$(date)
-    echo "NWPS run started on ${date_hh_mm_ss}" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+    cd ${INPUTdir}/
+    WindFileName=`ls -t ${siteid}*WIND.txt | head -1`
 
-    echo "Checking for input forecaster winds" | tee -a ${LOGdir}/run_nwps.log 
-    ls -lt ${FORECASTWINDdir}/*tar*
-    NewestWind="Empty"
-    NewestWind=$(basename `ls -t ${FORECASTWINDdir}/NWPSWINDGRID_${siteid}* | head -1`)
-    ecflow_client --label=DCOM "${NewestWind}"
+    if [ "${RETROSPECTIVE^^}" == "TRUE" ]; then
+	echo "Using archived forecaster wind file for ${SITEID}" | tee -a ${LOGdir}/run_nwps.log
+	if [ ! -f "${WindFileName}" ]; then
+            warnings="YES"
+            echo "FATAL ERROR: Missing archive file ${INPUTdir}/${WindFileName}." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+            msg="FATAL ERROR: NWPS will not be executed due to absent archived wind file."
+            postmsg "$jlogfile" "$msg"
+            mkdir -p $GESOUT/warnings
+            cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${GESOUT}/warnings/Warn_Forecaster_${SITEID}.${PDY}.txt
+            echo "ABORTED $FORECASTWINDdir/${NewestWind} AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
+            export err=1; err_chk
+	fi
+    else
+	echo "Forecaster wind file has arrived from ${SITEID}" | tee -a ${LOGdir}/run_nwps.log 
+    fi
+    touch ${INPUTdir}/SWANflag
 
-    if [  -e ${FORECASTWINDdir}/${NewestWind} ]
-    then
-	echo "Forecaster wind file has arrived from ${SITEID}"     | tee -a $logfile 
-        touch ${INPUTdir}/SWANflag
-        echo "Most Recent wind file for ${SITEID}: ${NewestWind}"
-        cd ${INPUTdir}/
+    arr=$(echo ${WindFileName} | tr "_" "\n")
+    x=0
+    for xa in $arr
+    do
+        part[$x]=$xa
+        echo "> ${part[$x]}"
+        x=$(( $x + 1 ))
+    done
+    WindNewName="${part[1]}_${part[2]}"
+    echo "WindNewName : ${WindNewName}"
+    mv ${WindFileName} ${WindNewName}
+    
+    echo "${SITEID} wind file: ${WindNewName}" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
 
-        #Delete previous wind files, and copy newest input file
-        rm *.tar.gz ${siteid}*WIND.txt
-        cp ${FORECASTWINDdir}/${NewestWind} ${INPUTdir}/
-        tar xvfz ${INPUTdir}/${NewestWind}
-        rm ${NewestWind}
+    mkdir -p ${INPUTdir}/wind
+    rm ${INPUTdir}/wind/*
+    ls -l ${INPUTdir}/
+    cp -fp ${WindNewName} ${INPUTdir}/wind/${WindNewName}
+    ln -sf ${INPUTdir}/wind/${WindNewName} ${INPUTdir}/${WindNewName}
+    ls -l ${INPUTdir}/wind/
+    yyyymmdd=`ls ${WindNewName} | cut -c1-8`
+    hh=`ls ${WindNewName} | cut -c9-10`
 
-        WindFileName=`ls -t ${siteid}*WIND.txt | head -1`
+    #----- Model to be run with forecaster settings:                -----
+    #----- Read and process *.ctl control file from AWIPS2 NWPS GUI -----
+    #----- NOTE: We do not use the *.cfg domain file coming from    -----
+    #-----       WFOs, but rather the one stored in fix/domains/    -----
+    #mv -f ${siteid}_domain_setup.cfg ${DATA}/parm/templates/${siteid}/${SITEID}
 
-        if [ ! -f "${WindFileName}" ]
-        then
-           warnings="YES"
-           echo "FATAL ERROR: Wind file ${WindFileName} not transmitted. NWPS will not be executed. Please resend wind file." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-           msg="FATAL ERROR: NWPS will not be executed due to absent forecast wind file."
-           postmsg "$jlogfile" "$msg"
-           mkdir -p $GESOUT/warnings
-           cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${GESOUT}/warnings/Warn_Forecaster_${SITEID}.${PDY}.txt
-           echo "ABORTED $FORECASTWINDdir/${NewestWind} AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
-           export err=1; err_chk
-        fi
+fi
 
-        arr=$(echo ${WindFileName} | tr "_" "\n")
-        x=0
-        for xa in $arr
-        do
-          part[$x]=$xa
-          echo "> ${part[$x]}"
-           x=$(( $x + 1 ))
-        done
-        WindNewName="${part[1]}_${part[2]}"
-        echo "WindNewName : ${WindNewName}"
-        mv ${WindFileName} ${WindNewName}
+# Post run checks after wind init
+if [ "${RUNLEN}" -ne "${Default_RUNLEN}" ] || [ "${USERDELTAC}" -ne "${Default_USERDELTAC}" ] || \
+    [ "${WNA}" == "TAFB-NWPS" ] || [ "${WNA}" == "HURWave" ] || [ "${WAVEMODEL^^}" != "${Default_WAVEMODEL^^}" ] || \
+    [ "${PLOT^^}" != "${Default_PLOT^^}" ] || \
+    [ "${NESTS^^}" != "${Default_NESTS^^}" -a "${NESTGRIDS}" -ne 0 ] || \
+    [ "${NESTS^^}" == "${Default_NESTS^^}" -a "${NESTGRIDS}" -eq 0 ]
+then
+    echo "WARNING: Some forecaster settings overwritten by WCOSS defaults:" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+fi
 
-        echo "${SITEID} wind file: ${WindNewName}" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+if [ "${RUNLEN}" -ne "${Default_RUNLEN}" ]
+then
+    echo "WARNING: User input RUNLEN=${RUNLEN} not equal to Default_RUNLEN=${Default_RUNLEN}. Default run length of -${Default_RUNLEN} hrs- will be used." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+    warnings="YES"
+fi
+if [ "${USERDELTAC}" -ne "${Default_USERDELTAC}" ]
+then
+    echo "WARNING: User input USERDELTAC=${USERDELTAC} not equal to Default_USERDELTAC=${Default_USERDELTAC}. Default computational time step of -${Default_USERDELTAC} s- will be used." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+    warnings="YES"
+fi
+if [ "${WNA}" == "TAFB-NWPS" ]
+then
+    echo "WARNING: NWPS-WCOSS is not ready to ingest TAFB boundary conditions. Will use boundary conditions from WW3_multi1 (WNAWave)." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+    export WNA="WNAWave"
+    warnings="YES"
+fi
+if [ "${WNA}" == "HURWave" ]
+then
+    echo "WARNING: WW3_multi2 (HURWave) boundary condition option is no longer supported. Will use boundary conditions from WW3_multi1 (WNAWave)." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+    export WNA="WNAWave"
+    warnings="YES"
+fi
+if [ "${WAVEMODEL^^}" != "${Default_WAVEMODEL^^}" ]
+then
+    echo "WARNING: User input WAVEMODEL=${WAVEMODEL} not equal to Default_WAVEMODEL=${Default_WAVEMODEL}. Will run using the wave model ${Default_WAVEMODEL}." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+    warnings="YES"
+fi
+if [ "${PLOT^^}" != "${Default_PLOT^^}" ]
+then
+    echo "WARNING: User input PLOT=${PLOT} not equal to Default_PLOT=${Default_PLOT}. Will run with figure plotting activited." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+    warnings="YES"
+fi
+if [ "${NESTS^^}" != "${Default_NESTS^^}" ] && [ ${NESTGRIDS} -ne 0 ]
+then
+    echo "WARNING: User input NESTS=${NESTS} not equal to Default_NESTS=${Default_NESTS}. Default nesting option ${Default_NESTS} will be used." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+    export NESTS=${Default_NESTS}
+    warnings="YES"
+fi
+if [ "${NESTS^^}" == "${Default_NESTS^^}" ] && [ ${NESTGRIDS} -eq 0 ]
+then
+    echo "WARNING: User input is NESTS=${NESTS}, but no nests are defined in the stored domain file. Nesting option will be set to No." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+    export NESTS="No"
+    warnings="YES"
+fi
 
-        #Num_wind_fields=`grep "Wind_Mag_SFC:validTimes" ${WindNewName} |awk -F"=" '{print $NF}'|sed -e 's/,/ /g' -e 's/;/ /g'|wc -w`
-        Num_wind_fields=$(grep -i 'Wind_Mag_SFC(DIM_' ${WindNewName} | awk -F'(' '{ print $2 }' | awk -F',' '{ print $1 }' | awk -F'_' '{ print $2 }')
-        if [ "$Num_wind_fields" == "" ]
-        then
-           warnings="YES"
-           echo "FATAL ERROR: Wind file ${WindNewName} is empty. NWPS will not be executed. Please resend wind file." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-           msg="FATAL ERROR: NWPS will not be executed due to empty forecast wind file."
-           postmsg "$jlogfile" "$msg"
-           mkdir -p $GESOUT/warnings
-           cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${GESOUT}/warnings/Warn_Forecaster_${SITEID}.${PDY}.txt
-           echo "ABORTED $FORECASTWINDdir/${NewestWind} AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
-           export err=1; err_chk
-        fi
-        if [ "$Num_wind_fields" -lt "103" ]
-        then
-           warnings="YES"
-           echo "FATAL ERROR: Number of wind fields received is $Num_wind_fields, must be at least 103. NWPS will not be executed." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-           msg="FATAL ERROR: Number of wind fields received is $Num_wind_fields, must be at least 103. NWPS will not be executed."
-           postmsg "$jlogfile" "$msg"
-           mkdir -p $GESOUT/warnings
-           cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${GESOUT}/warnings/Warn_Forecaster_${SITEID}.${PDY}.txt
-           echo "ABORTED $FORECASTWINDdir/${NewestWind} AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
-           export err=1; err_chk
-        else
-           echo "Number of wind fields on file: $Num_wind_fields"
-        fi
+if [ "${warnings}" == "NO" ]
+then
+    echo "Run was configured with forecaster settings" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+fi
 
-        mkdir -p ${INPUTdir}/wind
-        rm ${INPUTdir}/wind/*
-        ls -l ${INPUTdir}/
-        cp -fp ${WindNewName} ${INPUTdir}/wind/${WindNewName}
-        ln -sf ${INPUTdir}/wind/${WindNewName} ${INPUTdir}/${WindNewName}
-        ls -l ${INPUTdir}/wind/
-        yyyymmdd=`ls ${WindNewName} | cut -c1-8`
-        hh=`ls ${WindNewName} | cut -c9-10`
-
-        #----- Model to be run with forecaster settings:                -----
-        #----- Read and process *.ctl control file from AWIPS2 NWPS GUI -----
-        #----- NOTE: We do not use the *.cfg domain file coming from    -----
-        #-----       WFOs, but rather the one stored in fix/domains/    -----
-        #mv -f ${siteid}_domain_setup.cfg ${DATA}/parm/templates/${siteid}/${SITEID}
-
-        # Source domain setup to get the setting for NESTGRIDS
-        # (i.e. whether nests have been defined for this domain or not)
-        source ${DOMAINSETUP}
-
-        warnings="NO"
-        while read line
-        do
-          p=$line
-        done <${INPUTdir}/${siteid}_inp_args.ctl
-
-        echo "line p=$p"
-        arr=$(echo $p | tr ":" "\n")
-        x=0
-        for xa in $arr
-        do
-          fromgui[$x]=$xa
-           x=$(( $x + 1 ))
-        done
-        # Assign run variables from AWIPS GUI, adjusting string formats 
-        # to ensure uniformity despite input from different AWIPS releases.
-        export RUNLEN="${fromgui[0]}"
-        export WNA="${fromgui[1]}"
-        export NESTS="${fromgui[2],,}"
-        export NESTS="${NESTS^}"
-        export RTOFS="${fromgui[3],,}"
-        export RTOFS="${RTOFS^}"
-        export WINDS="${fromgui[4]}"
-        export WEB="${fromgui[5],,}"
-        export WEB="${WEB^}"
-        export PLOT="${fromgui[6],,}"
-        export PLOT="${PLOT^}"
-        export USERDELTAC="${fromgui[7]}"
-               hotstart="${fromgui[8]}"
-        export HOTSTART=${hotstart^^}
-        export WATERLEVELS="${fromgui[9]}"
-        export CORE="${fromgui[10]}"
-        export EXCD="${fromgui[11]}"
-       
-# Checking if default values are different from the forecaster values
-        Default_RUNLEN="102"       
-        Default_USERDELTAC="600"
-        Default_WAVEMODEL="swan"
-        Default_WINDS="FORECASTER"
-        Default_NESTS="Yes"
-        Default_PLOT="Yes"
-
-        if [ "${RUNLEN}" -ne "${Default_RUNLEN}" ] || [ "${USERDELTAC}" -ne "${Default_USERDELTAC}" ] || \
-           [ "${WNA}" == "TAFB-NWPS" ] || [ "${WNA}" == "HURWave" ] || [ "${WAVEMODEL}" != "${Default_WAVEMODEL}" ] || \
-           [ "${PLOT}" != "${Default_PLOT}" ] || \
-           [ "${NESTS^^}" != "${Default_NESTS^^}" -a "${NESTGRIDS}" -ne 0 ] \
-           [ "${NESTS^^}" == "${Default_NESTS^^}" -a "${NESTGRIDS}" -eq 0 ]
-        then
-           echo "WARNING: Some forecaster settings overwritten by WCOSS defaults:" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-        fi
-
-        if [ "${RUNLEN}" -ne "${Default_RUNLEN}" ]
-        then
-           echo "WARNING: User input RUNLEN=${RUNLEN} not equal to Default_RUNLEN=${Default_RUNLEN}. Default run length of -${Default_RUNLEN} hrs- will be used." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-           warnings="YES"
-        fi
-        if [ "${USERDELTAC}" -ne "${Default_USERDELTAC}" ]
-        then
-           echo "WARNING: User input USERDELTAC=${USERDELTAC} not equal to Default_USERDELTAC=${Default_USERDELTAC}. Default computational time step of -${Default_USERDELTAC} s- will be used." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-           warnings="YES"
-        fi
-        if [ "${WNA}" == "TAFB-NWPS" ]
-        then
-            echo "WARNING: NWPS-WCOSS is not ready to ingest TAFB boundary conditions. Will use boundary conditions from WW3_multi2 (HURWave)." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-            export WNA="HURWave"
-           warnings="YES"
-        fi
-        if [ "${WNA}" == "HURWave" ] && [ "${SITEID}" == "HFO" -o "${SITEID}" == "GUM" -o "${SITEID}" == "SGX" -o \
-             "${SITEID}" == "SEW" -o "${SITEID}" == "AJK" -o "${SITEID}" == "ALU" ]
-        then
-            echo "WARNING: Your WFO is not configured to ingest WW3_multi2 (HURWave) boundary conditions. Will use boundary conditions from WW3_multi1 (WNAWave)." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-            export WNA="WNAWave"
-           warnings="YES"
-        fi
-        if [ "${WAVEMODEL}" != "${Default_WAVEMODEL}" ]
-        then
-           echo "WARNING: User input WAVEMODEL=${WAVEMODEL} not equal to Default_WAVEMODEL=${Default_WAVEMODEL}. Will run using the wave model ${Default_WAVEMODEL}." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-           warnings="YES"
-        fi
-        if [ "${PLOT}" != "${Default_PLOT}" ]
-        then
-           echo "WARNING: User input PLOT=${PLOT} not equal to Default_PLOT=${Default_PLOT}. Will run with figure plotting activited." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-           warnings="YES"
-        fi
-        if [ "${NESTS^^}" != "${Default_NESTS^^}" ] && [ ${NESTGRIDS} -ne 0 ]
-        then
-           echo "WARNING: User input NESTS=${NESTS} not equal to Default_NESTS=${Default_NESTS}. Default nesting option ${Default_NESTS} will be used." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-           export NESTS=${Default_NESTS}
-           warnings="YES"
-        fi
-        if [ "${NESTS^^}" == "${Default_NESTS^^}" ] && [ ${NESTGRIDS} -eq 0 ]
-        then
-           echo "WARNING: User input is NESTS=${NESTS}, but no nests are defined in the stored domain file. Nesting option will be set to No." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-           export NESTS="No"
-           warnings="YES"
-        fi
-
-        if [ "${warnings}" == "NO" ]
-        then
-           echo "Run was configured with forecaster settings" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-        fi
+# Set WINDS to GFS or FORECASTER
+if [ "${WINDS,,}" == "forecaster" ]; then WINDS="ForecastWindGrids"; fi
+export WINDS=${WINDS^^}
 
 #.......FIXED DEFAULT VALUES DISREGARDING THE VALUES FROM THE FORECASTER
-        export RUNLEN=${Default_RUNLEN}
-        export USERDELTAC=${Default_USERDELTAC}
-        export WAVEMODEL=${Default_WAVEMODEL}
-        export WINDS=${Default_WINDS}
-        export PLOT=${Default_PLOT}
-        export DOMAINSET="${FIXnwps}/domains/${SITEID}"
+export RUNLEN=${Default_RUNLEN}
+export USERDELTAC=${Default_USERDELTAC}
+export WAVEMODEL=${Default_WAVEMODEL}
+export PLOT=${Default_PLOT}
+export DOMAINSET="${FIXnwps}/domains/${SITEID}"
 #.......
-        echo "RUNLEN=$RUNLEN"
-        echo "WNA=$WNA"
-        echo "NESTS=$NESTS"
-        echo "RTOFS=$RTOFS"
-        echo "WINDS=$WINDS"
-        echo "WEB=$WEB"
-        echo "PLOT=$PLOT"
-        echo "USERDELTAC=$USERDELTAC"
-        echo "HOTSTART=$HOTSTART"
-        echo "WATERLEVELS=$WATERLEVELS"
-        echo "CORE=$CORE"
-        echo "EXCD=$EXCD"
-    else
-	echo "INFO - Our input wind file has not arrived" | tee -a ${LOGdir}/run_nwps.log 
-	echo "INFO - Will not start run until wind file has arrived" | tee -a ${LOGdir}/run_nwps.log 
-	echo "Exiting..."
-	exit 2
-    fi
-fi
+echo "RUNLEN=$RUNLEN"
+echo "WNA=$WNA"
+echo "NESTS=$NESTS"
+echo "RTOFS=$RTOFS"
+echo "WINDS=$WINDS"
+echo "WEB=$WEB"
+echo "PLOT=$PLOT"
+echo "USERDELTAC=$USERDELTAC"
+echo "HOTSTART=$HOTSTART"
+echo "WATERLEVELS=$WATERLEVELS"
+echo "CORE=$CORE"
+echo "EXCD=$EXCD"
 
 # NOTE: The following do not require default values
 # SITENAME
@@ -425,9 +519,13 @@ fi
 # NOTE: This must TRUE or FALSE to work with RunSwan.pm module
 HOTSTART="TRUE"
 
-# NOTE: In this release we only have the SWAN model core.
-# NOTE: The MODELCORE variable will not be used when the WW3 core is added.
-MODELCORE="SWAN"
+# Set the model core: Regular grid SWAN or unstructured mesh UNSWAN
+if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "TBW" ] || [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "BOX" ] || [ "${SITEID}" == "OKX" ] || [ "${SITEID}" == "SGX" ] || [ "${SITEID}" == "CAR" ] || [ "${SITEID}" == "HFO" ] || [ "${SITEID}" == "AKQ" ] || [ "${SITEID}" == "SJU" ] 
+then
+   export MODELCORE="UNSWAN"
+else
+   export MODELCORE="SWAN"
+fi
 
 cat /dev/null > ${LOGdir}/run_nwps.log
 echo "NWPS-WCOSS run program version ${VERSION}" | tee -a ${LOGdir}/run_nwps.log 
@@ -495,7 +593,6 @@ if [ "${DOMAINSETUP}" != "" ]
 	export err=1; err_chk
     fi
     ${USHnwps}/setup.sh ${DOMAINSETUP} ${NESTS} ${MODELCORE}
-    
     if [ "$?" != "0" ]
 	then
 	echo "FATAL ERROR: Domain setup program failed" | tee -a ${LOGdir}/run_nwps.log 
@@ -511,15 +608,7 @@ if [ "${CommandLineWindFileName}" != "" ]
     touch ${INPUTdir}/SWANflag;
 fi
 
-#GET previous hotstart files
-#if [ -d "${GESINm1}/hotstart" ]
-#  then 
-#  cp -f ${GESINm1}/hotstart/*  ${INPUTdir}/hotstart/. >> ${LOGdir}/hotstart.log 2>&1
-#else
-#  echo "NO previous Hotstart files" 
-#fi
-
-#Copying the Hotstart files from GESIN
+#Get previous hotstart files
 if [ -e $GESIN/hotstart/${SITEID} ]
    then 
    Prev_HOTdir="$GESIN/hotstart/${SITEID}"
@@ -534,20 +623,24 @@ else
    echo "WARNING: No HOTSTART file available from previous model run. Will instead initialize with stationary model run at first time step." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
 fi
 
-if [ ${Prev_HOTdir} != "" ]
-then
-   echo " Hotstart files are from ${Prev_HOTdir}"
-   cd ${Prev_HOTdir}
-   #list the hotstart directories and choose the most recent
-   hotfiles_dir=`ls -t -d */ | head -1`
-   echo ${hotfiles_dir}
-   files=`ls ${hotfiles_dir}`
-   cd ${hotfiles_dir}
-   
-   HOTdir="${INPUTdir}/hotstart"    
-   if [ ! -e ${HOTdir} ]; then mkdir -p ${HOTdir}; fi
-   cp $files ${HOTdir}/.
-fi
+##Copy the Hotstart files from GESIN based on the wind start time
+#if [ "${Prev_HOTdir}" != "" ]
+#then
+#   echo " Hotstart files are from ${Prev_HOTdir}"
+#   cd ${Prev_HOTdir}
+#   #List the cycles in the hotstart directory and choose the most recent one
+#   hotfiles_dir=`ls -t -d * | head -1`
+#   echo ${hotfiles_dir}
+#   cd ${hotfiles_dir}
+#   if [ ${MODELCORE} == "SWAN" ]; then
+#      files=${fcstday}.${hh}*
+#   elif [ ${MODELCORE} == "UNSWAN" ]; then
+#      files=PE*/${fcstday}.${hh}00
+#   fi
+#   HOTdir="${INPUTdir}/hotstart"    
+#   if [ ! -e ${HOTdir} ]; then mkdir -p ${HOTdir}; fi
+#   cp --parents $files ${HOTdir}/.
+#fi
 
 #export ${WINDS}
 if [ "${MODELCORE}" == "" ]
@@ -564,6 +657,42 @@ if [ "${EXCD}" == "" ]
 then
     EXCD="10"
 fi
+
+#AW # 05/25/2017: If using RTOFS or water levels, check to see if we have init files
+#AW if [ "${RTOFS^^}" == "YES" ]; then
+#AW     export RTOFS="YES" # Signal pre-processing script to get NCEP init files
+#AW     if [ ! -d ${COMINrtofs} ]; then
+#AW 	if [ ! -d ${COMINrtofsm1} ]; then
+#AW 	    export RTOFS="NO" # Signal pre-processing skip this init
+#AW 	    echo "WARNING: RTOFS input selected but we have no input files, disabling RTOFS" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+#AW 	fi
+#AW     fi
+#AW fi
+#AW 
+#AW 
+#AW if [ "${WATERLEVELS^^}" == "YES" ] || [ "${WATERLEVELS^^}" == "ESTOFS" ]; then
+#AW     export WATERLEVELS="ESTOFS"
+#AW     export ESTOFS="YES" # Signal pre-processing script to get NCEP init files
+#AW     if [ ! -d ${COMINestofs} ]; then
+#AW 	if [ ! -d ${COMINestofsm1} ]; then
+#AW 	    export WATERLEVELS="NO"
+#AW 	    export ESTOFS="NO" # Signal pre-processing skip this init
+#AW 	    echo "WARNING: ESTOFS input selected but we have no input files, disabling ESTOFS" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+#AW 	fi
+#AW     fi
+#AW fi
+#AW 
+#AW if [ "${WATERLEVELS^^}" == "PSURGE" ]; then
+#AW     export WATERLEVELS="PSURGE"
+#AW     export PSURGE="YES" # Signal pre-processing script to get NCEP init files
+#AW     if [ ! -d ${COMINpsurge} ]; then
+#AW 	if [ ! -d ${COMINpsurgem1} ]; then
+#AW 	    export WATERLEVELS="NO"
+#AW 	    export PSURGE="NO" # Signal pre-processing skip this init
+#AW 	    echo "WARNING: PSURGE input selected but we have no input files, disabling PSURGE" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+#AW 	fi
+#AW     fi
+#AW fi
 
 #Cleanup
 rm ${RUNdir}/Psurge_End_Time
@@ -590,8 +719,10 @@ else
    echo "Run settings: RUNLEN=${RUNLEN} WNA=${WNA} NESTS=${NESTS} RTOFS=${RTOFS} WINDS=${WINDS} WEB=${WEB} PLOT=${PLOT} USERDELTAC=${USERDELTAC} HOTSTART=${HOTSTART} WATERLEVELS=${WATERLEVELS} MODELCORE=${MODELCORE}" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
 fi
 
+echo "${USHnwps}/nwps_preproc.sh ${RUNLEN} ${WNA} ${NESTS} ${RTOFS} ${WINDS} ${WEB} ${PLOT} ${USERDELTAC} ${HOTSTART} ${WATERLEVELS} ${MODELCORE} ${EXCD}" | tee -a ${LOGdir}/run_nwps.log
 ${USHnwps}/nwps_preproc.sh ${RUNLEN} ${WNA} ${NESTS} ${RTOFS} ${WINDS} ${WEB} ${PLOT} ${USERDELTAC} ${HOTSTART} ${WATERLEVELS} ${MODELCORE} ${EXCD} | tee -a ${LOGdir}/run_nwps.log 
 export err=$?; err_chk
+
 cd ${RUNdir}
 hh=`ls *.wnd | cut -c9-10`
 export COMOUTCYC="${COMOUT}/${hh}"

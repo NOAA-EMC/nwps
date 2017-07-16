@@ -29,7 +29,7 @@ export NELON="-117.30"
 export SWLAT="32.60"
 export SWLON="-123.36"
 export RES="4.0"
-export TSTEP="3"
+export TSTEP="1"
 #
 #========================================================================
 #                  NESTED GRID CONFIGURATION                            =
@@ -54,8 +54,8 @@ export NELONN1="-117.81"
 export SWLATN1="33.52"
 export SWLONN1="-118.41"
 export RESN1=".5"
-export TSTEPN1="3"
-export STATN1="STA"
+export TSTEPN1="1"
+export STATN1="NON"
 #
 # Wind-only domain
 export NEST2INCG1="NO"
@@ -64,7 +64,7 @@ export NELONN2="-117.30"
 export SWLATN2="32.60"
 export SWLONN2="-123.36"
 export RESN2="5.0"
-export TSTEPN2="3"
+export TSTEPN2="1"
 export STATN2="NON"
 #
 #========================================================================

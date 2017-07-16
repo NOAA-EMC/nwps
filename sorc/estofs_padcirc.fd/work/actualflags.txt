@@ -1,0 +1,1566 @@
+----------------------------------
+Tue May 24 17:49:10 UTC 2016
+building adcprep
+PPFC := ifort  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ifort
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := icc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -Lodir_metis -lmetis -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Tue May 24 17:49:38 UTC 2016
+building adcpost
+PPFC := ifort  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ifort
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := icc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Tue May 24 17:49:50 UTC 2016
+building adcirc
+PPFC := ifort  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ifort
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Tue May 24 17:50:48 UTC 2016
+building padcirc
+PPFC := ifort  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ifort
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Tue May 24 17:51:49 UTC 2016
+building hstime
+PPFC := ifort  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ifort
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := icc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Tue May 24 17:51:50 UTC 2016
+building aswip
+PPFC := ifort  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ifort
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := icc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Dec 15 14:04:13 UTC 2016
+building adcprep
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -Lodir_metis -lmetis -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Dec 15 14:04:47 UTC 2016
+building adcpost
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Dec 15 14:05:03 UTC 2016
+building adcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Dec 15 14:06:04 UTC 2016
+building padcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Dec 15 14:07:07 UTC 2016
+building hstime
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Dec 15 14:07:10 UTC 2016
+building aswip
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Fri Dec 16 17:31:46 UTC 2016
+building adcprep
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -Lodir_metis -lmetis -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Fri Dec 16 17:32:22 UTC 2016
+building adcpost
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Fri Dec 16 17:32:38 UTC 2016
+building adcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Fri Dec 16 17:33:40 UTC 2016
+building padcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Fri Dec 16 17:34:45 UTC 2016
+building hstime
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Fri Dec 16 17:34:48 UTC 2016
+building aswip
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Mon Dec 19 15:25:13 UTC 2016
+building adcprep
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -Lodir_metis -lmetis -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Mon Dec 19 15:25:45 UTC 2016
+building adcpost
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Mon Dec 19 15:26:03 UTC 2016
+building adcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Mon Dec 19 15:27:02 UTC 2016
+building padcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Mon Dec 19 15:28:07 UTC 2016
+building hstime
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Mon Dec 19 15:28:10 UTC 2016
+building aswip
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Dec 29 15:53:09 UTC 2016
+building adcprep
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -Lodir_metis -lmetis -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Dec 29 15:53:41 UTC 2016
+building adcpost
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Dec 29 15:53:56 UTC 2016
+building adcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Dec 29 15:54:56 UTC 2016
+building padcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Dec 29 15:55:59 UTC 2016
+building hstime
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Dec 29 15:56:02 UTC 2016
+building aswip
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:29:35 UTC 2017
+building adcprep
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -Lodir_metis -lmetis -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:30:13 UTC 2017
+building adcpost
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:30:30 UTC 2017
+building adcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:31:35 UTC 2017
+building padcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:32:43 UTC 2017
+building hstime
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:32:46 UTC 2017
+building aswip
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:40:37 UTC 2017
+building adcprep
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -Lodir_metis -lmetis -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:41:12 UTC 2017
+building adcpost
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:41:28 UTC 2017
+building adcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:42:32 UTC 2017
+building padcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:43:38 UTC 2017
+building hstime
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:43:42 UTC 2017
+building aswip
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:48:34 UTC 2017
+building adcprep
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -Lodir_metis -lmetis -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:49:09 UTC 2017
+building adcpost
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:49:26 UTC 2017
+building adcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:50:32 UTC 2017
+building padcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:51:39 UTC 2017
+building hstime
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Thu Feb  2 16:51:43 UTC 2017
+building aswip
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Sat Feb  4 22:17:50 UTC 2017
+building adcprep
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -Lodir_metis -lmetis -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Sat Feb  4 22:18:23 UTC 2017
+building adcpost
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Sat Feb  4 22:18:39 UTC 2017
+building adcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Sat Feb  4 22:19:37 UTC 2017
+building padcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Sat Feb  4 22:20:42 UTC 2017
+building hstime
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Sat Feb  4 22:20:45 UTC 2017
+building aswip
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := 
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Sat Feb  4 22:33:38 UTC 2017
+building adcprep
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -Lodir_metis -lmetis -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Sat Feb  4 22:33:42 UTC 2017
+building padcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Sun Jul 16 12:44:38 UTC 2017
+building adcprep
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -Lodir_metis -lmetis -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------
+----------------------------------
+Sun Jul 16 12:45:45 UTC 2017
+building padcirc
+PPFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FC := ftn
+PFC := ftn  -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS1 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS2 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+FFLAGS3 := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source -DADCNETCDF -I/usrx/local/prod/NetCDF/4.2/intel/haswell/include  -DHAVE_NETCDF4 
+DA := -DREAL8 -DLINUX -DCSCA
+DP := -DREAL8 -DLINUX -DCSCA -DCMPI
+DPRE := -DREAL8 -DLINUX -DADCSWAN
+IMODS := -I
+CC := cc 
+CCBE := cc 
+CFLAGS := -I . -I ../prep -I/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/include -I/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/include -I /usrx/local/prod/zlib/1.2.7/intel/haswell/include -O2 -m64 -DLINUX
+CLIBS := 
+LIBS := -L/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf  -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdff -lnetcdf -L/gpfs/hps/usrx/local/prod/NetCDF/4.2/intel/haswell/lib -lnetcdf -L/gpfs/hps/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran /usrx/local/prod/zlib/1.2.7/intel/haswell/lib/libz.a
+MSGLIBS := 
+compiler := ncep
+MACHINENAME := 
+NETCDF := enable
+NETCDF4 := enable
+NETCDF4_COMPRESSION := 
+XDMF := 
+ifort (IFORT) 15.0.3 20150407
+----------------------------------

@@ -16,7 +16,7 @@ POC GYX andrew.pohl@noaa.gov
 POC BOX	james.notchey@noaa.gov
 POC NYC nelson.vaz@noaa.gov, jeffrey.tongue@noaa.gov
 POC PHI alan.cope@noaa.gov, walter.drag@noaa.gov
-POC LWX diana.norgaard@noaa.gov
+POC LWX bryan.jackson@noaa.gov, steven.zubrick@noaa.gov
 POC AKQ scott.schumann@noaa.gov
 POC MHX donnie.king@noaa.gov
 POC ILM carl.r.morgan@noaa.gov

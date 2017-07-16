@@ -4,13 +4,20 @@
 #   matplotlib
 #   basemap
 
+if [ "${NWPSdir}" == "" ]; then
+    echo "ERROR - Your NWPSdir variable is not set"
+    exit 1
+fi
+
 # change these to point to source and destination (build)
 SORC_DIR=$PWD  # assumes that the build script is in the source packages dir
 BUILD_ROOT=${NWPSdir}
-BUILD_DIR=$BUILD_ROOT/lib/python/
+#BUILD_DIR=$BUILD_ROOT/lib/python/
+BUILD_DIR=$BUILD_ROOT/lib64/python/
 
 # version numbers for the components (just to keep track of things)
-MPL_VERSION='1.2.0'
+#MPL_VERSION='1.2.0'
+MPL_VERSION='1.5.1'
 BASEMAP_VERSION='1.0.7'
 
 # sanity check first.  Check for non-system pythons.
@@ -20,7 +27,14 @@ if [[ `which python` != '/usr/bin/python' ]]; then
 fi
 
 # make sure that the build directory exists
+if [ -d ${BUILD_DIR} ]; then
+    echo "Removing Python module build directory "${BUILD_DIR}
+    rm -rf ${BUILD_DIR}
+fi
+echo "Creating Python module build directory "${BUILD_DIR}
 mkdir -p ${BUILD_DIR}
+mkdir -p ${BUILD_DIR}/python_modules/lib64/python2.6/site-packages/
+export PYTHONPATH=${BUILD_DIR}/python_modules/lib64/python2.6/site-packages/:${PYTHONPATH}
 
 # matplotlib build
 cd $SORC_DIR
@@ -36,6 +50,7 @@ tar -zxvf basemap-${BASEMAP_VERSION}.tar.gz
 cd basemap-${BASEMAP_VERSION}
 cd geos-3.3.3
 ./configure --prefix=$BUILD_DIR/basemap-${BASEMAP_VERSION}/geos-3.3.3
+make clean
 make 
 make install
 cd $SORC_DIR/basemap-${BASEMAP_VERSION}

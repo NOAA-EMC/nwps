@@ -29,7 +29,7 @@ export NELON="-78.10"
 export SWLAT="30.67"
 export SWLON="-81.70"
 export RES="1.8"
-export TSTEP="3"
+export TSTEP="1"
 #
 #========================================================================
 #                  NESTED GRID CONFIGURATION                            =
@@ -54,7 +54,7 @@ export NELONN1="-79.6121"
 export SWLATN1="32.6058"
 export SWLONN1="-80.0123"
 export RESN1=".5"
-export TSTEPN1="3"
+export TSTEPN1="1"
 export STATN1="NON"
 #
 # Savannah Harbor and Beaches
@@ -63,7 +63,7 @@ export NELONN2="-80.4376"
 export SWLATN2="31.8794"
 export SWLONN2="-81.1329"
 export RESN2=".5"
-export TSTEPN2="3"
+export TSTEPN2="1"
 export STATN2="NON"
 #
 #========================================================================

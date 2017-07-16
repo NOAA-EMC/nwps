@@ -33,7 +33,7 @@ export NELON="-79.00"
 export SWLAT="23.00"
 export SWLON="-83.50"
 export RES="3.5"
-export TSTEP="3"
+export TSTEP="1"
 #
 #========================================================================
 #                  NESTED GRID CONFIGURATION                              =
@@ -78,15 +78,16 @@ export NELONN1="-80.10"
 export SWLATN1="24.30"
 export SWLONN1="-83.20"
 export RESN1="1"
-export TSTEPN1="3"
+export TSTEPN1="1"
 export STATN1="NON"
+#
 # NEST 2...grid matches bathy 1/3 arc-sec (~10m res) NAVD 88 DEM from NGDC...key west
 # export NELATN2="24.88"
 # export NELONN2="-81.27"
 # export SWLATN2="24.40"
 # export SWLONN2="-82.18"
 # export RESN2=".5"
-# export TSTEPN2="3"
+# export TSTEPN2="1"
 # export STATN2="NON"
 #
 #

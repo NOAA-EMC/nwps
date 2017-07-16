@@ -27,20 +27,27 @@ fi
 
 #FOR DEGRIB
 #Using the GNU compiler or the Jasper/JPEG compression library will not work properly
+cd ${NWPSdir}/sorc
 ./make_degrib.sh
 
 module purge
 module load ncep
-module load ../modulefiles/NWPS/v1.1.0
+module load ../modulefiles/NWPS/v1.2.0
 module list
 
-#FOR SWAN
+#FOR SWAN (REGULAR GRID)
 cd ${NWPSdir}/sorc
 ./make_swan.sh
 
 #FOR WAVE TRACKING
 #The executable is ww3_systrk_mpi
+cd ${NWPSdir}/sorc
 ./make_ww3_systrk.sh
+
+#FOR SWAN (UNSTRUCTURED MESH, incl. parallel libraries in estofs_padcirc.fd/work/odir4/)
+cd ${NWPSdir}/sorc
+./make_padcirc.sh
+./make_swan4110.sh
 
 #FOR RIP CURRENTS
 #The executable is ripforecast.x

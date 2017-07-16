@@ -1,14 +1,14 @@
 #!/bin/bash
 # -----------------------------------------------------------
 # UNIX Shell Script
-# Tested Operating System(s): RHEL 5, 6
+# Tested Operating System(s): RHEL 5, 6, 7
 # Tested Run Level(s): 3, 5
 # Shell Used: BASH shell
 # Original Author(s): Douglas.Gaer@noaa.gov
 # File Creation Date: 01/17/2013
-# Date Last Modified: 07/29/2014
+# Date Last Modified: 12/05/2016
 #
-# Version control: 1.05
+# Version control: 1.11
 #
 # Support Team:
 #
@@ -20,6 +20,7 @@
 # Script used to create wind files for SWAN
 # using GFS data.
 #
+# WCOSS version
 # -----------------------------------------------------------
 
 # Check to see if our SITEID is set
@@ -27,31 +28,27 @@ if [ "${SITEID}" == "" ]
     then
     echo "ERROR - Your SITEID variable is not set"
     export err=1; err_chk
+    exit 1
 fi
 
 if [ "${USHnwps}" == "" ]
     then 
     echo "ERROR - Your USHnwps variable is not set"
     export err=1; err_chk
+    exit 1
 fi
 
-# Check to see if our NWPS env is set
-if [ "${NWPSenvset}" == "" ]
-then 
-    if [ -e ${USHnwps}/nwps_config.sh ]
-    then
-	source ${USHnwps}/nwps_config.sh
-    else
-	echo "ERROR - Cannot find ${USHnwps}/nwps_config.sh"
-	export err=1; err_chk
-    fi
+if [ -e ${USHnwps}/nwps_config.sh ]
+then
+    source ${USHnwps}/nwps_config.sh
+else
+    echo "ERROR - Cannot find ${USHnwps}/nwps_config.sh"
+    export err=1; err_chk
+    exit 1
 fi
 
 # NOTE: Data is processed on the server in UTC
 export TZ="UTC"
-
-# Source our alert functions script
-#source ${USHnwps}/alert_messages.sh
 
 # Script variables
 # ===========================================================
@@ -62,13 +59,8 @@ LOGfile="${LOGdir}/gen_gfswind.log"
 LDMdir="${LDMdir}/gfswind"
 WINDINFODIR="${INPUTdir}"
 INPUTdir="${INPUTdir}/gfswind"
-
-# Set our locking variables
-PROGRAMname="$0"
-LOCKfile="$VARdir/gen_gfswind.lck"
-MINold="15"
-
-#source ${USHnwps}/process_lock.sh
+RSYNC="/usr/bin/rsync"
+RSYNCargs="-av --force --stats --progress"
 
 # Make any of the following directories if needed
 mkdir -p ${INPUTdir}
@@ -79,21 +71,16 @@ mkdir -p ${WINDINFODIR}/wind
 cat /dev/null > ${LOGfile}
 
 echo "Generating wind files for NWPS model" | tee -a ${LOGfile}
-#echo "Checking for lock files" | tee -a ${LOGfile}
-#LockFileCheck $MINold
 
 datetime=`date -u`
 echo "Starting processing at at $datetime UTC" | tee -a ${LOGfile}
 
-#CreateLockFile
-
 myPWD=`pwd`
-
 if [ ! -e ${INPUTdir}/gfswind_start_time.txt ]
     then
     echo "INFO - No GFSWIND data to process" | tee -a ${LOGfile}
     echo "INFO - Will copy files from ${LDMdir}" | tee -a ${LOGfile}
-    rsync -av --force --stats --progress --delete ${LDMdir}/*wind* ${INPUTdir}/.
+    ${RSYNC} ${RSYNCargs} --delete ${LDMdir}/*wind* ${INPUTdir}/.
 fi
 
 ingest_dir_start=$(cat ${LDMdir}/gfswind_start_time.txt)
@@ -106,35 +93,35 @@ input_filehours=$(ls -1rat --color=none *.dat)
 
 for h in ${ingest_filehours} 
 do 
-    ingest_lasthour=$(echo "${h}" | awk -F_ '{ print $7 }' | sed s/.dat//g | sed s/f//g) 
+    ingest_lasthour=$(echo "${h}" | awk -F_ '{ print $5 }' | sed s/.dat//g | sed s/f//g) 
 done
 
 for h in ${input_filehours} 
 do 
-    input_lasthour=$(echo "${h}" | awk -F_ '{ print $7 }' | sed s/.dat//g | sed s/f//g) 
+    input_lasthour=$(echo "${h}" | awk -F_ '{ print $5 }' | sed s/.dat//g | sed s/f//g) 
 done
 
 if [ $ingest_dir_start -gt $input_dir_start ] || [ $ingest_lasthour -gt $input_lasthour ]
 then
     echo "INFO - New GFSWIND data to process in ingest DIR" | tee -a ${LOGfile}
     echo "INFO - Will copy files from ${LDMdir}" | tee -a ${LOGfile}
-    rsync -av --force --stats --progress --delete ${LDMdir}/*wind* ${INPUTdir}/.
+    ${RSYNC} ${RSYNCargs} --delete ${LDMdir}/*wind* ${INPUTdir}/.
 fi
 
 if [ ! -e ${INPUTdir}/gfswind_start_time.txt ]
     then
     echo "ERROR - No GFSWIND data to process" | tee -a ${LOGfile}
     echo "ERROR - Missing GFSWIND start time file ${INPUTdir}/gfswind_start_time.txt" | tee -a ${LOGfile}
-    #RemoveLockFile
     export err=1; err_chk
+    exit 1
 fi
 
 if [ ! -e ${INPUTdir}/gfswind_domain.txt ]
 then 
     echo "ERROR - No domain info found with this data set"
     echo "ERROR - Missing ${INPUTdir}/gfswind_domain.txt"
-    #RemoveLockFile
     export err=1; err_chk
+    exit 1
 fi
 
 # This file must contain a line in the following format
@@ -157,16 +144,17 @@ else
     done
 fi
 
+if [ "${GFSHOURS}" == "" ]; then export GFSHOURS="192"; fi
 echo "Purging any old model ingest" | tee -a ${LOGfile}
-last_hour="180"
+last_hour="${GFSHOURS}"
 ${BINdir}/purge_gfswind.sh ${INPUTdir} ${last_hour}
 
 gfswind_start_time=`cat ${INPUTdir}/gfswind_start_time.txt`
 gfswind_date_str=`echo ${gfswind_start_time} | awk '{ print strftime("%Y%m%d", $1) }'`
 gfswind_model_cycle=`echo ${gfswind_start_time} | awk '{ print strftime("%H", $1) }'`
 
-# Default to our current date
-YYYYMMDDHH=$(date -u +%Y%m%d%H)
+#AW # Default to our current date
+#AW YYYYMMDDHH=$(date -u +%Y%m%d%H)
 
 if [ "$1" != "" ]; then YYYYMMDDHH=${1}; fi
 if [ "$1" == "--model" ]; then YYYYMMDDHH=$(echo ${gfswind_start_time} | awk '{ print strftime("%Y%m%d%H", $1) }'); fi
@@ -174,7 +162,18 @@ if [ "$1" == "--model" ]; then YYYYMMDDHH=$(echo ${gfswind_start_time} | awk '{ 
 YYYY=$(echo $PDY|cut -c1-4)
 MM=$(echo $PDY|cut -c5-6)
 DD=$(echo $PDY|cut -c7-8)
-HH=`echo ${YYYYMMDDHH} | cut -b9-10`
+#AW HH=`echo ${YYYYMMDDHH} | cut -b9-10`
+
+#AW
+# Use the HH on the GFE tarball as the analysis time of the failover run
+NewestWind=$(basename $(ls -t ${VARdir}/gfe_grids_test/NWPSWINDGRID_${siteid}* | head -1))
+if [ "$NewestWind" != "" ]; then
+   HH=$(echo $NewestWind|cut -c26-27)
+else
+   HH=$(date -u +%H)
+fi
+YYYYMMDDHH="${YYYY}${MM}${DD}${HH}"
+#AW
 
 SWANPARMS=`perl -I${RUNdir} -I${PMnwps} ${BINdir}/gfswind_match.pl`
 for parm in ${SWANPARMS}
@@ -185,11 +184,12 @@ do
     if [ "${CG}" == 1 ] ; then break; fi
 done
 
-echo "FCSTLENGTH = ${FCSTLENGTH}" | tee -a ${LOGfile}
-echo "TIMESTEP = ${TIMESTEP}" | tee -a ${LOGfile}
-echo "=========================IN genwinds 1 1 1 ================================"
-echo "FCSTLENGTH = ${FCSTLENGTH}" 
-echo "TIMESTEP = ${TIMESTEP}" 
+if [ -z ${FCSTLENGTH} ]; then FCSTLENGTH=${GFSHOURS}; fi
+if [ -z ${TIMESTEP} ]; then TIMESTEP=${GFSTIMESTEP}; fi
+if [ -z ${CG} ]; then CG=1; fi
+ 
+echo "SWAN FCSTLENGTH = ${FCSTLENGTH}" | tee -a ${LOGfile}
+echo "SWAN TIMESTEP = ${TIMESTEP}" | tee -a ${LOGfile}
 
 # Check our time step compared to our init time
 if [ $HH -gt 0 ]
@@ -256,31 +256,18 @@ if [ $timecheck -gt $maxage ]
     echo "ERROR - GFSWIND data is too old" | tee -a ${LOGfile}
     echo "ERROR - Check the GFSWIND download from NCEP" | tee -a ${LOGfile}
     echo "ERROR - The SWAN will fail due to no input winds" | tee -a ${LOGfile}
-    #RemoveLockFile
     export err=1; err_chk
+    exit 1
 fi
-echo " ++++++++++++++ in gen_winds.sh ====++++++++++"
-echo " GFSHOURS: $GFSHOURS}"
-echo "=========================================="
+
 maxhours=${GFSHOURS}
 let maxhours*=3600
 let maxhours-=timecheck
 if [ $lencheck -gt $maxhours ]
     then 
-    echo "WARNING - The forecast length has exceeded the max hours of wind data" | tee -a ${LOGfile}
-    lencheck=$maxhours
-    let lencheck/=3600
-    echo "WARNING - Truncating the forecast length from $FCSTLENGTH to $lencheck" | tee -a ${LOGfile}
-    FCSTLENGTH=`echo $lencheck`
-    
-    echo "Changing the forecast length in ${PMnwps}/ConfigSwan.pm to match the wind data"  | tee -a ${LOGfile}
-    export RUNLEN=`grep "use constant SWANFCSTLENGTH =>" ${RUNdir}/ConfigSwan.pm`
-    sed -i s/"$RUNLEN"/"use constant SWANFCSTLENGTH => '${FCSTLENGTH}';"/g ${RUNdir}/ConfigSwan.pm
-    
-      # Alert the forecasters that the forecast length was truncated
-    echo "Sending alert message to the forecasters"  | tee -a ${LOGfile}
-    SendAWIPSMessage ${VARdir} "THE FORECAST LENGTH HAS EXCEEDED THE MAX HOURS OF GFS WIND DATA" \
-	"TRUNCATING THE FORECAST LENGTH FROM $FCSTLENGTH TO $lencheck" | tee -a ${LOGfile} 2>&1
+    echo "ERROR - The forecast length has exceeded the max hours of wind data" | tee -a ${LOGfile}
+    export err=1; err_chk
+    exit 1
 fi
 
 # Generate the wind data for SWAN 
@@ -305,15 +292,18 @@ if [ ! -e ${infile} ]
 then
     echo "ERROR - Missing input file: ${infile}" | tee -a ${LOGfile}
     echo "ERROR - The SWAN will fail due to no input winds" | tee -a ${LOGfile}
-    #RemoveLockFile
     export err=1; err_chk
+    exit 1
 fi
 cat ${infile} > ${VARdir}/wind_temp.$$
 
-until [ $end -ge $FCSTLENGTH ]; do
+until [ $end -ge $GFSHOURS ]; do
     let end+=$GFSTIMESTEP
+    if [ $end -gt $GFSHOURS ]; then break; fi
+
     let tstep=start+end
     FF=`echo $tstep`
+    if [ $FF -gt $GFSHOURS ]; then break; fi
     if [ $tstep -le 99 ]
     then
 	FF=`echo 0$tstep`
@@ -330,8 +320,8 @@ until [ $end -ge $FCSTLENGTH ]; do
 	echo "ERROR - Missing input file: ${infile}" | tee -a ${LOGfile}
 	echo "ERROR - The SWAN will fail due to no input winds" | tee -a ${LOGfile}
 	rm -f ${VARdir}/wind_temp.$$
-	#RemoveLockFile
 	export err=1; err_chk
+	exit 1
     fi
     cat ${infile} >> ${VARdir}/wind_temp.$$
 done
@@ -342,10 +332,9 @@ rm -f ${VARdir}/wind_temp.$$
 
 # Generate lines for INPUTCG files
 model_end_time=$model_start_time
-let secs=$FCSTLENGTH*3600
+let secs=$GFSHOURS*3600
 let model_end_time+=$secs
 model_end_time_str=`echo ${model_end_time} | awk '{ print strftime("%Y%m%d.%H00", $1) }'`
-
 
 appfile="${WINDINFODIR}/wind/inputCG.app.txt"
 cat /dev/null > ${appfile}
@@ -366,7 +355,6 @@ echo "Processing complete" | tee -a ${LOGfile}
 
 cd ${myPWD}
 echo "Exiting..." | tee -a ${LOGfile}
-#RemoveLockFile
 
 exit 0
 # -----------------------------------------------------------

@@ -23,8 +23,8 @@
 # ----------------------------------------------------------- 
 
 #BSUB -J ofs_prep
-#BSUB -oo /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/ofs_prep.o
-#     -e /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/ofs_prep.o
+#BSUB -oo /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/ofs_prep.o
+#     -e /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/ofs_prep.o
 #BSUB -q "dev"
 #BSUB -W 5:00
 #BSUB -R rusage[mem=1700]
@@ -55,7 +55,7 @@ export MODEL=${model^^}
 export envir="para"
 
 export DEVWCOSS_USER=$(whoami)
-export COMROOT=/gpfs/hps/ptmp/${DEVWCOSS_USER}/data/com
+export COMROOT=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/com
 
 #Dev environment value for $job and $jobid
 export job=pnwps_ofs_prep

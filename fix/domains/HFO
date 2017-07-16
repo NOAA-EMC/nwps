@@ -31,7 +31,7 @@ export NELON="-153.90"
 export SWLAT="18.07"
 export SWLON="-161.50"
 export RES="2.7"
-export TSTEP="3"
+export TSTEP="1"
 #
 #========================================================================
 #                  NESTED GRID CONFIGURATION                              =
@@ -75,7 +75,7 @@ export NELONN1="-159.09"
 export SWLATN1="21.55"
 export SWLONN1="-160.04"
 export RESN1=".5"
-export TSTEPN1="3"
+export TSTEPN1="1"
 export STATN1="NON"   
 
 # Oahu - 1/3 arc-second (~10m)
@@ -84,7 +84,7 @@ export NELONN2="-157.60"
 export SWLATN2="21.20"
 export SWLONN2="-158.35"
 export RESN2=".5"
-export TSTEPN2="3"
+export TSTEPN2="1"
 export STATN2="NON"
 
 # Maui - Kahului, HI 1/3 arc-second (~10m)   
@@ -93,7 +93,7 @@ export NELONN3="-155.9"
 export SWLATN3="20.4"
 export SWLONN3="-156.9"
 export RESN3=".5"
-export TSTEPN3="3"
+export TSTEPN3="1"
 export STATN3="NON"
  
 # Hilo - 1/3 arc-second DEM (~10m) 
@@ -102,7 +102,7 @@ export NELONN4="-154.60"
 export SWLATN4="19.40"
 export SWLONN4="-155.20"
 export RESN4=".5"
-export TSTEPN4="3"
+export TSTEPN4="1"
 export STATN4="NON"
 #
 #========================================================================
@@ -119,8 +119,7 @@ export STATN4="NON"
 # Spectra points defined as space delimited list of:
 #   "name1:lat1:lon1 name2:lat2:lon2 name3:lat3:lon3 name4:lat4:lon4 ...."
 #
-export SPECPOINTS="51208:22.30:-159.57 51207:21.477:-157.752 51206:19.781:-154.968 51205:21.018:-156.425 51204:21.281:-158.124 51203:20.788:-157.010 51202:21.414:-157.679 51201:21.669:-158.120 51003:19.289:-160.569 Kona:19.65:-156.18 Isaac:19.41:-154.73 
-HNL10:22.00:-157.75 HNL11:21.00:-158.25"
+export SPECPOINTS="51208:22.30:-159.57 51207:21.477:-157.752 51206:19.781:-154.968 51205:21.018:-156.425 51204:21.281:-158.124 51203:20.788:-157.010 51202:21.414:-157.679 51201:21.669:-158.120 51003:19.289:-160.569 51211:21.297:-157.959 Kona:19.65:-156.18 Isaac:19.41:-154.73 HNL10:22.00:-157.75 HNL11:21.00:-158.25"
 #
 # 51208:22.28:159.57
 # 51207:21.50:157.68
@@ -189,136 +188,64 @@ export WAVECPS="multi_1.NW-HFO77.spec.swan,multi_1.NW-HFO88.spec.swan,multi_1.NW
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#$west side HFO - s to n
-#BOUN SEG XY 198.50 18.07 198.50 23.09 VAR FILE 0.00 'multi_1.NW-HFO51.spec.swan'    1 &
-#0.50 'multi_1.NW-HFO52.spec.swan'     1 &
-#1.00 'multi_1.NW-HFO53.spec.swan'     1 &
-#1.50 'multi_1.NW-HFO54.spec.swan'     1 &
-#2.00 'multi_1.NW-HFO55.spec.swan'     1 &
-#2.50 'multi_1.NW-HFO56.spec.swan'     1 &
-#3.00 'multi_1.NW-HFO57.spec.swan'     1 &
-#3.50 'multi_1.NW-HFO58.spec.swan'     1 &
-#4.00 'multi_1.NW-HFO59.spec.swan'     1 &
-#4.50 'multi_1.NW-HFO60.spec.swan'     1 &
-#5.02 'multi_1.NW-HFO61.spec.swan'     1  
-#$ northern side - w to e
-#BOUN SEG XY 198.50 23.09 206.10 23.09 VAR FILE 0.00 'multi_1.NW-HFO62.spec.swan'    1 &
-#0.50 'multi_1.NW-HFO63.spec.swan'       1 &
-#1.00 'multi_1.NW-HFO64.spec.swan'       1 &
-#1.50 'multi_1.NW-HFO65.spec.swan'       1 &
-#2.00 'multi_1.NW-HFO66.spec.swan'       1 &
-#2.50 'multi_1.NW-HFO67.spec.swan'       1 &
-#3.00 'multi_1.NW-HFO68.spec.swan'       1 &
-#3.50 'multi_1.NW-HFO69.spec.swan'       1 &
-#4.00 'multi_1.NW-HFO70.spec.swan'       1 &
-#4.50 'multi_1.NW-HFO71.spec.swan'       1 &
-#5.00 'multi_1.NW-HFO72.spec.swan'       1 &
-#5.50 'multi_1.NW-HFO73.spec.swan'       1 &
-#6.00 'multi_1.NW-HFO74.spec.swan'       1 &
-#6.50 'multi_1.NW-HFO75.spec.swan'       1 &
-#7.00 'multi_1.NW-HFO76.spec.swan'       1 &
-#7.60 'multi_1.NW-HFO77.spec.swan'       1
-#$ Eastern Boundary - n to s
-#BOUN SEG XY 206.10 23.09 206.10 18.07 VAR FILE 0.00 'multi_1.NW-HFO77.spec.swan.cp'    1 &
-#0.09 'multi_1.NW-HFO78.spec.swan'    1 &
-#0.59 'multi_1.NW-HFO79.spec.swan'    1 &
-#1.09 'multi_1.NW-HFO80.spec.swan'    1 &
-#1.59 'multi_1.NW-HFO81.spec.swan'    1 &
-#2.09 'multi_1.NW-HFO82.spec.swan'    1 &
-#2.59 'multi_1.NW-HFO83.spec.swan'    1 &
-#3.09 'multi_1.NW-HFO84.spec.swan'    1 &
-#3.59 'multi_1.NW-HFO85.spec.swan'    1 &
-#4.09 'multi_1.NW-HFO86.spec.swan'    1 &
-#4.59 'multi_1.NW-HFO87.spec.swan'    1 &
-#5.02 'multi_1.NW-HFO88.spec.swan' 1 
-#$ souther side e to w
-#BOUN SEG XY 206.10 18.07 198.50 18.07 VAR FILE 0.00 'multi_1.NW-HFO88.spec.swan.cp'    1 &
-#0.10 'multi_1.NW-HFO89.spec.swan'    1 &
-#0.60 'multi_1.NW-HFO90.spec.swan'    1 &
-#1.10 'multi_1.NW-HFO91.spec.swan'    1 &
-#1.60 'multi_1.NW-HFO92.spec.swan'    1 &
-#2.10 'multi_1.NW-HFO93.spec.swan'    1 &
-#2.60 'multi_1.NW-HFO94.spec.swan'    1 &
-#3.10 'multi_1.NW-HFO95.spec.swan'    1 &
-#3.60 'multi_1.NW-HFO96.spec.swan'    1 &
-#4.10 'multi_1.NW-HFO97.spec.swan'    1 &
-#4.60 'multi_1.NW-HFO98.spec.swan'    1 &
-#5.10 'multi_1.NW-HFO99.spec.swan'    1 &
-#5.60 'multi_1.NW-HFO100.spec.swan'    1 &
-#6.10 'multi_1.NW-HFO101.spec.swan'    1 &
-#6.60 'multi_1.NW-HFO102.spec.swan'    1 &
-#7.10 'multi_1.NW-HFO103.spec.swan'    1 &
-#7.60 'multi_1.NW-HFO51.spec.swan.cp' 1
-#NUM DIRimpl cdd=1 cdlim=4
-#$END BOUNSEG
-#
-#################################################################################################
-# UNSTRSWAN DEV
-# Updated: 8/10/2014
-# By: alex.gibbs@noaa.gov
-# Code: to support the UNSWAN development
-#################################################################################################
-#
-#$UNSTR SWAN BOUNDARY COMMAND LINES
-#$ W boundary
-#BOUNdspec SIDE 1 CLOCKW CON FILE 'multi_1.NW-HFO51.spec.swan' 1
-#BOUNdspec SIDE 2 CLOCKW CON FILE 'multi_1.NW-HFO96.spec.swan' 1
-#BOUNdspec SIDE 3 CLOCKW CON FILE 'multi_1.NW-HFO97.spec.swan' 1
-#BOUNdspec SIDE 4 CLOCKW CON FILE 'multi_1.NW-HFO98.spec.swan' 1
-#BOUNdspec SIDE 5 CLOCKW CON FILE 'multi_1.NW-HFO99.spec.swan' 1
-#BOUNdspec SIDE 6 CLOCKW CON FILE 'multi_1.NW-HFO100.spec.swan' 1
-#BOUNdspec SIDE 7 CLOCKW CON FILE 'multi_1.NW-HFO101.spec.swan' 1
-#BOUNdspec SIDE 8 CLOCKW CON FILE 'multi_1.NW-HFO102.spec.swan' 1
-#BOUNdspec SIDE 9 CLOCKW CON FILE 'multi_1.NW-HFO103.spec.swan' 1
-#BOUNdspec SIDE 10 CLOCKW CON FILE 'multi_1.NW-HFO104.spec.swan' 1
-#BOUNdspec SIDE 11 CLOCKW CON FILE 'multi_1.NW-HFO105.spec.swan' 1
-#BOUNdspec SIDE 12 CLOCKW CON FILE 'multi_1.NW-HFO79.spec.swan' 1
+#$UNSTR SWAN BOUNDARY COMMAND LINES - SITE NW-HFO
 #$ N boundary
-#BOUNdspec SIDE 13 CLOCKW CON FILE 'multi_1.NW-HFO80.spec.swan' 1
-#BOUNdspec SIDE 14 CLOCKW CON FILE 'multi_1.NW-HFO81.spec.swan' 1
-#BOUNdspec SIDE 15 CLOCKW CON FILE 'multi_1.NW-HFO82.spec.swan' 1
-#BOUNdspec SIDE 16 CLOCKW CON FILE 'multi_1.NW-HFO83.spec.swan' 1
-#BOUNdspec SIDE 17 CLOCKW CON FILE 'multi_1.NW-HFO84.spec.swan' 1
-#BOUNdspec SIDE 18 CLOCKW CON FILE 'multi_1.NW-HFO85.spec.swan' 1
-#BOUNdspec SIDE 19 CLOCKW CON FILE 'multi_1.NW-HFO86.spec.swan' 1
-#BOUNdspec SIDE 20 CLOCKW CON FILE 'multi_1.NW-HFO87.spec.swan' 1
-#BOUNdspec SIDE 21 CLOCKW CON FILE 'multi_1.NW-HFO88.spec.swan' 1
-#BOUNdspec SIDE 22 CLOCKW CON FILE 'multi_1.NW-HFO89.spec.swan' 1
-#BOUNdspec SIDE 23 CLOCKW CON FILE 'multi_1.NW-HFO90.spec.swan' 1
-#BOUNdspec SIDE 24 CLOCKW CON FILE 'multi_1.NW-HFO91.spec.swan' 1
-#BOUNdspec SIDE 25 CLOCKW CON FILE 'multi_1.NW-HFO92.spec.swan' 1
-#BOUNdspec SIDE 26 CLOCKW CON FILE 'multi_1.NW-HFO93.spec.swan' 1
-#BOUNdspec SIDE 27 CLOCKW CON FILE 'multi_1.NW-HFO94.spec.swan' 1
-#BOUNdspec SIDE 28 CLOCKW CON FILE 'multi_1.NW-HFO67.spec.swan' 1
-#$ E boundary
-#BOUNdspec SIDE 29 CLOCKW CON FILE 'multi_1.NW-HFO68.spec.swan' 1
-#BOUNdspec SIDE 30 CLOCKW CON FILE 'multi_1.NW-HFO69.spec.swan' 1
-#BOUNdspec SIDE 31 CLOCKW CON FILE 'multi_1.NW-HFO70.spec.swan' 1
-#BOUNdspec SIDE 32 CLOCKW CON FILE 'multi_1.NW-HFO71.spec.swan' 1
-#BOUNdspec SIDE 33 CLOCKW CON FILE 'multi_1.NW-HFO72.spec.swan' 1
-#BOUNdspec SIDE 34 CLOCKW CON FILE 'multi_1.NW-HFO73.spec.swan' 1
-#BOUNdspec SIDE 35 CLOCKW CON FILE 'multi_1.NW-HFO74.spec.swan' 1
-#BOUNdspec SIDE 36 CLOCKW CON FILE 'multi_1.NW-HFO75.spec.swan' 1
-#BOUNdspec SIDE 37 CLOCKW CON FILE 'multi_1.NW-HFO76.spec.swan' 1
-#BOUNdspec SIDE 38 CLOCKW CON FILE 'multi_1.NW-HFO77.spec.swan' 1
-#BOUNdspec SIDE 39 CLOCKW CON FILE 'multi_1.NW-HFO78.spec.swan' 1
+#BOUNdspec SIDE 1 CCW CON FILE 'multi_1.NW-HFO77.spec.swan' 1
+#BOUNdspec SIDE 2 CCW CON FILE 'multi_1.NW-HFO76.spec.swan' 1
+#BOUNdspec SIDE 3 CCW CON FILE 'multi_1.NW-HFO75.spec.swan' 1
+#BOUNdspec SIDE 4 CCW CON FILE 'multi_1.NW-HFO74.spec.swan' 1
+#BOUNdspec SIDE 5 CCW CON FILE 'multi_1.NW-HFO73.spec.swan' 1
+#BOUNdspec SIDE 6 CCW CON FILE 'multi_1.NW-HFO72.spec.swan' 1
+#BOUNdspec SIDE 7 CCW CON FILE 'multi_1.NW-HFO71.spec.swan' 1
+#BOUNdspec SIDE 8 CCW CON FILE 'multi_1.NW-HFO70.spec.swan' 1
+#BOUNdspec SIDE 9 CCW CON FILE 'multi_1.NW-HFO69.spec.swan' 1
+#BOUNdspec SIDE 10 CCW CON FILE 'multi_1.NW-HFO68.spec.swan' 1
+#BOUNdspec SIDE 11 CCW CON FILE 'multi_1.NW-HFO67.spec.swan' 1
+#BOUNdspec SIDE 12 CCW CON FILE 'multi_1.NW-HFO66.spec.swan' 1
+#BOUNdspec SIDE 13 CCW CON FILE 'multi_1.NW-HFO65.spec.swan' 1
+#BOUNdspec SIDE 14 CCW CON FILE 'multi_1.NW-HFO64.spec.swan' 1
+#BOUNdspec SIDE 15 CCW CON FILE 'multi_1.NW-HFO63.spec.swan' 1
+#$ W boundary
+#BOUNdspec SIDE 16 CCW CON FILE 'multi_1.NW-HFO61.spec.swan' 1
+#BOUNdspec SIDE 17 CCW CON FILE 'multi_1.NW-HFO60.spec.swan' 1
+#BOUNdspec SIDE 18 CCW CON FILE 'multi_1.NW-HFO59.spec.swan' 1
+#BOUNdspec SIDE 19 CCW CON FILE 'multi_1.NW-HFO58.spec.swan' 1
+#BOUNdspec SIDE 20 CCW CON FILE 'multi_1.NW-HFO57.spec.swan' 1
+#BOUNdspec SIDE 21 CCW CON FILE 'multi_1.NW-HFO56.spec.swan' 1
+#BOUNdspec SIDE 22 CCW CON FILE 'multi_1.NW-HFO55.spec.swan' 1
+#BOUNdspec SIDE 23 CCW CON FILE 'multi_1.NW-HFO54.spec.swan' 1
+#BOUNdspec SIDE 24 CCW CON FILE 'multi_1.NW-HFO53.spec.swan' 1
+#BOUNdspec SIDE 25 CCW CON FILE 'multi_1.NW-HFO52.spec.swan' 1
 #$ S boundary
-#BOUNdspec SIDE 40 CLOCKW CON FILE 'multi_1.NW-HFO66.spec.swan' 1
-#BOUNdspec SIDE 41 CLOCKW CON FILE 'multi_1.NW-HFO65.spec.swan' 1
-#BOUNdspec SIDE 42 CLOCKW CON FILE 'multi_1.NW-HFO64.spec.swan' 1
-#BOUNdspec SIDE 43 CLOCKW CON FILE 'multi_1.NW-HFO63.spec.swan' 1
-#BOUNdspec SIDE 44 CLOCKW CON FILE 'multi_1.NW-HFO62.spec.swan' 1
-#BOUNdspec SIDE 45 CLOCKW CON FILE 'multi_1.NW-HFO61.spec.swan' 1
-#BOUNdspec SIDE 46 CLOCKW CON FILE 'multi_1.NW-HFO60.spec.swan' 1
-#BOUNdspec SIDE 47 CLOCKW CON FILE 'multi_1.NW-HFO59.spec.swan' 1
-#BOUNdspec SIDE 48 CLOCKW CON FILE 'multi_1.NW-HFO58.spec.swan' 1
-#BOUNdspec SIDE 49 CLOCKW CON FILE 'multi_1.NW-HFO57.spec.swan' 1
-#BOUNdspec SIDE 50 CLOCKW CON FILE 'multi_1.NW-HFO56.spec.swan' 1
-#BOUNdspec SIDE 51 CLOCKW CON FILE 'multi_1.NW-HFO55.spec.swan' 1
-#BOUNdspec SIDE 52 CLOCKW CON FILE 'multi_1.NW-HFO54.spec.swan' 1
-#BOUNdspec SIDE 53 CLOCKW CON FILE 'multi_1.NW-HFO53.spec.swan' 1
-#BOUNdspec SIDE 54 CLOCKW CON FILE 'multi_1.NW-HFO52.spec.swan' 1
-#$END BOUNSEG for UNSTR SWAN
+#BOUNdspec SIDE 26 CCW CON FILE 'multi_1.NW-HFO51.spec.swan' 1
+#BOUNdspec SIDE 27 CCW CON FILE 'multi_1.NW-HFO103.spec.swan' 1
+#BOUNdspec SIDE 28 CCW CON FILE 'multi_1.NW-HFO102.spec.swan' 1
+#BOUNdspec SIDE 29 CCW CON FILE 'multi_1.NW-HFO101.spec.swan' 1
+#BOUNdspec SIDE 30 CCW CON FILE 'multi_1.NW-HFO100.spec.swan' 1
+#BOUNdspec SIDE 31 CCW CON FILE 'multi_1.NW-HFO99.spec.swan' 1
+#BOUNdspec SIDE 32 CCW CON FILE 'multi_1.NW-HFO98.spec.swan' 1
+#BOUNdspec SIDE 33 CCW CON FILE 'multi_1.NW-HFO97.spec.swan' 1
+#BOUNdspec SIDE 34 CCW CON FILE 'multi_1.NW-HFO96.spec.swan' 1
+#BOUNdspec SIDE 35 CCW CON FILE 'multi_1.NW-HFO95.spec.swan' 1
+#BOUNdspec SIDE 36 CCW CON FILE 'multi_1.NW-HFO94.spec.swan' 1
+#BOUNdspec SIDE 37 CCW CON FILE 'multi_1.NW-HFO93.spec.swan' 1
+#BOUNdspec SIDE 38 CCW CON FILE 'multi_1.NW-HFO92.spec.swan' 1
+#BOUNdspec SIDE 39 CCW CON FILE 'multi_1.NW-HFO91.spec.swan' 1
+#BOUNdspec SIDE 40 CCW CON FILE 'multi_1.NW-HFO90.spec.swan' 1
+#BOUNdspec SIDE 41 CCW CON FILE 'multi_1.NW-HFO89.spec.swan' 1
+#$ E boundary
+#BOUNdspec SIDE 42 CCW CON FILE 'multi_1.NW-HFO88.spec.swan' 1
+#BOUNdspec SIDE 43 CCW CON FILE 'multi_1.NW-HFO87.spec.swan' 1
+#BOUNdspec SIDE 44 CCW CON FILE 'multi_1.NW-HFO86.spec.swan' 1
+#BOUNdspec SIDE 45 CCW CON FILE 'multi_1.NW-HFO85.spec.swan' 1
+#BOUNdspec SIDE 46 CCW CON FILE 'multi_1.NW-HFO84.spec.swan' 1
+#BOUNdspec SIDE 47 CCW CON FILE 'multi_1.NW-HFO83.spec.swan' 1
+#BOUNdspec SIDE 48 CCW CON FILE 'multi_1.NW-HFO82.spec.swan' 1
+#BOUNdspec SIDE 49 CCW CON FILE 'multi_1.NW-HFO81.spec.swan' 1
+#BOUNdspec SIDE 50 CCW CON FILE 'multi_1.NW-HFO80.spec.swan' 1
+#BOUNdspec SIDE 51 CCW CON FILE 'multi_1.NW-HFO79.spec.swan' 1
+#BOUNdspec SIDE 52 CCW CON FILE 'multi_1.NW-HFO78.spec.swan' 1
+#$END BOUNSEG
 #
 #========================================================================
 #                    RIP CURRENT PROGRAM (SEE NWPS MANUAL)              =
@@ -326,8 +253,8 @@ export WAVECPS="multi_1.NW-HFO77.spec.swan,multi_1.NW-HFO88.spec.swan,multi_1.NW
 # IF RIP CURRENT PROGRAM WILL BE RUN, then RIPCONT=1, Otherwise =0;
 # Setting up RIPCONT here to zero will permanently disable RIP program.
 #
-export RIPPROG="0"
-export RIPDOMAIN="CG2"
+export RIPPROG="1"
+export RIPDOMAIN="CG1"
 export RIPCONT="5m"
 #
 #___________________________________________________________________________
@@ -340,7 +267,7 @@ export RIPCONT="5m"
 #
 # RAY 'ray1' 282.85 34.628 282.85 34.62 2000 283.00 34.655 283.00 34.62
 #
-# ISOLINE '5mcont' 'ray1' BOTtom 5
+# ISOLINE '5mcont' 'ray1' BOTtom 10
 # TABLE '5mcont' HEAD '5mtable' HSIGN TPS PDIR OUTPUT 20110825.1200 3.0 HR
 #_____________________________________________________________________________
 #
@@ -349,14 +276,213 @@ export RIPCONT="5m"
 # CURRENTS (RIPCONT="0") THEY WILL REMAIN AS A COMMENTED LINES. IF YOU DECIDE TO USE
 # BOUNDARY CONDITIONS (BOUNCOND="1") NWPS WILL INCLUDE THE INFORMATION IN THE ACTUAL
 # INPUT FILES WITH NOT COMMENT CHARACTER
-#ORIGINAL LINE
-#TABLE '5mcont' HEAD '5m_contour_CG2' TIME XP YP HSIGN TPS DIR DSPR VEL WATL WIND OUTPUT YYYYMMDD.HHMM H.M HR
+# POIN '5mcont' 279.887  25.8725 
+#
 #$RIP LINES
-#$ Ray for 5m contour data.
+#$ Points along ~ 5m contour.
 #$
-#RAY 'ray1' 279.88 25.84 279.9 25.84 100 279.88 25.90 279.90 25.90
-#ISOLINE '5mcont' 'ray1' BOTtom 5
-#TABLE '5mcont' HEAD '5m_contour_CG2' TIME XP YP HSIGN TPS DIR DSPR VEL BOTLEV WIND OUTPUT YYYYMMDD.HHMM H.M HR
-#$
+#POINTS '5mcont' &
+#202.336 21.2882 &
+#202.329 21.2820 &
+#202.321 21.2782 &
+#202.314 21.2724 &
+#202.311 21.2674 &
+#202.303 21.2599 &
+#202.294 21.2574 &
+#202.287 21.2619 &
+#202.284 21.2691 &
+#202.275 21.2729 &
+#202.266 21.2738 &
+#202.256 21.2724 &
+#202.247 21.2697 &
+#202.237 21.2685 &
+#202.228 21.2657 &
+#202.220 21.2609 &
+#202.212 21.2565 &
+#202.203 21.2531 &
+#202.194 21.2506 &
+#202.185 21.2513 &
+#202.176 21.2554 &
+#202.172 21.2635 &
+#202.169 21.2703 &
+#202.160 21.2739 &
+#202.153 21.2799 &
+#202.145 21.2848 &
+#202.137 21.2888 &
+#202.129 21.2919 &
+#202.032 21.3063 &
+#202.025 21.3070 &
+#202.017 21.3019 &
+#202.009 21.2988 &
+#201.999 21.2980 &
+#201.990 21.3003 &
+#201.981 21.3009 &
+#201.972 21.3021 &
+#201.963 21.3001 &
+#201.955 21.2955 &
+#201.946 21.2923 &
+#201.937 21.2930 &
+#201.929 21.2931 &
+#201.920 21.2915 &
+#201.911 21.2902 &
+#201.901 21.2885 &
+#201.893 21.2901 &
+#201.886 21.2965 &
+#201.883 21.3048 &
+#201.879 21.3129 &
+#201.877 21.3209 &
+#201.874 21.3273 &
+#201.872 21.3349 &
+#201.868 21.3407 &
+#201.868 21.3492 &
+#201.865 21.3599 &
+#201.857 21.3715 &
+#201.852 21.3764 &
+#201.848 21.3808 &
+#201.843 21.3884 &
+#201.836 21.3931 &
+#201.826 21.3960 &
+#201.819 21.4014 &
+#201.817 21.4097 &
+#201.819 21.4174 &
+#201.817 21.4259 &
+#201.812 21.4308 &
+#201.809 21.4372 &
+#201.806 21.4426 &
+#201.799 21.4469 &
+#201.793 21.4544 &
+#201.784 21.4580 &
+#201.779 21.4658 &
+#201.777 21.4715 &
+#201.769 21.4775 &
+#201.766 21.4952 &
+#201.766 21.5046 &
+#201.767 21.5140 &
+#201.768 21.5234 &
+#201.763 21.5395 &
+#201.756 21.5460 &
+#201.749 21.5526 &
+#201.743 21.5564 &
+#201.736 21.5623 &
+#201.727 21.5672 &
+#201.744 21.5827 &
+#201.751 21.5841 &
+#201.760 21.5846 &
+#201.767 21.5857 &
+#201.775 21.5859 &
+#201.783 21.5885 &
+#201.791 21.5890 &
+#201.801 21.5890 &
+#201.808 21.5898 &
+#201.815 21.5894 &
+#201.824 21.5881 &
+#201.831 21.5878 &
+#201.839 21.5875 &
+#201.846 21.5879 &
+#201.853 21.5900 &
+#201.862 21.5932 &
+#201.867 21.5913 &
+#201.871 21.5964 &
+#201.879 21.5991 &
+#201.885 21.5986 &
+#201.890 21.6013 &
+#201.889 21.6072 &
+#201.893 21.6129 &
+#201.900 21.6172 &
+#201.905 21.6210 &
+#201.909 21.6220 &
+#201.913 21.6253 &
+#201.917 21.6305 &
+#201.923 21.6345 &
+#201.928 21.6390 &
+#201.932 21.6423 &
+#201.933 21.6478 &
+#201.935 21.6542 &
+#201.939 21.6606 &
+#201.944 21.6665 &
+#201.947 21.6690 &
+#201.951 21.6780 &
+#201.955 21.6839 &
+#201.961 21.6866 &
+#201.964 21.6926 &
+#201.970 21.6972 &
+#201.976 21.7013 &
+#201.983 21.7044 &
+#201.989 21.7065 &
+#201.994 21.7077 &
+#202.001 21.7106 &
+#202.008 21.7133 &
+#202.016 21.7152 &
+#202.024 21.7140 &
+#202.040 21.7072 &
+#202.046 21.7013 &
+#202.052 21.6949 &
+#202.056 21.6899 &
+#202.059 21.6841 &
+#202.072 21.6698 &
+#202.066 21.6679 &
+#202.074 21.6679 &
+#202.080 21.6651 &
+#202.077 21.6577 &
+#202.081 21.6523 &
+#202.086 21.6345 &
+#202.088 21.6425 &
+#202.088 21.6283 &
+#202.092 21.6206 &
+#202.095 21.6152 &
+#202.093 21.6101 &
+#202.103 21.6102 &
+#202.110 21.6036 &
+#202.114 21.5968 &
+#202.120 21.5894 &
+#202.123 21.5833 &
+#202.119 21.5792 &
+#202.126 21.5791 &
+#202.132 21.5777 &
+#202.138 21.5716 &
+#202.146 21.5652 &
+#202.150 21.5607 &
+#202.157 21.5563 &
+#202.162 21.5492 &
+#202.166 21.5411 &
+#202.172 21.5337 &
+#202.176 21.5260 &
+#202.181 21.5180 &
+#202.178 21.5105 &
+#202.173 21.5031 &
+#202.166 21.5001 &
+#202.162 21.4938 &
+#202.163 21.4914 &
+#202.164 21.4840 &
+#202.163 21.4760 &
+#202.165 21.4718 &
+#202.170 21.4674 &
+#202.271 21.4450 &
+#202.267 21.4373 &
+#202.265 21.4288 &
+#202.263 21.4208 &
+#202.267 21.4144 &
+#202.269 21.4087 &
+#202.278 21.4061 &
+#202.285 21.4014 &
+#202.292 21.3953 &
+#202.298 21.3960 &
+#202.303 21.3904 &
+#202.303 21.3835 &
+#202.307 21.3758 &
+#202.302 21.3722 &
+#202.307 21.3675 &
+#202.310 21.3602 &
+#202.304 21.3652 &
+#202.295 21.3648 &
+#202.292 21.3593 &
+#202.295 21.3512 &
+#202.301 21.3480 &
+#202.304 21.3425 &
+#202.310 21.3459 &
+#202.314 21.3476 &
+#202.317 21.3392 &
+#202.321 21.3316
+#TABLE '5mcont' HEAD '5m_contour_CG1' TIME XP YP HSIGN TPS DIR DSPR VEL WATL WIND OUTPUT 20110825.1200 1.0 HR
 #$END RIP
 #

@@ -24,7 +24,7 @@
       bulkout=b0+(bhs*loghs)+(bmwd*absmwdsn)+(bevent*real(ievent))+
      1        (btide*tide)
 !
-      prob=exp(bulkout)/(1.+exp(bulkout))
+      prob=100.*exp(bulkout)/(1.+exp(bulkout))
 !
       return
       end subroutine bulkmodel

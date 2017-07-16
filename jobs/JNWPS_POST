@@ -33,16 +33,6 @@ export DATA=$DATAROOT/p${model}_${WFO}_${envir}
 mkdir $DATA
 cd $DATA
 
-curhour=$(date -u +%H)
-if [ $curhour -lt 12 ]; then CYCLE="00"; fi
-if [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
-if [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
-if [ $curhour -ge 22 ]; then CYCLE="18"; fi
-echo ""
-echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
-export cyc=${CYCLE}
-export cycle=t${cyc}z
-
 ####################################
 # Specify NET and RUN Name and model
 ####################################
@@ -83,8 +73,8 @@ export TMPdir=${TMPdir:-${DATA}/tmp}
 export LOGdir=${LOGdir:-${DATA}/logs}
 export GEN_NETCDF=${GEN_NETCDF:-FALSE}
 export GEN_HDF5=${GEN_HDF5:-TRUE}
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
-export PYTHONPATH=${HOMEnwps}/lib/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOMEnwps}/lib64/python/basemap-1.0.7/geos-3.3.3/lib
+export PYTHONPATH=${HOMEnwps}/lib64/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
 export PYTHON=python
 
 # Set NWPS run conditions
@@ -93,6 +83,7 @@ export DEBUG_LEVEL=${DEBUG_LEVEL:-1}
 export ISPRODUCTION=${ISPRODUCTION:-TRUE}
 export SITETYPE=${SITETYPE:-EMC}
 export MODELTYPE="SWAN"
+export MODELCORE=`grep SWAN ${RUNdir}/info_to_nwps_coremodel.txt`
 
 export pgmout=OUTPUT.$$
 #setpdy.sh
@@ -115,10 +106,8 @@ export GESIN=${GESROOT}/${envir}/${NET}.${PDY}
 export GESINm1=${GESROOT}/${envir}/${NET}.${PDYm1}
 export GESINm2=${GESROOT}/${envir}/${NET}.${PDYm2}
 export GESINm3=${GESROOT}/${envir}/${NET}.${PDYm3}
-export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )
 #--------------------------------------------------------------------------
 export dcom_hist="$GESOUT/dcom_hist.txt"
-export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )
 #export dcom=${dcom:-${DCOMROOT}}
 export PCOM=${PCOMROOT}/${NET}
 # make sure NWPS COM directory exists
@@ -127,6 +116,8 @@ if [ "${SENDCOM}" = YES ]; then
 fi
 
 mkdir -p $COMIN $LOGdir $RUNdir $TMPdir $OUTPUTdir $ARCHdir $DATAdir $INPUTdir $VARdir
+
+env
 
 ##############################################
 # Execute the script

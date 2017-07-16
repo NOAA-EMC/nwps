@@ -90,6 +90,8 @@ echo $$ > /${TMPdir}/${USERNAME}/nwps/8890_gen_current_sh.pid
 
 myPWD=`pwd`
 
+if [ "${RETROSPECTIVE}" == "FALSE" ]; then    #RETROSPECTIVE
+
 if [ ! -e ${INPUTdir}/rtofs_current_start_time.txt ] || [ ! -e ${INPUTdir}/rtofs_current_domain.txt ]
     then
     echo "INFO - No RTOFS data to process in ${INPUTdir}" | tee -a ${LOGfile}
@@ -144,6 +146,8 @@ if [ -e ${LDMdir}/rtofs_current_start_time.txt ]
     fi
 fi
 
+fi    #RETROSPECTIVE
+
 # This file must contain a line in the following format
 # RTOFSDOMAIN:LON LAT NX NY EW-RESOLUTION NS-RESOLUTION 
 # for example:
@@ -164,15 +168,15 @@ for file in ${files}
   rm -f ${file}
 done
 
-echo "Purging any old model ingest" | tee -a ${LOGfile}
-last_hour="${RTOFSHOURS}"
-${BINdir}/purge_rtofs.sh  ${INPUTdir} ${last_hour}
+#AW echo "Purging any old model ingest" | tee -a ${LOGfile}
+#AW last_hour="${RTOFSHOURS}"
+#AW ${BINdir}/purge_rtofs.sh  ${INPUTdir} ${last_hour}
 
-rtofs_current_start_time=`cat ${INPUTdir}/rtofs_current_start_time.txt`
-rtofs_date_str=`echo ${rtofs_current_start_time} | awk '{ print strftime("%Y%m%d", $1) }'`
-# We only have the 00z cycle for all NCEP production runs
-## rtofs_model_cycle=`echo ${rtofs_current_start_time} | awk '{ print strftime("%H", $1) }'`
-rtofs_model_cycle="00"
+#AW rtofs_current_start_time=`cat ${INPUTdir}/rtofs_current_start_time.txt`
+#AW rtofs_date_str=`echo ${rtofs_current_start_time} | awk '{ print strftime("%Y%m%d", $1) }'`
+#AW # We only have the 00z cycle for all NCEP production runs
+#AW ## rtofs_model_cycle=`echo ${rtofs_current_start_time} | awk '{ print strftime("%H", $1) }'`
+#AW rtofs_model_cycle="00"
 
 if [ "$1" != "" ]
     then 
@@ -196,6 +200,15 @@ HH=`echo ${YYYYMMDDHH} | cut -b9-10`
 
 time_str="${YYYY} ${MM} ${DD} ${HH} 00 00"
 model_start_time=`echo ${time_str} | awk -F: '{ print mktime($1 $2 $3 $4 $5 $6) }'`
+
+# Find most recent water level file by comparing the model init epoch time 
+# to those of all available ESTOFS files (ignoring estofs_waterlevel_start_time.txt)
+# This allows the same water level file to be used in case of a model rerun.
+rtofs_current_start_time=`ls ${INPUTdir}/wave_rtofs_uv* | xargs -n1 basename | cut -b15-24 | sort | uniq | awk -v thresh=$model_start_time '$1 <= thresh' | tail -1`
+rtofs_date_str=`echo ${rtofs_current_start_time} | awk '{ print strftime("%Y%m%d", $1) }'`
+# We only have the 00z cycle for all NCEP production runs
+## rtofs_model_cycle=`echo ${rtofs_current_start_time} | awk '{ print strftime("%H", $1) }'`
+rtofs_model_cycle="00"
 
 echo "RTOFS start UNIX time: ${rtofs_current_start_time}" | tee -a ${LOGfile}
 echo "Model start UNIX time: ${model_start_time}" | tee -a ${LOGfile}
@@ -271,7 +284,7 @@ if [ $timecheck -gt $maxage ]
     exit 0
 fi
 
-maxhours=140
+maxhours=144
 let maxhours*=3600
 let maxhours-=timecheck
 if [ $lencheck -gt $maxhours ]
@@ -301,7 +314,7 @@ fi
 SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/rtofs_match.pl`
 for parm in ${SWANPARMS}
   do
-  echo "Processing SWAM parameters: ${parm}" | tee -a ${LOGfile}
+  echo "Processing SWAN parameters: ${parm}" | tee -a ${LOGfile}
   CG=`echo ${parm} | awk -F, '{ print $1 }'`
   TIMESTEP=`echo ${parm} | awk -F, '{ print $2 }'`
   FCSTLENGTH=`echo ${parm} | awk -F, '{ print $3 }'`
@@ -388,7 +401,8 @@ for parm in ${SWANPARMS}
   fi
   cat ${infile} > ${VARdir}/curr_temp.$$
 
-  until [ $end -ge $FCSTLENGTH ]; do
+#  until [ $end -ge $FCSTLENGTH ]; do
+  until [ $end -ge $FCSTLENGTH -o $end -ge $(($lencheck/3600)) ]; do
       let end+=$RTOFSTIMESTEP
       let tstep=start+end
       FF=`echo $tstep`

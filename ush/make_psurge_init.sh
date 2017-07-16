@@ -123,11 +123,11 @@ find ${INGESTdir} -type f -mtime +${PSURGEPURGEdays} | xargs rm -f
 # Production?
 workdir=$(echo `pwd`)
 PSurge_latest=${COMINpsurge}
-cd ${PSurge_latest}
-NewD=$(basename `ls -t * | head -1`)
-NewestDir=$(echo "${NewD%?}")
-cd ${NewestDir}
-NewestPsurge=$(basename `ls -t *e??_inc_dat.conus_625m.grib2 | head -1`)
+#cd ${PSurge_latest}
+#NewD=$(basename `ls -t * | head -1`)
+#NewestDir=$(echo "${NewD%?}")
+#cd ${NewestDir}
+NewestPsurge=$(basename `ls -t ${PSurge_latest}/*e??_inc_dat.h102.conus_625m.grib2 | head -1`)
 
 if [ "${NewestPsurge}" == "" ]
     then 
@@ -139,7 +139,7 @@ fi
 split=(${NewestPsurge//_/ })
 for part in ${split[@]} ; do echo $part; done
 #split[0] must be something like:  psurge.t2004091418z.al822004
-cp ${split[0]}_e??_inc_dat.conus_625m.grib2 ${RUNdir} 
+cp ${PSurge_latest}/${split[0]}_e??_inc_dat.h102.conus_625m.grib2 ${RUNdir} 
 cd $workdir
 #--------------------------------------------------------------
 
