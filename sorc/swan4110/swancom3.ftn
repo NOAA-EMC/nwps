@@ -1000,8 +1000,12 @@
              CDRAG = 0.0012873
            ENDIF
         ELSE IF ( IDRAG.EQ.2 ) THEN
-           UTL   = WIND10/UREF
-           CDRAG = ( PP + QQ*UTL + RR*UTL*UTL ) * 0.001
+           IF ( WIND10 .LT. 50. ) THEN
+             UTL   = WIND10/UREF
+             CDRAG = ( PP + QQ*UTL + RR*UTL*UTL ) * 0.001
+           ELSE
+             CDRAG = 0.0015000
+           ENDIF
            CDRAG = MIN ( CDCAP, CDRAG )
         ELSE IF ( IDRAG.EQ.3 ) THEN
            UTL1  = WIND10/UREF1
