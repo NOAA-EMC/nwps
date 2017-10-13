@@ -52,44 +52,44 @@ function logit () {
     echo "$@" | tee -a ${LOGFILE}
 }
 
-function get_wd () {
-    CWD=$1
-    COUNT=$(echo $CWD | tr "/" " " | wc -w)
-    PROGRAM=$(echo $CWD | tr "/" " " | awk "{ print \$$COUNT }")
-    PATHTEST=$(echo "$CWD" | sed -e "s#/$PROGRAM##g")
-    if [[ $PATHTEST == "./" || $PATHTEST == "" || $PATHTEST == "." ]]
-    then
-	WD="."
-    else
-	WD="$PATHTEST"
-    fi
-    if [[ $WD == "." ]]
-    then
-	WD=$(pwd)
-    fi
-}
+#function get_wd () {
+#    CWD=$1
+#    COUNT=$(echo $CWD | tr "/" " " | wc -w)
+#    PROGRAM=$(echo $CWD | tr "/" " " | awk "{ print \$$COUNT }")
+#    PATHTEST=$(echo "$CWD" | sed -e "s#/$PROGRAM##g")
+#    if [[ $PATHTEST == "./" || $PATHTEST == "" || $PATHTEST == "." ]]
+#    then
+#	WD="."
+#    else
+#	WD="$PATHTEST"
+#    fi
+#    if [[ $WD == "." ]]
+#    then
+#	WD=$(pwd)
+#    fi
+#}
 
-function check_pwd () {
-    get_wd $0
-    cd $WD
-    if [[ ! -f $PROGRAMNAME ]]
-    then
-	logit " "
-	logit "Unable to find $PROGRAMNAME"
-	logit " "
-	logit "Please execute $PROGRAMNAME from the directory in which it resides"
-	logit " "
-	logit "Example: "
-	logit "         cd ${DATA}/"
-	logit "         ${USHnwps}/setup.sh"
-	logit " "
-	logit "Exiting ... "
-	logit " "
-	export err=1; err_chk
-    else
-	echo "found $PROGRAMNAME in $WD ..." >> ${LOGFILE}
-    fi
-}
+#function check_pwd () {
+#    get_wd $0
+#    cd $WD
+#    if [[ ! -f $PROGRAMNAME ]]
+#    then
+#	logit " "
+#	logit "Unable to find $PROGRAMNAME"
+#	logit " "
+#	logit "Please execute $PROGRAMNAME from the directory in which it resides"
+#	logit " "
+#	logit "Example: "
+#	logit "         cd ${DATA}/"
+#	logit "         ${USHnwps}/setup.sh"
+#	logit " "
+#	logit "Exiting ... "
+#	logit " "
+#	export err=1; err_chk
+#    else
+#	echo "found $PROGRAMNAME in $WD ..." >> ${LOGFILE}
+#    fi
+#}
 
 function get_sid () {
     clear
@@ -652,8 +652,8 @@ function confirm_values () {
        logit " 1D-Spectra Information not required" 
     fi
     
-    logit " "
-    logit "This script is being ran from this directory: $WD"
+#    logit " "
+#    logit "This script is being ran from this directory: $WD"
     logit " "
     logit "Please check that the above information is correct before continuing"
     logit "---------------------------------------------------------------------"
@@ -1154,7 +1154,7 @@ fi
 ### PROGRAM LOGIC ###################################
 
 echo "Checking ..." >> ${LOGFILE}
-check_pwd
+#check_pwd
 
 echo "Need to check if NWPS workstation package is installed..." >> ${LOGFILE}
 USER=$(whoami)
@@ -1657,8 +1657,8 @@ fi
 #    done
 #fi
 
-rm -rf ${WD}/templates/install
-cd ${WD}
+#rm -rf ${WD}/templates/install
+#cd ${WD}
 
 logit ": Setup setting ${DATA}/parm/templates/${LSID}/siteid.sh for local SITE ID ... "
 mkdir -p ${DATA}/parm/templates/${LSID}
@@ -1691,7 +1691,7 @@ echo "export MODELTYPE=$URMODEL" >> ${DATA}/parm/templates/${LSID}/modeltype.sh
 echo "export modeltype=$LRMODEL" >> ${DATA}/parm/templates/${LSID}/modeltype.sh
 #chmod 775 ${NWPSdir}/parm/templates/${LSID}/modeltype.sh
 
-cd ${WD}
+#cd ${WD}
 
 logit " "
 logit "Domain setup complete"
