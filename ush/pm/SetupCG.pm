@@ -82,6 +82,7 @@ our %RunValues;
 my $SITEID = $ENV{'SITEID'};
 my $PDY = $ENV{'PDY'};
 my $WNA = $ENV{'WNA'};
+our $PATH = $ENV{PATH};
 our $numofOutputSpectra;
 our $numofOutputPoints;
 our $numofOutputPartition;
@@ -831,6 +832,7 @@ print "In SetupCG  USERDELTAC: $USERDELTAC";
     }
     else {
 	print "ERROR - Cannot open sitefile $sitefile\n";
+        system("export err=1; err_chk")
     }
 
     close SITEFILE;
