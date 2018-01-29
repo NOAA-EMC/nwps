@@ -41,7 +41,7 @@ export cyc=${CYCLE}
 export cycle=t${cyc}z
 export pgmout=OUTPUT.$$
 
-export UTILROOT=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.12
+export UTILROOT=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.20
 
 cd /gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/
 
@@ -131,8 +131,8 @@ export GESIN=${GESROOT}/${envir}/${NET}.${PDY}
 export GESINm1=${GESROOT}/${envir}/${NET}.${PDYm1}
 export GESINm2=${GESROOT}/${envir}/${NET}.${PDYm2}
 
-export COMINgfs=${COMROOTp2}/gfs/prod/gfs.${PDY}
-export COMINwave=${COMROOTp1}/wave/prod
+export COMINgfs=/gpfs/hps/nco/ops/com/gfs/prod/gfs.${PDY}
+export COMINwave=${COMROOTp2}/wave/prod
 export COMINestofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/estofs/${WFO}_output
 export COMINestofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/estofs/${WFO}_output
 export COMINrtofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/rtofs/${WFO}_output
