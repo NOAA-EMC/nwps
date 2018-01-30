@@ -82,8 +82,8 @@ export SITETYPE=${SITETYPE:-EMC}
 export MODELTYPE="SWAN"
 
 #export pgmout=OUTPUT.$$
-export utilscript=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.12/ush
-export USHutil=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.12/ush
+export utilscript=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.20/ush
+export USHutil=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.20/ush
 sh $utilscript/setpdy.sh
 . ./PDY
 
