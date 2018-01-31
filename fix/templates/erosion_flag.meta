@@ -62,7 +62,7 @@ product_def_number = 0
 
 # GRIB2 product template 4.0 meta data
 parameter_category = 3
-parameter_number = 3 
+parameter_number = 252 
 process_type = 2
 process_id = 0
 forecast_process = 15 
