@@ -8,7 +8,7 @@
 # NOTE: All "<< name of value >>" fields must be set before encoding
 
 # GRIB2 Section 0 meta data
-discipline = 1
+discipline = 10
 
 # GRIB2 Section 1  meta data
 originating_center = 7
@@ -62,7 +62,7 @@ product_def_number = 0
 
 # GRIB2 product template 4.0 meta data
 parameter_category = 1
-parameter_number = 2 
+parameter_number = 4 
 process_type = 2
 process_id = 0
 forecast_process = 15 
