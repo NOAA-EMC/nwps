@@ -73,19 +73,19 @@ for tstep in range(1, (TDEF+1)):
    fieldmax = 'RIP_extract_fieldmax.txt'
    fieldmin = 'RIP_extract_fieldmin.txt'
    if tstep == 1:
-      #command = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:anl" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
-      #command2 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:anl" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
-      #command3 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:anl" | $WGRIB2 -i '+DSET+' -min | cat > '+fieldmin
-      command = '$WGRIB2 '+DSET+' -s | grep "POP:surface:anl" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
-      command2 = '$WGRIB2 '+DSET+' -s | grep "POP:surface:anl" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
-      command3 = '$WGRIB2 '+DSET+' -s | grep "POP:surface:anl" | $WGRIB2 -i '+DSET+' -min | cat > '+fieldmin
+      command = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:anl" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
+      command2 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:anl" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
+      command3 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:anl" | $WGRIB2 -i '+DSET+' -min | cat > '+fieldmin
+      #command = '$WGRIB2 '+DSET+' -s | grep "POP:surface:anl" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
+      #command2 = '$WGRIB2 '+DSET+' -s | grep "POP:surface:anl" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
+      #command3 = '$WGRIB2 '+DSET+' -s | grep "POP:surface:anl" | $WGRIB2 -i '+DSET+' -min | cat > '+fieldmin
    else:
-      #command = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
-      #command2 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -max | cat >> '+fieldmax
-      #command3 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -min | cat >> '+fieldmin
-      command = '$WGRIB2 '+DSET+' -s | grep "POP:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
-      command2 = '$WGRIB2 '+DSET+' -s | grep "POP:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -max | cat >> '+fieldmax
-      command3 = '$WGRIB2 '+DSET+' -s | grep "POP:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -min | cat >> '+fieldmin
+      command = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
+      command2 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -max | cat >> '+fieldmax
+      command3 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -min | cat >> '+fieldmin
+      #command = '$WGRIB2 '+DSET+' -s | grep "POP:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
+      #command2 = '$WGRIB2 '+DSET+' -s | grep "POP:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -max | cat >> '+fieldmax
+      #command3 = '$WGRIB2 '+DSET+' -s | grep "POP:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -min | cat >> '+fieldmin
    os.system(command)
    os.system(command2)
    os.system(command3)
@@ -137,14 +137,14 @@ for tstep in range(1, (TDEF+1)):
    fo = open(grib2dump, "r")
    line = fo.readline()
    linesplit = line.split()
-   #if linesplit[7] == 'anl':
-   if linesplit[3] == 'anl':
+   if linesplit[7] == 'anl':
+   #if linesplit[3] == 'anl':
       forecastTime = 0
    else:
-      #forecastTime = int(linesplit[7])
-      forecastTime = int(linesplit[3])
-   #temp = linesplit[6]
-   temp = linesplit[2]
+      forecastTime = int(linesplit[7])
+      #forecastTime = int(linesplit[3])
+   temp = linesplit[6]
+   #temp = linesplit[2]
    temp = temp[2:12]
    date = datetime.datetime(int(temp[0:4]),int(temp[4:6]),int(temp[6:8]),int(temp[8:10]))
    # Add the forecast hour to the start of the cycle timestamp
