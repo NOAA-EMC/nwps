@@ -95,6 +95,7 @@ export GESOUTm1=${GESROOT}/${envir}/${NET}.${PDYm1}
 export GESOUTm2=${GESROOT}/${envir}/${NET}.${PDYm2}
 
 export COMINgfs=${COMROOT}/gfs/prod/gfs.${PDY}
+export COMINgfsm1=${COMROOT}/gfs/prod/gfs.${PDYm1}
 export COMINwave=${COMROOTp2}/wave/prod
 #----Suggested paths for OFS PREP output (see get_ncep_initfiles.sh)-------
 export COMINestofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/estofs/${WFO}_output
