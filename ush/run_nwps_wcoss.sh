@@ -345,20 +345,10 @@ then
     echo "Starting model run with ${WINDS} winds" | tee -a ${LOGdir}/run_nwps.log 
     echo "Starting model run with ${WINDS} winds" >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
 
-    # Check to see if our COMINgfs VAR is set
-    if [ -z ${COMINgfs} ]; then
-	if [ -z ${COMROOTp2} ]; then
-	    echo "FATAL ERROR: COMROOTp2 not set in ENV, cannot locate GFS winds" | tee -a ${LOGdir}/run_nwps.log
-	    echo "Exiting model run with fatal error" | tee -a ${LOGdir}/run_nwps.log 
-	    export err=1; err_chk
-	fi
-	export COMINgfs=${COMROOTp2}/gfs/prod/gfs.${PDY}
-    fi
-
     # Check for today's GFS run, if not available use yesterday's run
     if [ ! -d ${COMINgfs} ]
     then
-	export COMINgfs=${COMROOTp2}/gfs/prod/gfs.${PDYm1}
+	export COMINgfs=${COMINgfsm1}
     fi
 
     # Get our latest GFS wind files
