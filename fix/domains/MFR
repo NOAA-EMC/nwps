@@ -81,7 +81,7 @@ export NELATN4="44.45"
 export NELONN4="-123.65"
 export SWLATN4="41.00"
 export SWLONN4="-127.30"
-export RESN4="5.0"
+export RESN4="4.0"
 export TSTEPN4="1"
 export STATN4="NON"
 #

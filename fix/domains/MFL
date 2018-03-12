@@ -183,6 +183,8 @@ export WAVECPS="multi_1.MIA51.spec.swan,multi_1.MIA56.spec.swan,multi_1.MIA62.sp
 #BOUNdspec SIDE 25 CCW CON FILE 'multi_1.MIA60.spec.swan' 1
 #BOUNdspec SIDE 26 CCW CON FILE 'multi_1.MIA59.spec.swan' 1
 #BOUNdspec SIDE 27 CCW CON FILE 'multi_1.MIA58.spec.swan' 1
+#$NUM DIRimpl cdd=1 cdlim=2
+#NUM CTHETA cfl=5.0 CSIGMA cfl=5.0
 #$END BOUNSEG
 #
 #========================================================================
