@@ -210,7 +210,7 @@ then
 	    let newTS=$GFSTIMESTEP-$mod
 	    let newHH=$HHnum+$newTS
 	fi
-	if [ $newHH -gt 24 ]; then let newHH=24; fi
+	if [ $newHH -ge 24 ]; then let newHH=21; fi
 	
 	if [ $newHH -le 9 ]
 	then
