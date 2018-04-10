@@ -164,16 +164,16 @@ then
    cp ${DATA}/install/swn_reginterpCG${CGNUM}.py ${RUNdir}/
 
    cat /dev/null > ${RUNdir}/reginterpCG${CGNUM}_cmdfile
-   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} HSIG" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
-   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} WIND" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
-   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} TPS" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
-   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} DIR" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
-   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} PDIR" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
-   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} VEL" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
-   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} WATL" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
-   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} HSWE" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
-   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} WLEN" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
-   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} DEPTH" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
+   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} HSIG ${siteid}" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
+   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} WIND ${siteid}" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
+   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} TPS ${siteid}" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
+   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} DIR ${siteid}" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
+   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} PDIR ${siteid}" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
+   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} VEL ${siteid}" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
+   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} WATL ${siteid}" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
+   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} HSWE ${siteid}" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
+   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} WLEN ${siteid}" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
+   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} DEPTH ${siteid}" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
 
    aprun -n10 -N10 -j1 -d1 cfp ${RUNdir}/reginterpCG${CGNUM}_cmdfile
    export err=$?; err_chk
