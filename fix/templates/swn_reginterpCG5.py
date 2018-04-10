@@ -20,7 +20,7 @@ direc=sys.argv[1]
 ncfile=sys.argv[2]
 grid=sys.argv[3]
 par=sys.argv[4]
-siteid=direc[-17:-14]
+siteid=sys.argv[5]
 
 #-----------------------------------------
 #--- Output mesh configuration
