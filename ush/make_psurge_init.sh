@@ -127,7 +127,8 @@ PSurge_latest=${COMINpsurge}
 #NewD=$(basename `ls -t * | head -1`)
 #NewestDir=$(echo "${NewD%?}")
 #cd ${NewestDir}
-NewestPsurge=$(basename `ls -t ${PSurge_latest}/*e??_inc_dat.h102.conus_625m.grib2 | head -1`)
+#NewestPsurge=$(basename `ls -t ${PSurge_latest}/*e??_inc_dat.h102.conus_625m.grib2 | head -1`)
+NewestPsurge=$(basename `ls -t ${PSurge_latest}/*e[1-5]?_inc_dat.h102.conus_625m.grib2 | head -1`)
 
 if [ "${NewestPsurge}" == "" ]
     then 
@@ -139,7 +140,8 @@ fi
 split=(${NewestPsurge//_/ })
 for part in ${split[@]} ; do echo $part; done
 #split[0] must be something like:  psurge.t2004091418z.al822004
-cp ${PSurge_latest}/${split[0]}_e??_inc_dat.h102.conus_625m.grib2 ${RUNdir} 
+#cp ${PSurge_latest}/${split[0]}_e??_inc_dat.h102.conus_625m.grib2 ${RUNdir} 
+cp ${PSurge_latest}/${split[0]}_e[1-5]?_inc_dat.h102.conus_625m.grib2 ${RUNdir} 
 cd $workdir
 #--------------------------------------------------------------
 
