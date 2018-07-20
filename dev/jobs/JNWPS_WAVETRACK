@@ -17,7 +17,7 @@ set -xa
 #AWexport cyc=${CYCLE}
 #AWexport cycle=t${cyc}z
 
-export UTILROOT=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.20
+export UTILROOT=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.25
 
 export utilscript=${UTILROOT}/ush
 export USHutil=${UTILROOT}/ush
@@ -73,8 +73,8 @@ export TMPdir=${TMPdir:-${DATA}/tmp}
 export LOGdir=${LOGdir:-${DATA}/logs}
 export GEN_NETCDF=${GEN_NETCDF:-FALSE}
 export GEN_HDF5=${GEN_HDF5:-FALSE}
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOMEnwps}/lib64/python/basemap-1.0.7/geos-3.3.3/lib
-export PYTHONPATH=${HOMEnwps}/lib64/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
+#AW020218 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOMEnwps}/lib64/python/basemap-1.0.7/geos-3.3.3/lib
+#AW020218 export PYTHONPATH=${HOMEnwps}/lib64/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
 export PYTHON=python
 
 # Set NWPS run conditions
