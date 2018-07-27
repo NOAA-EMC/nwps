@@ -193,8 +193,8 @@ export WAVECPS="multi_1.NW-AKQ59.spec.swan"
 #BOUNDspec SIDE 8 CCW CON FILE 'multi_1.NW-AKQ55.spec.swan' 1
 #BOUNDspec SIDE 9 CCW CON FILE 'multi_1.NW-AKQ54.spec.swan' 1
 #BOUNDspec SIDE 10 CCW CON FILE 'multi_1.NW-AKQ53.spec.swan' 1
-#BOUNDspec SIDE 9 CCW CON FILE 'multi_1.NW-AKQ52.spec.swan' 1
-#BOUNDspec SIDE 10 CCW CON FILE 'multi_1.NW-AKQ51.spec.swan' 1
+#BOUNDspec SIDE 11 CCW CON FILE 'multi_1.NW-AKQ52.spec.swan' 1
+#BOUNDspec SIDE 12 CCW CON FILE 'multi_1.NW-AKQ51.spec.swan' 1
 #$END BOUNSEG for UNSTR SWAN
 #
 #========================================================================
