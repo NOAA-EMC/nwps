@@ -314,9 +314,9 @@ sub makeInputCGx (%){
 ################################################################################################################
 
     if ($CG{CGNUM} eq 1 ) {
-	$circle="CIRCLE 36 0.05 1.5";
+	$circle="CIRCLE 36 0.035 1.5 36";
     } else {
-	$circle="CIRCLE 36 0.05 1.5";
+	$circle="CIRCLE 36 0.035 1.5 36";
     }
 
     @values=("PROJ=PROJ 'SWAN-".FTPPAT2."-CG".$CG{CGNUM}."' '$day$hour'",
@@ -560,8 +560,12 @@ sub runWaveModel (%){
        print "Configure the unstructured INPUT file for SWAN\n";
        my $pattern=`grep "^CGRID" inputCG1`;
        chomp ($pattern);
-       system("sed -i 's/$pattern/CGRID UNSTRUCTURED CIRCLE 36 0.05 1.5/g' inputCG1");
+       system("sed -i 's/$pattern/CGRID UNSTRUCTURED CIRCLE 36 0.035 1.5 36/g' inputCG1");
        system("sed -i 's/\$ << UNSTR GRID >>/READ UNSTRUCTURED ADCIRC/g' inputCG1");
+    }
+
+    if ( ("${SITEID}" eq "MFL") || ("${SITEID}" eq "KEY") ) {
+       system("sed -i 's/NUM ACCUR 0.04 0.04 0.04 96. 10/NUM STOPC dabs=0.005 drel=0.01 curvat=0.005 npnts=96.0 NONSTAT mxitns=5 limiter=0.01/g' inputCG1");
     }
 
     #swan need the input file to be called INPUT (as we need also to archive it, we copy it first)
