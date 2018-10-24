@@ -322,9 +322,9 @@ sub makeInputCGx (%){
 ################################################################################################################
 
     if ($CG{CGNUM} eq 1 ) {
-	$circle="CIRCLE 36 0.05 1.5";
+	$circle="CIRCLE 36 0.035 1.5 36";
     } else {
-	$circle="CIRCLE 36 0.05 1.5";
+	$circle="CIRCLE 36 0.035 1.5 36";
     }
 
     @values=("PROJ=PROJ 'SWAN-".FTPPAT2."-CG".$CG{CGNUM}."' '$day$hour'",
@@ -465,7 +465,7 @@ sub makeInputCGx (%){
 	   $newhotfilelocation="${RUNdir}/PE00${core}/";
 	   system("cp -pfv $hotfilelocation $newhotfilelocation >> ${LOGdir}/hotstart.log 2>&1");
         }
-        if ( ("${SITEID}" eq "MHX") || ("${SITEID}" eq "CAR") || ("${SITEID}" eq "MFL") || ("${SITEID}" eq "TBW") || ("${SITEID}" eq "BOX") || ("${SITEID}" eq "SGX") || ("${SITEID}" eq "SJU") || ("${SITEID}" eq "AKQ") || ("${SITEID}" eq "OKX") ) {
+        if ( ("${SITEID}" eq "MHX") || ("${SITEID}" eq "CAR") || ("${SITEID}" eq "MFL") || ("${SITEID}" eq "TBW") || ("${SITEID}" eq "BOX") || ("${SITEID}" eq "SGX") || ("${SITEID}" eq "SJU") || ("${SITEID}" eq "AKQ") || ("${SITEID}" eq "OKX") || ("${SITEID}" eq "GUM") || ("${SITEID}" eq "ALU") || ("${SITEID}" eq "GUA") ) {
            for (my $core=16; $core<48; $core++){
 	      #AW $hotfilelocation="${INPUTdir}/hotstart/PE00${core}/${hottime[0]}";
 	      $hotfilelocation="${hotfiles_cyc}/PE00${core}/${hottime[0]}";
