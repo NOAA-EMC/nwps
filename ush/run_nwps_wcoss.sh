@@ -510,7 +510,7 @@ echo "EXCD=$EXCD"
 HOTSTART="TRUE"
 
 # Set the model core: Regular grid SWAN or unstructured mesh UNSWAN
-if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "TBW" ] || [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "BOX" ] || [ "${SITEID}" == "OKX" ] || [ "${SITEID}" == "SGX" ] || [ "${SITEID}" == "CAR" ] || [ "${SITEID}" == "HFO" ] || [ "${SITEID}" == "AKQ" ] || [ "${SITEID}" == "SJU" ] 
+if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "TBW" ] || [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "BOX" ] || [ "${SITEID}" == "OKX" ] || [ "${SITEID}" == "SGX" ] || [ "${SITEID}" == "CAR" ] || [ "${SITEID}" == "HFO" ] || [ "${SITEID}" == "AKQ" ] || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "ALU" ] || [ "${SITEID}" == "GUA" ] 
 then
    export MODELCORE="UNSWAN"
 else
