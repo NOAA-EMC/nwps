@@ -61,7 +61,7 @@ then
       aprun -n48 -N24 -j1 -d1 ${EXECnwps}/swan-mpi.exe
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
-   elif [ "${siteid}" == "hgx" ] || [ "${siteid}" == "mob" ] || [ "${siteid}" == "tae" ] || [ "${siteid}" == "jax" ] || [ "${siteid}" == "key" ] || [ "${siteid}" == "phi" ] || [ "${siteid}" == "mtr" ] || [ "${siteid}" == "alu" ] || [ "${siteid}" == "aer" ] || [ "${siteid}" == "afg" ]
+   elif [ "${siteid}" == "hgx" ] || [ "${siteid}" == "mob" ] || [ "${siteid}" == "tae" ] || [ "${siteid}" == "jax" ] || [ "${siteid}" == "key" ] || [ "${siteid}" == "phi" ] || [ "${siteid}" == "mtr" ] || [ "${siteid}" == "aer" ] || [ "${siteid}" == "afg" ]
    then
       aprun -n24 -N24 -j1 -d1 ${EXECnwps}/swan-mpi.exe
       export err=$?;
@@ -93,7 +93,7 @@ then
       fi
 
       # Run each domain with appropriate number of cores.
-      if [ "${siteid}" == "car" ] || [ "${siteid}" == "mfl" ] || [ "${siteid}" == "tbw" ] || [ "${siteid}" == "box" ] || [ "${siteid}" == "sgx" ] || [ "${siteid}" == "sju" ] || [ "${siteid}" == "akq" ] || [ "${siteid}" == "okx" ]
+      if [ "${siteid}" == "car" ] || [ "${siteid}" == "mfl" ] || [ "${siteid}" == "tbw" ] || [ "${siteid}" == "box" ] || [ "${siteid}" == "sgx" ] || [ "${siteid}" == "sju" ] || [ "${siteid}" == "akq" ] || [ "${siteid}" == "okx" ] || [ "${siteid}" == "gum" ] || [ "${siteid}" == "alu" ] || [ "${siteid}" == "gua" ]
       then
          echo "Copying required files for PuNSWAN run for "${siteid}
          for i in {0..9}; do
