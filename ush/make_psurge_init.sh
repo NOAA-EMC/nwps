@@ -204,7 +204,19 @@ done
 echo ""
 echo "DEGRIB these GRIB2 files, using multi-core processing..."
 ##Running 24 tasks, 6 per node (on a total of 4 nodes)
-aprun -n24 -N6 -j1 -d1 cfp ${RUNdir}/degrib_cmdfile
+# aprun -n24 -N6 -j1 -d1 cfp ${RUNdir}/degrib_cmdfile
+# aprun -n24 -N6 -S3 -j1 -d1 cfp ${RUNdir}/degrib_cmdfile
+# aprun -j 1 -n 24 -N 6 -S 3 -d 3 -cc depth cfp ${RUNdir}/degrib_cmdfile
+# cmd="aprun -j 1 -n 24 -N 6 -S 3 -d 3 -cc depth cfp ${RUNdir}/degrib_cmdfile"
+export MPICH_RANK_REORDER_METHOD=1  # 0=RR ; 1=SMP=dflt ; 2=folded
+cmd="aprun -j 1 -n 24 -N 6 -S 3 -d 4 -cc depth cfp ${RUNdir}/degrib_cmdfile"
+echo "${0}: info: before ${cmd} at `date`"
+t0=$SECONDS
+eval ${cmd}
+t1=$SECONDS
+echo "${0}: info: after ${cmd} at `date`"
+echo "${0}: info: '${cmd}' took $(( ( t1 - t0 ) + 1 )) wallclock seconds."
+
 #Running 24 tasks, 12 per node (on a total of 2 nodes)
 #aprun -n24 -N12 -j1 -d1 cfp ${RUNdir}/degrib_cmdfile
 
