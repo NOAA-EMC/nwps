@@ -84,7 +84,7 @@ endif
 STD_INC += -I.
 
 # Default compiler flags
-CFLAGS = -O3 -Wall -Wextra -pedantic -ansi
+CFLAGS = -O3 -Wall -Wextra -pedantic -ansi -pthread
 
 # Enhance compiler flags
 ifeq ($(BIT),32)
@@ -96,7 +96,7 @@ CFLAGS += $(STD_DEF) $(STD_INC)
 # Set up Linker flags...
 #    STD_LIB and LD_FLAGS
 ############################
-LD_FLAGS=
+LD_FLAGS= -static
 STD_LIB=
 
 # Add libaat to Build path
@@ -119,6 +119,7 @@ endif
 SOURCE = mymapf.c
 
 OBJECTS = $(SOURCE:.c=.o) \
+          /opt/cray/iobuf/2.0.8/lib/iobuf.o \
           $(MEMWATCH)
 
 HEADERS = mymapf.h 
@@ -138,7 +139,7 @@ help:
 
 $(PRJ_NAME): $(OBJECTS) $(C_MAIN) $(HEADERS)
 	$(CC) $(C_MAIN) $(CFLAGS) $(LD_FLAGS) $(OBJECTS) $(STD_LIB) -o $(PRJ_NAME)
-	$(STRIP) -s $(PRJ_NAME)
+#	$(STRIP) -s $(PRJ_NAME)
 
 .PHONY: install
 install: $(TARGETS)
