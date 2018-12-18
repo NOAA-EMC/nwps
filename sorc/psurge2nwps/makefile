@@ -10,11 +10,6 @@ SHELL = /bin/bash
 MEM=false
 DEBUG=false
 
-# For testing purposes leave mem and debug on
-MEM=true
-DEBUG=true
-
-
 # Determine platform specific options
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
