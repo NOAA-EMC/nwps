@@ -25,6 +25,8 @@ if [ "${NWPSdir}" == "" ]
     exit 1
 fi
 
+mkdir -p ${NWPSdir}/exec
+
 #FOR DEGRIB
 #Using the GNU compiler or the Jasper/JPEG compression library will not work properly
 cd ${NWPSdir}/sorc
@@ -43,6 +45,10 @@ cd ${NWPSdir}/sorc
 #The executable is ww3_systrk_mpi
 cd ${NWPSdir}/sorc
 ./make_ww3_systrk.sh
+
+#The executable is ww3_sysprep.exe
+cd ${NWPSdir}/sorc
+./make_sysprep.sh
 
 #FOR SWAN (UNSTRUCTURED MESH, incl. parallel libraries in estofs_padcirc.fd/work/odir4/)
 cd ${NWPSdir}/sorc
