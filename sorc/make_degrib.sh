@@ -31,11 +31,7 @@ if [ "${NWPSdir}" == "" ]
    export NWPSdir="/gpfs/${WCOSS_SYSTEM}/emc/marine/save/${DEVWCOSS_USER}/NWPS/emc_nwps"
 fi
 
-#loading the necessary modules 
-#module purge
-#module load ncep
-#module load ../modulefiles/NWPS/v1.2.0
-#module list
+mkdir -p ${NWPSdir}/exec
 
 # We can only use the GNU compiler or the Jasper/JPEG compression library will not work properly
 cd ${NWPSdir}/sorc/degrib_gnu_cray/
