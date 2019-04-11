@@ -31,10 +31,10 @@ if (pltflag):
 # Read domain file
 domainfile = 'estofs_waterlevel_domain.txt'
 if os.path.isfile(domainfile):
-   print '*** estofs_extend.py ***'
-   print 'Reading: '+domainfile
+   print('*** estofs_extend.py ***')
+   print('Reading: '+domainfile)
 else:
-   print '*** TERMINATING ERROR: Missing ESTOFS domain file: '+domainfile
+   print('*** TERMINATING ERROR: Missing ESTOFS domain file: '+domainfile)
    sys.exit()
 
 with open(domainfile) as f:
@@ -48,35 +48,35 @@ y0 = float(dummy[1])
 dx = float(dummy[5])
 dy = float(dummy[6])
 
-#print 'ESTOFS field dimensions: nlon='+str(nlon)+', nlat='+str(nlat)
-#print 'x0='+str(x0)+', y0='+str(y0)+', dx='+str(dx)+', dy='+str(dy)
+#print('ESTOFS field dimensions: nlon='+str(nlon)+', nlat='+str(nlat))
+#print('x0='+str(x0)+', y0='+str(y0)+', dx='+str(dx)+', dy='+str(dy))
 
 lons=np.linspace(x0,x0+float(nlon-1)*dx,num=nlon)
 lats=np.linspace(y0,y0+float(nlat-1)*dy,num=nlat)
 # Convert to -180:180 format
 lons = lons-360
 
-#print lons.shape
-#print lons.min(), lons.max()
-#print lats.shape
-#print lats.min(), lats.max()
+#print(lons.shape)
+#print(lons.min(), lons.max())
+#print(lats.shape)
+#print(lats.min(), lats.max())
 
 # Read ESTOFS data file
 infile = sys.argv[1]
 if os.path.isfile(infile):
-   print 'Reading: '+infile
+   print('Reading: '+infile)
 else:
-   print '*** TERMINATING ERROR: Missing ESTOFS data file: '+infile
+   print('*** TERMINATING ERROR: Missing ESTOFS data file: '+infile)
    sys.exit()
 
 data=np.loadtxt(infile)
 
-#print data.shape
+#print(data.shape)
 
 # Create a matrix of nlat x nlon initialized to 0
 rawpar = np.zeros((nlat, nlon))
 par = np.zeros((nlat, nlon))
-#print rawpar.shape
+#print(rawpar.shape)
 
 # Set up water level field
 for lat in range(0, nlat):
@@ -111,25 +111,25 @@ for iter in range(1,niter+1):
          rawpar[lat,lon] = par[lat,lon]
 
    # Extrapolate values towards the coast
-   #print 'Editing field...'
+   #print('Editing field...')
    for lat in reversed(range(1, nlat-1)):
       for lon in range(1, nlon-1):
          nghsum = 0.
          nngh = 0
          if (rawpar[lat,lon] == 0.):
-            #print 'Testing ('+str(lon)+','+str(lat)+'): par='+str(par[lat,lon])+'; rawpar='+str(rawpar[lat,lon])
+            #print('Testing ('+str(lon)+','+str(lat)+'): par='+str(par[lat,lon])+'; rawpar='+str(rawpar[lat,lon]))
             for ysearch in range(-1, 2):
                for xsearch in range(-1, 2):
-                  #print lon+xsearch,lat+ysearch
+                  #print(lon+xsearch,lat+ysearch)
                   if (rawpar[lat+ysearch,lon+xsearch] != 0.): # and not(xsearch==0 and ysearch==0) ):
-                     #print 'Adding: '+str(rawpar[lat+ysearch,lon+xsearch])
+                     #print('Adding: '+str(rawpar[lat+ysearch,lon+xsearch]))
                      nghsum = nghsum+rawpar[lat+ysearch,lon+xsearch]
                      nngh = nngh+1
-            #print 'Result: nngh='+str(nngh)+', nghsum='+str(nghsum)
+            #print('Result: nngh='+str(nngh)+', nghsum='+str(nghsum))
             if nngh >= 3:
                par[lat,lon] = nghsum/nngh
                rawpar[lat,lon] = 0.
-               #print 'Updating ('+str(lon)+','+str(lat)+'): par='+str(par[lat,lon])+'; rawpar='+str(rawpar[lat,lon])
+               #print('Updating ('+str(lon)+','+str(lat)+'): par='+str(par[lat,lon])+'; rawpar='+str(rawpar[lat,lon]))
 
    # Plot updated field
    if (pltflag):
@@ -153,7 +153,7 @@ for iter in range(1,niter+1):
 
 # Write output file
 fout = open('extend_'+infile,"w")
-print 'Writing: '+'extend_'+infile
+print('Writing: '+'extend_'+infile)
 
 for ilat in range(0,nlat):
    for ilon in range(0,nlon):
