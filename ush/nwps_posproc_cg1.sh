@@ -482,7 +482,7 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
       mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
    done
    # Additional copies for domains running on 48 cores
-   if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CAR" ] || [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "TBW" ] || [ "${SITEID}" == "BOX" ] || [ "${SITEID}" == "SGX" ] || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "AKQ" ] || [ "${SITEID}" == "OKX" ]
+   if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CAR" ] || [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "TBW" ] || [ "${SITEID}" == "BOX" ] || [ "${SITEID}" == "SGX" ] || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "AKQ" ] || [ "${SITEID}" == "OKX" ] || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "ALU" ] || [ "${SITEID}" == "GUA" ]
    then
       for i in {16..47}; do
          mkdir -p ${HOTdir}/PE00${i}
