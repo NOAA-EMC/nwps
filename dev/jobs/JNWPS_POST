@@ -102,7 +102,7 @@ export GEN_HDF5=${GEN_HDF5:-FALSE}
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOMEnwps}/lib64/python/basemap-1.0.7/geos-3.3.3/lib
 
 # Set paths for local Python modules (plotting)
-export PYTHONPATH=${HOMEnwps}/lib64/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
+#AW032119 export PYTHONPATH=${HOMEnwps}/lib64/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
 export PYTHON=python
 
 # Set NWPS run conditions
