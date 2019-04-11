@@ -228,14 +228,14 @@ for parm in ${SWANPARMS}
   echo "Copying LOGO from ${ETCdir}/default/*.gif files"
   cp -f ${ETCdir}/default/*.gif ${TEMPDIR}/.
     cp -f ${ETCdir}/default/*.png ${TEMPDIR}/.
-  echo "Unpacking shape files for plotting"
+  #echo "Unpacking shape files for plotting"
   cd ${TEMPDIR}
-  tar xvfz ${SHAPEFILEdb}/marine_zones.tar.gz
-  tar xvfz ${SHAPEFILEdb}/cwa.tar.gz
-  tar xvfz ${SHAPEFILEdb}/river_basins.tar.gz
-  tar xvfz ${SHAPEFILEdb}/lakes.tar.gz
-  tar xvfz ${SHAPEFILEdb}/rivers.tar.gz
-  tar xvfz ${SHAPEFILEdb}/zones.tar.gz
+  #tar xvfz ${SHAPEFILEdb}/marine_zones.tar.gz
+  #tar xvfz ${SHAPEFILEdb}/cwa.tar.gz
+  #tar xvfz ${SHAPEFILEdb}/river_basins.tar.gz
+  #tar xvfz ${SHAPEFILEdb}/lakes.tar.gz
+  #tar xvfz ${SHAPEFILEdb}/rivers.tar.gz
+  #tar xvfz ${SHAPEFILEdb}/zones.tar.gz
 
   echo "Creating GRADS control file, used by Python"
   echo "${YYYY}${MM}${DD}_${HH}${MIN}" > ${TEMPDIR}/datelab.txt
@@ -337,66 +337,51 @@ for parm in ${SWANPARMS}
 #      echo "Will plot all elements by default"
       echo "Creating new site specific python element file for GRIB2 plot"
       cat /dev/null > ${TEMPDIR}/python_grib2_elements.sh
-      echo "# Comment out any elments you do not want to publish on the Web" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "" >> ${TEMPDIR}/python_grib2_elements.sh
-#============================================================
-      echo 'echo "PYTHON IN elements: ${PYTHONPATH}"' >> ${TEMPDIR}/python_grib2_elements.sh
-#============================================================
-      echo 'echo "Creating PYTHON plot for Wind"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "(${PYTHON} wind.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo '##echo "Creating PYTHON plot for 4 Panel"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "##${PYTHON} 4panel_grib2.py" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo '##echo "Creating PYTHON plot 6 Panel"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "##${PYTHON} 6panel_grib2.py" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo 'echo "Creating PYTHON plot for Depth"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "(${PYTHON} depth.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo 'echo "Creating PYTHON plot for Wave Height"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "(${PYTHON} htsgw.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo 'echo "Creating PYTHON plot for Period"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "(${PYTHON} period.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo 'echo "Creating PYTHON plot for Wave Length"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "(${PYTHON} wlen.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo 'echo "Creating PYTHON plot for Current"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "(${PYTHON} cur.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo 'echo "Creating PYTHON plot for water level"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "(${PYTHON} wlev.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo 'echo "Creating PYTHON plot for swell"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "(${PYTHON} swell.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "" >> ${TEMPDIR}/python_grib2_elements.sh
-      if [ CG"${CGNUMPLOT}" == "${RIPDOMAIN}" ]
+      echo "${PYTHON} wind.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "${PYTHON} depth.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "${PYTHON} htsgw.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "${PYTHON} period.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "${PYTHON} wlen.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "${PYTHON} cur.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "${PYTHON} wlev.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "${PYTHON} swell.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      if [ "${RIPPROG}" == "1" ] && [ CG"${CGNUMPLOT}" == "${RIPDOMAIN}" ]
       then
-         echo 'echo "Creating PYTHON plot for rip currents"' >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "(${PYTHON} rip.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "${PYTHON} rip.py" >> ${TEMPDIR}/python_grib2_elements.sh
       fi
-      if [ CG"${CGNUMPLOT}" == "${RUNUPDOMAIN}" ]
+      if [ "${RUNUPPROG}" == "1" ] && [ CG"${CGNUMPLOT}" == "${RUNUPDOMAIN}" ]
       then
-         echo 'echo "Creating PYTHON plot for erosion"' >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "(${PYTHON} erosion.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo 'echo "Creating PYTHON plot for overwash"' >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "(${PYTHON} owash.py; export err=\$?; err_chk) &" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "${PYTHON} erosion.py" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "${PYTHON} owash.py" >> ${TEMPDIR}/python_grib2_elements.sh
       fi
-      echo 'echo "Wait for all processes to finish"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "wait" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo '##echo "Creating PYTHON plot for Specific Locations"' >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "##${PYTHON} graph-dvd.py" >> ${TEMPDIR}/python_grib2_elements.sh
+#      echo '##echo "Creating PYTHON plot for Specific Locations"' >> ${TEMPDIR}/python_grib2_elements.sh
+#      echo "##${PYTHON} graph-dvd.py" >> ${TEMPDIR}/python_grib2_elements.sh
 #  fi
 
-  echo "Sourcing ${TEMPDIR}/python_grib2_elements.sh"
-  bash ${TEMPDIR}/python_grib2_elements.sh
-  export err=$?; err_chk 
+  echo "Executing ${TEMPDIR}/python_grib2_elements.sh"
+  if [ "${CGNUM}" -eq "1" ]
+     then
+     if ( [ "${RIPPROG}" == "1" ] && [ CG"${CGNUMPLOT}" == "${RIPDOMAIN}" ] ) && \
+        ( [ "${RUNUPPROG}" == "1" ] && [ CG"${CGNUMPLOT}" == "${RUNUPDOMAIN}" ] )
+     then
+        echo "Executing 11 plotting jobs using cfp"
+        aprun -n11 -N11 -j1 -d1 cfp ${TEMPDIR}/python_grib2_elements.sh
+        export err=$?; err_chk
+     elif [ "${RIPPROG}" == "1" ] && [ CG"${CGNUMPLOT}" == "${RIPDOMAIN}" ]
+     then
+        echo "Executing 9 plotting jobs using cfp"
+        aprun -n9 -N9 -j1 -d1 cfp ${TEMPDIR}/python_grib2_elements.sh
+        export err=$?; err_chk
+     else
+        echo "Executing 8 plotting jobs using cfp"
+        aprun -n8 -N8 -j1 -d1 cfp ${TEMPDIR}/python_grib2_elements.sh
+        export err=$?; err_chk
+     fi
+  else
+     echo "Executing plotting jobs in serial"
+     bash ${TEMPDIR}/python_grib2_elements.sh
+     export err=$?; err_chk
+  fi
 
   echo "Copying PNG images to ${GRAPHICSdir}"
   if [ "${HASHOTSTART}" == "TRUE" ]
