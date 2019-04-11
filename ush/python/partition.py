@@ -20,7 +20,7 @@ def read_controlFile(cfile):
         words = line.split()
         if words[0] == 'DSET':
             file = words[1]
-	elif words[0] == 'UNDEF':
+        elif words[0] == 'UNDEF':
             undef = float(words[1])
         elif words[0] == 'XDEF':
             xcol = int(words[1])
@@ -64,14 +64,14 @@ nws_logo = imread('nws_logo.png')
 #-----------------------------------------
 #--- Read Control files
 #-----------------------------------------
-cWave = open('swanpartition.ctl','r')    	# Control file
-cWind = open('windforhansonplots.ctl','r')    	# Control file
+cWave = open('swanpartition.ctl','r')           # Control file
+cWind = open('windforhansonplots.ctl','r')      # Control file
 
 #----------------------------------------------
 #--- Read Wave Partition binary & control file
 #----------------------------------------------
 fwave,waveXcol,waveRows,waveYval,wavePrts,waveCols,waveRun,waveFhr,waveStep,missing_val,YYYY,MM,DD,HH = read_controlFile(cWave)
-bWave = open(fwave,'r')        	# Binary 1D Spectrum file
+bWave = open(fwave,'r')         # Binary 1D Spectrum file
 
 print(fwave,waveXcol,waveRows,waveYval,wavePrts,waveCols,waveRun,waveFhr,waveStep,YYYY,MM,DD,HH)
 
@@ -99,7 +99,7 @@ bWave.close()
 #--- Read Wind Partition binary & control file
 #----------------------------------------------
 fwind,windXcol,windRows,windYval,windPrts,windCols,windRun,windFhr,windStep,missing_val,YYYY,MM,DD,HH = read_controlFile(cWind)
-bWind = open(fwind,'r')        	# Binary 1D Spectrum file
+bWind = open(fwind,'r')         # Binary 1D Spectrum file
 
 windData = np.fromfile(bWind, dtype=np.float32) # read the binary data
 windData = windData.reshape((windPrts*2,windCols,windRows)) # reshape the data file (2*components u,v)
@@ -124,7 +124,7 @@ bWind.close()
 #-----------------------------------------
 #--- Prepare the Wave data for plotting
 #-----------------------------------------
-timeSteps = wavePrts	# (2*components u,v)
+timeSteps = wavePrts     # (2*components u,v)
 
 if timeSteps > 20:
     XtickSpacing = 2
@@ -137,8 +137,8 @@ VectorColors = ['#000099','#0033FF','#00CCFF','#00FF00','#FFFF00','#FF6600','#FF
 
 waveComp = []
 mxUVwave = 0
-UWave 	 = np.zeros((timeSteps,waveCols,waveRows))
-VWave 	 = np.zeros((timeSteps,waveCols,waveRows))
+UWave    = np.zeros((timeSteps,waveCols,waveRows))
+VWave    = np.zeros((timeSteps,waveCols,waveRows))
 
 for i in range(0,timeSteps,1): #different lines
     #print(i)
@@ -154,10 +154,10 @@ for i in range(0,timeSteps,1): #different lines
     vec   = np.concatenate([uwave[~np.isnan(uwave)],vwave[~np.isnan(vwave)]])
     
     if len(vec) != 0:
-	waveComp.append(str(i+1))
-	mxUVwave = max(max(abs(vec)),mxUVwave)
+        waveComp.append(str(i+1))
+        mxUVwave = max(max(abs(vec)),mxUVwave)
     else:
-	waveComp.append('')
+        waveComp.append('')
 
 #Set regional override for fixed vector scaling
 if region == 'wr':
@@ -189,9 +189,9 @@ for i in range(0,timeSteps,1):
     xlabel('Time [UTC]',labelpad=2)
     
     if i == (timeSteps-1):
-	annotate(' NWPSystem\n\nWave\nPartition', xy=(1.1, 0.925), xycoords='axes fraction', color='k', horizontalalignment='center')
-	for j in range(min(9,len(waveComp))):          ## Limit plot to 9 wave systems
-	    annotate(waveComp[j]+'\n', xy=(1.1, 0.83-(j*0.065)), xycoords='axes fraction', color=VectorColors[j], horizontalalignment='center')
+        annotate(' NWPSystem\n\nWave\nPartition', xy=(1.1, 0.925), xycoords='axes fraction', color='k', horizontalalignment='center')
+        for j in range(min(9,len(waveComp))):          ## Limit plot to 9 wave systems
+            annotate(waveComp[j]+'\n', xy=(1.1, 0.83-(j*0.065)), xycoords='axes fraction', color=VectorColors[j], horizontalalignment='center')
 
     
 subplot(6,1,(5,6))
