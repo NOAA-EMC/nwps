@@ -2,6 +2,8 @@
 # Author: Andre van der Westhuysen, 04/28/15
 # Purpose: Plots SWAN output parameters from GRIB2.
 
+import cartopy.crs as ccrs
+import cartopy.feature as cfeature
 import matplotlib
 matplotlib.use('Agg',warn=False)
 import sys
@@ -11,7 +13,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.colors import Normalize
-from mpl_toolkits.basemap import Basemap
+#from mpl_toolkits.basemap import Basemap
 
 # Parameters
 monthstr = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']
@@ -23,9 +25,9 @@ noaa_logo = plt.imread('NOAA-Transparent-Logo.png')
 nws_logo = plt.imread('NWS_Logo.png')
 
 # Read control file
-print '*** cur.py ***'
+print('*** cur.py ***')
 if os.path.isfile("swan.ctl"):
-   print 'Reading: swan.ctl'
+   print('Reading: swan.ctl')
 
    with open("swan.ctl") as f:
        content = f.readlines()
@@ -55,20 +57,20 @@ if os.path.isfile("swan.ctl"):
    TDEF = (TDEF-1)/(TINCR/TINCR_OLD)+1
    #-------------------------------------------------------------------------
 else:
-   print '*** TERMINATING ERROR: Missing control file: swan.ctl'
+   print('*** TERMINATING ERROR: Missing control file: swan.ctl')
    sys.exit()
 
 # Load model results
 if os.path.isfile(DSET):
-   print 'Reading: '+DSET
+   print('Reading: '+DSET)
 else:
-   print '*** TERMINATING ERROR: Missing input file: '+DSET
+   print('*** TERMINATING ERROR: Missing input file: '+DSET)
    sys.exit()
 
 # Extract GRIB2 files to text
-for tstep in range(1, (TDEF+1)):
-   print ''
-   print 'Extracting Time step: '+str(tstep)
+for tstep in range(1, (int(TDEF)+1)):
+   print('')
+   print('Extracting Time step: '+str(tstep))
 
    # Current speed
    grib2dump = 'SPC_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
@@ -114,9 +116,9 @@ maxval=max(temp)
 
 plt.figure()
 # Read the extracted text file
-for tstep in range(1, (TDEF+1)):
-   print ''
-   print 'Processing Time step: '+str(tstep)
+for tstep in range(1, (int(TDEF)+1)):
+   print('')
+   print('Processing Time step: '+str(tstep))
 
    # Create a matrices of nlat x nlon initialized to 0
    par = np.zeros((nlat, nlon))
@@ -137,7 +139,7 @@ for tstep in range(1, (TDEF+1)):
    # Add the forecast hour to the start of the cycle timestamp
    date = date + datetime.timedelta(hours=forecastTime)
    fo.close()
-   print 'Cycle: '+str(forecastTime)+', Hour: '+str(date)
+   print('Cycle: '+str(forecastTime)+', Hour: '+str(date))
 
    # Current speed
    grib2dump = 'SPC_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
@@ -175,12 +177,7 @@ for tstep in range(1, (TDEF+1)):
    v=np.sin(3.1416/180*(270-par2))
 
    # Plot data
-   if tstep == 1:
-      if ((SITEID == 'afg') & (CGNUMPLOT == '1')):
-         m=Basemap(projection='merc',llcrnrlon=lons.min(),urcrnrlon=lons.max(),llcrnrlat=(lats.min()-0.1),urcrnrlat=lats.max(),resolution='h')
-      else:
-         m=Basemap(projection='merc',llcrnrlon=lons.min(),urcrnrlon=lons.max(),llcrnrlat=lats.min(),urcrnrlat=lats.max(),resolution='h')
-      x,y=m(reflon,reflat)
+   ax = plt.axes(projection=ccrs.Mercator())
    u = par*u
    v = par*v
 
@@ -188,8 +185,15 @@ for tstep in range(1, (TDEF+1)):
    if (maxval > 0.):
       if (not (SITEID == 'afg')) & (not (SITEID == 'alu')):
          norm = matplotlib.colors.Normalize(vmin=0.,vmax=(int(unitconvert*maxval)+1))
-         m.streamplot(x,y,u,v,color=par,density=4,linewidth=0.75,arrowsize=1.5,norm=norm)
-         m.colorbar(location='right',size='2.5%',pad='7%')
+         culim = int(unitconvert*maxval)+1
+         if (culim > 2):
+            clevs = np.arange(0, culim+0.5, 0.5)      #Have to add an additional 0.5 to get the right array upper limit
+         else:
+            clevs = np.arange(0, culim+0.2, 0.2)      #Have to add an additional 0.2 to get the right array upper limit
+         lw = 1.0*par / par.max()
+         plt.contourf(reflon,reflat,par,clevs,cmap=plt.cm.jet,norm=norm,transform=ccrs.PlateCarree())
+         ax.streamplot(reflon,reflat,u,v,color='k',density=2,linewidth=1.5*lw,arrowsize=0.75,norm=norm,transform=ccrs.PlateCarree())
+         plt.colorbar(ax=ax)
       else:
       # Basemap streamplot does not plot correctly at higher latitudes (WFOs AFG and ALU). Do surface plot and vectors instead
          par[np.where(par==0.)] = np.nan
@@ -199,24 +203,32 @@ for tstep in range(1, (TDEF+1)):
          else:
             clevs = np.arange(0, culim+0.2, 0.2)      #Have to add an additional 0.2 to get the right array upper limit
 
-         m.contourf(x,y,par,clevs,cmap=plt.cm.jet)
-         m.colorbar(location='right',size='2.5%',pad='7%')
+         plt.contourf(reflon,reflat,par,clevs,cmap=plt.cm.jet,norm=norm,transform=ccrs.PlateCarree())
+         plt.colorbar(ax=ax)
 
-         rowskip=np.floor(par2.shape[0]/20)
-         colskip=np.floor(par2.shape[1]/20)
-         m.quiver(x[0::rowskip,0::colskip],y[0::rowskip,0::colskip],\
+         rowskip=int(np.floor(par2.shape[0]/20))
+         colskip=int(np.floor(par2.shape[1]/20))
+         plt.quiver(reflon[0::rowskip,0::colskip],reflat[0::rowskip,0::colskip],\
              u[0::rowskip,0::colskip],v[0::rowskip,0::colskip], \
              color='black',pivot='middle',alpha=0.7,scale=6.,width=0.015,units='inches')
+
+   ax.set_aspect('auto', adjustable=None)
+   ax.set_extent([lons.min(), lons.max(), lats.min(), lats.max()])
 
    # There is an issue with plotting m.fillcontinents with inland lakes, so omitting it in
    # the case of WFO-GYX, CG2 and CG3 (Lakes Sebago and Winni)
    if (not ((SITEID == 'mfl') & (CGNUMPLOT == '3'))) & \
       (not ((SITEID == 'gyx') & (CGNUMPLOT == '2'))) & \
       (not ((SITEID == 'gyx') & (CGNUMPLOT == '3'))):
-      m.fillcontinents()
-      m.drawcoastlines() 
-   m.drawmeridians(np.arange(lons.min(),lons.max(),dlon),labels=[0,0,0,dlon],dashes=[1,3],color='0.50',fontsize=7)   
-   m.drawparallels(np.arange(lats.min(),lats.max(),dlat),labels=[dlat,0,0,0],dashes=[1,3],color='0.50',fontsize=7)
+      land_50m = cfeature.NaturalEarthFeature('physical','land','50m',edgecolor='face',facecolor=cfeature.COLORS['land'])
+      ax.add_feature(land_50m)
+   ax.coastlines(resolution='10m', color='black', linewidth=1)
+   gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
+                  linewidth=0.5, color='gray', alpha=0.5, linestyle='--')
+   gl.xlabels_top = False
+   gl.ylabels_right = False
+   gl.xlabel_style = {'size': 7}
+   gl.ylabel_style = {'size': 7}
 
    # Draw CWA zones from ESRI shapefiles. NB: Make sure the lon convention is -180:180.
    #m.readshapefile('marine_zones','marine_zones')
@@ -233,24 +245,21 @@ for tstep in range(1, (TDEF+1)):
                    (235.95295-360),(235.95676-360),(235.98158-360),(235.99183-360)]
       spierlats = [46.23481,46.234087,46.233942,46.233758,
                    46.232979,46.233316,46.227833,46.224246]
-      xx, yy = m(ipierlons, ipierlats) 
-      xxx, yyy = m(npierlons, npierlats) 
-      xxxx, yyyy = m(spierlons, spierlats) 
-      m.plot(xx,yy,color="black", linewidth=2.5, linestyle="-")
-      m.plot(xxx,yyy,color="black", linewidth=2.5, linestyle="-")
-      m.plot(xxxx,yyyy,color="black", linewidth=2.5, linestyle="-")
+      plt.plot(ipierlons, ipierlats, color="black", linewidth=2.5, linestyle="-", transform=ccrs.PlateCarree())
+      plt.plot(npierlons, npierlats, color="black", linewidth=2.5, linestyle="-", transform=ccrs.PlateCarree())
+      plt.plot(spierlons, spierlats, color="black", linewidth=2.5, linestyle="-", transform=ccrs.PlateCarree())
 
    figtitle = 'NWPS RTOFS-GLOBAL Surface Horizontal Current (knots) \n Hour '\
               +str(forecastTime)+' ('+str(date.hour).zfill(2)+'Z'+str(date.day).zfill(2)\
               +monthstr[int(date.month)-1]+str(date.year)+')'
-   plt.title(figtitle,fontsize=14)
+   plt.title(figtitle,fontsize=10)
    #plt.figtext(0.40, 0.06, '**EXPERIMENTAL**',fontsize=9)
 
    # Set up subaxes and plot the logos in them
-   plt.axes([0.02,.87,.08,.08])
+   plt.axes([0.00,.87,.08,.08])
    plt.axis('off')
    plt.imshow(noaa_logo,interpolation='gaussian')
-   plt.axes([.92,.87,.08,.08])
+   plt.axes([.86,.87,.08,.08])
    plt.axis('off')
    plt.imshow(nws_logo,interpolation='gaussian')
 
