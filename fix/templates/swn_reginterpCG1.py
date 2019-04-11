@@ -9,7 +9,7 @@ import numpy as np
 import numpy.ma as ma
 import netCDF4
 from matplotlib.tri import Triangulation, LinearTriInterpolator
-from StringIO import StringIO
+from io import StringIO
 
 #import ipdb; ipdb.set_trace()
 
@@ -33,58 +33,58 @@ Ypmax = #SWLAT#+#YLENC#
 myc = #MESHLAT#
 
 def array2cols(data,filename,cols):
-	rows=data.shape[0]
-	s=''
-	for row in range(rows):
-		s+=array_one_row(data[row,],filename,cols)
-	with open(filename,'a') as f:                  # append to file
-		f.write(s)
-	return
+        rows=data.shape[0]
+        s=''
+        for row in range(rows):
+                s+=array_one_row(data[row,],filename,cols)
+        with open(filename,'a') as f:                  # append to file
+                f.write(s)
+        return
 
 def array_one_row(data,filename,cols):
-	"""
-	Convert numpy masked array to ascii fixed width file
-	"""
-	rows=int(data.size/cols)                       # calc number of rows needed
-	if data.size%cols != 0:                        # add one more for spillover
-		rows+=1
-	data2=data.filled().copy()                     # convert to filled numpy array
-	data2=np.resize(data2,(rows,cols))             # expand to new size and pad with zeros
-	spares=cols-data.size%cols                     # compute number of values to blank at end
-	if (spares > 0) & (spares < 6):
-		data2[-1,-spares:]=-888.               # convert any end zeros to dummy values
-	s = StringIO()                                 # create internal file
-	np.savetxt(s,data2,fmt='%11.4e',delimiter=' ') # save to internal file
-	s2=s.getvalue().replace('-8.8800e+02',' '*11)  # replace dummy values
+        """
+        Convert numpy masked array to ascii fixed width file
+        """
+        rows=int(data.size/cols)                       # calc number of rows needed
+        if data.size%cols != 0:                        # add one more for spillover
+                rows+=1
+        data2=data.filled().copy()                     # convert to filled numpy array
+        data2=np.resize(data2,(rows,cols))             # expand to new size and pad with zeros
+        spares=cols-data.size%cols                     # compute number of values to blank at end
+        if (spares > 0) & (spares < 6):
+                data2[-1,-spares:]=-888.               # convert any end zeros to dummy values
+        s = StringIO()                                 # create internal file
+        np.savetxt(s,data2,fmt='%11.4e',delimiter=' ') # save to internal file
+        s2=s.getvalue().replace('-8.8800e+02',' '*11)  # replace dummy values
         #del s                                          # Cleans internal file
-	return s2
+        return s2
 
 #--- Added read triangulation from fort.14 to avoid interpolation over land mass ---
 if (siteid == 'hfo'):
    def get_grid_tri(fname_grid):
-	# get triangulation from fort.14
-	grid = open(fname_grid)
-	tmp = grid.readlines()
-	n_points = int(tmp[1].split()[1])
-	n_elements = int(tmp[1].split()[0])
-	points_array = tmp[2:n_points+2]
-	element_array = tmp[n_points+2: n_points+n_elements+2]
-	arraywidth = len(np.array(element_array[0].split(),dtype=int))
-	elements = np.zeros((n_elements,arraywidth),dtype=int,order='C')
-	for i in range(0, n_elements):
-		elements[i] = np.array(element_array[i].split(),dtype=int)-1
-	tri_grid = elements[:,arraywidth-3:arraywidth]		# indices of grid point for each element
-	return tri_grid
+        # get triangulation from fort.14
+        grid = open(fname_grid)
+        tmp = grid.readlines()
+        n_points = int(tmp[1].split()[1])
+        n_elements = int(tmp[1].split()[0])
+        points_array = tmp[2:n_points+2]
+        element_array = tmp[n_points+2: n_points+n_elements+2]
+        arraywidth = len(np.array(element_array[0].split(),dtype=int))
+        elements = np.zeros((n_elements,arraywidth),dtype=int,order='C')
+        for i in range(0, n_elements):
+                elements[i] = np.array(element_array[i].split(),dtype=int)-1
+        tri_grid = elements[:,arraywidth-3:arraywidth]          # indices of grid point for each element
+        return tri_grid
 #--- Added read triangulation from fort.14 to avoid interpolation over land mass ---
 
 # Load unstructured grid (Matlab binary)
 infile = direc+ncfile
-print 'Loading: '+infile
+print('Loading: '+infile)
 
 ncf=infile
 nco=netCDF4.Dataset(ncf)
 
-print 'Interpolating: '+grid+', '+par
+print('Interpolating: '+grid+', '+par)
 parkey = ''
 parkey2 = ''
 
@@ -148,7 +148,7 @@ if os.path.isfile(fname):
    os.remove(fname)
 
 for rec in range(0, len(epochtime)):
-   print 'Hour ',rec
+   print('Hour ',rec)
    #Read and interpolate data
    var=ma.array(fields[rec,:],dtype='double')
    var.fill_value=np.nan
