@@ -2,6 +2,8 @@
 # Author: Andre van der Westhuysen, 12/15/16
 # Purpose: Plots SWAN output parameters from GRIB2.
 
+import cartopy.crs as ccrs
+import cartopy.feature as cfeature
 import matplotlib
 matplotlib.use('Agg',warn=False)
 import sys
@@ -10,7 +12,7 @@ import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
-from mpl_toolkits.basemap import Basemap
+#from mpl_toolkits.basemap import Basemap
 from matplotlib import colors
 
 # Parameters
@@ -22,9 +24,9 @@ nws_logo = plt.imread('NWS_Logo.png')
 usgs_logo = plt.imread('USGS_Logo.png')
 
 # Read control file
-print '*** erosion.py ***'
+print('*** erosion.py ***')
 if os.path.isfile("swan_riprunup.ctl"):
-   print 'Reading: swan_riprunup.ctl'
+   print('Reading: swan_riprunup.ctl')
 
    with open("swan_riprunup.ctl") as f:
        content = f.readlines()
@@ -54,20 +56,20 @@ if os.path.isfile("swan_riprunup.ctl"):
    TDEF = (TDEF-1)/(TINCR/TINCR_OLD)+1
    #-------------------------------------------------------------------------
 else:
-   print '*** TERMINATING ERROR: Missing control file: swan_riprunup.ctl'
+   print('*** TERMINATING ERROR: Missing control file: swan_riprunup.ctl')
    sys.exit()
 
 # Load model results
 if os.path.isfile(DSET):
-   print 'Reading: '+DSET
+   print('Reading: '+DSET)
 else:
-   print '*** TERMINATING ERROR: Missing input file: '+DSET
+   print('*** TERMINATING ERROR: Missing input file: '+DSET)
    sys.exit()
 
 # Extract GRIB2 files to text
-for tstep in range(1, (TDEF+1)):
-   print ''
-   print 'Extracting Time step: '+str(tstep)
+for tstep in range(1, (int(TDEF)+1)):
+   print('')
+   print('Extracting Time step: '+str(tstep))
 
    # Deviation of sea level from mean
    grib2dump = 'EROSION_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
@@ -113,9 +115,9 @@ minval=min(temp)
 
 plt.figure()
 # Read the extracted text file
-for tstep in range(1, (TDEF+1)):
-   print ''
-   print 'Processing Time step: '+str(tstep)
+for tstep in range(1, (int(TDEF)+1)):
+   print('')
+   print('Processing Time step: '+str(tstep))
 
    # Create a matrices of nlat x nlon initialized to 0
    par = np.zeros((nlat, nlon))
@@ -139,7 +141,7 @@ for tstep in range(1, (TDEF+1)):
    # Add the forecast hour to the start of the cycle timestamp
    date = date + datetime.timedelta(hours=forecastTime)
    fo.close()
-   print 'Cycle: '+str(forecastTime)+', Hour: '+str(date)
+   print('Cycle: '+str(forecastTime)+', Hour: '+str(date))
 
    # Erosion probability (0-1)
    grib2dump = 'EROSION_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
@@ -158,13 +160,7 @@ for tstep in range(1, (TDEF+1)):
    par[np.where(par==-9999)] = np.nan
 
    # Plot data
-   if tstep == 1:
-      if ((SITEID == 'afg') & (CGNUMPLOT == '1')):
-         m=Basemap(projection='merc',llcrnrlon=lons.min(),urcrnrlon=lons.max(),llcrnrlat=(lats.min()-0.1),urcrnrlat=lats.max(),resolution='f')
-      else:
-         m=Basemap(projection='merc',llcrnrlon=lons.min(),urcrnrlon=lons.max(),llcrnrlat=lats.min(),urcrnrlat=lats.max(),resolution='f')
-      x,y=m(reflon,reflat)
-
+   ax = plt.axes(projection=ccrs.Mercator())
    clevs = [0,5,50,95,100]
    # specify the bounds for the colors
    bounds=[0,5,50,95,100]
@@ -173,21 +169,25 @@ for tstep in range(1, (TDEF+1)):
    # specify the mapping from value-->color
    norm = colors.BoundaryNorm(bounds, cmap.N)
 
-   m.contourf(x,y,par,clevs,cmap=cmap,norm=norm)
-   m.colorbar(location='right',size='2.5%',pad='7%',spacing='proportional')
-   #bar(np.nan,np.nan,color='blue',label='blue label')
-   #bar(np.nan,np.nan,color='red',label='red label')
-   #legend(fancybox=True,shadow=True,loc='best')
+   plt.contourf(reflon, reflat, par, clevs, cmap=cmap, transform=ccrs.PlateCarree())
+   plt.colorbar(ax=ax,spacing='proportional').set_label("", size=8)
+   ax.set_aspect('auto', adjustable=None)
+   ax.set_extent([lons.min(), lons.max(), lats.min(), lats.max()])
 
    # There is an issue with plotting m.fillcontinents with inland lakes, so omitting it in
    # the case of WFO-GYX, CG2 and CG3 (Lakes Sebago and Winni)
-   if (not ((SITEID == 'mfl') & (CGNUMPLOT == '3'))) & \
-      (not ((SITEID == 'gyx') & (CGNUMPLOT == '2'))) & \
-      (not ((SITEID == 'gyx') & (CGNUMPLOT == '3'))):
-      #m.fillcontinents()
-      m.drawcoastlines()
-   m.drawmeridians(np.arange(lons.min(),lons.max(),dlon),labels=[0,0,0,dlon],dashes=[1,3],color='0.50',fontsize=7)   
-   m.drawparallels(np.arange(lats.min(),lats.max(),dlat),labels=[dlat,0,0,0],dashes=[1,3],color='0.50',fontsize=7)
+   #if (not ((SITEID == 'mfl') & (CGNUMPLOT == '3'))) & \
+   #   (not ((SITEID == 'gyx') & (CGNUMPLOT == '2'))) & \
+   #   (not ((SITEID == 'gyx') & (CGNUMPLOT == '3'))):
+   #   land_50m = cfeature.NaturalEarthFeature('physical','land','50m',edgecolor='face',facecolor=cfeature.COLORS['land'])
+   #   ax.add_feature(land_50m)
+   ax.coastlines(resolution='10m', color='black', linewidth=1)
+   gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
+                  linewidth=0.5, color='gray', alpha=0.5, linestyle='--')
+   gl.xlabels_top = False
+   gl.ylabels_right = False
+   gl.xlabel_style = {'size': 7}
+   gl.ylabel_style = {'size': 7}
 
    # Draw CWA zones from ESRI shapefiles. NB: Make sure the lon convention is -180:180.
    #m.readshapefile('marine_zones','marine_zones')
@@ -204,26 +204,23 @@ for tstep in range(1, (TDEF+1)):
                    (235.95295-360),(235.95676-360),(235.98158-360),(235.99183-360)]
       spierlats = [46.23481,46.234087,46.233942,46.233758,
                    46.232979,46.233316,46.227833,46.224246]
-      xx, yy = m(ipierlons, ipierlats) 
-      xxx, yyy = m(npierlons, npierlats) 
-      xxxx, yyyy = m(spierlons, spierlats) 
-      m.plot(xx,yy,color="black", linewidth=2.5, linestyle="-")
-      m.plot(xxx,yyy,color="black", linewidth=2.5, linestyle="-")
-      m.plot(xxxx,yyyy,color="black", linewidth=2.5, linestyle="-")
+      plt.plot(ipierlons, ipierlats, color="black", linewidth=2.5, linestyle="-", transform=ccrs.PlateCarree())
+      plt.plot(npierlons, npierlats, color="black", linewidth=2.5, linestyle="-", transform=ccrs.PlateCarree())
+      plt.plot(spierlons, spierlats, color="black", linewidth=2.5, linestyle="-", transform=ccrs.PlateCarree())
 
    figtitle = '** EXPERIMENTAL **   NWPS-USGS Dune Erosion Probability (%) \n Hour '\
               +str(forecastTime)+' ('+str(date.hour).zfill(2)+'Z'+str(date.day).zfill(2)\
               +monthstr[int(date.month)-1]+str(date.year)+')'
-   plt.title(figtitle,fontsize=14)
+   plt.title(figtitle,fontsize=10)
 
    # Set up subaxes and plot the logos in them
-   plt.axes([0.02,.87,.08,.08])
+   plt.axes([0.00,.87,.08,.08])
    plt.axis('off')
    plt.imshow(noaa_logo,interpolation='gaussian')
-   plt.axes([.92,.87,.08,.08])
+   plt.axes([.86,.87,.08,.08])
    plt.axis('off')
    plt.imshow(nws_logo,interpolation='gaussian')
-   plt.axes([0.02,.02,.11,.08])
+   plt.axes([0.00,.02,.11,.08])
    plt.axis('off')
    plt.imshow(usgs_logo,interpolation='gaussian')
 
