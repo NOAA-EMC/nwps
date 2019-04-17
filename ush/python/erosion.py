@@ -181,7 +181,9 @@ for tstep in range(1, (int(TDEF)+1)):
    #   (not ((SITEID == 'gyx') & (CGNUMPLOT == '3'))):
    #   land_50m = cfeature.NaturalEarthFeature('physical','land','50m',edgecolor='face',facecolor=cfeature.COLORS['land'])
    #   ax.add_feature(land_50m)
-   ax.coastlines(resolution='10m', color='black', linewidth=1)
+   coast = cfeature.GSHHSFeature(scale='high',edgecolor='black')
+   ax.add_feature(coast)
+   #ax.coastlines(resolution='10m', color='black', linewidth=1)
    gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
                   linewidth=0.5, color='gray', alpha=0.5, linestyle='--')
    gl.xlabels_top = False
