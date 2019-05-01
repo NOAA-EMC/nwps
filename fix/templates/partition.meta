@@ -12,7 +12,10 @@ discipline = 10
 
 # GRIB2 Section 1  meta data
 originating_center = 7
-originating_subcenter = 0
+#AW20190501 --- Temporarily changed to allow test output to be ingested by AWIPS ---
+#AW20190501 originating_subcenter = 0
+originating_subcenter = 4
+#AW20190501 --- Temporarily changed to allow test output to be ingested by AWIPS ---
 master_table_version = 2
 grib_local_table_ver = 1
 time_reference = 1
