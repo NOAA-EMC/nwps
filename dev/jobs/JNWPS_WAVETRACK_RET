@@ -76,9 +76,9 @@ export TMPdir=${TMPdir:-${DATA}/tmp}
 export LOGdir=${LOGdir:-${DATA}/logs}
 export GEN_NETCDF=${GEN_NETCDF:-FALSE}
 export GEN_HDF5=${GEN_HDF5:-FALSE}
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOMEnwps}/lib64/python/basemap-1.0.7/geos-3.3.3/lib
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOMEnwps}/lib64/python/basemap-1.0.7/geos-3.3.3/lib
 #export PYTHONPATH=${HOMEnwps}/lib/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
-export PYTHONPATH=${HOMEnwps}/lib64/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
+#export PYTHONPATH=${HOMEnwps}/lib64/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
 export PYTHON=python
 
 # Set NWPS run conditions
