@@ -105,7 +105,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOMEnwps}/lib/szip:${HOMEnwps}/lib/pro
 
 # Set paths for local Python modules (mesh interpolation)
 #export PYTHONPATH=${HOMEnwps}/lib/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
-export PYTHONPATH=${HOMEnwps}/lib64/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
+#export PYTHONPATH=${HOMEnwps}/lib64/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
 export PYTHON=python
 
 # Set NWPS run conditions
