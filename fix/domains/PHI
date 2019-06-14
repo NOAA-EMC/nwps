@@ -129,18 +129,18 @@ export WAVECPS="multi_1.NW-PHI55.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#BOUN SEG XY 286.65 40.60 286.65 38.20 VAR FILE 0.00 'multi_1.NW-PHI60.spec.swan'    1 &
-#                         0.50 'multi_1.NW-PHI59.spec.swan'    1 &
-#                         1.00 'multi_1.NW-PHI58.spec.swan'    1 &
-#                         1.50 'multi_1.NW-PHI57.spec.swan'    1 &
-#                         2.00 'multi_1.NW-PHI56.spec.swan'    1 &
-#                         2.40 'multi_1.NW-PHI55.spec.swan'    1
+#$BOUN SEG XY 286.65 40.60 286.65 38.20 VAR FILE 0.00 'multi_1.NW-PHI60.spec.swan'    1 &
+#$                         0.50 'multi_1.NW-PHI59.spec.swan'    1 &
+#$                         1.00 'multi_1.NW-PHI58.spec.swan'    1 &
+#$                         1.50 'multi_1.NW-PHI57.spec.swan'    1 &
+#$                         2.00 'multi_1.NW-PHI56.spec.swan'    1 &
+#$                         2.40 'multi_1.NW-PHI55.spec.swan'    1
 #$
-#BOUN SEG XY 286.65 38.20 284.75 38.20 VAR FILE 0.00 'multi_1.NW-PHI55.spec.swan.cp'    1 &
-#                         0.40 'multi_1.NW-PHI54.spec.swan'    1 &
-#                         0.90 'multi_1.NW-PHI53.spec.swan'    1 &
-#                         1.40 'multi_1.NW-PHI52.spec.swan'    1 &
-#                         1.90 'multi_1.NW-PHI51.spec.swan'    1
+#$BOUN SEG XY 286.65 38.20 284.75 38.20 VAR FILE 0.00 'multi_1.NW-PHI55.spec.swan.cp'    1 &
+#$                         0.40 'multi_1.NW-PHI54.spec.swan'    1 &
+#$                         0.90 'multi_1.NW-PHI53.spec.swan'    1 &
+#$                         1.40 'multi_1.NW-PHI52.spec.swan'    1 &
+#$                         1.90 'multi_1.NW-PHI51.spec.swan'    1
 #$END BOUNSEG
 #
 #========================================================================
