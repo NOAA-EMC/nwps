@@ -217,7 +217,8 @@ echo " " | tee -a $logrunup
      cgnLAT2=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat | grep to | grep by | awk '{ print $4 }')
      cgnNY=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat-lon | grep grid | grep x | awk '{ print $4 }' | sed s/')'//g)
      SWAN_RUNUP_OUTPUT_FILE="${OUTDIRrunup}/${FORT22}"
-     RUNUPparms="erosion_flag owash_flag"
+     #RUNUPparms="erosion_flag owash_flag"
+     RUNUPparms="erosion_flag owash_flag twl runup setup swash erosion overwash"
      RUNUPerrors=0
      for parm in ${RUNUPparms}
      do
