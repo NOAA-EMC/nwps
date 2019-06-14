@@ -465,7 +465,14 @@ sub makeInputCGx (%){
 	   $newhotfilelocation="${RUNdir}/PE00${core}/";
 	   system("cp -pfv $hotfilelocation $newhotfilelocation >> ${LOGdir}/hotstart.log 2>&1");
         }
-        if ( ("${SITEID}" eq "MHX") || ("${SITEID}" eq "CAR") || ("${SITEID}" eq "MFL") || ("${SITEID}" eq "TBW") || ("${SITEID}" eq "BOX") || ("${SITEID}" eq "SGX") || ("${SITEID}" eq "SJU") || ("${SITEID}" eq "AKQ") || ("${SITEID}" eq "OKX") || ("${SITEID}" eq "GUM") || ("${SITEID}" eq "ALU") || ("${SITEID}" eq "GUA") ) {
+        if ( ("${SITEID}" eq "MHX") || ("${SITEID}" eq "CAR") || ("${SITEID}" eq "MFL") 
+          || ("${SITEID}" eq "TBW") || ("${SITEID}" eq "BOX") || ("${SITEID}" eq "SGX") 
+          || ("${SITEID}" eq "SJU") || ("${SITEID}" eq "AKQ") || ("${SITEID}" eq "OKX") 
+          || ("${SITEID}" eq "GUM") || ("${SITEID}" eq "ALU") || ("${SITEID}" eq "GUA") 
+          || ("${SITEID}" eq "MLB") || ("${SITEID}" eq "JAX") || ("${SITEID}" eq "CHS") 
+          || ("${SITEID}" eq "ILM") || ("${SITEID}" eq "PHI") || ("${SITEID}" eq "GYX")
+          || ("${SITEID}" eq "KEY") || ("${SITEID}" eq "TAE") || ("${SITEID}" eq "MOB")
+          || ("${SITEID}" eq "MLB") ) {
            for (my $core=16; $core<48; $core++){
 	      #AW $hotfilelocation="${INPUTdir}/hotstart/PE00${core}/${hottime[0]}";
 	      $hotfilelocation="${hotfiles_cyc}/PE00${core}/${hottime[0]}";
