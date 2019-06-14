@@ -201,10 +201,9 @@ HH=`echo ${YYYYMMDDHH} | cut -b9-10`
 time_str="${YYYY} ${MM} ${DD} ${HH} 00 00"
 model_start_time=`echo ${time_str} | awk -F: '{ print mktime($1 $2 $3 $4 $5 $6) }'`
 
-# Find most recent water level file by comparing the model init epoch time 
-# to those of all available ESTOFS files (ignoring estofs_waterlevel_start_time.txt)
-# This allows the same water level file to be used in case of a model rerun.
-rtofs_current_start_time=`ls ${INPUTdir}/wave_rtofs_uv* | xargs -n1 basename | cut -b15-24 | sort | uniq | awk -v thresh=$model_start_time '$1 <= thresh' | tail -1`
+# Find the epoch stat time of the RTOFS current file 
+#AW rtofs_current_start_time=`ls ${INPUTdir}/wave_rtofs_uv* | xargs -n1 basename | cut -b15-24 | sort | uniq | awk -v thresh=$model_start_time '$1 <= thresh' | tail -1`
+rtofs_current_start_time=$(cat ${INPUTdir}/rtofs_current_start_time.txt)
 rtofs_date_str=`echo ${rtofs_current_start_time} | awk '{ print strftime("%Y%m%d", $1) }'`
 # We only have the 00z cycle for all NCEP production runs
 ## rtofs_model_cycle=`echo ${rtofs_current_start_time} | awk '{ print strftime("%H", $1) }'`
@@ -387,6 +386,8 @@ for parm in ${SWANPARMS}
       FF=`echo 00$t0`
   fi
 
+  if [ "${RETROSPECTIVE}" == "FALSE" ]; then    #RETROSPECTIVE
+
   infile="${INPUTdir}/wave_rtofs_uv_${rtofs_current_start_time}_${rtofs_date_str}_${rtofs_model_cycle}_f${FF}.dat"
   echo "SWAN input file for $t0: ${infile}" | tee -a ${LOGfile}
   if [ ! -s ${infile} ]
@@ -434,6 +435,10 @@ for parm in ${SWANPARMS}
   # Put the current file for each CG in the SWAN processing directory
   cat ${VARdir}/curr_temp.$$ > ${outfile}
   rm -f ${VARdir}/curr_temp.$$
+
+  else    #RETROSPECTIVE
+     cp ${INPUTdir}/*CG?.cur ${RUNdir}
+  fi    #RETROSPECTIVE
 
   # Generate lines for INPUTCG files
   model_end_time=$model_start_time
