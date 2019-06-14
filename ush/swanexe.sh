@@ -93,7 +93,13 @@ then
       fi
 
       # Run each domain with appropriate number of cores.
-      if [ "${siteid}" == "car" ] || [ "${siteid}" == "mfl" ] || [ "${siteid}" == "tbw" ] || [ "${siteid}" == "box" ] || [ "${siteid}" == "sgx" ] || [ "${siteid}" == "sju" ] || [ "${siteid}" == "akq" ] || [ "${siteid}" == "okx" ] || [ "${siteid}" == "gum" ] || [ "${siteid}" == "alu" ] || [ "${siteid}" == "gua" ]
+      if [ "${siteid}" == "car" ] || [ "${siteid}" == "mfl" ] || [ "${siteid}" == "tbw" ] \
+         || [ "${siteid}" == "box" ] || [ "${siteid}" == "sgx" ] || [ "${siteid}" == "sju" ] \
+         || [ "${siteid}" == "akq" ] || [ "${siteid}" == "okx" ] || [ "${siteid}" == "gum" ] \
+         || [ "${siteid}" == "alu" ] || [ "${siteid}" == "gua" ] || [ "${siteid}" == "mlb" ] \
+         || [ "${siteid}" == "jax" ] || [ "${siteid}" == "chs" ] || [ "${siteid}" == "ilm" ] \
+         || [ "${siteid}" == "phi" ] || [ "${siteid}" == "gyx" ] || [ "${siteid}" == "key" ] \
+         || [ "${siteid}" == "tae" ] || [ "${siteid}" == "mob" ] || [ "${siteid}" == "hgx" ]
       then
          echo "Copying required files for PuNSWAN run for "${siteid}
          for i in {0..9}; do
