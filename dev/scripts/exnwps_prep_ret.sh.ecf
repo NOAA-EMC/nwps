@@ -1,4 +1,5 @@
 #!/bin/bash
+set -xa
 echo "============================================================="
 echo "=                                                           ="
 echo "=         RUNNING NWPS-WCOSS FOR SITE: ${SITEID}                  ="
@@ -15,6 +16,7 @@ export WINDS=${WINDS:-FORECASTER}
 export DOMAINSET=${DOMAINSET:-${FIXnwps}/domains/${SITEID}}
 
 # Copy all required data from run archive
+mkdir ${INPUTdir}/estofs/ ${INPUTdir}/psurge/ ${INPUTdir}/rtofs/
 cd ${RUNdir}
 for CG in CG1 CG0 CG2 CG3 CG4 CG5
 do
@@ -22,10 +24,10 @@ do
    if [ -d "${HPSSARCHdir}/${REGION}.${PDY}/${siteid}/${cyc}/${CG}" ]; then
       echo 'Data found. Copying to '${RUNdir}
       cp -pv ${HPSSARCHdir}/${REGION}.${PDY}/${siteid}/${cyc}/${CG}/* ${RUNdir}
+      cp -pv ${HPSSARCHdir}/${REGION}.${PDY}/${siteid}/${cyc}/${CG}/*${CG}.cur ${INPUTdir}/rtofs/
       if [ $CG == CG1 ]; then
          #tar -xf ${RUNdir}/*.spec.swan.tar
          mv NWPSWINDGRID_${siteid}* ${INPUTdir}/
-         mkdir ${INPUTdir}/estofs/ ${INPUTdir}/psurge/ ${INPUTdir}/rtofs/
          if [ -e wave_estofs_waterlevel_*.tar ]; then
             mv wave_estofs_waterlevel_*.tar ${INPUTdir}/estofs/
             cd ${INPUTdir}/estofs/
