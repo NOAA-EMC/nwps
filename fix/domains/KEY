@@ -166,44 +166,44 @@ export WAVECPS="multi_1.KEY51.spec.swan,multi_1.KEY63.spec.swan,multi_1.KEY68.sp
 #
 #$BOUNDARY COMMAND LINES
 #$southern side KEY - east to west
-#BOUN SEG XY 276.50 26.00 276.50 23.00 VAR FILE 0.00 'multi_1.KEY51.spec.swan'    1 &
-#0.25 'multi_1.KEY52.spec.swan'    1 &
-#0.50 'multi_1.KEY53.spec.swan'    1 &
-#0.75 'multi_1.KEY54.spec.swan'    1 &
-#1.00 'multi_1.KEY55.spec.swan'    1 &
-#1.25 'multi_1.KEY56.spec.swan'    1 &
-#1.50 'multi_1.KEY57.spec.swan'    1 &
-#1.75 'multi_1.KEY58.spec.swan'    1 &
-#2.00 'multi_1.KEY59.spec.swan'    1 &
-#2.25 'multi_1.KEY60.spec.swan'    1 &
-#2.50 'multi_1.KEY61.spec.swan'    1 &
-#2.75 'multi_1.KEY62.spec.swan'    1 &
-#3.00 'multi_1.KEY63.spec.swan.cp' 1
+#$BOUN SEG XY 276.50 26.00 276.50 23.00 VAR FILE 0.00 'multi_1.KEY51.spec.swan'    1 &
+#$0.25 'multi_1.KEY52.spec.swan'    1 &
+#$0.50 'multi_1.KEY53.spec.swan'    1 &
+#$0.75 'multi_1.KEY54.spec.swan'    1 &
+#$1.00 'multi_1.KEY55.spec.swan'    1 &
+#$1.25 'multi_1.KEY56.spec.swan'    1 &
+#$1.50 'multi_1.KEY57.spec.swan'    1 &
+#$1.75 'multi_1.KEY58.spec.swan'    1 &
+#$2.00 'multi_1.KEY59.spec.swan'    1 &
+#$2.25 'multi_1.KEY60.spec.swan'    1 &
+#$2.50 'multi_1.KEY61.spec.swan'    1 &
+#$2.75 'multi_1.KEY62.spec.swan'    1 &
+#$3.00 'multi_1.KEY63.spec.swan.cp' 1
 #$ Southern Boundary
-#BOUN SEG XY 276.50 23.00 281.00 23.00 VAR FILE 0.00 'multi_1.KEY63.spec.swan'    1 &
-#3.70 'multi_1.KEY64.spec.swan'    1 &
-#3.90 'multi_1.KEY65.spec.swan'    1 &
-#4.10 'multi_1.KEY66.spec.swan'    1 &
-#4.30 'multi_1.KEY67.spec.swan'    1 &
-#4.50 'multi_1.KEY68.spec.swan.cp' 1 
+#$BOUN SEG XY 276.50 23.00 281.00 23.00 VAR FILE 0.00 'multi_1.KEY63.spec.swan'    1 &
+#$3.70 'multi_1.KEY64.spec.swan'    1 &
+#$3.90 'multi_1.KEY65.spec.swan'    1 &
+#$4.10 'multi_1.KEY66.spec.swan'    1 &
+#$4.30 'multi_1.KEY67.spec.swan'    1 &
+#$4.50 'multi_1.KEY68.spec.swan.cp' 1 
 #$ Eastern Boundary
-#BOUN SEG XY 281.00 23.00 281.00 26.00 VAR FILE 0.00 'multi_1.KEY68.spec.swan'    1 &
-#0.20 'multi_1.KEY69.spec.swan'    1 &
-#0.40 'multi_1.KEY70.spec.swan'    1 &
-#3.00 'multi_1.KEY71.spec.swan.cp' 1 
+#$BOUN SEG XY 281.00 23.00 281.00 26.00 VAR FILE 0.00 'multi_1.KEY68.spec.swan'    1 &
+#$0.20 'multi_1.KEY69.spec.swan'    1 &
+#$0.40 'multi_1.KEY70.spec.swan'    1 &
+#$3.00 'multi_1.KEY71.spec.swan.cp' 1 
 #$ Northern Boundary
-#BOUN SEG XY 281.00 26.00 276.5 26.00 VAR FILE 0.00 'multi_1.KEY71.spec.swan'    1 &
-#0.20 'multi_1.KEY72.spec.swan'    1 &
-#0.40 'multi_1.KEY73.spec.swan'    1 &
-#0.60 'multi_1.KEY74.spec.swan'    1 &
-#0.80 'multi_1.KEY75.spec.swan'    1 &
-#1.00 'multi_1.KEY76.spec.swan'    1 &
-#3.20 'multi_1.KEY77.spec.swan'    1 &
-#3.45 'multi_1.KEY78.spec.swan'    1 &
-#3.70 'multi_1.KEY79.spec.swan'    1 &
-#3.95 'multi_1.KEY80.spec.swan'    1 &
-#4.20 'multi_1.KEY81.spec.swan'    1 &
-#4.50 'multi_1.KEY51.spec.swan.cp' 1
+#$BOUN SEG XY 281.00 26.00 276.5 26.00 VAR FILE 0.00 'multi_1.KEY71.spec.swan'    1 &
+#$0.20 'multi_1.KEY72.spec.swan'    1 &
+#$0.40 'multi_1.KEY73.spec.swan'    1 &
+#$0.60 'multi_1.KEY74.spec.swan'    1 &
+#$0.80 'multi_1.KEY75.spec.swan'    1 &
+#$1.00 'multi_1.KEY76.spec.swan'    1 &
+#$3.20 'multi_1.KEY77.spec.swan'    1 &
+#$3.45 'multi_1.KEY78.spec.swan'    1 &
+#$3.70 'multi_1.KEY79.spec.swan'    1 &
+#$3.95 'multi_1.KEY80.spec.swan'    1 &
+#$4.20 'multi_1.KEY81.spec.swan'    1 &
+#$4.50 'multi_1.KEY51.spec.swan.cp' 1
 #NUM DIRimpl cdd=1 cdlim=2
 #$END BOUNSEG
 #
