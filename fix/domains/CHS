@@ -131,20 +131,20 @@ export WAVECPS="multi_1.CHS55.spec.swan,multi_1.CHS59.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-# BOUN SEG XY 281.90 30.67 278.7 30.67 VAR FILE 0.00 'multi_1.CHS55.spec.swan'    1 &
-# 0.90 'multi_1.CHS54.spec.swan'    1 &
-# 1.70 'multi_1.CHS53.spec.swan'    1 &
-# 2.40 'multi_1.CHS52.spec.swan'    1 &
-# 3.20 'multi_1.CHS51.spec.swan'    1
+#$ BOUN SEG XY 281.90 30.67 278.7 30.67 VAR FILE 0.00 'multi_1.CHS55.spec.swan'    1 &
+#$ 0.90 'multi_1.CHS54.spec.swan'    1 &
+#$ 1.70 'multi_1.CHS53.spec.swan'    1 &
+#$ 2.40 'multi_1.CHS52.spec.swan'    1 &
+#$ 3.20 'multi_1.CHS51.spec.swan'    1
 #$
-# BOUN SEG XY 281.90 33.58 281.90 30.67 VAR FILE 0.00 'multi_1.CHS59.spec.swan'    1 &
-# 0.72 'multi_1.CHS58.spec.swan'    1 &
-# 1.45 'multi_1.CHS57.spec.swan'    1 &
-# 2.18 'multi_1.CHS56.spec.swan'    1 &
-# 2.91 'multi_1.CHS55.spec.swan.cp' 1
+#$ BOUN SEG XY 281.90 33.58 281.90 30.67 VAR FILE 0.00 'multi_1.CHS59.spec.swan'    1 &
+#$ 0.72 'multi_1.CHS58.spec.swan'    1 &
+#$ 1.45 'multi_1.CHS57.spec.swan'    1 &
+#$ 2.18 'multi_1.CHS56.spec.swan'    1 &
+#$ 2.91 'multi_1.CHS55.spec.swan.cp' 1
 #$
-# BOUN SEG XY 281.10 33.58 281.90 33.58 VAR FILE 0.00 'multi_1.CHS61.spec.swan'    1 &
-# 0.40 'multi_1.CHS60.spec.swan'    1 &
-# 0.80 'multi_1.CHS59.spec.swan.cp' 1
+#$ BOUN SEG XY 281.10 33.58 281.90 33.58 VAR FILE 0.00 'multi_1.CHS61.spec.swan'    1 &
+#$ 0.40 'multi_1.CHS60.spec.swan'    1 &
+#$ 0.80 'multi_1.CHS59.spec.swan.cp' 1
 #$END BOUNSEG
 #
