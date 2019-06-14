@@ -133,7 +133,8 @@ elif timeSteps >= 36:
 else:
     XtickSpacing = 1
 
-VectorColors = ['#000099','#0033FF','#00CCFF','#00FF00','#FFFF00','#FF6600','#FF3300','#990000','#660099','#CC0099']
+#VectorColors = ['#000099','#0033FF','#00CCFF','#00FF00','#FFFF00','#FF6600','#FF3300','#990000','#660099','#CC0099']
+VectorColors = ['#0033FF','#FF0000','#00CCFF','#00FF00','#8B008B','#FF6600','#FF3300','#990000','#660099','#CC0099']
 
 waveComp = []
 mxUVwave = 0
@@ -189,9 +190,9 @@ for i in range(0,timeSteps,1):
     xlabel('Time [UTC]',labelpad=2)
     
     if i == (timeSteps-1):
-        annotate(' NWPSystem\n\nWave\nPartition', xy=(1.1, 0.925), xycoords='axes fraction', color='k', horizontalalignment='center')
+        annotate('\n\n\nWave\nSystem', xy=(1.1, 0.925), xycoords='axes fraction', color='k', horizontalalignment='center')
         for j in range(min(9,len(waveComp))):          ## Limit plot to 9 wave systems
-            annotate(waveComp[j]+'\n', xy=(1.1, 0.83-(j*0.065)), xycoords='axes fraction', color=VectorColors[j], horizontalalignment='center')
+            annotate(waveComp[j]+'\n', xy=(1.1, 0.77-(j*0.065)), xycoords='axes fraction', color=VectorColors[j], horizontalalignment='center')
 
     
 subplot(6,1,(5,6))
@@ -213,10 +214,10 @@ ylim(int(np.round(mxUVwind*1.94,0))*-1,int(np.round(mxUVwind*1.94,0)))
 
 subplots_adjust(hspace=1.5)    
 
-quiverkey(Qwave,waveXvals[-1]*1.1,3,mxUVwave,'Wave Height\nScale\n'+str(np.round(mxUVwave*3.28,1))+" [ft]",coordinates='data',color='r',fontproperties={'size': 'small'})
+quiverkey(Qwave,waveXvals[-1]*1.1,3,mxUVwave,'Wave Height\nScale\n'+str(np.round(mxUVwave*3.28,1))+" [ft]",coordinates='data',color='#0033FF',fontproperties={'size': 'small'})
 annotate(''+str(np.round((mxUVwave),1))+' [m]', xy=(1.1, 1.54), xycoords='axes fraction', color='k', horizontalalignment='center', fontsize='small')
 
-quiverkey(Qwind,waveXvals[-1]*1.1,int(np.round(mxUVwind*1.94,0))*-0.5,mxUVwind,'Wind Source:\n'+windSource+'\n\nWind Speed\nScale\n'+str(np.round(mxUVwind*1.94,1))+" [kts]",coordinates='data',color='r',fontproperties={'size': 'small'})
+quiverkey(Qwind,waveXvals[-1]*1.1,int(np.round(mxUVwind*1.94,0))*-0.5,mxUVwind,'Wind Source:\n'+windSource[:8]+'\n\nWind Speed\nScale\n'+str(np.round(mxUVwind*1.94,1))+" [kts]",coordinates='data',color='#0033FF',fontproperties={'size': 'small'})
 annotate(''+str(np.round((mxUVwind),1))+' [m/s]', xy=(1.1, 0.06), xycoords='axes fraction', color='k', horizontalalignment='center', fontsize='small')
 
 
