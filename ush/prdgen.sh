@@ -159,7 +159,9 @@ YMDH=${PDY}
            yyyy=$(cat year)
            mon=$(cat mon)
            dd=$(cat day)
-           file="${WFO}_${NET}_${grdID}_Trkng_${yyyy}${mon}${dd}_${cycle}00.grib2"
+           ## AW20190515 --- Temporarily changed file name to *clust.grib2 -------------
+           file="${WFO}_${NET}_${grdID}_Trkng_${yyyy}${mon}${dd}_${cycle}00.clust.grib2"
+           ## AW20190515 ---------------------------------------------------------------
         else 
            #cycle=${file:22:2}
            grep "^INPGRID WIND" ${RUNdir}/input${grdID} > blah1
