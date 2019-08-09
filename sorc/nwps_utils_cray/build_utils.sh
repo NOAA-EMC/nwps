@@ -150,6 +150,12 @@ if [ "${INSTALL^^}" == "TRUE" ]; then make install; fi
 if [ "${CLEAN^^}" == "TRUE" ]; then make clean; fi
 cd ${WORKDIR}
 
+cd shiproute_to_bin
+make
+if [ "${INSTALL^^}" == "TRUE" ]; then make install; fi
+if [ "${CLEAN^^}" == "TRUE" ]; then make clean; fi
+cd ${WORKDIR}
+
 echo "NWPS utils build complete"
 date -u
 # ----------------------------------------------------------- 
