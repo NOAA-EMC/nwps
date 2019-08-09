@@ -654,6 +654,7 @@ use IO::File;
 sub getPrtNamesLonLat {
     my ($sought1 , $name, $numOfPartLoc, @temp , @char,$longName   );
     my ($domain)=@_;
+    my $SHIPRTstring="SHIPRT";
     $sought1="POINTS";
     $numOfPartLoc=0;
     open (DATA,"input$_[0]");
@@ -670,6 +671,12 @@ sub getPrtNamesLonLat {
             @char=split //, $temp[1];
             pop @char; shift @char; #scraching the apostrophes in the name
             $name=join ("",@char);
+
+	    # 01/10/2017: Check for Ship route points
+	    if($name =~/^$SHIPRTstring/) {
+		next;
+	    }
+
             undef @char;
             push @prtShortName, $name;
             push @prtLon, $temp[2];
