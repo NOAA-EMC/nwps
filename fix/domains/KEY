@@ -165,45 +165,43 @@ export WAVECPS="multi_1.KEY51.spec.swan,multi_1.KEY63.spec.swan,multi_1.KEY68.sp
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#$southern side KEY - east to west
-#$BOUN SEG XY 276.50 26.00 276.50 23.00 VAR FILE 0.00 'multi_1.KEY51.spec.swan'    1 &
-#$0.25 'multi_1.KEY52.spec.swan'    1 &
-#$0.50 'multi_1.KEY53.spec.swan'    1 &
-#$0.75 'multi_1.KEY54.spec.swan'    1 &
-#$1.00 'multi_1.KEY55.spec.swan'    1 &
-#$1.25 'multi_1.KEY56.spec.swan'    1 &
-#$1.50 'multi_1.KEY57.spec.swan'    1 &
-#$1.75 'multi_1.KEY58.spec.swan'    1 &
-#$2.00 'multi_1.KEY59.spec.swan'    1 &
-#$2.25 'multi_1.KEY60.spec.swan'    1 &
-#$2.50 'multi_1.KEY61.spec.swan'    1 &
-#$2.75 'multi_1.KEY62.spec.swan'    1 &
-#$3.00 'multi_1.KEY63.spec.swan.cp' 1
-#$ Southern Boundary
-#$BOUN SEG XY 276.50 23.00 281.00 23.00 VAR FILE 0.00 'multi_1.KEY63.spec.swan'    1 &
-#$3.70 'multi_1.KEY64.spec.swan'    1 &
-#$3.90 'multi_1.KEY65.spec.swan'    1 &
-#$4.10 'multi_1.KEY66.spec.swan'    1 &
-#$4.30 'multi_1.KEY67.spec.swan'    1 &
-#$4.50 'multi_1.KEY68.spec.swan.cp' 1 
-#$ Eastern Boundary
-#$BOUN SEG XY 281.00 23.00 281.00 26.00 VAR FILE 0.00 'multi_1.KEY68.spec.swan'    1 &
-#$0.20 'multi_1.KEY69.spec.swan'    1 &
-#$0.40 'multi_1.KEY70.spec.swan'    1 &
-#$3.00 'multi_1.KEY71.spec.swan.cp' 1 
-#$ Northern Boundary
-#$BOUN SEG XY 281.00 26.00 276.5 26.00 VAR FILE 0.00 'multi_1.KEY71.spec.swan'    1 &
-#$0.20 'multi_1.KEY72.spec.swan'    1 &
-#$0.40 'multi_1.KEY73.spec.swan'    1 &
-#$0.60 'multi_1.KEY74.spec.swan'    1 &
-#$0.80 'multi_1.KEY75.spec.swan'    1 &
-#$1.00 'multi_1.KEY76.spec.swan'    1 &
-#$3.20 'multi_1.KEY77.spec.swan'    1 &
-#$3.45 'multi_1.KEY78.spec.swan'    1 &
-#$3.70 'multi_1.KEY79.spec.swan'    1 &
-#$3.95 'multi_1.KEY80.spec.swan'    1 &
-#$4.20 'multi_1.KEY81.spec.swan'    1 &
-#$4.50 'multi_1.KEY51.spec.swan.cp' 1
+#$UNSTR SWAN BOUNDARY COMMAND LINES - SITE NW-KEY
+#$ NW boundary
+#BOUNdspec SIDE 1 CCW CON FILE 'multi_1.KEY81.spec.swan' 1
+#BOUNdspec SIDE 2 CCW CON FILE 'multi_1.KEY80.spec.swan' 1
+#BOUNdspec SIDE 3 CCW CON FILE 'multi_1.KEY79.spec.swan' 1
+#BOUNdspec SIDE 4 CCW CON FILE 'multi_1.KEY78.spec.swan' 1
+#BOUNdspec SIDE 5 CCW CON FILE 'multi_1.KEY77.spec.swan' 1
+#$ NE boundary
+#BOUNdspec SIDE 6 CCW CON FILE 'multi_1.KEY76.spec.swan' 1
+#BOUNdspec SIDE 7 CCW CON FILE 'multi_1.KEY75.spec.swan' 1
+#BOUNdspec SIDE 8 CCW CON FILE 'multi_1.KEY74.spec.swan' 1
+#BOUNdspec SIDE 9 CCW CON FILE 'multi_1.KEY73.spec.swan' 1
+#BOUNdspec SIDE 10 CCW CON FILE 'multi_1.KEY72.spec.swan' 1
+#BOUNdspec SIDE 11 CCW CON FILE 'multi_1.KEY71.spec.swan' 1
+#$ E boundary
+#BOUNdspec SIDE 12 CCW CON FILE 'multi_1.KEY70.spec.swan' 1
+#BOUNdspec SIDE 13 CCW CON FILE 'multi_1.KEY69.spec.swan' 1
+#BOUNdspec SIDE 14 CCW CON FILE 'multi_1.KEY68.spec.swan' 1
+#$ S boundary
+#BOUNdspec SIDE 15 CCW CON FILE 'multi_1.KEY67.spec.swan' 1
+#BOUNdspec SIDE 16 CCW CON FILE 'multi_1.KEY66.spec.swan' 1
+#BOUNdspec SIDE 17 CCW CON FILE 'multi_1.KEY65.spec.swan' 1
+#BOUNdspec SIDE 18 CCW CON FILE 'multi_1.KEY64.spec.swan' 1
+#BOUNdspec SIDE 19 CCW CON FILE 'multi_1.KEY63.spec.swan' 1
+#$ W boundary
+#BOUNdspec SIDE 20 CCW CON FILE 'multi_1.KEY62.spec.swan' 1
+#BOUNdspec SIDE 21 CCW CON FILE 'multi_1.KEY61.spec.swan' 1
+#BOUNdspec SIDE 22 CCW CON FILE 'multi_1.KEY60.spec.swan' 1
+#BOUNdspec SIDE 23 CCW CON FILE 'multi_1.KEY59.spec.swan' 1
+#BOUNdspec SIDE 24 CCW CON FILE 'multi_1.KEY58.spec.swan' 1
+#BOUNdspec SIDE 25 CCW CON FILE 'multi_1.KEY57.spec.swan' 1
+#BOUNdspec SIDE 26 CCW CON FILE 'multi_1.KEY56.spec.swan' 1
+#BOUNdspec SIDE 27 CCW CON FILE 'multi_1.KEY55.spec.swan' 1
+#BOUNdspec SIDE 28 CCW CON FILE 'multi_1.KEY54.spec.swan' 1
+#BOUNdspec SIDE 29 CCW CON FILE 'multi_1.KEY53.spec.swan' 1
+#BOUNdspec SIDE 30 CCW CON FILE 'multi_1.KEY52.spec.swan' 1
+#BOUNdspec SIDE 31 CCW CON FILE 'multi_1.KEY51.spec.swan' 1
 #NUM DIRimpl cdd=1 cdlim=2
 #$END BOUNSEG
 #
@@ -242,43 +240,6 @@ export RIPCONT="5m"
 #$ Ray for 5m contour data.
 #$
 #POINTS '5mcont' &
-#279.884 25.9589 &
-#279.883 25.9409 &
-#279.883 25.9229 &
-#279.882 25.9049 &
-#279.882 25.8868 &
-#279.883 25.8688 &
-#279.887 25.8510 &
-#279.889 25.8332 &
-#279.887 25.8152 &
-#279.882 25.7979 &
-#279.874 25.7813 &
-#279.870 25.7636 &
-#279.866 25.7458 &
-#279.865 25.7278 &
-#279.862 25.7100 &
-#279.860 25.6920 &
-#279.863 25.6741 &
-#279.863 25.6561 &
-#279.864 25.6381 &
-#279.866 25.6201 &
-#279.866 25.6021 &
-#279.865 25.5841 &
-#279.863 25.5661 &
-#279.857 25.5489 &
-#279.851 25.5317 &
-#279.851 25.5136 &
-#279.849 25.4957 &
-#279.840 25.4796 &
-#279.833 25.4628 &
-#279.829 25.4451 &
-#279.825 25.4276 &
-#279.819 25.4104 &
-#279.813 25.3931 &
-#279.808 25.3756 &
-#279.807 25.3576 &
-#279.801 25.3412 &
-#279.785 25.3305 &
 #279.770 25.3186 &
 #279.755 25.3065 &
 #279.744 25.2920 &
@@ -424,105 +385,7 @@ export RIPCONT="5m"
 #278.489 24.7898 &
 #278.506 24.7990 &
 #278.522 24.8090 &
-#278.534 24.8231 &
-#278.539 24.8407 &
-#278.550 24.8552 &
-#278.567 24.8644 &
-#278.582 24.8765 &
-#278.599 24.8849 &
-#278.616 24.8939 &
-#278.632 24.9046 &
-#278.647 24.9162 &
-#278.659 24.9308 &
-#278.669 24.9466 &
-#278.676 24.9633 &
-#278.682 24.9805 &
-#278.687 24.9981 &
-#278.691 25.0157 &
-#278.694 25.0336 &
-#278.696 25.0515 &
-#278.699 25.0694 &
-#278.701 25.0873 &
-#278.705 25.1051 &
-#278.708 25.1228 &
-#278.711 25.1408 &
-#278.713 25.1587 &
-#278.717 25.1763 &
-#278.722 25.1939 &
-#278.723 25.2118 &
-#278.722 25.2298 &
-#278.712 25.2449 &
-#278.703 25.2613 &
-#278.705 25.2793 &
-#278.705 25.2973 &
-#278.704 25.3153 &
-#278.704 25.3330 &
-#278.696 25.3492 &
-#278.698 25.3671 &
-#278.702 25.3845 &
-#278.698 25.4020 &
-#278.689 25.4184 &
-#278.682 25.4353 &
-#278.675 25.4521 &
-#278.667 25.4685 &
-#278.661 25.4856 &
-#278.655 25.5029 &
-#278.649 25.5200 &
-#278.645 25.5375 &
-#278.644 25.5543 &
-#278.630 25.5676 &
-#278.617 25.5807 &
-#278.602 25.5924 &
-#278.589 25.6050 &
-#278.577 25.6182 &
-#278.562 25.6292 &
-#278.549 25.6432 &
-#278.535 25.6558 &
-#278.522 25.6687 &
-#278.509 25.6821 &
-#278.495 25.6947 &
-#278.480 25.7067 &
-#278.465 25.7190 &
-#278.452 25.7321 &
-#278.434 25.7361 &
-#278.418 25.7271 &
-#278.399 25.7227 &
-#278.379 25.7241 &
-#278.361 25.7181 &
-#278.345 25.7275 &
-#278.335 25.7431 &
-#278.320 25.7551 &
-#278.308 25.7694 &
-#278.299 25.7855 &
-#278.291 25.8020 &
-#278.285 25.8193 &
-#278.281 25.8370 &
-#278.271 25.8523 &
-#278.259 25.8666 &
-#278.249 25.8821 &
-#278.241 25.8986 &
-#278.233 25.9152 &
-#278.226 25.9323 &
-#278.224 25.9502 &
-#278.220 25.9679 &
-#278.212 25.9844 &
-#278.205 26.0013 &
-#277.900 24.6047 &
-#277.883 24.6134 &
-#277.863 24.6145 &
-#277.844 24.6090 &
-#277.826 24.6014 &
-#277.809 24.5969 &
-#277.798 24.5845 &
-#277.796 24.5666 &
-#277.799 24.5488 &
-#277.808 24.5334 &
-#277.823 24.5224 &
-#277.843 24.5183 &
-#277.862 24.5190 &
-#277.882 24.5229 &
-#277.900 24.5304 &
-#277.917 24.5403 &
+#278.534 24.8231
 #TABLE '5mcont' HEAD '5m_contour_CG1' TIME XP YP HSIGN TPS DIR DSPR VEL WATL WIND DEP OUTPUT 20140804.0000 1.0 HR
 #$
 #$END RIP
