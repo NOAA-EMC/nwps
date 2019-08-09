@@ -1617,6 +1617,44 @@ if [[ "$USEOBSTA" == "1" ]]
 fi
 #__________________END OBSTACLES_____________________________
 
+
+##__________________SHIP ROUTES___________________________________
+#
+
+CFGFILE=${FIXnwps}/shiproutes/${siteid}_shiproutes.cfg
+grep "$ SHIPROUTE LINES BEGIN HERE" inputCG1 &> /dev/null
+if [ -f  ${CFGFILE} ] && [ $? -eq 0 ]; then
+    echo "Creating inputCG1 ship route lines"
+    ${USHnwps}/shiproutes/shiproute_domain_setup.sh 
+    echo "Running ${USHnwps}/shiproutes/shiproute_domain_setup.sh"
+    ${USHnwps}/shiproutes/shiproute_domain_setup.sh
+    if [ $? -eq 0 ]; then
+	cat ${VARdir}/shiproutes/INPUTcg1_shiproutes.app > ShipRouteLines.txt
+	sed '/$ SHIPROUTE LINES BEGIN HERE/{
+        r ShipRouteLines.txt
+        d
+        }' inputCG1 > inputCG1_shiproutes
+	mv -fv inputCG1_shiproutes inputCG1
+	rm -fv ShipRouteLines.txt
+    else
+	echo "ERROR - Error generating shiproute points"
+	echo "ERROR - See ouput log: ${LOGdir}/shiproute_domain_setup.log"
+    fi
+else
+    if [ $? -ne 0 ]; then
+	echo "INFO - Our inputCG1 fixed template does not have '$ SHIPROUTE LINES BEGIN HERE' line"
+	echo "INFO - No ship route data or plots will be created for ${SITEID} due to bad inputCG1 template"
+    fi
+    if [ ! -f ${CFGFILE} ]; then 
+	echo "INFO - ${SITEID} has no CFG file for ship routes, missing: ${FIXnwps}/shiproutes/${siteid}_shiproutes.cfg"
+	echo "INFO - No ship route data or plots will be created for ${SITEID} due to no shiproute config file"
+    fi
+fi
+
+
+##__________________END SHIP ROUTES_______________________________
+
+
 #
 #Following lines will introduce the Nested Grids info into the CGinclude.pm file
 
