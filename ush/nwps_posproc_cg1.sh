@@ -337,6 +337,12 @@ then
     #${USHnwps}/grads/bin/plot_nwps_run.sh ${SITEID} |tee -a $logfile
     ${USHnwps}/python/plot_nwps_run.sh ${SITEID} |tee -a $logfile
     export err=$?; err_chk
+
+    if [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "AKQ" ] || [ "${SITEID}" == "LOX" ] || \
+       [ "${SITEID}" == "AER" ] || [ "${SITEID}" == "AJK" ] || [ "${SITEID}" == "AFG" ]; then
+	${USHnwps}/shiproutes/plot_shiproutes.sh |tee -a $logfile
+	export err=$?; err_chk
+    fi
 fi
 #Sending grib2 files with gridded wave parameters to COMOUT
 cd ${DATA}/output/grib2/CG${CGNUM}
@@ -483,7 +489,14 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
       mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
    done
    # Additional copies for domains running on 48 cores
-   if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CAR" ] || [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "TBW" ] || [ "${SITEID}" == "BOX" ] || [ "${SITEID}" == "SGX" ] || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "AKQ" ] || [ "${SITEID}" == "OKX" ] || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "ALU" ] || [ "${SITEID}" == "GUA" ]
+   if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CAR" ] || [ "${SITEID}" == "MFL" ] \
+      || [ "${SITEID}" == "TBW" ] || [ "${SITEID}" == "BOX" ] || [ "${SITEID}" == "SGX" ] \
+      || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "AKQ" ] || [ "${SITEID}" == "OKX" ] \
+      || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "ALU" ] || [ "${SITEID}" == "GUA" ] \
+      || [ "${SITEID}" == "MLB" ] || [ "${SITEID}" == "JAX" ] || [ "${SITEID}" == "CHS" ] \
+      || [ "${SITEID}" == "ILM" ] || [ "${SITEID}" == "PHI" ] || [ "${SITEID}" == "GYX" ] \
+      || [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "TAE" ] || [ "${SITEID}" == "MOB" ] \
+      || [ "${SITEID}" == "HGX" ]
    then
       for i in {16..47}; do
          mkdir -p ${HOTdir}/PE00${i}
