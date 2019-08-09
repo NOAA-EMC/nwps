@@ -113,8 +113,8 @@ export COMINestofs=/gpfs/hps/nco/ops/com/estofs/prod/estofs_atl.${PDY}
 export COMINestofspac=${COMROOTp1}/estofs/prod/estofs_pac.${PDY}
 export COMINestofsmic=/gpfs/hps/nco/ops/com/estofs/prod/estofs_mic.${PDY}
 export COMINrtofs=${COMROOTp2}/rtofs/prod/rtofs.${PDY}
-export COMINsice=${COMROOTp2}/omb/prod/sice.${PDY}
-export COMINsicem1=${COMROOTp2}/omb/prod/sice.${PDYm1}
+export COMINsice=${COMROOTp3}/omb/prod/sice.${PDY}
+export COMINsicem1=${COMROOTp3}/omb/prod/sice.${PDYm1}
 
 export COMROOTp2=/gpfs/hps/nco/ops/com
 
