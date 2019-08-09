@@ -183,31 +183,31 @@ export WAVECPS="multi_1.PCB51.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#$southern side TAE - east to west
-#$BOUN SEG XY 277.0 28.35 272.65 28.35 VAR FILE 0.00 'multi_1.PCB71.spec.swan'    1 &
-#$                         0.45 'multi_1.PCB70.spec.swan'    1 &
-#$                         0.75 'multi_1.PCB69.spec.swan'    1 &
-#$                         1.05 'multi_1.PCB68.spec.swan'    1 &
-#$                         1.35 'multi_1.PCB67.spec.swan'    1 &
-#$                         1.65 'multi_1.PCB66.spec.swan'    1 &
-#$                         1.95 'multi_1.PCB65.spec.swan'    1 &
-#$                         2.25 'multi_1.PCB64.spec.swan'    1 &
-#$                         2.55 'multi_1.PCB63.spec.swan'    1 &
-#$                         2.85 'multi_1.PCB62.spec.swan'    1 &
-#$                         3.15 'multi_1.PCB61.spec.swan'    1 &
-#$                         3.45 'multi_1.PCB60.spec.swan'    1 &
-#$                         3.75 'multi_1.PCB59.spec.swan'    1 &
-#$                         4.05 'multi_1.PCB58.spec.swan'    1 &
-#$                         4.35 'multi_1.PCB51.spec.swan'    1
-#$west boundary-N to S
-#$BOUN SEG XY 272.65 30.15 272.65 28.35 VAR FILE 0.00 'multi_1.PCB57.spec.swan'    1 &
-#$                         0.30 'multi_1.PCB56.spec.swan'    1 &
-#$                         0.60 'multi_1.PCB55.spec.swan'    1 &
-#$                         0.90 'multi_1.PCB54.spec.swan'    1 &
-#$                         1.20 'multi_1.PCB53.spec.swan'    1 &
-#$                         1.50 'multi_1.PCB52.spec.swan'    1 &
-#$                         1.80 'multi_1.PCB51.spec.swan.cp' 1
-#$END BOUNSEG
+#$UNSTR SWAN BOUNDARY COMMAND LINES - SITE NW-TAE
+#$ S OPEN GRID BOUNDARY
+#BOUNDspec SIDE 1 CCW CON FILE 'multi_1.PCB71.spec.swan' 1
+#BOUNDspec SIDE 2 CCW CON FILE 'multi_1.PCB70.spec.swan' 1
+#BOUNDspec SIDE 3 CCW CON FILE 'multi_1.PCB69.spec.swan' 1
+#BOUNDspec SIDE 4 CCW CON FILE 'multi_1.PCB68.spec.swan' 1
+#BOUNDspec SIDE 5 CCW CON FILE 'multi_1.PCB67.spec.swan' 1
+#BOUNDspec SIDE 6 CCW CON FILE 'multi_1.PCB66.spec.swan' 1
+#BOUNDspec SIDE 7 CCW CON FILE 'multi_1.PCB65.spec.swan' 1
+#BOUNDspec SIDE 8 CCW CON FILE 'multi_1.PCB64.spec.swan' 1
+#BOUNDspec SIDE 9 CCW CON FILE 'multi_1.PCB63.spec.swan' 1
+#BOUNDspec SIDE 10 CCW CON FILE 'multi_1.PCB62.spec.swan' 1
+#BOUNDspec SIDE 11 CCW CON FILE 'multi_1.PCB61.spec.swan' 1
+#BOUNDspec SIDE 12 CCW CON FILE 'multi_1.PCB60.spec.swan' 1
+#BOUNDspec SIDE 13 CCW CON FILE 'multi_1.PCB59.spec.swan' 1
+#BOUNDspec SIDE 14 CCW CON FILE 'multi_1.PCB58.spec.swan' 1
+#$ W OPEN GRID BOUNDARY
+#BOUNDspec SIDE 15 CCW CON FILE 'multi_1.PCB57.spec.swan' 1
+#BOUNDspec SIDE 16 CCW CON FILE 'multi_1.PCB56.spec.swan' 1
+#BOUNDspec SIDE 17 CCW CON FILE 'multi_1.PCB55.spec.swan' 1
+#BOUNDspec SIDE 18 CCW CON FILE 'multi_1.PCB54.spec.swan' 1
+#BOUNDspec SIDE 19 CCW CON FILE 'multi_1.PCB53.spec.swan' 1
+#BOUNDspec SIDE 20 CCW CON FILE 'multi_1.PCB52.spec.swan' 1
+#BOUNDspec SIDE 21 CCW CON FILE 'multi_1.PCB51.spec.swan' 1
+#$END BOUNSEG for UNSTR SWAN
 #
 #========================================================================
 #                    RIP CURRENT PROGRAM (SEE NWPS MANUAL)              =
@@ -244,73 +244,6 @@ export RIPCONT="5m"
 #$ Ray for 5m contour data.
 #$
 #POINTS '5mcont' &
-#277.095 28.2993 &
-#277.095 28.3173 &
-#277.095 28.3353 &
-#277.098 28.3531 &
-#277.111 28.3666 &
-#277.123 28.3813 &
-#277.123 28.3991 &
-#277.106 28.4078 &
-#277.086 28.4068 &
-#277.077 28.4214 &
-#277.085 28.4381 &
-#277.092 28.4545 &
-#277.094 28.4724 &
-#277.093 28.4903 &
-#277.088 28.5077 &
-#277.082 28.5246 &
-#277.078 28.5423 &
-#277.078 28.5603 &
-#277.078 28.5783 &
-#277.082 28.5960 &
-#277.088 28.6132 &
-#277.090 28.6306 &
-#277.088 28.6483 &
-#277.086 28.6660 &
-#277.075 28.6803 &
-#277.065 28.6953 &
-#277.057 28.7116 &
-#277.052 28.7288 &
-#277.053 28.7467 &
-#277.054 28.7646 &
-#277.061 28.7806 &
-#277.065 28.7975 &
-#277.066 28.8154 &
-#277.075 28.8311 &
-#277.083 28.8476 &
-#277.090 28.8645 &
-#277.096 28.8817 &
-#277.090 28.8979 &
-#277.088 28.9139 &
-#277.099 28.9285 &
-#277.102 28.9461 &
-#277.098 28.9635 &
-#277.086 28.9751 &
-#277.067 28.9700 &
-#277.055 28.9785 &
-#277.039 28.9898 &
-#277.021 28.9974 &
-#277.002 29.0043 &
-#276.983 29.0105 &
-#276.963 29.0163 &
-#276.944 29.0224 &
-#276.926 29.0301 &
-#276.909 29.0405 &
-#276.895 29.0538 &
-#276.885 29.0693 &
-#276.877 29.0858 &
-#276.869 29.1025 &
-#276.860 29.1186 &
-#276.850 29.1343 &
-#276.841 29.1507 &
-#276.828 29.1642 &
-#276.809 29.1688 &
-#276.789 29.1740 &
-#276.771 29.1833 &
-#276.759 29.1977 &
-#276.746 29.2112 &
-#276.731 29.2238 &
 #276.726 29.2411 &
 #276.721 29.2587 &
 #276.705 29.2691 &
@@ -521,56 +454,7 @@ export RIPCONT="5m"
 #273.675 30.3644 &
 #273.655 30.3678 &
 #273.634 30.3711 &
-#273.614 30.3740 &
-#273.593 30.3764 &
-#273.573 30.3783 &
-#273.552 30.3797 &
-#273.531 30.3804 &
-#273.510 30.3802 &
-#273.489 30.3806 &
-#273.469 30.3828 &
-#273.448 30.3859 &
-#273.428 30.3885 &
-#273.407 30.3904 &
-#273.386 30.3920 &
-#273.365 30.3930 &
-#273.345 30.3930 &
-#273.324 30.3924 &
-#273.303 30.3917 &
-#273.282 30.3910 &
-#273.262 30.3898 &
-#273.241 30.3879 &
-#273.220 30.3858 &
-#273.199 30.3838 &
-#273.179 30.3815 &
-#273.158 30.3792 &
-#273.138 30.3765 &
-#273.117 30.3735 &
-#273.097 30.3703 &
-#273.076 30.3669 &
-#273.056 30.3635 &
-#273.035 30.3599 &
-#273.015 30.3564 &
-#272.995 30.3528 &
-#272.974 30.3492 &
-#272.954 30.3455 &
-#272.934 30.3418 &
-#272.913 30.3379 &
-#272.893 30.3340 &
-#272.873 30.3301 &
-#272.852 30.3263 &
-#272.832 30.3230 &
-#272.811 30.3200 &
-#272.791 30.3173 &
-#272.770 30.3151 &
-#272.749 30.3133 &
-#272.729 30.3137 &
-#272.708 30.3163 &
-#272.690 30.3076 &
-#272.669 30.3095 &
-#272.649 30.3126 &
-#272.628 30.3105 &
-#272.610 30.3017 &
+#273.614 30.3740
 #TABLE '5mcont' HEAD '5m_contour_CG1' TIME XP YP HSIGN TPS DIR DSPR VEL WATL WIND DEP OUTPUT 20140804.0000 1.0 HR
 #$
 #$END RIP
