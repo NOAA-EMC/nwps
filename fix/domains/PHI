@@ -129,19 +129,20 @@ export WAVECPS="multi_1.NW-PHI55.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#$BOUN SEG XY 286.65 40.60 286.65 38.20 VAR FILE 0.00 'multi_1.NW-PHI60.spec.swan'    1 &
-#$                         0.50 'multi_1.NW-PHI59.spec.swan'    1 &
-#$                         1.00 'multi_1.NW-PHI58.spec.swan'    1 &
-#$                         1.50 'multi_1.NW-PHI57.spec.swan'    1 &
-#$                         2.00 'multi_1.NW-PHI56.spec.swan'    1 &
-#$                         2.40 'multi_1.NW-PHI55.spec.swan'    1
-#$
-#$BOUN SEG XY 286.65 38.20 284.75 38.20 VAR FILE 0.00 'multi_1.NW-PHI55.spec.swan.cp'    1 &
-#$                         0.40 'multi_1.NW-PHI54.spec.swan'    1 &
-#$                         0.90 'multi_1.NW-PHI53.spec.swan'    1 &
-#$                         1.40 'multi_1.NW-PHI52.spec.swan'    1 &
-#$                         1.90 'multi_1.NW-PHI51.spec.swan'    1
-#$END BOUNSEG
+#$UNSTR SWAN BOUNDARY COMMAND LINES - SITE NW-PHI
+#$ E OPEN GRID BOUNDARY
+#BOUNDspec SIDE 1 CCW CON FILE 'multi_1.NW-PHI60.spec.swan' 1
+#BOUNDspec SIDE 2 CCW CON FILE 'multi_1.NW-PHI59.spec.swan' 1
+#BOUNDspec SIDE 3 CCW CON FILE 'multi_1.NW-PHI58.spec.swan' 1
+#BOUNDspec SIDE 4 CCW CON FILE 'multi_1.NW-PHI57.spec.swan' 1
+#BOUNDspec SIDE 5 CCW CON FILE 'multi_1.NW-PHI56.spec.swan' 1
+#$ S OPEN GRID BOUNDARY
+#BOUNDspec SIDE 6 CCW CON FILE 'multi_1.NW-PHI55.spec.swan' 1
+#BOUNDspec SIDE 7 CCW CON FILE 'multi_1.NW-PHI54.spec.swan' 1
+#BOUNDspec SIDE 8 CCW CON FILE 'multi_1.NW-PHI53.spec.swan' 1
+#BOUNDspec SIDE 9 CCW CON FILE 'multi_1.NW-PHI52.spec.swan' 1
+#BOUNDspec SIDE 10 CCW CON FILE 'multi_1.NW-PHI51.spec.swan' 1
+#$END BOUNSEG for UNSTR SWAN
 #
 #========================================================================
 #                    RIP CURRENT PROGRAM (SEE NWPS MANUAL)              =
@@ -178,6 +179,28 @@ export RIPCONT="5m"
 #$ Ray for 5m contour data.
 #$
 #POINTS '5mcont' &
+#284.952 38.4578 &
+#284.952 38.4759 &
+#284.951 38.4940 &
+#284.950 38.5121 &
+#284.949 38.5302 &
+#284.947 38.5483 &
+#284.945 38.5663 &
+#284.943 38.5844 &
+#284.941 38.6025 &
+#284.939 38.6205 &
+#284.937 38.6385 &
+#284.935 38.6566 &
+#284.933 38.6747 &
+#284.930 38.6926 &
+#284.927 38.7106 &
+#284.924 38.7286 &
+#284.922 38.7466 &
+#284.920 38.7646 &
+#284.916 38.7825 &
+#284.899 38.7903 &
+#284.878 38.7836 &
+#284.856 38.7890 &
 #285.054 39.0336 &
 #285.045 39.0170 &
 #285.039 38.9995 &
@@ -287,42 +310,6 @@ export RIPCONT="5m"
 #286.020 40.4333 &
 #286.014 40.4507 &
 #286.006 40.4677 &
-#284.859 38.2174 &
-#284.867 38.2342 &
-#284.876 38.2509 &
-#284.885 38.2678 &
-#284.891 38.2851 &
-#284.898 38.3024 &
-#284.908 38.3189 &
-#284.916 38.3354 &
-#284.927 38.3511 &
-#284.933 38.3685 &
-#284.939 38.3862 &
-#284.944 38.4039 &
-#284.947 38.4218 &
-#284.950 38.4397 &
-#284.952 38.4578 &
-#284.952 38.4759 &
-#284.951 38.4940 &
-#284.950 38.5121 &
-#284.949 38.5302 &
-#284.947 38.5483 &
-#284.945 38.5663 &
-#284.943 38.5844 &
-#284.941 38.6025 &
-#284.939 38.6205 &
-#284.937 38.6385 &
-#284.935 38.6566 &
-#284.933 38.6747 &
-#284.930 38.6926 &
-#284.927 38.7106 &
-#284.924 38.7286 &
-#284.922 38.7466 &
-#284.920 38.7646 &
-#284.916 38.7825 &
-#284.899 38.7903 &
-#284.878 38.7836 &
-#284.856 38.7890 &
 #TABLE '5mcont' HEAD '5m_contour_CG1' TIME XP YP HSIGN TPS DIR DSPR VEL WATL WIND DEP OUTPUT 20140804.0000 1.0 HR
 #$
 #$END RIP
