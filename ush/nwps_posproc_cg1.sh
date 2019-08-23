@@ -338,8 +338,8 @@ then
     ${USHnwps}/python/plot_nwps_run.sh ${SITEID} |tee -a $logfile
     export err=$?; err_chk
 
-    if [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "AKQ" ] || [ "${SITEID}" == "LOX" ] || \
-       [ "${SITEID}" == "AER" ] || [ "${SITEID}" == "AJK" ] || [ "${SITEID}" == "AFG" ]; then
+    if [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "LIX" ] || [ "${SITEID}" == "AKQ" ] || \
+       [ "${SITEID}" == "LOX" ] || [ "${SITEID}" == "AER" ] || [ "${SITEID}" == "AJK" ] || [ "${SITEID}" == "AFG" ]; then
 	${USHnwps}/shiproutes/plot_shiproutes.sh |tee -a $logfile
 	export err=$?; err_chk
     fi
