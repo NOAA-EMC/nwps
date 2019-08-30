@@ -182,28 +182,24 @@ export WAVECPS="multi_1.JXFL60.spec.swan,multi_1.JXFL53.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#$BOUN SEG XY 279.5 32.0 280.7 32.0 VAR FILE 0.00 'multi_1.JXFL63.spec.swan'    1 &
-#$0.30 'multi_1.JXFL62.spec.swan'    1 &
-#$0.70 'multi_1.JXFL61.spec.swan'    1 &
-#$1.20 'multi_1.JXFL60.spec.swan'    1
-#$
-#$eastern side JXFL: south to north or SE corner to NE corner
-#$
-#$BOUN SEG XY 280.7 28.7 280.7 32.0 VAR FILE 0.00 'multi_1.JXFL53.spec.swan'    1 &
-#$0.50 'multi_1.JXFL54.spec.swan'    1 &
-#$1.00 'multi_1.JXFL55.spec.swan'    1 &
-#$1.50 'multi_1.JXFL56.spec.swan'    1 &
-#$2.00 'multi_1.JXFL57.spec.swan'    1 &
-#$2.50 'multi_1.JXFL58.spec.swan'    1 &
-#$2.90 'multi_1.JXFL59.spec.swan'    1 &
-#$3.30 'multi_1.JXFL60.spec.swan.cp' 1
-#$
-#$southern side JXFL: west to east - to SE corner of domain (53)
-#$
-#$BOUN SEG XY 279.8 28.7 280.7 28.7 VAR FILE 0.00 'multi_1.JXFL51.spec.swan'    1 &
-#$0.50 'multi_1.JXFL52.spec.swan'    1 &
-#$0.90 'multi_1.JXFL53.spec.swan.cp' 1
-#$END BOUNSEG
+#$UNSTR SWAN BOUNDARY COMMAND LINES - SITE NW-JAX
+#$ N OPEN GRID BOUNDARY
+#BOUNDspec SIDE 1 CCW CON FILE 'multi_1.JXFL63.spec.swan' 1
+#BOUNDspec SIDE 2 CCW CON FILE 'multi_1.JXFL62.spec.swan' 1
+#BOUNDspec SIDE 3 CCW CON FILE 'multi_1.JXFL61.spec.swan' 1
+#BOUNDspec SIDE 4 CCW CON FILE 'multi_1.JXFL60.spec.swan' 1
+#$ E OPEN GRID BOUNDARY
+#BOUNDspec SIDE 5 CCW CON FILE 'multi_1.JXFL59.spec.swan' 1
+#BOUNDspec SIDE 6 CCW CON FILE 'multi_1.JXFL58.spec.swan' 1
+#BOUNDspec SIDE 7 CCW CON FILE 'multi_1.JXFL57.spec.swan' 1
+#BOUNDspec SIDE 8 CCW CON FILE 'multi_1.JXFL56.spec.swan' 1
+#BOUNDspec SIDE 9 CCW CON FILE 'multi_1.JXFL55.spec.swan' 1
+#BOUNDspec SIDE 10 CCW CON FILE 'multi_1.JXFL54.spec.swan' 1
+#BOUNDspec SIDE 11 CCW CON FILE 'multi_1.JXFL53.spec.swan' 1
+#$ S OPEN GRID BOUNDARY
+#BOUNDspec SIDE 12 CCW CON FILE 'multi_1.JXFL52.spec.swan' 1
+#BOUNDspec SIDE 13 CCW CON FILE 'multi_1.JXFL51.spec.swan' 1
+#$END BOUNSEG for UNSTR SWAN
 #
 #========================================================================
 #                    RIP CURRENT PROGRAM (SEE NWPS MANUAL)              =
