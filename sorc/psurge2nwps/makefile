@@ -7,8 +7,8 @@ SHELL = /bin/bash
 # USAGE:
 #    make MEM=false, DEBUG=false, BIT=32 | 64
 ############################
-MEM=false
-DEBUG=false
+MEM=true
+DEBUG=true
 
 # Determine platform specific options
 UNAME := $(shell uname)
