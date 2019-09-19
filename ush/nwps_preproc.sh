@@ -352,7 +352,10 @@ then
     fi     #RETROSPECTIVE
 else
     export WNA="NO"
-    echo "WW3 bounary conditions will NOT be used" | tee -a $logfile
+    echo "FATAL ERROR: Wave boundary conditions are not set. Please CANCEL the downstream jobs for ${siteid}." | tee -a $logfile
+    msg="FATAL ERROR: Wave boundary conditions are not set. Please CANCEL the downstream jobs for ${siteid}."
+    postmsg "$jlogfile" "$msg"
+    export err=1; err_chk
 ###    cp -vfp ${DATA}/parm/templates/${siteid}/inputCG1.wna_off ${RUNdir}/inputCG1 | tee -a $logfile
 fi
 
