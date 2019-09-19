@@ -327,7 +327,8 @@ echo "RUN   ${plotGorP}   SCRIPTS"
 if [ "${WEB}" == "YES" ]; then export PLOT="YES"; fi
 
 # NOTE: This will allow us to automate plotting with out send to Web option
-if [ "${PLOT}" == "YES" ]
+# NOTE: To save time, deactivate plotting when running retrospectives
+if [ "${PLOT}" == "YES" ] && [ "${RETROSPECTIVE}" == "FALSE" ]
 then
 
 #    echo "Cleaning Previous grads plots from ${OUTPUTdir}/grads/${siteid}" | tee -a $logfile
