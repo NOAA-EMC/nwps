@@ -81,7 +81,7 @@ else
     #bsub < ${NWPSdir}/dev/ecf/jnwps_wtcore_cg1.ecf.${siteid}  >> ${NWPSdir}/dev/ecf/jobids_${siteid}.log;
     #AW20180418 aprun -n16 -N16 -j1 -d1 ${EXECnwps}/ww3_systrk_mpi > ${RUNdir}/ww3_systrk.out 2> ${RUNdir}/ww3_systrk.err
     #AW aprun -n1 -N1 -d1 ${PYTHON} ${NWPSdir}/sorc/ww3_syscluster/ww3_systrk_nobasemap_tables_gh.py ${SITEID,,}
-    aprun -n1 -N1 -d1 ${PYTHON} ${NWPSdir}/sorc/ww3_syscluster/ww3_systrk_tables_gh_weighted_cartopy.py ${SITEID,,}
+    aprun -n1 -N1 -d1 ${PYTHON} ${NWPSdir}/ush/python/ww3_systrk_cluster.py ${SITEID,,}
     export err=$?
     if [ "${err}" != "0" ];then
         echo " ============  E R R O R ==============="                  | tee -a ${LOGdir}/systrk_info.log 
