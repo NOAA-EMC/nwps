@@ -225,8 +225,8 @@ if [ "${WINDS,,}" == "forecaster" ]; then
 	    ${EXECnwps}/check_awips_windfile --verbose --debug ${windfile} > ${LOGdir}/gfe_wind_file_check.log
 	    if [ $? -ne 0 ]; then
 		warnings="YES"
-		echo "WARNING - We received bad GFE wind file, forecaster wind file has bad values" | tee -a ${LOGdir}/run_nwps.log
-		echo "WARNING: We received bad GFE wind file, forecaster wind file has bad values" >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+		echo "WARNING - We received bad GFE wind file, forecaster wind file has bad values. Will fail over to GFS data." | tee -a ${LOGdir}/run_nwps.log
+		echo "WARNING: We received bad GFE wind file, forecaster wind file has bad values. Will fail over to GFS data." >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
 		WINDS="gfs"
 	    else
 		echo "GFE wind grid passed wind file check" | tee -a ${LOGdir}/run_nwps.log
@@ -235,14 +235,14 @@ if [ "${WINDS,,}" == "forecaster" ]; then
 		echo "Number of wind fields on file: ${Num_wind_fields}" | tee -a ${LOGdir}/run_nwps.log
 		if [ "$Num_wind_fields" == "" ]
 		then
-		    echo "WARNING - Wind file ${NewestWind} is empty" | tee -a ${LOGdir}/run_nwps.log
-		    echo "WARNING: Wind file ${NewestWind} is empty" >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+		    echo "WARNING - Wind file ${NewestWind} is empty. Will fail over to GFS data." | tee -a ${LOGdir}/run_nwps.log
+		    echo "WARNING: Wind file ${NewestWind} is empty. Will fail over to GFS data." >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
 		    warnings="YES"
 		    WINDS="gfs"
 		else 
 		    if [ ${Num_wind_fields} -lt ${minwindhours} ]; then
-			echo "WARNING - Wind fields = ${Num_wind_fields}, must be >= ${minwindhours}" | tee -a ${LOGdir}/run_nwps.log
-			echo "WARNING: Wind fields = ${Num_wind_fields}, must be >= ${minwindhours}" >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+			echo "WARNING - Wind fields = ${Num_wind_fields}, must be >= ${minwindhours}. Will fail over to GFS data." | tee -a ${LOGdir}/run_nwps.log
+			echo "WARNING: Wind fields = ${Num_wind_fields}, must be >= ${minwindhours}. Will fail over to GFS data." >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
 			warnings="YES"
 			WINDS="gfs"
 		    else
@@ -267,8 +267,8 @@ if [ "${WINDS,,}" == "forecaster" ]; then
 	WindFileName=`ls -t ${siteid}*WIND.txt | head -1`
 	if [ ! -f "${WindFileName}" ]
 	then
-	    echo "WARNING - Wind file ${WindFileName} not transmitted." | tee -a ${LOGdir}/run_nwps.log
-	    echo "WARNING: Wind file ${WindFileName} not transmitted." >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+	    echo "WARNING - Wind file ${WindFileName} not transmitted. Will fail over to GFS data." | tee -a ${LOGdir}/run_nwps.log
+	    echo "WARNING: Wind file ${WindFileName} not transmitted. Will fail over to GFS data." >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
 	    warnings="YES"
 	    WINDS="gfs"
 	fi 
