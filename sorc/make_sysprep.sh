@@ -16,7 +16,7 @@ fi
 #module load ../modulefiles/NWPS/v1.2.0
 #module list
 
-cd ${NWPSdir}/sorc/ww3_syscluster
+cd ${NWPSdir}/sorc/ww3_sysprep.fd
 make ww3_sysprep
 rm *.o
 mv -v ww3_sysprep.exe ${NWPSdir}/exec/ww3_sysprep.exe
