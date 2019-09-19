@@ -245,11 +245,11 @@ echo " " | tee -a $logrunup
 	 for parm in ${RUNUPparms}
 	 do
 	     cat ${parm}_final_runup.grib2 >> final_runup.grib2
-	     cp -f final_runup.grib2 ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
-	     cp -f final_runup.grib2 ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+	     #>AW091019 cp -f final_runup.grib2 ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+	     #>AW091019 cp -f final_runup.grib2 ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
 	 done
          #AW052917 Do not include runup output in general GRIB2 output, because it won't go over SBN yet.
-         #cat final_runup.grib2 >> ${GRIB2file}
+         cat final_runup.grib2 >> ${GRIB2file}
      else 
 	 echo "ERROR - ${WAVE_RUNUP_TO_BIN} program error, no RUNUP GRIB2 file generated for this run"
      fi
@@ -310,10 +310,10 @@ echo " " | tee -a $logrunup
 	 echo "${WGRIB2} ${RIPDATA}/templates.grib2 -no_header -import_bin ${RIPDATA}/points.bin -grib_out ${RIPDATA}/final_rip.grib2"
 	 ${WGRIB2} ${RIPDATA}/templates.grib2 -no_header -import_bin ${RIPDATA}/points.bin -grib_out ${RIPDATA}/final_rip.grib2
          #AW052917 Do not include runup output in general GRIB2 output, because it won't go over SBN yet.
-         #cat ${RIPDATA}/final_rip.grib2 >> ${GRIB2file}
+         cat ${RIPDATA}/final_rip.grib2 >> ${GRIB2file}
 	 #cp -f ${RIPDATA}/final_rip.grib2 ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
-         cat ${RIPDATA}/final_rip.grib2 >> ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
-         cat ${RIPDATA}/final_rip.grib2 >> ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+         #>AW091019 cat ${RIPDATA}/final_rip.grib2 >> ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+         #>AW091019 cat ${RIPDATA}/final_rip.grib2 >> ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
      fi
      # TODO: 11/29/2016 - Tesing RIP GRIB2 encoding above
   else
@@ -327,7 +327,8 @@ echo "RUN ${plotGorP} SCRIPTS"                            | tee -a $logfile
 if [ "${WEB}" == "YES" ]; then export PLOT="YES"; fi
 
 # NOTE: This will allow us to automate plotting with out send to Web option
-if [ "${PLOT}" == "YES" ]
+# NOTE: To save time, deactivate plotting when running retrospectives
+if [ "${PLOT}" == "YES" ] && [ "${RETROSPECTIVE}" == "FALSE" ]
 then
 
     echo "Cleaning Previous grads plots from ${OUTPUTdir}/grads/${siteid}" | tee -a $logfile
