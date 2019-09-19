@@ -255,14 +255,12 @@ elif [ "${WNA^^}" = "TAFB-NWPS" ]
 
 elif [ "${WNA^^}" = "NO" ]
    then
-   echo " NOT BOUNDARY CONDITIONS"
+   echo " NO BOUNDARY CONDITIONS"
    bc_option="NO"
    exit 0
-fi
 
- if [ "${WNA}" != "" ] && [ "${url}" == "" ]
-then
-   msg="FATAL ERROR: URL for boundary condition is not set. Please CANCEL the downstream jobs for ${SITEID}."
+else
+   msg="FATAL ERROR: Wave boundary conditions are not set. Please CANCEL the downstream jobs for ${SITEID}."
    postmsg "$jlogfile" "$msg"
    export err=1; err_chk
 fi
