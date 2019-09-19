@@ -473,6 +473,14 @@ sub graphicOutputProcessing (%){
 	if ($g2DataType eq 'partition' ) {
 	    next;
 	}
+        #>AW20190911 --- Omitting WLEN and DEPTH from GRIB2 file
+	if ($g2DataType eq 'WLEN') { 
+            next;
+	}
+	if ($g2DataType eq 'depth') { 
+            next;
+	}
+        #>AW20190911 --- Omitting WLEN and DEPTH from GRIB2 file
 
 	# TODO: Ensure all GRIB2 variables are mapped to SWAN outputs in IF statements below
 	if ($g2DataType eq 'htsgw') { 
