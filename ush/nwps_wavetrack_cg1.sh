@@ -40,7 +40,6 @@ if [ "${hastracking}" == "TRUE" ]
    mv -fv ${OUTPUTdir}/partition/CG1/SYS_PNT.OUT ${OUTPUTdir}/partition/CG1/SYS_PNT.OUT.SPRL
 
    cd ${RUNdir}
-   cp ${NWPSdir}/sorc/ww3_syscluster/coastal_bound_high.txt .
 
    #aprun -n1 -N1 -d1 ${PYTHON} ${NWPSdir}/sorc/ww3_syscluster/ww3_systrk_nobasemap_tables_gh.py ${SITEID,,}
    perl -I${PMnwps} -I${RUNdir} ${USHnwps}/waveTracking_clust.pl | tee -a $logfile
