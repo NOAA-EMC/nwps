@@ -78,6 +78,7 @@ export PYTHONPATH=${HOMEnwps}/lib64/python/python_modules/lib64/python2.6/site-p
 export PYTHON=python
 
 # Set NWPS run conditions
+export RETROSPECTIVE=${RETROSPECTIVE:-FALSE}
 export DEBUGGING=${DEBUGGING:-TRUE}
 export DEBUG_LEVEL=${DEBUG_LEVEL:-1}
 export ISPRODUCTION=${ISPRODUCTION:-TRUE}
