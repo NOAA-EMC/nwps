@@ -17,8 +17,6 @@ scp andre.westhuysen@emcrzdm:/home/www/polar/nwps/EMC_nwps_external/fix/bathy_db
 tar -C ${NWPSdir}/fix/ -xvf ${NWPSdir}/fix/bathy_db.tar
 rm ${NWPSdir}/fix/bathy_db.tar
 scp andre.westhuysen@emcrzdm:/home/www/polar/nwps/EMC_nwps_external/fix/pdef_ncep_global ${NWPSdir}/fix/
-#scp andre.westhuysen@emcrzdm:/home/www/polar/nwps/EMC_nwps_external/sorc/python_modules/basemap-1.0.7.tar.gz ${NWPSdir}/sorc/python_modules/
-#scp andre.westhuysen@emcrzdm:/home/www/polar/nwps/EMC_nwps_external/sorc/python_modules/matplotlib-1.5.1.tar.gz ${NWPSdir}/sorc/python_modules/
 scp andre.westhuysen@emcrzdm:/home/www/polar/nwps/EMC_nwps_external/ush/rtofs/datfiles/pdef_ncep_global.gz ${NWPSdir}/ush/rtofs/datfiles/
 scp andre.westhuysen@emcrzdm:/home/www/polar/nwps/EMC_nwps_external/ush/rtofs/datfiles/pdef_ncep_reg1.gz ${NWPSdir}/ush/rtofs/datfiles/
 scp andre.westhuysen@emcrzdm:/home/www/polar/nwps/EMC_nwps_external/ush/rtofs/datfiles/pdef_ncep_reg2.gz ${NWPSdir}/ush/rtofs/datfiles/
