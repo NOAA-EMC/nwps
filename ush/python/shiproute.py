@@ -238,7 +238,7 @@ wind_arr = np.fromfile(sr_fp, dtype=np.float32, count=NUMSRPOINTS*TDEF)
 perpw_arr = np.fromfile(sr_fp, dtype=np.float32, count=NUMSRPOINTS*TDEF)
 
 cnt = 0
-for tstep in range(1, (TDEF+1)):
+for tstep in range(1, (TDEF+1), 3):
 
    forecastTime = cnt * TINCR
    cnt = cnt+1
