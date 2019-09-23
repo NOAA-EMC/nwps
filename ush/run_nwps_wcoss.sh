@@ -205,20 +205,29 @@ if [ "${WINDS,,}" == "forecaster" ]; then
             #AW
 	    tar xvfz ${FORECASTWINDdir}/${NewestWind} -C ${VARdir}/gfe_grids_test
 	    windfile=$(ls -1t --color=none ${VARdir}/gfe_grids_test/${siteid}*WIND.txt | head -1)
-	    # We still need a copy of our CTL file, even if we fail over to GFS wind init. First check contents, then copy.
+	    # We still need a copy of our CTL file, even if we fail over to GFS wind init. First test whether present, then check contents, then copy.
 	    ctlfile=$(ls -1t --color=none ${VARdir}/gfe_grids_test/${siteid}_inp_args.ctl | head -1)
-            numlines=$(cat ${ctlfile} | wc -l)
-            numchars=$(cat ${ctlfile} | wc -c)
-            if [ "$numlines" -ne 1 ] || [ "$numchars" -lt 51 ] || [ "$numchars" -gt 76 ]
-            then
-               echo "FATAL ERROR: CTL file from AWIPS is corrupt. NWPS will not be executed." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-               msg="FATAL ERROR: CTL file from AWIPS is corrupt. NWPS will not be executed."
+            if [ "${ctlfile}" == "" ]; then
+               echo "FATAL ERROR: CTL file missing in AWIPS submission. NWPS will not be executed." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+               msg="FATAL ERROR: CTL file missing in AWIPS submission. NWPS will not be executed."
                postmsg "$jlogfile" "$msg"
                cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${GESOUT}/warnings/Warn_Forecaster_${SITEID}.${PDY}.txt
                echo "ABORTED $FORECASTWINDdir/${NewestWind} AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
                export err=1; err_chk
             else
-	       cp -fpv ${ctlfile} ${INPUTdir}/${siteid}_inp_args.ctl
+               numlines=$(cat ${ctlfile} | wc -l)
+               numchars=$(cat ${ctlfile} | wc -c)
+               if [ "$numlines" -ne 1 ] || [ "$numchars" -lt 51 ] || [ "$numchars" -gt 76 ]
+               then
+                  echo "FATAL ERROR: CTL file from AWIPS is corrupt. NWPS will not be executed." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+                  msg="FATAL ERROR: CTL file from AWIPS is corrupt. NWPS will not be executed."
+                  postmsg "$jlogfile" "$msg"
+                  cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${GESOUT}/warnings/Warn_Forecaster_${SITEID}.${PDY}.txt
+                  echo "ABORTED $FORECASTWINDdir/${NewestWind} AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
+                  export err=1; err_chk
+               else
+	          cp -fpv ${ctlfile} ${INPUTdir}/${siteid}_inp_args.ctl
+               fi
             fi
 	    let minwindhours=${Default_RUNLEN}+1 # NOTE: We need to have the 1 extra hour to nested grids
 	    #AW ${EXECnwps}/check_awips_windfile --max-speed 199. --verbose --debug ${windfile} > ${LOGdir}/gfe_wind_file_check.log
