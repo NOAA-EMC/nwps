@@ -25,6 +25,10 @@ if [ "${NWPSdir}" == "" ]
     exit 1
 fi
 
+#Fetching external fix and binary files from rzdm
+cd ${NWPSdir}/sorc
+./get_externals.sh
+
 mkdir -p ${NWPSdir}/exec
 
 #FOR DEGRIB
@@ -62,9 +66,6 @@ cd ${NWPSdir}/sorc
 #FOR RUNUP
 #The executable is runupforecast.exe
 ./make_runup_program.sh
-
-#PYTHON MODULES (Basemap and Matplotlib)
-#AW20190328 ./make_python_modules.sh
 
 #FOR PSURGE2NWPS
 #The following will generate the executables: psurge2nwps_64, psurge_identify.exe and  psoutTOnwps.exe.
