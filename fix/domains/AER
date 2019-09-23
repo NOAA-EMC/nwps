@@ -161,6 +161,7 @@ export WAVECPS="multi_1.NW-AER66.spec.swan"
 #1.00 'multi_1.NW-AER53.spec.swan'    1 &
 #2.75 'multi_1.NW-AER54.spec.swan'    1 &
 #3.00 'multi_1.NW-AER55.spec.swan'    1 &
+#NUM DIRimpl cdd=1 cdlim=2
 #$END BOUNSEG
 #
 #========================================================================
