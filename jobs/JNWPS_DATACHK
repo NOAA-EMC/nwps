@@ -74,7 +74,7 @@ export dcom=${dcom:-${DCOMROOT}/us007003}
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 
 # Establish rsync timeout and retry limits
-export RSYNC_MAX_SECONDS=${RSYNC_MAX_SECONDS:-100}
+export RSYNC_MAX_SECONDS=${RSYNC_MAX_SECONDS:-60}
 export RSYNC_MAX_ATTEMPTS=${RSYNC_MAX_ATTEMPTS:-3}
 
 # make sure NWPS COM directory exists
