@@ -1,5 +1,0 @@
-README_FOR_SPA
-
-Instructions for buidling Python modules
-
-The Python modules for NWPS is built as part of the make_NWPS.sh build script. However, the Python libraries built under lib64/python/ are not portable, in particular lib64/python/python_modules/lib64/python2.6/site-packages/_geoslib.so. Therefore, when building the code in /gpfs/hps/nco/ops/nwpara/, please retain the original build libraries when copy the model to /gpfs/hps/nco/ops/nwprod/ for production.
