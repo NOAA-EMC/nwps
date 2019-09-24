@@ -9,7 +9,7 @@ Make the $NWROOT home directory for the model:
 > mkdir nwps
 > cd nwps
 
-Check out the NWPS code from the following emc-svn tag: https://svnemc.ncep.noaa.gov/projects/nwps/tags/IT_NWPS_WCOSS_ver1.2.0-20170717
+Check out the NWPS code from the following VLab repo (head):
 > git clone https://vlab.ncep.noaa.gov/code-review/EMC_nwps
 
 II) Building the executables
