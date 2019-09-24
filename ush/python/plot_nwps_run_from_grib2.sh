@@ -161,7 +161,7 @@ for parm in ${SWANPARMS}
   file=$(echo ${files} | awk '{ print $1 }')
   if [ CG"${CGNUMPLOT}" == "${RIPDOMAIN}" ] || [ CG"${CGNUMPLOT}" == "${RUNUPDOMAIN}" ]
   then
-     files_riprunup=$(ls -1t ${GRAPHICOUTPUTDIRECTORY}/???_nwps_CG?_????????_????_RipRunup.grib2)
+     files_riprunup=$(ls -1t ${GRAPHICOUTPUTDIRECTORY}/???_nwps_CG?_????????_????.grib2)
      file_riprunup=$(echo ${files_riprunup} | awk '{ print $1 }')
   fi
   TEMPDIR=${VARdir}/${SITEID}.tmp/CG${CGNUM}
