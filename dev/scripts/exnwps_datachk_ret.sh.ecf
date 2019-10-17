@@ -231,7 +231,7 @@ do                             #read line
    elif [ "${region}" == "pr" ]; then
       wfos="hfo gua"
    elif [ "${region}" == "ar" ]; then
-      wfos="ajk aer alu afg"
+      wfos="ajk aer alu afg" 
    fi
 
    PDY=$line
