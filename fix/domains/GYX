@@ -356,3 +356,80 @@ export RIPCONT="5m"
 #$
 #$END RIP
 #
+#
+#========================================================================
+#                    RUNUP PROGRAM (SEE NWPS MANUAL)              =
+#========================================================================
+# IF RUNUP PROGRAM WILL BE RUN, then RIPCONT=1, Otherwise =0;
+# Setting up RIPCONT here to zero will permanently disable RIP program.
+#
+export RUNUPPROG="1"
+export RUNUPDOMAIN="CG1"
+export RUNUPCONT="20m"
+#
+#___________________________________________________________________________
+# RAY Section: Define a pair of rays to drop data out along critical contours
+#              for rip current program.
+#
+# Example: SEE ABOVE FOR RIPCURRENT
+#_____________________________________________________________________________
+#
+# THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD RUNUP COMMAND LINES FOR YOUR
+# DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE
+# RUNUP (RUNUPCONT="0") THEY WILL REMAIN AS A COMMENTED LINES. IF YOU DECIDE TO USE
+# IT NWPS WILL INCLUDE THE INFORMATION IN THE ACTUAL
+# INPUT FILES WITH NOT COMMENT CHARACTER
+# POIN '20mcont' 279.887  25.8725 
+#
+#$RUNUP LINES
+#$ Ray for 20m contour data.
+#$
+#POINTS '20mcont' &
+#289.367 43.0642 &
+#289.378 43.0670 &
+#289.390 43.0697 &
+#289.411 43.1685 &
+#289.428 43.2298 &
+#289.429 43.2477 &
+#289.432 43.2564 &
+#289.437 43.2644 &
+#289.459 43.3032 &
+#289.470 43.3020 &
+#289.473 43.3107 &
+#289.480 43.3178 &
+#289.491 43.3223 &
+#289.539 43.3260 &
+#289.560 43.3332 &
+#289.572 43.3361 &
+#289.589 43.3596 &
+#289.592 43.3682 &
+#289.597 43.3765 &
+#289.615 43.3881 &
+#289.628 43.4034 &
+#289.662 43.4116 &
+#289.670 43.4181 &
+#289.677 43.4252 &
+#289.679 43.4338 &
+#289.669 43.4638 &
+#289.662 43.4709 &
+#289.658 43.4793 &
+#289.660 43.4969 &
+#289.693 43.4934 &
+#289.692 43.5158 &
+#289.695 43.5233 &
+#289.705 43.5282 &
+#289.717 43.5321 &
+#289.763 43.5340 &
+#289.775 43.5351 &
+#289.786 43.5389 &
+#289.790 43.5466 &
+#290.180 43.6963 &
+#290.189 43.7016 &
+#290.200 43.7065 &
+#290.211 43.7090 &
+#290.277 43.7526 &
+#290.283 43.7603
+#TABLE '20mcont' HEAD '20m_contour_CG1' TIME XP YP HSIGN TPS DIR VEL WATL WIND OUTPUT 20110825.1200 1.0 HR
+#$
+#$END RUNUP
+#
