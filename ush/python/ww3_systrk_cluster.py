@@ -626,7 +626,7 @@ with open(fname_pnt,'a') as f:                  # append to file
     f.write(s)
 
 bulfilenm = wfo+'_nwps_CG0_Trkng_'+datetime.datetime.fromtimestamp(startdate).strftime('%Y%m%d')+'_'\
-            +datetime.datetime.fromtimestamp(startdate).strftime('%H%M')+'.clust.bull'
+            +datetime.datetime.fromtimestamp(startdate).strftime('%H%M')+'.bull'
 bul_file = open(bulfilenm, "w")
 bul_file.write("%s" % '  Location : '+wfo.upper()+' domain spatial average\n')
 bul_file.write("%s" % '  Model    : Cluster-based wave system tracking\n')
@@ -776,7 +776,7 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
          norm = BoundaryNorm(clevs, ncolors=plt.cm.jet.N, clip=True)
          cf = axlist[plotloc].pcolormesh(x,y,convfac*np.asarray(par),cmap=plt.cm.jet, norm=norm, transform=ccrs.PlateCarree())
          cb = fig.colorbar(cf, ax=axlist[plotloc])
-         cb.set_label('System '+str(ipart+1)+': Hs (m)', size=9)
+         cb.set_label('System '+str(ipart+1)+': Hs (ft)', size=9)
          axlist[plotloc].plot(xspc,yspc,'k+',markersize=10,markeredgewidth=2,transform=ccrs.PlateCarree())
          rowskip=int(np.floor(par3.shape[0]/20))
          colskip=int(np.floor(par3.shape[1]/20))
