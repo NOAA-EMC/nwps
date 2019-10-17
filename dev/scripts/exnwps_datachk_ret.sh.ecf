@@ -214,7 +214,8 @@ function process_nwps_dcom {
 
 #AW111116    for runit in ${DCOM_FILES[@]}; do
 
-regions="sr er wr pr ar"
+#regions="sr er wr pr ar"
+regions="sr"
 cycles="00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23"
 
 while read line
@@ -223,16 +224,12 @@ do                             #read line
   do                             #region
    if [ "${region}" == "sr" ]; then
       wfos="bro crp hgx lch lix mob tae tbw key mfl mlb jax sju"
-      #wfos="tbw mfl sju"
    elif [ "${region}" == "er" ]; then
       wfos="chs ilm mhx akq lwx phi okx box gyx car"
-      #wfos="mhx akq okx box car"
    elif [ "${region}" == "wr" ]; then
       wfos="sew pqr mfr eka mtr lox sgx"
-      #wfos="sgx"
    elif [ "${region}" == "pr" ]; then
       wfos="hfo gua"
-      #wfos="hfo"
    elif [ "${region}" == "ar" ]; then
       wfos="ajk aer alu afg"
    fi
