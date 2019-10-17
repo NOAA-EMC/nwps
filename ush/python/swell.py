@@ -207,7 +207,7 @@ for tstep in range(1, (int(TDEF)+1)):
       plt.plot(npierlons, npierlats, color="black", linewidth=2.5, linestyle="-", transform=ccrs.PlateCarree())
       plt.plot(spierlons, spierlats, color="black", linewidth=2.5, linestyle="-", transform=ccrs.PlateCarree())
 
-   figtitle = 'NWPS Swell (ft) \n Hour '\
+   figtitle = 'NWPS Swell (ft): Low-pass filter of wave height at < 0.1 Hz\n Hour '\
               +str(forecastTime)+' ('+str(date.hour).zfill(2)+'Z'+str(date.day).zfill(2)\
               +monthstr[int(date.month)-1]+str(date.year)+')'
    plt.title(figtitle,fontsize=10)
