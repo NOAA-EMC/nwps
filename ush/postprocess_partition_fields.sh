@@ -218,12 +218,12 @@ done
 if [ ! -e ${grib2dir}/tracking/CG0 ]; then mkdir -p ${grib2dir}/tracking/CG0; fi
 
 cd ${grib2dir}/tracking/CG0
-cat /dev/null > ${grib2dir}/tracking/CG0/${siteid}_nwps_CG0_Trkng_${time_stamp}.grib2
+cat /dev/null > ${grib2dir}/tracking/CG0/${siteid}_nwps_CG0_Trkng_${time_stamp}.sprl.grib2
 
-echo "Creating final grib2 file: ${grib2dir}/tracking/CG0/${siteid}_nwps_CG0_Trkng_${time_stamp}.grib2"
+echo "Creating final grib2 file: ${grib2dir}/tracking/CG0/${siteid}_nwps_CG0_Trkng_${time_stamp}.sprl.grib2"
 for TYPE in HSIGN DIR TP
 do
-    cat ${WTVARdir}/${TYPE}_final.grib2 >> ${grib2dir}/tracking/CG0/${siteid}_nwps_CG0_Trkng_${time_stamp}.grib2
+    cat ${WTVARdir}/${TYPE}_final.grib2 >> ${grib2dir}/tracking/CG0/${siteid}_nwps_CG0_Trkng_${time_stamp}.sprl.grib2
 done
 
 echo "Cleaning var files"
@@ -250,9 +250,9 @@ cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
 COMOUTCYC="${COMOUT}/${cycle}/CG0"
 if [ "${SENDCOM}" == "YES" ]; then
    mkdir -p $COMOUTCYC
-   cp -fv  ${grib2dir}/tracking/CG0/${siteid}_nwps_CG0_Trkng_${time_stamp}.grib2 $COMOUTCYC/
+   cp -fv  ${grib2dir}/tracking/CG0/${siteid}_nwps_CG0_Trkng_${time_stamp}.sprl.grib2 $COMOUTCYC/
    if [ "${SENDDBN}" == "YES" ]; then
-       ${DBNROOT}/bin/dbn_alert MODEL NWPS_GRIB $job  ${COMOUTCYC}/${siteid}_nwps_CG0_Trkng_${time_stamp}.grib2
+       ${DBNROOT}/bin/dbn_alert MODEL NWPS_GRIB $job  ${COMOUTCYC}/${siteid}_nwps_CG0_Trkng_${time_stamp}.sprl.grib2
    fi
 fi
 
