@@ -223,16 +223,12 @@ do                             #read line
   do                             #region
    if [ "${region}" == "sr" ]; then
       wfos="bro crp hgx lch lix mob tae tbw key mfl mlb jax sju"
-      #wfos="tbw mfl sju"
    elif [ "${region}" == "er" ]; then
       wfos="chs ilm mhx akq lwx phi okx box gyx car"
-      #wfos="mhx akq okx box car"
    elif [ "${region}" == "wr" ]; then
       wfos="sew pqr mfr eka mtr lox sgx"
-      #wfos="sgx"
    elif [ "${region}" == "pr" ]; then
       wfos="hfo gua"
-      #wfos="hfo"
    elif [ "${region}" == "ar" ]; then
       wfos="ajk aer alu afg"
    fi
