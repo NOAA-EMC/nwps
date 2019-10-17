@@ -127,6 +127,9 @@ lhour=$(${WGRIB2} ${GRIB2file} -match WIND | tail -1 | awk -F':' '{ print $6 }' 
 
 # Get hour time step from the grib2 vars
 timestep=$(echo "${fhour2} - ${fhour1}" | bc )
+#Override time step to 3 hours
+#timestep=3
+#lhour=49
 
 echo "Timestep = ${timestep}" | tee -a ${LOGFILE}
 echo "Number of forecast hours = ${lhour}" | tee -a ${LOGFILE}
