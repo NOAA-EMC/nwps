@@ -210,7 +210,7 @@ DPI_IMAGE = int(os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | gre
 DPI = DPI_IMAGE/2
 
 # Extract GRIB2 files to text
-for tstep in range(1, (TDEF+1), 3):
+for tstep in range(1, (TDEF+1)):
    print('')
    print('Extracting Time step: '+str(tstep))
 
@@ -249,7 +249,7 @@ CGNUMPLOT = os.environ.get('CGNUMPLOT')
 
 plt.figure()
 # Read the extracted text file
-for tstep in range(1, (TDEF+1), 3):
+for tstep in range(1, (TDEF+1)):
    print('')
    print('Processing Time step: '+str(tstep))
 
