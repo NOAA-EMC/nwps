@@ -238,7 +238,7 @@ wind_arr = np.fromfile(sr_fp, dtype=np.float32, count=NUMSRPOINTS*TDEF)
 perpw_arr = np.fromfile(sr_fp, dtype=np.float32, count=NUMSRPOINTS*TDEF)
 
 cnt = 0
-for tstep in range(1, (TDEF+1), 3):
+for tstep in range(1, (TDEF+1)):
 
    forecastTime = cnt * TINCR
    cnt = cnt+1
@@ -283,24 +283,42 @@ for tstep in range(1, (TDEF+1), 3):
 
    ind = np.arange(NUMSRPOINTS)
    ax_chart_bottom.set_xticks(ind)
+   ticklabs = [''] * NUMSRPOINTS
+   ticklabs[0] = SHIPROUTENAME.split(" to ",1)[0]
+   ticklabs[len(ind[0::3])-1] = SHIPROUTENAME.split(" to ",1)[1]
+   ax_chart_bottom.set_xticklabels(ticklabs, fontsize=7)
    ax_chart_bottom.get_yaxis().set_visible(False)
-   ax_chart_bottom.get_xaxis().set_visible(False)
+   ax_chart_bottom.get_xaxis().set_visible(True)
    ax_chart_bottom.set_title('Peak Wave Direction', size=8, color='black')
    ax_chart_bottom.quiver(dirpw_u[0::3],dirpw_v[0::3],scale=7.)
 
    ax_chart_middle.tick_params(axis='y', labelsize=7)
-   ax_chart_middle.set_yticks((0,10,20,30,40))
-   ax_chart_middle.set_ylim([0,40])
+   if ( SHIPROUTENAME.split(" to ",1)[0] == 'Cook Inlet SW' or \
+        SHIPROUTENAME.split(" to ",1)[0] == 'Barren Islands SW' or \
+        SHIPROUTENAME.split(" to ",1)[0] == 'Whittier' ):
+      ax_chart_middle.set_yticks((0,10,20,30,40,50))
+      ax_chart_middle.set_ylim([0,50])
+      ax_chart_middle.axhline(y=23,xmin=0,xmax=3,c="darkorange",linewidth=1.5,zorder=0,label='Small Craft Advisory')
+      ax_chart_middle.axhline(y=33,xmin=0,xmax=3,c="red",linewidth=1.5,zorder=0,label='Gale')
+   elif ( SHIPROUTENAME.split(" to ",1)[0] == 'Long Beach' or \
+        SHIPROUTENAME.split(" to ",1)[0] == 'Ventura' ):
+      ax_chart_middle.set_yticks((0,10,20,30,40))
+      ax_chart_middle.set_ylim([0,40])
+      ax_chart_middle.axhline(y=21,xmin=0,xmax=3,c="darkorange",linewidth=1.5,zorder=0,label='Small Craft Advisory')
+      ax_chart_middle.axhline(y=34,xmin=0,xmax=3,c="red",linewidth=1.5,zorder=0,label='Gale')
+   else:
+      ax_chart_middle.set_yticks((0,10,20,30,40))
+      ax_chart_middle.set_ylim([0,40])
+      ax_chart_middle.axhline(y=15,xmin=0,xmax=3,c="gold",linewidth=1.5,zorder=0,label='Small Craft Exercise Caution')
+      ax_chart_middle.axhline(y=20,xmin=0,xmax=3,c="darkorange",linewidth=1.5,zorder=0,label='Small Craft Advisory')
+      ax_chart_middle.axhline(y=33,xmin=0,xmax=3,c="red",linewidth=1.5,zorder=0,label='Gale')
    wind_bar_width = .8
-   ax_chart_middle.axhline(y=15,xmin=0,xmax=3,c="gold",linewidth=1.5,zorder=0,label='Small Craft Operators Exercise Caution')
-   ax_chart_middle.axhline(y=20,xmin=0,xmax=3,c="darkorange",linewidth=1.5,zorder=0,label='Small Craft Advisory Winds')
-   ax_chart_middle.axhline(y=33,xmin=0,xmax=3,c="red",linewidth=1.5,zorder=0,label='Gale')
    font= FontProperties(weight='bold',size=3.7)
    legend = ax_chart_middle.legend(loc='upper right', ncol=3,frameon=False,prop=font)
    ax_chart_middle.set_xticks(ind)
    ax_chart_middle.axes.get_xaxis().set_visible(False)
    ax_chart_middle.set_title('Wind Speed (Knots)', size=8, color='black')
-   ax_chart_middle.bar(np.arange(NUMSRPOINTS), wndspdms_knots, wind_bar_width, color='lightgreen',alpha=.25)
+   ax_chart_middle.bar(np.arange(NUMSRPOINTS), wndspdms_knots, wind_bar_width, color='green',alpha=.25)
 
    ax2_chart_top = ax_chart_top.twinx()
    ax_chart_top.tick_params(axis='y', labelsize=7)
@@ -313,16 +331,16 @@ for tstep in range(1, (TDEF+1), 3):
    hgt_bar_width = 0.7
    perpw_bar_width = 0.5
    ax_chart_top.plot(hgt, color='blue')
-   ax_chart_top.axhline(y=7.5,xmin=0,xmax=3,c="red",linewidth=1.5,zorder=0,label='Small Craft Advisory Seas')
+   ax_chart_top.axhline(y=7.5,xmin=0,xmax=3,c="red",linewidth=1.5,zorder=0,label='Small Craft Advisory')
    font = FontProperties(weight='bold',size=3.7)
    legend = ax_chart_top.legend(loc='upper right', ncol=1,frameon=False,prop=font)
-   ax2_chart_top.bar(ind, perpw, perpw_bar_width, color='gold',alpha=.5) 
+   ax2_chart_top.bar(ind, perpw, perpw_bar_width, color='green',alpha=.5) 
    ax_chart_top.set_xticks(ind)
    ax2_chart_top.set_xticks(ind)
    ax_chart_top.axes.get_xaxis().set_visible(False)
    ax2_chart_top.axes.get_xaxis().set_visible(False)
    ax_chart_top.set_title('(ft) Significant Wave Height     ', horizontalalignment='right', size=7.5, color='blue')
-   ax2_chart_top.set_title('     Peak Wave Period (sec)', horizontalalignment='left', size=7.5, color='gold')
+   ax2_chart_top.set_title('     Peak Wave Period (sec)', horizontalalignment='left', size=7.5, color='green')
 
    plt.subplots_adjust(hspace=.30, left=.04, bottom=.15, right=.97, top=.82, wspace=.30)
 
