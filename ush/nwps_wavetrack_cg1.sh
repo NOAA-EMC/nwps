@@ -26,18 +26,20 @@ if [ "${hastracking}" == "TRUE" ]
    pwd                                                 | tee -a $logfile
    #AW echo 'Removing empty lines in partition.raw file...'
    #AW sed -i.bak '/ 0.0  0.0 270.0  0.0   0.0/,+1d' ${RUNdir}/swan_part.CG1.raw
-   echo "perl -I${PMnwps} -I${RUNdir} ${USHnwps}/waveTracking.pl" | tee -a $logfile    
-   perl -I${PMnwps} -I${RUNdir} ${USHnwps}/waveTracking.pl | tee -a $logfile
-   export err=$?; err_chk
+   #AW20200206 echo "perl -I${PMnwps} -I${RUNdir} ${USHnwps}/waveTracking.pl" | tee -a $logfile    
+   #AW20200206 perl -I${PMnwps} -I${RUNdir} ${USHnwps}/waveTracking.pl | tee -a $logfile
+   #AW20200206 export err=$?; err_chk
+   #AW20200206 mv -fv ${OUTPUTdir}/partition/CG1/SYS_HSIGN.OUT ${OUTPUTdir}/partition/CG1/SYS_HSIGN.OUT.SPRL
+   #AW20200206 mv -fv ${OUTPUTdir}/partition/CG1/SYS_TP.OUT ${OUTPUTdir}/partition/CG1/SYS_TP.OUT.SPRL
+   #AW20200206 mv -fv ${OUTPUTdir}/partition/CG1/SYS_DIR.OUT ${OUTPUTdir}/partition/CG1/SYS_DIR.OUT.SPRL
+   #AW20200206 mv -fv ${OUTPUTdir}/partition/CG1/SYS_DSPR.OUT ${OUTPUTdir}/partition/CG1/SYS_DSPR.OUT.SPRL
+   #AW20200206 mv -fv ${OUTPUTdir}/partition/CG1/SYS_PNT.OUT ${OUTPUTdir}/partition/CG1/SYS_PNT.OUT.SPRL
+
    #AW073017 ----- Convert partition file to Python scikit learn format ----
+   mv swan_part.CG1.raw partition.raw
    ${EXECnwps}/ww3_sysprep.exe
    #AW073017 ---------------------------------------------------------------
    #AW020218 ----- Run Python scikit learn version of wave tracking --------
-   mv -fv ${OUTPUTdir}/partition/CG1/SYS_HSIGN.OUT ${OUTPUTdir}/partition/CG1/SYS_HSIGN.OUT.SPRL
-   mv -fv ${OUTPUTdir}/partition/CG1/SYS_TP.OUT ${OUTPUTdir}/partition/CG1/SYS_TP.OUT.SPRL
-   mv -fv ${OUTPUTdir}/partition/CG1/SYS_DIR.OUT ${OUTPUTdir}/partition/CG1/SYS_DIR.OUT.SPRL
-   mv -fv ${OUTPUTdir}/partition/CG1/SYS_DSPR.OUT ${OUTPUTdir}/partition/CG1/SYS_DSPR.OUT.SPRL
-   mv -fv ${OUTPUTdir}/partition/CG1/SYS_PNT.OUT ${OUTPUTdir}/partition/CG1/SYS_PNT.OUT.SPRL
 
    cd ${RUNdir}
 
@@ -51,8 +53,9 @@ if [ "${hastracking}" == "TRUE" ]
    tar -czvf mapplots_CG0_${PDY}${cycle}.tar.gz swan_systrk1_hr???.png
    cp -fv ${RUNdir}/mapplots_CG0_${PDY}${cycle}.tar.gz $COMOUTCYC/
    cp -fv ${RUNdir}/${siteid}_nwps_CG0_Trkng_${PDY}_${cycle}00.bull $COMOUTCYC/
+   cp -fv ${RUNdir}/${siteid}_${PDY}.${cycle}0000.sys $COMOUTCYC/
    rm ${RUNdir}/swan_systrk1_hr???.png
-   rm ${RUNdir}/coastal_bound_high.txt
+   #rm ${RUNdir}/coastal_bound_high.txt
    #AW020218 ---------------------------------------------------------------
 fi
 
