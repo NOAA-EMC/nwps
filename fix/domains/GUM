@@ -176,55 +176,51 @@ export WAVECPS="multi_1.NW-GUM51.spec.swan,multi_1.NW-GUM60.spec.swan,multi_1.NW
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#$western boundary, s to n
-#BOUN SEG XY 143.67 12.34 143.67 16.81 VAR FILE 0.00 'multi_1.NW-GUM51.spec.swan'    1 &
-#0.50 'multi_1.NW-GUM52.spec.swan'    1 &
-#1.00 'multi_1.NW-GUM53.spec.swan'    1 &
-#1.50 'multi_1.NW-GUM54.spec.swan'    1 &
-#2.00 'multi_1.NW-GUM55.spec.swan'    1 &
-#2.50 'multi_1.NW-GUM56.spec.swan'    1 &
-#3.00 'multi_1.NW-GUM57.spec.swan'    1 &
-#3.50 'multi_1.NW-GUM58.spec.swan'    1 &
-#4.00 'multi_1.NW-GUM59.spec.swan'    1 &
-#4.47 'multi_1.NW-GUM60.spec.swan'    1 
-#$ northern boundary, w to e
-#BOUN SEG XY 143.67 16.81 148.29 16.81 VAR FILE 0.00 'multi_1.NW-GUM60.spec.swan.cp'    1 &
-#0.50 'multi_1.NW-GUM61.spec.swan'       1 &
-#1.00 'multi_1.NW-GUM62.spec.swan'       1 &
-#1.50 'multi_1.NW-GUM63.spec.swan'       1 &
-#2.00 'multi_1.NW-GUM64.spec.swan'       1 &
-#2.50 'multi_1.NW-GUM65.spec.swan'       1 &
-#3.00 'multi_1.NW-GUM66.spec.swan'       1 &
-#3.50 'multi_1.NW-GUM67.spec.swan'       1 &
-#4.00 'multi_1.NW-GUM68.spec.swan'       1 &
-#4.50 'multi_1.NW-GUM69.spec.swan'       1 &
-#4.62 'multi_1.NW-GUM70.spec.swan'       1 
-#$ eastern boundary, n to s
-#BOUN SEG XY 148.29 16.81 148.29 12.34 VAR FILE 0.00 'multi_1.NW-GUM70.spec.swan.cp'    1 &
-#0.47 'multi_1.NW-GUM71.spec.swan'    1 &
-#0.97 'multi_1.NW-GUM72.spec.swan'    1 &
-#1.47 'multi_1.NW-GUM73.spec.swan'    1 &
-#1.97 'multi_1.NW-GUM74.spec.swan'    1 &
-#2.47 'multi_1.NW-GUM75.spec.swan'    1 &
-#2.97 'multi_1.NW-GUM76.spec.swan'    1 &
-#3.47 'multi_1.NW-GUM77.spec.swan'    1 &
-#3.97 'multi_1.NW-GUM78.spec.swan'    1 &
-#4.47 'multi_1.NW-GUM79.spec.swan'    1 
+#$UNSTR SWAN BOUNDARY COMMAND LINES - SITE NW-GUM
+#$western boundary, n to s (southern half)
+#BOUNdspec SIDE 1 CCW CON FILE 'multi_1.NW-GUM56.spec.swan' 1
+#BOUNdspec SIDE 2 CCW CON FILE 'multi_1.NW-GUM55.spec.swan' 1
+#BOUNdspec SIDE 3 CCW CON FILE 'multi_1.NW-GUM54.spec.swan' 1
+#BOUNdspec SIDE 4 CCW CON FILE 'multi_1.NW-GUM53.spec.swan' 1
+#BOUNdspec SIDE 5 CCW CON FILE 'multi_1.NW-GUM52.spec.swan' 1
+#BOUNdspec SIDE 6 CCW CON FILE 'multi_1.NW-GUM51.spec.swan' 1
 #$ southern boundary, w to e
-#BOUN SEG XY 148.29 12.34 143.67 12.34 VAR FILE 0.00 'multi_1.NW-GUM79.spec.swan.cp'    1 &
-#0.50 'multi_1.NW-GUM80.spec.swan'    1 &
-#1.00 'multi_1.NW-GUM81.spec.swan'    1 &
-#1.50 'multi_1.NW-GUM82.spec.swan'    1 &
-#2.00 'multi_1.NW-GUM83.spec.swan'    1 &
-#2.50 'multi_1.NW-GUM84.spec.swan'    1 &
-#3.00 'multi_1.NW-GUM85.spec.swan'    1 &
-#3.50 'multi_1.NW-GUM86.spec.swan'    1 &
-#4.00 'multi_1.NW-GUM87.spec.swan'    1 &
-#4.50 'multi_1.NW-GUM88.spec.swan'    1 &
-#4.62 'multi_1.NW-GUM51.spec.swan.cp' 1
-#NUM DIRimpl cdd=1 cdlim=4
+#BOUNdspec SIDE 7 CCW CON FILE 'multi_1.NW-GUM88.spec.swan' 1
+#BOUNdspec SIDE 8 CCW CON FILE 'multi_1.NW-GUM87.spec.swan' 1
+#BOUNdspec SIDE 9 CCW CON FILE 'multi_1.NW-GUM86.spec.swan' 1
+#BOUNdspec SIDE 10 CCW CON FILE 'multi_1.NW-GUM85.spec.swan' 1
+#BOUNdspec SIDE 11 CCW CON FILE 'multi_1.NW-GUM84.spec.swan' 1
+#BOUNdspec SIDE 12 CCW CON FILE 'multi_1.NW-GUM83.spec.swan' 1
+#BOUNdspec SIDE 13 CCW CON FILE 'multi_1.NW-GUM82.spec.swan' 1
+#BOUNdspec SIDE 14 CCW CON FILE 'multi_1.NW-GUM81.spec.swan' 1
+#BOUNdspec SIDE 15 CCW CON FILE 'multi_1.NW-GUM80.spec.swan' 1
+#BOUNdspec SIDE 16 CCW CON FILE 'multi_1.NW-GUM79.spec.swan' 1
+#$ eastern boundary, s to n
+#BOUNdspec SIDE 17 CCW CON FILE 'multi_1.NW-GUM78.spec.swan' 1
+#BOUNdspec SIDE 18 CCW CON FILE 'multi_1.NW-GUM77.spec.swan' 1
+#BOUNdspec SIDE 19 CCW CON FILE 'multi_1.NW-GUM76.spec.swan' 1
+#BOUNdspec SIDE 20 CCW CON FILE 'multi_1.NW-GUM75.spec.swan' 1
+#BOUNdspec SIDE 21 CCW CON FILE 'multi_1.NW-GUM74.spec.swan' 1
+#BOUNdspec SIDE 22 CCW CON FILE 'multi_1.NW-GUM73.spec.swan' 1
+#BOUNdspec SIDE 23 CCW CON FILE 'multi_1.NW-GUM72.spec.swan' 1
+#BOUNdspec SIDE 24 CCW CON FILE 'multi_1.NW-GUM71.spec.swan' 1
+#BOUNdspec SIDE 25 CCW CON FILE 'multi_1.NW-GUM70.spec.swan' 1
+#$ northern boundary, e to w
+#BOUNdspec SIDE 26 CCW CON FILE 'multi_1.NW-GUM69.spec.swan' 1
+#BOUNdspec SIDE 27 CCW CON FILE 'multi_1.NW-GUM68.spec.swan' 1
+#BOUNdspec SIDE 28 CCW CON FILE 'multi_1.NW-GUM67.spec.swan' 1
+#BOUNdspec SIDE 29 CCW CON FILE 'multi_1.NW-GUM66.spec.swan' 1
+#BOUNdspec SIDE 30 CCW CON FILE 'multi_1.NW-GUM65.spec.swan' 1
+#BOUNdspec SIDE 31 CCW CON FILE 'multi_1.NW-GUM64.spec.swan' 1
+#BOUNdspec SIDE 32 CCW CON FILE 'multi_1.NW-GUM63.spec.swan' 1
+#BOUNdspec SIDE 33 CCW CON FILE 'multi_1.NW-GUM62.spec.swan' 1
+#BOUNdspec SIDE 34 CCW CON FILE 'multi_1.NW-GUM61.spec.swan' 1
+#BOUNdspec SIDE 35 CCW CON FILE 'multi_1.NW-GUM60.spec.swan' 1
+#$western boundary, n to s (northern half)
+#BOUNdspec SIDE 36 CCW CON FILE 'multi_1.NW-GUM59.spec.swan' 1
+#BOUNdspec SIDE 37 CCW CON FILE 'multi_1.NW-GUM58.spec.swan' 1
+#BOUNdspec SIDE 38 CCW CON FILE 'multi_1.NW-GUM57.spec.swan' 1
 #$END BOUNSEG
-#
 #
 #========================================================================
 #                    RIP CURRENT PROGRAM (SEE NWPS MANUAL)              =
@@ -232,10 +228,9 @@ export WAVECPS="multi_1.NW-GUM51.spec.swan,multi_1.NW-GUM60.spec.swan,multi_1.NW
 # IF RIP CURRENT PROGRAM WILL BE RUN, then RIPCONT=1, Otherwise =0;
 # Setting up RIPCONT here to zero will permanently disable RIP program.
 #
-# GUM first values
-export RIPPROG="0"
-export RIPDOMAIN=""
-export RIPCONT="0"
+export RIPPROG="1"
+export RIPDOMAIN="CG1"
+export RIPCONT="5m"
 #
 #___________________________________________________________________________
 # RAY Section: Define a pair of rays to drop data out along critical contours
@@ -247,7 +242,7 @@ export RIPCONT="0"
 #
 # RAY 'ray1' 282.85 34.628 282.85 34.62 2000 283.00 34.655 283.00 34.62
 #
-# ISOLINE '5mcont' 'ray1' BOTtom 5
+# ISOLINE '5mcont' 'ray1' BOTtom 10
 # TABLE '5mcont' HEAD '5mtable' HSIGN TPS PDIR OUTPUT 20110825.1200 3.0 HR
 #_____________________________________________________________________________
 #
@@ -256,14 +251,73 @@ export RIPCONT="0"
 # CURRENTS (RIPCONT="0") THEY WILL REMAIN AS A COMMENTED LINES. IF YOU DECIDE TO USE
 # BOUNDARY CONDITIONS (BOUNCOND="1") NWPS WILL INCLUDE THE INFORMATION IN THE ACTUAL
 # INPUT FILES WITH NOT COMMENT CHARACTER
-#ORIGINAL LINE
-#TABLE '5mcont' HEAD '5m_contour_CG2' TIME XP YP HSIGN TPS DIR DSPR VEL WATL WIND OUTPUT YYYYMMDD.HHMM H.M HR
+# POIN '5mcont' 279.887  25.8725 
+#
 #$RIP LINES
-#$ Ray for 5m contour data.
+#$ Ray for 5m and 20m contour data.
 #$
-#RAY 'ray1' 279.88 25.84 279.9 25.84 100 279.88 25.90 279.90 25.90
-#ISOLINE '5mcont' 'ray1' BOTtom 5
-#TABLE '5mcont' HEAD '5m_contour_CG2' TIME XP YP HSIGN TPS DIR DSPR VEL BOTLEV WIND OUTPUT YYYYMMDD.HHMM H.M HR
+#POINTS '5mcont' &
+#144.645 13.3632 &
+#144.646 13.3710 &
+#144.646 13.3786 &
+#144.650 13.3852 &
+#144.656 13.3910 &
+#144.659 13.3981 &
+#144.659 13.4058 &
+#144.653 13.4112 &
+#144.645 13.4678 &
+#144.653 13.4665 &
+#144.661 13.4665 &
+#144.669 13.4641 &
+#144.677 13.4651 &
+#144.693 13.4680 &
+#144.698 13.4735 &
+#144.703 13.4793 &
+#144.711 13.4770 &
+#144.719 13.4785 &
+#144.727 13.4809 &
+#144.735 13.4822 &
+#144.742 13.4835 &
+#144.750 13.4820 &
+#144.758 13.4836 &
+#144.765 13.4877 &
+#144.834 13.5883 &
+#144.832 13.5957 &
+#144.835 13.6029 &
+#144.834 13.6108 &
+#144.835 13.6186 &
+#144.837 13.6262 &
+#144.842 13.6327 &
+#144.846 13.6393 &
+#144.850 13.6464 &
+#144.855 13.6528 &
+#144.862 13.6558 &
+#144.870 13.6541 &
+#144.876 13.6497 &
+#144.882 13.6439 &
+#144.887 13.6378 &
+#144.892 13.6316 &
+#144.898 13.6257 &
+#144.902 13.6192 &
+#144.905 13.6119 &
+#144.911 13.6060 &
+#144.918 13.6030 &
+#144.926 13.6013 &
+#144.934 13.6006 &
+#144.942 13.5997 &
+#144.950 13.6003 &
+#144.759 13.2773 &
+#144.753 13.2721 &
+#144.747 13.2676 &
+#144.742 13.2615 &
+#144.740 13.2540 &
+#144.734 13.2483 &
+#144.727 13.2444 &
+#144.719 13.2465 &
+#144.711 13.2431 &
+#144.704 13.2417 &
+#144.696 13.2418
+#TABLE '5mcont' HEAD '5m_contour_CG1' TIME XP YP HSIGN TPS DIR DSPR VEL WATL WIND DEP OUTPUT 20110825.1200 1.0 HR
 #$
 #$END RIP
 #
