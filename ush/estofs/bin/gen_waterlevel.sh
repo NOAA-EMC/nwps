@@ -81,6 +81,20 @@ echo "Generating waterlevel files for NWPS model" | tee -a ${LOGfile}
 #echo "Checking for lock files" | tee -a ${LOGfile}
 #LockFileCheck $MINold
 
+if [ "${RETROSPECTIVE}" == "TRUE" ]; then    #RETROSPECTIVE
+   echo "Extracting water level configuration from archived inputCG"
+   cd ${RUNdir}
+   SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/estofs_match.pl`
+   for parm in ${SWANPARMS}
+      do
+      CG=`echo ${parm} | awk -F, '{ print $1 }'`
+      inputCG="${RUNdir}/input${CG}"
+      awk 'c&&c--;/WLEVEL STARTS HERE/{c=2}' "${inputCG}.org" > "${RUNdir}/waterlevel.org"
+      sed -i '/WLEVEL STARTS HERE/ r waterlevel.org' "${inputCG}"
+   done
+   exit 0
+fi     #RETROSPECTIVE
+
 datetime=`date -u`
 echo "Starting processing at at $datetime UTC" | tee -a ${LOGfile}
 
