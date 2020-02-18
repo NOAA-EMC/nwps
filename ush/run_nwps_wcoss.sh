@@ -161,7 +161,7 @@ Default_EXCD="10"
 if [ -z "${RETROSPECTIVE}" ]; then RETROSPECTIVE="FALSE"; fi
 
 # Forecaster warning log file
-. ${DATA}/PDY
+#AW . ${DATA}/PDY
 cat /dev/null > ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
 date_hh_mm_ss=$(date)
 echo "NWPS run started on ${date_hh_mm_ss}" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
@@ -408,7 +408,7 @@ else
     echo "${SITEID} wind file: ${WindNewName}" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
 
     mkdir -p ${INPUTdir}/wind
-    rm ${INPUTdir}/wind/*
+    if [ -e ${INPUTdir}/wind/* ]; then rm ${INPUTdir}/wind/*; fi
     ls -l ${INPUTdir}/
     cp -fp ${WindNewName} ${INPUTdir}/wind/${WindNewName}
     ln -sf ${INPUTdir}/wind/${WindNewName} ${INPUTdir}/${WindNewName}
@@ -701,10 +701,10 @@ fi
 #AW fi
 
 #Cleanup
-rm ${RUNdir}/Psurge_End_Time
-rm ${RUNdir}/nortofs
-rm ${RUNdir}/noestofs
-rm ${RUNdir}/nopsurge
+if [ -e ${RUNdir}/Psurge_End_Time ]; then rm ${RUNdir}/Psurge_End_Time; fi
+if [ -e ${RUNdir}/nortofs ]; then rm ${RUNdir}/nortofs; fi
+if [ -e ${RUNdir}/noestofs ]; then rm ${RUNdir}/noestofs; fi
+if [ -e ${RUNdir}/nopsurge ]; then rm ${RUNdir}/nopsurge; fi
 
 export MODELCORE=$(echo ${MODELCORE} | tr [:lower:] [:upper:])
 export modelcore=$(echo ${MODELCORE} | tr [:upper:] [:lower:])
