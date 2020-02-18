@@ -245,8 +245,8 @@ echo " " | tee -a $logrunup
 	 for parm in ${RUNUPparms}
 	 do
 	     cat ${parm}_final_runup.grib2 >> final_runup.grib2
-	     #>AW091019 cp -f final_runup.grib2 ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
-	     #>AW091019 cp -f final_runup.grib2 ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+	     cp -f final_runup.grib2 ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+	     cp -f final_runup.grib2 ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
 	 done
          #AW052917 Do not include runup output in general GRIB2 output, because it won't go over SBN yet.
          cat final_runup.grib2 >> ${GRIB2file}
@@ -435,7 +435,7 @@ cd ${DATA}/output/grib2/CG${CGNUM}
         if [ -e ${INPUTdir}/rtofs/rtofs_current_start_time.txt ]; then
            cd ${INPUTdir}/rtofs
            current_start_time=`cat ${INPUTdir}/rtofs/rtofs_current_start_time.txt`
-           tar -cf wave_rtofs_current_${current_start_time}.tar *.txt wave_rtofs_uv_${waterlevel_start_time}*.dat
+           tar -cf wave_rtofs_current_${current_start_time}.tar *.txt wave_rtofs_uv_${current_start_time}*.dat
            mv ${INPUTdir}/rtofs/wave_rtofs_current_${current_start_time}.tar ${COMOUTCYC}/
         fi
 
@@ -496,10 +496,18 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
       || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "ALU" ] || [ "${SITEID}" == "GUA" ] \
       || [ "${SITEID}" == "MLB" ] || [ "${SITEID}" == "JAX" ] || [ "${SITEID}" == "CHS" ] \
       || [ "${SITEID}" == "ILM" ] || [ "${SITEID}" == "PHI" ] || [ "${SITEID}" == "GYX" ] \
-      || [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "TAE" ] || [ "${SITEID}" == "MOB" ] \
+      || [ "${SITEID}" == "TAE" ] || [ "${SITEID}" == "MOB" ] \
       || [ "${SITEID}" == "HGX" ]
    then
       for i in {16..47}; do
+         mkdir -p ${HOTdir}/PE00${i}
+         mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+      done
+   fi
+   # Additional copies for domains running on 96 cores
+   if [ "${SITEID}" == "KEY" ]
+   then
+      for i in {16..95}; do
          mkdir -p ${HOTdir}/PE00${i}
          mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
       done
@@ -530,23 +538,23 @@ echo "DONE" | tee -a ${LOGdir}/hotstart.log
 
 echo " " | tee -a $logfile
 
-echo "Cleaning out archive directory:"              | tee -a $logfile
-cd ${ARCHdir}/
-ITEMSTOKEEP=60
-TOTAL=$(ls -1 *tgz | sort | wc -l)
-HEAD=$(expr $TOTAL - $ITEMSTOKEEP)
-if [[ $TOTAL -le $ITEMSTOKEEP ]]
-then
-    echo ": Nothing to clean ..."               | tee -a $logfile
-else
-    for i in $(ls -1 *tgz | head -n $HEAD)
-    do
-	echo -n ": "                        | tee -a $logfile
-	rm -vf $i                           | tee -a $logfile
-    done
-fi
-
-echo " " | tee -a $logfile
+#echo "Cleaning out archive directory:"              | tee -a $logfile
+#cd ${ARCHdir}/
+#ITEMSTOKEEP=60
+#TOTAL=$(ls -1 *tgz | sort | wc -l)
+#HEAD=$(expr $TOTAL - $ITEMSTOKEEP)
+#if [[ $TOTAL -le $ITEMSTOKEEP ]]
+#then
+#    echo ": Nothing to clean ..."               | tee -a $logfile
+#else
+#    for i in $(ls -1 *tgz | head -n $HEAD)
+#    do
+#	echo -n ": "                        | tee -a $logfile
+#	rm -vf $i                           | tee -a $logfile
+#    done
+#fi
+#
+#echo " " | tee -a $logfile
 ################################################################### 
 echo "Cleaning out netcdf/cdl directory:"           | tee -a $logfile
 cd ${OUTPUTdir}/netCdf/cdl
