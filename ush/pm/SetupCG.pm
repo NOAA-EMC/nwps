@@ -480,6 +480,14 @@ sub makeInputCGx (%){
 	      system("cp -pfv $hotfilelocation $newhotfilelocation >> ${LOGdir}/hotstart.log 2>&1");
            }
         }
+        if ( ("${SITEID}" eq "KEY") ) {
+           for (my $core=48; $core<96; $core++){
+	      #AW $hotfilelocation="${INPUTdir}/hotstart/PE00${core}/${hottime[0]}";
+	      $hotfilelocation="${hotfiles_cyc}/PE00${core}/${hottime[0]}";
+      	      $newhotfilelocation="${RUNdir}/PE00${core}/";
+	      system("cp -pfv $hotfilelocation $newhotfilelocation >> ${LOGdir}/hotstart.log 2>&1");
+           }
+        }
 	system("echo OFF > ${RUNdir}/hotstart.flag");
 	#if(-e "${RUNdir}/PE0000/${hottime[0]}") {
 	#    system("cp -pfv ${INPUTdir}/hotstart/${hottime[0]}-001 ${RUNdir}/${hottime[0]} >> ${LOGdir}/hotstart.log 2>&1");
