@@ -81,6 +81,20 @@ echo "Generating current files for NWPS model" | tee -a ${LOGfile}
 #echo "Checking for lock files" | tee -a ${LOGfile}
 #LockFileCheck $MINold
 
+if [ "${RETROSPECTIVE}" == "TRUE" ]; then    #RETROSPECTIVE
+   echo "Extracting currents configuration from archived inputCG"
+   cd ${RUNdir}
+   SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/rtofs_match.pl`
+   for parm in ${SWANPARMS}
+      do
+      CG=`echo ${parm} | awk -F, '{ print $1 }'`
+      inputCG="${RUNdir}/input${CG}"
+      awk 'c&&c--;/CURR STARTS HERE/{c=2}' "${inputCG}.org" > "${RUNdir}/currents.org"
+      sed -i '/CURR STARTS HERE/ r currents.org' "${inputCG}"
+   done
+   exit 0
+fi     #RETROSPECTIVE
+
 datetime=`date -u`
 echo "Starting processing at at $datetime UTC" | tee -a ${LOGfile}
 
@@ -159,14 +173,17 @@ RTOFSDOMAIN=$(grep ^RTOFSDOMAIN ${INPUTdir}/rtofs_current_domain.txt | awk -F: '
 cd ${myPWD}
 
 echo "Cleaning up any previous ${RUNdir}/*.cur files" | tee -a ${LOGfile}
-files=`ls -1rat ${RUNdir}/*.cur`
-for file in ${files}
-  do
-  echo "Removing ${file}" | tee -a ${LOGfile}
-  # NOTE: The RM command does not like globbing with an underscore in the
-  # NOTE: file name in our SHELL env. So we will delete the files one by one.
-  rm -f ${file}
-done
+if [ -f ${RUNdir}/*.cur ]
+then
+   files=`ls -1rat ${RUNdir}/*.cur`
+   for file in ${files}
+     do
+     echo "Removing ${file}" | tee -a ${LOGfile}
+     # NOTE: The RM command does not like globbing with an underscore in the
+     # NOTE: file name in our SHELL env. So we will delete the files one by one.
+     rm -f ${file}
+   done
+fi
 
 #AW echo "Purging any old model ingest" | tee -a ${LOGfile}
 #AW last_hour="${RTOFSHOURS}"
