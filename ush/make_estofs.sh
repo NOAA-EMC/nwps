@@ -115,6 +115,9 @@ function process_wfolist() {
      elif [ "${ESTOFS_BASIN}" == "estofs.pac" ] && [ "${ESTOFS_REGION}" == "alaska" ]
      then
        hasdownload_000=${hasDL[5]}
+     elif [ "${ESTOFS_BASIN}" == "estofs.mic" ] && [ "${ESTOFS_REGION}" == "guam" ]
+     then
+       hasdownload_000=${hasDL[6]}
      fi
 #................................................
     OUTPUTdir="${RUNdir}/${wfo}_output"
@@ -167,12 +170,17 @@ function process_wfolist() {
            hasDL[4]="true"
         elif [ "${ESTOFS_BASIN}" == "estofs.pac" ] && [ "${ESTOFS_REGION}" == "alaska" ];then
            hasDL[5]="true"
+        elif [ "${ESTOFS_BASIN}" == "estofs.mic" ] && [ "${ESTOFS_REGION}" == "guam" ];then
+           hasDL[6]="true"
         fi
 
         echo "Downloading ${SPOOLdir}/$file to $outfile" 
         if [ "${ESTOFS_BASIN}" == "estofs.pac" ]; then
            echo "cp -rp ${COMINestofspac}/${file} ."
            cp -rp ${COMINestofspac}/${file} .
+        elif [ "${ESTOFS_BASIN}" == "estofs.mic" ]; then
+           echo "cp -rp ${COMINestofsmic}/${file} ."
+           cp -rp ${COMINestofsmic}/${file} .
         else
            echo "cp -rp ${COMINestofs}/${file} ."
            cp -rp ${COMINestofs}/${file} .
@@ -183,6 +191,9 @@ function process_wfolist() {
         fi
         if [ "${ESTOFS_BASIN}" == "estofs.pac" ]; then
            cp -rp ${COMINestofspac}/${file} .
+        elif [ "${ESTOFS_BASIN}" == "estofs.mic" ]; then
+           echo "cp -rp ${COMINestofsmic}/${file} ."
+           cp -rp ${COMINestofsmic}/${file} .
         else
            cp -rp ${COMINestofs}/${file} .
         fi
@@ -335,7 +346,11 @@ function process_wfolist() {
                 if [ "${ESTOFS_BASIN}" == "estofs.pac" ]; then
 	           echo "Copying ${COMINestofspac}/${file} ${PRODUCTdir}/${file}"
 	           echo "cp -rp ${COMINestofspac}/${file} ."
-	           cp -rp ${COMINestofspac}/${file} .                
+	           cp -rp ${COMINestofspac}/${file} .   
+                elif [ "${ESTOFS_BASIN}" == "estofs.mic" ]; then
+	           echo "Copying ${COMINestofsmic}/${file} ${PRODUCTdir}/${file}"
+	           echo "cp -rp ${COMINestofsmic}/${file} ."
+	           cp -rp ${COMINestofsmic}/${file} .               
                 else
 	           echo "Copying ${COMINestofs}/${file} ${PRODUCTdir}/${file}"
 	           echo "cp -rp ${COMINestofs}/${file} ."
@@ -347,6 +362,8 @@ function process_wfolist() {
 	        fi
                 if [ "${ESTOFS_BASIN}" == "estofs.pac" ]; then
  	           cp -rp ${COMINestofspac}/${file} .
+                elif [ "${ESTOFS_BASIN}" == "estofs.mic" ]; then
+ 	           cp -rp ${COMINestofsmic}/${file} .
                 else
  	           cp -rp ${COMINestofs}/${file} .
                 fi
