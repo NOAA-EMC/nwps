@@ -36,10 +36,6 @@ echo ' '
 echo "Starting at : `date`"
 [[ "$LOUD" = YES ]] && set -x
 
-#AW20190911 --- Temporarily switching off prdgen: WLEN and WDEPTH fields omitted
-exit 0
-#AW20190911 --- Temporarily switching off prdgen: WLEN and WDEPTH fields omitted
-
 source ${USHnwps}/nwps_config.sh
 export err=$?; err_chk
 ${USHnwps}/prdgen.sh
