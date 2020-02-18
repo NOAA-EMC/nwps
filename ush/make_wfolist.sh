@@ -98,12 +98,6 @@ do
 		RTOFSNY=""
 	    fi
 
-            if [ "${PROCESS}" == "estofs" ] && [ "${WFO}" == "GUM" ]; then
-               echo "WARNING - No ESTOFS data available for WFO Guam at present"
-               echo "WARNING - cannot include WFO: ${WFO}"
-               continue
-            fi
-
 	    if [ "${HASERROR}" == "false" ]
 	    then 
 		echo "Adding ${WFO} to RTOFS/ESTOFS init list"
