@@ -172,6 +172,7 @@ print('                   *** WAVEWATCH III Wave system tracking ***  ')
 print('               ===============================================')
 print
 
+""" Omiting the analysis of spiral tracking files
 print('Reading spiral track files file...')
 print('Read Tp values from spiral track output file...')
 fname = '../output/partition/CG1/SYS_TP.OUT.SPRL'
@@ -296,6 +297,7 @@ with open(fname) as ff:
    print(nrowspl,ncolspl,ngrpspl)
    sparse_coef = float(nobs)/float(nrowspl*ncolspl*ngrpspl)
    print('Sparseness Coefficient:',sparse_coef,'\n')
+"""
 
 print('Reading ww3_systrk.inp file...')
 fname = 'ww3_systrk.inp'
@@ -447,10 +449,10 @@ rawdat = np.loadtxt('partition.blk.raw')
 print('... finished')
 #print(rawdat)
 
-placemnt_coef = float(nobs)/float(len(rawdat))*145      #Temporarily multiply by 145 to get results for 1st hour
-print(nobs)
-print(len(rawdat)/145)
-print('Placement Coefficient:',placemnt_coef,'\n')
+#AW20200206 placemnt_coef = float(nobs)/float(len(rawdat))*145      #Temporarily multiply by 145 to get results for 1st hour
+#AW20200206 print(nobs)
+#AW20200206 print(len(rawdat)/145)
+#AW20200206 print('Placement Coefficient:',placemnt_coef,'\n')
 
 # Select parameters for clustering, omitting first (empty) record
 # Contents of partition.blk.raw:
@@ -509,6 +511,31 @@ lats=np.linspace(y0,y0+float(nlat-1)*dy,num=nlat)
 reflon,reflat=np.meshgrid(lons,lats)
 #print(lons)
 #print(lats)
+
+# Write coordinate output file
+#Clean old output file before writing new one
+fname_coords = "SYS_COORD.OUT"
+if os.path.isfile(fname_coords):
+   os.remove(fname_coords)
+# Header info
+s = str(nlat).rjust(6)+'                                                                     Number of rows\n'
+with open(fname_coords,'a') as f:                  # append to file
+    f.write(s)
+s = str(nlon).rjust(6)+'                                                                     Number of cols\n'
+with open(fname_coords,'a') as f:                  # append to file
+    f.write(s)
+
+s = np.array2string(lons, max_line_width=1400, formatter={'float_kind':lambda x: '%6.2f' % x})
+with open(fname_coords,'a') as f:                  # append to file
+    f.write(' Longitude =\n')
+    for row in range(nlat):
+       f.write(' '+s[1:-1]+'\n')
+
+with open(fname_coords,'a') as f:                  # append to file
+    f.write(' Latitude =\n')
+    for row in reversed(range(nlat)):
+       s = np.array2string(np.repeat(lats[row], nlon), max_line_width=1400, formatter={'float_kind':lambda x: '%6.2f' % x})
+       f.write(' '+s[1:-1]+'\n')
 
 if (lons.max()-lons.min()) > 15.0:
    dlon = 5.0
@@ -641,6 +668,9 @@ bul_file.write("%s" % ' +-------+-----------+--------------------+--------------
 fhour = -1*dt/3600
 #AWfor itime in range(startdate, (enddate+3*dt), 3*dt):
 
+hsmax_all = convfac*np.max(wavedat2[:,3])
+print('Hs_max overall:',("%5.2f" % hsmax_all))
+
 for itime in range(startdate, (enddate+1*dt), 1*dt):
    timestr = time.strftime('%Y%m%d.%H', time.localtime(itime))
    print(timestr)
@@ -703,7 +733,8 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
       #print(len(partfield))
       #print(len(partfield[0]))
 
-      hsmax = convfac*np.max(partfield[:,3])
+      #hsmax = convfac*np.max(partfield[:,3])
+      hsmax = hsmax_all
 
       dateindex = np.where(partfield[:,0] == float(timestr))[0]
       #print(dateindex)
@@ -908,20 +939,20 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
            f.write(s2)
 
    # Remove panels for unused wave systems
-   for plotloc in range(nclust_best, 6):
-      if plotloc < 3: 
-         axlist[plotloc].outline_patch.set_visible(False)
-         axlist[plotloc+3].outline_patch.set_visible(False)
-      else:
-         axlist[plotloc+3].outline_patch.set_visible(False)
-         axlist[plotloc+6].outline_patch.set_visible(False)
+   if (plot_output) & (fhour % 3 == 0): 
+      for plotloc in range(nclust_best, 6):
+         if plotloc < 3: 
+            axlist[plotloc].outline_patch.set_visible(False)
+            axlist[plotloc+3].outline_patch.set_visible(False)
+         else:
+            axlist[plotloc+3].outline_patch.set_visible(False)
+            axlist[plotloc+6].outline_patch.set_visible(False)
 
    if (plot_output) & (fhour % 3 == 0):   
       date = datetime.datetime.fromtimestamp(itime) 
       figtitle = 'NWPS Wave Systems: Top: Hs (ft) and Dir; Bottom: Tp (s) and Dir \n'\
                   +'Hour '+str(fhour)+' ('+str(date.hour).zfill(2)+'Z'+str(date.day).zfill(2)\
-                  +monthstr[int(date.month)-1]+str(date.year)+')'+', SC = '+("%4.2f" % silhouette_best)\
-                  +' ('+("%4.2f" % silhouette_spl)+'/'+str(ngrpspl)+')\n'\
+                  +monthstr[int(date.month)-1]+str(date.year)+')'+', SC = '+("%4.2f" % silhouette_best)+'\n'\
                   +'*** EXPERIMENTAL - NOT FOR OPERATIONAL USE ***' 
       fig.suptitle(figtitle,fontsize=18)
 
@@ -974,10 +1005,10 @@ bul_file.write("%s" % ' +-------+-----------+--------------------+--------------
 bul_file.close()
 
 # Write output file with wave system stats
-ofilenm = wfo+'_'+datetime.datetime.fromtimestamp(startdate).strftime('%Y%m%d.%H%M%S')+'.sys'
-text_file = open(ofilenm, "w")
-outstring = str(startdate)+' '+str(nclust_best)+' '+("%6.3f" % silhouette_best)\
-                          +' '+str(ngrpspl)+' '+("%6.3f" % silhouette_spl)+("%6.3f" % placemnt_coef)+'\n'
-text_file.write("%s" % outstring)
-text_file.close()
+#AW20200206 ofilenm = wfo+'_'+datetime.datetime.fromtimestamp(startdate).strftime('%Y%m%d.%H%M%S')+'.sys'
+#AW20200206 text_file = open(ofilenm, "w")
+#AW20200206 outstring = str(startdate)+' '+str(nclust_best)+' '+("%6.3f" % silhouette_best)\
+#AW20200206                           +' '+str(ngrpspl)+' '+("%6.3f" % silhouette_spl)+("%6.3f" % placemnt_coef)+'\n'
+#AW20200206 text_file.write("%s" % outstring)
+#AW20200206 text_file.close()
 
