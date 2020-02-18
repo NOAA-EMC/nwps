@@ -100,8 +100,13 @@ then
       echo "Downloading RTOFS Data. Checking Yesterday First."
       #${WGET} ${WGETargs} http://${SITE}/${RTOFSPATHY}
       if [ -e ${COMINrtofsm1}/LOCKFILE ]; then sleep 600; fi 
-      cp -pfv ${COMINrtofsm1}/* .
-      rm -fr index.* robots.*
+      if [ -e ${COMINrtofsm1}/rtofs_current_start_time.txt ]
+      then
+         cp -pfv ${COMINrtofsm1}/* .
+         rm -fr index.* robots.*
+      else
+         echo "WARNING: Optional RTOFS data not available for Yesterday."
+      fi
    fi
 
    #Check whether wind file initialization time (=run start time) falls within yesterday. 
@@ -134,8 +139,13 @@ then
       echo "Downloading RTOFS Data. Checking Today."
       #${WGET} ${WGETargs} http://${SITE}/${RTOFSPATH}
       if [ -e ${COMINrtofs}/LOCKFILE ]; then sleep 600; fi
-      cp -pfv ${COMINrtofs}/* .
-      rm -fr index.* robots.*
+      if [ -e ${COMINrtofs}/rtofs_current_start_time.txt ]
+      then
+         cp -pfv ${COMINrtofs}/* .
+         rm -fr index.* robots.*
+      else
+         echo "WARNING: Optional RTOFS data not available for Today."
+      fi
    else
       echo "Wind initialization time is yesterday. Don't need today's RTOFS data."
    fi 
@@ -176,18 +186,28 @@ then
       echo "Downloading ESTOFS Data. Checking Yesterday First."
       #${WGET} ${WGETargs} http://${SITE}/${ESTOFSPATHY}
       if [ -e ${COMINestofsm1}/LOCKFILE ]; then sleep 600; fi 
-      cp -pfv ${COMINestofsm1}/wave_estofs* .
-      cp -pfv ${COMINestofsm1}/estofs_waterlevel_domain.txt .
-      cp -pfv ${COMINestofsm1}/estofs_waterlevel_start_time.txt .
-      rm -fr index.* robots.*
+      if [ -e ${COMINestofsm1}/estofs_waterlevel_start_time.txt ]
+      then
+         cp -pfv ${COMINestofsm1}/wave_estofs* .
+         cp -pfv ${COMINestofsm1}/estofs_waterlevel_domain.txt .
+         cp -pfv ${COMINestofsm1}/estofs_waterlevel_start_time.txt .
+         rm -fr index.* robots.*
+      else
+         echo "WARNING: Optional ESTOFS data not available for Yesterday."
+      fi
    fi
    echo "Downloading ESTOFS data for Today"
    ##${WGET} ${WGETargs} http://${SITE}/${ESTOFSPATH}
    if [ -e ${COMINestofs}/LOCKFILE ]; then sleep 600; fi
-   cp -pfv ${COMINestofs}/wave_estofs* .
-   cp -pfv ${COMINestofs}/estofs_waterlevel_domain.txt .
-   cp -pfv ${COMINestofs}/estofs_waterlevel_start_time.txt .
-   rm -fr index.* robots.*
+   if [ -e ${COMINestofs}/estofs_waterlevel_start_time.txt ]
+   then
+      cp -pfv ${COMINestofs}/wave_estofs* .
+      cp -pfv ${COMINestofs}/estofs_waterlevel_domain.txt .
+      cp -pfv ${COMINestofs}/estofs_waterlevel_start_time.txt .
+      rm -fr index.* robots.*
+   else
+      echo "WARNING: Optional ESTOFS data not available for Today."
+   fi
    echo "Cleaning OLD data from ESTOFS Directory"
    if [ -e estofs_waterlevel_start_time.txt ]
    then
@@ -226,12 +246,17 @@ then
       echo "Downloading PSURGE Data. Checking Yesterday First."
       #${WGET} ${WGETargs} http://${SITE}/${PSURGEPATHY}
       #cp -pfv ${ES_RTOFS_PSurgedir}/${PSURGEPATHY}/wave_psurge_*_${siteid}_e${EXCD}.dat.tar.gz .
-      cp -pfv ${COMINpsurgem1}/wave_psurge_*_${siteid}_e${EXCD}_f*.dat .
-      cp -pfv ${COMINpsurgem1}/psurge_waterlevel_domain_${siteid}.txt .
-      cp -pfv ${COMINpsurgem1}/psurge_waterlevel_start_time.txt .
-      rm -fr index.* robots.*
-      PSfiles_exist="TRUE"
-      chmod 664 *.dat
+      if [ -e ${COMINpsurgem1}/psurge_waterlevel_start_time.txt ]
+      then
+         cp -pfv ${COMINpsurgem1}/wave_psurge_*_${siteid}_e${EXCD}_f*.dat .
+         cp -pfv ${COMINpsurgem1}/psurge_waterlevel_domain_${siteid}.txt .
+         cp -pfv ${COMINpsurgem1}/psurge_waterlevel_start_time.txt .
+         rm -fr index.* robots.*
+         PSfiles_exist="TRUE"
+         chmod 664 *.dat
+      else
+         echo "WARNING: Optional PSURGE data not available for Yesterday."
+      fi
    fi
    echo "Downloading PSURGE data"
    #${WGET} ${WGETargs} http://${SITE}/${PSURGEPATH}
@@ -239,12 +264,17 @@ then
    # SET THIS PROPERLY XXX
    #PSurgeFiles="/ptmpp1/Roberto.Padilla/data/Psurge2NWPS/output"
    #cp -pfv ${ES_RTOFS_PSurgedir}/${PSURGEPATH}/wave_psurge_*_${siteid}_e${EXCD}.dat.tar.gz .
-   cp -pfv ${COMINpsurge}/wave_psurge_*_${siteid}_e${EXCD}_f*.dat .
-   cp -pfv ${COMINpsurge}/psurge_waterlevel_domain_${siteid}.txt .
-   cp -pfv ${COMINpsurge}/psurge_waterlevel_start_time.txt .
-   rm -fr index.* robots.*
-   #PSfiles_exist="TRUE"
-   chmod 664 *.dat
+   if [ -e ${COMINpsurge}/psurge_waterlevel_start_time.txt ]
+   then
+      cp -pfv ${COMINpsurge}/wave_psurge_*_${siteid}_e${EXCD}_f*.dat .
+      cp -pfv ${COMINpsurge}/psurge_waterlevel_domain_${siteid}.txt .
+      cp -pfv ${COMINpsurge}/psurge_waterlevel_start_time.txt .
+      rm -fr index.* robots.*
+      #PSfiles_exist="TRUE"
+      chmod 664 *.dat
+   else
+      echo "WARNING: Optional PSURGE data not available for Today."
+   fi
 
    echo "Cleaning OLD data from PSURGE Directory"
    if [ -e psurge_waterlevel_start_time.txt ]
