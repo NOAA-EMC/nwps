@@ -127,9 +127,6 @@ lhour=$(${WGRIB2} ${GRIB2file} -match WIND | tail -1 | awk -F':' '{ print $6 }' 
 
 # Get hour time step from the grib2 vars
 timestep=$(echo "${fhour2} - ${fhour1}" | bc )
-#Override time step to 3 hours
-#timestep=3
-#lhour=49
 
 echo "Timestep = ${timestep}" | tee -a ${LOGFILE}
 echo "Number of forecast hours = ${lhour}" | tee -a ${LOGFILE}
@@ -142,13 +139,26 @@ then
     exit 1
 fi
 
+#Override time step to 3-hourly
+timestep=3
+lhour=49
+num_hours=${lhour}
+
 # Read site configuration
 # loc1,stlat,stlon,loc2,endlat,endlon,resolution,current_box_lats,current_box_lons,current_box_xaxis,swan_table_name
+rtnum=0
+cat /dev/null > ${PROCdir}/python_shiproute_cur_elements.sh
+cat /dev/null > ${PROCdir}/python_shiproute_elements.sh
 while read line
 do
     DATLINE=$(echo $line | grep -v "^#")
     if [ "${DATLINE}" != "" ] 
     then
+        # Create subfolder for processing
+        rtnum=$((rtnum+1))
+        PROCdirparll="${PROCdir}/route${rtnum}"
+        mkdir -p ${PROCdirparll}
+
 	loc1=$(echo "${DATLINE}" | awk -F, '{ print $1 }')
 	stlat=$(echo "${DATLINE}" | awk -F, '{ print $2 }')
 	stlon=$(echo "${DATLINE}" | awk -F, '{ print $3 }')
@@ -235,7 +245,7 @@ do
 	    continue
 	fi
 
-	cp -fpv ${SWANoutputfile} ${PROCdir}/${swan_table_name} | tee -a ${LOGFILE}
+	cp -fpv ${SWANoutputfile} ${PROCdirparll}/${swan_table_name} | tee -a ${LOGFILE}
 	rm -f ${SWANoutputfile}
 
 	echo "Departing point: ${stlat} ${stlon}" | tee -a ${LOGFILE}
@@ -290,7 +300,16 @@ do
 	DHOUR=1
 	
 	echo "Writing Fortran BIN of horizontal points for HTSGW DIRPW WIND PERPW out to ${num_forcast_hours} forecast hours" | tee -a ${LOGFILE}
-	${EXECnwps}/shiproute_to_bin -v ${PROCdir}/${swan_table_name} ${PROCdir}/shiproute.bin | tee -a ${LOGFILE}
+        echo "Filter table file to 3-hourly..."
+        for h in {0..21..3}; do
+           hp1=$(printf "%02d" $((h+1)) )
+           hp2=$(printf "%02d" $((h+2)) )
+           echo "Deleting rows for forecast hour .${hp1}0000"
+           sed -i "/.${hp1}0000/d" ${PROCdirparll}/${swan_table_name}
+           echo "Deleting rows for forecast hour .${hp2}0000"
+           sed -i "/.${hp2}0000/d" ${PROCdirparll}/${swan_table_name}
+        done
+	${EXECnwps}/shiproute_to_bin -v ${PROCdirparll}/${swan_table_name} ${PROCdirparll}/shiproute.bin | tee -a ${LOGFILE}
 	
 	echo "Generating templates for plotting" | tee -a ${LOGFILE}
 	time_stamp="${yyyy}${mon}${dd}_${hh}${mm}"
@@ -309,69 +328,80 @@ do
 	cg1NY=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lat-lon | grep grid | grep x | awk '{ print $4 }' | sed s/')'//g)
 
 	echo "Writing our Python plotting config file" | tee -a ${LOGFILE}
-	cat /dev/null > ${PROCdir}/pyplot_shiproutes.cfg
-	echo "# CFG file for python plotting program" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "[GRIB2]" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "DSET =  swancg1run.grib2" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "UNDEF = 9.999E+20" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "PLOT = False" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "NLONS = $cg1NX" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "LL_LON = $cg1LON" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "DX = $cg1DX" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "NLATS = $cg1NY" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "LL_LAT = $cg1LAT" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "DY = $cg1DY" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "NUMTIMESTEPS = ${num_hours}" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "TIMESTEP =  ${timestep}" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "# For this plot we are plotting the clipped region only" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "[GRIB2CLIP]" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "DSET = swancg1run_clip.grib2" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "PLOT = True" >> $PROCdir/pyplot_shiproutes.cfg
+	cat /dev/null > ${PROCdirparll}/pyplot_shiproutes.cfg
+	echo "# CFG file for python plotting program" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "[GRIB2]" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "DSET =  ${PROCdir}/swancg1run.grib2" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "UNDEF = 9.999E+20" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "PLOT = False" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "NLONS = $cg1NX" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "LL_LON = $cg1LON" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "DX = $cg1DX" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "NLATS = $cg1NY" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "LL_LAT = $cg1LAT" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "DY = $cg1DY" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "NUMTIMESTEPS = ${num_hours}" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "TIMESTEP =  ${timestep}" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "# For this plot we are plotting the clipped region only" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "[GRIB2CLIP]" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "DSET = ${PROCdirparll}/swancg1run_clip.grib2" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "PLOT = True" >> $PROCdirparll/pyplot_shiproutes.cfg
 	LL_LON=$(echo ${current_box_lons} | awk '{ print $1 }')
 	UL_LON=$(echo ${current_box_lons} | awk '{ print $2 }')
 	LL_LAT=$(echo ${current_box_lats} | awk '{ print $1 }')
 	UL_LAT=$(echo ${current_box_lats} | awk '{ print $2 }')
-	echo "LL_LON = ${LL_LON}" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "UL_LON = ${UL_LON}" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "LL_LAT = ${LL_LAT}" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "UL_LAT = ${UL_LAT}" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "# Our ship route plotting configuration" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "[SHIPROUTE]" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "DSET = shiproute.bin" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "UNDEF = 9.999E+20" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "NAME = ${loc1} to ${loc2}" >> $PROCdir/pyplot_shiproutes.cfg
+	echo "LL_LON = ${LL_LON}" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "UL_LON = ${UL_LON}" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "LL_LAT = ${LL_LAT}" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "UL_LAT = ${UL_LAT}" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "# Our ship route plotting configuration" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "[SHIPROUTE]" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "DSET = ${PROCdirparll}/shiproute.bin" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "UNDEF = 9.999E+20" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "NAME = ${loc1} to ${loc2}" >> $PROCdirparll/pyplot_shiproutes.cfg
 	# Remove spaces from location name use in file names
 	locFName1=$(echo "${loc1}" | sed s/' '/'_'/g)
 	locFName2=$(echo "${loc2}" | sed s/' '/'_'/g)
-	echo "IMGFILEPREFIX = swan_${locFName1}_${locFName2}" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "STLAT = ${stlat}" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "STLON = ${stlon}" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "ENDLAT = ${endlat}" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "ENDLON = ${endlon}" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "NUMPOINTS = ${ptnum}" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "RES = ${res}" >> $PROCdir/pyplot_shiproutes.cfg
+	echo "IMGFILEPREFIX = swan_${locFName1}_${locFName2}" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "STLAT = ${stlat}" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "STLON = ${stlon}" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "ENDLAT = ${endlat}" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "ENDLON = ${endlon}" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "NUMPOINTS = ${ptnum}" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "RES = ${res}" >> $PROCdirparll/pyplot_shiproutes.cfg
 	DISTANCE_NM=$(printf '%.0f' ${dist})
-	echo "DISTANCE_NM = ${DISTANCE_NM}" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "PLOTCURRENTS = True" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "MODEL = NWPS" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "IMGSIZE = 150" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "HOUR = ${hh}" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "DAY = ${dd}" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "MONTH = ${month}" >> $PROCdir/pyplot_shiproutes.cfg
-	echo "YEAR = ${yyyy}" >> $PROCdir/pyplot_shiproutes.cfg
-	cat ${TEMPLATEDIR}/NOAA-Transparent-Logo.png  > ${PROCdir}/NOAA-Transparent-Logo.png
-	cat ${TEMPLATEDIR}/NWS_Logo.png > ${PROCdir}/NWS_Logo.png
-	cat ${NWPSdir}/ush/python/shiproute_cur.py > ${PROCdir}/shiproute_cur.py
-	cat ${NWPSdir}/ush/python/shiproute.py > ${PROCdir}/shiproute.py
+	echo "DISTANCE_NM = ${DISTANCE_NM}" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "PLOTCURRENTS = True" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "MODEL = NWPS" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "IMGSIZE = 150" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "HOUR = ${hh}" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "DAY = ${dd}" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "MONTH = ${month}" >> $PROCdirparll/pyplot_shiproutes.cfg
+	echo "YEAR = ${yyyy}" >> $PROCdirparll/pyplot_shiproutes.cfg
+	#cat ${TEMPLATEDIR}/NOAA-Transparent-Logo.png > ${PROCdirparll}/NOAA-Transparent-Logo.png
+	#cat ${TEMPLATEDIR}/NWS_Logo.png > ${PROCdirparll}/NWS_Logo.png
+	cp ${TEMPLATEDIR}/NOAA-Transparent-Logo.png ${PROCdirparll}/NOAA-Transparent-Logo.png
+	cp ${TEMPLATEDIR}/NWS_Logo.png ${PROCdirparll}/NWS_Logo.png
+	cat ${NWPSdir}/ush/python/shiproute_cur.py > ${PROCdirparll}/shiproute_cur.py
+	cat ${NWPSdir}/ush/python/shiproute.py > ${PROCdirparll}/shiproute.py
 	cd ${PROCdir}
-	${PYTHON} ${PROCdir}/shiproute_cur.py ${PROCdir}/pyplot_shiproutes.cfg | tee -a ${DEBUGLOGfile}
-	${PYTHON} ${PROCdir}/shiproute.py ${PROCdir}/pyplot_shiproutes.cfg | tee -a ${DEBUGLOGfile}
+	#${PYTHON} ${PROCdirparll}/shiproute_cur.py ${PROCdirparll}/pyplot_shiproutes.cfg | tee -a ${DEBUGLOGfile}
+	#${PYTHON} ${PROCdirparll}/shiproute.py ${PROCdirparll}/pyplot_shiproutes.cfg | tee -a ${DEBUGLOGfile}
+
+        echo "${PYTHON} ${PROCdirparll}/shiproute_cur.py ${PROCdirparll} pyplot_shiproutes.cfg" >> ${PROCdir}/python_shiproute_cur_elements.sh
+        echo "${PYTHON} ${PROCdirparll}/shiproute.py ${PROCdirparll} pyplot_shiproutes.cfg" >> ${PROCdir}/python_shiproute_elements.sh
 
 # End of config line read	
     fi
 done < ${CFGFILE}
+
+echo "Executing ${PROCdir}/python_shiproute_cur_elements.sh for ${rtnum} transects"
+aprun -n${rtnum} -N${rtnum} -j1 -d1 cfp ${PROCdir}/python_shiproute_cur_elements.sh
+
+echo "Executing ${PROCdir}/python_shiproute_elements.sh for ${rtnum} transects"
+aprun -n${rtnum} -N${rtnum} -j1 -d1 cfp ${PROCdir}/python_shiproute_elements.sh
 
 echo "INFO - Cleaning previous ship route plots from ${GRAPHICOUTPUTdir}" >> ${DEBUGLOGfile} 2>&1
 while read line
@@ -388,7 +418,7 @@ do
 done < ${CFGFILE}
 
 echo "Publishing results" | tee -a ${LOGFILE}
-cp -pfv ${PROCdir}/swan*hr*.png  ${GRAPHICOUTPUTdir}/. >> ${DEBUGLOGfile} 2>&1
+cp -pfv ${PROCdir}/route*/swan*hr*.png  ${GRAPHICOUTPUTdir}/. >> ${DEBUGLOGfile} 2>&1
 chmod 777 ${GRAPHICOUTPUTdir}/swan*hr*.png
 figsTarFile="shiproute_plots_CG1_${yyyy}${mon}${dd}${hh}.tar.gz"
 cd ${GRAPHICOUTPUTdir}
@@ -400,7 +430,7 @@ mkdir -p $COMOUTCYC
 cp -fpv ${figsTarFile} $COMOUTCYC/${figsTarFile} >> ${DEBUGLOGfile} 2>&1
 
 echo "Cleaning ${PROCdir} directory" >> ${DEBUGLOGfile} 2>&1
-find ${PROCdir} -name "*.png" -print | xargs rm -fv >> ${DEBUGLOGfile} 2>&1
+#AW20191121 find ${PROCdir} -name "*.png" -print | xargs rm -fv >> ${DEBUGLOGfile} 2>&1
 
 echo "Ship route plotting complete for ${SITEID}" | tee -a ${LOGFILE}
 date -u | tee -a ${LOGFILE}
