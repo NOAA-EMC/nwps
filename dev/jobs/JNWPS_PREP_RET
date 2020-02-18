@@ -94,7 +94,7 @@ export BATHYdb=${BATHYdb:-${FIXnwps}/bathy_db}
 export SHAPEFILEdb=${SHAPEFILEdb:-${FIXnwps}/shapefile_db}
 
 # Set processing DIRs here
-export HPSSARCHdir=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/retro/archive
+export HPSSARCHdir=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/retro/archive4
 export ARCHdir=${ARCHdir:-${DATA}/archive}
 export DATAdir=${DATAdir:-${DATA}/data}
 export INPUTdir=${INPUTdir:-${DATA}/input}
