@@ -242,7 +242,7 @@ do
 	    echo -n "${clon} ${lat} " >> ${PROCdir}/INPUTcg1_shiproutes.app
 	done 3<${PROCdir}/lon_points.txt 4<${PROCdir}/lat_points.txt
 	echo "" >> ${PROCdir}/INPUTcg1_shiproutes.app
-	echo "TABLE '${swan_table_name}' HEAD '${swan_table_name}' TIME XP YP HSIG TPS PDIR WIND OUTPUT $(date +%Y%m%d).${CYCLE}00 1.0 HR" >> ${PROCdir}/INPUTcg1_shiproutes.app
+	echo "TABLE '${swan_table_name}' HEAD '${swan_table_name}' TIME XP YP HSIG TPS PDIR WIND OUTPUT $(date +%Y%m%d).${CYCLE}00 3.0 HR" >> ${PROCdir}/INPUTcg1_shiproutes.app
 
 # End of config line read	
     fi
