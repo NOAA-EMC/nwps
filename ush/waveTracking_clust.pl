@@ -232,7 +232,7 @@ for $i (0..0){
    my $CG = @CGSS{$columns[$i]}; # 6,1,3
    %CG = %{$CG};
    my $cgnum = $CG{CGNUM};
-   my $sysTrcktFileName="swan_part.CG".$CG{CGNUM}.".raw";
+   #my $sysTrcktFileName="swan_part.CG".$CG{CGNUM}.".raw";
    chdir($RUNdir) or die "Cant chdir to $RUNdir $!";
 #XXX
   system("more CGinclude.pm");
@@ -654,6 +654,12 @@ use IO::File;
 sub getPrtNamesLonLat {
     my ($sought1 , $name, $numOfPartLoc, @temp , @char,$longName   );
     my ($domain)=@_;
+    my $contstring1="5mcont";
+    my $contstring2="20mcont";
+    my $SHIPRTstring1="SHIPRT1";
+    my $SHIPRTstring2="SHIPRT2";
+    my $SHIPRTstring3="SHIPRT3";
+    my $SHIPRTstring4="SHIPRT4";
     $sought1="POINTS";
     $numOfPartLoc=0;
     open (DATA,"input$_[0]");
@@ -670,6 +676,28 @@ sub getPrtNamesLonLat {
             @char=split //, $temp[1];
             pop @char; shift @char; #scraching the apostrophes in the name
             $name=join ("",@char);
+
+	    # 01/09/2020: Check for 5m and 20m contour points
+	    if($name =~/^$contstring1/) {
+		next;
+	    }
+	    if($name =~/^$contstring2/) {
+		next;
+	    }
+	    # 01/10/2017: Check for Ship route points
+	    if($name =~/^$SHIPRTstring1/) {
+		next;
+	    }
+	    if($name =~/^$SHIPRTstring2/) {
+		next;
+	    }
+	    if($name =~/^$SHIPRTstring3/) {
+		next;
+	    }
+	    if($name =~/^$SHIPRTstring4/) {
+		next;
+	    }
+
             undef @char;
             push @prtShortName, $name;
             push @prtLon, $temp[2];
