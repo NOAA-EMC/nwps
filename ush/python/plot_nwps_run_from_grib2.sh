@@ -378,33 +378,38 @@ for parm in ${SWANPARMS}
         export err=$?; err_chk
      fi
   else
-     echo "Executing plotting jobs in serial"
-     bash ${TEMPDIR}/python_grib2_elements.sh
-     export err=$?; err_chk
+     #AW echo "Executing plotting jobs in serial"
+     #AW bash ${TEMPDIR}/python_grib2_elements.sh
+     #AW export err=$?; err_chk
+     echo "*** Not creating plots for CG2-5: Plotting jobs now done externally"
   fi
 
-  echo "Copying PNG images to ${GRAPHICSdir}"
-  if [ "${HASHOTSTART}" == "TRUE" ]
-  then 
-      echo "HOTSTART was used for this run, keeping hours 0-9 for CG${CGNUM}"
-  else
-      echo "No HOTSTART was used for this run, removing hours 0-9 for CG${CGNUM}."
-##      rm -vf *hr00[0-9].png
+  if [ "${CGNUM}" -eq "1" ]
+     then
+     echo "Copying PNG images to ${GRAPHICSdir}"
+     if [ "${HASHOTSTART}" == "TRUE" ]
+     then 
+         echo "HOTSTART was used for this run, keeping hours 0-9 for CG${CGNUM}"
+     else
+         echo "No HOTSTART was used for this run, removing hours 0-9 for CG${CGNUM}."
+##         rm -vf *hr00[0-9].png
+     fi
+
+     rm *logo* *Logo*
+     cp -vpf *.png ${GRAPHICSdir}/.
+     chmod 777 ${GRAPHICSdir}/*.png
+     cd ${GRAPHICSdir}
+#     Spectra plots (if any) must be in ${GRAPHICSdir} already
+#     AW010620: Spectra plots no longer produced, so copy command deactivated.
+     figsTarFile="plots_CG${CGNUM}_${YYYY}${MM}${DD}${HH}.tar.gz"
+     #cp ${FIGOUTPUTdir}/${SITEID}/spectra/CG${CGNUM}/*.png .
+
+     tar cvfz ${figsTarFile} *.png
+     cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
+     COMOUTCYC="${COMOUT}/${cycleout}/CG${CGNUM}"
+     mkdir -p $COMOUTCYC
+     cp ${figsTarFile} $COMOUTCYC/${figsTarFile}
   fi
-
-  rm *logo* *Logo*
-  cp -vpf *.png ${GRAPHICSdir}/.
-  chmod 777 ${GRAPHICSdir}/*.png
-  cd ${GRAPHICSdir}
-#  Spectra plots (if any) must be in ${GRAPHICSdir} already
-  figsTarFile="plots_CG${CGNUM}_${YYYY}${MM}${DD}${HH}.tar.gz"
-  cp ${FIGOUTPUTdir}/${SITEID}/spectra/CG${CGNUM}/*.png .
-
-  tar cvfz ${figsTarFile} *.png
-  cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
-  COMOUTCYC="${COMOUT}/${cycleout}/CG${CGNUM}"
-  mkdir -p $COMOUTCYC
-  cp ${figsTarFile} $COMOUTCYC/${figsTarFile}
 done
 
 
