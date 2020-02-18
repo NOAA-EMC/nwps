@@ -71,6 +71,9 @@ monthstr = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','D
 clevs = [0,0.25,0.50,0.75,1.00,1.25,1.50,1.75,2.00,2.25,2.50,2.75,3.00,3.25,3.50,3.75,4.00,4.25]
 excpt = 0.0
 
+procdirparall = sys.argv[1]
+os.chdir(procdirparall)
+
 # Read NOAA and NWS logos
 noaa_logo = plt.imread('NOAA-Transparent-Logo.png')
 nws_logo = plt.imread('NWS_Logo.png')
@@ -81,7 +84,7 @@ if len(sys.argv) < 2:
    sys.exit()
 
 #AW Config = ConfigParser.ConfigParser()
-fname = sys.argv[1] 
+fname = sys.argv[2] 
 if os.path.isfile(fname):
    print("Reading pyplot CFG file: " + fname)
 #   Config.read(fname)
@@ -107,16 +110,16 @@ else:
 #TDEF = Config.getint('GRIB2', 'NUMTIMESTEPS')
 #TINCR = Config.getint('GRIB2', 'TIMESTEP')
 
-DSET = os.popen("grep [[]GRIB2[]] -A 11 pyplot_shiproutes.cfg | grep DSET | sed 's/DSET =  //g'").read().split()
+DSET = os.popen("grep [[]GRIB2[]] -A 11 " + fname + " | grep DSET | sed 's/DSET =  //g'").read().split()
 DSET = DSET[0]
-nlon = int(os.popen("grep [[]GRIB2[]] -A 11 pyplot_shiproutes.cfg | grep NLONS | sed 's/NLONS = //g'").read())
-x0 = float(os.popen("grep [[]GRIB2[]] -A 11 pyplot_shiproutes.cfg | grep LL_LON | sed 's/LL_LON = //g'").read())
-dx = float(os.popen("grep [[]GRIB2[]] -A 11 pyplot_shiproutes.cfg | grep DX | sed 's/DX = //g'").read())
-nlat = int(os.popen("grep [[]GRIB2[]] -A 11 pyplot_shiproutes.cfg | grep NLATS | sed 's/NLATS = //g'").read())
-y0 = float(os.popen("grep [[]GRIB2[]] -A 11 pyplot_shiproutes.cfg | grep LL_LAT | sed 's/LL_LAT = //g'").read())
-dy = float(os.popen("grep [[]GRIB2[]] -A 11 pyplot_shiproutes.cfg | grep DY | sed 's/DY = //g'").read())
-TDEF = int(os.popen("grep [[]GRIB2[]] -A 11 pyplot_shiproutes.cfg | grep NUMTIMESTEPS | sed 's/NUMTIMESTEPS = //g'").read())
-TINCR = int(os.popen("grep [[]GRIB2[]] -A 11 pyplot_shiproutes.cfg | grep 'TIMESTEP ' | sed 's/TIMESTEP = //g'").read())
+nlon = int(os.popen("grep [[]GRIB2[]] -A 11 " + fname + " | grep NLONS | sed 's/NLONS = //g'").read())
+x0 = float(os.popen("grep [[]GRIB2[]] -A 11 " + fname + " | grep LL_LON | sed 's/LL_LON = //g'").read())
+dx = float(os.popen("grep [[]GRIB2[]] -A 11 " + fname + " | grep DX | sed 's/DX = //g'").read())
+nlat = int(os.popen("grep [[]GRIB2[]] -A 11 " + fname + " | grep NLATS | sed 's/NLATS = //g'").read())
+y0 = float(os.popen("grep [[]GRIB2[]] -A 11 " + fname + " | grep LL_LAT | sed 's/LL_LAT = //g'").read())
+dy = float(os.popen("grep [[]GRIB2[]] -A 11 " + fname + " | grep DY | sed 's/DY = //g'").read())
+TDEF = int(os.popen("grep [[]GRIB2[]] -A 11 " + fname + " | grep NUMTIMESTEPS | sed 's/NUMTIMESTEPS = //g'").read())
+TINCR = int(os.popen("grep [[]GRIB2[]] -A 11 " + fname + " | grep 'TIMESTEP ' | sed 's/TIMESTEP = //g'").read())
 
 print('DSET = ' + DSET)
 print('nlon = %d' % nlon)
@@ -148,13 +151,13 @@ else:
 #   LL_LAT = Config.getfloat('GRIB2CLIP', 'LL_LAT')
 #   UL_LAT = Config.getfloat('GRIB2CLIP', 'UL_LAT')
 
-CLIPDSET = os.popen("grep [[]GRIB2CLIP[]] -A 6 pyplot_shiproutes.cfg | grep DSET | sed 's/DSET = //g'").read().split()
+CLIPDSET = os.popen("grep [[]GRIB2CLIP[]] -A 6 " + fname + " | grep DSET | sed 's/DSET = //g'").read().split()
 CLIPDSET = CLIPDSET[0]
-PLOTCLIP = os.popen("grep [[]GRIB2CLIP[]] -A 6 pyplot_shiproutes.cfg | grep PLOT | sed 's/PLOT = //g'").read()
-LL_LON = float(os.popen("grep [[]GRIB2CLIP[]] -A 6 pyplot_shiproutes.cfg | grep LL_LON | sed 's/LL_LON = //g'").read())
-UL_LON = float(os.popen("grep [[]GRIB2CLIP[]] -A 6 pyplot_shiproutes.cfg | grep UL_LON | sed 's/UL_LON = //g'").read())
-LL_LAT = float(os.popen("grep [[]GRIB2CLIP[]] -A 6 pyplot_shiproutes.cfg | grep LL_LAT | sed 's/LL_LAT = //g'").read())
-UL_LAT = float(os.popen("grep [[]GRIB2CLIP[]] -A 6 pyplot_shiproutes.cfg | grep UL_LAT | sed 's/UL_LAT = //g'").read())
+PLOTCLIP = os.popen("grep [[]GRIB2CLIP[]] -A 6 " + fname + " | grep PLOT | sed 's/PLOT = //g'").read()
+LL_LON = float(os.popen("grep [[]GRIB2CLIP[]] -A 6 " + fname + " | grep LL_LON | sed 's/LL_LON = //g'").read())
+UL_LON = float(os.popen("grep [[]GRIB2CLIP[]] -A 6 " + fname + " | grep UL_LON | sed 's/UL_LON = //g'").read())
+LL_LAT = float(os.popen("grep [[]GRIB2CLIP[]] -A 6 " + fname + " | grep LL_LAT | sed 's/LL_LAT = //g'").read())
+UL_LAT = float(os.popen("grep [[]GRIB2CLIP[]] -A 6 " + fname + " | grep UL_LAT | sed 's/UL_LAT = //g'").read())
 
 clip_lon_points = np.arange(LL_LON, UL_LON, dx)
 clip_lat_points = np.arange(LL_LAT, UL_LAT, dy)
@@ -194,26 +197,26 @@ print('Clip TINCR = %d' % TINCR)
 #MONTH = Config.get('SHIPROUTE', 'MONTH')
 #YEAR = Config.get('SHIPROUTE', 'YEAR')
 
-SHIPROUTENAME = os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | grep NAME | sed 's/NAME = //g'").read().split()
+SHIPROUTENAME = os.popen("grep [[]SHIPROUTE[]] -A 18 " + fname + " | grep NAME | sed 's/NAME = //g'").read().split()
 SHIPROUTENAME = ' '.join(SHIPROUTENAME[0:])
-IMGFILEPREFIX = os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | grep IMGFILEPREFIX | sed 's/IMGFILEPREFIX = //g'").read().split()
+IMGFILEPREFIX = os.popen("grep [[]SHIPROUTE[]] -A 18 " + fname + " | grep IMGFILEPREFIX | sed 's/IMGFILEPREFIX = //g'").read().split()
 IMGFILEPREFIX = IMGFILEPREFIX[0]
-SRDSET = os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | grep DSET | sed 's/DSET = //g'").read().split()
+SRDSET = os.popen("grep [[]SHIPROUTE[]] -A 18 " + fname + " | grep DSET | sed 's/DSET = //g'").read().split()
 SRDSET = SRDSET[0]
-STLAT = float(os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | grep STLAT | sed 's/STLAT = //g'").read())
-STLON = float(os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | grep STLON | sed 's/STLON = //g'").read())
-ENDLAT = float(os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | grep ENDLAT | sed 's/ENDLAT = //g'").read())
-ENDLON = float(os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | grep ENDLON | sed 's/ENDLON = //g'").read())
-RES = float(os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | grep RES | sed 's/RES = //g'").read())
-NUMSRPOINTS = int(os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | grep NUMPOINTS | sed 's/NUMPOINTS = //g'").read())
-PLOTCURRENTS = os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | grep PLOTCURRENTS | sed 's/PLOTCURRENTS = //g'").read()
-DISTANCE_NM = int(os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | grep DISTANCE_NM | sed 's/DISTANCE_NM = //g'").read())
-MODEL = str(os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | grep MODEL | sed 's/MODEL = //g'").read())
-DPI = int(os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | grep IMGSIZE | sed 's/IMGSIZE = //g'").read())
-HOUR = str(os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | grep HOUR | sed 's/HOUR = //g'").read())
-DAY = str(os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | grep DAY | sed 's/DAY = //g'").read())
-MONTH = str(os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | grep MONTH | sed 's/MONTH = //g'").read())
-YEAR = str(os.popen("grep [[]SHIPROUTE[]] -A 18 pyplot_shiproutes.cfg | grep YEAR | sed 's/YEAR = //g'").read())
+STLAT = float(os.popen("grep [[]SHIPROUTE[]] -A 18 " + fname + " | grep STLAT | sed 's/STLAT = //g'").read())
+STLON = float(os.popen("grep [[]SHIPROUTE[]] -A 18 " + fname + " | grep STLON | sed 's/STLON = //g'").read())
+ENDLAT = float(os.popen("grep [[]SHIPROUTE[]] -A 18 " + fname + " | grep ENDLAT | sed 's/ENDLAT = //g'").read())
+ENDLON = float(os.popen("grep [[]SHIPROUTE[]] -A 18 " + fname + " | grep ENDLON | sed 's/ENDLON = //g'").read())
+RES = float(os.popen("grep [[]SHIPROUTE[]] -A 18 " + fname + " | grep RES | sed 's/RES = //g'").read())
+NUMSRPOINTS = int(os.popen("grep [[]SHIPROUTE[]] -A 18 " + fname + " | grep NUMPOINTS | sed 's/NUMPOINTS = //g'").read())
+PLOTCURRENTS = os.popen("grep [[]SHIPROUTE[]] -A 18 " + fname + " | grep PLOTCURRENTS | sed 's/PLOTCURRENTS = //g'").read()
+DISTANCE_NM = int(os.popen("grep [[]SHIPROUTE[]] -A 18 " + fname + " | grep DISTANCE_NM | sed 's/DISTANCE_NM = //g'").read())
+MODEL = str(os.popen("grep [[]SHIPROUTE[]] -A 18 " + fname + " | grep MODEL | sed 's/MODEL = //g'").read())
+DPI = int(os.popen("grep [[]SHIPROUTE[]] -A 18 " + fname + " | grep IMGSIZE | sed 's/IMGSIZE = //g'").read())
+HOUR = str(os.popen("grep [[]SHIPROUTE[]] -A 18 " + fname + " | grep HOUR | sed 's/HOUR = //g'").read())
+DAY = str(os.popen("grep [[]SHIPROUTE[]] -A 18 " + fname + " | grep DAY | sed 's/DAY = //g'").read())
+MONTH = str(os.popen("grep [[]SHIPROUTE[]] -A 18 " + fname + " | grep MONTH | sed 's/MONTH = //g'").read())
+YEAR = str(os.popen("grep [[]SHIPROUTE[]] -A 18 " + fname + " | grep YEAR | sed 's/YEAR = //g'").read())
 
 if os.path.isfile(SRDSET):
    print('Reading ship route data file ' + SRDSET) 
