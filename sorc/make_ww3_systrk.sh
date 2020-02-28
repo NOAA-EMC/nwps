@@ -34,7 +34,7 @@ fi
 #loading the necessary modules 
 #module purge
 #module load ncep
-#module load ../modulefiles/NWPS/v1.2.0
+#module load ../modulefiles/NWPS/v1.3.0
 #module list
 
 # The gnu fortran compiler  buffers the writes on default, the intel fortran compiler 
@@ -43,6 +43,6 @@ fi
 # "export FORT_BUFFERED=true" it will buffer the data like the gnu fortran compiler does.
 export FORT_BUFFERED=true
 
-${NWPSdir}/sorc/ww3_systrack/make_ww3_systrk_mpi.sh
-
+cd ${NWPSdir}/sorc/ww3_systrack
+./make_ww3_systrk_mpi.sh | tee ./ww3_systrk_build.log
 
