@@ -45,7 +45,7 @@ export C_COMP_MP=cc
 
   fcodes=`ls -d estofs_padcirc.fd | sed 's/\.fd//g'`
   echo " FORTRAN codes found: "$fcodes
-  outfile=`pwd`/make_padcirc.out
+  outfile=`pwd`/estofs_padcirc.fd/padcirc_build.log
   rm -f $outfile
 
 # 2. Create all execution
