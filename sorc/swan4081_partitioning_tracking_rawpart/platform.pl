@@ -163,7 +163,7 @@ elsif ($os =~ /Linux/i) {
     #print OUTFILE "FLAGS_OPT = \n";
     print OUTFILE "FLAGS_OPT = -c\n";
     print OUTFILE "FLAGS_MSC = -g -O2 \n";
-    print OUTFILE "FLAGS90_MSC = \$(FLAGS_MSC) -ffree-line-length-none\n";
+    print OUTFILE "FLAGS90_MSC = \$(FLAGS_MSC)\n";
 
 #    print OUTFILE "FLAGS_OPT = -g -O2 -v \n";
 #    print OUTFILE "FLAGS_MSC =\n";
