@@ -19,11 +19,11 @@ fi
 
 #module purge
 #module load ncep
-#module load ../modulefiles/NWPS/v1.2.0
+#module load ../modulefiles/NWPS/v1.3.0
 #module list
 
 cd ${NWPSdir}/sorc/runup_program/
-make runupforecast
+make runupforecast | tee ./runup_build.log
 rm *.o
 mv -v runupforecast.exe ${NWPSdir}/exec/runupforecast.exe
 
