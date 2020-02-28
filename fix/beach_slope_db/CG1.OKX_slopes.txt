@@ -1,5 +1,4 @@
-%USGS SPCMSC mean beach slope derived from lidar surveys from 2005 to 2014, dunes from 2013-2014 in LMSL
-%Version 1.1 Compiled 3/31/17 
+%USGS SPCMSC mean beach slope derived from lidar surveys from 2005 to 2014, dunes from 2013-2014 in LMSL, Version 1.1 Compiled 3/31/17 
 %iso_lon %iso_lat %sl_lon %sl_lat %slope %95_up %95_low  dhigh   dlow month year
 286.004 39.7670 285.906 39.7899 0.0456 0.0744 0.0171 7.1260 3.8471  1 2014
 286.005 39.7727 285.907 39.7979 0.0580 0.0776 0.0171 7.3014 4.0397  1 2014
