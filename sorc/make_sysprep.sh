@@ -13,11 +13,11 @@ fi
 
 #module purge
 #module load ncep
-#module load ../modulefiles/NWPS/v1.2.0
+#module load ../modulefiles/NWPS/v1.3.0
 #module list
 
 cd ${NWPSdir}/sorc/ww3_sysprep.fd
-make ww3_sysprep
+make ww3_sysprep | tee ./sysprep_build.log
 rm *.o
 mv -v ww3_sysprep.exe ${NWPSdir}/exec/ww3_sysprep.exe
 
