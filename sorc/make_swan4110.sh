@@ -36,7 +36,7 @@ mkdir -p ${NWPSdir}/exec
 
 #module purge
 #module load ncep
-#module load ../modulefiles/NWPS/v1.2.0
+#module load ../modulefiles/NWPS/v1.3.0
 #module list
 
 # Loading Intel Compiler Suite
@@ -59,8 +59,8 @@ module load w3emc-intel/2.2.0
 module load w3nco-intel/2.0.6
 module load iobuf/2.0.5
 
-echo "Building OpenMPI SWAN binary" | tee ./swan_build.log
 cd ${NWPSdir}/sorc/swan4110
+echo "Building OpenMPI SWAN binary" | tee ./swan_build.log
 make clobber | tee -a ./swan_build.log
 make config | tee -a ./swan_build.log
 
