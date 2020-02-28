@@ -33,45 +33,55 @@ mkdir -p ${NWPSdir}/exec
 
 #FOR DEGRIB
 #Using the GNU compiler or the Jasper/JPEG compression library will not work properly
+echo "================== FOR DEGRIB : make_degrib.sh =================="
 cd ${NWPSdir}/sorc
 ./make_degrib.sh
 
 module purge
 module load ncep
-module load ../modulefiles/NWPS/v1.2.0
+module load ../modulefiles/NWPS/v1.3.0
 module list
 
 #FOR SWAN (REGULAR GRID)
+echo "================== FOR SWAN (REGULAR GRID) : make_swan.sh  =================="
 cd ${NWPSdir}/sorc
 ./make_swan.sh
 
 #FOR WAVE TRACKING
 #The executable is ww3_systrk_mpi
+echo "================== FOR WAVE TRACKING : make_ww3_systrk.sh =================="
 cd ${NWPSdir}/sorc
 ./make_ww3_systrk.sh
 
+#FOR WAVE TRACKING PREPROCESSOR
 #The executable is ww3_sysprep.exe
+echo "================== FOR WAVE TRACKING PREPROCESSOR : make_sysprep.sh =================="
 cd ${NWPSdir}/sorc
 ./make_sysprep.sh
 
 #FOR SWAN (UNSTRUCTURED MESH, incl. parallel libraries in estofs_padcirc.fd/work/odir4/)
+echo "================== FOR SWAN (UNSTRUCTURED MESH,..) : make_padcirc.sh make_swan4110.sh =================="
 cd ${NWPSdir}/sorc
 ./make_padcirc.sh
 ./make_swan4110.sh
 
 #FOR RIP CURRENTS
 #The executable is ripforecast.x
+echo "================== FOR RIP CURRENTS : make_rip_current_program.sh =================="
 ./make_rip_current_program.sh
 
 #FOR RUNUP
 #The executable is runupforecast.exe
+echo "================== FOR RUNUP : make_runup_program.sh =================="
 ./make_runup_program.sh
 
 #FOR PSURGE2NWPS
 #The following will generate the executables: psurge2nwps_64, psurge_identify.exe and  psoutTOnwps.exe.
+echo "================== FOR PSURGE2NWPS : make_Psurge2NWPS.sh =================="
 ./make_Psurge2NWPS.sh
 
 #FOR UTILITY PROGRAMS
+echo "================== FOR UTILITY PROGRAMS : make_nwps_utils.sh =================="
 ./make_nwps_utils.sh
 
 echo "NWPS Build complete"
