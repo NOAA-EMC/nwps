@@ -63,11 +63,11 @@ mkdir -p ${NWPSdir}/exec
 
 #module purge
 #module load ncep
-#module load ../modulefiles/NWPS/v1.1.0
+#module load ../modulefiles/NWPS/v1.3.0
 #module list
 
-echo "Building OpenMPI SWAN binary" | tee ./swan_build.log
 cd ${NWPSdir}/sorc/swan
+echo "Building OpenMPI SWAN binary" | tee ./swan_build.log
 make clobber | tee -a ./swan_build.log
 make config | tee -a ./swan_build.log
 make mpi FLAGS_OPT="${OPTFLAGS}" | tee -a ./swan_build.log
