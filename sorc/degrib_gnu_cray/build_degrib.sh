@@ -31,16 +31,16 @@ export COMPILER="gnu"
 
 export WORKDIR=$(pwd)
 
-source ${WORKDIR} load_gnu_env.sh ${NODETYPE}
+#source ${WORKDIR}/load_gnu_env.sh ${NODETYPE}
 
 echo "Build using GNU Cray-CE for Cray haswell"
 echo "Starting build"
 date -u
 
 cd ${WORKDIR}/src
-make
-make install 
-make clean
+make | tee ${WORKDIR}/degrib_build.log
+make install  | tee -a ${WORKDIR}/degrib_build.log
+make clean | tee -a ${WORKDIR}/degrib_build.log
 cd ${WORKDIR}
 
 echo "degrib build complete"
