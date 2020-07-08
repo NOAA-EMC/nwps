@@ -127,6 +127,8 @@
       do i=1,nhs
          if(mwdsn(i).lt.-180.) then
             mwdsn(i)=mwdsn(i)+360.
+         else if(mwdsn(i).gt.180.) then
+            mwdsn(i)=mwdsn(i)-360.
          endif
       end do
 !
