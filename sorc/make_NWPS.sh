@@ -66,7 +66,7 @@ cd ${NWPSdir}/sorc
 ./make_swan4110.sh
 
 #FOR RIP CURRENTS
-#The executable is ripforecast.x
+#The executable is ripforecast.exe
 echo "================== FOR RIP CURRENTS : make_ripforecast.sh =================="
 ./make_ripforecast.sh
 
