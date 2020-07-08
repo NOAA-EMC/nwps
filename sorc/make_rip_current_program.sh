@@ -16,7 +16,7 @@ fi
 #module load ../modulefiles/NWPS/v1.3.0
 #module list
 
-cd ${NWPSdir}/sorc/rip_current_program/
+cd ${NWPSdir}/sorc/ripforecast.fd/
 make ripforecast | tee ./ripcurrent_build.log
 rm *.o
 mv -v ripforecast.exe ${NWPSdir}/exec/ripforecast.exe
