@@ -22,7 +22,7 @@ fi
 #module load ../modulefiles/NWPS/v1.3.0
 #module list
 
-cd ${NWPSdir}/sorc/runup_program/
+cd ${NWPSdir}/sorc/runupforecast.fd/
 make runupforecast | tee ./runup_build.log
 rm *.o
 mv -v runupforecast.exe ${NWPSdir}/exec/runupforecast.exe
