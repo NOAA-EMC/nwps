@@ -68,12 +68,12 @@ cd ${NWPSdir}/sorc
 #FOR RIP CURRENTS
 #The executable is ripforecast.x
 echo "================== FOR RIP CURRENTS : make_rip_current_program.sh =================="
-./make_rip_current_program.sh
+./make_ripforecast.sh
 
 #FOR RUNUP
 #The executable is runupforecast.exe
 echo "================== FOR RUNUP : make_runup_program.sh =================="
-./make_runup_program.sh
+./make_runupforecast.sh
 
 #FOR PSURGE2NWPS
 #The following will generate the executables: psurge2nwps_64, psurge_identify.exe and  psoutTOnwps.exe.
