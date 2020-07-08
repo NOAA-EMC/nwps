@@ -43,7 +43,7 @@
       if(c.gt.1.0.and.peakind.gt.npast72)then
          c1=maxval(hspast72)
          peakind1=maxloc(hspast72,dim=1)
-!           only consider this and indepencent even if hs
+!           only consider this an independent event if hs
 !           drops below 1 again before the predicted hs 
          below1=0
          do i=peakind1,npast72
@@ -82,9 +82,10 @@
             firstunder1=0
             do i=peakind,nall
                if(hsall(i).lt.1.0)then
-                  firstunder1=i+(peakind-1)
+!AW030320                  firstunder1=i+(peakind-1)
+                  firstunder1=i
 !                    adding peakind-1 to give us the absolute
-!                    index from hsall
+!                    index from hsall  AW030320: This is incorrect!
                   exit
                endif
             end do
@@ -95,7 +96,8 @@
                firstover1=0
                do i=firstunder1,nall
                   if(hsall(i).gt.1.0)then
-                     firstover1=i+(firstunder1-1)
+!AW030320                     firstover1=i+(firstunder1-1)
+                     firstover1=i
                      exit
                   endif
                end do                
