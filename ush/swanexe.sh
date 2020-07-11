@@ -59,12 +59,12 @@ fi
 if [ "${MODELCORE}" == "SWAN" ]
 then
    echo "Starting SWAN executable for "${siteid}
-   if [ "${siteid}" == "gyx" ] || [ "${siteid}" == "mfr" ] || [ "${siteid}" == "ajk" ]
+   if [ "${siteid}" == "gyx" ] || [ "${siteid}" == "mfr" ] || [ "${siteid}" == "ajk" ] || [ "${siteid}" == "mtr" ]
    then
       aprun -n48 -N24 -j1 -d1 ${EXECnwps}/swan-mpi.exe
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
-   elif [ "${siteid}" == "hgx" ] || [ "${siteid}" == "mob" ] || [ "${siteid}" == "tae" ] || [ "${siteid}" == "jax" ] || [ "${siteid}" == "key" ] || [ "${siteid}" == "phi" ] || [ "${siteid}" == "mtr" ] || [ "${siteid}" == "aer" ] || [ "${siteid}" == "afg" ]
+   elif [ "${siteid}" == "hgx" ] || [ "${siteid}" == "mob" ] || [ "${siteid}" == "tae" ] || [ "${siteid}" == "jax" ] || [ "${siteid}" == "key" ] || [ "${siteid}" == "phi" ] || [ "${siteid}" == "aer" ] || [ "${siteid}" == "afg" ] || [ "${siteid}" == "lch" ]
    then
       aprun -n24 -N24 -j1 -d1 ${EXECnwps}/swan-mpi.exe
       export err=$?;
@@ -99,7 +99,7 @@ then
       hh=`ls *.wnd | cut -c9-10`
 
       # Run each domain with appropriate number of cores.
-      if [ "${siteid}" == "key" ]
+      if [ "${siteid}" == "key" ] || [ "${siteid}" == "mfl" ] || [ "${siteid}" == "akq" ]
       then
          echo "Copying required files for PuNSWAN run for "${siteid}
 
@@ -136,17 +136,66 @@ then
          done
 
          echo "Starting PuNSWAN executable for "${siteid}
-         aprun -n96 -N24 -j1 -d1 ${EXECnwps}/punswan4110-mpi.exe
+         aprun -n96 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
          export err=$?;
          echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
          cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
          cp -f *CG1* ${DATA}/output/grid
          if [ "${err}" != "0" ];then
-            msg="FATAL ERROR: Wave model executable punswan4110-mpi.exe failed."
+            msg="FATAL ERROR: Wave model executable punswan4110.exe failed."
             postmsg "$jlogfile" "$msg"
          fi
          err_chk
-      elif [ "${siteid}" == "car" ] || [ "${siteid}" == "mfl" ] || [ "${siteid}" == "tbw" ] \
+      #######
+      elif [ "${siteid}" == "alu" ]
+      then
+         echo "Copying required files for PuNSWAN run for "${siteid}
+
+         # Check that all hotfiles are present in the PE subfolders
+         for i in {0..9}; do
+            echo "Checking hotfile for PE000"${i}"/"${PDY}.${hh}"00"
+            # Note: Checking also for PDYm1 to allow running of a late cycle from previous day           
+            if [ -f ${RUNdir}/PE000${i}/${PDY}.${hh}00 ] || [ -f ${RUNdir}/PE000${i}/${PDYm1}.${hh}00 ]; then
+               echo "Found PE000"${i}"/"${PDY}.${hh}"00"
+            else
+               echo "Warning: Not found PE000"${i}"/"${PDY}.${hh}"00"
+               msg="WARNING - missing hotfile in PE000"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
+               postmsg "$jlogfile" "$msg"
+               sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
+            fi
+         done
+         for i in {10..83}; do
+            echo "Checking hotfile for PE00"${i}"/"${PDY}.${hh}"00"           
+            if [ -f ${RUNdir}/PE00${i}/${PDY}.${hh}00 ] || [ -f ${RUNdir}/PE00${i}/${PDYm1}.${hh}00 ]; then
+               echo "Found PE00"${i}"/"${PDY}.${hh}"00"
+            else
+               echo "Warning: Not found PE00"${i}"/"${PDY}.${hh}"00"
+               msg="WARNING - missing hotfile in PE00"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
+               postmsg "$jlogfile" "$msg"
+               sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
+            fi
+         done
+
+         for i in {0..9}; do        
+            cp ${RUNdir}/INPUT ${RUNdir}/PE000${i}/
+         done
+         for i in {10..83}; do
+            cp ${RUNdir}/INPUT ${RUNdir}/PE00${i}/
+         done
+
+         echo "Starting PuNSWAN executable for "${siteid}
+         aprun -n84 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
+         export err=$?;
+         echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
+         cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
+         cp -f *CG1* ${DATA}/output/grid
+         if [ "${err}" != "0" ];then
+            msg="FATAL ERROR: Wave model executable punswan4110.exe failed."
+            postmsg "$jlogfile" "$msg"
+         fi
+         err_chk
+      #######
+      elif [ "${siteid}" == "car" ] || [ "${siteid}" == "tbw" ] \
          || [ "${siteid}" == "box" ] || [ "${siteid}" == "sgx" ] || [ "${siteid}" == "sju" ] \
          || [ "${siteid}" == "akq" ] || [ "${siteid}" == "okx" ] || [ "${siteid}" == "gum" ] \
          || [ "${siteid}" == "alu" ] || [ "${siteid}" == "gua" ] || [ "${siteid}" == "mlb" ] \
@@ -189,13 +238,13 @@ then
          done
 
          echo "Starting PuNSWAN executable for "${siteid}
-         aprun -n48 -N24 -j1 -d1 ${EXECnwps}/punswan4110-mpi.exe
+         aprun -n48 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
          export err=$?;
          echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
          cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
          cp -f *CG1* ${DATA}/output/grid
          if [ "${err}" != "0" ];then
-            msg="FATAL ERROR: Wave model executable punswan4110-mpi.exe failed."
+            msg="FATAL ERROR: Wave model executable punswan4110.exe failed."
             postmsg "$jlogfile" "$msg"
          fi
          err_chk
@@ -236,13 +285,13 @@ then
          done
 
          echo "Starting PuNSWAN executable for "${siteid}
-         aprun -n24 -N24 -j1 -d1 ${EXECnwps}/punswan4110-mpi.exe
+         aprun -n24 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
          export err=$?;
          echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
          cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
          cp -f *CG1* ${DATA}/output/grid
          if [ "${err}" != "0" ];then
-            msg="FATAL ERROR: Wave model executable punswan4110-mpi.exe failed."
+            msg="FATAL ERROR: Wave model executable punswan4110.exe failed."
             postmsg "$jlogfile" "$msg"
          fi
          err_chk
@@ -283,13 +332,13 @@ then
          done
 
          echo "Starting PuNSWAN executable for "${siteid}
-         aprun -n16 -N16 -j1 -d1 ${EXECnwps}/punswan4110-mpi.exe
+         aprun -n16 -N16 -j1 -d1 ${EXECnwps}/punswan4110.exe
          export err=$?;
          echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
          cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
          cp -f *CG1* ${DATA}/output/grid
          if [ "${err}" != "0" ];then
-            msg="FATAL ERROR: Wave model executable punswan4110-mpi.exe failed."
+            msg="FATAL ERROR: Wave model executable punswan4110.exe failed."
             postmsg "$jlogfile" "$msg"
          fi
          err_chk
