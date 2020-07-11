@@ -63,7 +63,7 @@ cd ${NWPSdir}/sorc
 echo "================== FOR SWAN (UNSTRUCTURED MESH,..) : make_padcirc.sh make_swan4110.sh =================="
 cd ${NWPSdir}/sorc
 ./make_padcirc.sh
-./make_swan4110.sh
+./make_punswan4110.sh
 
 #FOR RIP CURRENTS
 #The executable is ripforecast.exe
