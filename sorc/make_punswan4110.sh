@@ -59,14 +59,14 @@ module load w3emc-intel/2.2.0
 module load w3nco-intel/2.0.6
 module load iobuf/2.0.5
 
-cd ${NWPSdir}/sorc/swan4110
+cd ${NWPSdir}/sorc/punswan4110.fd
 echo "Building OpenMPI SWAN binary" | tee ./swan_build.log
 make clobber | tee -a ./swan_build.log
 make config | tee -a ./swan_build.log
 
 #Build parallel unstructured version
 make punswan FLAGS_OPT="${OPTFLAGS}" | tee -a ./swan_build.log
-cp -pfv swan.exe ${NWPSdir}/exec/punswan4110-mpi.exe
+cp -pfv swan.exe ${NWPSdir}/exec/punswan4110.exe
 
 make clobber | tee -a ./swan_build.log
 cd ${PWD}
