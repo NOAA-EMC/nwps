@@ -61,22 +61,22 @@ then
    echo "Starting SWAN executable for "${siteid}
    if [ "${siteid}" == "gyx" ] || [ "${siteid}" == "mfr" ] || [ "${siteid}" == "ajk" ] || [ "${siteid}" == "mtr" ]
    then
-      aprun -n48 -N24 -j1 -d1 ${EXECnwps}/swan-mpi.exe
+      aprun -n48 -N24 -j1 -d1 ${EXECnwps}/swan.exe
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
    elif [ "${siteid}" == "hgx" ] || [ "${siteid}" == "mob" ] || [ "${siteid}" == "tae" ] || [ "${siteid}" == "jax" ] || [ "${siteid}" == "key" ] || [ "${siteid}" == "phi" ] || [ "${siteid}" == "aer" ] || [ "${siteid}" == "afg" ] || [ "${siteid}" == "lch" ]
    then
-      aprun -n24 -N24 -j1 -d1 ${EXECnwps}/swan-mpi.exe
+      aprun -n24 -N24 -j1 -d1 ${EXECnwps}/swan.exe
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
    else
-      aprun -n16 -N16 -j1 -d1 ${EXECnwps}/swan-mpi.exe
+      aprun -n16 -N16 -j1 -d1 ${EXECnwps}/swan.exe
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
    fi
    cp -f *CG1* ${DATA}/output/grid
    if [ "${err}" != "0" ];then
-      msg="FATAL ERROR: Wave model executable swan-mpi.exe failed."
+      msg="FATAL ERROR: Wave model executable swan.exe failed."
       postmsg "$jlogfile" "$msg"
    fi
    err_chk
