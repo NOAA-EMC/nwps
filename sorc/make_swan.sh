@@ -52,7 +52,7 @@ mkdir -p ${NWPSdir}/exec
 #make clobber | tee -a ./swan_build.log
 #make config | tee -a ./swan_build.log
 #make ser FLAGS_OPT="${OPTFLAGS}" | tee -a ./swan_build.log
-#cp -pfv swan.exe ${NWPSdir}/exec/swan.exe
+#cp -pfv swan.exe ${NWPSdir}/exec/swan-ser.exe
 
 #echo "Building OpenMP SWAN binary for ${COMPILER} compiler" | tee ./swan_build.log
 #cd ${NWPSdir}/sorc/swan
@@ -66,12 +66,12 @@ mkdir -p ${NWPSdir}/exec
 #module load ../modulefiles/NWPS/v1.3.0
 #module list
 
-cd ${NWPSdir}/sorc/swan
+cd ${NWPSdir}/sorc/swan.fd
 echo "Building OpenMPI SWAN binary" | tee ./swan_build.log
 make clobber | tee -a ./swan_build.log
 make config | tee -a ./swan_build.log
 make mpi FLAGS_OPT="${OPTFLAGS}" | tee -a ./swan_build.log
-cp -pfv swan.exe ${NWPSdir}/exec/swan-mpi.exe
+cp -pfv swan.exe ${NWPSdir}/exec/swan.exe
 
 make clobber | tee -a ./swan_build.log
 cd ${PWD}
