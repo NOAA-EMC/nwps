@@ -5,10 +5,10 @@
 !/                  | WAVEWATCH III           NOAA/NCEP |
 !/                  |     A. J. van der Westhuysen      |
 !/                  |                        FORTRAN 95 |
-!/                  | Last update :         18-Aug-2017 |
+!/                  | Last update :         12-Jul-2020 |
 !/                  +-----------------------------------+
 !/
-!/    04-Aug-2017 : Origination                         ( version 5.16 )
+!/    19-Sep-2019 : Origination                         ( version 6.07 )
 !/
 !/    Copyright 2009-2017 National Weather Service (NWS),
 !/       National Oceanic and Atmospheric Administration.  All rights
@@ -19,15 +19,13 @@
 !
 !  1. Purpose :
 !
-!     Perform spatial and temporal tracking of wave systems, based 
-!     on spectral partition (bulletin) output.
+!     Transform native WW3 partition output ASCII file into a "tidy"
+!     dataframe formatted ASCII file.
 !
 !  2. Method :
 !
-!     This is a controller program. It reads the input parameter file 
-!     ww3_systrk.inp and calls subroutine waveTracking_NWS_V2 to 
-!     perform the actual tracking procedure. Write output (fields and 
-!     point output).
+!     Read native data from WW3 partition ASCII file, compute grid indices
+!     and write into an ASCII file in a dataframe format.
 !
 !  3. Parameters :
 !
