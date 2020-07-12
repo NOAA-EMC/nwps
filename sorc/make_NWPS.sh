@@ -57,7 +57,7 @@ cd ${NWPSdir}/sorc
 #The executable is ww3_sysprep.exe
 echo "================== FOR WAVE TRACKING PREPROCESSOR : make_sysprep.sh =================="
 cd ${NWPSdir}/sorc
-./make_sysprep.sh
+./make_ww3_sysprep.sh
 
 #FOR SWAN (UNSTRUCTURED MESH, incl. parallel libraries in estofs_padcirc.fd/work/odir4/)
 echo "================== FOR SWAN (UNSTRUCTURED MESH,..) : make_padcirc.sh make_swan4110.sh =================="
