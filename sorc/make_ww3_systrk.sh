@@ -43,6 +43,6 @@ fi
 # "export FORT_BUFFERED=true" it will buffer the data like the gnu fortran compiler does.
 export FORT_BUFFERED=true
 
-cd ${NWPSdir}/sorc/ww3_systrack.fd
+cd ${NWPSdir}/sorc/ww3_systrk.fd
 ./make_ww3_systrk_mpi.sh | tee ./ww3_systrk_build.log
 
