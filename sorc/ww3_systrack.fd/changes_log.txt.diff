@@ -1,0 +1,27 @@
+1c1
+< Changes log, version 1.03 (04/03/12)
+---
+> Changes log, version 1.04 (06/25/2014)
+6a7,28
+> 
+> 1. w3strkmd_compile.f90(6301): error #6415: This name cannot be assigned this data type because it conflicts with prior uses of the name.   [ARRAYSIZE]
+>       INTEGER :: ARRAYSIZE
+> 
+> 2. w3strkmd_compile.f90(6361): error #6415: This name cannot be assigned this data type because it conflicts with prior uses of the name.   [ARRAYSIZE]
+>       INTEGER :: ARRAYSIZE
+> 
+> The order of declaration had to be changed from:
+> 
+> !     Parameter list
+> !     ----------------------------------------------------------------
+>       REAL :: ARRAY(ARRAYSIZE)
+>       REAL :: VAL
+>       INTEGER :: ARRAYSIZE
+> 
+> to:
+> 
+> !     Parameter list
+> !     ----------------------------------------------------------------
+>       INTEGER :: ARRAYSIZE
+>       REAL :: ARRAY(ARRAYSIZE)
+>       REAL :: VAL
