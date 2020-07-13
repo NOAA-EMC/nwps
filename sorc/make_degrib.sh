@@ -34,6 +34,6 @@ fi
 mkdir -p ${NWPSdir}/exec
 
 # We can only use the GNU compiler or the Jasper/JPEG compression library will not work properly
-cd ${NWPSdir}/sorc/degrib_gnu_cray/
+cd ${NWPSdir}/sorc/degrib.fd/
 ./build_degrib.sh
 
