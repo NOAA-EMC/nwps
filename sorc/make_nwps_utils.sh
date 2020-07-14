@@ -32,12 +32,12 @@ if [ "${NWPSdir}" == "" ]
 fi
 
 #loading the necessary modules 
-#module purge
-#module load ncep
-#module load ../modulefiles/NWPS/v1.2.0
-#module list
+module purge
+module load ncep
+module load ../modulefiles/NWPS/v1.2.0
+module list
 
-cd nwps_utils_cray; ./build_utils.sh | tee -a ./nwps_utils_build.log 
+cd nwps_utils.fd; ./build_utils.sh | tee -a ./nwps_utils_build.log 
 
 cd ${PWD}
 
