@@ -33,7 +33,7 @@ echo "Building psurge2nwps"  | tee ${NWPSdir}/sorc/psurge2nwps.fd/psurge2nwps_bu
 cd ${NWPSdir}/sorc/psurge2nwps.fd
 make clean | tee -a ${NWPSdir}/sorc/psurge2nwps.fd/psurge2nwps_build.log
 make  | tee -a ${NWPSdir}/sorc/psurge2nwps.fd/psurge2nwps_build.log
-mv -v psurge2nwps_64 ${NWPSdir}/exec
+mv -v psurge2nwps_64 ${NWPSdir}/exec/psurge2nwps
 echo "Build complete" | tee -a ${NWPSdir}/sorc/psurge2nwps.fd/psurge2nwps_build.log
 
 exit 0
