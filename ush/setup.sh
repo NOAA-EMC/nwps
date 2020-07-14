@@ -1016,7 +1016,8 @@ function auto_run()
   if [ "${WVTONCG}" == "0" ]
     then
     NELATWT=$(echo "$NELATWT + 0.0" | bc | tr -d "-") 
-    NELATWT=$(printf "%.02f" $NELATWT)
+    #NELATWT=$(printf "%.02f" $NELATWT)
+    NELATWT=$(printf "%6.2f" $NELATWT)
     if [[ $NELATWT == "0.00" ]]
     then
 	logit "ERROR - Cannot determine NELATWT to be a valid lat/lon point"
@@ -1027,6 +1028,7 @@ function auto_run()
     NELONWT=$(echo "$NELONWT + 0.0" | bc | tr -d "-") 
     NELONWT=$(printf "%.02f" $NELONWT)
     NELONCIRCWT=$(echo "360.00 - $NELONWT" | bc)
+    NELONCIRCWT=$(printf "%6.2f" $NELONCIRCWT)
     if [[ $NELONWT == "0.00" ]]
     then
 	logit "ERROR - Cannot determine NELONWT to be a valid lat/lon point"
@@ -1035,7 +1037,8 @@ function auto_run()
     fi
 
     SWLATWT=$(echo "$SWLATWT + 0.0" | bc | tr -d "-") 
-    SWLATWT=$(printf "%.02f" $SWLATWT)
+    #SWLATWT=$(printf "%.02f" $SWLATWT)
+    SWLATWT=$(printf "%6.2f" $SWLATWT)
     if [[ $SWLATWT == "0.00" ]]
     then
 	logit "ERROR - Cannot determine SWLATWT to be a valid lat/lon point"
@@ -1046,6 +1049,7 @@ function auto_run()
     SWLONWT=$(echo "$SWLONWT + 0.0" | bc | tr -d "-") 
     SWLONWT=$(printf "%.02f" $SWLONWT)
     SWLONCIRCWT=$(echo "360.00 - $SWLONWT" | bc)
+    SWLONCIRCWT=$(printf "%6.2f" $SWLONCIRCWT)
     if [[ $SWLONWT == "0.00" ]]
     then
 	logit "ERROR - Cannot determine SWLONWT to be a valid lat/lon point"
@@ -1066,7 +1070,9 @@ function auto_run()
     distx=`perl ${USHnwps}/dist_lat_lon.pl $SWLATWT $SWLONWT $SWLATWT $NELONWT`
     disty=`perl ${USHnwps}/dist_lat_lon.pl $SWLATWT $SWLONWT $NELATWT $SWLONWT`
     MESHLATWT=$(echo "$disty/$GEORESWT" | bc)
+    MESHLATWT=$(printf "%4d" $MESHLATWT)
     MESHLONWT=$(echo "$distx/$GEORESWT" | bc)
+    MESHLONWT=$(printf "%4d" $MESHLONWT)
     XLENWT=$(echo "$NELONCIRCWT - $SWLONCIRCWT" | bc)
     YLENWT=$(echo "$NELATWT - $SWLATWT" | bc)
   fi
