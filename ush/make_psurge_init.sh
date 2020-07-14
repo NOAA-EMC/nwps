@@ -47,7 +47,7 @@ myPWD=$(pwd)
 PSURGEPURGEdays="5"
 export DEGRIB=${EXECnwps}/degrib
 #export DEGRIB=/nwprod2/grib_util.v1.0.0/exec/degrib2
-PSURGE2NWPS=${EXECnwps}/exec/psurge2nwps_64
+PSURGE2NWPS=${EXECnwps}/exec/psurge2nwps
 
 
 # NOTE: Add WGET --no-remove-listing option for FTP downloads
