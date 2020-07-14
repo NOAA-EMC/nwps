@@ -74,6 +74,9 @@ if [ -z "${PYTHON}" ]; then export PYTHON=python; fi
 PROCdir="${VARdir}/shiproutes"
 if [ ! -e ${PROCdir} ]; then mkdir -p ${PROCdir}; fi
 
+TEMPDIR=${VARdir}/${siteid}.tmp/CG1
+if [ ! -e $TEMPDIR} ]; then mkdir -p ${TEMPDIR}; fi
+
 GRAPHICOUTPUTdir="${OUTPUTdir}/figures/${siteid}/shiproutes"
 TEMPLATEDIR="${USHnwps}/python/etc/default"
 
@@ -390,18 +393,21 @@ do
 	#${PYTHON} ${PROCdirparll}/shiproute_cur.py ${PROCdirparll}/pyplot_shiproutes.cfg | tee -a ${DEBUGLOGfile}
 	#${PYTHON} ${PROCdirparll}/shiproute.py ${PROCdirparll}/pyplot_shiproutes.cfg | tee -a ${DEBUGLOGfile}
 
-        echo "${PYTHON} ${PROCdirparll}/shiproute_cur.py ${PROCdirparll} pyplot_shiproutes.cfg" >> ${PROCdir}/python_shiproute_cur_elements.sh
-        echo "${PYTHON} ${PROCdirparll}/shiproute.py ${PROCdirparll} pyplot_shiproutes.cfg" >> ${PROCdir}/python_shiproute_elements.sh
+        #echo "${PYTHON} ${PROCdirparll}/shiproute_cur.py ${PROCdirparll} pyplot_shiproutes.cfg" >> ${PROCdir}/python_shiproute_cur_elements.sh
+        echo "${PYTHON} ${PROCdirparll}/shiproute_cur.py ${PROCdirparll} pyplot_shiproutes.cfg; ${PYTHON} ${PROCdirparll}/shiproute.py ${PROCdirparll} pyplot_shiproutes.cfg" >> ${PROCdir}/python_shiproute_elements.sh
+        echo "${PYTHON} ${PROCdirparll}/shiproute_cur.py ${PROCdirparll} pyplot_shiproutes.cfg; ${PYTHON} ${PROCdirparll}/shiproute.py ${PROCdirparll} pyplot_shiproutes.cfg" >> ${TEMPDIR}/python_grib2_elements.sh
 
 # End of config line read	
     fi
 done < ${CFGFILE}
 
-echo "Executing ${PROCdir}/python_shiproute_cur_elements.sh for ${rtnum} transects"
-aprun -n${rtnum} -N${rtnum} -j1 -d1 cfp ${PROCdir}/python_shiproute_cur_elements.sh
+#echo "Executing ${PROCdir}/python_shiproute_cur_elements.sh for ${rtnum} transects"
+#aprun -n${rtnum} -N${rtnum} -j1 -d1 cfp ${PROCdir}/python_shiproute_cur_elements.sh
 
-echo "Executing ${PROCdir}/python_shiproute_elements.sh for ${rtnum} transects"
-aprun -n${rtnum} -N${rtnum} -j1 -d1 cfp ${PROCdir}/python_shiproute_elements.sh
+#echo "Executing ${PROCdir}/python_shiproute_elements.sh for ${rtnum} transects"
+#aprun -n${rtnum} -N${rtnum} -j1 -d1 cfp ${PROCdir}/python_shiproute_elements.sh
+
+exit 0
 
 echo "INFO - Cleaning previous ship route plots from ${GRAPHICOUTPUTdir}" >> ${DEBUGLOGfile} 2>&1
 while read line
