@@ -144,7 +144,7 @@ if [ "${INSTALL^^}" == "TRUE" ]; then make install; fi
 if [ "${CLEAN^^}" == "TRUE" ]; then make clean; fi
 cd ${WORKDIR}
 
-cd write_template
+cd g2_write_template
 make
 if [ "${INSTALL^^}" == "TRUE" ]; then make install; fi
 if [ "${CLEAN^^}" == "TRUE" ]; then make clean; fi
