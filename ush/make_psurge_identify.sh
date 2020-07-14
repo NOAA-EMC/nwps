@@ -40,7 +40,7 @@ if [ "${USHnwps}" == "" ]
     echo "ERROR - Your USHnwps variable is not set"
     exit 1
 fi
-PSURGE2NWPS=${EXECnwps}/psurge2nwps_64
+PSURGE2NWPS=${EXECnwps}/psurge2nwps
 echo "====== Running make_psurge_identify.sh ======================="
 echo "A low-resolution quick-scan to identify WFO domains to extract"
 echo "=============================================================="
