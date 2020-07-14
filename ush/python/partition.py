@@ -89,7 +89,11 @@ for d in waveXdates:
     waveXticks.append(d.strftime("%m/%d\n%HZ"))
     
 data = np.fromfile(bWave, dtype=np.float32) # read the binary data
+#print(data.shape)
 data = data.reshape((wavePrts*2,waveCols,waveRows)) # reshape the data file (2*components u,v)
+#print(data.shape)
+data2 = data.reshape((wavePrts*2,waveRows,waveCols)) # reshape the data file (2*components u,v)
+#print(data2.shape)
 
 (x,y) = np.meshgrid(waveXvals,waveYvals)
 
@@ -124,35 +128,37 @@ bWind.close()
 #-----------------------------------------
 #--- Prepare the Wave data for plotting
 #-----------------------------------------
-timeSteps = wavePrts     # (2*components u,v)
 
-if timeSteps > 20:
-    XtickSpacing = 2
-elif timeSteps >= 36:
-    XtickSpacing = 8
-else:
-    XtickSpacing = 1
+XtickSpacing = 1
 
 #VectorColors = ['#000099','#0033FF','#00CCFF','#00FF00','#FFFF00','#FF6600','#FF3300','#990000','#660099','#CC0099']
 VectorColors = ['#0033FF','#FF0000','#00CCFF','#00FF00','#8B008B','#FF6600','#FF3300','#990000','#660099','#CC0099']
 
 waveComp = []
 mxUVwave = 0
-UWave    = np.zeros((timeSteps,waveCols,waveRows))
-VWave    = np.zeros((timeSteps,waveCols,waveRows))
+mxUVwave2 = 0
+UWave    = np.zeros((wavePrts,waveCols,waveRows))
+VWave    = np.zeros((wavePrts,waveCols,waveRows))
+UWave2    = np.zeros((wavePrts,waveCols,waveRows))
+VWave2    = np.zeros((wavePrts,waveCols,waveRows))
 
-for i in range(0,timeSteps,1): #different lines
-    #print(i)
+for i in range(0,wavePrts,1): #different lines
     uwave = data[i,:,:]
     uwave[uwave == missing_val] = nan     # Replacing missing values with NaN
     UWave[i,:,:] = uwave
+    uwave2 = np.transpose(data2[i,:,:])
+    uwave2[uwave2 == missing_val] = nan     # Replacing missing values with NaN
+    UWave2[i,:,:] = uwave2
 
-    
-    vwave = data[i+timeSteps,:,:]
+    vwave = data[i+wavePrts,:,:]
     vwave[vwave == missing_val] = nan     # Replacing missing values with NaN
     VWave[i,:,:] = vwave
+    vwave2 = np.transpose(data2[i+wavePrts,:,:])
+    vwave2[vwave2 == missing_val] = nan     # Replacing missing values with NaN
+    VWave2[i,:,:] = vwave2
 
     vec   = np.concatenate([uwave[~np.isnan(uwave)],vwave[~np.isnan(vwave)]])
+    vec2   = np.column_stack(( np.nansum(uwave2[:,:], axis=1), np.nansum(vwave2[:,:], axis=1) ))
     
     if len(vec) != 0:
         waveComp.append(str(i+1))
@@ -160,18 +166,32 @@ for i in range(0,timeSteps,1): #different lines
     else:
         waveComp.append('')
 
+    if len(vec2) != 0:
+        mxUVwave2 = max(max(np.linalg.norm(vec2, axis=1)),mxUVwave2)
+
+# Set the tick interval for the Hs panel
+WaveScaleFeet = np.ceil(3.28*mxUVwave2)
+print(WaveScaleFeet)
+if WaveScaleFeet > 20:
+    YtickSpacing = 5
+elif WaveScaleFeet >= 8:
+    YtickSpacing = 2
+else:
+    YtickSpacing = 1
+
 #Set regional override for fixed vector scaling
-if region == 'wr':
-    mxUVwave = 10./3.28    #in ft/3.28
-    mxUVwind = 40./1.94   #in knt/1.94
+#if region == 'wr':
+#    mxUVwave = 10./3.28    #in ft/3.28
+#    mxUVwind = 40./1.94   #in knt/1.94
 
 #-----------------------------------------
 #--- Plot the data
 #-----------------------------------------
-timeSteps = min(9,timeSteps)          ## Limit plot to 9 wave systems
-for i in range(0,timeSteps,1):
+wavePrts = min(9,wavePrts)          ## Limit plot to 9 wave systems
+for i in range(0,wavePrts,1):
+    hscomp = np.zeros((wavePrts, 145))
     
-    subplot(6,1,(1,4))
+    subplot(8,1,(1,4))
     ## 12/23/16 AW: With model output now hourly, thin out quiver plot to 3-hourly again
     #Qwave = quiver(x[:,0::3],y[:,0::3],UWave[i,:,0::3],VWave[i,:,0::3],scale=int(np.round(mxUVwave,1)*15),color=VectorColors[i])
     Qwave = quiver(x,y,UWave[i,:,:],VWave[i,:,:],scale=int(np.round(mxUVwave,1)*15),color=VectorColors[i])
@@ -187,35 +207,59 @@ for i in range(0,timeSteps,1):
     xticks(waveXvals[0::12],waveXticks[0::12])
     xlim(0,waveXvals[-1])
     title('Gerling-Hanson Plot for '+LocName+' ('+lon+'$^\circ$,'+lat+'$^\circ$) '+'\nNWPS RUN: '+waveRun)
-    xlabel('Time [UTC]',labelpad=2)
+    #xlabel('Time [UTC]',labelpad=2)
     
-    if i == (timeSteps-1):
+    if i == (wavePrts-1):
         annotate('\n\n\nWave\nSystem', xy=(1.1, 0.925), xycoords='axes fraction', color='k', horizontalalignment='center')
         for j in range(min(9,len(waveComp))):          ## Limit plot to 9 wave systems
-            annotate(waveComp[j]+'\n', xy=(1.1, 0.77-(j*0.065)), xycoords='axes fraction', color=VectorColors[j], horizontalalignment='center')
+            annotate(waveComp[j]+'\n', xy=(1.1, 0.74-(j*0.080)), xycoords='axes fraction', color=VectorColors[j], horizontalalignment='center')
 
+    subplot(8,1,(5,6))
+    hscomp[i,:] = np.sqrt(np.nansum(UWave2[i,:,:], axis=1)**2 + np.nansum(VWave2[i,:,:], axis=1)**2)
+    hscomp[hscomp == 0.] = nan     # Replace missing values with NaN
+    hscomp = 3.28*hscomp     # Convert to feet
+    Hwave = plot(waveXvals, hscomp[i,:], color=VectorColors[i])   
+
+    ax1=gca()
+    ax1.xaxis.set_major_locator(MultipleLocator(XtickSpacing))
+    ax1.xaxis.grid(b=True, which='major', color='#C0C0C0', linestyle=':')
+    ax1.yaxis.set_major_locator(MultipleLocator(2))
+    ax1.yaxis.grid(b=True, which='major', color='#C0C0C0', linestyle=':')
+    ax1.tick_params( labelsize='x-small')
+    ax1.set_ylabel('Hs [ft]',labelpad = 18)
+    #pos1 = ax1.get_position() # get the original position 
+    #pos2 = [pos1.x0, pos1.y0-0.3, pos1.width, pos1.height]
+    #ax1.set_position(pos2)
+
+    xticks(waveXvals[0::12],waveXticks[0::12])
+    xlim(0,waveXvals[-1])
+    yticks(np.arange(0, WaveScaleFeet+1, YtickSpacing))
+    ylim(0, WaveScaleFeet)
     
-subplot(6,1,(5,6))
+subplot(8,1,(7,8))
 ## 12/23/16 AW: With model output now hourly, thin out quiver plot to 3-hourly again 
 #Qwind = quiver(Xwnd[:,0::3],Ywnd[:,0::3],UWind[:,0::3],VWind[:,0::3],scale=np.round(mxUVwind,1)*10,width=0.0025, color=VectorColors[0])
-Qwind = quiver(Xwnd,Ywnd,UWind,VWind,scale=np.round(mxUVwind,1)*10,width=0.0025, color=VectorColors[0])
+#Qwind = quiver(Xwnd,Ywnd,UWind,VWind,scale=np.round(mxUVwind,1)*10,width=0.0025, color=VectorColors[0])
+Qwind = quiver(Xwnd,Ywnd,UWind,VWind,scale=np.round(mxUVwind,1)*14.5,width=0.0025, color=VectorColors[0])
 
-ax1=gca()
-ax1.xaxis.set_major_locator(MultipleLocator(XtickSpacing))
-ax1.xaxis.grid(b=True, which='major', color='#C0C0C0', linestyle=':')
-ax1.yaxis.set_major_locator(MultipleLocator(int(np.round(mxUVwind*1.94,0))/2))
-ax1.yaxis.grid(b=True, which='major', color='#C0C0C0', linestyle=':')
-ax1.tick_params( labelsize='x-small')
+ax2=gca()
+ax2.xaxis.set_major_locator(MultipleLocator(XtickSpacing))
+ax2.xaxis.grid(b=True, which='major', color='#C0C0C0', linestyle=':')
+ax2.yaxis.set_major_locator(MultipleLocator(int(np.round(mxUVwind*1.94,0))/2))
+ax2.yaxis.grid(b=True, which='major', color='#C0C0C0', linestyle=':')
+ax2.tick_params( labelsize='x-small')
 
 xticks(waveXvals[0::12],waveXticks[0::12])
 xlim(0,waveXvals[-1])
 ylabel('Wind Speed [kts]')
-ylim(int(np.round(mxUVwind*1.94,0))*-1,int(np.round(mxUVwind*1.94,0)))
+#ylim(int(np.round(mxUVwind*1.94,0))*-1,int(np.round(mxUVwind*1.94,0)))
+ylim(int(np.ceil(mxUVwind*1.94))*-1,int(np.ceil(mxUVwind*1.94)))
+#print(mxUVwind*1.94)
 
 subplots_adjust(hspace=1.5)    
 
 quiverkey(Qwave,waveXvals[-1]*1.1,3,mxUVwave,'Wave Height\nScale\n'+str(np.round(mxUVwave*3.28,1))+" [ft]",coordinates='data',color='#0033FF',fontproperties={'size': 'small'})
-annotate(''+str(np.round((mxUVwave),1))+' [m]', xy=(1.1, 1.54), xycoords='axes fraction', color='k', horizontalalignment='center', fontsize='small')
+annotate(''+str(np.round((mxUVwave),1))+' [m]', xy=(1.1, 2.94), xycoords='axes fraction', color='k', horizontalalignment='center', fontsize='small')
 
 quiverkey(Qwind,waveXvals[-1]*1.1,int(np.round(mxUVwind*1.94,0))*-0.5,mxUVwind,'Wind Source:\n'+windSource[:8]+'\n\nWind Speed\nScale\n'+str(np.round(mxUVwind*1.94,1))+" [kts]",coordinates='data',color='#0033FF',fontproperties={'size': 'small'})
 annotate(''+str(np.round((mxUVwind),1))+' [m/s]', xy=(1.1, 0.06), xycoords='axes fraction', color='k', horizontalalignment='center', fontsize='small')
