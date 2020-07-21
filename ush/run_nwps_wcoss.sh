@@ -280,6 +280,21 @@ if [ "${WINDS,,}" == "forecaster" ]; then
 	    echo "WARNING: Wind file ${WindFileName} not transmitted. Will fail over to GFS data." >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
 	    warnings="YES"
 	    WINDS="gfs"
+        else
+            # Check that the initialization time in the GFE wind file is not more than 6 h in the future
+            init_epoch=`grep Wind_Mag_SFC:validTimes ${WindFileName} | cut -c29-38 | tail -1`
+            pdy_epoch=`date +%s`
+            init_str=`date -d @${init_epoch} +'%Y%m%d %HZ'`
+            init_win1_str=`date -d "-72 hours" +'%Y%m%d %HZ'`
+            init_win2_str=`date -d "+6 hours" +'%Y%m%d %HZ'`
+            if [ "$(( ${init_epoch} - ${pdy_epoch} ))" -gt 21600 ]; then
+               echo "FATAL ERROR: Forecast analysis time ${init_str} is too far in the future. NWPS will not be executed. Resubmit with an analysis time between ${init_win1_str} and ${init_win2_str}." >> ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+               msg="FATAL ERROR: Forecast analysis time ${init_str} is too far in the future. NWPS will not be executed. Resubmit with an analysis time between ${init_win1_str} and ${init_win2_str}."
+               postmsg "$jlogfile" "$msg"
+               cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt ${GESOUT}/warnings/Warn_Forecaster_${SITEID}.${PDY}.txt
+               echo "ABORTED $FORECASTWINDdir/${NewestWind} AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
+               export err=1; err_chk
+            fi
 	fi 
     fi
 fi
@@ -517,6 +532,11 @@ echo "EXCD=$EXCD"
 # NOTE: The default variable is defined in master config $USHnwps/nwps_config.sh
 # NOTE: This must TRUE or FALSE to work with RunSwan.pm module
 HOTSTART="TRUE"
+if [ "${SITEID}" == "MFL" ] && [ $(date -d "$D" '+%d') == 30 ]
+then
+  echo "Setting periodic stationary start to suppress hotspot build-up"
+  HOTSTART="FALSE" 
+fi
 
 # Set the model core: Regular grid SWAN or unstructured mesh UNSWAN
 if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "TBW" ] || [ "${SITEID}" == "MFL" ] \
