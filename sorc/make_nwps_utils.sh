@@ -34,7 +34,7 @@ fi
 #loading the necessary modules 
 module purge
 module load ncep
-module load ../modulefiles/NWPS/v1.2.0
+module load ../modulefiles/NWPS/v1.3.0
 module list
 
 cd nwps_utils.fd; ./build_utils.sh | tee -a ./nwps_utils_build.log 
