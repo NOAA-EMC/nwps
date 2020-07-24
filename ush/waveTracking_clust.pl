@@ -452,7 +452,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     #system("${USHnwps}/grads/bin/postprocess_plot_partition_fields.sh ${SITEID} ${CGNUMBER}");
     system("${USHnwps}/postprocess_partition_fields_clust.sh ${SITEID} ${CGNUMBER}");
     print "postprocess_partition_fields  DONE! \n";
-    system("cp -f ${RUNdir}/sys_log0000.ww3 ${LOGdir}/."); #Info from Log files are used for packing
+    #system("cp -f ${RUNdir}/sys_log0000.ww3 ${LOGdir}/."); #Info from Log files are used for packing
 } # END for $i (0..$numcgrids-1)
 
 system("touch ${OUTPUTdir}/tracking_completed");
