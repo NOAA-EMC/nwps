@@ -330,14 +330,61 @@ if [ "${WEB}" == "YES" ]; then export PLOT="YES"; fi
 # NOTE: To save time, deactivate plotting when running retrospectives
 if [ "${PLOT}" == "YES" ] && [ "${RETROSPECTIVE}" == "FALSE" ]
 then
-
+  if [ "${siteid}" == "alu" ] || [ "${siteid}" == "aer" ] || [ "${siteid}" == "ajk" ]
+  then
 #    echo "Cleaning Previous grads plots from ${OUTPUTdir}/grads/${siteid}" | tee -a $logfile
 #    rm -fr ${OUTPUTdir}/ush/grads/${siteid}/CG* | tee -a $logfile
 #    rm -fr ${OUTPUTdir}/ush/grads/${siteid}/partition | tee -a $logfile
+
+    TEMPDIR=${VARdir}/${siteid}.tmp/CG${CGNUM}
+    mkdir -p ${TEMPDIR}
+    GRAPHICSdir="${OUTPUTdir}/figures/${siteid}/CG${CGNUM}"
+    mkdir -p ${GRAPHICSdir}
+
     echo "Creating output plots"
     #${NWPSdir}/ush/grads/bin/plot_nwps_run.sh ${SITEID} |tee -a $logfile
     ${NWPSdir}/ush/python/plot_nwps_run.sh ${SITEID}
     export err=$?; err_chk 
+
+    cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
+    COMOUTCYC="${COMOUT}/${cycleout}/CG${CGNUM}"
+    mkdir -p $COMOUTCYC
+
+    inputparm="${RUNdir}/inputCG${CGNUM}"
+    if [ ! -e ${inputparm} ]
+    then
+       echo "ERROR - Missing inputCG${CGNUM} file"
+       echo "ERROR - Cannot open ${inputparm}"
+       export err=1; err_chk
+    fi
+    #Copying all needed data; input and programs here to run ru_runup.sh
+    # in ${VARdir}/${siteid}.tmp/CG${CGNUM}/runup
+    cp ${inputparm} .
+    grep "^INPGRID WIND" inputCG${CGNUM} > blah1
+    init=$(awk '{print $11;}' blah1)
+    echo "$init" > datetime
+    cut -c 1-4 datetime > year
+    cut -c 5-6 datetime > mon
+    cut -c 7-8 datetime > day
+    cut -c 10-11 datetime > hh
+    cut -c 12-13 datetime > mm
+
+    yyyy=$(cat year)
+    mon=$(cat mon)
+    dd=$(cat day)
+    hh=$(cat hh)
+    mm=$(cat mm)
+
+    # Copying field plots to COMOUT
+    echo "Copying PNG images to ${GRAPHICSdir}"
+    rm ${TEMPDIR}/*logo* ${TEMPDIR}/*Logo*
+    cp -vpf ${TEMPDIR}/*.png ${GRAPHICSdir}/.
+    chmod 777 ${GRAPHICSdir}/*.png
+    cd ${GRAPHICSdir}
+    figsTarFile="plots_CG${CGNUM}_${yyyy}${mon}${dd}${hh}.tar.gz"
+    tar cvfz ${figsTarFile} *.png
+    cp ${figsTarFile} $COMOUTCYC/${figsTarFile}
+  fi
 fi
 
 #Sending grib2 files with gridded wave parameters to COMOUT
