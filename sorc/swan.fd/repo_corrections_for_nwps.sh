@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 # ----------------------------------------------------------- 
 # UNIX Shell Script File
 # Original Author(s): Andre.VanderWesthuysen@noaa.gov
