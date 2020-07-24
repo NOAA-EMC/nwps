@@ -9,7 +9,7 @@ fi
 #loading the necessary modules 
 module purge
 module load ncep
-module load ../modulefiles/NWPS/v1.2.0
+module load ../modulefiles/NWPS/v1.3.0
 module list
 
 echo "Building psoutTOnwps"  | tee ${NWPSdir}/sorc/psurge2nwps.fd/psoutTOnwps_build.log
