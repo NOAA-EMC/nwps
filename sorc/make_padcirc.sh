@@ -14,7 +14,7 @@ set -x
 
 #module purge
 #module load ncep
-#module load ../modulefiles/NWPS/v1.2.0
+#module load ../modulefiles/NWPS/v1.3.0
 #module list
 
 # Loading Intel Compiler Suite
@@ -62,7 +62,7 @@ export C_COMP_MP=cc
                 cp -f $exename ../../../exec/estofs_${exename}
              done
           fi
-          #AW make clean
+          make clean
           echo ' ' >> $outfile
           cd ../..
        else  
@@ -70,7 +70,7 @@ export C_COMP_MP=cc
           cd ${code}.?d
           make >> $outfile
           echo " Moving $code to exec " >> $outfile
-          #AW make clean
+          make clean
           echo ' ' >> $outfile
           cd ..
        fi
@@ -85,7 +85,7 @@ export C_COMP_MP=cc
                 cp -f $exename ../../../exec/estofs_${exename}
              done
           fi
-          #AW make clean
+          make clean
           echo ' ' >> $outfile
           cd ../..
        else
@@ -93,7 +93,7 @@ export C_COMP_MP=cc
           cd $1.?d
           make >> $outfile
           echo " Moving $1 to exec " >> $outfile
-          #AW make clean
+          make clean
           echo ' ' >> $outfile
           cd ..
     fi
