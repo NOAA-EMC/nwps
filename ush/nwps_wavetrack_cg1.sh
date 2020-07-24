@@ -53,7 +53,7 @@ if [ "${hastracking}" == "TRUE" ]
    tar -czvf mapplots_CG0_${PDY}${cycle}.tar.gz swan_systrk1_hr???.png
    cp -fv ${RUNdir}/mapplots_CG0_${PDY}${cycle}.tar.gz $COMOUTCYC/
    cp -fv ${RUNdir}/${siteid}_nwps_CG0_Trkng_${PDY}_${cycle}00.bull $COMOUTCYC/
-   cp -fv ${RUNdir}/${siteid}_${PDY}.${cycle}0000.sys $COMOUTCYC/
+   #cp -fv ${RUNdir}/${siteid}_${PDY}.${cycle}0000.sys $COMOUTCYC/
    rm ${RUNdir}/swan_systrk1_hr???.png
    #rm ${RUNdir}/coastal_bound_high.txt
    #AW020218 ---------------------------------------------------------------
