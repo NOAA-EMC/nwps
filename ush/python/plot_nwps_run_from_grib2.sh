@@ -336,12 +336,12 @@ for parm in ${SWANPARMS}
 #      echo "WARNING - No site specific python grib2_element file"
 #      echo "Will plot all elements by default"
       echo "Creating new site specific python element file for GRIB2 plot"
-      cat /dev/null > ${TEMPDIR}/python_grib2_elements.sh
+      #cat /dev/null > ${TEMPDIR}/python_grib2_elements.sh
       echo "${PYTHON} wind.py" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} depth.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      #AW echo "${PYTHON} depth.py" >> ${TEMPDIR}/python_grib2_elements.sh
       echo "${PYTHON} htsgw.py" >> ${TEMPDIR}/python_grib2_elements.sh
       echo "${PYTHON} period.py" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} wlen.py" >> ${TEMPDIR}/python_grib2_elements.sh
+      #AW echo "${PYTHON} wlen.py" >> ${TEMPDIR}/python_grib2_elements.sh
       echo "${PYTHON} cur.py" >> ${TEMPDIR}/python_grib2_elements.sh
       echo "${PYTHON} wlev.py" >> ${TEMPDIR}/python_grib2_elements.sh
       echo "${PYTHON} swell.py" >> ${TEMPDIR}/python_grib2_elements.sh
@@ -361,22 +361,15 @@ for parm in ${SWANPARMS}
   echo "Executing ${TEMPDIR}/python_grib2_elements.sh"
   if [ "${CGNUM}" -eq "1" ]
      then
-     if ( [ "${RIPPROG}" == "1" ] && [ CG"${CGNUMPLOT}" == "${RIPDOMAIN}" ] ) && \
-        ( [ "${RUNUPPROG}" == "1" ] && [ CG"${CGNUMPLOT}" == "${RUNUPDOMAIN}" ] )
+     njobs=`wc -l ${TEMPDIR}/python_grib2_elements.sh | cut -c1-2`
+     echo "Executing ${njobs} plotting jobs using cfp"
+     aprun -n${njobs} -N${njobs} -j1 -d1 cfp ${TEMPDIR}/python_grib2_elements.sh
+     export err=$?; err_chk
+  elif [ "${SITEID}" == "alu" ] || [ "${SITEID}" == "aer" ] || [ "${SITEID}" == "ajk" ]
      then
-        echo "Executing 11 plotting jobs using cfp"
-        aprun -n11 -N11 -j1 -d1 cfp ${TEMPDIR}/python_grib2_elements.sh
-        export err=$?; err_chk
-     elif [ "${RIPPROG}" == "1" ] && [ CG"${CGNUMPLOT}" == "${RIPDOMAIN}" ]
-     then
-        echo "Executing 9 plotting jobs using cfp"
-        aprun -n9 -N9 -j1 -d1 cfp ${TEMPDIR}/python_grib2_elements.sh
-        export err=$?; err_chk
-     else
-        echo "Executing 8 plotting jobs using cfp"
-        aprun -n8 -N8 -j1 -d1 cfp ${TEMPDIR}/python_grib2_elements.sh
-        export err=$?; err_chk
-     fi
+     echo "Executing plotting jobs in serial"
+     bash ${TEMPDIR}/python_grib2_elements.sh
+     export err=$?; err_chk
   else
      #AW echo "Executing plotting jobs in serial"
      #AW bash ${TEMPDIR}/python_grib2_elements.sh
@@ -384,32 +377,32 @@ for parm in ${SWANPARMS}
      echo "*** Not creating plots for CG2-5: Plotting jobs now done externally"
   fi
 
-  if [ "${CGNUM}" -eq "1" ]
-     then
-     echo "Copying PNG images to ${GRAPHICSdir}"
-     if [ "${HASHOTSTART}" == "TRUE" ]
-     then 
-         echo "HOTSTART was used for this run, keeping hours 0-9 for CG${CGNUM}"
-     else
-         echo "No HOTSTART was used for this run, removing hours 0-9 for CG${CGNUM}."
-##         rm -vf *hr00[0-9].png
-     fi
-
-     rm *logo* *Logo*
-     cp -vpf *.png ${GRAPHICSdir}/.
-     chmod 777 ${GRAPHICSdir}/*.png
-     cd ${GRAPHICSdir}
-#     Spectra plots (if any) must be in ${GRAPHICSdir} already
-#     AW010620: Spectra plots no longer produced, so copy command deactivated.
-     figsTarFile="plots_CG${CGNUM}_${YYYY}${MM}${DD}${HH}.tar.gz"
-     #cp ${FIGOUTPUTdir}/${SITEID}/spectra/CG${CGNUM}/*.png .
-
-     tar cvfz ${figsTarFile} *.png
-     cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
-     COMOUTCYC="${COMOUT}/${cycleout}/CG${CGNUM}"
-     mkdir -p $COMOUTCYC
-     cp ${figsTarFile} $COMOUTCYC/${figsTarFile}
-  fi
+#  if [ "${CGNUM}" -eq "1" ]
+#     then
+#     echo "Copying PNG images to ${GRAPHICSdir}"
+#     if [ "${HASHOTSTART}" == "TRUE" ]
+#     then 
+#         echo "HOTSTART was used for this run, keeping hours 0-9 for CG${CGNUM}"
+#     else
+#         echo "No HOTSTART was used for this run, removing hours 0-9 for CG${CGNUM}."
+###         rm -vf *hr00[0-9].png
+#     fi
+#
+#     rm *logo* *Logo*
+#     cp -vpf *.png ${GRAPHICSdir}/.
+#     chmod 777 ${GRAPHICSdir}/*.png
+#     cd ${GRAPHICSdir}
+##     Spectra plots (if any) must be in ${GRAPHICSdir} already
+##     AW010620: Spectra plots no longer produced, so copy command deactivated.
+#     figsTarFile="plots_CG${CGNUM}_${YYYY}${MM}${DD}${HH}.tar.gz"
+#     #cp ${FIGOUTPUTdir}/${SITEID}/spectra/CG${CGNUM}/*.png .
+#
+#     tar cvfz ${figsTarFile} *.png
+#     cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
+#     COMOUTCYC="${COMOUT}/${cycleout}/CG${CGNUM}"
+#     mkdir -p $COMOUTCYC
+#     cp ${figsTarFile} $COMOUTCYC/${figsTarFile}
+#  fi
 done
 
 
