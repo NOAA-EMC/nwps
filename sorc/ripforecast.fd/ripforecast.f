@@ -57,6 +57,7 @@
 !      logical, dimension(ninput) :: eventout
       integer, dimension(ninput) :: eventout
       real, dimension(nobsread) :: sxpos,sypos,shore
+      logical :: exist
 
 !
 !        Banner
@@ -90,14 +91,23 @@
       watlev(:)=-9999.
       uwind(:)=-9999.
       vwind(:)=-9999.
+      exist=.false.
 !
 !        read past file. The routine will return the number of
 !        observations it read from fupast in npast72.
 !
-      call read_nwps(fupast,ninput,npast72,ftime,xpos,ypos,hsig,
-     1               pwp,mwd,xvel,yvel,watlev,uwind,vwind,npast72,
-     2               ier)
-      hspast72=hsig(1:npast72)
+      inquire(file='fort.22', exist=exist)
+      if (exist) then
+         call read_nwps(fupast,ninput,npast72,ftime,xpos,ypos,hsig,
+     1                  pwp,mwd,xvel,yvel,watlev,uwind,vwind,npast72,
+     2                  ier)
+         hspast72=hsig(1:npast72)
+      else
+!        If past file doesn't exist, set all past hs to zero (no event)
+         write(6,*) 'No history file. Values of hspast72 set to zero.'
+         hspast72=0
+         npast72=72
+      endif
 !
 !        read input file. The routine will return the number of
 !        observations it read from funwps in nhs.
