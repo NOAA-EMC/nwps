@@ -149,6 +149,8 @@ echo " " | tee -a $logrunup
      export TEMPDIRrunup=${VARdir}/${siteid}.tmp/CG${CGNUM}/runup
      mkdir -p ${TEMPDIRrunup}
      cd ${TEMPDIRrunup}
+     # Clean directory
+     rm ${TEMPDIRrunup}/* 2> /dev/null
      #Copying all needed data; input and programs here to run run_runup.sh
      # in ${VARdir}/${siteid}.tmp/CG${CGNUM}/runup
      cp ${inputparm} .
@@ -330,6 +332,20 @@ if [ "${WEB}" == "YES" ]; then export PLOT="YES"; fi
 # NOTE: To save time, deactivate plotting when running retrospectives
 if [ "${PLOT}" == "YES" ] && [ "${RETROSPECTIVE}" == "FALSE" ]
 then
+    TEMPDIR=${VARdir}/${siteid}.tmp/CG${CGNUM}
+    mkdir -p ${TEMPDIR}
+    echo "Writing all temp files to ${TEMPDIR}"
+    cat /dev/null > ${TEMPDIR}/python_grib2_elements.sh
+    GRAPHICSdir="${OUTPUTdir}/figures/${siteid}/CG${CGNUM}"
+    mkdir -p ${GRAPHICSdir}
+
+    CFGFILE=${FIXnwps}/shiproutes/${siteid}_shiproutes.cfg
+    if [ -f  ${CFGFILE} ]; then
+       GRAPHICSdirshiproutes="${OUTPUTdir}/figures/${siteid}/shiproutes"
+       mkdir -p ${GRAPHICSdirshiproutes}
+       ${USHnwps}/shiproutes/plot_shiproutes.sh |tee -a $logfile
+       export err=$?; err_chk
+    fi
 
     echo "Cleaning Previous grads plots from ${OUTPUTdir}/grads/${siteid}" | tee -a $logfile
     rm -fr ${OUTPUTdir}/grads/${siteid}/CG* | tee -a $logfile
@@ -339,11 +355,57 @@ then
     ${USHnwps}/python/plot_nwps_run.sh ${SITEID} |tee -a $logfile
     export err=$?; err_chk
 
-    if [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "LIX" ] || [ "${SITEID}" == "AKQ" ] || \
-       [ "${SITEID}" == "LOX" ] || [ "${SITEID}" == "AER" ] || [ "${SITEID}" == "AJK" ] || [ "${SITEID}" == "AFG" ]; then
-	${USHnwps}/shiproutes/plot_shiproutes.sh |tee -a $logfile
-	export err=$?; err_chk
+    if [ "${CGNUM}" -eq "1" ]
+       then
+       cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
+       COMOUTCYC="${COMOUT}/${cycleout}/CG${CGNUM}"
+       mkdir -p $COMOUTCYC
+
+       inputparm="${RUNdir}/inputCG${CGNUM}"
+       if [ ! -e ${inputparm} ]
+       then
+          echo "ERROR - Missing inputCG${CGNUM} file"
+          echo "ERROR - Cannot open ${inputparm}"
+          export err=1; err_chk
+       fi
+       cp ${inputparm} .
+       grep "^INPGRID WIND" inputCG${CGNUM} > blah1
+       init=$(awk '{print $11;}' blah1)
+       echo "$init" > datetime
+       cut -c 1-4 datetime > year
+       cut -c 5-6 datetime > mon
+       cut -c 7-8 datetime > day
+       cut -c 10-11 datetime > hh
+       cut -c 12-13 datetime > mm
+       yyyy=$(cat year)
+       mon=$(cat mon)
+       dd=$(cat day)
+       hh=$(cat hh)
+       mm=$(cat mm)
+
+       # Copying field plots to COMOUT
+       echo "Copying PNG images to ${GRAPHICSdir}"
+       rm ${TEMPDIR}/*logo* ${TEMPDIR}/*Logo*
+       cp -vpf ${TEMPDIR}/*.png ${GRAPHICSdir}/.
+       chmod 777 ${GRAPHICSdir}/*.png
+       cd ${GRAPHICSdir}
+       figsTarFile="plots_CG${CGNUM}_${yyyy}${mon}${dd}${hh}.tar.gz"
+       tar cvfz ${figsTarFile} *.png
+       cp ${figsTarFile} $COMOUTCYC/${figsTarFile}
+
+       CFGFILE=${FIXnwps}/shiproutes/${siteid}_shiproutes.cfg
+       if [ -f  ${CFGFILE} ]; then
+          # Copying shiproute plots to COMOUT
+          #echo "Publishing results" | tee -a ${LOGFILE}
+          cp -pfv ${VARdir}/shiproutes/route*/swan*hr*.png ${GRAPHICSdirshiproutes}/.
+          chmod 777 ${GRAPHICSdirshiproutes}/swan*hr*.png
+          cd ${GRAPHICSdirshiproutes}
+          figsTarFile="shiproute_plots_CG1_${yyyy}${mon}${dd}${hh}.tar.gz"
+          tar cvfz ${figsTarFile} *.png
+          cp -fpv ${figsTarFile} $COMOUTCYC/${figsTarFile}
+       fi
     fi
+
 fi
 #Sending grib2 files with gridded wave parameters to COMOUT
 cd ${DATA}/output/grib2/CG${CGNUM}
@@ -490,7 +552,7 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
       mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
    done
    # Additional copies for domains running on 48 cores
-   if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CAR" ] || [ "${SITEID}" == "MFL" ] \
+   if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CAR" ] \
       || [ "${SITEID}" == "TBW" ] || [ "${SITEID}" == "BOX" ] || [ "${SITEID}" == "SGX" ] \
       || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "AKQ" ] || [ "${SITEID}" == "OKX" ] \
       || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "ALU" ] || [ "${SITEID}" == "GUA" ] \
@@ -504,8 +566,16 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
          mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
       done
    fi
+   # Additional copies for domains running on 84 cores
+   if [ "${SITEID}" == "ALU" ]
+   then
+      for i in {16..83}; do
+         mkdir -p ${HOTdir}/PE00${i}
+         mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+      done
+   fi
    # Additional copies for domains running on 96 cores
-   if [ "${SITEID}" == "KEY" ]
+   if [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "AKQ" ]
    then
       for i in {16..95}; do
          mkdir -p ${HOTdir}/PE00${i}
