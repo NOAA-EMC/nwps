@@ -60,6 +60,9 @@ module load w3nco-intel/2.0.6
 module load iobuf/2.0.5
 
 cd ${NWPSdir}/sorc/punswan4110.fd
+echo "Repo corrections: Update the floating point formatting in the print file PRINTF" | tee ./punswan_build.log
+./repo_corrections_for_nwps.sh | tee -a ./punswan_build.log
+
 echo "Building OpenMPI SWAN binary" | tee ./punswan_build.log
 make clobber | tee -a ./punswan_build.log
 make config | tee -a ./punswan_build.log
