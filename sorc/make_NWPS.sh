@@ -77,7 +77,7 @@ echo "================== FOR RUNUP : make_runupforecast.sh =================="
 
 #FOR PSURGE2NWPS
 #The following will generate the executables: psurge2nwps_64, psurge_identify.exe and  psoutTOnwps.exe.
-echo "================== FOR PSURGE2NWPS : make_Psurge2NWPS.sh =================="
+echo "================== FOR PSURGE2NWPS : make_psurge2nwps.sh =================="
 ./make_psurge2nwps.sh
 
 #FOR UTILITY PROGRAMS
