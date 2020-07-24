@@ -331,8 +331,20 @@ while read line; do
        fi
        err_chk
    elif [[ -s fort.20 && ! -s fort.22 ]]; then
-       echo "Only the current model data was found."
-       echo "Some model data from the previous 72 hours is required to run"
+       #echo "Only the current model data was found."
+       #echo "Some model data from the previous 72 hours is required to run"
+       echo "WARNING: Only the current model data was found."
+       echo "WARNING: Not possible to compute event from the previous 72 hours."
+       export FORT20="${RIPDATA}/fort.20"
+       export FORT21="${RIPDATA}/fort.21"
+       ${NWPSdir}/exec/ripforecast.exe
+       export err=$?;
+       echo "Exit Code: ${err}" | tee -a ${LOGdir}/runrip.log
+       if [ "${err}" != "0" ];then
+          msg="FATAL ERROR: Rip current executable ripforecast.exe failed."
+          postmsg "$jlogfile" "$msg"
+       fi
+       err_chk
    fi  
    
 done <  fort.21
