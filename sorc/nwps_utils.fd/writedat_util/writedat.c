@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  printf("Writing output data, size of float is %u\n", sizeof(f));
+  printf("Writing output data, size of float is %lu\n", sizeof(f));
   memset(&f, 0, sizeof(f));
 
 #if defined (_USE_DIRECT_IO_)
