@@ -1,7 +1,7 @@
 #%Module######################################################################
 ##                                             Andre.VanderWesthuysen@noaa.gov
 ##                                                           NOAA/NWS/NCEP/EMC
-## NWPS v1.2.0
+## NWPS v1.3.0
 ##_____________________________________________________
 proc ModulesHelp { } {
 puts stderr "Set environment veriables for NWPS"
@@ -10,21 +10,17 @@ puts stderr "for the Intel Compiler Suite $version\n"
 }
 module-whatis " NWPS whatis description"
 
-set ver v1.2.0
+set ver v1.3.0
 
 set sys [uname sysname]
-set NWPS /gpfs/hps/nco/ops/nwpara/nwps.v1.2.0/modulefiles/NWPS
+set NWPS /gpfs/hps/nco/ops/nwpara/nwps.v1.2.10/modulefiles/NWPS
 set lname NWPS
 
-#module unuse /gpfs/hps/nco/ops/nwprod/lib/modulefiles
-# JY module use /gpfs/hps/nco/ops/nwpara/modulefiles
 module use /gpfs/hps/nco/ops/nwprod/modulefiles
-
-# Known conflicts ???
 
 # Loading Intel Compiler Suite
 setenv INTEL_VERSION 5.2.56
 setenv CRAY_CPU_TARGET x86-64
 module load PrgEnv-intel
 module load iobuf
-module load netcdf4-python/1.2.2
+module load python/3.6.3
