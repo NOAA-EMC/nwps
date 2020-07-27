@@ -950,3 +950,12 @@ export RIPCONT="5m"
 #TABLE '5mcont' HEAD '5m_contour_CG1' TIME XP YP HSIGN TPS DIR DSPR VEL WATL WIND OUTPUT 20110825.1200 1.0 HR
 #$END RIP
 #
+#========================================================================
+#                    RUNUP PROGRAM (SEE NWPS MANUAL)              =
+#========================================================================
+# IF RUNUP PROGRAM WILL BE RUN, then RIPCONT=1, Otherwise =0;
+# Setting up RIPCONT here to zero will permanently disable RIP program.
+#
+export RUNUPPROG="0"
+export RUNUPDOMAIN="CG1"
+export RUNUPCONT="20m"
