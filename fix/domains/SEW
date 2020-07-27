@@ -191,3 +191,12 @@ export RIPCONT="5m"
 #$
 #$END RIP
 #
+#========================================================================
+#                    RUNUP PROGRAM (SEE NWPS MANUAL)              =
+#========================================================================
+# IF RUNUP PROGRAM WILL BE RUN, then RIPCONT=1, Otherwise =0;
+# Setting up RIPCONT here to zero will permanently disable RIP program.
+#
+export RUNUPPROG="0"
+export RUNUPDOMAIN="CG1"
+export RUNUPCONT="20m"
