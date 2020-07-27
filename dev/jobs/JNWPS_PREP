@@ -41,8 +41,6 @@ export cyc=${CYCLE}
 export cycle=t${cyc}z
 export pgmout=OUTPUT.$$
 
-export UTILROOT=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.25
-
 cd /gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/
 
 export utilscript=${UTILROOT}/ush
