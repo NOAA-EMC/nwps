@@ -40,8 +40,6 @@ set -xa
 #AWexport cyc=${CYCLE}
 #AWexport cycle=t${cyc}z
 
-export UTILROOT=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.25
-
 export utilscript=${UTILROOT}/ush
 export USHutil=${UTILROOT}/ush
 
