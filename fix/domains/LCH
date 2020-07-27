@@ -205,3 +205,22 @@ export WAVECPS="multi_1.LCH54.spec.swan,multi_1.LCH59.spec.swan"
 #         1.27 'multi_1.LCH59.spec.swan.cp' 1
 #$END BOUNSEG
 #
+#========================================================================
+#                    RIP CURRENT PROGRAM (SEE NWPS MANUAL)              =
+#========================================================================
+# IF RIP CURRENT PROGRAM WILL BE RUN, then RIPCONT=1, Otherwise =0;
+# Setting up RIPCONT here to zero will permanently disable RIP program.
+#
+export RIPPROG="0"
+export RIPDOMAIN="CG1"
+export RIPCONT="5m"
+#
+#========================================================================
+#                    RUNUP PROGRAM (SEE NWPS MANUAL)              =
+#========================================================================
+# IF RUNUP PROGRAM WILL BE RUN, then RIPCONT=1, Otherwise =0;
+# Setting up RIPCONT here to zero will permanently disable RIP program.
+#
+export RUNUPPROG="0"
+export RUNUPDOMAIN="CG1"
+export RUNUPCONT="20m"
