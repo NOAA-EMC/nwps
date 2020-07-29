@@ -459,9 +459,32 @@ cd ${DATA}/output/grib2/CG${CGNUM}
               cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
            done
            # Additional copies for domains running on 48 cores
-           if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CAR" ] || [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "TBW" ] || [ "${SITEID}" == "BOX" ] || [ "${SITEID}" == "SGX" ] || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "AKQ" ] || [ "${SITEID}" == "OKX" ]
+           if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CAR" ] \
+              || [ "${SITEID}" == "TBW" ] || [ "${SITEID}" == "BOX" ] || [ "${SITEID}" == "SGX" ] \
+              || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "AKQ" ] || [ "${SITEID}" == "OKX" ] \
+              || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "ALU" ] || [ "${SITEID}" == "GUA" ] \
+              || [ "${SITEID}" == "MLB" ] || [ "${SITEID}" == "JAX" ] || [ "${SITEID}" == "CHS" ] \
+              || [ "${SITEID}" == "ILM" ] || [ "${SITEID}" == "PHI" ] || [ "${SITEID}" == "GYX" ] \
+              || [ "${SITEID}" == "TAE" ] || [ "${SITEID}" == "MOB" ] \
+              || [ "${SITEID}" == "HGX" ]
            then
               for i in {16..47}; do
+                 mkdir -p ${COMOUTCYC}/PE00${i}/
+                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+              done
+           fi
+           # Additional copies for domains running on 84 cores
+           if [ "${SITEID}" == "ALU" ]
+           then
+              for i in {16..83}; do
+                 mkdir -p ${COMOUTCYC}/PE00${i}/
+                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+              done
+           fi
+           # Additional copies for domains running on 96 cores
+           if [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "AKQ" ]
+           then
+              for i in {16..95}; do
                  mkdir -p ${COMOUTCYC}/PE00${i}/
                  cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
               done
@@ -469,8 +492,12 @@ cd ${DATA}/output/grib2/CG${CGNUM}
         fi
         cp -fv  ${RUNdir}/inputCG${CGNUM} ${COMOUTCYC}/
         cp -fv  ${RUNdir}/${date_stamp}${cycle}.wnd ${COMOUTCYC}/
-        cp -fv  ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.wlev ${COMOUTCYC}/
-        cp -fv  ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.cur ${COMOUTCYC}/
+        if [ -e ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.wlev ]; then
+           cp -fv  ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.wlev ${COMOUTCYC}/
+        fi
+        if [ -e ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.cur ]; then
+           cp -fv  ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.cur ${COMOUTCYC}/
+        fi
         tar -cf ${date_stamp}${cycle}.spec.swan.tar *.spec.swan*
         cp -fv  ${RUNdir}/${date_stamp}${cycle}.spec.swan.tar ${COMOUTCYC}/
 
