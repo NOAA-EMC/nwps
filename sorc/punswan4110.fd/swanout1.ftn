@@ -406,7 +406,7 @@
           DO 25 IP=1, MIN(MIP,20)
             WRITE (PRTEST, 24) (VOQ(IP+(JJ-1)*MIP),
      &                          JJ=1, NVOQP)
-  24        FORMAT (12(1X,E10.4))
+  24        FORMAT (12(1X,E11.4))
   25      CONTINUE
         ENDIF
 !
@@ -1033,11 +1033,11 @@
           WRITE(PRINTF, 11) MXK ,MYK , XQP ,YQP , DXK ,DYK
  11       FORMAT ('SWODDC :',/,'     MXK ,MYK , XQP     ,YQP       ,DXK'
      &          ,'        ,DYK'
-     &          ,/,2(1X,I5), 4(1X,E9.3))
+     &          ,/,2(1X,I5), 4(1X,E10.3))
           IF (PSTYPE .EQ. 'H') WRITE(PRINTF, 12)XCMIN,XCMAX,YCMIN,YCMAX,
      &      XPMAX ,XPMIN
  12         FORMAT(' XCMIN   ,XCMAX    ,YCMIN    ,YCMAX    ,',
-     &      'XPMAX    ,XPMIN :',/,6(1X,E9.3))
+     &      'XPMAX    ,XPMIN :',/,6(1X,E10.3))
         ENDIF
       ELSE IF (PSTYPE.EQ.'C' .OR. PSTYPE.EQ.'P') THEN
         MXK = 0
@@ -1086,7 +1086,7 @@
         IF (PSTYPE.EQ.'F' .OR. PSTYPE .EQ. 'H') WRITE (PRTEST, 92)
      &     MXK, MYK, ALPQ, DXK, DYK
   92    FORMAT ('SWODDC : MXK, MYK,   ALPQ,   DXK,     DYK',/,
-     &  6X, 2I5, 4(1X,E9.3))
+     &  6X, 2I5, 4(1X,E10.3))
       ENDIF
 !
       RETURN
@@ -1306,11 +1306,11 @@
  64       FORMAT (' SWOEXC FRAME DATA :',/,' XQLEN      ,YQLEN      ',    30.72
      &            ',MXQ ,MYQ , DCXQ    ,DCYQ     ,XC(1)    ,YC(1)',
      &            '    ,DXQ       ,DYQ',/,1X,
-     &    2(1X,E9.3),2(1X,I4),2X,6(1X,E9.3))
+     &    2(1X,E10.3),2(1X,I4),2X,6(1X,E10.3))
           WRITE(PRINTF,65)XCMIN,XCMAX,YCMIN,YCMAX,
      &                    XPMIN,XPMAX,YPMIN,YPMAX
  65       FORMAT('XCMIN        ,XCMAX  ,YCMIN     ,YCMAX    ,XPMIN',
-     &           '   ,XPMAX     ,YPMIN    ,YPMAX   ',/,8(1X,E9.3),/)
+     &           '   ,XPMAX     ,YPMIN    ,YPMAX   ',/,8(1X,E10.3),/)
         ENDIF
         YY    = YCMIN - DCYQ
         IP    = 0
@@ -2912,7 +2912,7 @@
      &  XC(IP) , YC(IP) ,JX1, JY1, JX2,JY2, (WW(JC),JC=1,4),              40.86
      &  (INDX(JC), JC=1,4), (FINP(INDX(JC)), JC=1,4)                      40.86
   82    FORMAT (2(F7.1,1X),4I5, 4(1X,F5.2), 3X,4(2X,I5), 3X,              40.86
-     &  4(1X,E9.3))                                                       40.86
+     &  4(1X,E10.3))                                                       40.86
  100  CONTINUE
 !
       RETURN
