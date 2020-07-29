@@ -2525,7 +2525,7 @@
             X4 = COBST%XCRP(JP)                                           40.31
             Y4 = COBST%YCRP(JP)                                           40.31
             IF (ITEST.GE. 120) WRITE(PRINTF,30) JP,X4,Y4
-  30        FORMAT(' Corner number:', I4,'    XP: ',E10.4,' YP: ',E11.4)
+  30        FORMAT(' Corner number:', I4,'    XP: ',E11.4,' YP: ',E11.4)
             DO 100 IX = 1, MXC
               DO 90 IY = 1, MYC
                 ICC = KGRPNT(IX,IY)
@@ -2714,7 +2714,7 @@
              X4 = COBST%XCRP(JP)
              Y4 = COBST%YCRP(JP)
              IF (ITEST.GE. 120) WRITE(PRINTF,30) JP,X4,Y4
-  30         FORMAT(' Corner number:', I4,'    XP: ',E10.4,
+  30         FORMAT(' Corner number:', I4,'    XP: ',E11.4,
      &                                       ' YP: ',E11.4)
              DO IP = 1, MIP
                 X1 = XP(IP)
@@ -2977,8 +2977,8 @@
           WRITE(PRINTF,70)X1,Y1,X2,Y2,X3,Y3,X4,Y4
   70      FORMAT(' Obstacle crossing  :',/,
      &    ' Coordinates of comp grid points and corners of obstacle:',/,
-     &    ' P1(',E10.4,',',E10.4,')',' P2(',E10.4,',',E10.4,')',/,
-     &    ' P3(',E10.4,',',E10.4,')',' P4(',E10.4,',',E10.4,')')
+     &    ' P1(',E11.4,',',E11.4,')',' P2(',E11.4,',',E11.4,')',/,
+     &    ' P3(',E11.4,',',E11.4,')',' P4(',E11.4,',',E11.4,')')
         ENDIF
 !
         TCROSS = .TRUE.
@@ -3168,7 +3168,7 @@
             X4 = COBST%XCRP(JP)                                           40.31
             Y4 = COBST%YCRP(JP)                                           40.31
             IF (ITEST.GE. 120) WRITE(PRINTF,30) JP,X4,Y4
-  30        FORMAT(' Corner number:', I4,'    XP: ',E10.4,' YP: ',E11.4)
+  30        FORMAT(' Corner number:', I4,'    XP: ',E11.4,' YP: ',E11.4)
             DO IX = 1, MXC
               DO IY = 1, MYC
                 ICC = KGRPNT(IX,IY)
@@ -4571,7 +4571,7 @@
         ENDIF
         IF (ITEST.GE.10) CTOTT = CTOTT + CDIR * DDIR
         IF (ITEST.GE.100) WRITE (PRTEST, 360) ID,SPCDIR(ID,1),CDIR
- 360    FORMAT (' ID Spcdir Cdir: ',I3,3(1X,E10.4))
+ 360    FORMAT (' ID Spcdir Cdir: ',I3,3(1X,E11.4))
         DO IS = 1, MSC
           ACLOC(ID,IS) = CDIR * ACLOC(MDC,IS)
         ENDDO
