@@ -3304,11 +3304,11 @@
  6021   FORMAT (' INP GRID PARAMETERS: ',/,
      &          'IGRID , FRAMTYPE,XLENFR ,YLENFR  XPFR  YPFR    ALPFR',
      &          '    MXFR MYFR',/,I2,1X,A,4X,
-     &           2(1X,E8.3), 2(1X,E10.3), F7.3, 2(1X,I4))                 40.31 30.60
+     &           2(1X,E10.3), 2(1X,E10.3), F7.3, 2(1X,I4))                 40.31 30.60
  6022   FORMAT (' INP GRID PARAMETERS: ',/,
      &          'IGRID, FRAMTYPE ,XMAXFR ,YMAXFR XMINFR YMINFR  ALPFR',
      &          '    MXFR MYFR',/,
-     &          I3,8X,A,1X,4(3X,I4),5X,E8.3,2(1X,I4))
+     &          I3,8X,A,1X,4(3X,I4),5X,E10.3,2(1X,I4))
       ENDIF                                                               30.21
       NULLIFY(OPSTMP%NEXTOPS)                                             40.31
       IF ( .NOT.LOPS ) THEN                                               40.31
