@@ -26,14 +26,14 @@
 #BSUB -oo /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/ofs_prep.o
 #     -e /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/ofs_prep.o
 #BSUB -q "dev"
-#BSUB -W 5:00
+#BSUB -W 2:00
 #BSUB -R rusage[mem=1700]
 #BSUB -P NWPS-T2O
 #BSUB -extsched 'CRAYLINUX[]'
 export NODES=4
 
 #module load %MODULES%
-module use /gpfs/hps/nco/ops/nwpara/modulefiles
+module use /gpfs/hps/nco/ops/nwprod/modulefiles
 module load prod_envir
 module load prod_util
 module load PrgEnv-intel
