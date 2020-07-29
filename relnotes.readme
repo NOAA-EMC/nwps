@@ -36,7 +36,7 @@ estofs_padcirc             | estofs_padcirc.fd                     | padcirc_bui
 estofs_adcprep (util)      | estofs_padcirc.fd                     | padcirc_build.log
 ww3_sysprep.exe            | ww3_sysprep.fd                        | sysprep_build.log
 ww3_systrk_mpi             | ww3_systrk.fd                         | ww3_systrk_build.log
-degrib                     | degrib.fd                             | degrib_build.log
+degrib                     | degrib-2.15.cd                        | degrib_build.log
 psurge2nwps                | psurge2nwps.fd                        | psurge2nwps_build.log
 psurge_identify.exe (util) | psurge2nwps.fd                        | psurge_identify_build.log
 psoutTOnwps.exe (util)     | psurge2nwps.fd                        | psoutTOnwps_build.log
