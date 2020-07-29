@@ -66,11 +66,6 @@ mkdir -p ${NWPSdir}/exec
 #module load ../modulefiles/NWPS/v1.3.0
 #module list
 
-cd ${NWPSdir}/sorc/swan.fd
-echo "Repo corrections: Update the floating point formatting in the print file PRINTF" | tee ./swan_build.log
-./repo_corrections_for_nwps.sh | tee -a ./swan_build.log
-
-
 echo "Building OpenMPI SWAN binary" | tee ./swan_build.log
 make clobber | tee -a ./swan_build.log
 make config | tee -a ./swan_build.log
