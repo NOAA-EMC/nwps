@@ -33,9 +33,9 @@ mkdir -p ${NWPSdir}/exec
 
 #FOR DEGRIB
 #Using the GNU compiler or the Jasper/JPEG compression library will not work properly
-echo "================== FOR DEGRIB : make_degrib.sh =================="
+echo "================== FOR DEGRIB : make_degrib-2.15.sh =================="
 cd ${NWPSdir}/sorc
-./make_degrib.sh
+./make_degrib-2.15.sh
 
 module purge
 module load ncep
