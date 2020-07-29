@@ -28,8 +28,8 @@ The table below lists the executables, their respective source code directories,
 
 Executable                 | Source directory name                 | Build log
 ---------------------------+---------------------------------------+---------------------
-punswan4110.exe            | punswan4110.fd                        | punswan4110.fd/punswan_build.log
-swan.exe                   | swan.fd                               | swan.fd/swan_build.log
+punswan4110.exe            | punswan4110.fd                        | punswan_build.log
+swan.exe                   | swan.fd                               | swan_build.log
 runupforecast.exe          | runupforecast.fd                      | runup_build.log
 ripforecast.exe            | ripforecast.fd                        | ripcurrent_build.log
 estofs_padcirc             | estofs_padcirc.fd                     | padcirc_build.log
@@ -37,20 +37,20 @@ estofs_adcprep (util)      | estofs_padcirc.fd                     | padcirc_bui
 ww3_sysprep.exe            | ww3_sysprep.fd                        | sysprep_build.log
 ww3_systrk_mpi             | ww3_systrk.fd                         | ww3_systrk_build.log
 degrib                     | degrib-2.15.cd                        | degrib_build.log
-psurge2nwps                | psurge2nwps.fd                        | psurge2nwps_build.log
-psurge_identify.exe (util) | psurge2nwps.fd                        | psurge_identify_build.log
-psoutTOnwps.exe (util)     | psurge2nwps.fd                        | psoutTOnwps_build.log
+psurge2nwps                | psurge2nwps.cd                        | psurge2nwps_build.log
+psurge_identify.exe (util) | psurge2nwps.cd                        | psurge_identify_build.log
+psoutTOnwps.exe (util)     | psurge2nwps.cd                        | psoutTOnwps_build.log
                            |                                       |
-check_awips_windfile       | nwps_utils.fd/check_awips_windfile    | nwps_utils_build.log
-wave_runup_to_bin          | nwps_utils.fd/wave_runup_to_bin       | nwps_utils_build.log
-rip_current_to_bin         | nwps_utils.fd/rip_current_to_bin      | nwps_utils_build.log
-fix_ascii_point_data       | nwps_utils.fd/fix_ascii_point_data    | nwps_utils_build.log
-read_awips_windfile        | nwps_utils.fd/read_awips_windfile     | nwps_utils_build.log
-readdat                    | nwps_utils.fd/readdat                 | nwps_utils_build.log
-seaice_mask                | nwps_utils.fd/seaice_mask             | nwps_utils_build.log
-swan_out_to_bin            | nwps_utils.fd/swan_out_to_bin         | nwps_utils_build.log
-swan_wavetrack_to_bin      | nwps_utils.fd/swan_wavetrack_to_bin   | nwps_utils_build.log
-writedat                   | nwps_utils.fd/writedat                | nwps_utils_build.log
-g2_write_template          | nwps_utils.fd/g2_write_template       | nwps_utils_build.log
-shiproute_to_bin           | nwps_utils.fd/shiproute_to_bin        | nwps_utils_build.log
+check_awips_windfile       | nwps_utils.cd/check_awips_windfile    | nwps_utils_build.log
+wave_runup_to_bin          | nwps_utils.cd/wave_runup_to_bin       | nwps_utils_build.log
+rip_current_to_bin         | nwps_utils.cd/rip_current_to_bin      | nwps_utils_build.log
+fix_ascii_point_data       | nwps_utils.cd/fix_ascii_point_data    | nwps_utils_build.log
+read_awips_windfile        | nwps_utils.cd/read_awips_windfile     | nwps_utils_build.log
+readdat                    | nwps_utils.cd/readdat                 | nwps_utils_build.log
+seaice_mask                | nwps_utils.cd/seaice_mask             | nwps_utils_build.log
+swan_out_to_bin            | nwps_utils.cd/swan_out_to_bin         | nwps_utils_build.log
+swan_wavetrack_to_bin      | nwps_utils.cd/swan_wavetrack_to_bin   | nwps_utils_build.log
+writedat                   | nwps_utils.cd/writedat                | nwps_utils_build.log
+g2_write_template          | nwps_utils.cd/g2_write_template       | nwps_utils_build.log
+shiproute_to_bin           | nwps_utils.cd/shiproute_to_bin        | nwps_utils_build.log
 
