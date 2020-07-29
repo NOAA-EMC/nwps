@@ -1,0 +1,3 @@
+# To set up external links...
+# # svn propset svn:externals -F .svnexternal .
+emapf-c -r176 http://slosh.nws.noaa.gov/svn/libpub/emapf-20070323
