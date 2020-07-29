@@ -219,7 +219,7 @@
         ENDDO
         WRITE(PRINTF,188) DET,RDX(1),RDX(2),RDY(1),RDY(2)
  188    FORMAT('  DET,       RDX1,      RDX2,      RDY1,     RDY2',/,
-     &  5(E10.4,1X))
+     &  5(E11.4,1X))
       ENDIF
 
       RETURN
@@ -2281,7 +2281,7 @@
             TCF2 = OBREDF(ID,IS,2)                                         040697
             IF (TESTFL .AND. ITEST.GE.80) THEN                            40.01
               WRITE(PRINTF,10) KCGRD(1),ID,IS,TCF1,TCF2
- 10           FORMAT(' STRSXY obst ',3(1X,I5),2(1X,E10.4))
+ 10           FORMAT(' STRSXY obst ',3(1X,I5),2(1X,E11.4))
             ENDIF
           ELSE
             TCF1 = 1.
