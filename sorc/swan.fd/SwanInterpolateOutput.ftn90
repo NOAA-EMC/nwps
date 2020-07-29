@@ -316,6 +316,6 @@ subroutine SwanInterpolateOutput ( foutp, x, y, finp, mip, kvert, excval )
     enddo pointloop
     !
  10 format (' Obstacle number : ', i4,'  has ', i4, ' corners')
- 20 format (' Corner number:', i4,'    Xp: ', e10.4, ' Yp: ', e11.4)
+ 20 format (' Corner number:', i4,'    Xp: ', e11.4, ' Yp: ', e11.4)
     !
 end subroutine SwanInterpolateOutput
