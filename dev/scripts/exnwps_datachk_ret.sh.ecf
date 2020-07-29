@@ -362,8 +362,8 @@ do                             #read line
                 sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_post_cgn_ret.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_post_cgn_ret.ecf.${wfo}
                 sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn_ret.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn_ret.ecf.${wfo}
 
-                if [ "$wfo" == "key" ]; then
-                   sed -i "s/NODES=2/NODES=4/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cg1_ret.ecf.${wfo}
+                if [ "$wfo" == "key" ] || [ "$wfo" == "mfl" ] || [ "$wfo" == "alu" ] || [ "$wfo" == "akq" ]; then
+                   sed -i "s/NODES=2/NODES=4/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cg1.ecf.${wfo}
                 fi
 
                 echo $runit                                                  > ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
