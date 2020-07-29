@@ -253,7 +253,7 @@ else
                 sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_post_cgn.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_post_cgn.ecf.${wfo}
                 sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn.ecf.${wfo}
 
-                if [ "$wfo" == "key" ]; then
+                if [ "$wfo" == "key" ] || [ "$wfo" == "mfl" ] || [ "$wfo" == "alu" ] || [ "$wfo" == "akq" ]; then
                    sed -i "s/NODES=2/NODES=4/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cg1.ecf.${wfo}
                 fi
 
