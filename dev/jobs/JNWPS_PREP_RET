@@ -45,8 +45,6 @@ export cyc=`cat CYC.${WFO^^}`
 export cycle=t${cyc}z
 export pgmout=OUTPUT.$$
 
-export UTILROOT=/gpfs/hps/nco/ops/nwprod/prod_util.v1.0.25
-
 export utilscript=${UTILROOT}/ush
 export USHutil=${UTILROOT}/ush
 #sh $utilscript/setpdy.sh
