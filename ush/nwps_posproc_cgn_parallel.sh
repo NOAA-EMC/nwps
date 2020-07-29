@@ -253,7 +253,8 @@ echo " " | tee -a $logrunup
      else 
 	 echo "ERROR - ${WAVE_RUNUP_TO_BIN} program error, no RUNUP GRIB2 file generated for this run"
      fi
-
+  else
+     echo " Runup calculation not activated for this domain (CG${CGNUM})"
   fi
 #_________________________RIP CURRENT PROGRAM____________________________________________
 #Run Program 
@@ -321,8 +322,6 @@ echo " " | tee -a $logrunup
   fi
 #_______________________________________________________________________________________
 
-echo "RUN   ${plotGorP}   SCRIPTS"                      
-
 # NOTE: If WEB is enable we must set PLOT to YES
 if [ "${WEB}" == "YES" ]; then export PLOT="YES"; fi
 
@@ -330,6 +329,8 @@ if [ "${WEB}" == "YES" ]; then export PLOT="YES"; fi
 # NOTE: To save time, deactivate plotting when running retrospectives
 if [ "${PLOT}" == "YES" ] && [ "${RETROSPECTIVE}" == "FALSE" ]
 then
+  echo "RUN PYTHON PLOTTING SCRIPTS"
+
   if [ "${siteid}" == "alu" ] || [ "${siteid}" == "aer" ] || [ "${siteid}" == "ajk" ]
   then
 #    echo "Cleaning Previous grads plots from ${OUTPUTdir}/grads/${siteid}" | tee -a $logfile
@@ -424,9 +425,13 @@ cd ${DATA}/output/grib2/CG${CGNUM}
         # Restart and other input files
         cp -fv  ${RUNdir}/inputCG${CGNUM} ${COMOUTCYC}/
         cp -fv  ${RUNdir}/${date_stamp}${cycle}.wnd ${COMOUTCYC}/
-        cp -fv  ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.wlev ${COMOUTCYC}/
-        cp -fv  ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.cur ${COMOUTCYC}/
-        cp -fv  ${RUNdir}/bc_CG${CGNUM} ${COMOUTCYC}/
+        if [ -e ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.wlev ]; then
+           cp -fv  ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.wlev ${COMOUTCYC}/
+        fi
+        if [ -e ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.cur ]; then
+           cp -fv  ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.cur ${COMOUTCYC}/
+        fi
+        #cp -fv  ${RUNdir}/bc_CG${CGNUM} ${COMOUTCYC}/
 
         if [ "${SENDDBN}" == "YES" ]; then
             ${DBNROOT}/bin/dbn_alert MODEL NWPS_GRIB $job ${COMOUTCYC}/${grib2File}
@@ -434,13 +439,17 @@ cd ${DATA}/output/grib2/CG${CGNUM}
      fi
 
 #Sending spec2d files at buoy locations to COMOUT
-cd ${DATA}/output/spectra/CG${CGNUM}
-     yy=$(echo $yyyy | cut -c 3-4)
-     spec2dFile="SPC2D.*.CG${CGNUM}.YY${yy}.MO${mon}.DD${dd}.HH${hh}"
-     if [ "${SENDCOM}" == "YES" ]; then
-        mkdir -p $COMOUTCYC
-        cp -fv  ${spec2dFile} ${COMOUTCYC}/
-     fi
+if [[ -d "${DATA}/output/spectra/CG${CGNUM}" ]]; then
+   cd ${DATA}/output/spectra/CG${CGNUM}
+   yy=$(echo $yyyy | cut -c 3-4)
+   spec2dFile="SPC2D.*.CG${CGNUM}.YY${yy}.MO${mon}.DD${dd}.HH${hh}"
+   if [ "${SENDCOM}" == "YES" ]; then
+      mkdir -p $COMOUTCYC
+      cp -fv  ${spec2dFile} ${COMOUTCYC}/
+   fi
+else
+   echo "Wave spectra not computed over this domain (CG${CGNUM})"
+fi
 
 #if [ "${WEB}" == "YES" ]
 #then
@@ -452,23 +461,23 @@ cd ${DATA}/output/spectra/CG${CGNUM}
     export WEB="NO"
 #fi
 
-echo " " | tee -a $logfile
-
-echo "Cleaning out archive directory:"              | tee -a $logfile
-cd ${ARCHdir}/
-ITEMSTOKEEP=60
-TOTAL=$(ls -1 *tgz | sort | wc -l)
-HEAD=$(expr $TOTAL - $ITEMSTOKEEP)
-if [[ $TOTAL -le $ITEMSTOKEEP ]]
-then
-    echo ": Nothing to clean ..."               | tee -a $logfile
-else
-    for i in $(ls -1 *tgz | head -n $HEAD)
-    do
-	echo -n ": "                        | tee -a $logfile
-	rm -vf $i                           | tee -a $logfile
-    done
-fi
+#echo " " | tee -a $logfile
+#
+#echo "Cleaning out archive directory:"              | tee -a $logfile
+#cd ${ARCHdir}/
+#ITEMSTOKEEP=60
+#TOTAL=$(ls -1 *tgz | sort | wc -l)
+#HEAD=$(expr $TOTAL - $ITEMSTOKEEP)
+#if [[ $TOTAL -le $ITEMSTOKEEP ]]
+#then
+#    echo ": Nothing to clean ..."               | tee -a $logfile
+#else
+#    for i in $(ls -1 *tgz | head -n $HEAD)
+#    do
+#	echo -n ": "                        | tee -a $logfile
+#	rm -vf $i                           | tee -a $logfile
+#    done
+#fi
 
 echo " " | tee -a $logfile
 ################################################################### 
