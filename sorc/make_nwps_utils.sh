@@ -37,7 +37,7 @@ module load ncep
 module load ../modulefiles/NWPS/v1.3.0
 module list
 
-cd nwps_utils.fd; ./build_utils.sh | tee -a ./nwps_utils_build.log 
+cd nwps_utils.cd; ./build_utils.sh | tee -a ./nwps_utils_build.log 
 
 cd ${PWD}
 
