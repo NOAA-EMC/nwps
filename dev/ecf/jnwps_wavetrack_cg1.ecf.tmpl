@@ -33,7 +33,7 @@
 #BSUB -extsched 'CRAYLINUX[]'
 export NODES=1
 
-module use /gpfs/hps/nco/ops/nwpara/modulefiles
+module use /gpfs/hps/nco/ops/nwprod/modulefiles
 module load prod_envir
 module load prod_util
 module unload grib_util
@@ -42,10 +42,6 @@ module load PrgEnv-intel
 module load iobuf
 export IOBUF_PARAMS="*:count=4:size=32M:prefetch=1:preflush=1"
 export FORT_BUFFERED=TRUE
-#module load netcdf4-python
-#module use ${NWPSdir}/lib/python/modulefiles
-#module load nwps_python
-#module load python/2.7.14
 module load python/3.6.3
 module list
 
