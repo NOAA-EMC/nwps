@@ -1,6 +1,220 @@
 TITLE: 
 Nearshore Wave Prediction System (NWPS) v1.3.0
 
+CHANGE REQUEST CLASS: 
+Major change
+
+DESCRIPTION OF CHANGE:  
+This upgrade includes the following major changes:
+- Improved algorithm for wave system tracking guidance, incl. 
+reducing low-frequency cut-off to 0.035 Hz (all 36 WFO domains).
+- For 12 WFO domains (HGX, MOB, TAE, KEY, MLB, JAX, CHS, ILM,
+PHI, GYX, ALU, GUM), computation on unstructured domain meshes
+with variable resolution of 5 km to 200 m. (These are, however,
+interpolated onto existing regular CG1-CG5 output grids for
+AWIPS ingest.)
+- For 9 WFO domains (HGX, MOB, TAE, MLB, JAX, CHS, ILM, PHI,
+GYX), the addition of rip current and runup (erosion/overwash)
+guidance. For WFOs KEY and GUM, only rip current guidance is
+added.
+- Inclusion of wave field transect output graphics.
+
+The NWPS is run 1-8 times per day, on demand, depending on the 
+coastal Weather Forecast Office (WFO). The 1-hourly grids will 
+be disseminated in GRIB2 format, as well as in graphical (png) 
+format on http://polar.ncep.noaa.gov/nwps/. Grid resolutions will 
+be dependent upon individual coastal WFO. Each WFO will receive 
+integral (total wave field) model guidance on a CG1 grid, and 
+on up to 4 nested grids (CG2-CG5). In addition, partitioned wave 
+fields will be available on a lower-resolution CG0 grid, if requested:
+
+   CG0 grid - partition output on low-resolution version of overall computational domain CG1
+   CG1 grid - integral output on overall computational grid
+   CG2 grid - integral output on first nested grid, if applicable
+   CG3 grid - integral output on second nested grid, if applicable
+   CG4 grid - integral output on third nested grid, if applicable
+   CG5 grid - integral output on fourth nested grid, if applicable
+
+In the case of the 12 new unstructured meshes, the results on the 
+native unstructured meshes are interpolated on the above regular 
+grids for AWIPS display.
+
+JOB DEPENDENCIES:
+This system has upstream dependencies on the following WCOSS models:
+ - WW3 Multi_1 (wave boundary conditions)
+ - RTOFS Global (surface current fields)
+ - ESTOFS Atlantic, Pacific and Micronesia (water level fields)
+ - MMAB Sea Ice Analysis (sea ice fields) 
+ - P-Surge (water level fields)
+ - GFS pgrb files (U10 fields for GFS fail-over option) 
+
+The system has upstream data dependencies on:
+ - User input received from AWIPS via LDM
+
+This system currently has no downstream dependencies.
+
+REQUIRED SYSTEM USAGE:
+
+i) Input field preprocessing:
+Preprocessing module to extract input fields from upstream models 
+ESTOFS, Sea Ice, RTOFS and P-Surge to grids directly ingestible 
+in NWPS. These run in parallel to the on-demand runs for each WFO 
+(see below), and are staged for on-demand use in the latter.
+
+ESTOFS water level and Sea Ice extraction:
+   CPU time:   0:46:54 h:min:sec
+   Max/Ave Memory :   29 MB / 22.04 MB
+   Num of CPUs :   36 (cfp parallel, distrib. over 2 nodes)
+
+RTOFS surface current extraction:
+   CPU time:   0:10:00 h:min:sec
+   Max/Ave Memory :   134 MB / 40.70 MB
+   Num of CPUs :   1 (Serial, on 1 node)
+
+P-Surge water level extraction (tropical conditions in SR/ER):
+   CPU time :   0:34:34 h:min:sec
+   Max/Ave Memory :   28 MB / 22.18 MB
+   Num of CPUs :   22 (cfp parallel, distrib. over 2 nodes)
+
+ii) Real-time, on-demand model:
+For each of the 36 on-demand WFO runs, the following tasks are 
+executed: PREP, FORECAST_CG1, POST_CG1, PRDGEN_CG1,  WAVETRACK_CG1, 
+PRDGEN_CG0. Additionally, up to 4 nested domains are run, using 
+the tasks FORECAST_CGn, POST_CGn and PRDGEN_CGn in a loop of n. 
+The system usage for each of these tasks depends on the specific 
+WFO domain, and number of nest grids. Example system usage values 
+for the unstructured-mesh domain for WFO Upton, NY (OKX) are:
+
+JNWPS_PREP
+   CPU time :   04:59 min:sec
+   Max/Ave Memory :   79 MB / 47.00 MB
+   Num of CPUs :   1 (Serial)
+
+JNWPS_FORECAST_CG1
+   CPU time :   28:43 min:sec
+   Max/Ave Memory :   40 MB / 33.25 MB
+   Num of CPUs :   96 (Parallel)
+
+JNWPS_POST_CG1
+   CPU time :   11:29 min:sec
+   Max/Ave Memory :   127 MB / 27.59 MB
+   Num of CPUs :   11 (Parallel)
+
+JNWPS_PRDGEN_CG1
+   CPU time :   11:29 min:sec
+   Max/Ave Memory :   2440 MB / 82.82 MB
+   Num of CPUs :   11 (Parallel)
+
+JNWPS_WAVETRACK_CG1 & JNWPS_PRDGEN_CG0
+   CPU time :   2:57 min:sec
+   Max/Ave Memory :   229 MB / 22.81 MB
+   Num of CPUs :   8 (Parallel)
+
+JNWPS_FORECAST_CGn
+   CPU time :   02:01 min:sec
+    Max/Ave Memory :   40 MB / 20.83 MB
+   Num of CPUs :   10 (Parallel)
+
+JNWPS_POST_CGn & JNWPS_PRDGEN_CGn 
+   CPU time :   8:02 min:sec
+   Max/Ave Memory :   27 MB / 20.62 MB
+   Num of CPUs :   Up to 4 (Parallel)
+
+Estimated average system usage for each of the 36 WFOs: 16-96 cores. 
+This is determined by the size of the JNWPS_FORECAST_CG1 job above, 
+which depends on the size/complexity of each WFO domain:
+
+MFL, KEY, AKQ:      96 CPUs
+ALU:                84 CPUs
+AER, AFG, LCH, MHX: 24 CPUs
+HFO:                16 CPUs
+Remaining WFOs:     48 CPUs
+
+A total of 44 nodes on WCOSS TO4 (Cray) should be reserved for the 
+on-demand operation, preferably EXCLUSIVE. With this configuration, 
+the total average run time per WFO is (values of current v1.2.13 
+implementation in parentheses to show impacts):
+
+Table of product delays of v1.3 relative to v1.2.13 (new products 
+in v1.3 indicated by "new"):
+
+WFO, CG1, CG0, CG2, CG3, CG4, CG5
+bro,   -,   -,    ,    ,    ,    
+crp,   -,   7,    ,    ,    ,    
+hgx,   -,   -, new,    ,    ,    
+lch,   -,   -,    ,    ,    ,    
+lix,   -,  10,   -,    ,    ,    
+mob,   -,   -,   -,   -,   -,   -
+tae,  19,  31,   -,   -,   -,   -
+tbw,   -,   6,   -,    ,    ,    
+key,  33,  47,   -,    ,    ,    
+mfl,   -,   -,   -,   -,   -,   -
+mlb,   8,  18,   -,    ,    ,    
+jax,   9,  16,   -,   -,   -,   -
+sju,   -,  11,   -,   -,    ,    
+chs,  14,  23,   -,   -,    ,    
+ilm,  24,  33,    ,    ,    ,    
+mhx,   -,   -,   -,   -,   -,   -
+akq,   -,   -,    ,    ,    ,    
+lwx,   -, new,    ,    ,    ,    
+phi,  17,  25,   -,   -,    ,    
+okx,   -,   6,   -,   -,   -,    
+box,   -,  17,   7,    ,    ,    
+gyx,  27,  37,   -,   -,    ,    
+car,   -,   -,   -,   -,    ,    
+ajk,   -,  14,   -,   -,    ,    
+aer,   -,  13,   -,   -,    ,    
+alu,  14,  25, new, new,    ,    
+afg,   -,    ,   -,   -,    ,    
+hfo,   -,   7,   -,   -,   -,   -
+gum,  14,  24,   -,   -,   -,    
+
+Disk storage: Total disk footprint in all run directories, nwges, 
+com and pcom is 2.5T (up from 19.T in v1.2.13). Request data to be 
+stored for 5 days.
+
+HPSS tape storage: Total volume (36 WFOs, all domains) = 111 GB/day, 
+incl. space of retrospective inputs (up from 88.5 GB/day in v1.2.13). 
+Request data to be archived for 2 years.
+
+BENEFITS OF CHANGE:
+- Improved quality of wave system tracking guidance to aid in
+the production of separate wind sea and swell forecasts
+- For 12 unstructured WFO domains: Higher nearshore grid
+resolution improves representation of the coastal geography and
+nearshore wave growth and propagation
+- For 12 unstructured WFO domains: High resolution enables the
+computation of rip current and erosion/overwash guidance to aid
+in the production of coastal hazard forecasts
+- Transect output provides improved view on the wave guidance
+along high-impact tracks.
+
+USER IMPACT STATEMENT:
+To complete
+
+TECHNICAL IMPACT STATEMENT:
+To complete
+
+RISKS:
+To complete
+
+PROPOSED IMPLEMENTATION
+DATE:  December 21, 2020
+TIME: 00z
+
+BUGFIXES
+- Bug 926: Add wind initialization time window checking in nwps (01/21/20)
+- Bug 903: decrease rsync timeout time in JNWPS_DATACHK (07/31/19)
+- Bug 828: nwps_hfo_post_cg1 job failure with CYCLE 09 (07/31/19)
+- Bug 881: Fix nwps_forecast_cg1 hung when missing restart files (06/03/19)
+- Bug 860: improve handling bad WFO submission in nwps prep job (04/29/19)
+- Bug 845: Check for empty NWPS submission file (03/11/19)
+- Bug 828: Nwps_hfo_post_cg1 job failure with CYCLE 09 (11/20/18)
+- Bug 678: Remove the Python warnings in NWPS code in next (11/17/17)
+- Bug 677: NWPS executables do not match their top level source directory names (11/16/17)
+- Bug 676: Memory leaking in nwps_forecast job (11/16/17)
+- Bug 671: Add the warning in prep job if fail over to gfs data (11/15/17)
+
 IMPLEMENTATION INSTRUCTIONS
 
 I) Checking out the code from VLab
@@ -15,7 +229,7 @@ Check out the NWPS code from the following VLab repo (head):
 II) Building the executables
 
 First define the path variable ${NWPSdir} in your profile file, which points to the base of the code checked out under (I) above.
-> NWPSdir=$(pwd)
+> export NWPSdir=$(pwd)
 
 Next, change directory to ${NWPSdir}/sorc/, and execute the general NWPS install script. This single step will install the total package, including all binary compilations:
 
