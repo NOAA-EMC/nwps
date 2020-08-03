@@ -235,12 +235,63 @@ do
    cp ${file} ${xfile}
 done < ${RUNdir}/exceedances
 
+# Combine P-Surge fields with ESTOFS background, in order to fill zero values
+# Check availability of ESTOFS for current P-Surge cycle
+estofs_dir="${COMOUT}/estofs/${wfo}_output/"
+if [ -e "${estofs_dir}/wave_estofs_waterlevel_${epoc_time_ini}_${yyyymmdd_ini}_${HH_ini}_f180.dat" ]
+then
+   # The following are the timestamps for the ESTOFS data
+   epoc_time_ini2=${epoc_time_ini}
+   yyyymmdd_ini2=${yyyymmdd_ini}
+   HH_ini2=${HH_ini}
+   while read line
+   do
+      EXCEED=`echo $line | awk -F" " '{print $1}'`
+   
+      for f in {0..102}
+      do
+         fhour=$(printf "%03d" $f)
+         fhour2=${fhour}        
+         ${EXECnwps}/psurge_combine.exe ${estofs_dir} ${wfo} ${EXCEED} \
+                                        ${epoc_time_ini} ${yyyymmdd_ini} ${HH_ini} ${fhour} \
+                                        ${epoc_time_ini2} ${yyyymmdd_ini2} ${HH_ini2} ${fhour2}
+      done
+   done < ${RUNdir}/exceedances
+else
+   # Look for ESTOFS files of one cycle (6h) ago
+   epoc_time_ini2=$(( $epoc_time_ini-21600 ))
+   temp=$(date -d @$epoc_time_ini2 +%Y%m%d%H)
+   yyyymmdd_ini2=`echo ${temp} | cut -c1-8`
+   HH_ini2=`echo ${temp} | cut -c9-10`
+   if [ ${HH_ini2} == 18 ]
+   then
+      estofs_dir="${COMOUTm1}/estofs/${wfo}_output/"
+   fi
+   if [ -e "${estofs_dir}/wave_estofs_waterlevel_${epoc_time_ini2}_${yyyymmdd_ini2}_${HH_ini2}_f180.dat" ]
+   then
+      while read line
+      do
+         EXCEED=`echo $line | awk -F" " '{print $1}'`
+   
+         for f in {0..102}
+         do
+            fhour=$(printf "%03d" $f)
+            fhour2=$(printf "%03d" $((f+6)) )      
+            ${EXECnwps}/psurge_combine.exe ${estofs_dir} ${wfo} ${EXCEED} \
+                                           ${epoc_time_ini} ${yyyymmdd_ini} ${HH_ini} ${fhour} \
+                                           ${epoc_time_ini2} ${yyyymmdd_ini2} ${HH_ini2} ${fhour2}
+         done
+      done < ${RUNdir}/exceedances
+   fi
+fi
+
 while read line
 do
    EXCEED=`echo $line | awk -F" " '{print $1}'`
 
    #echo "The UNIX time for ${yyyymmddhh} is epoc_time: ${epoc_time}"
    file="wave_psurge_waterlevel_${epoc_time_ini}_${yyyymmdd_ini}_${HH_ini}_${wfo}_e${EXCEED}_f*.dat"
+   file2="wave_combnd_waterlevel_${epoc_time_ini}_${yyyymmdd_ini}_${HH_ini}_${wfo}_e${EXCEED}_f*.dat"
    filetar="wave_psurge_waterlevel_${epoc_time_ini}_${yyyymmdd_ini}_${HH_ini}_${wfo}_e${EXCEED}.dat.tar.gz"
    if [ -e "${filetar}" ]
    then
@@ -249,13 +300,14 @@ do
    fi
 
    echo "Creating tar file..."
-   tar cvfz ${filetar} ${file} psurge_waterlevel_domain_${wfo}.txt psurge_waterlevel_start_time.txt
+   tar cvfz ${filetar} ${file} ${file2} psurge_waterlevel_domain_${wfo}.txt psurge_waterlevel_start_time.txt
 
    echo "Moving the PSurge files to ${COMOUT}/${OFSTYPE}..."
    mkdir -p ${COMOUT}/${OFSTYPE}/${wfo}_output/
    cp psurge_waterlevel_domain_${wfo}.txt ${COMOUT}/${OFSTYPE}/${wfo}_output/
    cp psurge_waterlevel_start_time.txt ${COMOUT}/${OFSTYPE}/${wfo}_output/
    mv ${file} ${COMOUT}/${OFSTYPE}/${wfo}_output/
+   mv ${file2} ${COMOUT}/${OFSTYPE}/${wfo}_output/
    mv ${filetar} ${COMOUT}/${OFSTYPE}/${wfo}_output/
 
    #sh ${USHnwps}/scp_psurge_out_to_polar.sh ${wfo} ${yyyymmdd_ini}
