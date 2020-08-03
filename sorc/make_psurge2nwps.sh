@@ -7,10 +7,10 @@ if [ "${NWPSdir}" == "" ]
 fi
 
 #loading the necessary modules 
-module purge
-module load ncep
-module load ../modulefiles/NWPS/v1.3.0
-module list
+#module purge
+#module load ncep
+#module load ../modulefiles/NWPS/v1.3.0
+#module list
 
 echo "Building psoutTOnwps"  | tee ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
 cd ${NWPSdir}/sorc/emapf-c
