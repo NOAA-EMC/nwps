@@ -67,8 +67,8 @@ ESTOFS water level and Sea Ice extraction:
    Num of CPUs :   36 (cfp parallel, distrib. over 2 nodes)
 
 RTOFS surface current extraction:
-   CPU time:   0:10:00 h:min:sec
-   Max/Ave Memory :   134 MB / 40.70 MB
+   CPU time:   0:10:24 h:min:sec
+   Max/Ave Memory :   131 MB / 39.11 MB
    Num of CPUs :   1 (Serial, on 1 node)
 
 P-Surge water level extraction (tropical conditions in SR/ER):
@@ -141,9 +141,7 @@ HFO:                16 CPUs
 Remaining WFOs:     48 CPUs
 
 A total of 44 nodes on WCOSS TO4 (Cray) should be reserved for the 
-on-demand operation, preferably EXCLUSIVE. With this configuration, 
-the total average run time per WFO is (values of current v1.2.13 
-implementation in parentheses to show impacts):
+on-demand operation, preferably EXCLUSIVE. 
 
 Table of product delays of v1.3 relative to v1.2.13 (new products 
 in v1.3 indicated by "new"):
@@ -264,6 +262,7 @@ degrib                     | degrib-2.15.cd                        | degrib_buil
 psurge2nwps                | psurge2nwps.cd                        | psurge2nwps_build.log
 psurge_identify.exe (util) | psurge2nwps.cd                        | psurge_identify_build.log
 psoutTOnwps.exe (util)     | psurge2nwps.cd                        | psoutTOnwps_build.log
+psurge_combine.exe (util)  | psurge2nwps.cd                        | psurge_combine_build.log
                            |                                       |
 check_awips_windfile       | nwps_utils.cd/check_awips_windfile    | nwps_utils_build.log
 wave_runup_to_bin          | nwps_utils.cd/wave_runup_to_bin       | nwps_utils_build.log
