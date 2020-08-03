@@ -248,7 +248,8 @@ then
       #cp -pfv ${ES_RTOFS_PSurgedir}/${PSURGEPATHY}/wave_psurge_*_${siteid}_e${EXCD}.dat.tar.gz .
       if [ -e ${COMINpsurgem1}/psurge_waterlevel_start_time.txt ]
       then
-         cp -pfv ${COMINpsurgem1}/wave_psurge_*_${siteid}_e${EXCD}_f*.dat .
+         #cp -pfv ${COMINpsurgem1}/wave_psurge_*_${siteid}_e${EXCD}_f*.dat .
+         cp -pfv ${COMINpsurgem1}/wave_combnd_*_${siteid}_e${EXCD}_f*.dat .
          cp -pfv ${COMINpsurgem1}/psurge_waterlevel_domain_${siteid}.txt .
          cp -pfv ${COMINpsurgem1}/psurge_waterlevel_start_time.txt .
          rm -fr index.* robots.*
@@ -266,7 +267,8 @@ then
    #cp -pfv ${ES_RTOFS_PSurgedir}/${PSURGEPATH}/wave_psurge_*_${siteid}_e${EXCD}.dat.tar.gz .
    if [ -e ${COMINpsurge}/psurge_waterlevel_start_time.txt ]
    then
-      cp -pfv ${COMINpsurge}/wave_psurge_*_${siteid}_e${EXCD}_f*.dat .
+      #cp -pfv ${COMINpsurge}/wave_psurge_*_${siteid}_e${EXCD}_f*.dat .
+      cp -pfv ${COMINpsurge}/wave_combnd_*_${siteid}_e${EXCD}_f*.dat .
       cp -pfv ${COMINpsurge}/psurge_waterlevel_domain_${siteid}.txt .
       cp -pfv ${COMINpsurge}/psurge_waterlevel_start_time.txt .
       rm -fr index.* robots.*
@@ -280,16 +282,19 @@ then
    if [ -e psurge_waterlevel_start_time.txt ]
    then
       start_time=`cat psurge_waterlevel_start_time.txt`
-      file=`ls wave_psurge_waterlevel_${start_time}_*.dat`
+      #file=`ls wave_psurge_waterlevel_${start_time}_*.dat`
+      file=`ls wave_combnd_waterlevel_${start_time}_*.dat`
       ##1234567890123456789012345678901234567890123456789012345678
       ##wave_psurge_waterlevel_1130112000_20051024_00_mfl_e10_f036.dat
       cycle=`echo $file | cut -c35-45`
-      for i in $(ls wave_psurge_waterlevel*.dat)
+      #for i in $(ls wave_psurge_waterlevel*.dat)
+      for i in $(ls wave_combnd_waterlevel*.dat)
       do
          init_time=`echo $i | cut -c24-33`
          fhour=`echo $i | cut -c56-58`
          echo "Processing $i $init_time $start_time $fhour $cycle"
-         if [ $init_time -lt $start_time ]  && [ -e wave_psurge_waterlevel_${start_time}_${cycle}_*_*_f102.dat ]
+         #if [ $init_time -lt $start_time ]  && [ -e wave_psurge_waterlevel_${start_time}_${cycle}_*_*_f102.dat ]
+         if [ $init_time -lt $start_time ]  && [ -e wave_combnd_waterlevel_${start_time}_${cycle}_*_*_f102.dat ]
          then
             echo "Removing $i"
             rm -f $i
