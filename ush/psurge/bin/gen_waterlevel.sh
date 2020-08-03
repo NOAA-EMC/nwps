@@ -290,11 +290,11 @@ if [ $lencheck -gt $maxhours ]
     then 
     lencheck=$maxhours
     let lencheckhours=$lencheck/3600
-    echo "WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available PSURGE water level data. Persistence will be applied after $lencheckhours h." | tee -a ${LOGfile}
-    echo "WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available PSURGE water level data. Persistence will be applied after $lencheckhours h."| tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+    echo "WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available PSURGE water level data. ESTOFS will be applied after $lencheckhours h." | tee -a ${LOGfile}
+    echo "WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available PSURGE water level data. ESTOFS will be applied after $lencheckhours h."| tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
     #AW: This warning message to the jlogfile/SDM is perhaps too verbose, since 
     #    it will occur regularly and doesn't require any action.
-    #msg="WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available PSURGE water level data. Persistence will be applied after $lencheck h."
+    #msg="WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available PSURGE water level data. ESTOFS will be applied after $lencheck h."
     #postmsg "$jlogfile" "$msg"
     #let lencheck*=3600
 
@@ -348,7 +348,8 @@ for parm in ${SWANPARMS}
       FF=`echo 00$t0`
   fi
   source ${RUNdir}/PEXCD
-  infile="${INPUTdir}/wave_psurge_waterlevel_${psurge_waterlevel_start_time}_${psurge_date_str}_${psurge_model_cycle}_${siteid}_e${EXCD}_f${FF}.dat"
+  #infile="${INPUTdir}/wave_psurge_waterlevel_${psurge_waterlevel_start_time}_${psurge_date_str}_${psurge_model_cycle}_${siteid}_e${EXCD}_f${FF}.dat"
+  infile="${INPUTdir}/wave_combnd_waterlevel_${psurge_waterlevel_start_time}_${psurge_date_str}_${psurge_model_cycle}_${siteid}_e${EXCD}_f${FF}.dat"
   echo "SWAN input file for $t0: ${infile}" | tee -a ${LOGfile}
   if [ ! -e ${infile} ]
   then
@@ -372,7 +373,8 @@ for parm in ${SWANPARMS}
 	  FF=`echo 00$tstep`
       fi
 
-      infile="${INPUTdir}/wave_psurge_waterlevel_${psurge_waterlevel_start_time}_${psurge_date_str}_${psurge_model_cycle}_${siteid}_e${EXCD}_f${FF}.dat"
+      #infile="${INPUTdir}/wave_psurge_waterlevel_${psurge_waterlevel_start_time}_${psurge_date_str}_${psurge_model_cycle}_${siteid}_e${EXCD}_f${FF}.dat"
+      infile="${INPUTdir}/wave_combnd_waterlevel_${psurge_waterlevel_start_time}_${psurge_date_str}_${psurge_model_cycle}_${siteid}_e${EXCD}_f${FF}.dat"
       echo "SWAN input file for $tstep: ${infile}" | tee -a ${LOGfile}  
       if [ ! -e ${infile} ]
 	then
