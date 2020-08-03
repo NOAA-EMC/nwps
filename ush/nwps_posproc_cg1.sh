@@ -517,7 +517,8 @@ cd ${DATA}/output/grib2/CG${CGNUM}
         if [ -e ${INPUTdir}/psurge/psurge_waterlevel_start_time.txt ]; then
            cd ${INPUTdir}/psurge
            waterlevel_start_time=`cat ${INPUTdir}/psurge/psurge_waterlevel_start_time.txt`
-           tar -cf wave_psurge_waterlevel_${waterlevel_start_time}.tar *.txt wave_psurge_waterlevel_${waterlevel_start_time}*.dat
+           #tar -cf wave_psurge_waterlevel_${waterlevel_start_time}.tar *.txt wave_psurge_waterlevel_${waterlevel_start_time}*.dat
+           tar -cf wave_psurge_waterlevel_${waterlevel_start_time}.tar *.txt wave_combnd_waterlevel_${waterlevel_start_time}*.dat
            mv ${INPUTdir}/psurge/wave_psurge_waterlevel_${waterlevel_start_time}.tar ${COMOUTCYC}/
         fi
         # c. RTOFS current fields (if available)
