@@ -7,10 +7,10 @@ if [ "${NWPSdir}" == "" ]
 fi
 
 #loading the necessary modules 
-#module purge
-#module load ncep
-#module load ../modulefiles/NWPS/v1.3.0
-#module list
+module purge
+module load ncep
+module load ../modulefiles/NWPS/v1.3.0
+module list
 
 echo "Building psoutTOnwps"  | tee ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
 cd ${NWPSdir}/sorc/emapf-c
@@ -30,16 +30,16 @@ mv -v psurge_identify.exe ${NWPSdir}/exec/psurge_identify.exe
 echo "Build complete" | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psurge_identify_build.log
 
 echo "Building psurge_combine" | tee ${NWPSdir}/sorc/psurge2nwps.cd/psurge_combine_build.log
-rm ${NWPSdir}/lib/r8lib.o | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psurge_combine_build.log
+rm -f ${NWPSdir}/lib/r8lib.o | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psurge_combine_build.log
 cd ${NWPSdir}/lib/sorc/r8lib/
 ftn -c r8lib.f90 | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psurge_combine_build.log
 mv -v r8lib.o ${NWPSdir}/lib/r8lib.o
 
 cd ${NWPSdir}/sorc/psurge2nwps.cd/
+rm -f psurge_combine.o pwl_interp_2d.o | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psurge_combine_build.log
 ftn -c pwl_interp_2d.f90 | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psurge_combine_build.log
 ftn -c psurge_combine.f90 | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psurge_combine_build.log
 ftn -o psurge_combine.exe psurge_combine.o pwl_interp_2d.o ${NWPSdir}/lib/r8lib.o | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psurge_combine_build.log
-rm psurge_combine.o pwl_interp_2d.o | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psurge_combine_build.log
 mv -v psurge_combine.exe ${NWPSdir}/exec/psurge_combine.exe
 echo "Build complete" | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psurge_combine_build.log
 
