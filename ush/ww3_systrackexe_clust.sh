@@ -81,7 +81,7 @@ else
     #bsub < ${NWPSdir}/dev/ecf/jnwps_wtcore_cg1.ecf.${siteid}  >> ${NWPSdir}/dev/ecf/jobids_${siteid}.log;
     #AW20180418 aprun -n16 -N16 -j1 -d1 ${EXECnwps}/ww3_systrk_mpi > ${RUNdir}/ww3_systrk.out 2> ${RUNdir}/ww3_systrk.err
     #AW aprun -n1 -N1 -d1 ${PYTHON} ${NWPSdir}/sorc/ww3_syscluster/ww3_systrk_nobasemap_tables_gh.py ${SITEID,,}
-    aprun -n1 -N1 -d1 ${PYTHON} ${NWPSdir}/ush/python/ww3_systrk_cluster.py ${SITEID,,}
+    aprun -n1 -N1 -d1 ${PYTHON} ${NWPSdir}/ush/python/ww3_systrk_cluster_timing3.py ${SITEID,,}
     export err=$?
     if [ "${err}" != "0" ];then
         echo " ============  E R R O R ==============="                  | tee -a ${LOGdir}/systrk_info.log 
@@ -99,14 +99,14 @@ else
         echo "     Exit Code: ${err}"           | tee -a ${LOGdir}/systrk_info.log 
     fi
 fi
-if [ "${err}" == "0" ];then
-   mv -fv sys_pnt.ww3   SYS_PNT.OUT
-   mv -fv sys_coord.ww3 SYS_COORD.OUT
-   mv -fv sys_hs.ww3    SYS_HSIGN.OUT
-   mv -fv sys_tp.ww3    SYS_TP.OUT
-   mv -fv sys_dir.ww3   SYS_DIR.OUT
-   mv -fv sys_dspr.ww3  SYS_DSPR.OUT
-fi
+#if [ "${err}" == "0" ];then
+#   mv -fv sys_pnt.ww3   SYS_PNT.OUT
+#   mv -fv sys_coord.ww3 SYS_COORD.OUT
+#   mv -fv sys_hs.ww3    SYS_HSIGN.OUT
+#   mv -fv sys_tp.ww3    SYS_TP.OUT
+#   mv -fv sys_dir.ww3   SYS_DIR.OUT
+#   mv -fv sys_dspr.ww3  SYS_DSPR.OUT
+#fi
 
 exit 0
 # -----------------------------------------------------------
