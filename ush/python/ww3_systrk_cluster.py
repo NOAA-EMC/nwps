@@ -167,6 +167,12 @@ def array_one_row(data,filename,cols):
         #del s                                         # Cleans internal file
 	return s2
 
+def hs_agg(hs_gr):
+        return 4.*np.sqrt( np.sum( np.square(hs_gr/4.) ) )
+
+def tp_agg(hs_gr,tp_gr):
+        return np.dot(tp_gr, np.square(hs_gr/4.))/np.sum( np.square(hs_gr/4.) )
+
 print
 print('                   *** WAVEWATCH III Wave system tracking ***  ')
 print('               ===============================================')
@@ -458,7 +464,7 @@ print('... finished')
 # Contents of partition.blk.raw:
 # 20181015.060000  49.420 233.000    1.12   11.85   282.22     9.98   0.00
 wavedat = rawdat[1:-1,[4, 5]]
-wavedat2 = rawdat[1:-1,[0, 1, 2, 3, 4, 5]]
+wavedat2 = rawdat[1:-1,[0, 1, 2, 3, 4, 5, 8, 9]]
 # Change circular boundary of DIR from N to E for these West Coast WFOs
 if ( (wfo == 'sgx') | (wfo == 'lox') | (wfo == 'mtr') | (wfo == 'eka') | \
      (wfo == 'mfr') | (wfo == 'pqr') | (wfo == 'sew') | (wfo == 'alu') ):
@@ -742,13 +748,19 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
       #print(partfield2)
 
       # Create a matrices of nlat x nlon initialized to 0
+      #tic = time.time()
       par = np.zeros((nlat, nlon))
       par.fill(np.nan)
       par2 = np.zeros((nlat, nlon))
       par2.fill(np.nan)
       par3 = np.zeros((nlat, nlon))
       par3.fill(np.nan)
+      #toc = time.time()
+      #print('Time to create matrices:')
+      #print(toc-tic)
 
+      """
+      tic = time.time()
       # Set up parameter field
       for ilat in range(0, nlat):
          for ilon in range(0, nlon):
@@ -756,7 +768,7 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
             #print((np.where(partfield2[:,1] == lat))
             #print((np.where(partfield2[:,2] == lon))
             llind = np.where( (abs(partfield2[:,1]-lats[ilat]) < 0.005) & (abs(partfield2[:,2]-lons[ilon]) < 0.005) )[0]
-            #print(llind)
+            #print(ilat, ilon, llind)
             #print(partfield2[llind,1])
             #print(partfield2[llind,2])
             if llind.size:
@@ -772,12 +784,46 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
       #print(par2)
       #print(par3)
       print('Sys, Hs, Tp, Dir:',(ipart+1),("%5.2f" % np.nanmean(par)),("%5.2f" % np.nanmean(par2)),("%6.2f" % np.nanmean(par3)))
+      toc = time.time()
+      print('Time to interpolate parameter field (1):')
+      print(toc-tic)
+      """
+
+      #tic = time.time()
+      # Set up parameter field
+      for ilat in range(0, nlat):
+         llind_lat = np.where(partfield2[:,6]==ilat)[0]
+         for ilon in range(0, nlon):
+            #print("grid: ",lat,lon)
+            #print((np.where(partfield2[:,1] == lat))
+            #print((np.where(partfield2[:,2] == lon))
+            #llind2 = np.where( abs(partfield2[llind1,2]-lons[ilon]) < 0.005 )[0]
+            llind = llind_lat[ np.where(partfield2[llind_lat,7]==ilon)[0] ]
+            #print(ilat, ilon, llind)
+            #print(partfield2[llind,1])
+            #print(partfield2[llind,2])
+            if llind.size > 1:
+               par[ilat,ilon] = hs_agg(partfield2[llind,3])
+               par2[ilat,ilon] = tp_agg(partfield2[llind,3],partfield2[llind,4])
+               par3[ilat,ilon] = partfield2[min(llind),5]
+            elif llind.size:
+               par[ilat,ilon] = partfield2[llind,3]
+               par2[ilat,ilon] = partfield2[llind,4]
+               par3[ilat,ilon] = partfield2[llind,5]
+      #print(par)
+      #print(par2)
+      #print(par3)
+      print('Sys, Hs, Tp, Dir:',(ipart+1),("%5.2f" % np.nanmean(par)),("%5.2f" % np.nanmean(par2)),("%6.2f" % np.nanmean(par3)))
+      #toc = time.time()
+      #print('Time to interpolate parameter field (5):')
+      #print(toc-tic)
 
       par3ma = ma.masked_where(par3==-9999, par3)
       u=ma.cos(3.1416/180*(270-par3ma))
       v=ma.sin(3.1416/180*(270-par3ma))
 
       # --- Plot output in separate panels per cluster (every 3 hours) ---------
+      #tic = time.time()
       if (plot_output) & (fhour % 3 == 0):      
          #if fhour == 0:
             #m=Basemap(projection='merc',llcrnrlon=lons.min(),urcrnrlon=lons.max(),llcrnrlat=lats.min(),urcrnrlat=lats.max(),resolution='h')
@@ -872,8 +918,12 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
          ax2.contourf(theta[:,0:21],r[:,0:21],vardens_plt[:,0:21],cmap=plt.cm.jet)
          ax2.set_theta_zero_location("N")
          ax2.set_theta_direction("clockwise")
+      #toc = time.time()
+      #print('Time to plot fields:')
+      #print(toc-tic)
 
       # --- Write output to file -----------------------------------------------
+      #tic = time.time()
       # HS
       s = str(ipart+1).rjust(6)+'                                                                     System number\n'
       with open(fname_hs,'a') as f:                  # append to file
@@ -922,8 +972,12 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
       tp_part[ipart] = np.nanmean(par2)
       dir_part[ipart] = np.nanmean(par3)
       cover_part[ipart] = 100.*( np.count_nonzero(~np.isnan(par)) / (fracwet*nlat*nlon) )
+      #toc = time.time()
+      #print('Time to plot wave systems:')
+      #print(toc-tic)
 
    # Write all partitions to PNT (point output file)
+   #tic = time.time()
    for iloc in range(0, nloc):
         data = []
         data = np.append(data,pntlon[iloc])
@@ -937,6 +991,9 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
         s2=s.getvalue()
         with open(fname_pnt,'a') as f:                  # append to file
            f.write(s2)
+   #toc = time.time()
+   #print('Time to write to PNT output file:')
+   #print(toc-tic)
 
    # Remove panels for unused wave systems
    if (plot_output) & (fhour % 3 == 0): 
