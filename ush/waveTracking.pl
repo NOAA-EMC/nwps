@@ -232,7 +232,7 @@ for $i (0..0){
    my $CG = @CGSS{$columns[$i]}; # 6,1,3
    %CG = %{$CG};
    my $cgnum = $CG{CGNUM};
-   my $sysTrcktFileName="swan_part.CG".$CG{CGNUM}.".raw";
+   #my $sysTrcktFileName="swan_part.CG".$CG{CGNUM}.".raw";
    chdir($RUNdir) or die "Cant chdir to $RUNdir $!";
 #XXX
   system("more CGinclude.pm");
@@ -242,7 +242,7 @@ for $i (0..0){
    print "= Computational Grid: $cgnum         =\n";
    print "=                               =\n";
    print "=================================\n";
-   print " SysTrcktFileName: $sysTrcktFileName\n";
+   #print " SysTrcktFileName: $sysTrcktFileName\n";
 
 
 # TODO for the time being only output locations in CG1 can be processed
@@ -271,7 +271,7 @@ for $i (0..0){
    }
 
 ##   system("mv -f ${sysTrcktFileName} partition.raw");
-   system("cp -f ${sysTrcktFileName} partition.raw");
+   #system("cp -f ${sysTrcktFileName} partition.raw");
    #AW # Remove any exception values in partition file produced by SWAN, in particular wind speed
    #AW system("sed -i 's/\\*\\*\\*\\*\\*/  0.0/g' partition.raw");
    system("date +%s > ${VARdir}/wavetrackrun_start_secs.txt");
@@ -452,7 +452,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     #system("${USHnwps}/grads/bin/postprocess_plot_partition_fields.sh ${SITEID} ${CGNUMBER}");
     system("${USHnwps}/postprocess_partition_fields.sh ${SITEID} ${CGNUMBER}");
     print "postprocess_partition_fields  DONE! \n";
-    system("cp -f ${RUNdir}/sys_log0000.ww3 ${LOGdir}/."); #Info from Log files are used for packing
+    #system("cp -f ${RUNdir}/sys_log0000.ww3 ${LOGdir}/."); #Info from Log files are used for packing
 } # END for $i (0..$numcgrids-1)
 
 system("touch ${OUTPUTdir}/tracking_completed");
