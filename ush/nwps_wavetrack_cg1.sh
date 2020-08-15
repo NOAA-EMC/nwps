@@ -14,9 +14,7 @@ echo -n "SWAN Run Finished: "                       | tee -a $logfile
 date                                                | tee -a $logfile
 echo " " | tee -a $logfile
 
-#Running Wave Tracking 
-#Next line if a test then ww3_systrk.inp from the test directory
-#TESTYoN 
+#Running Wave Tracking
 hastracking=$(cat ${RUNdir}/Tracking.flag)
 if [ "${hastracking}" == "TRUE" ] 
    then
@@ -24,29 +22,14 @@ if [ "${hastracking}" == "TRUE" ]
    date -u                                             | tee -a $logfile
    cd ${RUNdir}
    pwd                                                 | tee -a $logfile
-   #AW echo 'Removing empty lines in partition.raw file...'
-   #AW sed -i.bak '/ 0.0  0.0 270.0  0.0   0.0/,+1d' ${RUNdir}/swan_part.CG1.raw
-   #AW20200206 echo "perl -I${PMnwps} -I${RUNdir} ${USHnwps}/waveTracking.pl" | tee -a $logfile    
-   #AW20200206 perl -I${PMnwps} -I${RUNdir} ${USHnwps}/waveTracking.pl | tee -a $logfile
-   #AW20200206 export err=$?; err_chk
-   #AW20200206 mv -fv ${OUTPUTdir}/partition/CG1/SYS_HSIGN.OUT ${OUTPUTdir}/partition/CG1/SYS_HSIGN.OUT.SPRL
-   #AW20200206 mv -fv ${OUTPUTdir}/partition/CG1/SYS_TP.OUT ${OUTPUTdir}/partition/CG1/SYS_TP.OUT.SPRL
-   #AW20200206 mv -fv ${OUTPUTdir}/partition/CG1/SYS_DIR.OUT ${OUTPUTdir}/partition/CG1/SYS_DIR.OUT.SPRL
-   #AW20200206 mv -fv ${OUTPUTdir}/partition/CG1/SYS_DSPR.OUT ${OUTPUTdir}/partition/CG1/SYS_DSPR.OUT.SPRL
-   #AW20200206 mv -fv ${OUTPUTdir}/partition/CG1/SYS_PNT.OUT ${OUTPUTdir}/partition/CG1/SYS_PNT.OUT.SPRL
 
-   #AW073017 ----- Convert partition file to Python scikit learn format ----
+   # ----- Convert partition file to Python scikit learn format ----
    mv swan_part.CG1.raw partition.raw
    ${EXECnwps}/ww3_sysprep.exe
-   #AW073017 ---------------------------------------------------------------
-   #AW020218 ----- Run Python scikit learn version of wave tracking --------
 
+   # ----- Call script to perform cluster-based wave tracking ----
    cd ${RUNdir}
-
-   #aprun -n1 -N1 -d1 ${PYTHON} ${NWPSdir}/sorc/ww3_syscluster/ww3_systrk_nobasemap_tables_gh.py ${SITEID,,}
-   perl -I${PMnwps} -I${RUNdir} ${USHnwps}/waveTracking_clust.pl | tee -a $logfile
-
-   #${USHnwps}/postprocess_partition_fields_clust.sh ${SITEID} CG1
+   perl -I${PMnwps} -I${RUNdir} ${USHnwps}/waveTracking.pl | tee -a $logfile
 
    cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
    COMOUTCYC="${COMOUT}/${cycle}/CG0"
