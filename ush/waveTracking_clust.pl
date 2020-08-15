@@ -242,7 +242,7 @@ for $i (0..0){
    print "= Computational Grid: $cgnum         =\n";
    print "=                               =\n";
    print "=================================\n";
-   print " SysTrcktFileName: $sysTrcktFileName\n";
+   #print " SysTrcktFileName: $sysTrcktFileName\n";
 
 
 # TODO for the time being only output locations in CG1 can be processed
@@ -271,7 +271,7 @@ for $i (0..0){
    }
 
 ##   system("mv -f ${sysTrcktFileName} partition.raw");
-   system("cp -f ${sysTrcktFileName} partition.raw");
+   #system("cp -f ${sysTrcktFileName} partition.raw");
    #AW # Remove any exception values in partition file produced by SWAN, in particular wind speed
    #AW system("sed -i 's/\\*\\*\\*\\*\\*/  0.0/g' partition.raw");
    system("date +%s > ${VARdir}/wavetrackrun_start_secs.txt");
@@ -854,6 +854,7 @@ sub createDataPartition {
           foreach $time (0..$numTimes) {  # For each output time
              $diff=-1;
              $Tpindex=-1;
+             $locTp=0.0;
              while ($diff < 0 && $Tpindex <= $#TpArray) {
                 $Tpindex++;
                 $vector{"$time,$Tpindex"}=-99.99;
