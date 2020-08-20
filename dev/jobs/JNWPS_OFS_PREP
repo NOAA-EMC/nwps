@@ -106,6 +106,7 @@ export SITETYPE=${SITETYPE:-EMC}
 ##############################################
 export COMIN=${COMROOT}/${NET}/${envir}/${OFS}.${PDY}
 export COMOUT=${COMROOT}/${NET}/${envir}/${OFS}.${PDY}
+export COMOUTm1=${COMROOT}/${NET}/${envir}/${OFS}.${PDYm1}
 export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
 #export COMINgfs=${COMROOT}/gfs/prod/gfs.${PDY}
 export COMINwave=${COMROOTp1}/wave/prod
@@ -142,6 +143,8 @@ export COMROOTp2=/gpfs/hps/nco/ops/com
 #export COMINpsurge=/gpfs/hps/nco/ops/com/psurge/para/psurge.20170403
 #export COMINpsurge=/gpfs/hps/nco/ops/com/psurge/para/psurge.20170404
 #export COMINpsurge=/gpfs/hps3/emc/marine/noscrub/Andre.VanderWesthuysen/nwps_para_20160501/psurge.20180501
+#export COMINpsurge=/gpfs/hps/nco/ops/com/psurge/para/psurge.20200726
+#export COMINpsurge=/gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/psurge_tmp/
 #------------------------
 
 export dcom=${dcom:-/dcom/us007003}
