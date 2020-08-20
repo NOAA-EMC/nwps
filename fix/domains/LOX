@@ -219,3 +219,29 @@ export RIPCONT="5m"
 export RUNUPPROG="0"
 export RUNUPDOMAIN="CG1"
 export RUNUPCONT="20m"
+#
+#========================================================================
+#                    OBSTACLES (SEE SWAN MANUAL)              =
+#========================================================================
+# IF OBSTACLES WILL BE USED, then USEOBSTA=1, Otherwise =0;
+# Setting up OBSTACLE here to zero will permanently disable OBSTACLES.
+#
+export USEOBSTA="1"
+export OBSTADOMAIN="CG2"
+#
+# THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD OBSTACLES FOR YOUR
+# DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE
+# OBSTACLES (USEOBSTA="0") THEY WILL REMAIN AS A COMMENTED LINES. IF YOU DECIDE TO USE
+# IT NWPS WILL INCLUDE THE INFORMATION IN THE ACTUAL
+# INPUT FILES WITH NOT COMMENT CHARACTER
+#
+#$OBSTACLES LINES
+#$
+#OBSTACLE TRANSM 0.0 REFL 1.00 LINE &
+#241.71667 33.710000 &
+#241.73333 33.703333 &
+#241.79333 33.723333 &
+#241.86333 33.723333
+#
+#$END OBSTACLES
+#
