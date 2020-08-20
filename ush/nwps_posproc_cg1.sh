@@ -1,4 +1,5 @@
 #!/bin/bash
+set -xa
 # ----------------------------------------------------------- 
 # UNIX Shell Script File
 # Tested Operating System(s): RHEL 5,6
@@ -205,8 +206,7 @@ echo " " | tee -a $logrunup
         fi
      fi
 
-     # TODO: 12/08/2016 - Testing RUNUP GRIB2 encoding
-     gribfile=$(ls ${DATA}/output/grib2/CG${CGNUM}/*CG${CGNUM}*grib2 | xargs -n 1 basename | tail -n 1)
+     gribfile=$(ls ${DATA}/output/grib2/CG${CGNUM}/*CG${CGNUM}_????????_????.grib2 | xargs -n 1 basename | tail -n 1)
      fullname=`echo $gribfile | cut -c14-26`
      GRIB2file=${NWPSDATA}/output/grib2/CG${CGNUM}/${gribfile}
      WAVE_RUNUP_TO_BIN="${EXECnwps}/wave_runup_to_bin"
@@ -243,15 +243,28 @@ echo " " | tee -a $logrunup
      done
      
      if [ ${RUNUPerrors} -eq 0 ]; then
+         echo "Copying runup parameters to final_runup.grib2"
 	 cat /dev/null > final_runup.grib2
 	 for parm in ${RUNUPparms}
 	 do
+             echo "cat ${parm}_final_runup.grib2 >> final_runup.grib2"
 	     cat ${parm}_final_runup.grib2 >> final_runup.grib2
-	     cp -f final_runup.grib2 ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
-	     cp -f final_runup.grib2 ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
 	 done
-         #AW052917 Do not include runup output in general GRIB2 output, because it won't go over SBN yet.
+         if [ "${SITEID}" != "HGX" ]; then
+	    cp -f final_runup.grib2 ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+	    cp -f final_runup.grib2 ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+         fi
+         echo "Copying final_runup.grib2 to ${GRIB2file}"
+         ${WGRIB2} -count final_runup.grib2
+         echo "cat final_runup.grib2 >> ${GRIB2file}"
          cat final_runup.grib2 >> ${GRIB2file}
+         export err=$?
+         if [ "${err}" != "0" ];then
+            echo "ERROR: Could not copy runup parameters to ${GRIB2file}."
+            msg="ERROR: Could not copy runup parameters to ${GRIB2file}."
+            postmsg "$jlogfile" "$msg"
+            err_chk 
+         fi
      else 
 	 echo "ERROR - ${WAVE_RUNUP_TO_BIN} program error, no RUNUP GRIB2 file generated for this run"
      fi
@@ -282,7 +295,6 @@ echo " " | tee -a $logrunup
      mkdir -p $GESOUT/riphist/${SITEID}
      cp -fv  ${RIPDATA}/${CGCONT} ${GESOUT}/riphist/${SITEID}/${CGCONT}
 
-     # TODO: 11/29/2016 - Tesing RIP GRIB2 encoding below
      SWAN_RIP_OUTPUT_FILE="${RIPDATA}/${FORT23}"
      rip_current_meta_template="${FIXnwps}/templates/RIP.meta"
      rip_current_meta="${RIPDATA}/RIP.meta"
@@ -305,19 +317,21 @@ echo " " | tee -a $logrunup
      sed -i s/'<< SET LA2 >>'/${cgnLAT2}/g ${rip_current_meta}
      sed -i s/'<< SET LO1 >>'/${cgnLON1}/g ${rip_current_meta}
      sed -i s/'<< SET LO2 >>'/${cgnLON2}/g ${rip_current_meta}
-     echo "${RIP_CURRENT_TO_BIN} -v -d -c ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin"
-     ${RIP_CURRENT_TO_BIN} -v -d -c ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin
+     if [ "${SITEID}" == "GUM" ]; then
+        # Write only original output points to file
+        echo "${RIP_CURRENT_TO_BIN} -v -d ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin"
+        ${RIP_CURRENT_TO_BIN} -v -d ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin
+     else
+        # Write a cluster of 9 at each output point to improve visibility (add argument "-c")
+        echo "${RIP_CURRENT_TO_BIN} -v -d -c ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin"
+        ${RIP_CURRENT_TO_BIN} -v -d -c ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin
+     fi
      if [ $? -eq 0 ]; then
 	 # Only create the GRIB2 file if the encoding process is successful
 	 echo "${WGRIB2} ${RIPDATA}/templates.grib2 -no_header -import_bin ${RIPDATA}/points.bin -grib_out ${RIPDATA}/final_rip.grib2"
 	 ${WGRIB2} ${RIPDATA}/templates.grib2 -no_header -import_bin ${RIPDATA}/points.bin -grib_out ${RIPDATA}/final_rip.grib2
-         #AW052917 Do not include runup output in general GRIB2 output, because it won't go over SBN yet.
          cat ${RIPDATA}/final_rip.grib2 >> ${GRIB2file}
-	 #cp -f ${RIPDATA}/final_rip.grib2 ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
-         #>AW091019 cat ${RIPDATA}/final_rip.grib2 >> ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
-         #>AW091019 cat ${RIPDATA}/final_rip.grib2 >> ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
      fi
-     # TODO: 11/29/2016 - Tesing RIP GRIB2 encoding above
   else
      echo " Rip current calculation not activated for this domain (CG${CGNUM})"
   fi
