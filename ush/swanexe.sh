@@ -95,7 +95,8 @@ then
            exit 1
       fi
 
-      # Get run cycle to check for the presence of hotfiles     
+      # Get run PDY and cycle to check for the presence of hotfiles     
+      yyyymmdd=`ls *.wnd | cut -c1-8`
       hh=`ls *.wnd | cut -c9-10`
 
       # Run each domain with appropriate number of cores.
@@ -105,23 +106,23 @@ then
 
          # Check that all hotfiles are present in the PE subfolders
          for i in {0..9}; do
-            echo "Checking hotfile for PE000"${i}"/"${PDY}.${hh}"00"
+            echo "Checking hotfile for PE000"${i}"/"${yyyymmdd}.${hh}"00"
             # Note: Checking also for PDYm1 to allow running of a late cycle from previous day           
-            if [ -f ${RUNdir}/PE000${i}/${PDY}.${hh}00 ] || [ -f ${RUNdir}/PE000${i}/${PDYm1}.${hh}00 ]; then
-               echo "Found PE000"${i}"/"${PDY}.${hh}"00"
+            if [ -f ${RUNdir}/PE000${i}/${yyyymmdd}.${hh}00 ] || [ -f ${RUNdir}/PE000${i}/${PDYm1}.${hh}00 ]; then
+               echo "Found PE000"${i}"/"${yyyymmdd}.${hh}"00"
             else
-               echo "Warning: Not found PE000"${i}"/"${PDY}.${hh}"00"
+               echo "Warning: Not found PE000"${i}"/"${yyyymmdd}.${hh}"00"
                msg="WARNING - missing hotfile in PE000"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
                postmsg "$jlogfile" "$msg"
                sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
             fi
          done
          for i in {10..95}; do
-            echo "Checking hotfile for PE00"${i}"/"${PDY}.${hh}"00"           
-            if [ -f ${RUNdir}/PE00${i}/${PDY}.${hh}00 ] || [ -f ${RUNdir}/PE00${i}/${PDYm1}.${hh}00 ]; then
-               echo "Found PE00"${i}"/"${PDY}.${hh}"00"
+            echo "Checking hotfile for PE00"${i}"/"${yyyymmdd}.${hh}"00"           
+            if [ -f ${RUNdir}/PE00${i}/${yyyymmdd}.${hh}00 ] || [ -f ${RUNdir}/PE00${i}/${PDYm1}.${hh}00 ]; then
+               echo "Found PE00"${i}"/"${yyyymmdd}.${hh}"00"
             else
-               echo "Warning: Not found PE00"${i}"/"${PDY}.${hh}"00"
+               echo "Warning: Not found PE00"${i}"/"${yyyymmdd}.${hh}"00"
                msg="WARNING - missing hotfile in PE00"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
                postmsg "$jlogfile" "$msg"
                sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
@@ -153,23 +154,23 @@ then
 
          # Check that all hotfiles are present in the PE subfolders
          for i in {0..9}; do
-            echo "Checking hotfile for PE000"${i}"/"${PDY}.${hh}"00"
+            echo "Checking hotfile for PE000"${i}"/"${yyyymmdd}.${hh}"00"
             # Note: Checking also for PDYm1 to allow running of a late cycle from previous day           
-            if [ -f ${RUNdir}/PE000${i}/${PDY}.${hh}00 ] || [ -f ${RUNdir}/PE000${i}/${PDYm1}.${hh}00 ]; then
-               echo "Found PE000"${i}"/"${PDY}.${hh}"00"
+            if [ -f ${RUNdir}/PE000${i}/${yyyymmdd}.${hh}00 ] || [ -f ${RUNdir}/PE000${i}/${PDYm1}.${hh}00 ]; then
+               echo "Found PE000"${i}"/"${yyyymmdd}.${hh}"00"
             else
-               echo "Warning: Not found PE000"${i}"/"${PDY}.${hh}"00"
+               echo "Warning: Not found PE000"${i}"/"${yyyymmdd}.${hh}"00"
                msg="WARNING - missing hotfile in PE000"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
                postmsg "$jlogfile" "$msg"
                sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
             fi
          done
          for i in {10..83}; do
-            echo "Checking hotfile for PE00"${i}"/"${PDY}.${hh}"00"           
-            if [ -f ${RUNdir}/PE00${i}/${PDY}.${hh}00 ] || [ -f ${RUNdir}/PE00${i}/${PDYm1}.${hh}00 ]; then
-               echo "Found PE00"${i}"/"${PDY}.${hh}"00"
+            echo "Checking hotfile for PE00"${i}"/"${yyyymmdd}.${hh}"00"           
+            if [ -f ${RUNdir}/PE00${i}/${yyyymmdd}.${hh}00 ] || [ -f ${RUNdir}/PE00${i}/${PDYm1}.${hh}00 ]; then
+               echo "Found PE00"${i}"/"${yyyymmdd}.${hh}"00"
             else
-               echo "Warning: Not found PE00"${i}"/"${PDY}.${hh}"00"
+               echo "Warning: Not found PE00"${i}"/"${yyyymmdd}.${hh}"00"
                msg="WARNING - missing hotfile in PE00"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
                postmsg "$jlogfile" "$msg"
                sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
@@ -207,23 +208,23 @@ then
 
          # Check that all hotfiles are present in the PE subfolders
          for i in {0..9}; do
-            echo "Checking hotfile for PE000"${i}"/"${PDY}.${hh}"00"
+            echo "Checking hotfile for PE000"${i}"/"${yyyymmdd}.${hh}"00"
             # Note: Checking also for PDYm1 to allow running of a late cycle from previous day         
-            if [ -f ${RUNdir}/PE000${i}/${PDY}.${hh}00 ] || [ -f ${RUNdir}/PE000${i}/${PDYm1}.${hh}00 ]; then
-               echo "Found PE000"${i}"/"${PDY}.${hh}"00"
+            if [ -f ${RUNdir}/PE000${i}/${yyyymmdd}.${hh}00 ] || [ -f ${RUNdir}/PE000${i}/${PDYm1}.${hh}00 ]; then
+               echo "Found PE000"${i}"/"${yyyymmdd}.${hh}"00"
             else
-               echo "Warning: Not found PE000"${i}"/"${PDY}.${hh}"00"
+               echo "Warning: Not found PE000"${i}"/"${yyyymmdd}.${hh}"00"
                msg="WARNING - missing hotfile in PE000"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
                postmsg "$jlogfile" "$msg"
                sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
             fi
          done
          for i in {10..47}; do
-            echo "Checking hotfile for PE00"${i}"/"${PDY}.${hh}"00"           
-            if [ -f ${RUNdir}/PE00${i}/${PDY}.${hh}00 ] || [ -f ${RUNdir}/PE00${i}/${PDYm1}.${hh}00 ]; then
-               echo "Found PE00"${i}"/"${PDY}.${hh}"00"
+            echo "Checking hotfile for PE00"${i}"/"${yyyymmdd}.${hh}"00"           
+            if [ -f ${RUNdir}/PE00${i}/${yyyymmdd}.${hh}00 ] || [ -f ${RUNdir}/PE00${i}/${PDYm1}.${hh}00 ]; then
+               echo "Found PE00"${i}"/"${yyyymmdd}.${hh}"00"
             else
-               echo "Warning: Not found PE00"${i}"/"${PDY}.${hh}"00"
+               echo "Warning: Not found PE00"${i}"/"${yyyymmdd}.${hh}"00"
                msg="WARNING - missing hotfile in PE00"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
                postmsg "$jlogfile" "$msg"
                sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
@@ -254,23 +255,23 @@ then
 
          # Check that all hotfiles are present in the PE subfolders
          for i in {0..9}; do
-            echo "Checking hotfile for PE000"${i}"/"${PDY}.${hh}"00"
+            echo "Checking hotfile for PE000"${i}"/"${yyyymmdd}.${hh}"00"
             # Note: Checking also for PDYm1 to allow running of a late cycle from previous day           
-            if [ -f ${RUNdir}/PE000${i}/${PDY}.${hh}00 ] || [ -f ${RUNdir}/PE000${i}/${PDYm1}.${hh}00 ]; then
-               echo "Found PE000"${i}"/"${PDY}.${hh}"00"
+            if [ -f ${RUNdir}/PE000${i}/${yyyymmdd}.${hh}00 ] || [ -f ${RUNdir}/PE000${i}/${PDYm1}.${hh}00 ]; then
+               echo "Found PE000"${i}"/"${yyyymmdd}.${hh}"00"
             else
-               echo "Warning: Not found PE000"${i}"/"${PDY}.${hh}"00"
+               echo "Warning: Not found PE000"${i}"/"${yyyymmdd}.${hh}"00"
                msg="WARNING - missing hotfile in PE000"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
                postmsg "$jlogfile" "$msg"
                sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
             fi
          done
          for i in {10..23}; do
-            echo "Checking hotfile for PE00"${i}"/"${PDY}.${hh}"00"           
-            if [ -f ${RUNdir}/PE00${i}/${PDY}.${hh}00 ] || [ -f ${RUNdir}/PE00${i}/${PDYm1}.${hh}00 ]; then
-               echo "Found PE00"${i}"/"${PDY}.${hh}"00"
+            echo "Checking hotfile for PE00"${i}"/"${yyyymmdd}.${hh}"00"           
+            if [ -f ${RUNdir}/PE00${i}/${yyyymmdd}.${hh}00 ] || [ -f ${RUNdir}/PE00${i}/${PDYm1}.${hh}00 ]; then
+               echo "Found PE00"${i}"/"${yyyymmdd}.${hh}"00"
             else
-               echo "Warning: Not found PE00"${i}"/"${PDY}.${hh}"00"
+               echo "Warning: Not found PE00"${i}"/"${yyyymmdd}.${hh}"00"
                msg="WARNING - missing hotfile in PE00"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
                postmsg "$jlogfile" "$msg"
                sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
@@ -301,23 +302,23 @@ then
 
          # Check that all hotfiles are present in the PE subfolders
          for i in {0..9}; do
-            echo "Checking hotfile for PE000"${i}"/"${PDY}.${hh}"00"
+            echo "Checking hotfile for PE000"${i}"/"${yyyymmdd}.${hh}"00"
             # Note: Checking also for PDYm1 to allow running of a late cycle from previous day           
-            if [ -f ${RUNdir}/PE000${i}/${PDY}.${hh}00 ] || [ -f ${RUNdir}/PE000${i}/${PDYm1}.${hh}00 ]; then
-               echo "Found PE000"${i}"/"${PDY}.${hh}"00"
+            if [ -f ${RUNdir}/PE000${i}/${yyyymmdd}.${hh}00 ] || [ -f ${RUNdir}/PE000${i}/${PDYm1}.${hh}00 ]; then
+               echo "Found PE000"${i}"/"${yyyymmdd}.${hh}"00"
             else
-               echo "Warning: Not found PE000"${i}"/"${PDY}.${hh}"00"
+               echo "Warning: Not found PE000"${i}"/"${yyyymmdd}.${hh}"00"
                msg="WARNING - missing hotfile in PE000"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
                postmsg "$jlogfile" "$msg"
                sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
             fi
          done
          for i in {10..15}; do
-            echo "Checking hotfile for PE00"${i}"/"${PDY}.${hh}"00"           
-            if [ -f ${RUNdir}/PE00${i}/${PDY}.${hh}00 ] || [ -f ${RUNdir}/PE00${i}/${PDYm1}.${hh}00 ]; then
-               echo "Found PE00"${i}"/"${PDY}.${hh}"00"
+            echo "Checking hotfile for PE00"${i}"/"${yyyymmdd}.${hh}"00"           
+            if [ -f ${RUNdir}/PE00${i}/${yyyymmdd}.${hh}00 ] || [ -f ${RUNdir}/PE00${i}/${PDYm1}.${hh}00 ]; then
+               echo "Found PE00"${i}"/"${yyyymmdd}.${hh}"00"
             else
-               echo "Warning: Not found PE00"${i}"/"${PDY}.${hh}"00"
+               echo "Warning: Not found PE00"${i}"/"${yyyymmdd}.${hh}"00"
                msg="WARNING - missing hotfile in PE00"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
                postmsg "$jlogfile" "$msg"
                sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
