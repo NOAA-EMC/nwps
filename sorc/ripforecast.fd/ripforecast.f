@@ -140,6 +140,12 @@
          else if(mwdsn(i).gt.180.) then
             mwdsn(i)=mwdsn(i)-360.
          endif
+!        limit mwdsn aperture to [-90, 90]
+         if(mwdsn(i).lt.-90.) then
+            mwdsn(i)=-90.
+         else if(mwdsn(i).gt.90.) then
+            mwdsn(i)=90.
+         endif
       end do
 !
       open(UNIT=fuprob,ACCESS='APPEND',STATUS='OLD')
