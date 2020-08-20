@@ -75,7 +75,7 @@ export BATHYdb=${BATHYdb:-${FIXnwps}/bathy_db}
 export SHAPEFILEdb=${SHAPEFILEdb:-${FIXnwps}/shapefile_db}
 
 # Set processing DIRs here
-export HPSSARCHdir=${DATA}/archive4
+export HPSSARCHdir=${DATA}/archive
 
 # Set NWPS run conditions
 export DEBUGGING=${DEBUGGING:-TRUE}
