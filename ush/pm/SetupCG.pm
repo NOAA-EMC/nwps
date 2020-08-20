@@ -392,7 +392,7 @@ sub makeInputCGx (%){
 # After each run, the hotfiles created are stored in ${INPUTdir}/hotstart/
 # 
 ###############################################################################################
-#    if($HOTSTART eq 'TRUE') {
+    if($HOTSTART eq 'TRUE') {
     #Find most recent hotstart directory in nwges
     if (-e "${GESIN}/hotstart/${SITEID}") {
        $Prev_HOTdir="${GESIN}/hotstart/${SITEID}";
@@ -530,7 +530,9 @@ sub makeInputCGx (%){
 	    }
 	}
     }   #UNSWAN
-#    }
+    } else {
+       system("echo FALSE > ${RUNdir}/hotstart.flag");
+    }    
 
 ###############################################################################################
 # TAFB-NWPS boundary condition section:
