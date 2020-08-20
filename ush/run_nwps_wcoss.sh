@@ -532,9 +532,12 @@ echo "EXCD=$EXCD"
 # NOTE: The default variable is defined in master config $USHnwps/nwps_config.sh
 # NOTE: This must TRUE or FALSE to work with RunSwan.pm module
 HOTSTART="TRUE"
-if [ "${SITEID}" == "MFL" ] && [ $(date -d "$D" '+%d') == 30 ]
+if [ [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "MFL" ] || \
+     [ "${SITEID}" == "MLB" ] || [ "${SITEID}" == "JAX" ] || \ 
+     [ "${SITEID}" == "CHS" ] || [ "${SITEID}" == "ILM" ] ] && \
+     [ $(date -d "$D" '+%d') == '01' ]
 then
-  echo "Setting periodic stationary start to suppress hotspot build-up"
+  echo "Setting periodic stationary start to suppress hotspot build-up due to Gulf Stream currents"
   HOTSTART="FALSE" 
 fi
 
