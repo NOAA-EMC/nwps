@@ -56,46 +56,27 @@ then
 fi
 
 cat /dev/null > ${LOGdir}/systrk_info.log
-     
-# Check the number of CPUs one last time
-if [ "$NUMCPUS" == "" ]; then NUMCPUS="1"; fi
-if [ $NUMCPUS -eq 1 ];then
-    echo "Starting ${ARCHBITS}-bit serial version of ww3_systrk_ser"   
-    ${EXECnwps}/ww3_systrk_ser > ${RUNdir}/ww3_systrk.out 2> ${RUNdir}/ww3_systrk.err
-    export err=$?
-    if [ "${err}" != "0" ]; then
-        echo "Exit Code: ${err}"                                     | tee -a ${LOGdir}/systrk_info.log 
-	    echo "ERROR - Something went wrong running ww3_systrk_ser"       | tee -a ${LOGdir}/systrk_info.log 
-	    echo "ERROR - HERE IS WHAT WE HAVE IN THE FILE "                 | tee -a ${LOGdir}/systrk_info.log 
-	    echo "        ${DATAdir}/logs/run_wavetrack_exe_error.log"       | tee -a ${LOGdir}/systrk_info.log 
-        cat ${DATAdir}/logs/run_wavetrack_exe_error.log >> ${LOGdir}/systrk_info.log
-        msg="FATAL ERROR: Wave system tracking executable ww3_systrk failed."
-        postmsg "$jlogfile" "$msg"
-        err_chk
-    fi
+
+echo "Starting clustering-based Python script ww3_systrk_cluster.py"  
+echo " In ww3_systrackexe.sh, calling aprun" 
+aprun -n1 -N1 -d1 ${PYTHON} ${NWPSdir}/ush/python/ww3_systrk_cluster.py ${SITEID,,}
+export err=$?
+if [ "${err}" != "0" ];then
+    echo " ============  E R R O R ==============="                  | tee -a ${LOGdir}/systrk_info.log
+    echo "Exit Code: ${err}"                                         | tee -a ${LOGdir}/systrk_info.log 
+    echo " Something went wrong running ww3_systrk_cluster.py"       | tee -a ${LOGdir}/systrk_info.log 
+    echo " HERE IS WHAT WE HAVE IN THE FILE "                        | tee -a ${LOGdir}/systrk_info.log 
+    echo " "                                                         | tee -a ${LOGdir}/systrk_info.log
+    echo "        ${DATAdir}/logs/run_wavetrack_exe_error.log"       | tee -a ${LOGdir}/systrk_info.log 
+    cat ${DATAdir}/logs/run_wavetrack_exe_error.log >> ${LOGdir}/systrk_info.log 
+    msg="FATAL ERROR: Wave system tracking script ww3_systrk_cluster.py failed."
+    postmsg "$jlogfile" "$msg"
+    err_chk
 else
-    echo "Starting ${ARCHBITS}-bit MPI version of ww3_systrk_exe_mpi"  
-    #echo " In ww3_systrackexe.sh MPIEXEC: $MPIEXEC" 
-    #${MPIRUN} -n8 -N8 -j1 -d1 ${EXECnwps}/ww3_systrk_mpi > ${RUNdir}/ww3_systrk.out 2> ${RUNdir}/ww3_systrk.err
-    echo " In ww3_systrackexe.sh, calling aprun" 
-    aprun -n1 -N1 -d1 ${PYTHON} ${NWPSdir}/ush/python/ww3_systrk_cluster.py ${SITEID,,}
-    export err=$?
-    if [ "${err}" != "0" ];then
-        echo " ============  E R R O R ==============="                  | tee -a ${LOGdir}/systrk_info.log 
-        echo "Exit Code: ${err}"                                     | tee -a ${LOGdir}/systrk_info.log 
-	    echo " Something went wrong running ww3_systrk_exe_mpi"          | tee -a ${LOGdir}/systrk_info.log 
-	    echo " HERE IS WHAT WE HAVE IN THE FILE "                        | tee -a ${LOGdir}/systrk_info.log 
-        echo " "                                                         | tee -a ${LOGdir}/systrk_info.log
-	    echo "        ${DATAdir}/logs/run_wavetrack_exe_error.log"       | tee -a ${LOGdir}/systrk_info.log 
-        cat ${DATAdir}/logs/run_wavetrack_exe_error.log >> ${LOGdir}/systrk_info.log 
-        msg="FATAL ERROR: Wave system tracking executable ww3_systrk_mpi failed."
-        postmsg "$jlogfile" "$msg"
-        err_chk
-    else
-	    echo " ww3_systrk_exe_mpi run was successful "   | tee -a ${LOGdir}/systrk_info.log 
-        echo "     Exit Code: ${err}"           | tee -a ${LOGdir}/systrk_info.log 
-    fi
+    echo " ww3_systrk_cluster.py run was successful "   | tee -a ${LOGdir}/systrk_info.log 
+    echo "     Exit Code: ${err}"           | tee -a ${LOGdir}/systrk_info.log 
 fi
+
 #if [ "${err}" == "0" ];then
 #   mv -fv sys_pnt.ww3   SYS_PNT.OUT
 #   mv -fv sys_coord.ww3 SYS_COORD.OUT
