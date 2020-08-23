@@ -70,11 +70,11 @@ export GESOUTm1=${GESROOT}/${envir}/${NET}.${PDYm1}
 export dcom_hist="$GESOUT/dcom_hist.txt"
 export dcom_histm1="$GESOUTm1/dcom_hist.txt"
 export web_status_file="$GESOUT/status_file.txt"
-export dcom=${dcom:-${DCOMROOT}/us007003}
+export dcom=${dcom:-${DCOMROOT}/prod}
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 
 # Establish rsync timeout and retry limits
-export RSYNC_MAX_SECONDS=${RSYNC_MAX_SECONDS:-60}
+export RSYNC_MAX_SECONDS=${RSYNC_MAX_SECONDS:-100}
 export RSYNC_MAX_ATTEMPTS=${RSYNC_MAX_ATTEMPTS:-3}
 
 # make sure NWPS COM directory exists
@@ -133,7 +133,7 @@ function rsync_sh {
         fi
     done
     if [ $numattempts -eq 0 ]; then
-        echo "FATAL ERROR: rsync failed after three attempts"
+        echo "FATAL ERROR: rsync failed after three attempts. Please requeue the failed job for the next datacheck!!"
         err_exit
     fi
 }
