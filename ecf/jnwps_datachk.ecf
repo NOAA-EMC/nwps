@@ -1,14 +1,20 @@
 #BSUB -J %E%%MODEL%_datachk
 #BSUB -o %COMROOT%/output/%ENVIR%/today/%MODEL%_datachk.o%J
-#BSUB -e %COMROOT%/output/%ENVIR%/today/%MODEL%_datachk.o%J
 #BSUB -L /bin/sh
 #BSUB -q %QUEUESERV%
-#BSUB -cwd /tmpnwprd2
+#BSUB -cwd /tmp
 #BSUB -W 0:05
 #BSUB -M 1700
-#BSUB -P NWPS-%PROJ%
+#BSUB -P %PROJ%-%PROJENVIR%
 
 %include <head.h>
+%include <envir-xc40.h>
+
+export TIME_FLAG=YES
+
+export model=%MODEL%
+
+%include <model_ver.h>
 
 module load %MODULES%
 export FORT_BUFFERED=true
@@ -16,23 +22,11 @@ export NWPSplatform="WCOSS"
 export MP_PGMMODEL=mpmd
 export MP_CSS_INTERRUPT=yes
 export KEEPDATA=%KEEPDATA%
-export model=%MODEL%
 export MODEL=${model^^}
 
-%include <envir-p1.h>
+${HOMEnwps}/jobs/J${MODEL}_DATACHK
 
-VERSION_FILE=${NWROOT}/versions/${model}.ver
-if [ -f $VERSION_FILE ]; then
-  . $VERSION_FILE
-else
-  ecflow_client --msg="***JOB ${ECFNAME} ERROR: Version File $VERSION_FILE does not exist ***"
-  ecflow_client --abort
-  exit
-fi
-
-${NWROOT}/${model}.${nwps_ver}/jobs/J${MODEL}_DATACHK
-
-export PSURGE_JOB=/%SUITE%/prep/psurge/jnwps_psurge_prep
+export PSURGE_JOB=/%SUITE%/nwps/prep/psurge/jnwps_psurge_prep
 if $(ecflow_client --group="get ${PSURGE_JOB}; show state" 2> /dev/null|grep --quiet state:complete); then 
     ecflow_client --requeue ${PSURGE_JOB}
 fi
