@@ -1,28 +1,30 @@
 #BSUB -J %E%%MODEL%_%FAMILY1%_forecast_cg%N%
 #BSUB -o %COMROOT%/output/%ENVIR%/today/%MODEL%_%FAMILY1%_forecast_cg%N%.o%J
-#BSUB -e %COMROOT%/output/%ENVIR%/today/%MODEL%_%FAMILY1%_forecast_cg%N%.o%J
 #BSUB -L /bin/sh
 #BSUB -q %QUEUE%
-#BSUB -cwd /tmpnwprd1
+#BSUB -cwd /tmp
 #BSUB -W 3:00
 #BSUB -M 1700
-#BSUB -P NWPS-%PROJ%
+#BSUB -P %PROJ%-%PROJENVIR%
 #BSUB -extsched 'CRAYLINUX[]'
 export NODES=2
 
 %include <head.h>
+%include <envir-xc40.h>
+
+export model=%MODEL%
+%include <model_ver.h>
 
 module load %MODULES%
 #---- Suggested modules -----------------------------------------
-module use /gpfs/hps/nco/ops/nwpara/modulefiles
-module load prod_envir
-module load prod_util
-module load grib_util
-module load PrgEnv-intel
-module load iobuf
+module load grib_util/${grib_util_ver}
+module load PrgEnv-intel/${intel_ver}
 export IOBUF_PARAMS="*:count=4:size=32M:prefetch=1:preflush=1"
-module load netcdf4-python/1.2.2
-module load cfp-intel-sandybridge
+
+# JY the following two from the checked out ecf scripts
+module load python/3.6.3
+module load cfp-intel-sandybridge/${cfp_ver}  # 1.1.0
+
 #----------------------------------------------------------------
 export FORT_BUFFERED=true
 export NWPSplatform="WCOSS"
@@ -36,18 +38,7 @@ export KEEPDATA=%KEEPDATA%
 export model=%MODEL%
 export MODEL=${model^^}
 
-%include <envir-p1.h>
-
-VERSION_FILE=${NWROOT}/versions/${model}.ver
-if [ -f $VERSION_FILE ]; then
-  . $VERSION_FILE
-else
-  ecflow_client --msg="***JOB ${ECFNAME} ERROR: Version File $VERSION_FILE does not exist ***"
-  ecflow_client --abort
-  exit
-fi
-
-${NWROOT}/${model}.${nwps_ver}/jobs/J${MODEL}_FORECAST
+${HOMEnwps}/jobs/J${MODEL}_FORECAST
 
 %include <tail.h>
 
