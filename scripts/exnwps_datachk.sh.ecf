@@ -223,8 +223,11 @@ else
             wfo=$(echo ${runit}|awk -F_ '{print $2}')
             ecf_wfo=$(grep ${wfo} ${PARMnwps}/wfo.tbl)
             region=$(echo ${ecf_wfo} |awk -F"/" '{print $1}')
-            if ecflow_client --group="get ${ECF_NAME%/*}/regions/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:active; then
-                echo "Not starting ${ecf_wfo} with ${runint}, ${ecf_wfo^^} is active."
+            if ! ( ecflow_client --group="get ${ECF_NAME%/*}/regions/${ecf_wfo}; show state" 2> /dev/null| grep "family ${wfo}" |grep --quiet state:complete ); then
+            # JY if ecflow_client --group="get ${ECF_NAME%/*}/regions/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:active; then
+                echo "Not starting ${ecf_wfo} with ${runint}, ${ecf_wfo^^} is not complete."
+                echo "The status of the ${ecf_wfo} is as following:"
+                ecflow_client --group="get ${ECF_NAME%/*}/regions/${ecf_wfo}; show state" 2> /dev/null| grep "family ${wfo}" 
                 DCOM_FILES=( "${DCOM_FILES[@]/${runit}}" )
             else
                 echo -ne "QUEUEING:\t\t$wfo\n"
