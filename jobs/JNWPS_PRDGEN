@@ -104,8 +104,7 @@ export COMOUT=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
 export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
 #--------------------------------------------------------------------------
 export dcom_hist="$GESOUT/dcom_hist.txt"
-export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )
-export dcom=${dcom:-/gpfs/${WCOSS_SYSTEM}p1/nco/ops/dcom/us007003}
+dcom=${dcom:-${DCOMROOT}/prod}
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 export PCOM=${PCOMROOT}/${NET}
 
@@ -125,7 +124,8 @@ export err=$?; err_chk
 ##############################################
 if [ "$?" -eq 0 ] && [ "${N,,}" == "n" ]; then
     dfile=$(ecflow_client --group="get ${ECF_NAME%/*}/jnwps_prep ; show state"|grep label|awk '{print $NF}'|sed 's/\"//g')
-    echo "FINISHED ${FORECASTWINDdir}/$dfile AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
+    # echo "FINISHED ${FORECASTWINDdir}/$dfile AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
+    echo "FINISHED ${FORECASTWINDdir}/$dfile for $WFO AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
 fi
 
 msg="JOB $job HAS COMPLETED NORMALLY."
