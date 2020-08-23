@@ -1,0 +1,60 @@
+#BSUB -J %E%%MODEL%_%OFSTYPE%_prep_%CYC%
+#BSUB -o %COMROOT%/output/%ENVIR%/today/%MODEL%_%OFSTYPE%_prep_%CYC%.o%J
+#BSUB -L /bin/sh
+#BSUB -q %QUEUE%
+#BSUB -cwd /tmp
+#BSUB -W 5:00
+#BSUB -M 1700
+#BSUB -P %PROJ%-%PROJENVIR%
+#BSUB -extsched 'CRAYLINUX[]'
+export NODES=1
+
+%include <head.h>
+%include <envir-xc40.h>
+
+export model=%MODEL%
+%include <model_ver.h>
+
+module load %MODULES%
+#---- Suggested modules -----------------------------------------
+module load PrgEnv-intel/${intel_ver}
+module load iobuf/${iobuf_ver}
+export IOBUF_PARAMS="*:count=24:size=32M:prefetch=1:preflush=1:verbose"
+module load grib_util/${grib_util_ver}
+module load cfp-intel-sandybridge/${cfp_ver}
+#----------------------------------------------------------------
+export FORT_BUFFERED=true
+export NWPSplatform="WCOSS"
+export MP_PGMMODEL=mpmd
+export MP_CSS_INTERRUPT=yes
+export cyc=%CYC%
+export CYC=${cyc}
+export cycle=t${cyc}z
+export PDY=${PDY:-%PDY:%}
+export KEEPDATA=%KEEPDATA%
+export OFSTYPE=%OFSTYPE%
+export model=%MODEL%
+export MODEL=${model^^}
+
+${HOMEnwps}/jobs/J${MODEL}_OFS_PREP
+
+%include <tail.h>
+
+%manual
+################################################################################
+#TASKSCRIPT DOCUMENTATION BLOCK
+#TASKSCRIPT:     jnwps_%OFSTYPE%_prep
+#LAST MODIFIER:  Floyd Fayton
+#ORGANIZATION:   NP11
+#DATE:           SEP 2014
+#FULL NAME:    /nwps_para/nwps/SR/jnwps_%OFSTYPE%_prep
+#PURPOSE:  To execute the job that creates NWPS RTOFS and ESTOFS output files
+#JOB SCRIPT CALLED: /nwprod/nwps.${model_ver}/jobs/JNWPS_OFS_PREP ==>
+#                            /nwprod/nwps.${model_ver}/scripts/exnwps_ofs_prep.sh.ecf
+#################################################################################
+######################################################################
+# Job specific troubleshooting instructions:
+#  see generic troubleshoot manual page
+#
+######################################################################
+%end
