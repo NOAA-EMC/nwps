@@ -1,0 +1,53 @@
+#BSUB -J %E%%MODEL%_datachk
+#BSUB -o %COMROOT%/output/%ENVIR%/today/%MODEL%_datachk.o%J
+#BSUB -L /bin/sh
+#BSUB -q %QUEUESERV%
+#BSUB -cwd /tmp
+#BSUB -W 0:05
+#BSUB -M 1700
+#BSUB -P %PROJ%-%PROJENVIR%
+
+%include <head.h>
+%include <envir-xc40.h>
+
+export TIME_FLAG=YES
+
+export model=%MODEL%
+
+%include <model_ver.h>
+
+module load %MODULES%
+export FORT_BUFFERED=true
+export NWPSplatform="WCOSS"
+export MP_PGMMODEL=mpmd
+export MP_CSS_INTERRUPT=yes
+export KEEPDATA=%KEEPDATA%
+export MODEL=${model^^}
+
+${HOMEnwps}/jobs/J${MODEL}_DATACHK
+
+export PSURGE_JOB=/%SUITE%/nwps/prep/psurge/jnwps_psurge_prep
+if $(ecflow_client --group="get ${PSURGE_JOB}; show state" 2> /dev/null|grep --quiet state:complete); then 
+    ecflow_client --requeue ${PSURGE_JOB}
+fi
+
+%include <tail.h>
+
+%manual
+################################################################################
+#TASKSCRIPT DOCUMENTATION BLOCK
+#TASKSCRIPT:     jnwps_datachk
+#LAST MODIFIER:  Floyd Fayton
+#ORGANIZATION:   NP11
+#DATE:           SEP 2014
+#FULL NAME:    /nwps/regions/jnwps_datachk
+#PURPOSE:  To execute the job that creates NWPS MFL GRIB output files
+#JOB SCRIPT CALLED: /nwprod/nwps.${nwps_ver}/jobs/JNWPS_DATACHK ==>
+#                            /nwprod/nwps.${nwps_ver}/scripts/exnwps_datachk.sh.ecf
+#################################################################################
+######################################################################
+# Job specific troubleshooting instructions:
+#  see generic troubleshoot manual page
+#
+######################################################################
+%end
