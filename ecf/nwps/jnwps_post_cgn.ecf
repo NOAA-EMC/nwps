@@ -1,0 +1,60 @@
+#BSUB -J %E%%MODEL%_%FAMILY1%_post_cg%N%
+#BSUB -o %COMROOT%/output/%ENVIR%/today/%MODEL%_%FAMILY1%_post_cg%N%.o%J
+#BSUB -L /bin/sh
+#BSUB -q %QUEUE%
+#BSUB -cwd /tmp
+#BSUB -W 1:30
+#BSUB -M 1700
+#BSUB -P %PROJ%-%PROJENVIR%
+
+#BSUB -extsched 'CRAYLINUX[]'
+export NODES=1
+
+%include <head.h>
+%include <envir-xc40.h>
+
+export model=%MODEL%
+%include <model_ver.h>
+
+module load %MODULES%
+#---- Suggested modules -----------------------------------------
+module load grib_util/${grib_util_ver}
+module load PrgEnv-intel/${intel_ver}
+module load cfp-intel-sandybridge/${cfp_ver}
+module load python/3.6.3
+
+#----------------------------------------------------------------
+export FORT_BUFFERED=true
+export NWPSplatform="WCOSS"
+export MP_PGMMODEL=mpmd
+export MP_CSS_INTERRUPT=yes
+export WFO=%FAMILY1%
+export siteid=${WFO}
+export SITEID=${WFO^^}
+export N=%N%
+export KEEPDATA=%KEEPDATA%
+export model=%MODEL%
+export MODEL=${model^^}
+
+${HOMEnwps}/jobs/J${MODEL}_POST
+
+%include <tail.h>
+
+%manual
+################################################################################
+#TASKSCRIPT DOCUMENTATION BLOCK
+#TASKSCRIPT:     jnwps_%FAMILY1%_post_cg%N%
+#LAST MODIFIER:  Floyd Fayton
+#ORGANIZATION:   NP11
+#DATE:           SEP 2014
+#FULL NAME:    /nwps_para/nwps/SR/jmfl
+#PURPOSE:  To execute the job that creates NWPS MFL GRIB output files
+#JOB SCRIPT CALLED: /nwprod/nwps.${nwps_ver}/jobs/JNWPS ==>
+#                            /nwprod/nwps.${nwps_ver}/scripts/exnwps_post_cg%N%.sh.ecf
+#################################################################################
+######################################################################
+# Job specific troubleshooting instructions:
+#  see generic troubleshoot manual page
+#
+######################################################################
+%end
