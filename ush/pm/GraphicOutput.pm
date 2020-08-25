@@ -252,7 +252,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     my ($WGRIB2, $SwapTotal, $SwapFree, $NUMCPUS, $NCPUS);
     
     my $infoFile03 = "${RUNdir}/info_to_all_modules.txt";
-    open IN, "<$infoFile03"  or die "Cannot open: $!";
+    open IN, "<$infoFile03"  or die "Cannot open $infoFile03: $!";
     
     $ndata=0;
     while (<IN>) {
