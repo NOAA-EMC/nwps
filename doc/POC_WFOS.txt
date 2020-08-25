@@ -26,7 +26,7 @@ POC LOX william.forwood@noaa.gov, mark.jackson@noaa.gov
 POC MTR drew.peterson@noaa.gov, warren.blier@noaa.gov
 POC EKA sten.tjaden@noaa.gov
 POC MFR michael.stavish@noaa.gov, john.lovegrove@noaa.gov
-POC PQR bill.schneider@noaa.gov, william.ahue@noaa.gov, jeremiah.pyle@noaa.gov
+POC PQR treena.jensen@noaa.gov, dan.j.miller@noaa.gov, william.ahue@noaa.gov, jeremiah.pyle@noaa.gov
 POC SEW kirby.cook@noaa.gov, melissa.clark@noaa.gov
 POC HFO alex.gibbs@noaa.gov
 POC GUM paul.stanko@noaa.gov
