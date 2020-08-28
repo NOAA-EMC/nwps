@@ -24,3 +24,6 @@ scp /gpfs/hps3/emc/marine/noscrub/emc.wavepa/git/nwps-externals/v_1-3/ush/rtofs/
 scp /gpfs/hps3/emc/marine/noscrub/emc.wavepa/git/nwps-externals/v_1-3/ush/python/etc/default/rdat.tar ${NWPSdir}/ush/python/etc/default
 tar -C ${NWPSdir}/ush/python/etc/default/ -xvf ${NWPSdir}/ush/python/etc/default/rdat.tar
 rm ${NWPSdir}/ush/python/etc/default/rdat.tar
+scp /gpfs/hps3/emc/marine/noscrub/emc.wavepa/git/nwps-externals/v_1-3/lib/cartopy_shapefiles.tgz ${NWPSdir}/lib/cartopy_shapefiles.tgz
+tar -C ${NWPSdir}/lib/ -xvf ${NWPSdir}/lib/cartopy_shapefiles.tgz
+rm ${NWPSdir}/lib/cartopy_shapefiles.tgz
