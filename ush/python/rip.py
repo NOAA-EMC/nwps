@@ -2,6 +2,7 @@
 # Author: Andre van der Westhuysen, 12/15/16
 # Purpose: Plots SWAN output parameters from GRIB2.
 
+import cartopy
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import matplotlib
@@ -12,8 +13,14 @@ import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
-#from mpl_toolkits.basemap import Basemap
 from matplotlib import colors
+
+print('*** rip.py ***')
+
+NWPSdir = os.environ['NWPSdir']
+cartopy.config['pre_existing_data_dir'] = NWPSdir+'/lib/cartopy'
+print('Reading cartopy shapefiles from:')
+print(cartopy.config['pre_existing_data_dir'])
 
 # Parameters
 monthstr = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']
@@ -23,7 +30,6 @@ noaa_logo = plt.imread('NOAA-Transparent-Logo.png')
 nws_logo = plt.imread('NWS_Logo.png')
 
 # Read control file
-print('*** rip.py ***')
 if os.path.isfile("swan_riprunup.ctl"):
    print('Reading: swan_riprunup.ctl')
 
@@ -221,7 +227,7 @@ for tstep in range(1, (int(TDEF)+1)):
       plt.plot(npierlons, npierlats, color="black", linewidth=2.5, linestyle="-", transform=ccrs.PlateCarree())
       plt.plot(spierlons, spierlats, color="black", linewidth=2.5, linestyle="-", transform=ccrs.PlateCarree())
 
-   figtitle = '** EXPERIMENTAL **   NWPS Rip Current Probability (%) \n Hour '\
+   figtitle = 'NWPS Rip Current Probability (%) \n Hour '\
               +str(forecastTime)+' ('+str(date.hour).zfill(2)+'Z'+str(date.day).zfill(2)\
               +monthstr[int(date.month)-1]+str(date.year)+')'
    plt.title(figtitle,fontsize=10)
