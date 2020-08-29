@@ -58,19 +58,8 @@ if [[ $rc -ne 0 ]] ; then
 fi
 
 #FOR WAVE TRACKING
-#The executable is ww3_systrk_mpi
-echo "================== FOR WAVE TRACKING : make_ww3_systrk.sh =================="
-cd ${NWPSdir}/sorc
-./make_ww3_systrk.sh
-rc=$?
-if [[ $rc -ne 0 ]] ; then
-    echo "Fatal error in building ww3_systrk."
-    echo "The log file is in sorc/ww3_systrk.fd/ww3_systrk_build.log"
-fi
-
-#FOR WAVE TRACKING PREPROCESSOR
 #The executable is ww3_sysprep.exe
-echo "================== FOR WAVE TRACKING PREPROCESSOR : make_sysprep.sh =================="
+echo "================== FOR WAVE TRACKING : make_sysprep.sh =================="
 cd ${NWPSdir}/sorc
 ./make_ww3_sysprep.sh
 rc=$?
