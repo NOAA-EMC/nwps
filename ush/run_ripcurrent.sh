@@ -292,7 +292,8 @@ while read line; do
    do
       let CYC=0
       while (( $CYC <= 21 )) && [ "${found}" == "FALSE" ]; do
-         if [[ $DAT == $DATE && $(printf %02d $CYC) == $(printf %02d $CYCLE) ]]; then
+         # JY if [[ $DAT == $DATE && $(printf %02d $CYC) == $(printf %02d $CYCLE) ]]; then
+         if [[ $DAT == $DATE && $(printf %02d $CYC) == $(printf %02d ${CYCLE#0}) ]]; then
             break
          fi
          DAT_CYC="${DAT}_$(printf %02d $CYC)00"
