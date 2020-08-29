@@ -57,11 +57,17 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 
+import cartopy
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
-#AW from mpl_toolkits.basemap import Basemap
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
+import os
+
+NWPSdir = os.environ['NWPSdir']
+cartopy.config['pre_existing_data_dir'] = NWPSdir+'/lib/cartopy'
+print('Reading cartopy shapefiles from:')
+print(cartopy.config['pre_existing_data_dir'])
 
 # Parameters
 monthstr = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']
