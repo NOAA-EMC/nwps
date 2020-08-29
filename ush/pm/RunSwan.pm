@@ -316,7 +316,7 @@ sub runWaveModel (%){
     }
     else {
 	if ($CG{CGNUM} eq $numofGrids) {
-	    print "++++++++++++++sub makeInputCGx++++++++++++++++++\n";
+	    print "++++++++++++++sub runWaveModel++++++++++++++++++\n";
 	    print " Number of Computational Grids: $numofGrids\n";
 	    print " Working in Comp Grid Number  : $CG{CGNUM}\n";
 	    print " Is Nest activated            : $NESTS\n";
@@ -416,35 +416,6 @@ sub runWaveModel (%){
     Logs::bug("end runWaveModel",1);
 }
 
-
-# NAME: &correctCurrentLine
-# CALL: &correctCurrentLine();
-# GOAL:create the computation time lines
-################################################################################
-sub correctCurrentLine{
-	#Logs::bug("correctCurrentLine",9);
-  	$inpGrid=~/NONSTAT/;
-  	my $end=$'; #'
-  	@info = split(" ",$end);
-  	$end = " $info[0]"." 1.0 HR "."$info[3]";
-
-  	Logs::bug("end=$end",9) if ($test==1);
-
-  	# update water level input line
-  	my $line=&giveNextEntryLine('INPGRID WLEV',1,\@inputCGx);
-  	$inputCGx[$line]=~/NONSTAT/;
-  	my $beginning=$`;
-  	$inputCGx[$line]=$beginning.$&.$end;
-
-  	# update current input line
-  	$line=&giveNextEntryLine('INPGRID CURR',1,\@inputCGx);
-  	$inputCGx[$line]=~/NONSTAT/;
-  	$beginning=$`;
-  	$inputCGx[$line]=$beginning.$&.$end;
-
-  	#Logs::bug("currentLine=$inputCGx[$line]",9);
-	#Logs::bug("end correctCurrentLine",9);
-}
 ################################################################################`
 # Subroutine ReadMetadataFile
 # Calling program/subroutine: RunSwan.pm/getWW3Files
