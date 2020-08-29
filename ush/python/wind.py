@@ -2,6 +2,7 @@
 # Author: Andre van der Westhuysen, 04/28/15
 # Purpose: Plots SWAN output parameters from GRIB2.
 
+import cartopy
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import matplotlib
@@ -13,7 +14,13 @@ import numpy as np
 import numpy.ma as ma
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
-#from mpl_toolkits.basemap import Basemap
+
+print('*** wind.py ***')
+
+NWPSdir = os.environ['NWPSdir']
+cartopy.config['pre_existing_data_dir'] = NWPSdir+'/lib/cartopy'
+print('Reading cartopy shapefiles from:')
+print(cartopy.config['pre_existing_data_dir'])
 
 # Parameters
 monthstr = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']
@@ -25,7 +32,6 @@ noaa_logo = plt.imread('NOAA-Transparent-Logo.png')
 nws_logo = plt.imread('NWS_Logo.png')
 
 # Read control file
-print('*** wind.py ***')
 if os.path.isfile("swan.ctl"):
    print('Reading: swan.ctl')
 
