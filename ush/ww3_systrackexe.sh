@@ -48,13 +48,6 @@ then
     source ${USHnwps}/set_os_env.sh
 fi
 
-NUMCPUS_SWAN=`grep "use constant NUMCPUS" ${RUNdir}/ConfigSwan.pm | awk -F\' '{ print $2 }'`
-if [ $NUMCPUS -ne $NUMCPUS_SWAN ]
-then
-    echo "INFO - NUMCPUS value in ConfigSwan.pm does not match the actual number of CPUs"
-    echo "INFO - Will use the actual number of CPUs for model run"
-fi
-
 cat /dev/null > ${LOGdir}/systrk_info.log
 
 echo "Starting clustering-based Python script ww3_systrk_cluster.py"  
