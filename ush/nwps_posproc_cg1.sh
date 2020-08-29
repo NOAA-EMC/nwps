@@ -250,10 +250,8 @@ echo " " | tee -a $logrunup
              echo "cat ${parm}_final_runup.grib2 >> final_runup.grib2"
 	     cat ${parm}_final_runup.grib2 >> final_runup.grib2
 	 done
-         if [ "${SITEID}" != "HGX" ]; then
-	    cp -f final_runup.grib2 ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
-	    cp -f final_runup.grib2 ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
-         fi
+	 #cp -f final_runup.grib2 ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+	 #cp -f final_runup.grib2 ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
          echo "Copying final_runup.grib2 to ${GRIB2file}"
          ${WGRIB2} -count final_runup.grib2
          echo "cat final_runup.grib2 >> ${GRIB2file}"
