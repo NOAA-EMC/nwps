@@ -91,7 +91,7 @@ JNWPS_PREP
    Num of CPUs :   1 (Serial)
 
 JNWPS_FORECAST_CG1
-   CPU time :   40:01 min:sec
+   CPU time :   53:01 min:sec
    Max/Ave Memory :   40 MB / 32.65 MB
    Num of CPUs :   96 (Parallel)
 
@@ -106,7 +106,7 @@ JNWPS_PRDGEN_CG1
    Num of CPUs :   11 (Parallel)
 
 JNWPS_WAVETRACK_CG1
-   CPU time :   15:20 min:sec
+   CPU time :   19:20 min:sec
    Max/Ave Memory :   313 MB / 25.26 MB
    Num of CPUs :   1 (Serial)
 
@@ -116,7 +116,7 @@ JNWPS_PRDGEN_CG0
    Num of CPUs :   8 (Parallel)
 
 JNWPS_FORECAST_CGn
-   CPU time :   02:44 min:sec
+   CPU time :   06:44 min:sec
     Max/Ave Memory :   41 MB / 20.85 MB
    Num of CPUs :   10 (Parallel)
 
@@ -143,39 +143,90 @@ Remaining WFOs:     48 CPUs
 A total of 44 nodes on WCOSS TO4 (Cray) should be reserved for the 
 on-demand operation, preferably EXCLUSIVE. 
 
-Table of product delays of v1.3 relative to v1.2.13 (new products 
-in v1.3 indicated by "new"):
+NWPS v1.3 has some product delays relative to v1.2. The tables below 
+detail the delivery times per job for each WFO, measured relative to the 
+run initiation time. The table on the left shows the timing for v1.3, and 
+the table on the right shows the corresponding values for v1.2:
 
-WFO, CG1, CG0, CG2, CG3, CG4, CG5
-bro,   -,   -,    ,    ,    ,    
-crp,   -,   7,    ,    ,    ,    
-hgx,   -,   -, new,    ,    ,    
-lch,   -,   -,    ,    ,    ,    
-lix,   -,  10,   -,    ,    ,    
-mob,   -,   -,   -,   -,   -,   -
-tae,  19,  31,   -,   -,   -,   -
-tbw,   -,   6,   -,    ,    ,    
-key,  33,  47,   -,    ,    ,    
-mfl,   -,   -,   -,   -,   -,   -
-mlb,   8,  18,   -,    ,    ,    
-jax,   9,  16,   -,   -,   -,   -
-sju,   -,  11,   -,   -,    ,    
-chs,  14,  23,   -,   -,    ,    
-ilm,  24,  33,    ,    ,    ,    
-mhx,   -,   -,   -,   -,   -,   -
-akq,   -,   -,    ,    ,    ,    
-lwx,   -, new,    ,    ,    ,    
-phi,  17,  25,   -,   -,    ,    
-okx,   -,   6,   -,   -,   -,    
-box,   -,  17,   7,    ,    ,    
-gyx,  27,  37,   -,   -,    ,    
-car,   -,   -,   -,   -,    ,    
-ajk,   -,  14,   -,   -,    ,    
-aer,   -,  13,   -,   -,    ,    
-alu,  14,  25, new, new,    ,    
-afg,   -,    ,   -,   -,    ,    
-hfo,   -,   7,   -,   -,   -,   -
-gum,  14,  24,   -,   -,   -,    
+Delivery time of v1.3 products (min):        Delivery times of v1.2 products (min):
+      CG1   CG0   CG2   CG3   CG4   CG5            CG1   CG0   CG2   CG3   CG4   CG5
+bro    25    37     -     -     -     -      bro    31    32     -     -     -     -
+crp    33    41     -     -     -     -      crp    33    34     -     -     -     -
+hgx    36    46    50     -     -     -      hgx    54    56     -     -     -     -
+lch    31    42     -     -     -     -      lch    35    37     -     -     -     -
+lix    43    54    74     -     -     -      lix    42    44    76     -     -     -
+mob    36    47    51    52    52    53      mob    40    42    65    66    67    68
+tae    45    58    63    64    64    65      tae    26    27    65    66    66    67
+tbw    36    46    49     -     -     -      tbw    38    40    55     -     -     -
+key    64    79    84     -     -     -      key    31    32    86     -     -     -
+mfl    80    99   105   106   106   107      mfl    98   101   114   115   115   116
+mlb    41    54    58     -     -     -      mlb    33    36    68     -     -     -
+jax    31    43    47    48    48    49      jax    22    27    58    59    59    60
+sju    57    74    80    81     -     -      sju    58    63    79    80     -     -
+chs    42    54    57    58     -     -      chs    28    31    68    69     -     -
+ilm    47    62     -     -     -     -      ilm    23    29     -     -     -     -
+mhx    69    79    84    85    85    86      mhx    72    74    88    89    89    90
+akq    51    63     -     -     -     -      akq    55    58     -     -     -     -
+lwx    16    25     -     -     -     -      lwx    15     -     -     -     -     -
+phi    34    46    49    50     -     -      phi    17    21    52    53     -     -
+okx    53    68    72    73    73     -      okx    59    62    74    74    75     -
+box    67    84    89     -     -     -      box    64    67    82     -     -     -
+gyx    44    56    61    62     -     -      gyx    17    19    66    67     -     -
+car    38    45    49    50     -     -      car    41    42    58    59     -     -
+sgx    40    50    53    54     -     -      sgx    51    54    66    67     -     -
+lox    23    42    59    60     -     -      lox    25    37    74    75     -     -
+mtr    28    44    77    78    79     -      mtr    22    31    80    81    82     -
+eka    19    34    41     -     -     -      eka    17    29    45     -     -     -
+mfr    25    40    69    70    70    71      mfr    23    33    74    75    75    76
+pqr    26    40    57    58    58    59      pqr    24    29    58    59    59    60
+sew    22    36    46     -     -     -      sew    23    31    57     -     -     -
+ajk    30    41   120   121     -     -      ajk    25    27   138   139     -     -
+aer    29    40   123   124     -     -      aer    24    27   134   135     -     -
+alu    55    72    79    80     -     -      alu    41    47     -     -     -     -
+afg    43     -    86    87     -     -      afg    40     -   101   102     -     -
+hfo    92   113   120   121   121   122      hfo    95   106   123   124   124   125
+gum    32    45    48    49    49     -      gum    18    21    43    44    45     -
+
+The table below summarizes all product delays >5 min. Note that new 
+products in v1.3 is indicated by "new":
+
+      CG1   CG0   CG2   CG3   CG4   CG5
+bro     -     -                       
+crp     -     7                       
+hgx     -     -   new                 
+lch     -     -                       
+lix     -    10     -                 
+mob     -     -     -     -     -     -
+tae    19    31     -     -     -     -
+tbw     -     6     -                 
+key    33    47     -                 
+mfl     -     -     -     -     -     -
+mlb     8    18     -                 
+jax     9    16     -     -     -     -
+sju     -    11     -     -           
+chs    14    23     -     -           
+ilm    24    33                       
+mhx     -     -     -     -     -     -
+akq     -     -                       
+lwx     -   new                       
+phi    17    25     -     -           
+okx     -     6     -     -     -     
+box     -    17     7                 
+gyx    27    37     -     -           
+car     -     -     -     -                  
+sgx     -     -     -     -    
+lox     -     -     -     -    
+mtr     6    13     -     -     -    
+eka     -     -     -    
+mfr     -     7     -     -     -     -
+pqr     -    11     -     -     -     -
+sew     -     -     -    
+ajk     -    14     -     -          
+aer     -    13     -     -          
+alu    14    25   new   new          
+afg     -           -     -   
+hfo     -     7     -     -     -     -
+gum    14    24     -     -     -     
 
 Disk storage: Total disk footprint in all run directories, nwges, 
 com and pcom is 2.5T (up from 19.T in v1.2.13). Request data to be 
@@ -194,17 +245,49 @@ nearshore wave growth and propagation
 - For 12 unstructured WFO domains: High resolution enables the
 computation of rip current and erosion/overwash guidance to aid
 in the production of coastal hazard forecasts
-- Transect output provides improved view on the wave guidance
+- Transect output provides a view of the wave guidance
 along high-impact tracks.
 
 USER IMPACT STATEMENT:
-To complete
+Coastal WFOs in SR, ER, WR, PR and AR will be provided with enhanced, 
+more consistent wave system guidance available in GFE (for editing) 
+and D2D (for display). For the 12 WFOs transitioning to unstructured 
+meshes, coastal wave physics will be resolved with more detail. For 
+21 WFOs (existing and new unstructured mesh domains), probabilistic 
+rip current probability guidance will be available in GFE/D2D for the 
+first time. Similarly for 16 WFOs probabilistic erosion and overwash 
+guidance will be available for the first time in GFE/D2D.
 
 TECHNICAL IMPACT STATEMENT:
-To complete
+Three technical impacts will be seen at the user (WFO) level:
+1) The product delays listed above
+2) The following GRIB2 fields will be removed from the SBN (see PNS20-47):
+   - Water depth (WDEPTH) [m]
+   - Wave length (WLENG) [m]
+3) The following GRIB2 fields will be added to the SBN (configured in AWIPS v20.2.1):
+Rip current probability (RIPCOP) [0-100%]
+   - Erosion Occurrence Probability (EROSNP) [0-100%]
+   - Overwash Occurrence Probability (OWASHP) [0-100%]
+   - Total Water Level Accounting for Tide, Wind and Waves (TWLWAV) [m MSL]
+   - Total Water Level Increase due to Waves (RUNUP) [m]
+   - Mean Increase in Water Level due to Waves (SETUP) [m]
+   - Time-varying Increase in Water Level due to Waves (SWASH) [m]
+   - Total Water Level Above Dune Toe (TWLDT) [m]
+   - Total Water Level Above Dune Crest (TWLDC) [m]
 
 RISKS:
-To complete
+This on-demand system has two primary technical risks:
+1. Dataflow: Each of the 23 coastal WFOs will submit a set of three files 
+via LDM for their respective runs. The data volume of each submission will 
+be up to 3 MB. There is a risk that there would be insufficient capacity 
+on the LDM to relay this data, or that the transmission would be interrupted 
+by a network outage. If this would occur, the NWPS runs will not initiate 
+on WCOSS.
+
+2. The NWPS will handle individual runs of up to 23 coastal WFOs, but 
+typically not all concurrently. Projections suggest that 44 nodes on 
+WCOSS T04 (Cray) will provide sufficient capacity, but the actual operational 
+loading could vary.  
 
 PROPOSED IMPLEMENTATION
 DATE:  December 21, 2020
@@ -257,7 +340,6 @@ ripforecast.exe            | ripforecast.fd                        | ripcurrent_
 estofs_padcirc             | estofs_padcirc.fd                     | padcirc_build.log
 estofs_adcprep (util)      | estofs_padcirc.fd                     | padcirc_build.log
 ww3_sysprep.exe            | ww3_sysprep.fd                        | sysprep_build.log
-ww3_systrk_mpi             | ww3_systrk.fd                         | ww3_systrk_build.log
 degrib                     | degrib-2.15.cd                        | degrib_build.log
 psurge2nwps                | psurge2nwps.cd                        | psurge2nwps_build.log
 psurge_identify.exe (util) | psurge2nwps.cd                        | psurge_identify_build.log
