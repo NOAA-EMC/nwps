@@ -265,7 +265,7 @@ Three technical impacts will be seen at the user (WFO) level:
    - Water depth (WDEPTH) [m]
    - Wave length (WLENG) [m]
 3) The following GRIB2 fields will be added to the SBN (configured in AWIPS v20.2.1):
-Rip current probability (RIPCOP) [0-100%]
+   - Rip current probability (RIPCOP) [0-100%]
    - Erosion Occurrence Probability (EROSNP) [0-100%]
    - Overwash Occurrence Probability (OWASHP) [0-100%]
    - Total Water Level Accounting for Tide, Wind and Waves (TWLWAV) [m MSL]
