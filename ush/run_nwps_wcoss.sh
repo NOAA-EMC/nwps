@@ -141,6 +141,12 @@ source ${DOMAINSETUP}
 
 warnings="NO"
 
+# NOTE: Default variables are defined in master config $USHnwps/nwps_config.sh
+# NOTE: The following do not require default values:
+#       - SITENAME
+#       - DOMAINSETUP
+#       - WINDFILE
+
 # Set our default values that will always override forecaster values
 Default_RUNLEN="144"       
 Default_USERDELTAC="600"
@@ -509,6 +515,7 @@ export USERDELTAC=${Default_USERDELTAC}
 export WAVEMODEL=${Default_WAVEMODEL}
 export PLOT=${Default_PLOT}
 export DOMAINSET="${FIXnwps}/domains/${SITEID}"
+export HOTSTART=${Default_HOTSTART}
 #.......
 echo "RUNLEN=$RUNLEN"
 echo "WNA=$WNA"
@@ -523,18 +530,10 @@ echo "WATERLEVELS=$WATERLEVELS"
 echo "CORE=$CORE"
 echo "EXCD=$EXCD"
 
-# NOTE: The following do not require default values
-# SITENAME
-# DOMAINSETUP
-# WINDFILE
-
-#
-# NOTE: The default variable is defined in master config $USHnwps/nwps_config.sh
-# NOTE: This must TRUE or FALSE to work with RunSwan.pm module
-HOTSTART="TRUE"
-if [ [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "MFL" ] || \
-     [ "${SITEID}" == "MLB" ] || [ "${SITEID}" == "JAX" ] || \ 
-     [ "${SITEID}" == "CHS" ] || [ "${SITEID}" == "ILM" ] ] && \
+# Set periodic stationary start to suppress hotspot build-up
+if ( [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "MFL" ] || \
+     [ "${SITEID}" == "MLB" ] || [ "${SITEID}" == "JAX" ] || \
+     [ "${SITEID}" == "CHS" ] || [ "${SITEID}" == "ILM" ] ) && \
      [ $(date -d "$D" '+%d') == '01' ]
 then
   echo "Setting periodic stationary start to suppress hotspot build-up due to Gulf Stream currents"
@@ -777,6 +776,9 @@ then
 else
     echo "NWPS development model run complete" | tee -a ${LOGdir}/run_nwps.log 
 fi
+
+# Added the label here - JY 01/18/2019
+#AW ecflow_client --alter change label DCOM "`echo $NewestWind`" $ECF_NAME
 
 echo -n "End time: "
 date -u | tee -a ${LOGdir}/run_nwps.log 
