@@ -917,7 +917,7 @@ sub getWW3Files($%) {
 # File Creation Date: January-2012
 # Date Last Modified:
 ################################################################################
-  sub makeWW3InputFiles  {
+sub makeWW3InputFiles  {
     use File::Find;
     my (@spcNum   , @prtNum, @ww3Files, $i, $j,@inputww3);
     my ($pointLong, $pointLati);
@@ -1086,7 +1086,7 @@ sub getWW3Files($%) {
 # GOAL: Prepares the wind file for WW3 adding dates and formatting
 # SUBROUTINES CALLS:&goForward
 ################################################################################
-  sub makeWindforWW3 {
+sub makeWindforWW3 {
      my($result);
      $Npx=$RunValues{"WNDnpxinp"  };
      my @temp=split //,$RunValues{"WNDtbeginp"};
@@ -1158,7 +1158,7 @@ sub getWW3Files($%) {
 # GOAL: Prepares the wind file for WW3 adding dates and formatting
 # SUBROUTINES CALLS:&goForward
 ################################################################################
-  sub makeCurrforWW3 {
+sub makeCurrforWW3 {
      my($result  , $Npx         , $idlacurr, $ndata);
      my(@curarray, $TimesForCurr, $ndataComp       );
      $Npx       = $RunValues{"CURnpxinp"};
