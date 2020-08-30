@@ -1,3 +1,4 @@
+import cartopy
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import sys
@@ -18,6 +19,16 @@ from sklearn import cluster
 from sklearn.neighbors import kneighbors_graph
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score
+
+print
+print('                   *** WAVEWATCH III Wave system tracking ***  ')
+print('               ===============================================')
+print
+
+NWPSdir = os.environ['NWPSdir']
+cartopy.config['pre_existing_data_dir'] = NWPSdir+'/lib/cartopy'
+print('Reading cartopy shapefiles from:')
+print(cartopy.config['pre_existing_data_dir'])
 
 # Parameters
 monthstr = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']
@@ -173,138 +184,6 @@ def hs_agg(hs_gr):
 def tp_agg(hs_gr,tp_gr):
         return np.dot(tp_gr, np.square(hs_gr/4.))/np.sum( np.square(hs_gr/4.) )
 
-print
-print('                   *** WAVEWATCH III Wave system tracking ***  ')
-print('               ===============================================')
-print
-
-""" Omiting the analysis of spiral tracking files
-print('Reading spiral track files file...')
-print('Read Tp values from spiral track output file...')
-fname = '../output/partition/CG1/SYS_TP.OUT.SPRL'
-with open(fname) as ff:
-   line = ff.readline()
-   nrowspl = int(line[0:6])
-   line = ff.readline()
-   ncolspl = int(line[0:6])
-   print(nrowspl,ncolspl)
-
-   datespl = np.empty(145)
-   tpspl = np.empty((nrowspl,ncolspl))
-   dirspl = np.empty((nrowspl,ncolspl))
-   grpspl = np.empty((nrowspl,ncolspl))
-   tpvec = np.empty((nrowspl*ncolspl,1))
-   dirvec = np.empty((nrowspl*ncolspl,1))
-   grpvec = np.empty((nrowspl*ncolspl,1))
-
-   nobs = 0
-   for fhour in range(0, 1):
-      print(fhour)
-      line = ff.readline()
-      yyyymmddHHMMSS = line[0:15]
-      date_time = yyyymmddHHMMSS
-      pattern = '%Y%m%d.%H%M%S'
-      datespl[fhour] = int(time.mktime(time.strptime(date_time, pattern)))
-      print(yyyymmddHHMMSS)
-
-      line = ff.readline()
-      ngrpspl = int(line[0:6])
-
-      for igrp in range(0, ngrpspl):
-         print('wave sys:'+str(igrp+1))
-         line = ff.readline()
-         line = ff.readline()
-         nobs = nobs+int(line[0:6])   #Calculate total number of grouped partitions
-         print(nobs)
-
-         for irow in range(0, nrowspl):
-            line = ff.readline()
-            tpspl[irow,0:ncolspl] = np.asarray(line.split())
-            grpspl[irow,0:ncolspl] = igrp+1
-         #print(tpspl)
-         #print(grpspl)
-
-         tp1d = tpspl.reshape((nrowspl*ncolspl,1))
-         #print(tp1d.shape)
-         #print(tp1d)
-
-         grp1d = grpspl.reshape((nrowspl*ncolspl,1))
-         #print(grp1d.shape)
-         #print(grp1d)
-
-         tpvec = np.append(tpvec,tp1d,axis=0)
-         #print(tpvec.shape)
-         #print(tpvec)
-
-         grpvec = np.append(grpvec,grp1d,axis=0)
-         #print(grpvec.shape)
-         #print(grpvec)
-   print(nobs)
- 
-print('Read Dir values from spiral track output file...')           
-fname = '../output/partition/CG1/SYS_DIR.OUT.SPRL'
-with open(fname) as ff:
-   line = ff.readline()
-   nrowspl = int(line[0:6])
-   line = ff.readline()
-   ncolspl = int(line[0:6])
-   print(nrowspl,ncolspl)
-
-   datespl = np.empty(145)
-   dirspl = np.empty((nrowspl,ncolspl))
-   dirvec = np.empty((nrowspl*ncolspl,1))
-    
-   for fhour in range(0, 1):
-      print(fhour)
-      line = ff.readline()
-      yyyymmddHHMMSS = line[0:15]
-      date_time = yyyymmddHHMMSS
-      pattern = '%Y%m%d.%H%M%S'
-      datespl[fhour] = int(time.mktime(time.strptime(date_time, pattern)))
-      print(yyyymmddHHMMSS)
-
-      line = ff.readline()
-      ngrpspl = int(line[0:6])
-
-      for igrp in range(0, ngrpspl):
-         print('wave sys:'+str(igrp+1))
-         line = ff.readline()
-         line = ff.readline()
-
-         for irow in range(0, nrowspl):
-            line = ff.readline()
-            dirspl[irow,0:ncolspl] = np.asarray(line.split())
-         #print(dirspl)
-
-         dir1d = dirspl.reshape((nrowspl*ncolspl,1))
-         #print(dir1d.shape)
-         #print(dir1d)
-
-         dirvec = np.append(dirvec,dir1d,axis=0)
-         #print(dirvec.shape)
-         #print(dirvec)
-
-   spldat = np.append(tpvec,dirvec,axis=1)
-   spldat = np.append(spldat,grpvec,axis=1)
-   spldat = spldat[nrowspl*ncolspl:,:]
-   spldat = spldat[spldat[:,0]!=9999.00,:]
-   print(spldat.shape)
-   #print(spldat[:,0:2])
-   #print(spldat[:,2])
-
-   print('Calculating spiral fit quality...')
-   if ( len(np.unique(spldat[:,2])) > 1 ):            #To compute metric there must be more than 1 label (wave group)
-      silhouette_spl = silhouette_score(spldat[:,0:2], spldat[:,2])
-   else:
-      print('*** Only one or fewer wave groups found - SC cannot be computed')
-      silhouette_spl = -9.999
-   print('Silhouette Coefficient:',silhouette_spl,'\n')
-   print(nobs)
-   print(nrowspl,ncolspl,ngrpspl)
-   sparse_coef = float(nobs)/float(nrowspl*ncolspl*ngrpspl)
-   print('Sparseness Coefficient:',sparse_coef,'\n')
-"""
-
 print('Reading ww3_systrk.inp file...')
 fname = 'ww3_systrk.inp'
 with open(fname) as ff:
@@ -455,11 +334,6 @@ rawdat = np.loadtxt('partition.blk.raw')
 print('... finished')
 #print(rawdat)
 
-#AW20200206 placemnt_coef = float(nobs)/float(len(rawdat))*145      #Temporarily multiply by 145 to get results for 1st hour
-#AW20200206 print(nobs)
-#AW20200206 print(len(rawdat)/145)
-#AW20200206 print('Placement Coefficient:',placemnt_coef,'\n')
-
 # Select parameters for clustering, omitting first (empty) record
 # Contents of partition.blk.raw:
 # 20181015.060000  49.420 233.000    1.12   11.85   282.22     9.98   0.00
@@ -482,10 +356,7 @@ for nclust in range(2, 6):
    print('Trying nclust =',nclust)
    k_means = cluster.KMeans(n_clusters=nclust)
    k_means.fit(wavedat)
-   #affinity_propagation = cluster.AffinityPropagation(damping=.9,preference=-200)
-   #affinity_propagation.fit(wavedat)
    label=k_means.labels_.astype(np.float)
-   #>label=affinity_propagation.labels_.astype(np.float)
 
    print('Calculating fit quality...')
    silhouette_avg = silhouette_score(wavedat[0:(nlon*nlat*5),:], label[0:(nlon*nlat*5)], sample_size=min(25000,nlon*nlat*5))
@@ -498,19 +369,6 @@ for nclust in range(2, 6):
 print('nclust_best = ',nclust_best)
 print('silhouette_best = ',silhouette_best)
 #--------------------------------
-
-#># connectivity matrix for structured Ward
-#>connectivity = kneighbors_graph(wavedat, n_neighbors=10, include_self=False)
-#># make connectivity symmetric
-#>connectivity = 0.5 * (connectivity + connectivity.T)
-
-#>average_linkage = cluster.AgglomerativeClustering(linkage="average", affinity="cityblock", connectivity=connectivity)
-#>average_linkage.fit(wavedat)
-
-#label=average_linkage.labels_.astype(np.float)
-#partmax=max(label)
-#print(partmax)
-#for itime in range(1500328800, 1500350400, 3600):
 
 lons=np.linspace(x0,x0+float(nlon-1)*dx,num=nlon)
 lats=np.linspace(y0,y0+float(nlat-1)*dy,num=nlat)
@@ -722,9 +580,6 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
    cover_part = excp_pnt*np.ones(5)
 
    if (plot_output) & (fhour % 3 == 0):
-      #plt.figure(figsize=(16,13))
-      #ax = plt.axes(projection=ccrs.Mercator())
-      #fig, ax = plt.subplots(4, 3, subplot_kw=dict(projection=ccrs.Mercator()))
       fig, axarr = plt.subplots(nrows=4, ncols=3, figsize=(16,13), constrained_layout=False,
                           subplot_kw={'projection': ccrs.PlateCarree()})
       #fig.tight_layout()
@@ -733,19 +588,13 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
    for ipart in range(0, nclust_best):
       #print('Wave system:',(ipart+1))
       labelindex = np.where(label_best == ipart)[0]
-      #print(labelindex)
       partfield = wavedat2[ labelindex, ]
-      #print(partfield)
-      #print(len(partfield))
-      #print(len(partfield[0]))
 
       #hsmax = convfac*np.max(partfield[:,3])
       hsmax = hsmax_all
 
       dateindex = np.where(partfield[:,0] == float(timestr))[0]
-      #print(dateindex)
       partfield2 = partfield[ dateindex, ]
-      #print(partfield2)
 
       # Create a matrices of nlat x nlon initialized to 0
       #tic = time.time()
@@ -759,49 +608,12 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
       #print('Time to create matrices:')
       #print(toc-tic)
 
-      """
-      tic = time.time()
-      # Set up parameter field
-      for ilat in range(0, nlat):
-         for ilon in range(0, nlon):
-            #print("grid: ",lat,lon)
-            #print((np.where(partfield2[:,1] == lat))
-            #print((np.where(partfield2[:,2] == lon))
-            llind = np.where( (abs(partfield2[:,1]-lats[ilat]) < 0.005) & (abs(partfield2[:,2]-lons[ilon]) < 0.005) )[0]
-            #print(ilat, ilon, llind)
-            #print(partfield2[llind,1])
-            #print(partfield2[llind,2])
-            if llind.size:
-               #AW072417 par[ilat,ilon] = partfield2[ min(llind), 3 ]
-               #AW072417 par2[ilat,ilon] = partfield2[ min(llind), 4 ]
-               #AW072417 par3[ilat,ilon] = partfield2[ min(llind), 5 ]
-               par[ilat,ilon] = 4.*( np.sum((partfield2[ llind, 3 ]/4.)**2.) )**0.5
-               #AW par2[ilat,ilon] = np.mean(partfield2[ llind, 4 ])
-               #AW par2[ilat,ilon] = np.max(partfield2[ llind, 4 ])
-               par2[ilat,ilon] = np.dot(partfield2[ llind, 4 ],(partfield2[ llind, 3 ]/4.)**2.)/np.sum((partfield2[ llind, 3 ]/4.)**2.)
-               par3[ilat,ilon] = partfield2[ min(llind), 5 ]
-      #print(par)
-      #print(par2)
-      #print(par3)
-      print('Sys, Hs, Tp, Dir:',(ipart+1),("%5.2f" % np.nanmean(par)),("%5.2f" % np.nanmean(par2)),("%6.2f" % np.nanmean(par3)))
-      toc = time.time()
-      print('Time to interpolate parameter field (1):')
-      print(toc-tic)
-      """
-
       #tic = time.time()
       # Set up parameter field
       for ilat in range(0, nlat):
          llind_lat = np.where(partfield2[:,6]==ilat)[0]
          for ilon in range(0, nlon):
-            #print("grid: ",lat,lon)
-            #print((np.where(partfield2[:,1] == lat))
-            #print((np.where(partfield2[:,2] == lon))
-            #llind2 = np.where( abs(partfield2[llind1,2]-lons[ilon]) < 0.005 )[0]
             llind = llind_lat[ np.where(partfield2[llind_lat,7]==ilon)[0] ]
-            #print(ilat, ilon, llind)
-            #print(partfield2[llind,1])
-            #print(partfield2[llind,2])
             if llind.size > 1:
                par[ilat,ilon] = hs_agg(partfield2[llind,3])
                par2[ilat,ilon] = tp_agg(partfield2[llind,3],partfield2[llind,4])
@@ -810,9 +622,6 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
                par[ilat,ilon] = partfield2[llind,3]
                par2[ilat,ilon] = partfield2[llind,4]
                par3[ilat,ilon] = partfield2[llind,5]
-      #print(par)
-      #print(par2)
-      #print(par3)
       print('Sys, Hs, Tp, Dir:',(ipart+1),("%5.2f" % np.nanmean(par)),("%5.2f" % np.nanmean(par2)),("%6.2f" % np.nanmean(par3)))
       #toc = time.time()
       #print('Time to interpolate parameter field (5):')
@@ -825,8 +634,6 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
       # --- Plot output in separate panels per cluster (every 3 hours) ---------
       #tic = time.time()
       if (plot_output) & (fhour % 3 == 0):      
-         #if fhour == 0:
-            #m=Basemap(projection='merc',llcrnrlon=lons.min(),urcrnrlon=lons.max(),llcrnrlat=lats.min(),urcrnrlat=lats.max(),resolution='h')
          x=reflon-360.
          y=reflat
          xspc=spclon-360.
@@ -837,8 +644,6 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
          else:
             plotloc = ipart+3         
 
-         #plt.subplot(4, 3, plotloc)
-         #plt.scatter(partfield2[:, 2], partfield2[:, 1], partfield2[:, 3], edgecolor='none')
          if hsmax > 10.:
             clevs = np.arange(0, int(hsmax)+1,2)
          if hsmax > 5.:
@@ -849,7 +654,6 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
             clevs = np.arange(0, int(hsmax)+1,0.2)
          if hsmax < 1.:
             clevs = np.arange(0, int(hsmax)+1,0.1)
-         #cf = axlist[plotloc].contourf(x,y,convfac*np.asarray(par),clevs,cmap=plt.cm.jet, transform=ccrs.PlateCarree())
          norm = BoundaryNorm(clevs, ncolors=plt.cm.jet.N, clip=True)
          cf = axlist[plotloc].pcolormesh(x,y,convfac*np.asarray(par),cmap=plt.cm.jet, norm=norm, transform=ccrs.PlateCarree())
          cb = fig.colorbar(cf, ax=axlist[plotloc])
@@ -862,13 +666,6 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
          axlist[plotloc].quiver(x[0::rowskip,0::colskip],y[0::rowskip,0::colskip],\
              u[0::rowskip,0::colskip],v[0::rowskip,0::colskip], \
              color='black',pivot='middle',scale=6.,width=0.015,units='inches',transform=ccrs.PlateCarree())
-         #m.fillcontinents()
-         #m.drawcoastlines()
-         #m.drawmeridians(np.arange(lons.min(),lons.max(),dlon),labels=[0,0,0,dlon],dashes=[1,3],color='0.50',fontsize=9)   
-         #m.drawparallels(np.arange(lats.min(),lats.max(),dlat),labels=[dlat,0,0,0],dashes=[1,3],color='0.50',fontsize=9)
-         #plt.plot(landbound[:,0]-360.,landbound[:,1],'k')
-         #plt.xlim(lons.min()-360.,lons.max()-360.)
-         #plt.ylim(lats.min(),lats.max())
          axlist[plotloc].coastlines(resolution='10m', color='black', linewidth=1)
          axlist[plotloc].set_extent([lons.min()-360.,lons.max()-360., lats.min(), lats.max()])
          gl = axlist[plotloc].gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
@@ -878,10 +675,7 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
          gl.xlabel_style = {'size': 7}
          gl.ylabel_style = {'size': 7}
 
-         #plt.subplot(4, 3, plotloc+3)
-         #plt.scatter(partfield2[:, 2], partfield2[:, 1], partfield2[:, 3], edgecolor='none')
          clevs2 = np.arange(0, 30+1)
-         #cf = axlist[plotloc+3].contourf(x,y,par2,clevs2,cmap=plt.cm.jet, transform=ccrs.PlateCarree())
          norm = BoundaryNorm(clevs2, ncolors=plt.cm.jet.N, clip=True)
          cf = axlist[plotloc+3].pcolormesh(x,y,par2,cmap=plt.cm.jet, norm=norm, transform=ccrs.PlateCarree())
          cb = fig.colorbar(cf, ax=axlist[plotloc+3])
@@ -894,13 +688,6 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
          axlist[plotloc+3].quiver(x[0::rowskip,0::colskip],y[0::rowskip,0::colskip],\
              u[0::rowskip,0::colskip],v[0::rowskip,0::colskip], \
              color='black',pivot='middle',scale=6.,width=0.015,units='inches',transform=ccrs.PlateCarree())
-         #m.fillcontinents()
-         #m.drawcoastlines()
-         #m.drawmeridians(np.arange(lons.min(),lons.max(),dlon),labels=[0,0,0,dlon],dashes=[1,3],color='0.50',fontsize=9)   
-         #m.drawparallels(np.arange(lats.min(),lats.max(),dlat),labels=[dlat,0,0,0],dashes=[1,3],color='0.50',fontsize=9)
-         #plt.plot(landbound[:,0]-360.,landbound[:,1],'k')
-         #plt.xlim(lons.min()-360.,lons.max()-360.)
-         #plt.ylim(lats.min(),lats.max())
          axlist[plotloc+3].coastlines(resolution='10m', color='black', linewidth=1)
          axlist[plotloc+3].set_extent([lons.min()-360.,lons.max()-360., lats.min(), lats.max()])
          gl = axlist[plotloc+3].gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
@@ -913,9 +700,12 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
          # Plot 2d wave spectrum
          vardens_plt = vardens[fhour,:,:]  
          vardens_plt = np.transpose(vardens_plt)
-         vardens_plt = np.log10(vardens_plt)
+         vardens_plt = np.log10(np.maximum(vardens_plt,1e-09))
+         vardens_plt[vardens_plt==np.log10(1e-09)] = np.NaN
+         cmap=plt.cm.jet
+         cmap.set_bad("white")
          ax2 = fig.add_subplot(4, 3, 9, projection='polar')
-         ax2.contourf(theta[:,0:21],r[:,0:21],vardens_plt[:,0:21],cmap=plt.cm.jet)
+         ax2.contourf(theta[:,0:21],r[:,0:21],vardens_plt[:,0:21],cmap=cmap)
          ax2.set_theta_zero_location("N")
          ax2.set_theta_direction("clockwise")
       #toc = time.time()
@@ -1009,8 +799,7 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
       date = datetime.datetime.fromtimestamp(itime) 
       figtitle = 'NWPS Wave Systems: Top: Hs (ft) and Dir; Bottom: Tp (s) and Dir \n'\
                   +'Hour '+str(fhour)+' ('+str(date.hour).zfill(2)+'Z'+str(date.day).zfill(2)\
-                  +monthstr[int(date.month)-1]+str(date.year)+')'+', SC = '+("%4.2f" % silhouette_best)+'\n'\
-                  +'*** EXPERIMENTAL - NOT FOR OPERATIONAL USE ***' 
+                  +monthstr[int(date.month)-1]+str(date.year)+')'+', SC = '+("%4.2f" % silhouette_best)
       fig.suptitle(figtitle,fontsize=18)
 
       filenm = 'swan_systrk1_hr'+str(fhour).zfill(3)+'.png'
