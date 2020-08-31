@@ -167,7 +167,7 @@ Default_EXCD="10"
 if [ -z "${RETROSPECTIVE}" ]; then RETROSPECTIVE="FALSE"; fi
 
 # Forecaster warning log file
-#AW . ${DATA}/PDY
+. ${DATA}/PDY
 cat /dev/null > ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
 date_hh_mm_ss=$(date)
 echo "NWPS run started on ${date_hh_mm_ss}" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
@@ -778,7 +778,7 @@ else
 fi
 
 # Added the label here - JY 01/18/2019
-#AW ecflow_client --alter change label DCOM "`echo $NewestWind`" $ECF_NAME
+ecflow_client --alter change label DCOM "`echo $NewestWind`" $ECF_NAME
 
 echo -n "End time: "
 date -u | tee -a ${LOGdir}/run_nwps.log 
