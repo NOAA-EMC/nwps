@@ -314,8 +314,9 @@ Make the $NWROOT home directory for the model:
 > mkdir nwps
 > cd nwps
 
-Check out the NWPS code from the following VLab repo (head):
+Check out the NWPS code from the following VLab repo, checkout the tag v1.3.0:
 > git clone https://vlab.ncep.noaa.gov/code-review/EMC_nwps
+> git checkout v1.3.0
 
 II) Building the executables
 
