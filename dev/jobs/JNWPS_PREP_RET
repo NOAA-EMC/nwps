@@ -144,7 +144,7 @@ export dcom=${dcom:-${DCOMROOT}/us007003}
 export COMINwaveTAFB=$dcom
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 export COM_nwps_R_ES_TOFS="/com"
-export PCOM=${PCOMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
+export COMOUTwmo=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/wmo
 
 if [ "${SENDCOM}" = YES ]; then
     mkdir -p $COMOUT
