@@ -102,18 +102,18 @@ export COMINm2=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm2}/${WFO}
 export COMINm3=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm3}/${WFO}
 export COMOUT=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
 export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
+export COMOUTwmo=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/wmo
 #--------------------------------------------------------------------------
 export dcom_hist="$GESOUT/dcom_hist.txt"
 dcom=${dcom:-${DCOMROOT}/prod}
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
-export PCOM=${PCOMROOT}/${NET}
 
 # make sure NWPS COM directory exists
 if [ "${SENDCOM}" = YES ]; then
     mkdir -p $COMOUT
 fi
 
-mkdir -p $COMIN $LOGdir $RUNdir $TMPdir $OUTPUTdir $ARCHdir $DATAdir $INPUTdir $VARdir $GESOUT $PCOM
+mkdir -p $COMIN $LOGdir $RUNdir $TMPdir $OUTPUTdir $ARCHdir $DATAdir $INPUTdir $VARdir $GESOUT $COMOUTwmo
 
 env
 
