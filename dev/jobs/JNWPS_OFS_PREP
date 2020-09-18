@@ -148,7 +148,7 @@ export COMROOTp2=/gpfs/hps/nco/ops/com
 #------------------------
 
 export dcom=${dcom:-/dcom/us007003}
-export PCOM=/pcom/${envir}/${NET}
+export COMOUTwmo=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/wmo
 
 if [ "${SENDCOM}" = YES ]; then
     mkdir -p $COMOUT
