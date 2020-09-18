@@ -328,16 +328,16 @@ YMDH=${PDY}
       then
         set +x
         echo "      Saving AWIPSGRIB as grib2.$cycle.awipsnwps_${siteid}_${grdID}"
-        echo "          in $PCOM"
+        echo "          in $COMOUTwmo"
         [[ "$LOUD" = YES ]] && set -x
-        cp AWIPSGRIB $PCOM/grib2.$cycle.awipsnwps_${siteid}_${grdID}
+        cp AWIPSGRIB $COMOUTwmo/grib2.$cycle.awipsnwps_${siteid}_${grdID}
         export err=$?; err_chk
       fi
 
       if [ "$SENDDBN" = 'YES' ]
       then
         echo "      Sending grib2.$cycle.awipsnwps_${siteid}_${grdID} to DBNET."
-        $DBNROOT/bin/dbn_alert GRIB_LOW $NET $job $PCOM/grib2.$cycle.awipsnwps_${siteid}_${grdID}
+        $DBNROOT/bin/dbn_alert GRIB_LOW $NET $job $COMOUTwmo/grib2.$cycle.awipsnwps_${siteid}_${grdID}
       fi
 
       ##rm -f "tocgrib2_${grdID}.out"
