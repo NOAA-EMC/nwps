@@ -108,7 +108,7 @@ export COMINpsurgem1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/psurge/${WFO}_outpu
 export dcom=${dcom:-${DCOMROOT}/prod}
 
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
-export PCOM=${PCOMROOT}/${NET}
+export COMOUTwmo=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/wmo
 export dcom_hist="$GESOUT/dcom_hist.txt"
 
 # make sure NWPS COM directory exists
