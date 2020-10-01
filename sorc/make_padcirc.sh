@@ -15,27 +15,7 @@ set -x
 #module purge
 #module load ncep
 #module load ../modulefiles/NWPS/v1.3.0
-#module list
-
-# Loading Intel Compiler Suite
-module load PrgEnv-intel/5.2.56
-module load craype-haswell
-
-# Loading ncep prod modules
-module load HDF5-serial-intel-haswell/1.8.9
-module load NetCDF-intel-haswell/4.2
-module load jasper-gnu-haswell/1.900.1
-module load png-intel-haswell/1.2.49
-module load zlib-intel-haswell/1.2.7
-module load nco-gnu-haswell/4.4.4 
-
-# Loading ncep libs 
-module load bacio-intel/2.0.1
-module load bufr-intel/11.0.2
-module load g2-intel/2.5.0
-module load w3emc-intel/2.2.0
-module load w3nco-intel/2.0.6
-module load iobuf/2.0.5
+module list
 
 # 1. Preparations: seek source codes to be compiled
 export COMP=ftn
