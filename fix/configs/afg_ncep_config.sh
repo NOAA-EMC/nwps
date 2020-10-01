@@ -8,7 +8,7 @@ export RTOFSNX="1314"
 export RTOFSNY="483"
 
 # ESTOFS Domain for water level
-export ESTOFS_BASIN="estofs.pac"
+export ESTOFS_BASIN="estofs.glo"
 export ESTOFS_REGION="alaska"
 # ESFOTSDOMAIN="LON LAT 0. NX NY EW-RESOLUTION NS-RESOLUTION"
 export ESTOFSDOMAIN="183.00 60.50 0.0  1313 482 0.029326 0.027027"
