@@ -152,11 +152,11 @@ export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="multi_1"
-export FTPPAT1B="multi_1"
+export FTPPAT1="gfswave"
+export FTPPAT1B="gfswave"
 export FTPPAT2="KEY"
 export NFTPATTEMPTS="3"
-export WAVECPS="multi_1.KEY51.spec.swan,multi_1.KEY63.spec.swan,multi_1.KEY68.spec.swan,multi_1.KEY71.spec.swan"
+export WAVECPS="gfswave.KEY51.spec.swan,gfswave.KEY63.spec.swan,gfswave.KEY68.spec.swan,gfswave.KEY71.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -167,41 +167,41 @@ export WAVECPS="multi_1.KEY51.spec.swan,multi_1.KEY63.spec.swan,multi_1.KEY68.sp
 #$BOUNDARY COMMAND LINES
 #$UNSTR SWAN BOUNDARY COMMAND LINES - SITE NW-KEY
 #$ NW boundary
-#BOUNdspec SIDE 1 CCW CON FILE 'multi_1.KEY81.spec.swan' 1
-#BOUNdspec SIDE 2 CCW CON FILE 'multi_1.KEY80.spec.swan' 1
-#BOUNdspec SIDE 3 CCW CON FILE 'multi_1.KEY79.spec.swan' 1
-#BOUNdspec SIDE 4 CCW CON FILE 'multi_1.KEY78.spec.swan' 1
-#BOUNdspec SIDE 5 CCW CON FILE 'multi_1.KEY77.spec.swan' 1
+#BOUNdspec SIDE 1 CCW CON FILE 'gfswave.KEY81.spec.swan' 1
+#BOUNdspec SIDE 2 CCW CON FILE 'gfswave.KEY80.spec.swan' 1
+#BOUNdspec SIDE 3 CCW CON FILE 'gfswave.KEY79.spec.swan' 1
+#BOUNdspec SIDE 4 CCW CON FILE 'gfswave.KEY78.spec.swan' 1
+#BOUNdspec SIDE 5 CCW CON FILE 'gfswave.KEY77.spec.swan' 1
 #$ NE boundary
-#BOUNdspec SIDE 6 CCW CON FILE 'multi_1.KEY76.spec.swan' 1
-#BOUNdspec SIDE 7 CCW CON FILE 'multi_1.KEY75.spec.swan' 1
-#BOUNdspec SIDE 8 CCW CON FILE 'multi_1.KEY74.spec.swan' 1
-#BOUNdspec SIDE 9 CCW CON FILE 'multi_1.KEY73.spec.swan' 1
-#BOUNdspec SIDE 10 CCW CON FILE 'multi_1.KEY72.spec.swan' 1
-#BOUNdspec SIDE 11 CCW CON FILE 'multi_1.KEY71.spec.swan' 1
+#BOUNdspec SIDE 6 CCW CON FILE 'gfswave.KEY76.spec.swan' 1
+#BOUNdspec SIDE 7 CCW CON FILE 'gfswave.KEY75.spec.swan' 1
+#BOUNdspec SIDE 8 CCW CON FILE 'gfswave.KEY74.spec.swan' 1
+#BOUNdspec SIDE 9 CCW CON FILE 'gfswave.KEY73.spec.swan' 1
+#BOUNdspec SIDE 10 CCW CON FILE 'gfswave.KEY72.spec.swan' 1
+#BOUNdspec SIDE 11 CCW CON FILE 'gfswave.KEY71.spec.swan' 1
 #$ E boundary
-#BOUNdspec SIDE 12 CCW CON FILE 'multi_1.KEY70.spec.swan' 1
-#BOUNdspec SIDE 13 CCW CON FILE 'multi_1.KEY69.spec.swan' 1
-#BOUNdspec SIDE 14 CCW CON FILE 'multi_1.KEY68.spec.swan' 1
+#BOUNdspec SIDE 12 CCW CON FILE 'gfswave.KEY70.spec.swan' 1
+#BOUNdspec SIDE 13 CCW CON FILE 'gfswave.KEY69.spec.swan' 1
+#BOUNdspec SIDE 14 CCW CON FILE 'gfswave.KEY68.spec.swan' 1
 #$ S boundary
-#BOUNdspec SIDE 15 CCW CON FILE 'multi_1.KEY67.spec.swan' 1
-#BOUNdspec SIDE 16 CCW CON FILE 'multi_1.KEY66.spec.swan' 1
-#BOUNdspec SIDE 17 CCW CON FILE 'multi_1.KEY65.spec.swan' 1
-#BOUNdspec SIDE 18 CCW CON FILE 'multi_1.KEY64.spec.swan' 1
-#BOUNdspec SIDE 19 CCW CON FILE 'multi_1.KEY63.spec.swan' 1
+#BOUNdspec SIDE 15 CCW CON FILE 'gfswave.KEY67.spec.swan' 1
+#BOUNdspec SIDE 16 CCW CON FILE 'gfswave.KEY66.spec.swan' 1
+#BOUNdspec SIDE 17 CCW CON FILE 'gfswave.KEY65.spec.swan' 1
+#BOUNdspec SIDE 18 CCW CON FILE 'gfswave.KEY64.spec.swan' 1
+#BOUNdspec SIDE 19 CCW CON FILE 'gfswave.KEY63.spec.swan' 1
 #$ W boundary
-#BOUNdspec SIDE 20 CCW CON FILE 'multi_1.KEY62.spec.swan' 1
-#BOUNdspec SIDE 21 CCW CON FILE 'multi_1.KEY61.spec.swan' 1
-#BOUNdspec SIDE 22 CCW CON FILE 'multi_1.KEY60.spec.swan' 1
-#BOUNdspec SIDE 23 CCW CON FILE 'multi_1.KEY59.spec.swan' 1
-#BOUNdspec SIDE 24 CCW CON FILE 'multi_1.KEY58.spec.swan' 1
-#BOUNdspec SIDE 25 CCW CON FILE 'multi_1.KEY57.spec.swan' 1
-#BOUNdspec SIDE 26 CCW CON FILE 'multi_1.KEY56.spec.swan' 1
-#BOUNdspec SIDE 27 CCW CON FILE 'multi_1.KEY55.spec.swan' 1
-#BOUNdspec SIDE 28 CCW CON FILE 'multi_1.KEY54.spec.swan' 1
-#BOUNdspec SIDE 29 CCW CON FILE 'multi_1.KEY53.spec.swan' 1
-#BOUNdspec SIDE 30 CCW CON FILE 'multi_1.KEY52.spec.swan' 1
-#BOUNdspec SIDE 31 CCW CON FILE 'multi_1.KEY51.spec.swan' 1
+#BOUNdspec SIDE 20 CCW CON FILE 'gfswave.KEY62.spec.swan' 1
+#BOUNdspec SIDE 21 CCW CON FILE 'gfswave.KEY61.spec.swan' 1
+#BOUNdspec SIDE 22 CCW CON FILE 'gfswave.KEY60.spec.swan' 1
+#BOUNdspec SIDE 23 CCW CON FILE 'gfswave.KEY59.spec.swan' 1
+#BOUNdspec SIDE 24 CCW CON FILE 'gfswave.KEY58.spec.swan' 1
+#BOUNdspec SIDE 25 CCW CON FILE 'gfswave.KEY57.spec.swan' 1
+#BOUNdspec SIDE 26 CCW CON FILE 'gfswave.KEY56.spec.swan' 1
+#BOUNdspec SIDE 27 CCW CON FILE 'gfswave.KEY55.spec.swan' 1
+#BOUNdspec SIDE 28 CCW CON FILE 'gfswave.KEY54.spec.swan' 1
+#BOUNdspec SIDE 29 CCW CON FILE 'gfswave.KEY53.spec.swan' 1
+#BOUNdspec SIDE 30 CCW CON FILE 'gfswave.KEY52.spec.swan' 1
+#BOUNdspec SIDE 31 CCW CON FILE 'gfswave.KEY51.spec.swan' 1
 #NUM DIRimpl cdd=1 cdlim=2
 #$END BOUNSEG
 #
