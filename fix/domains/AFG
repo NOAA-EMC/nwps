@@ -116,11 +116,11 @@ export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="multi_1"
-export FTPPAT1B="multi_1"
+export FTPPAT1="gfswave"
+export FTPPAT1B="gfswave"
 export FTPPAT2="NW-AFG"
 export NFTPATTEMPTS="3"
-export WAVECPS="multi_1.NW-AFG51.spec.swan,multi_1.NW-AFG119.spec.swan"
+export WAVECPS="gfswave.NW-AFG51.spec.swan,gfswave.NW-AFG119.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -129,44 +129,44 @@ export WAVECPS="multi_1.NW-AFG51.spec.swan,multi_1.NW-AFG119.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#BOUN SEG XY 183.50 73.00 221.00 73.00 VAR FILE 0.00 'multi_1.NW-AFG51.spec.swan'    1 &
-#2.00 'multi_1.NW-AFG55.spec.swan'    1 &
-#4.00 'multi_1.NW-AFG59.spec.swan'    1 &
-#6.00 'multi_1.NW-AFG63.spec.swan'    1 &
-#8.00 'multi_1.NW-AFG67.spec.swan'    1 &
-#10.00 'multi_1.NW-AFG71.spec.swan'    1 &
-#12.00 'multi_1.NW-AFG75.spec.swan'    1 &
-#14.00 'multi_1.NW-AFG79.spec.swan'    1 &
-#16.00 'multi_1.NW-AFG83.spec.swan'    1 &
-#18.00 'multi_1.NW-AFG87.spec.swan'    1 &
-#20.00 'multi_1.NW-AFG91.spec.swan'    1 &
-#22.00 'multi_1.NW-AFG95.spec.swan'    1 &
-#24.00 'multi_1.NW-AFG99.spec.swan'    1 &
-#26.00 'multi_1.NW-AFG103.spec.swan'    1 &
-#28.00 'multi_1.NW-AFG107.spec.swan'    1 &
-#30.00 'multi_1.NW-AFG111.spec.swan'    1 &
-#32.00 'multi_1.NW-AFG115.spec.swan'    1 &
-#34.00 'multi_1.NW-AFG119.spec.swan'    1 &
-#36.00 'multi_1.NW-AFG123.spec.swan'    1 &
-#37.50 'multi_1.NW-AFG126.spec.swan'    1 
+#BOUN SEG XY 183.50 73.00 221.00 73.00 VAR FILE 0.00 'gfswave.NW-AFG51.spec.swan'    1 &
+#2.00 'gfswave.NW-AFG55.spec.swan'    1 &
+#4.00 'gfswave.NW-AFG59.spec.swan'    1 &
+#6.00 'gfswave.NW-AFG63.spec.swan'    1 &
+#8.00 'gfswave.NW-AFG67.spec.swan'    1 &
+#10.00 'gfswave.NW-AFG71.spec.swan'    1 &
+#12.00 'gfswave.NW-AFG75.spec.swan'    1 &
+#14.00 'gfswave.NW-AFG79.spec.swan'    1 &
+#16.00 'gfswave.NW-AFG83.spec.swan'    1 &
+#18.00 'gfswave.NW-AFG87.spec.swan'    1 &
+#20.00 'gfswave.NW-AFG91.spec.swan'    1 &
+#22.00 'gfswave.NW-AFG95.spec.swan'    1 &
+#24.00 'gfswave.NW-AFG99.spec.swan'    1 &
+#26.00 'gfswave.NW-AFG103.spec.swan'    1 &
+#28.00 'gfswave.NW-AFG107.spec.swan'    1 &
+#30.00 'gfswave.NW-AFG111.spec.swan'    1 &
+#32.00 'gfswave.NW-AFG115.spec.swan'    1 &
+#34.00 'gfswave.NW-AFG119.spec.swan'    1 &
+#36.00 'gfswave.NW-AFG123.spec.swan'    1 &
+#37.50 'gfswave.NW-AFG126.spec.swan'    1 
 #$
-#BOUN SEG XY 183.50 61.00 183.50 72.50 VAR FILE 0.00 'multi_1.NW-AFG151.spec.swan'    1 &
-#1.00 'multi_1.NW-AFG149.spec.swan'    1 &
-#2.00 'multi_1.NW-AFG147.spec.swan'    1 &
-#3.00 'multi_1.NW-AFG145.spec.swan'    1 &
-#4.00 'multi_1.NW-AFG143.spec.swan'    1 &
-#8.00 'multi_1.NW-AFG141.spec.swan'    1 &
-#9.00 'multi_1.NW-AFG139.spec.swan'    1 &
-#10.00 'multi_1.NW-AFG137.spec.swan'    1 &
-#11.00 'multi_1.NW-AFG135.spec.swan'    1 &
-#11.50 'multi_1.NW-AFG134.spec.swan'    1 
+#BOUN SEG XY 183.50 61.00 183.50 72.50 VAR FILE 0.00 'gfswave.NW-AFG151.spec.swan'    1 &
+#1.00 'gfswave.NW-AFG149.spec.swan'    1 &
+#2.00 'gfswave.NW-AFG147.spec.swan'    1 &
+#3.00 'gfswave.NW-AFG145.spec.swan'    1 &
+#4.00 'gfswave.NW-AFG143.spec.swan'    1 &
+#8.00 'gfswave.NW-AFG141.spec.swan'    1 &
+#9.00 'gfswave.NW-AFG139.spec.swan'    1 &
+#10.00 'gfswave.NW-AFG137.spec.swan'    1 &
+#11.00 'gfswave.NW-AFG135.spec.swan'    1 &
+#11.50 'gfswave.NW-AFG134.spec.swan'    1 
 #$
-#BOUN SEG XY 184.00 61.00 194.00 61.00 VAR FILE 0.00 'multi_1.NW-AFG152.spec.swan'    1 &
-#2.00 'multi_1.NW-AFG156.spec.swan'    1 &
-#4.00 'multi_1.NW-AFG160.spec.swan'    1 &
-#6.00 'multi_1.NW-AFG164.spec.swan'    1 &
-#8.00 'multi_1.NW-AFG168.spec.swan'    1 &
-#10.00 'multi_1.NW-AFG172.spec.swan'    1
+#BOUN SEG XY 184.00 61.00 194.00 61.00 VAR FILE 0.00 'gfswave.NW-AFG152.spec.swan'    1 &
+#2.00 'gfswave.NW-AFG156.spec.swan'    1 &
+#4.00 'gfswave.NW-AFG160.spec.swan'    1 &
+#6.00 'gfswave.NW-AFG164.spec.swan'    1 &
+#8.00 'gfswave.NW-AFG168.spec.swan'    1 &
+#10.00 'gfswave.NW-AFG172.spec.swan'    1
 #$
 #$END BOUNSEG
 #
