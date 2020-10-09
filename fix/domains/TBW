@@ -143,11 +143,11 @@ export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="multi_1"
-export FTPPAT1B="multi_1"
+export FTPPAT1="gfswave"
+export FTPPAT1B="gfswave"
 export FTPPAT2="TBW"
 export NFTPATTEMPTS="3"
-export WAVECPS="multi_1.TBW59.spec.swan"
+export WAVECPS="gfswave.TBW59.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -160,21 +160,21 @@ export WAVECPS="multi_1.TBW59.spec.swan"
 #$ N boundary
 #$ NOTE: SIDE 1 skirting Tallahassee is left blank
 #$ W boundary
-#BOUNdspec SIDE 2 CCW CON FILE 'multi_1.TBW51.spec.swan' 1
-#BOUNdspec SIDE 3 CCW CON FILE 'multi_1.TBW52.spec.swan' 1
-#BOUNdspec SIDE 4 CCW CON FILE 'multi_1.TBW53.spec.swan' 1
-#BOUNdspec SIDE 5 CCW CON FILE 'multi_1.TBW54.spec.swan' 1
-#BOUNdspec SIDE 6 CCW CON FILE 'multi_1.TBW55.spec.swan' 1
-#BOUNdspec SIDE 7 CCW CON FILE 'multi_1.TBW56.spec.swan' 1
-#BOUNdspec SIDE 8 CCW CON FILE 'multi_1.TBW57.spec.swan' 1
-#BOUNdspec SIDE 9 CCW CON FILE 'multi_1.TBW58.spec.swan' 1
+#BOUNdspec SIDE 2 CCW CON FILE 'gfswave.TBW51.spec.swan' 1
+#BOUNdspec SIDE 3 CCW CON FILE 'gfswave.TBW52.spec.swan' 1
+#BOUNdspec SIDE 4 CCW CON FILE 'gfswave.TBW53.spec.swan' 1
+#BOUNdspec SIDE 5 CCW CON FILE 'gfswave.TBW54.spec.swan' 1
+#BOUNdspec SIDE 6 CCW CON FILE 'gfswave.TBW55.spec.swan' 1
+#BOUNdspec SIDE 7 CCW CON FILE 'gfswave.TBW56.spec.swan' 1
+#BOUNdspec SIDE 8 CCW CON FILE 'gfswave.TBW57.spec.swan' 1
+#BOUNdspec SIDE 9 CCW CON FILE 'gfswave.TBW58.spec.swan' 1
 #$ S boundary
-#BOUNdspec SIDE 10 CCW CON FILE 'multi_1.TBW59.spec.swan' 1
-#BOUNdspec SIDE 11 CCW CON FILE 'multi_1.TBW60.spec.swan' 1
-#BOUNdspec SIDE 12 CCW CON FILE 'multi_1.TBW61.spec.swan' 1
-#BOUNdspec SIDE 13 CCW CON FILE 'multi_1.TBW62.spec.swan' 1
-#BOUNdspec SIDE 14 CCW CON FILE 'multi_1.TBW63.spec.swan' 1
-#BOUNdspec SIDE 15 CCW CON FILE 'multi_1.TBW64.spec.swan' 1
+#BOUNdspec SIDE 10 CCW CON FILE 'gfswave.TBW59.spec.swan' 1
+#BOUNdspec SIDE 11 CCW CON FILE 'gfswave.TBW60.spec.swan' 1
+#BOUNdspec SIDE 12 CCW CON FILE 'gfswave.TBW61.spec.swan' 1
+#BOUNdspec SIDE 13 CCW CON FILE 'gfswave.TBW62.spec.swan' 1
+#BOUNdspec SIDE 14 CCW CON FILE 'gfswave.TBW63.spec.swan' 1
+#BOUNdspec SIDE 15 CCW CON FILE 'gfswave.TBW64.spec.swan' 1
 #$ E boundary
 #$ NOTE: SIDE 16 facing the Everglades is left blank
 #$END BOUNSEG
