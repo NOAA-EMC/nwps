@@ -408,3 +408,56 @@ fix/configs/okx_ncep_config.sh
 fix/configs/sgx_ncep_config.sh
 fix/configs/txx_ncep_config.sh
 fix/configs/tbw_ncep_config.sh
+
+
+Update for tag 'v1.3.4':
+Date: 10/09/20
+
+This tag contains updates for the downstream dependency of NWPS v1.3 on GFSv16 (both 
+atmosphere and wave).
+
+IMPLEMENTATION INSTRUCTIONS (v1.3.4):
+
+The script files listed below need to be updated in the codebase in order to correctly 
+process the output from GFSv16. Since no executables are modified, the system 
+does not need to be rebuilt for these changes to be incorporated.
+
+jobs/JNWPS_PREP
+ush/get_wna.sh
+ush/gfswind/bin/get_gfswind.sh
+fix/domains/AER
+fix/domains/AFG
+fix/domains/AJK
+fix/domains/AKQ
+fix/domains/ALU
+fix/domains/BOX
+fix/domains/BRO
+fix/domains/CAR
+fix/domains/CHS
+fix/domains/CRP
+fix/domains/EKA
+fix/domains/GUM
+fix/domains/GYX
+fix/domains/HFO
+fix/domains/HGX
+fix/domains/ILM
+fix/domains/JAX
+fix/domains/KEY
+fix/domains/LCH
+fix/domains/LIX
+fix/domains/LOX
+fix/domains/LWX
+fix/domains/MFL
+fix/domains/MFR
+fix/domains/MHX
+fix/domains/MLB
+fix/domains/MOB
+fix/domains/MTR
+fix/domains/OKX
+fix/domains/PHI
+fix/domains/PQR
+fix/domains/SEW
+fix/domains/SGX
+fix/domains/SJU
+fix/domains/TAE
+fix/domains/TBW
