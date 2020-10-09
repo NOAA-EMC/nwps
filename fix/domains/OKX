@@ -149,11 +149,11 @@ export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="multi_1"
-export FTPPAT1B="multi_1"
+export FTPPAT1="gfswave"
+export FTPPAT1B="gfswave"
 export FTPPAT2="NW-NYC"
 export NFTPATTEMPTS="3"
-export WAVECPS="multi_1.NW-NYC57.spec.swan"
+export WAVECPS="gfswave.NW-NYC57.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -164,18 +164,18 @@ export WAVECPS="multi_1.NW-NYC57.spec.swan"
 #$BOUNDARY COMMAND LINES
 #$UNSTR SWAN BOUNDARY COMMAND LINES - SITE NW-NYC
 #$ S boundary
-#BOUNdspec SIDE 1 CCW CON FILE 'multi_1.NW-NYC56.spec.swan' 1
-#BOUNdspec SIDE 2 CCW CON FILE 'multi_1.NW-NYC55.spec.swan' 1
-#BOUNdspec SIDE 3 CCW CON FILE 'multi_1.NW-NYC54.spec.swan' 1
-#BOUNdspec SIDE 4 CCW CON FILE 'multi_1.NW-NYC53.spec.swan' 1
-#BOUNdspec SIDE 5 CCW CON FILE 'multi_1.NW-NYC52.spec.swan' 1
-#BOUNdspec SIDE 6 CCW CON FILE 'multi_1.NW-NYC51.spec.swan' 1
-#BOUNdspec SIDE 7 CCW CON FILE 'multi_1.NW-NYC57.spec.swan' 1
+#BOUNdspec SIDE 1 CCW CON FILE 'gfswave.NW-NYC56.spec.swan' 1
+#BOUNdspec SIDE 2 CCW CON FILE 'gfswave.NW-NYC55.spec.swan' 1
+#BOUNdspec SIDE 3 CCW CON FILE 'gfswave.NW-NYC54.spec.swan' 1
+#BOUNdspec SIDE 4 CCW CON FILE 'gfswave.NW-NYC53.spec.swan' 1
+#BOUNdspec SIDE 5 CCW CON FILE 'gfswave.NW-NYC52.spec.swan' 1
+#BOUNdspec SIDE 6 CCW CON FILE 'gfswave.NW-NYC51.spec.swan' 1
+#BOUNdspec SIDE 7 CCW CON FILE 'gfswave.NW-NYC57.spec.swan' 1
 #$ E boundary
-#BOUNdspec SIDE 8 CCW CON FILE 'multi_1.NW-NYC58.spec.swan' 1
-#BOUNdspec SIDE 9 CCW CON FILE 'multi_1.NW-NYC59.spec.swan' 1
-#BOUNdspec SIDE 10 CCW CON FILE 'multi_1.NW-NYC60.spec.swan' 1
-#BOUNdspec SIDE 11 CCW CON FILE 'multi_1.NW-NYC61.spec.swan' 1
+#BOUNdspec SIDE 8 CCW CON FILE 'gfswave.NW-NYC58.spec.swan' 1
+#BOUNdspec SIDE 9 CCW CON FILE 'gfswave.NW-NYC59.spec.swan' 1
+#BOUNdspec SIDE 10 CCW CON FILE 'gfswave.NW-NYC60.spec.swan' 1
+#BOUNdspec SIDE 11 CCW CON FILE 'gfswave.NW-NYC61.spec.swan' 1
 #$END BOUNSEG
 #
 #========================================================================
