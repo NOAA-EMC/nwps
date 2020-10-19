@@ -354,12 +354,13 @@ silhouette_best = -1.
 # Test optimal number of clusters (between 2-5)
 for nclust in range(2, 6):
    print('Trying nclust =',nclust)
-   k_means = cluster.KMeans(n_clusters=nclust)
+   k_means = cluster.KMeans(n_clusters=nclust, random_state=1)
    k_means.fit(wavedat)
    label=k_means.labels_.astype(np.float)
 
    print('Calculating fit quality...')
-   silhouette_avg = silhouette_score(wavedat[0:(nlon*nlat*5),:], label[0:(nlon*nlat*5)], sample_size=min(25000,nlon*nlat*5))
+   silhouette_avg = silhouette_score(wavedat[0:(nlon*nlat*5),:], label[0:(nlon*nlat*5)], 
+                                     sample_size=min(25000,nlon*nlat*5), random_state=1)
    print('Silhouette Coefficient:',silhouette_avg,'\n')
    #silhouette_avg = 0.
    if silhouette_avg > silhouette_best:
