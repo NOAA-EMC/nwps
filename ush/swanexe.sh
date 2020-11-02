@@ -59,17 +59,123 @@ fi
 if [ "${MODELCORE}" == "SWAN" ]
 then
    echo "Starting SWAN executable for "${siteid}
-   if [ "${siteid}" == "gyx" ] || [ "${siteid}" == "mfr" ] || [ "${siteid}" == "ajk" ] || [ "${siteid}" == "mtr" ]
+
+   # Get run PDY and cycle to check for the presence of hotfiles     
+   yyyymmdd=`ls *.wnd | cut -c1-8`
+   hh=`ls *.wnd | cut -c9-10`
+
+   if [ "${siteid}" == "mfr" ] || [ "${siteid}" == "aer" ] || [ "${siteid}" == "afg" ]
    then
+      # Check that all hotfiles are present
+      for i in {1..9}; do
+         echo "Checking hotfile for "${yyyymmdd}.${hh}"00-00"${i}
+         # Note: Checking also for PDYm1 to allow running of a late cycle from previous day         
+         if [ -f ${RUNdir}/${yyyymmdd}.${hh}00-00${i} ] || [ -f ${RUNdir}/${PDYm1}.${hh}00-00${i} ]; then
+            echo "Found "${yyyymmdd}.${hh}"00-00"${i}
+         else
+            echo "Warning: Not found "${yyyymmdd}.${hh}"00-00"${i}
+            msg="WARNING - missing hotfile for core 0"${i}" for REGULAR GRID run. Will execute a cold start run."
+            postmsg "$jlogfile" "$msg"
+            sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
+         fi
+      done
+      for i in {10..48}; do
+         echo "Checking hotfile for "${yyyymmdd}.${hh}"00-0"${i}       
+         if [ -f ${RUNdir}/${yyyymmdd}.${hh}00-0${i} ] || [ -f ${RUNdir}/${PDYm1}.${hh}00-0${i} ]; then
+            echo "Found "${yyyymmdd}.${hh}"00-0"${i}
+         else
+            echo "Warning: Not found "${yyyymmdd}.${hh}"00-0"${i}
+            msg="WARNING - missing hotfile for core "${i}" for REGULAR GRID run. Will execute a cold start run."
+            postmsg "$jlogfile" "$msg"
+            sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
+         fi
+      done
       aprun -n48 -N24 -j1 -d1 ${EXECnwps}/swan.exe
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
-   elif [ "${siteid}" == "hgx" ] || [ "${siteid}" == "mob" ] || [ "${siteid}" == "tae" ] || [ "${siteid}" == "jax" ] || [ "${siteid}" == "key" ] || [ "${siteid}" == "phi" ] || [ "${siteid}" == "aer" ] || [ "${siteid}" == "afg" ] || [ "${siteid}" == "lch" ]
+   elif [ "${siteid}" == "ajk" ] || [ "${siteid}" == "mtr" ]
    then
+      # Check that all hotfiles are present
+      for i in {1..9}; do
+         echo "Checking hotfile for "${yyyymmdd}.${hh}"00-00"${i}
+         # Note: Checking also for PDYm1 to allow running of a late cycle from previous day         
+         if [ -f ${RUNdir}/${yyyymmdd}.${hh}00-00${i} ] || [ -f ${RUNdir}/${PDYm1}.${hh}00-00${i} ]; then
+            echo "Found "${yyyymmdd}.${hh}"00-00"${i}
+         else
+            echo "Warning: Not found "${yyyymmdd}.${hh}"00-00"${i}
+            msg="WARNING - missing hotfile for core 0"${i}" for REGULAR GRID run. Will execute a cold start run."
+            postmsg "$jlogfile" "$msg"
+            sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
+         fi
+      done
+      for i in {10..96}; do
+         echo "Checking hotfile for "${yyyymmdd}.${hh}"00-0"${i}       
+         if [ -f ${RUNdir}/${yyyymmdd}.${hh}00-0${i} ] || [ -f ${RUNdir}/${PDYm1}.${hh}00-0${i} ]; then
+            echo "Found "${yyyymmdd}.${hh}"00-0"${i}
+         else
+            echo "Warning: Not found "${yyyymmdd}.${hh}"00-0"${i}
+            msg="WARNING - missing hotfile for core "${i}" for REGULAR GRID run. Will execute a cold start run."
+            postmsg "$jlogfile" "$msg"
+            sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
+         fi
+      done
+      aprun -n96 -N24 -j1 -d1 ${EXECnwps}/swan.exe
+      export err=$?;
+      echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
+   elif [ "${siteid}" == "lch" ]
+   then
+      # Check that all hotfiles are present
+      for i in {1..9}; do
+         echo "Checking hotfile for "${yyyymmdd}.${hh}"00-00"${i}
+         # Note: Checking also for PDYm1 to allow running of a late cycle from previous day         
+         if [ -f ${RUNdir}/${yyyymmdd}.${hh}00-00${i} ] || [ -f ${RUNdir}/${PDYm1}.${hh}00-00${i} ]; then
+            echo "Found "${yyyymmdd}.${hh}"00-00"${i}
+         else
+            echo "Warning: Not found "${yyyymmdd}.${hh}"00-00"${i}
+            msg="WARNING - missing hotfile for core 0"${i}" for REGULAR GRID run. Will execute a cold start run."
+            postmsg "$jlogfile" "$msg"
+            sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
+         fi
+      done
+      for i in {10..24}; do
+         echo "Checking hotfile for "${yyyymmdd}.${hh}"00-0"${i}       
+         if [ -f ${RUNdir}/${yyyymmdd}.${hh}00-0${i} ] || [ -f ${RUNdir}/${PDYm1}.${hh}00-0${i} ]; then
+            echo "Found "${yyyymmdd}.${hh}"00-0"${i}
+         else
+            echo "Warning: Not found "${yyyymmdd}.${hh}"00-0"${i}
+            msg="WARNING - missing hotfile for core "${i}" for REGULAR GRID run. Will execute a cold start run."
+            postmsg "$jlogfile" "$msg"
+            sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
+         fi
+      done
       aprun -n24 -N24 -j1 -d1 ${EXECnwps}/swan.exe
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
    else
+      # Check that all hotfiles are present
+      for i in {1..9}; do
+         echo "Checking hotfile for "${yyyymmdd}.${hh}"00-00"${i}
+         # Note: Checking also for PDYm1 to allow running of a late cycle from previous day         
+         if [ -f ${RUNdir}/${yyyymmdd}.${hh}00-00${i} ] || [ -f ${RUNdir}/${PDYm1}.${hh}00-00${i} ]; then
+            echo "Found "${yyyymmdd}.${hh}"00-00"${i}
+         else
+            echo "Warning: Not found "${yyyymmdd}.${hh}"00-00"${i}
+            msg="WARNING - missing hotfile for core 0"${i}" for REGULAR GRID run. Will execute a cold start run."
+            postmsg "$jlogfile" "$msg"
+            sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
+         fi
+      done
+      for i in {10..16}; do
+         echo "Checking hotfile for "${yyyymmdd}.${hh}"00-0"${i}       
+         if [ -f ${RUNdir}/${yyyymmdd}.${hh}00-0${i} ] || [ -f ${RUNdir}/${PDYm1}.${hh}00-0${i} ]; then
+            echo "Found "${yyyymmdd}.${hh}"00-0"${i}
+         else
+            echo "Warning: Not found "${yyyymmdd}.${hh}"00-0"${i}
+            msg="WARNING - missing hotfile for core "${i}" for REGULAR GRID run. Will execute a cold start run."
+            postmsg "$jlogfile" "$msg"
+            sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
+         fi
+      done
       aprun -n16 -N16 -j1 -d1 ${EXECnwps}/swan.exe
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
@@ -100,7 +206,8 @@ then
       hh=`ls *.wnd | cut -c9-10`
 
       # Run each domain with appropriate number of cores.
-      if [ "${siteid}" == "key" ] || [ "${siteid}" == "mfl" ] || [ "${siteid}" == "akq" ]
+      if [ "${siteid}" == "key" ] || [ "${siteid}" == "mfl" ] || [ "${siteid}" == "akq" ] \
+         || [ "${siteid}" == "mlb" ] || [ "${siteid}" == "box" ]
       then
          echo "Copying required files for PuNSWAN run for "${siteid}
 
@@ -147,7 +254,6 @@ then
             postmsg "$jlogfile" "$msg"
          fi
          err_chk
-      #######
       elif [ "${siteid}" == "alu" ]
       then
          echo "Copying required files for PuNSWAN run for "${siteid}
@@ -195,14 +301,12 @@ then
             postmsg "$jlogfile" "$msg"
          fi
          err_chk
-      #######
-      elif [ "${siteid}" == "car" ] || [ "${siteid}" == "tbw" ] \
-         || [ "${siteid}" == "box" ] || [ "${siteid}" == "sgx" ] || [ "${siteid}" == "sju" ] \
-         || [ "${siteid}" == "akq" ] || [ "${siteid}" == "okx" ] || [ "${siteid}" == "gum" ] \
-         || [ "${siteid}" == "alu" ] || [ "${siteid}" == "gua" ] || [ "${siteid}" == "mlb" ] \
+      elif [ "${siteid}" == "car" ] || [ "${siteid}" == "tbw" ] || [ "${siteid}" == "sgx" ] \
+         || [ "${siteid}" == "sju" ] || [ "${siteid}" == "okx" ] || [ "${siteid}" == "gum" ] \
          || [ "${siteid}" == "jax" ] || [ "${siteid}" == "chs" ] || [ "${siteid}" == "ilm" ] \
          || [ "${siteid}" == "phi" ] || [ "${siteid}" == "gyx" ] || [ "${siteid}" == "tae" ] \
-         || [ "${siteid}" == "mob" ] || [ "${siteid}" == "hgx" ]
+         || [ "${siteid}" == "mob" ] || [ "${siteid}" == "hgx" ] || [ "${siteid}" == "hfo" ] \
+         || [ "${siteid}" == "mhx" ]
       then
          echo "Copying required files for PuNSWAN run for "${siteid}
 
@@ -240,100 +344,6 @@ then
 
          echo "Starting PuNSWAN executable for "${siteid}
          aprun -n48 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
-         export err=$?;
-         echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
-         cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
-         cp -f *CG1* ${DATA}/output/grid
-         if [ "${err}" != "0" ];then
-            msg="FATAL ERROR: Wave model executable punswan4110.exe failed."
-            postmsg "$jlogfile" "$msg"
-         fi
-         err_chk
-      elif [ "${siteid}" == "mhx" ]
-      then
-         echo "Copying required files for PuNSWAN run for "${siteid}
-
-         # Check that all hotfiles are present in the PE subfolders
-         for i in {0..9}; do
-            echo "Checking hotfile for PE000"${i}"/"${yyyymmdd}.${hh}"00"
-            # Note: Checking also for PDYm1 to allow running of a late cycle from previous day           
-            if [ -f ${RUNdir}/PE000${i}/${yyyymmdd}.${hh}00 ] || [ -f ${RUNdir}/PE000${i}/${PDYm1}.${hh}00 ]; then
-               echo "Found PE000"${i}"/"${yyyymmdd}.${hh}"00"
-            else
-               echo "Warning: Not found PE000"${i}"/"${yyyymmdd}.${hh}"00"
-               msg="WARNING - missing hotfile in PE000"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
-               postmsg "$jlogfile" "$msg"
-               sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
-            fi
-         done
-         for i in {10..23}; do
-            echo "Checking hotfile for PE00"${i}"/"${yyyymmdd}.${hh}"00"           
-            if [ -f ${RUNdir}/PE00${i}/${yyyymmdd}.${hh}00 ] || [ -f ${RUNdir}/PE00${i}/${PDYm1}.${hh}00 ]; then
-               echo "Found PE00"${i}"/"${yyyymmdd}.${hh}"00"
-            else
-               echo "Warning: Not found PE00"${i}"/"${yyyymmdd}.${hh}"00"
-               msg="WARNING - missing hotfile in PE00"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
-               postmsg "$jlogfile" "$msg"
-               sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
-            fi
-         done
-
-         for i in {0..9}; do
-            cp ${RUNdir}/INPUT ${RUNdir}/PE000${i}/
-         done
-         for i in {10..23}; do
-            cp ${RUNdir}/INPUT ${RUNdir}/PE00${i}/
-         done
-
-         echo "Starting PuNSWAN executable for "${siteid}
-         aprun -n24 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
-         export err=$?;
-         echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
-         cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
-         cp -f *CG1* ${DATA}/output/grid
-         if [ "${err}" != "0" ];then
-            msg="FATAL ERROR: Wave model executable punswan4110.exe failed."
-            postmsg "$jlogfile" "$msg"
-         fi
-         err_chk
-      elif [ "${siteid}" == "hfo" ]
-      then
-         echo "Copying required files for PuNSWAN run for "${siteid}
-
-         # Check that all hotfiles are present in the PE subfolders
-         for i in {0..9}; do
-            echo "Checking hotfile for PE000"${i}"/"${yyyymmdd}.${hh}"00"
-            # Note: Checking also for PDYm1 to allow running of a late cycle from previous day           
-            if [ -f ${RUNdir}/PE000${i}/${yyyymmdd}.${hh}00 ] || [ -f ${RUNdir}/PE000${i}/${PDYm1}.${hh}00 ]; then
-               echo "Found PE000"${i}"/"${yyyymmdd}.${hh}"00"
-            else
-               echo "Warning: Not found PE000"${i}"/"${yyyymmdd}.${hh}"00"
-               msg="WARNING - missing hotfile in PE000"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
-               postmsg "$jlogfile" "$msg"
-               sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
-            fi
-         done
-         for i in {10..15}; do
-            echo "Checking hotfile for PE00"${i}"/"${yyyymmdd}.${hh}"00"           
-            if [ -f ${RUNdir}/PE00${i}/${yyyymmdd}.${hh}00 ] || [ -f ${RUNdir}/PE00${i}/${PDYm1}.${hh}00 ]; then
-               echo "Found PE00"${i}"/"${yyyymmdd}.${hh}"00"
-            else
-               echo "Warning: Not found PE00"${i}"/"${yyyymmdd}.${hh}"00"
-               msg="WARNING - missing hotfile in PE00"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
-               postmsg "$jlogfile" "$msg"
-               sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
-            fi
-         done
-
-         for i in {0..9}; do
-            cp ${RUNdir}/INPUT ${RUNdir}/PE000${i}/
-         done
-         for i in {10..15}; do
-            cp ${RUNdir}/INPUT ${RUNdir}/PE00${i}/
-         done
-
-         echo "Starting PuNSWAN executable for "${siteid}
-         aprun -n16 -N16 -j1 -d1 ${EXECnwps}/punswan4110.exe
          export err=$?;
          echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
          cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
