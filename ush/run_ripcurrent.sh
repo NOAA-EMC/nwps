@@ -320,9 +320,6 @@ while read line; do
    # Execute the program
    # ======================================================================
    if [[ -s fort.20 && -s fort.22 ]]; then
-       export FORT20="${RIPDATA}/fort.20"
-       export FORT21="${RIPDATA}/fort.21"
-       export FORT22="${RIPDATA}/fort.22"
        ${NWPSdir}/exec/ripforecast.exe
        export err=$?;
        echo "Exit Code: ${err}" | tee -a ${LOGdir}/runrip.log
@@ -332,12 +329,8 @@ while read line; do
        fi
        err_chk
    elif [[ -s fort.20 && ! -s fort.22 ]]; then
-       #echo "Only the current model data was found."
-       #echo "Some model data from the previous 72 hours is required to run"
        echo "WARNING: Only the current model data was found."
        echo "WARNING: Not possible to compute event from the previous 72 hours."
-       export FORT20="${RIPDATA}/fort.20"
-       export FORT21="${RIPDATA}/fort.21"
        ${NWPSdir}/exec/ripforecast.exe
        export err=$?;
        echo "Exit Code: ${err}" | tee -a ${LOGdir}/runrip.log
