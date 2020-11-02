@@ -482,13 +482,13 @@ use IO::File;
         my ($pointLong     , $pointLati  , $ind1     , $ind2    );
         local *OUT;
         $FileIn="SYS_PNT.OUT";
-        $NumOfSpec=$RunValues{"NumSpcOut"};
+        $NumOfSpec=$RunValues{"NumPrtOut"};
         $CGx=$RunValues{"CGX"};
         $numofOutTimes=$RunValues{"NumOfOutTimes"};
 #                system("pwd");
 #                system("ls -lt");
 #       Open Data File to Read
-        #print "File IN: $FileIn   numofOutTimes: $numofOutTimes \n";
+        print "File IN: $FileIn   numofOutTimes: $numofOutTimes  NumOfSpec: $NumOfSpec \n";
         open IN, "<$FileIn"  or die "Cannot open: $!";
 #       Reading header lines
         for $i (0..6){
@@ -522,7 +522,7 @@ use IO::File;
             foreach $j (1..$NumOfSpec) {
               $pointlo="pointlong".$j;
               $pointla="pointlati".$j;
-              $specName ="SpecName".$j;
+              $specName ="pointname".$j;
 
               if ($loclon == $RunValues{$pointlo} && $loclat == $RunValues{$pointla}) {
                 #print "+++  $loclon == $RunValues{$pointlo}; $loclat == $RunValues{$pointla}\n";
@@ -1182,9 +1182,9 @@ sub ReadPRTLocNames($%) {
                 undef $keyfound, @temp;
              }
            }
-           if ($comline =~/^POINTS/)  {
+           if ( ($comline =~/^POINTS/) && ($comline !~/5mcont/) && ($comline !~/20mcont/) && ($comline !~/SHIPRT/) ) {
              $numofOutputPoints+=1;
-             #print " Searching for: Output Points ($numofOutputPoints)\n";
+             print " Searching for: Output Points ($numofOutputPoints)\n";
              $keyfound=$_;
 	        chomp $keyfound;
              @temp=split /\s+/,$_;
@@ -1245,7 +1245,7 @@ sub ReadPRTLocNames($%) {
         }
     }
     $RunValues{"NumSpcOut"} =$numofOutputSpectra;
-    $RunValues{"NumPrtOut"} =$numofOutputPartition;
+    $RunValues{"NumPrtOut"} =$numofOutputPoints;
 # Formatting the start and end time strings for WW3 
     @temp=split //,$RunValues{"Tbegc1"};
     $temp[8]=" ";
