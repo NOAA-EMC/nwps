@@ -4397,6 +4397,7 @@
       IF (RAWPRT) THEN                                                    40.PARTRAW
          !Produce a dump of the raw partition data at all grid points     40.PARTRAW
          ALLOCATE(VOQ(MXK*MYK,171))                                       40.PARTRAW
+         VOQ = 0.                                                         40.PARTRAW
 
          !First read data (all vars & all grid points) from individual    40.PARTRAW
          !process files                                                   40.PARTRAW
