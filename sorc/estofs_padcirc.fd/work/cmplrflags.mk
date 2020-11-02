@@ -21,7 +21,7 @@ ifeq ($(compiler),ncep)
   FC            := ${COMP}
   PFC           := ${COMP_MPI} 
   INCDIRS       := $(INCDIRS) ${NETCDF_INCLUDE} ${HDF5_INCLUDE} -I ${Z_INC}
-  FFLAGS1       :=  $(INCDIRS) -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source
+  FFLAGS1       :=  $(INCDIRS) -O1 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source
 #  FFLAGS1       :=  $(INCDIRS) -O3 -FI -assume byterecl -132 -assume buffered_io -axCORE-AVX2
   ifeq ($(DEBUG),full)
      FFLAGS1       :=  $(INCDIRS) -g -O0 -traceback -debug -check all -i-dynamic -FI -assume byterecl -132 -DALL_TRACE -DFULL_STACK -DFLUSH_MESSAGES
@@ -37,7 +37,7 @@ ifeq ($(compiler),ncep)
   IMODS         :=  -I
   CC            := ${C_COMP} 
   CCBE		:= ${C_COMP_MP} 
-  CFLAGS        := $(INCDIRS) -O2 -m64 -DLINUX
+  CFLAGS        := $(INCDIRS) -O1 -m64 -DLINUX
 #  CFLAGS        := $(INCDIRS) -O3 -m64 -DLINUX
   ifeq ($(DEBUG),full)
      CFLAGS        := $(INCDIRS) -g -O0 -march=k8 -m64 -mcmodel=medium -DLINUX
