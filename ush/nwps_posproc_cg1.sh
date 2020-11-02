@@ -266,7 +266,9 @@ echo " " | tee -a $logrunup
      else 
 	 echo "ERROR - ${WAVE_RUNUP_TO_BIN} program error, no RUNUP GRIB2 file generated for this run"
      fi
-
+     unset FORT20
+     unset FORT21
+     unset FORT22
   fi
 #_________________________RIP CURRENT PROGRAM____________________________________________
 #Run Program 
@@ -466,21 +468,15 @@ cd ${DATA}/output/grib2/CG${CGNUM}
               mkdir -p ${COMOUTCYC}/PE000${i}/
               cp -fv  ${RUNdir}/PE000${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE000${i}/
            done
-           for i in {10..15}; do
-              mkdir -p ${COMOUTCYC}/PE00${i}/
-              cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
-           done
            # Additional copies for domains running on 48 cores
-           if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CAR" ] \
-              || [ "${SITEID}" == "TBW" ] || [ "${SITEID}" == "BOX" ] || [ "${SITEID}" == "SGX" ] \
-              || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "AKQ" ] || [ "${SITEID}" == "OKX" ] \
-              || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "ALU" ] || [ "${SITEID}" == "GUA" ] \
-              || [ "${SITEID}" == "MLB" ] || [ "${SITEID}" == "JAX" ] || [ "${SITEID}" == "CHS" ] \
+           if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CAR" ] || [ "${SITEID}" == "TBW" ] \
+              || [ "${SITEID}" == "SGX" ] || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "OKX" ] \
+              || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "JAX" ] || [ "${SITEID}" == "CHS" ] \
               || [ "${SITEID}" == "ILM" ] || [ "${SITEID}" == "PHI" ] || [ "${SITEID}" == "GYX" ] \
-              || [ "${SITEID}" == "TAE" ] || [ "${SITEID}" == "MOB" ] \
-              || [ "${SITEID}" == "HGX" ]
+              || [ "${SITEID}" == "TAE" ] || [ "${SITEID}" == "MOB" ] || [ "${SITEID}" == "HGX" ] \
+              || [ "${SITEID}" == "HFO" ]
            then
-              for i in {16..47}; do
+              for i in {10..47}; do
                  mkdir -p ${COMOUTCYC}/PE00${i}/
                  cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
               done
@@ -488,15 +484,16 @@ cd ${DATA}/output/grib2/CG${CGNUM}
            # Additional copies for domains running on 84 cores
            if [ "${SITEID}" == "ALU" ]
            then
-              for i in {16..83}; do
+              for i in {10..83}; do
                  mkdir -p ${COMOUTCYC}/PE00${i}/
                  cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
               done
            fi
            # Additional copies for domains running on 96 cores
-           if [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "AKQ" ]
+           if [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "AKQ" ] \
+              || [ "${SITEID}" == "MLB" ] || [ "${SITEID}" == "BOX" ]
            then
-              for i in {16..95}; do
+              for i in {10..95}; do
                  mkdir -p ${COMOUTCYC}/PE00${i}/
                  cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
               done
@@ -587,21 +584,15 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
       mkdir -p ${HOTdir}/PE000${i}
       mv -vf ${RUNdir}/PE000${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE000${i}/ >> ${LOGdir}/hotstart.log 2>&1
    done
-   for i in {10..15}; do
-      mkdir -p ${HOTdir}/PE00${i}
-      mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
-   done
    # Additional copies for domains running on 48 cores
-   if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CAR" ] \
-      || [ "${SITEID}" == "TBW" ] || [ "${SITEID}" == "BOX" ] || [ "${SITEID}" == "SGX" ] \
-      || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "AKQ" ] || [ "${SITEID}" == "OKX" ] \
-      || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "ALU" ] || [ "${SITEID}" == "GUA" ] \
-      || [ "${SITEID}" == "MLB" ] || [ "${SITEID}" == "JAX" ] || [ "${SITEID}" == "CHS" ] \
+   if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CAR" ] || [ "${SITEID}" == "TBW" ] \
+      || [ "${SITEID}" == "SGX" ] || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "OKX" ] \
+      || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "JAX" ] || [ "${SITEID}" == "CHS" ] \
       || [ "${SITEID}" == "ILM" ] || [ "${SITEID}" == "PHI" ] || [ "${SITEID}" == "GYX" ] \
-      || [ "${SITEID}" == "TAE" ] || [ "${SITEID}" == "MOB" ] \
-      || [ "${SITEID}" == "HGX" ]
+      || [ "${SITEID}" == "TAE" ] || [ "${SITEID}" == "MOB" ] || [ "${SITEID}" == "HGX" ] \
+      || [ "${SITEID}" == "HFO" ]
    then
-      for i in {16..47}; do
+      for i in {10..47}; do
          mkdir -p ${HOTdir}/PE00${i}
          mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
       done
@@ -609,15 +600,16 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
    # Additional copies for domains running on 84 cores
    if [ "${SITEID}" == "ALU" ]
    then
-      for i in {16..83}; do
+      for i in {10..83}; do
          mkdir -p ${HOTdir}/PE00${i}
          mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
       done
    fi
    # Additional copies for domains running on 96 cores
-   if [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "AKQ" ]
+   if [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "AKQ" ] \
+      || [ "${SITEID}" == "MLB" ] || [ "${SITEID}" == "BOX" ]
    then
-      for i in {16..95}; do
+      for i in {10..95}; do
          mkdir -p ${HOTdir}/PE00${i}
          mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
       done
