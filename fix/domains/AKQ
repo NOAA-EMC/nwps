@@ -167,11 +167,11 @@ export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="multi_1"
-export FTPPAT1B="multi_1"
+export FTPPAT1="gfswave"
+export FTPPAT1B="gfswave"
 export FTPPAT2="NW-AKQ"
 export NFTPATTEMPTS="3"
-export WAVECPS="multi_1.NW-AKQ59.spec.swan"
+export WAVECPS="gfswave.NW-AKQ59.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -182,19 +182,19 @@ export WAVECPS="multi_1.NW-AKQ59.spec.swan"
 #$BOUNDARY COMMAND LINES
 #$UNSTR SWAN BOUNDARY COMMAND LINES - SITE NW-AKQ
 #$ S OPEN GRID BOUNDARY
-#BOUNDspec SIDE 1 CCW CON FILE 'multi_1.NW-AKQ62.spec.swan' 1
-#BOUNDspec SIDE 2 CCW CON FILE 'multi_1.NW-AKQ61.spec.swan' 1
-#BOUNDspec SIDE 3 CCW CON FILE 'multi_1.NW-AKQ60.spec.swan' 1
-#BOUNDspec SIDE 4 CCW CON FILE 'multi_1.NW-AKQ59.spec.swan' 1
+#BOUNDspec SIDE 1 CCW CON FILE 'gfswave.NW-AKQ62.spec.swan' 1
+#BOUNDspec SIDE 2 CCW CON FILE 'gfswave.NW-AKQ61.spec.swan' 1
+#BOUNDspec SIDE 3 CCW CON FILE 'gfswave.NW-AKQ60.spec.swan' 1
+#BOUNDspec SIDE 4 CCW CON FILE 'gfswave.NW-AKQ59.spec.swan' 1
 #$ E OPEN GRID BOUNDARY
-#BOUNDspec SIDE 5 CCW CON FILE 'multi_1.NW-AKQ58.spec.swan' 1
-#BOUNDspec SIDE 6 CCW CON FILE 'multi_1.NW-AKQ57.spec.swan' 1
-#BOUNDspec SIDE 7 CCW CON FILE 'multi_1.NW-AKQ56.spec.swan' 1
-#BOUNDspec SIDE 8 CCW CON FILE 'multi_1.NW-AKQ55.spec.swan' 1
-#BOUNDspec SIDE 9 CCW CON FILE 'multi_1.NW-AKQ54.spec.swan' 1
-#BOUNDspec SIDE 10 CCW CON FILE 'multi_1.NW-AKQ53.spec.swan' 1
-#BOUNDspec SIDE 11 CCW CON FILE 'multi_1.NW-AKQ52.spec.swan' 1
-#BOUNDspec SIDE 12 CCW CON FILE 'multi_1.NW-AKQ51.spec.swan' 1
+#BOUNDspec SIDE 5 CCW CON FILE 'gfswave.NW-AKQ58.spec.swan' 1
+#BOUNDspec SIDE 6 CCW CON FILE 'gfswave.NW-AKQ57.spec.swan' 1
+#BOUNDspec SIDE 7 CCW CON FILE 'gfswave.NW-AKQ56.spec.swan' 1
+#BOUNDspec SIDE 8 CCW CON FILE 'gfswave.NW-AKQ55.spec.swan' 1
+#BOUNDspec SIDE 9 CCW CON FILE 'gfswave.NW-AKQ54.spec.swan' 1
+#BOUNDspec SIDE 10 CCW CON FILE 'gfswave.NW-AKQ53.spec.swan' 1
+#BOUNDspec SIDE 11 CCW CON FILE 'gfswave.NW-AKQ52.spec.swan' 1
+#BOUNDspec SIDE 12 CCW CON FILE 'gfswave.NW-AKQ51.spec.swan' 1
 #$END BOUNSEG for UNSTR SWAN
 #
 #========================================================================

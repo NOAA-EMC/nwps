@@ -31,40 +31,13 @@ if [ "${NWPSdir}" == "" ]
     exit 1
 fi
 
-#if [ ! -e ${NWPSdir}/ush/nwps_config.sh ]
-#    then
-#    "ERROR - Cannot find ${NWPSdir}/ush/nwps_config.sh"
-#    exit 1
-#fi
-#    
-## Setup our NWPS environment                                                    
-#unset LD_LIBRARY_PATH
-#source ${NWPSdir}/ush/nwps_config.sh
-#
-## Setup our build environment
-#source ${NWPSdir}/sorc/set_compiler.sh
-
 PWD=$(pwd)
 mkdir -p ${NWPSdir}/exec
-
-#echo "Building serial SWAN binary for ${COMPILER} compiler" | tee ./swan_build.log
-#cd ${NWPSdir}/sorc/swan
-#make clobber | tee -a ./swan_build.log
-#make config | tee -a ./swan_build.log
-#make ser FLAGS_OPT="${OPTFLAGS}" | tee -a ./swan_build.log
-#cp -pfv swan.exe ${NWPSdir}/exec/swan-ser.exe
-
-#echo "Building OpenMP SWAN binary for ${COMPILER} compiler" | tee ./swan_build.log
-#cd ${NWPSdir}/sorc/swan
-#make clobber | tee -a ./swan_build.log
-#make config | tee -a ./swan_build.log
-#make omp FLAGS_OPT="${OPTFLAGS}" | tee -a ./swan_build.log
-#cp -pfv swan.exe ${NWPSdir}/exec/swan-omp.exe
 
 #module purge
 #module load ncep
 #module load ../modulefiles/NWPS/v1.3.0
-#module list
+module list
 
 cd ${NWPSdir}/sorc/swan.fd
 

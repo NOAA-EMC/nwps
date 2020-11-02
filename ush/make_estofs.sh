@@ -43,7 +43,7 @@ CYCLE=${cyc}
 HOURS="${ESTOFSHOURS}"
 TIMESTEP="${ESTOFSTIMESTEP}"
 
-if [ "${ESTOFS_REGION}" == "" ]; then ESTOFS_REGION="conus"; fi
+if [ "${ESTOFS_REGION}" == "" ]; then ESTOFS_REGION="conus.east"; fi
 
 function MakeClip() {
     DIR=${1}
@@ -100,22 +100,22 @@ function process_wfolist() {
     export err=$?; err_chk
     ESTOFS_REGION=$(echo ${ESTOFS_REGION} | tr [:upper:] [:lower:])
 #..........................................
-     if [ "${ESTOFS_BASIN}" == "estofs.atl" ] && [ "${ESTOFS_REGION}" == "conus" ]
+     if [ "${ESTOFS_BASIN}" == "estofs.glo" ] && [ "${ESTOFS_REGION}" == "conus.east" ]
      then
        hasdownload_000=${hasDL[1]}
-     elif [ "${ESTOFS_BASIN}" == "estofs.atl" ] && [ "${ESTOFS_REGION}" == "puertori" ]
+     elif [ "${ESTOFS_BASIN}" == "estofs.glo" ] && [ "${ESTOFS_REGION}" == "puertori" ]
      then
        hasdownload_000=${hasDL[2]}
-     elif [ "${ESTOFS_BASIN}" == "estofs.pac" ] && [ "${ESTOFS_REGION}" == "conus" ]
+     elif [ "${ESTOFS_BASIN}" == "estofs.glo" ] && [ "${ESTOFS_REGION}" == "conus.west" ]
      then
        hasdownload_000=${hasDL[3]}
-     elif [ "${ESTOFS_BASIN}" == "estofs.pac" ] && [ "${ESTOFS_REGION}" == "hawaii" ]
+     elif [ "${ESTOFS_BASIN}" == "estofs.glo" ] && [ "${ESTOFS_REGION}" == "hawaii" ]
      then
        hasdownload_000=${hasDL[4]}
-     elif [ "${ESTOFS_BASIN}" == "estofs.pac" ] && [ "${ESTOFS_REGION}" == "alaska" ]
+     elif [ "${ESTOFS_BASIN}" == "estofs.glo" ] && [ "${ESTOFS_REGION}" == "alaska" ]
      then
        hasdownload_000=${hasDL[5]}
-     elif [ "${ESTOFS_BASIN}" == "estofs.mic" ] && [ "${ESTOFS_REGION}" == "guam" ]
+     elif [ "${ESTOFS_BASIN}" == "estofs.glo" ] && [ "${ESTOFS_REGION}" == "guam" ]
      then
        hasdownload_000=${hasDL[6]}
      fi
@@ -160,43 +160,28 @@ function process_wfolist() {
     if [ "${hasdownload_000}" == "" ]; then hasdownload_000="false"; fi
     
     if [ "${hasdownload_000}" == "false" ];then
-        if [ "${ESTOFS_BASIN}" == "estofs.atl" ] && [ "${ESTOFS_REGION}" == "conus" ];then
+        if [ "${ESTOFS_BASIN}" == "estofs.glo" ] && [ "${ESTOFS_REGION}" == "conus.east" ];then
            hasDL[1]="true"
-        elif [ "${ESTOFS_BASIN}" == "estofs.atl" ] && [ "${ESTOFS_REGION}" == "puertori" ];then
+        elif [ "${ESTOFS_BASIN}" == "estofs.glo" ] && [ "${ESTOFS_REGION}" == "puertori" ];then
            hasDL[2]="true"
-        elif [ "${ESTOFS_BASIN}" == "estofs.pac" ] && [ "${ESTOFS_REGION}" == "conus" ];then
+        elif [ "${ESTOFS_BASIN}" == "estofs.glo" ] && [ "${ESTOFS_REGION}" == "conus.west" ];then
            hasDL[3]="true"
-        elif [ "${ESTOFS_BASIN}" == "estofs.pac" ] && [ "${ESTOFS_REGION}" == "hawaii" ];then
+        elif [ "${ESTOFS_BASIN}" == "estofs.glo" ] && [ "${ESTOFS_REGION}" == "hawaii" ];then
            hasDL[4]="true"
-        elif [ "${ESTOFS_BASIN}" == "estofs.pac" ] && [ "${ESTOFS_REGION}" == "alaska" ];then
+        elif [ "${ESTOFS_BASIN}" == "estofs.glo" ] && [ "${ESTOFS_REGION}" == "alaska" ];then
            hasDL[5]="true"
-        elif [ "${ESTOFS_BASIN}" == "estofs.mic" ] && [ "${ESTOFS_REGION}" == "guam" ];then
+        elif [ "${ESTOFS_BASIN}" == "estofs.glo" ] && [ "${ESTOFS_REGION}" == "guam" ];then
            hasDL[6]="true"
         fi
 
         echo "Downloading ${SPOOLdir}/$file to $outfile" 
-        if [ "${ESTOFS_BASIN}" == "estofs.pac" ]; then
-           echo "cp -rp ${COMINestofspac}/${file} ."
-           cp -rp ${COMINestofspac}/${file} .
-        elif [ "${ESTOFS_BASIN}" == "estofs.mic" ]; then
-           echo "cp -rp ${COMINestofsmic}/${file} ."
-           cp -rp ${COMINestofsmic}/${file} .
-        else
-           echo "cp -rp ${COMINestofs}/${file} ."
-           cp -rp ${COMINestofs}/${file} .
-        fi
+        echo "cp -rp ${COMINestofs}/${file} ."
+        cp -rp ${COMINestofs}/${file} .
         if [ "$?" != "0" ] && [ ! -e ${file} ];then
            sleep 2
            echo "ERROR - downling file ${PRODUCTdir}/${file}" 
         fi
-        if [ "${ESTOFS_BASIN}" == "estofs.pac" ]; then
-           cp -rp ${COMINestofspac}/${file} .
-        elif [ "${ESTOFS_BASIN}" == "estofs.mic" ]; then
-           echo "cp -rp ${COMINestofsmic}/${file} ."
-           cp -rp ${COMINestofsmic}/${file} .
-        else
-           cp -rp ${COMINestofs}/${file} .
-        fi
+        cp -rp ${COMINestofs}/${file} .
         if [ "$?" != "0" ] && [ ! -e ${file} ];then
            echo "ERROR - downling file ${PRODUCTdir}/${file}" 
            export err=1; err_chk
@@ -343,30 +328,14 @@ function process_wfolist() {
     	outfile="${file}"
     	cd ${PRODUCTdir}
     	if [ ! -e ${VARdir}/hasestofsdownload_${CYCLE}z.${ESTOFS_BASIN}.${ESTOFS_REGION}.f${FF} ];then
-                if [ "${ESTOFS_BASIN}" == "estofs.pac" ]; then
-	           echo "Copying ${COMINestofspac}/${file} ${PRODUCTdir}/${file}"
-	           echo "cp -rp ${COMINestofspac}/${file} ."
-	           cp -rp ${COMINestofspac}/${file} .   
-                elif [ "${ESTOFS_BASIN}" == "estofs.mic" ]; then
-	           echo "Copying ${COMINestofsmic}/${file} ${PRODUCTdir}/${file}"
-	           echo "cp -rp ${COMINestofsmic}/${file} ."
-	           cp -rp ${COMINestofsmic}/${file} .               
-                else
-	           echo "Copying ${COMINestofs}/${file} ${PRODUCTdir}/${file}"
-	           echo "cp -rp ${COMINestofs}/${file} ."
-	           cp -rp ${COMINestofs}/${file} .
-                fi
+	        echo "Copying ${COMINestofs}/${file} ${PRODUCTdir}/${file}"
+	        echo "cp -rp ${COMINestofs}/${file} ."
+	        cp -rp ${COMINestofs}/${file} .
 	        if [ "$?" != "0" ] && [ ! -e ${file} ];then
                 sleep 2
 	            echo "ERROR - downling file ${PRODUCTdir}/${file}" 
 	        fi
-                if [ "${ESTOFS_BASIN}" == "estofs.pac" ]; then
- 	           cp -rp ${COMINestofspac}/${file} .
-                elif [ "${ESTOFS_BASIN}" == "estofs.mic" ]; then
- 	           cp -rp ${COMINestofsmic}/${file} .
-                else
- 	           cp -rp ${COMINestofs}/${file} .
-                fi
+ 	        cp -rp ${COMINestofs}/${file} .
 	        if [ "$?" != "0" ] && [ ! -e ${file} ];then
 	            echo "ERROR - downling file ${PRODUCTdir}/${file}" 
                 export err=1; err_chk

@@ -109,7 +109,7 @@ export COMINpsurgem1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/psurge/${WFO}_outpu
 export dcom=${dcom:-/gpfs/${WCOSS_SYSTEM_COM}/dcomdev/us007003}
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 export COM_nwps_R_ES_TOFS="/com"
-export PCOM=${PCOMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
+export COMOUTwmo=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/wmo
 
 if [ "${SENDCOM}" = YES ]; then
     mkdir -p $COMOUT

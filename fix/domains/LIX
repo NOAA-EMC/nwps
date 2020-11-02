@@ -143,11 +143,11 @@ export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="multi_1"
-export FTPPAT1B="multi_1"
+export FTPPAT1="gfswave"
+export FTPPAT1B="gfswave"
 export FTPPAT2="LIX"
 export NFTPATTEMPTS="3"
-export WAVECPS="multi_1.LIX54.spec.swan,multi_1.LIX63.spec.swan"
+export WAVECPS="gfswave.LIX54.spec.swan,gfswave.LIX63.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -156,28 +156,28 @@ export WAVECPS="multi_1.LIX54.spec.swan,multi_1.LIX63.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#BOUN SEG XY 268.2 28.90 268.2 27.50 VAR FILE 0.00 'multi_1.LIX51.spec.swan'    1 &
-#               0.50 'multi_1.LIX52.spec.swan'    1 &
-#               1.00 'multi_1.LIX53.spec.swan'    1 &
-#               1.50 'multi_1.LIX54.spec.swan'    1
+#BOUN SEG XY 268.2 28.90 268.2 27.50 VAR FILE 0.00 'gfswave.LIX51.spec.swan'    1 &
+#               0.50 'gfswave.LIX52.spec.swan'    1 &
+#               1.00 'gfswave.LIX53.spec.swan'    1 &
+#               1.50 'gfswave.LIX54.spec.swan'    1
 #$
-#BOUN SEG XY 272.6 27.50 268.2 27.50 VAR FILE 0.00 'multi_1.LIX63.spec.swan'    1 &
-#               0.50 'multi_1.LIX62.spec.swan'    1 &
-#               1.00 'multi_1.LIX61.spec.swan'    1 &
-#               1.50 'multi_1.LIX60.spec.swan'    1 &
-#               2.00 'multi_1.LIX59.spec.swan'    1 &
-#               2.50 'multi_1.LIX58.spec.swan'    1 &
-#               3.00 'multi_1.LIX57.spec.swan'    1 &
-#               3.50 'multi_1.LIX56.spec.swan'    1 &
-#               4.00 'multi_1.LIX55.spec.swan'    1 &
-#               4.40 'multi_1.LIX54.spec.swan.cp' 1
+#BOUN SEG XY 272.6 27.50 268.2 27.50 VAR FILE 0.00 'gfswave.LIX63.spec.swan'    1 &
+#               0.50 'gfswave.LIX62.spec.swan'    1 &
+#               1.00 'gfswave.LIX61.spec.swan'    1 &
+#               1.50 'gfswave.LIX60.spec.swan'    1 &
+#               2.00 'gfswave.LIX59.spec.swan'    1 &
+#               2.50 'gfswave.LIX58.spec.swan'    1 &
+#               3.00 'gfswave.LIX57.spec.swan'    1 &
+#               3.50 'gfswave.LIX56.spec.swan'    1 &
+#               4.00 'gfswave.LIX55.spec.swan'    1 &
+#               4.40 'gfswave.LIX54.spec.swan.cp' 1
 #$
-#BOUN SEG XY 272.6 30.00 272.6 27.50 VAR FILE 0.00 'multi_1.LIX68.spec.swan'    1 &
-#               0.50 'multi_1.LIX67.spec.swan'    1 &
-#               1.00 'multi_1.LIX66.spec.swan'    1 &
-#               1.50 'multi_1.LIX65.spec.swan'    1 &
-#               2.00 'multi_1.LIX64.spec.swan'    1 &
-#               2.50 'multi_1.LIX63.spec.swan.cp' 1
+#BOUN SEG XY 272.6 30.00 272.6 27.50 VAR FILE 0.00 'gfswave.LIX68.spec.swan'    1 &
+#               0.50 'gfswave.LIX67.spec.swan'    1 &
+#               1.00 'gfswave.LIX66.spec.swan'    1 &
+#               1.50 'gfswave.LIX65.spec.swan'    1 &
+#               2.00 'gfswave.LIX64.spec.swan'    1 &
+#               2.50 'gfswave.LIX63.spec.swan.cp' 1
 #$END BOUNSEG
 #
 #========================================================================

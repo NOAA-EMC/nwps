@@ -132,11 +132,11 @@ export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="multi_1"
-export FTPPAT1B="multi_1"
+export FTPPAT1="gfswave"
+export FTPPAT1B="gfswave"
 export FTPPAT2="NW-AJK"
 export NFTPATTEMPTS="3"
-export WAVECPS="multi_1.NW-AJK51.spec.swan,multi_1.NW-AJK65.spec.swan"
+export WAVECPS="gfswave.NW-AJK51.spec.swan,gfswave.NW-AJK65.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -145,46 +145,46 @@ export WAVECPS="multi_1.NW-AJK51.spec.swan,multi_1.NW-AJK65.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#BOUN SEG XY 215.50 53.90 215.50 60.00 VAR FILE 0.00 'multi_1.NW-AJK51.spec.swan'    1 &
-#0.10 'multi_1.NW-AJK52.spec.swan'    1 &
-#0.60 'multi_1.NW-AJK53.spec.swan'    1 &
-#1.10 'multi_1.NW-AJK54.spec.swan'    1 &
-#1.60 'multi_1.NW-AJK55.spec.swan'    1 &
-#2.10 'multi_1.NW-AJK56.spec.swan'    1 &
-#2.60 'multi_1.NW-AJK57.spec.swan'    1 &
-#3.10 'multi_1.NW-AJK58.spec.swan'    1 &
-#3.60 'multi_1.NW-AJK59.spec.swan'    1 &
-#4.10 'multi_1.NW-AJK60.spec.swan'    1 &
-#4.60 'multi_1.NW-AJK61.spec.swan'    1 &
-#5.10 'multi_1.NW-AJK62.spec.swan'    1 &
-#5.60 'multi_1.NW-AJK63.spec.swan'    1 &
-#6.10 'multi_1.NW-AJK64.spec.swan'    1
+#BOUN SEG XY 215.50 53.90 215.50 60.00 VAR FILE 0.00 'gfswave.NW-AJK51.spec.swan'    1 &
+#0.10 'gfswave.NW-AJK52.spec.swan'    1 &
+#0.60 'gfswave.NW-AJK53.spec.swan'    1 &
+#1.10 'gfswave.NW-AJK54.spec.swan'    1 &
+#1.60 'gfswave.NW-AJK55.spec.swan'    1 &
+#2.10 'gfswave.NW-AJK56.spec.swan'    1 &
+#2.60 'gfswave.NW-AJK57.spec.swan'    1 &
+#3.10 'gfswave.NW-AJK58.spec.swan'    1 &
+#3.60 'gfswave.NW-AJK59.spec.swan'    1 &
+#4.10 'gfswave.NW-AJK60.spec.swan'    1 &
+#4.60 'gfswave.NW-AJK61.spec.swan'    1 &
+#5.10 'gfswave.NW-AJK62.spec.swan'    1 &
+#5.60 'gfswave.NW-AJK63.spec.swan'    1 &
+#6.10 'gfswave.NW-AJK64.spec.swan'    1
 #$
-#BOUN SEG XY 229.00 53.90 215.50 53.90 VAR FILE 0.00 'multi_1.NW-AJK65.spec.swan.cp'    1 &
-#0.50 'multi_1.NW-AJK66.spec.swan'    1 &
-#2.50 'multi_1.NW-AJK67.spec.swan'    1 &
-#3.00 'multi_1.NW-AJK68.spec.swan'    1 &
-#3.50 'multi_1.NW-AJK69.spec.swan'    1 &
-#4.00 'multi_1.NW-AJK70.spec.swan'    1 &
-#4.50 'multi_1.NW-AJK71.spec.swan'    1 &
-#5.00 'multi_1.NW-AJK72.spec.swan'    1 &
-#5.50 'multi_1.NW-AJK73.spec.swan'    1 &
-#6.00 'multi_1.NW-AJK74.spec.swan'    1 &
-#6.50 'multi_1.NW-AJK75.spec.swan'    1 &
-#7.00 'multi_1.NW-AJK76.spec.swan'    1 &
-#7.50 'multi_1.NW-AJK77.spec.swan'    1 &
-#8.00 'multi_1.NW-AJK78.spec.swan'    1 &
-#8.50 'multi_1.NW-AJK79.spec.swan'    1 &
-#9.00 'multi_1.NW-AJK80.spec.swan'    1 &
-#9.50 'multi_1.NW-AJK81.spec.swan'    1 &
-#10.00 'multi_1.NW-AJK82.spec.swan'    1 &
-#10.50 'multi_1.NW-AJK83.spec.swan'    1 &
-#11.00 'multi_1.NW-AJK84.spec.swan'    1 &
-#11.50 'multi_1.NW-AJK85.spec.swan'    1 &
-#12.00 'multi_1.NW-AJK86.spec.swan'    1 &
-#12.50 'multi_1.NW-AJK87.spec.swan'    1 &
-#13.00 'multi_1.NW-AJK88.spec.swan'    1 &
-#13.50 'multi_1.NW-AJK51.spec.swan.cp' 1
+#BOUN SEG XY 229.00 53.90 215.50 53.90 VAR FILE 0.00 'gfswave.NW-AJK65.spec.swan.cp'    1 &
+#0.50 'gfswave.NW-AJK66.spec.swan'    1 &
+#2.50 'gfswave.NW-AJK67.spec.swan'    1 &
+#3.00 'gfswave.NW-AJK68.spec.swan'    1 &
+#3.50 'gfswave.NW-AJK69.spec.swan'    1 &
+#4.00 'gfswave.NW-AJK70.spec.swan'    1 &
+#4.50 'gfswave.NW-AJK71.spec.swan'    1 &
+#5.00 'gfswave.NW-AJK72.spec.swan'    1 &
+#5.50 'gfswave.NW-AJK73.spec.swan'    1 &
+#6.00 'gfswave.NW-AJK74.spec.swan'    1 &
+#6.50 'gfswave.NW-AJK75.spec.swan'    1 &
+#7.00 'gfswave.NW-AJK76.spec.swan'    1 &
+#7.50 'gfswave.NW-AJK77.spec.swan'    1 &
+#8.00 'gfswave.NW-AJK78.spec.swan'    1 &
+#8.50 'gfswave.NW-AJK79.spec.swan'    1 &
+#9.00 'gfswave.NW-AJK80.spec.swan'    1 &
+#9.50 'gfswave.NW-AJK81.spec.swan'    1 &
+#10.00 'gfswave.NW-AJK82.spec.swan'    1 &
+#10.50 'gfswave.NW-AJK83.spec.swan'    1 &
+#11.00 'gfswave.NW-AJK84.spec.swan'    1 &
+#11.50 'gfswave.NW-AJK85.spec.swan'    1 &
+#12.00 'gfswave.NW-AJK86.spec.swan'    1 &
+#12.50 'gfswave.NW-AJK87.spec.swan'    1 &
+#13.00 'gfswave.NW-AJK88.spec.swan'    1 &
+#13.50 'gfswave.NW-AJK51.spec.swan.cp' 1
 #NUM DIRimpl cdd=1 cdlim=2
 #$END BOUNSEG
 #

@@ -169,11 +169,11 @@ export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="multi_1"
-export FTPPAT1B="multi_1"
+export FTPPAT1="gfswave"
+export FTPPAT1B="gfswave"
 export FTPPAT2="LCH"
 export NFTPATTEMPTS="3"
-export WAVECPS="multi_1.LCH54.spec.swan,multi_1.LCH59.spec.swan"
+export WAVECPS="gfswave.LCH54.spec.swan,gfswave.LCH59.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -182,27 +182,27 @@ export WAVECPS="multi_1.LCH54.spec.swan,multi_1.LCH59.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#BOUN SEG XY 264.97 28.55 264.97 27.41 VAR FILE 0.00 'multi_1.LCH51.spec.swan'    1 &
-#         0.32 'multi_1.LCH52.spec.swan'    1 &
-#         0.76 'multi_1.LCH53.spec.swan'    1 &
-#         1.14 'multi_1.LCH54.spec.swan'    1
+#BOUN SEG XY 264.97 28.55 264.97 27.41 VAR FILE 0.00 'gfswave.LCH51.spec.swan'    1 &
+#         0.32 'gfswave.LCH52.spec.swan'    1 &
+#         0.76 'gfswave.LCH53.spec.swan'    1 &
+#         1.14 'gfswave.LCH54.spec.swan'    1
 #$
 #$LCH southern side of grid: pt 59-54
 #$
-#BOUN SEG XY 269.57 27.41 264.97 27.41 VAR FILE 0.00 'multi_1.LCH59.spec.swan'    1 &
-#         1.26 'multi_1.LCH58.spec.swan'    1 &
-#         2.23 'multi_1.LCH57.spec.swan'    1 &
-#         3.10 'multi_1.LCH56.spec.swan'    1 &
-#         4.02 'multi_1.LCH55.spec.swan'    1 &
-#         4.60 'multi_1.LCH54.spec.swan.cp' 1
+#BOUN SEG XY 269.57 27.41 264.97 27.41 VAR FILE 0.00 'gfswave.LCH59.spec.swan'    1 &
+#         1.26 'gfswave.LCH58.spec.swan'    1 &
+#         2.23 'gfswave.LCH57.spec.swan'    1 &
+#         3.10 'gfswave.LCH56.spec.swan'    1 &
+#         4.02 'gfswave.LCH55.spec.swan'    1 &
+#         4.60 'gfswave.LCH54.spec.swan.cp' 1
 #$
 #$LCH eastern side of grid: point 59-63
 #$
-#BOUN SEG XY 269.57 28.68 269.57 27.41 VAR FILE 0.00 'multi_1.LCH63.spec.swan'    1 &
-#         0.16 'multi_1.LCH62.spec.swan'    1 &
-#         0.52 'multi_1.LCH61.spec.swan'    1 &
-#         0.94 'multi_1.LCH60.spec.swan'    1 &
-#         1.27 'multi_1.LCH59.spec.swan.cp' 1
+#BOUN SEG XY 269.57 28.68 269.57 27.41 VAR FILE 0.00 'gfswave.LCH63.spec.swan'    1 &
+#         0.16 'gfswave.LCH62.spec.swan'    1 &
+#         0.52 'gfswave.LCH61.spec.swan'    1 &
+#         0.94 'gfswave.LCH60.spec.swan'    1 &
+#         1.27 'gfswave.LCH59.spec.swan.cp' 1
 #$END BOUNSEG
 #
 #========================================================================

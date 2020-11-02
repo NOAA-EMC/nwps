@@ -152,11 +152,11 @@ export WVTRKPA="50. 5. 0.25 0.1 50. 5."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="multi_1"
-export FTPPAT1B="multi_1"
+export FTPPAT1="gfswave"
+export FTPPAT1B="gfswave"
 export FTPPAT2="NW-EKA"
 export NFTPATTEMPTS="3"
-export WAVECPS="multi_1.NW-EKA51.spec.swan,multi_1.NW-EKA59.spec.swan"
+export WAVECPS="gfswave.NW-EKA51.spec.swan,gfswave.NW-EKA59.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -166,29 +166,29 @@ export WAVECPS="multi_1.NW-EKA51.spec.swan,multi_1.NW-EKA59.spec.swan"
 #
 #$BOUNDARY COMMAND LINES
 #$ south side
-#BOUN SEG XY 233.73 38.40 236.3 38.40 VAR FILE 0.00 'multi_1.NW-EKA51.spec.swan'    1 &
-# 0.07 'multi_1.NW-EKA69.spec.swan'    1 &
-# 0.57 'multi_1.NW-EKA68.spec.swan'    1 &
-# 1.07 'multi_1.NW-EKA67.spec.swan'    1 &
-# 1.57 'multi_1.NW-EKA66.spec.swan'    1 &
-# 2.07 'multi_1.NW-EKA65.spec.swan'    1 &
-# 2.57 'multi_1.NW-EKA64.spec.swan'    1
+#BOUN SEG XY 233.73 38.40 236.3 38.40 VAR FILE 0.00 'gfswave.NW-EKA51.spec.swan'    1 &
+# 0.07 'gfswave.NW-EKA69.spec.swan'    1 &
+# 0.57 'gfswave.NW-EKA68.spec.swan'    1 &
+# 1.07 'gfswave.NW-EKA67.spec.swan'    1 &
+# 1.57 'gfswave.NW-EKA66.spec.swan'    1 &
+# 2.07 'gfswave.NW-EKA65.spec.swan'    1 &
+# 2.57 'gfswave.NW-EKA64.spec.swan'    1
 #$ west side
-#BOUN SEG XY 233.73 42.20 233.73 38.40 VAR FILE 0.00 'multi_1.NW-EKA59.spec.swan'    1 &
-# 0.30 'multi_1.NW-EKA58.spec.swan'    1 &
-# 0.80 'multi_1.NW-EKA57.spec.swan'    1 &
-# 1.30 'multi_1.NW-EKA56.spec.swan'    1 &
-# 1.80 'multi_1.NW-EKA55.spec.swan'    1 &
-# 2.30 'multi_1.NW-EKA54.spec.swan'    1 &
-# 2.80 'multi_1.NW-EKA53.spec.swan'    1 &
-# 3.30 'multi_1.NW-EKA52.spec.swan'    1 &
-# 3.80 'multi_1.NW-EKA51.spec.swan.cp' 1
+#BOUN SEG XY 233.73 42.20 233.73 38.40 VAR FILE 0.00 'gfswave.NW-EKA59.spec.swan'    1 &
+# 0.30 'gfswave.NW-EKA58.spec.swan'    1 &
+# 0.80 'gfswave.NW-EKA57.spec.swan'    1 &
+# 1.30 'gfswave.NW-EKA56.spec.swan'    1 &
+# 1.80 'gfswave.NW-EKA55.spec.swan'    1 &
+# 2.30 'gfswave.NW-EKA54.spec.swan'    1 &
+# 2.80 'gfswave.NW-EKA53.spec.swan'    1 &
+# 3.30 'gfswave.NW-EKA52.spec.swan'    1 &
+# 3.80 'gfswave.NW-EKA51.spec.swan.cp' 1
 #$ north side
-#BOUN SEG XY 235.36 42.20 233.73 42.20 VAR FILE 0.00 'multi_1.NW-EKA63.spec.swan'    1 &
-# 0.13 'multi_1.NW-EKA62.spec.swan'    1 &
-# 0.63 'multi_1.NW-EKA61.spec.swan'    1 &
-# 1.13 'multi_1.NW-EKA60.spec.swan'    1 &
-# 1.63 'multi_1.NW-EKA59.spec.swan.cp' 1
+#BOUN SEG XY 235.36 42.20 233.73 42.20 VAR FILE 0.00 'gfswave.NW-EKA63.spec.swan'    1 &
+# 0.13 'gfswave.NW-EKA62.spec.swan'    1 &
+# 0.63 'gfswave.NW-EKA61.spec.swan'    1 &
+# 1.13 'gfswave.NW-EKA60.spec.swan'    1 &
+# 1.63 'gfswave.NW-EKA59.spec.swan.cp' 1
 #$
 #$END BOUNSEG
 #

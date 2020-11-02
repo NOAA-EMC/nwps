@@ -25,7 +25,6 @@ export UTILROOT=/nwprod2/prod_util.v1.0.0
 export jlogfile=/com/logs/para/jlogfile
 export DATAROOT=/tmpnwprd2 (replace with DEV working directory)
 export DBNROOT=/nwprod/spa_util/fakedbn
-export PCOMROOT=/pcom/para (Should not need this for DEVWCOSS)
 export SENDDBN=YES
 export SENDDBN_NTC=YES
 export SENDECF=YES

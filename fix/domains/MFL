@@ -137,11 +137,11 @@ export WVTRKPA="40. 9. 0.25 0.1 40. 9."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="multi_1"
-export FTPPAT1B="multi_1"
+export FTPPAT1="gfswave"
+export FTPPAT1B="gfswave"
 export FTPPAT2="MIA"
 export NFTPATTEMPTS="3"
-export WAVECPS="multi_1.MIA51.spec.swan,multi_1.MIA56.spec.swan,multi_1.MIA62.spec.swan"
+export WAVECPS="gfswave.MIA51.spec.swan,gfswave.MIA56.spec.swan,gfswave.MIA62.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -152,37 +152,37 @@ export WAVECPS="multi_1.MIA51.spec.swan,multi_1.MIA56.spec.swan,multi_1.MIA62.sp
 #$BOUNDARY COMMAND LINES
 #$UNSTR SWAN BOUNDARY COMMAND LINES - SITE MIA
 #$ NW boundary
-#BOUNdspec SIDE 1 CCW CON FILE 'multi_1.MIA57.spec.swan' 1
+#BOUNdspec SIDE 1 CCW CON FILE 'gfswave.MIA57.spec.swan' 1
 #$ W boundary
-#BOUNdspec SIDE 2 CCW CON FILE 'multi_1.MIA56.spec.swan' 1
-#BOUNdspec SIDE 3 CCW CON FILE 'multi_1.MIA55.spec.swan' 1
-#BOUNdspec SIDE 4 CCW CON FILE 'multi_1.MIA54.spec.swan' 1
-#BOUNdspec SIDE 5 CCW CON FILE 'multi_1.MIA53.spec.swan' 1
-#BOUNdspec SIDE 6 CCW CON FILE 'multi_1.MIA52.spec.swan' 1
+#BOUNdspec SIDE 2 CCW CON FILE 'gfswave.MIA56.spec.swan' 1
+#BOUNdspec SIDE 3 CCW CON FILE 'gfswave.MIA55.spec.swan' 1
+#BOUNdspec SIDE 4 CCW CON FILE 'gfswave.MIA54.spec.swan' 1
+#BOUNdspec SIDE 5 CCW CON FILE 'gfswave.MIA53.spec.swan' 1
+#BOUNdspec SIDE 6 CCW CON FILE 'gfswave.MIA52.spec.swan' 1
 #$ S boundary
-#BOUNdspec SIDE 7 CCW CON FILE 'multi_1.MIA51.spec.swan' 1
-#BOUNdspec SIDE 8 CCW CON FILE 'multi_1.MIA76.spec.swan' 1
-#BOUNdspec SIDE 9 CCW CON FILE 'multi_1.MIA75.spec.swan' 1
-#BOUNdspec SIDE 10 CCW CON FILE 'multi_1.MIA74.spec.swan' 1
-#BOUNdspec SIDE 11 CCW CON FILE 'multi_1.MIA73.spec.swan' 1
-#BOUNdspec SIDE 12 CCW CON FILE 'multi_1.MIA72.spec.swan' 1
-#BOUNdspec SIDE 13 CCW CON FILE 'multi_1.MIA71.spec.swan' 1
-#BOUNdspec SIDE 14 CCW CON FILE 'multi_1.MIA70.spec.swan' 1
-#BOUNdspec SIDE 15 CCW CON FILE 'multi_1.MIA69.spec.swan' 1
-#BOUNdspec SIDE 16 CCW CON FILE 'multi_1.MIA68.spec.swan' 1
-#BOUNdspec SIDE 17 CCW CON FILE 'multi_1.MIA67.spec.swan' 1
+#BOUNdspec SIDE 7 CCW CON FILE 'gfswave.MIA51.spec.swan' 1
+#BOUNdspec SIDE 8 CCW CON FILE 'gfswave.MIA76.spec.swan' 1
+#BOUNdspec SIDE 9 CCW CON FILE 'gfswave.MIA75.spec.swan' 1
+#BOUNdspec SIDE 10 CCW CON FILE 'gfswave.MIA74.spec.swan' 1
+#BOUNdspec SIDE 11 CCW CON FILE 'gfswave.MIA73.spec.swan' 1
+#BOUNdspec SIDE 12 CCW CON FILE 'gfswave.MIA72.spec.swan' 1
+#BOUNdspec SIDE 13 CCW CON FILE 'gfswave.MIA71.spec.swan' 1
+#BOUNdspec SIDE 14 CCW CON FILE 'gfswave.MIA70.spec.swan' 1
+#BOUNdspec SIDE 15 CCW CON FILE 'gfswave.MIA69.spec.swan' 1
+#BOUNdspec SIDE 16 CCW CON FILE 'gfswave.MIA68.spec.swan' 1
+#BOUNdspec SIDE 17 CCW CON FILE 'gfswave.MIA67.spec.swan' 1
 #$ E boundary
 #$ NOTE: SIDE 18 over the Bahamas is left blank
-#BOUNdspec SIDE 19 CCW CON FILE 'multi_1.MIA66.spec.swan' 1
-#BOUNdspec SIDE 20 CCW CON FILE 'multi_1.MIA65.spec.swan' 1
-#BOUNdspec SIDE 21 CCW CON FILE 'multi_1.MIA64.spec.swan' 1
-#BOUNdspec SIDE 22 CCW CON FILE 'multi_1.MIA63.spec.swan' 1
+#BOUNdspec SIDE 19 CCW CON FILE 'gfswave.MIA66.spec.swan' 1
+#BOUNdspec SIDE 20 CCW CON FILE 'gfswave.MIA65.spec.swan' 1
+#BOUNdspec SIDE 21 CCW CON FILE 'gfswave.MIA64.spec.swan' 1
+#BOUNdspec SIDE 22 CCW CON FILE 'gfswave.MIA63.spec.swan' 1
 #$ NE boundary
-#BOUNdspec SIDE 23 CCW CON FILE 'multi_1.MIA62.spec.swan' 1
-#BOUNdspec SIDE 24 CCW CON FILE 'multi_1.MIA61.spec.swan' 1
-#BOUNdspec SIDE 25 CCW CON FILE 'multi_1.MIA60.spec.swan' 1
-#BOUNdspec SIDE 26 CCW CON FILE 'multi_1.MIA59.spec.swan' 1
-#BOUNdspec SIDE 27 CCW CON FILE 'multi_1.MIA58.spec.swan' 1
+#BOUNdspec SIDE 23 CCW CON FILE 'gfswave.MIA62.spec.swan' 1
+#BOUNdspec SIDE 24 CCW CON FILE 'gfswave.MIA61.spec.swan' 1
+#BOUNdspec SIDE 25 CCW CON FILE 'gfswave.MIA60.spec.swan' 1
+#BOUNdspec SIDE 26 CCW CON FILE 'gfswave.MIA59.spec.swan' 1
+#BOUNdspec SIDE 27 CCW CON FILE 'gfswave.MIA58.spec.swan' 1
 #$NUM DIRimpl cdd=1 cdlim=2
 #NUM CTHETA cfl=5.0 CSIGMA cfl=5.0
 #$END BOUNSEG
