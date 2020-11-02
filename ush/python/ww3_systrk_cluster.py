@@ -359,8 +359,11 @@ for nclust in range(2, 6):
    label=k_means.labels_.astype(np.float)
 
    print('Calculating fit quality...')
-   silhouette_avg = silhouette_score(wavedat[0:(nlon*nlat*5),:], label[0:(nlon*nlat*5)], 
-                                     sample_size=min(25000,nlon*nlat*5), random_state=1)
+   if len(set(label[0:(nlon*nlat*5)])) > 1:
+      silhouette_avg = silhouette_score(wavedat[0:(nlon*nlat*5),:], label[0:(nlon*nlat*5)], 
+                                        sample_size=min(25000,nlon*nlat*5), random_state=1)
+   else:
+      silhouette_avg = 0.
    print('Silhouette Coefficient:',silhouette_avg,'\n')
    #silhouette_avg = 0.
    if silhouette_avg > silhouette_best:
