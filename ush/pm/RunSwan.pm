@@ -287,7 +287,7 @@ sub runWaveModel (%){
        system("sed -i 's/\$ << UNSTR GRID >>/READ UNSTRUCTURED ADCIRC/g' inputCG1");
     }
 
-    if ( ("${SITEID}" eq "MFL") || ("${SITEID}" eq "KEY") ) {
+    if ( ("${SITEID}" eq "MFL") || ("${SITEID}" eq "KEY") || ("${SITEID}" eq "MLB") ) {
        system("sed -i 's/NUM ACCUR 0.04 0.04 0.04 96. 10/NUM STOPC dabs=0.005 drel=0.01 curvat=0.005 npnts=96.0 NONSTAT mxitns=5 limiter=0.01/g' inputCG1");
     }
 
