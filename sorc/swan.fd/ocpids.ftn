@@ -112,6 +112,7 @@
 !     see whether initialisation file exists
 !
       INQUIRE (FILE=INIFIL, EXIST=FILEXI)
+      FILEXI = .FALSE.
       IF (FILEXI) THEN
 !
 !       read initialisation file
