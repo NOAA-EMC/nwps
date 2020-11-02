@@ -1296,79 +1296,62 @@ then
     while [ $x -le $NUMSPC ]
     do
         line="POINTS '${spcnames[$x]}' ${spclons[$x]} ${spclats[$x]}"
-        #pointLocation="$pointLocation $line"$'\n'
-        linespc1="SPECOUT '${spcnames[$x]}' SPEC1D ABSOLUTE 'SPC1D.${spcnames[$x]}.CG1' OUTPUT 20100301.1800 3.0 HR"
-        linespc2="SPECOUT '${spcnames[$x]}' SPEC1D ABSOLUTE 'SPC1D.${spcnames[$x]}.CG2' OUTPUT 20100301.1800 3.0 HR"
-        line2dspc1="SPECOUT '${spcnames[$x]}' SPEC2D ABSOLUTE 'SPC2D.${spcnames[$x]}.CG1' OUTPUT 20100301.1800 3.0 HR"
-        line2dspc2="SPECOUT '${spcnames[$x]}' SPEC2D ABSOLUTE 'SPC2D.${spcnames[$x]}.CG2' OUTPUT 20100301.1800 3.0 HR"
-        #spcCommand="$spcCommand $linespc"$'\n'
         sed -i "/$SPECTRA OUT-LOCATIONS/ a $line" inputCG1
+
+        if [ -f "inputCG2" ];then
+            sed -i "/$SPECTRA OUT-LOCATIONS/ a $line" inputCG2
+        fi
+        if [ -f "inputCG3" ];then
+            sed -i "/$SPECTRA OUT-LOCATIONS/ a $line" inputCG3
+        fi
+        if [ -f "inputCG4" ];then
+            sed -i "/$SPECTRA OUT-LOCATIONS/ a $line" inputCG4
+        fi
+        if [ -f "inputCG5" ];then
+            sed -i "/$SPECTRA OUT-LOCATIONS/ a $line" inputCG5
+        fi
+
+	linesystrk="${spclons[$x]} ${spclats[$x]}"
+        sed -i "/#outputpointshere#/ a $linesystrk" ww3_systrk.inp
+        x=$(( $x + 1 ))
+    done
+    x=1
+    while [ $x -le $NUMSPC ]
+    do
+        if { [ "${SITEID}" == "HFO" ] && [ $x -gt 1 ]; }; then
+           linespc1="\$SPECOUT '${spcnames[$x]}' SPEC1D ABSOLUTE 'SPC1D.${spcnames[$x]}.CG1' OUTPUT 20100301.1800 3.0 HR"
+           line2dspc1="\$SPECOUT '${spcnames[$x]}' SPEC2D ABSOLUTE 'SPC2D.${spcnames[$x]}.CG1' OUTPUT 20100301.1800 3.0 HR"
+        else
+           linespc1="SPECOUT '${spcnames[$x]}' SPEC1D ABSOLUTE 'SPC1D.${spcnames[$x]}.CG1' OUTPUT 20100301.1800 3.0 HR"
+           line2dspc1="SPECOUT '${spcnames[$x]}' SPEC2D ABSOLUTE 'SPC2D.${spcnames[$x]}.CG1' OUTPUT 20100301.1800 3.0 HR"
+        fi
         sed -i "/$SPECTRA COMMANDS/ a $line2dspc1" inputCG1
         sed -i "/$SPECTRA COMMANDS/ a $linespc1" inputCG1
 
         if [ -f "inputCG2" ];then
-            sed -i "/$SPECTRA OUT-LOCATIONS/ a $line" inputCG2
+            linespc2="SPECOUT '${spcnames[$x]}' SPEC1D ABSOLUTE 'SPC1D.${spcnames[$x]}.CG2' OUTPUT 20100301.1800 3.0 HR"
+            line2dspc2="SPECOUT '${spcnames[$x]}' SPEC2D ABSOLUTE 'SPC2D.${spcnames[$x]}.CG2' OUTPUT 20100301.1800 3.0 HR"
             sed -i "/$SPECTRA COMMANDS/ a $line2dspc2" inputCG2
             sed -i "/$SPECTRA COMMANDS/ a $linespc2" inputCG2
         fi
         if [ -f "inputCG3" ];then
             linespc3="SPECOUT '${spcnames[$x]}' SPEC1D ABSOLUTE 'SPC1D.${spcnames[$x]}.CG3' OUTPUT 20100301.1800 3.0 HR"
             line2dspc3="SPECOUT '${spcnames[$x]}' SPEC2D ABSOLUTE 'SPC2D.${spcnames[$x]}.CG3' OUTPUT 20100301.1800 3.0 HR"
-            sed -i "/$SPECTRA OUT-LOCATIONS/ a $line" inputCG3
             sed -i "/$SPECTRA COMMANDS/ a $line2dspc3" inputCG3
             sed -i "/$SPECTRA COMMANDS/ a $linespc3" inputCG3
         fi
         if [ -f "inputCG4" ];then
             linespc4="SPECOUT '${spcnames[$x]}' SPEC1D ABSOLUTE 'SPC1D.${spcnames[$x]}.CG4' OUTPUT 20100301.1800 3.0 HR"
             line2dspc4="SPECOUT '${spcnames[$x]}' SPEC2D ABSOLUTE 'SPC2D.${spcnames[$x]}.CG4' OUTPUT 20100301.1800 3.0 HR"
-            sed -i "/$SPECTRA OUT-LOCATIONS/ a $line" inputCG4
             sed -i "/$SPECTRA COMMANDS/ a $line2dspc4" inputCG4
             sed -i "/$SPECTRA COMMANDS/ a $linespc4" inputCG4
         fi
         if [ -f "inputCG5" ];then
             linespc5="SPECOUT '${spcnames[$x]}' SPEC1D ABSOLUTE 'SPC1D.${spcnames[$x]}.CG5' OUTPUT 20100301.1800 3.0 HR"
             line2dspc5="SPECOUT '${spcnames[$x]}' SPEC2D ABSOLUTE 'SPC2D.${spcnames[$x]}.CG5' OUTPUT 20100301.1800 3.0 HR"
-            sed -i "/$SPECTRA OUT-LOCATIONS/ a $line" inputCG5
             sed -i "/$SPECTRA COMMANDS/ a $line2dspc5" inputCG5
             sed -i "/$SPECTRA COMMANDS/ a $linespc5" inputCG5
         fi
-        if [ -f "inputCG6" ];then
-            linespc6="SPECOUT '${spcnames[$x]}' SPEC1D ABSOLUTE 'SPC1D.${spcnames[$x]}.CG6' OUTPUT 20100301.1800 3.0 HR"
-            line2dspc6="SPECOUT '${spcnames[$x]}' SPEC2D ABSOLUTE 'SPC2D.${spcnames[$x]}.CG6' OUTPUT 20100301.1800 3.0 HR"
-            sed -i "/$SPECTRA OUT-LOCATIONS/ a $line" inputCG6
-            sed -i "/$SPECTRA COMMANDS/ a $line2dspc6" inputCG6
-            sed -i "/$SPECTRA COMMANDS/ a $linespc6" inputCG6
-        fi
-        if [ -f "inputCG7" ];then
-            linespc7="SPECOUT '${spcnames[$x]}' SPEC1D ABSOLUTE 'SPC1D.${spcnames[$x]}.CG7' OUTPUT 20100301.1800 3.0 HR"
-            line2dspc7="SPECOUT '${spcnames[$x]}' SPEC2D ABSOLUTE 'SPC2D.${spcnames[$x]}.CG7' OUTPUT 20100301.1800 3.0 HR"
-            sed -i "/$SPECTRA OUT-LOCATIONS/ a $line" inputCG7
-            sed -i "/$SPECTRA COMMANDS/ a $line2dspc7" inputCG7
-            sed -i "/$SPECTRA COMMANDS/ a $linespc7" inputCG7
-        fi
-        if [ -f "inputCG8" ];then
-            linespc8="SPECOUT '${spcnames[$x]}' SPEC1D ABSOLUTE 'SPC1D.${spcnames[$x]}.CG8' OUTPUT 20100301.1800 3.0 HR"
-            line2dspc8="SPECOUT '${spcnames[$x]}' SPEC2D ABSOLUTE 'SPC2D.${spcnames[$x]}.CG8' OUTPUT 20100301.1800 3.0 HR"
-            sed -i "/$SPECTRA OUT-LOCATIONS/ a $line" inputCG8
-            sed -i "/$SPECTRA COMMANDS/ a $line2dspc8" inputCG8
-            sed -i "/$SPECTRA COMMANDS/ a $linespc8" inputCG8
-        fi
-        if [ -f "inputCG9" ];then
-            linespc9="SPECOUT '${spcnames[$x]}' SPEC1D ABSOLUTE 'SPC1D.${spcnames[$x]}.CG9' OUTPUT 20100301.1800 3.0 HR"
-            line2dspc9="SPECOUT '${spcnames[$x]}' SPEC2D ABSOLUTE 'SPC2D.${spcnames[$x]}.CG9' OUTPUT 20100301.1800 3.0 HR"
-            sed -i "/$SPECTRA OUT-LOCATIONS/ a $line" inputCG9
-            sed -i "/$SPECTRA COMMANDS/ a $line2dspc9" inputCG9
-            sed -i "/$SPECTRA COMMANDS/ a $linespc9" inputCG9
-        fi
-        if [ -f "inputCG10" ];then
-            linespc10="SPECOUT '${spcnames[$x]}' SPEC1D ABSOLUTE 'SPC1D.${spcnames[$x]}.CG10' OUTPUT 20100301.1800 3.0 HR"
-            line2dspc10="SPECOUT '${spcnames[$x]}' SPEC2D ABSOLUTE 'SPC2D.${spcnames[$x]}.CG10' OUTPUT 20100301.1800 3.0 HR"
-            sed -i "/$SPECTRA OUT-LOCATIONS/ a $line" inputCG10
-            sed -i "/$SPECTRA COMMANDS/ a $line2dspc10" inputCG10
-            sed -i "/$SPECTRA COMMANDS/ a $linespc2" inputCG10
-        fi
-	    linesystrk="${spclons[$x]} ${spclats[$x]}"
-        sed -i "/#outputpointshere#/ a $linesystrk" ww3_systrk.inp
         x=$(( $x + 1 ))
     done
     sed -i '/#outputpointshere#/d' ww3_systrk.inp 
