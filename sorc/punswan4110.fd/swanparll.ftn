@@ -5341,6 +5341,7 @@
          ALLOCATE(VOQ(MXK*MYK,2))
       ELSE
          ALLOCATE(VOQ(MXK*MYK,NMOVAR))
+         VOQ = 0.
          VOQR=(/ (J, J=1, NMOVAR) /)
       ENDIF
 
