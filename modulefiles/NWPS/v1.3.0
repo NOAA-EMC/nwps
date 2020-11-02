@@ -36,7 +36,6 @@ module load zlib-intel-haswell/1.2.7
 
 # Loading ncep libs
 module load bacio-intel/2.0.1
-module load bufr-intel/11.0.2
 module load g2-intel/2.5.0
 module load w3emc-intel/2.2.0
 module load w3nco-intel/2.0.6
