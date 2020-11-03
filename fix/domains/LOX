@@ -123,11 +123,11 @@ export WVTRKPA="50. 5. 0.25 0.1 50. 5."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="gfswave"
-export FTPPAT1B="gfswave"
+export FTPPAT1="multi_1"
+export FTPPAT1B="multi_1"
 export FTPPAT2="NW-LOX"
 export NFTPATTEMPTS="3"
-export WAVECPS="gfswave.NW-LOX51.spec.swan,gfswave.NW-LOX58.spec.swan"
+export WAVECPS="multi_1.NW-LOX51.spec.swan,multi_1.NW-LOX58.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -136,33 +136,33 @@ export WAVECPS="gfswave.NW-LOX51.spec.swan,gfswave.NW-LOX58.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#BOUN SEG XY 238.14 36.10 236.64 36.10 VAR FILE 0.00 'gfswave.NW-LOX62.spec.swan'    1 &
-#0.50 'gfswave.NW-LOX61.spec.swan'    1 &
-#1.00 'gfswave.NW-LOX60.spec.swan'    1 &
-#1.50 'gfswave.NW-LOX58.spec.swan'    1 
+#BOUN SEG XY 238.14 36.10 236.64 36.10 VAR FILE 0.00 'multi_1.NW-LOX62.spec.swan'    1 &
+#0.50 'multi_1.NW-LOX61.spec.swan'    1 &
+#1.00 'multi_1.NW-LOX60.spec.swan'    1 &
+#1.50 'multi_1.NW-LOX58.spec.swan'    1 
 #$
-#BOUN SEG XY 236.64 36.10 236.64 32.60 VAR FILE 0.00 'gfswave.NW-LOX58.spec.swan.cp'    1 &
-#0.50 'gfswave.NW-LOX57.spec.swan'    1 &
-#1.00 'gfswave.NW-LOX56.spec.swan'    1 &
-#1.50 'gfswave.NW-LOX55.spec.swan'    1 &
-#2.00 'gfswave.NW-LOX54.spec.swan'    1 &
-#2.50 'gfswave.NW-LOX53.spec.swan'    1 &
-#3.00 'gfswave.NW-LOX52.spec.swan'    1 &
-#3.50 'gfswave.NW-LOX51.spec.swan'    1
+#BOUN SEG XY 236.64 36.10 236.64 32.60 VAR FILE 0.00 'multi_1.NW-LOX58.spec.swan.cp'    1 &
+#0.50 'multi_1.NW-LOX57.spec.swan'    1 &
+#1.00 'multi_1.NW-LOX56.spec.swan'    1 &
+#1.50 'multi_1.NW-LOX55.spec.swan'    1 &
+#2.00 'multi_1.NW-LOX54.spec.swan'    1 &
+#2.50 'multi_1.NW-LOX53.spec.swan'    1 &
+#3.00 'multi_1.NW-LOX52.spec.swan'    1 &
+#3.50 'multi_1.NW-LOX51.spec.swan'    1
 #$ 
-#BOUN SEG XY 242.64 32.60 236.64 32.60 VAR FILE 0.00 'gfswave.NW-LOX75.spec.swan'    1 &
-#0.50 'gfswave.NW-LOX74.spec.swan'    1 &
-#1.00 'gfswave.NW-LOX73.spec.swan'    1 &
-#1.50 'gfswave.NW-LOX72.spec.swan'    1 &
-#2.00 'gfswave.NW-LOX71.spec.swan'    1 &
-#2.50 'gfswave.NW-LOX70.spec.swan'    1 &
-#3.00 'gfswave.NW-LOX69.spec.swan'    1 &
-#3.50 'gfswave.NW-LOX68.spec.swan'    1 &
-#4.00 'gfswave.NW-LOX67.spec.swan'    1 &
-#4.50 'gfswave.NW-LOX66.spec.swan'    1 &
-#5.00 'gfswave.NW-LOX65.spec.swan'    1 &
-#5.50 'gfswave.NW-LOX64.spec.swan'    1 &
-#6.00 'gfswave.NW-LOX51.spec.swan.cp' 1
+#BOUN SEG XY 242.64 32.60 236.64 32.60 VAR FILE 0.00 'multi_1.NW-LOX75.spec.swan'    1 &
+#0.50 'multi_1.NW-LOX74.spec.swan'    1 &
+#1.00 'multi_1.NW-LOX73.spec.swan'    1 &
+#1.50 'multi_1.NW-LOX72.spec.swan'    1 &
+#2.00 'multi_1.NW-LOX71.spec.swan'    1 &
+#2.50 'multi_1.NW-LOX70.spec.swan'    1 &
+#3.00 'multi_1.NW-LOX69.spec.swan'    1 &
+#3.50 'multi_1.NW-LOX68.spec.swan'    1 &
+#4.00 'multi_1.NW-LOX67.spec.swan'    1 &
+#4.50 'multi_1.NW-LOX66.spec.swan'    1 &
+#5.00 'multi_1.NW-LOX65.spec.swan'    1 &
+#5.50 'multi_1.NW-LOX64.spec.swan'    1 &
+#6.00 'multi_1.NW-LOX51.spec.swan.cp' 1
 #NUM DIRimpl cdd=1 cdlim=2
 #$END BOUNSEG
 #
