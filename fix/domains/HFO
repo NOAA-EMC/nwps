@@ -175,11 +175,11 @@ export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="gfswave"
-export FTPPAT1B="gfswave"
+export FTPPAT1="multi_1"
+export FTPPAT1B="multi_1"
 export FTPPAT2="NW-HFO"
 export NFTPATTEMPTS="3"
-export WAVECPS="gfswave.NW-HFO77.spec.swan,gfswave.NW-HFO88.spec.swan,gfswave.NW-HFO51.spec.swan"
+export WAVECPS="multi_1.NW-HFO77.spec.swan,multi_1.NW-HFO88.spec.swan,multi_1.NW-HFO51.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -190,61 +190,61 @@ export WAVECPS="gfswave.NW-HFO77.spec.swan,gfswave.NW-HFO88.spec.swan,gfswave.NW
 #$BOUNDARY COMMAND LINES
 #$UNSTR SWAN BOUNDARY COMMAND LINES - SITE NW-HFO
 #$ N boundary
-#BOUNdspec SIDE 1 CCW CON FILE 'gfswave.NW-HFO77.spec.swan' 1
-#BOUNdspec SIDE 2 CCW CON FILE 'gfswave.NW-HFO76.spec.swan' 1
-#BOUNdspec SIDE 3 CCW CON FILE 'gfswave.NW-HFO75.spec.swan' 1
-#BOUNdspec SIDE 4 CCW CON FILE 'gfswave.NW-HFO74.spec.swan' 1
-#BOUNdspec SIDE 5 CCW CON FILE 'gfswave.NW-HFO73.spec.swan' 1
-#BOUNdspec SIDE 6 CCW CON FILE 'gfswave.NW-HFO72.spec.swan' 1
-#BOUNdspec SIDE 7 CCW CON FILE 'gfswave.NW-HFO71.spec.swan' 1
-#BOUNdspec SIDE 8 CCW CON FILE 'gfswave.NW-HFO70.spec.swan' 1
-#BOUNdspec SIDE 9 CCW CON FILE 'gfswave.NW-HFO69.spec.swan' 1
-#BOUNdspec SIDE 10 CCW CON FILE 'gfswave.NW-HFO68.spec.swan' 1
-#BOUNdspec SIDE 11 CCW CON FILE 'gfswave.NW-HFO67.spec.swan' 1
-#BOUNdspec SIDE 12 CCW CON FILE 'gfswave.NW-HFO66.spec.swan' 1
-#BOUNdspec SIDE 13 CCW CON FILE 'gfswave.NW-HFO65.spec.swan' 1
-#BOUNdspec SIDE 14 CCW CON FILE 'gfswave.NW-HFO64.spec.swan' 1
-#BOUNdspec SIDE 15 CCW CON FILE 'gfswave.NW-HFO63.spec.swan' 1
+#BOUNdspec SIDE 1 CCW CON FILE 'multi_1.NW-HFO77.spec.swan' 1
+#BOUNdspec SIDE 2 CCW CON FILE 'multi_1.NW-HFO76.spec.swan' 1
+#BOUNdspec SIDE 3 CCW CON FILE 'multi_1.NW-HFO75.spec.swan' 1
+#BOUNdspec SIDE 4 CCW CON FILE 'multi_1.NW-HFO74.spec.swan' 1
+#BOUNdspec SIDE 5 CCW CON FILE 'multi_1.NW-HFO73.spec.swan' 1
+#BOUNdspec SIDE 6 CCW CON FILE 'multi_1.NW-HFO72.spec.swan' 1
+#BOUNdspec SIDE 7 CCW CON FILE 'multi_1.NW-HFO71.spec.swan' 1
+#BOUNdspec SIDE 8 CCW CON FILE 'multi_1.NW-HFO70.spec.swan' 1
+#BOUNdspec SIDE 9 CCW CON FILE 'multi_1.NW-HFO69.spec.swan' 1
+#BOUNdspec SIDE 10 CCW CON FILE 'multi_1.NW-HFO68.spec.swan' 1
+#BOUNdspec SIDE 11 CCW CON FILE 'multi_1.NW-HFO67.spec.swan' 1
+#BOUNdspec SIDE 12 CCW CON FILE 'multi_1.NW-HFO66.spec.swan' 1
+#BOUNdspec SIDE 13 CCW CON FILE 'multi_1.NW-HFO65.spec.swan' 1
+#BOUNdspec SIDE 14 CCW CON FILE 'multi_1.NW-HFO64.spec.swan' 1
+#BOUNdspec SIDE 15 CCW CON FILE 'multi_1.NW-HFO63.spec.swan' 1
 #$ W boundary
-#BOUNdspec SIDE 16 CCW CON FILE 'gfswave.NW-HFO61.spec.swan' 1
-#BOUNdspec SIDE 17 CCW CON FILE 'gfswave.NW-HFO60.spec.swan' 1
-#BOUNdspec SIDE 18 CCW CON FILE 'gfswave.NW-HFO59.spec.swan' 1
-#BOUNdspec SIDE 19 CCW CON FILE 'gfswave.NW-HFO58.spec.swan' 1
-#BOUNdspec SIDE 20 CCW CON FILE 'gfswave.NW-HFO57.spec.swan' 1
-#BOUNdspec SIDE 21 CCW CON FILE 'gfswave.NW-HFO56.spec.swan' 1
-#BOUNdspec SIDE 22 CCW CON FILE 'gfswave.NW-HFO55.spec.swan' 1
-#BOUNdspec SIDE 23 CCW CON FILE 'gfswave.NW-HFO54.spec.swan' 1
-#BOUNdspec SIDE 24 CCW CON FILE 'gfswave.NW-HFO53.spec.swan' 1
-#BOUNdspec SIDE 25 CCW CON FILE 'gfswave.NW-HFO52.spec.swan' 1
+#BOUNdspec SIDE 16 CCW CON FILE 'multi_1.NW-HFO61.spec.swan' 1
+#BOUNdspec SIDE 17 CCW CON FILE 'multi_1.NW-HFO60.spec.swan' 1
+#BOUNdspec SIDE 18 CCW CON FILE 'multi_1.NW-HFO59.spec.swan' 1
+#BOUNdspec SIDE 19 CCW CON FILE 'multi_1.NW-HFO58.spec.swan' 1
+#BOUNdspec SIDE 20 CCW CON FILE 'multi_1.NW-HFO57.spec.swan' 1
+#BOUNdspec SIDE 21 CCW CON FILE 'multi_1.NW-HFO56.spec.swan' 1
+#BOUNdspec SIDE 22 CCW CON FILE 'multi_1.NW-HFO55.spec.swan' 1
+#BOUNdspec SIDE 23 CCW CON FILE 'multi_1.NW-HFO54.spec.swan' 1
+#BOUNdspec SIDE 24 CCW CON FILE 'multi_1.NW-HFO53.spec.swan' 1
+#BOUNdspec SIDE 25 CCW CON FILE 'multi_1.NW-HFO52.spec.swan' 1
 #$ S boundary
-#BOUNdspec SIDE 26 CCW CON FILE 'gfswave.NW-HFO51.spec.swan' 1
-#BOUNdspec SIDE 27 CCW CON FILE 'gfswave.NW-HFO103.spec.swan' 1
-#BOUNdspec SIDE 28 CCW CON FILE 'gfswave.NW-HFO102.spec.swan' 1
-#BOUNdspec SIDE 29 CCW CON FILE 'gfswave.NW-HFO101.spec.swan' 1
-#BOUNdspec SIDE 30 CCW CON FILE 'gfswave.NW-HFO100.spec.swan' 1
-#BOUNdspec SIDE 31 CCW CON FILE 'gfswave.NW-HFO99.spec.swan' 1
-#BOUNdspec SIDE 32 CCW CON FILE 'gfswave.NW-HFO98.spec.swan' 1
-#BOUNdspec SIDE 33 CCW CON FILE 'gfswave.NW-HFO97.spec.swan' 1
-#BOUNdspec SIDE 34 CCW CON FILE 'gfswave.NW-HFO96.spec.swan' 1
-#BOUNdspec SIDE 35 CCW CON FILE 'gfswave.NW-HFO95.spec.swan' 1
-#BOUNdspec SIDE 36 CCW CON FILE 'gfswave.NW-HFO94.spec.swan' 1
-#BOUNdspec SIDE 37 CCW CON FILE 'gfswave.NW-HFO93.spec.swan' 1
-#BOUNdspec SIDE 38 CCW CON FILE 'gfswave.NW-HFO92.spec.swan' 1
-#BOUNdspec SIDE 39 CCW CON FILE 'gfswave.NW-HFO91.spec.swan' 1
-#BOUNdspec SIDE 40 CCW CON FILE 'gfswave.NW-HFO90.spec.swan' 1
-#BOUNdspec SIDE 41 CCW CON FILE 'gfswave.NW-HFO89.spec.swan' 1
+#BOUNdspec SIDE 26 CCW CON FILE 'multi_1.NW-HFO51.spec.swan' 1
+#BOUNdspec SIDE 27 CCW CON FILE 'multi_1.NW-HFO103.spec.swan' 1
+#BOUNdspec SIDE 28 CCW CON FILE 'multi_1.NW-HFO102.spec.swan' 1
+#BOUNdspec SIDE 29 CCW CON FILE 'multi_1.NW-HFO101.spec.swan' 1
+#BOUNdspec SIDE 30 CCW CON FILE 'multi_1.NW-HFO100.spec.swan' 1
+#BOUNdspec SIDE 31 CCW CON FILE 'multi_1.NW-HFO99.spec.swan' 1
+#BOUNdspec SIDE 32 CCW CON FILE 'multi_1.NW-HFO98.spec.swan' 1
+#BOUNdspec SIDE 33 CCW CON FILE 'multi_1.NW-HFO97.spec.swan' 1
+#BOUNdspec SIDE 34 CCW CON FILE 'multi_1.NW-HFO96.spec.swan' 1
+#BOUNdspec SIDE 35 CCW CON FILE 'multi_1.NW-HFO95.spec.swan' 1
+#BOUNdspec SIDE 36 CCW CON FILE 'multi_1.NW-HFO94.spec.swan' 1
+#BOUNdspec SIDE 37 CCW CON FILE 'multi_1.NW-HFO93.spec.swan' 1
+#BOUNdspec SIDE 38 CCW CON FILE 'multi_1.NW-HFO92.spec.swan' 1
+#BOUNdspec SIDE 39 CCW CON FILE 'multi_1.NW-HFO91.spec.swan' 1
+#BOUNdspec SIDE 40 CCW CON FILE 'multi_1.NW-HFO90.spec.swan' 1
+#BOUNdspec SIDE 41 CCW CON FILE 'multi_1.NW-HFO89.spec.swan' 1
 #$ E boundary
-#BOUNdspec SIDE 42 CCW CON FILE 'gfswave.NW-HFO88.spec.swan' 1
-#BOUNdspec SIDE 43 CCW CON FILE 'gfswave.NW-HFO87.spec.swan' 1
-#BOUNdspec SIDE 44 CCW CON FILE 'gfswave.NW-HFO86.spec.swan' 1
-#BOUNdspec SIDE 45 CCW CON FILE 'gfswave.NW-HFO85.spec.swan' 1
-#BOUNdspec SIDE 46 CCW CON FILE 'gfswave.NW-HFO84.spec.swan' 1
-#BOUNdspec SIDE 47 CCW CON FILE 'gfswave.NW-HFO83.spec.swan' 1
-#BOUNdspec SIDE 48 CCW CON FILE 'gfswave.NW-HFO82.spec.swan' 1
-#BOUNdspec SIDE 49 CCW CON FILE 'gfswave.NW-HFO81.spec.swan' 1
-#BOUNdspec SIDE 50 CCW CON FILE 'gfswave.NW-HFO80.spec.swan' 1
-#BOUNdspec SIDE 51 CCW CON FILE 'gfswave.NW-HFO79.spec.swan' 1
-#BOUNdspec SIDE 52 CCW CON FILE 'gfswave.NW-HFO78.spec.swan' 1
+#BOUNdspec SIDE 42 CCW CON FILE 'multi_1.NW-HFO88.spec.swan' 1
+#BOUNdspec SIDE 43 CCW CON FILE 'multi_1.NW-HFO87.spec.swan' 1
+#BOUNdspec SIDE 44 CCW CON FILE 'multi_1.NW-HFO86.spec.swan' 1
+#BOUNdspec SIDE 45 CCW CON FILE 'multi_1.NW-HFO85.spec.swan' 1
+#BOUNdspec SIDE 46 CCW CON FILE 'multi_1.NW-HFO84.spec.swan' 1
+#BOUNdspec SIDE 47 CCW CON FILE 'multi_1.NW-HFO83.spec.swan' 1
+#BOUNdspec SIDE 48 CCW CON FILE 'multi_1.NW-HFO82.spec.swan' 1
+#BOUNdspec SIDE 49 CCW CON FILE 'multi_1.NW-HFO81.spec.swan' 1
+#BOUNdspec SIDE 50 CCW CON FILE 'multi_1.NW-HFO80.spec.swan' 1
+#BOUNdspec SIDE 51 CCW CON FILE 'multi_1.NW-HFO79.spec.swan' 1
+#BOUNdspec SIDE 52 CCW CON FILE 'multi_1.NW-HFO78.spec.swan' 1
 #$END BOUNSEG
 #
 #========================================================================
