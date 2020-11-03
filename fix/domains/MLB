@@ -143,11 +143,11 @@ export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="gfswave"
-export FTPPAT1B="gfswave"
+export FTPPAT1="multi_1"
+export FTPPAT1B="multi_1"
 export FTPPAT2="MLB"
 export NFTPATTEMPTS="3"
-export WAVECPS="gfswave.MLB57.spec.swan"
+export WAVECPS="multi_1.MLB57.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -158,30 +158,30 @@ export WAVECPS="gfswave.MLB57.spec.swan"
 #$BOUNDARY COMMAND LINES
 #$UNSTR SWAN BOUNDARY COMMAND LINES - SITE NW-MLB
 #$ S OPEN GRID BOUNDARY
-#BOUNDspec SIDE 1 CCW CON FILE 'gfswave.MLB72.spec.swan' 1
-#BOUNDspec SIDE 2 CCW CON FILE 'gfswave.MLB71.spec.swan' 1
-#BOUNDspec SIDE 3 CCW CON FILE 'gfswave.MLB70.spec.swan' 1
-#BOUNDspec SIDE 4 CCW CON FILE 'gfswave.MLB69.spec.swan' 1
-#BOUNDspec SIDE 5 CCW CON FILE 'gfswave.MLB68.spec.swan' 1
-#BOUNDspec SIDE 6 CCW CON FILE 'gfswave.MLB67.spec.swan' 1
+#BOUNDspec SIDE 1 CCW CON FILE 'multi_1.MLB72.spec.swan' 1
+#BOUNDspec SIDE 2 CCW CON FILE 'multi_1.MLB71.spec.swan' 1
+#BOUNDspec SIDE 3 CCW CON FILE 'multi_1.MLB70.spec.swan' 1
+#BOUNDspec SIDE 4 CCW CON FILE 'multi_1.MLB69.spec.swan' 1
+#BOUNDspec SIDE 5 CCW CON FILE 'multi_1.MLB68.spec.swan' 1
+#BOUNDspec SIDE 6 CCW CON FILE 'multi_1.MLB67.spec.swan' 1
 #$ E OPEN GRID BOUNDARY
-#BOUNDspec SIDE 7 CCW CON FILE 'gfswave.MLB66.spec.swan' 1
-#BOUNDspec SIDE 8 CCW CON FILE 'gfswave.MLB65.spec.swan' 1
-#BOUNDspec SIDE 9 CCW CON FILE 'gfswave.MLB64.spec.swan' 1
-#BOUNDspec SIDE 10 CCW CON FILE 'gfswave.MLB63.spec.swan' 1
-#BOUNDspec SIDE 11 CCW CON FILE 'gfswave.MLB62.spec.swan' 1
-#BOUNDspec SIDE 12 CCW CON FILE 'gfswave.MLB61.spec.swan' 1
-#BOUNDspec SIDE 13 CCW CON FILE 'gfswave.MLB60.spec.swan' 1
-#BOUNDspec SIDE 14 CCW CON FILE 'gfswave.MLB59.spec.swan' 1
-#BOUNDspec SIDE 15 CCW CON FILE 'gfswave.MLB58.spec.swan' 1
-#BOUNDspec SIDE 16 CCW CON FILE 'gfswave.MLB57.spec.swan' 1
+#BOUNDspec SIDE 7 CCW CON FILE 'multi_1.MLB66.spec.swan' 1
+#BOUNDspec SIDE 8 CCW CON FILE 'multi_1.MLB65.spec.swan' 1
+#BOUNDspec SIDE 9 CCW CON FILE 'multi_1.MLB64.spec.swan' 1
+#BOUNDspec SIDE 10 CCW CON FILE 'multi_1.MLB63.spec.swan' 1
+#BOUNDspec SIDE 11 CCW CON FILE 'multi_1.MLB62.spec.swan' 1
+#BOUNDspec SIDE 12 CCW CON FILE 'multi_1.MLB61.spec.swan' 1
+#BOUNDspec SIDE 13 CCW CON FILE 'multi_1.MLB60.spec.swan' 1
+#BOUNDspec SIDE 14 CCW CON FILE 'multi_1.MLB59.spec.swan' 1
+#BOUNDspec SIDE 15 CCW CON FILE 'multi_1.MLB58.spec.swan' 1
+#BOUNDspec SIDE 16 CCW CON FILE 'multi_1.MLB57.spec.swan' 1
 #$ N OPEN GRID BOUNDARY
-#BOUNDspec SIDE 17 CCW CON FILE 'gfswave.MLB56.spec.swan' 1
-#BOUNDspec SIDE 18 CCW CON FILE 'gfswave.MLB55.spec.swan' 1
-#BOUNDspec SIDE 19 CCW CON FILE 'gfswave.MLB54.spec.swan' 1
-#BOUNDspec SIDE 20 CCW CON FILE 'gfswave.MLB53.spec.swan' 1
-#BOUNDspec SIDE 21 CCW CON FILE 'gfswave.MLB52.spec.swan' 1
-#BOUNDspec SIDE 22 CCW CON FILE 'gfswave.MLB51.spec.swan' 1
+#BOUNDspec SIDE 17 CCW CON FILE 'multi_1.MLB56.spec.swan' 1
+#BOUNDspec SIDE 18 CCW CON FILE 'multi_1.MLB55.spec.swan' 1
+#BOUNDspec SIDE 19 CCW CON FILE 'multi_1.MLB54.spec.swan' 1
+#BOUNDspec SIDE 20 CCW CON FILE 'multi_1.MLB53.spec.swan' 1
+#BOUNDspec SIDE 21 CCW CON FILE 'multi_1.MLB52.spec.swan' 1
+#BOUNDspec SIDE 22 CCW CON FILE 'multi_1.MLB51.spec.swan' 1
 #$END BOUNSEG for UNSTR SWAN
 #
 #========================================================================
