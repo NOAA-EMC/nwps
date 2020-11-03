@@ -134,11 +134,11 @@ export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="gfswave"
-export FTPPAT1B="gfswave"
+export FTPPAT1="multi_1"
+export FTPPAT1B="multi_1"
 export FTPPAT2="NW-MHX"
 export NFTPATTEMPTS="3"
-export WAVECPS="gfswave.NW-MHX58.spec.swan,gfswave.NW-MHX64.spec.swan"
+export WAVECPS="multi_1.NW-MHX58.spec.swan,multi_1.NW-MHX64.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -151,25 +151,25 @@ export WAVECPS="gfswave.NW-MHX58.spec.swan,gfswave.NW-MHX64.spec.swan"
 #$ W boundary
 #$ NOTE: Overland SIDE 1 is left blank
 #$ S boundary
-#BOUNdspec SIDE 2 CCW CON FILE 'gfswave.NW-MHX51.spec.swan' 1
-#BOUNdspec SIDE 3 CCW CON FILE 'gfswave.NW-MHX52.spec.swan' 1
-#BOUNdspec SIDE 4 CCW CON FILE 'gfswave.NW-MHX53.spec.swan' 1
-#BOUNdspec SIDE 5 CCW CON FILE 'gfswave.NW-MHX54.spec.swan' 1
-#BOUNdspec SIDE 6 CCW CON FILE 'gfswave.NW-MHX55.spec.swan' 1
-#BOUNdspec SIDE 7 CCW CON FILE 'gfswave.NW-MHX56.spec.swan' 1
-#BOUNdspec SIDE 8 CCW CON FILE 'gfswave.NW-MHX57.spec.swan' 1
+#BOUNdspec SIDE 2 CCW CON FILE 'multi_1.NW-MHX51.spec.swan' 1
+#BOUNdspec SIDE 3 CCW CON FILE 'multi_1.NW-MHX52.spec.swan' 1
+#BOUNdspec SIDE 4 CCW CON FILE 'multi_1.NW-MHX53.spec.swan' 1
+#BOUNdspec SIDE 5 CCW CON FILE 'multi_1.NW-MHX54.spec.swan' 1
+#BOUNdspec SIDE 6 CCW CON FILE 'multi_1.NW-MHX55.spec.swan' 1
+#BOUNdspec SIDE 7 CCW CON FILE 'multi_1.NW-MHX56.spec.swan' 1
+#BOUNdspec SIDE 8 CCW CON FILE 'multi_1.NW-MHX57.spec.swan' 1
 #$ E boundary
-#BOUNdspec SIDE 9 CCW CON FILE 'gfswave.NW-MHX58.spec.swan' 1
-#BOUNdspec SIDE 10 CCW CON FILE 'gfswave.NW-MHX59.spec.swan' 1
-#BOUNdspec SIDE 11 CCW CON FILE 'gfswave.NW-MHX60.spec.swan' 1
-#BOUNdspec SIDE 12 CCW CON FILE 'gfswave.NW-MHX61.spec.swan' 1
-#BOUNdspec SIDE 13 CCW CON FILE 'gfswave.NW-MHX62.spec.swan' 1
-#BOUNdspec SIDE 14 CCW CON FILE 'gfswave.NW-MHX63.spec.swan' 1
+#BOUNdspec SIDE 9 CCW CON FILE 'multi_1.NW-MHX58.spec.swan' 1
+#BOUNdspec SIDE 10 CCW CON FILE 'multi_1.NW-MHX59.spec.swan' 1
+#BOUNdspec SIDE 11 CCW CON FILE 'multi_1.NW-MHX60.spec.swan' 1
+#BOUNdspec SIDE 12 CCW CON FILE 'multi_1.NW-MHX61.spec.swan' 1
+#BOUNdspec SIDE 13 CCW CON FILE 'multi_1.NW-MHX62.spec.swan' 1
+#BOUNdspec SIDE 14 CCW CON FILE 'multi_1.NW-MHX63.spec.swan' 1
 #$ N boundary
-#BOUNdspec SIDE 15 CCW CON FILE 'gfswave.NW-MHX64.spec.swan' 1
-#BOUNdspec SIDE 16 CCW CON FILE 'gfswave.NW-MHX65.spec.swan' 1
-#BOUNdspec SIDE 17 CCW CON FILE 'gfswave.NW-MHX66.spec.swan' 1
-#$BOUNdspec SIDE 18 CCW CON FILE 'gfswave.NW-MHX67.spec.swan' 1
+#BOUNdspec SIDE 15 CCW CON FILE 'multi_1.NW-MHX64.spec.swan' 1
+#BOUNdspec SIDE 16 CCW CON FILE 'multi_1.NW-MHX65.spec.swan' 1
+#BOUNdspec SIDE 17 CCW CON FILE 'multi_1.NW-MHX66.spec.swan' 1
+#$BOUNdspec SIDE 18 CCW CON FILE 'multi_1.NW-MHX67.spec.swan' 1
 #$END BOUNSEG
 #
 #========================================================================
