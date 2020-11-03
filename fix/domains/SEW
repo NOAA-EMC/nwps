@@ -112,11 +112,11 @@ export WVTRKPA="50. 5. 0.25 0.1 50. 5."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="gfswave"
-export FTPPAT1B="gfswave"
+export FTPPAT1="multi_1"
+export FTPPAT1B="multi_1"
 export FTPPAT2="NW-SEW"
 export NFTPATTEMPTS="3"
-export WAVECPS="gfswave.NW-SEW51.spec.swan,gfswave.NW-SEW58.spec.swan"
+export WAVECPS="multi_1.NW-SEW51.spec.swan,multi_1.NW-SEW58.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -125,26 +125,26 @@ export WAVECPS="gfswave.NW-SEW51.spec.swan,gfswave.NW-SEW58.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#BOUN SEG XY 233.00 49.42 233.00 46.10 VAR FILE 0.00 'gfswave.NW-SEW58.spec.swan'    1 &
-#0.32 'gfswave.NW-SEW57.spec.swan'    1 &
-#0.82 'gfswave.NW-SEW56.spec.swan'    1 &
-#1.32 'gfswave.NW-SEW55.spec.swan'    1 &
-#1.82 'gfswave.NW-SEW54.spec.swan'    1 &
-#2.32 'gfswave.NW-SEW53.spec.swan'    1 &
-#2.82 'gfswave.NW-SEW52.spec.swan'    1 &
-#3.32 'gfswave.NW-SEW51.spec.swan'    1
+#BOUN SEG XY 233.00 49.42 233.00 46.10 VAR FILE 0.00 'multi_1.NW-SEW58.spec.swan'    1 &
+#0.32 'multi_1.NW-SEW57.spec.swan'    1 &
+#0.82 'multi_1.NW-SEW56.spec.swan'    1 &
+#1.32 'multi_1.NW-SEW55.spec.swan'    1 &
+#1.82 'multi_1.NW-SEW54.spec.swan'    1 &
+#2.32 'multi_1.NW-SEW53.spec.swan'    1 &
+#2.82 'multi_1.NW-SEW52.spec.swan'    1 &
+#3.32 'multi_1.NW-SEW51.spec.swan'    1
 #$
-#BOUN SEG XY 233.00 49.42 233.25 49.42 VAR FILE 0.00 'gfswave.NW-SEW58.spec.swan.cp'    1 &
-#0.32 'gfswave.NW-SEW59.spec.swan'    1 
+#BOUN SEG XY 233.00 49.42 233.25 49.42 VAR FILE 0.00 'multi_1.NW-SEW58.spec.swan.cp'    1 &
+#0.32 'multi_1.NW-SEW59.spec.swan'    1 
 #$
-#BOUN SEG XY 233.00 46.10 235.84 46.10 VAR FILE 0.00 'gfswave.NW-SEW51.spec.swan.cp'    1 &
-#0.09 'gfswave.NW-SEW66.spec.swan'    1 &
-#0.59 'gfswave.NW-SEW65.spec.swan'    1 &
-#1.09 'gfswave.NW-SEW64.spec.swan'    1 &
-#1.59 'gfswave.NW-SEW63.spec.swan'    1 &
-#2.09 'gfswave.NW-SEW62.spec.swan'    1 &
-#2.59 'gfswave.NW-SEW61.spec.swan'    1 &
-#2.84 'gfswave.NW-SEW60.spec.swan'    1
+#BOUN SEG XY 233.00 46.10 235.84 46.10 VAR FILE 0.00 'multi_1.NW-SEW51.spec.swan.cp'    1 &
+#0.09 'multi_1.NW-SEW66.spec.swan'    1 &
+#0.59 'multi_1.NW-SEW65.spec.swan'    1 &
+#1.09 'multi_1.NW-SEW64.spec.swan'    1 &
+#1.59 'multi_1.NW-SEW63.spec.swan'    1 &
+#2.09 'multi_1.NW-SEW62.spec.swan'    1 &
+#2.59 'multi_1.NW-SEW61.spec.swan'    1 &
+#2.84 'multi_1.NW-SEW60.spec.swan'    1
 #$END BOUNSEG
 #
 #========================================================================
