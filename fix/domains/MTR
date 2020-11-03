@@ -130,11 +130,11 @@ export WVTRKPA="50. 5. 0.25 0.1 50. 5."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="gfswave"
-export FTPPAT1B="gfswave"
+export FTPPAT1="multi_1"
+export FTPPAT1B="multi_1"
 export FTPPAT2="NW-MTR"
 export NFTPATTEMPTS="3"
-export WAVECPS="gfswave.NW-MTR51.spec.swan,gfswave.NW-MTR60.spec.swan"
+export WAVECPS="multi_1.NW-MTR51.spec.swan,multi_1.NW-MTR60.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -143,34 +143,34 @@ export WAVECPS="gfswave.NW-MTR51.spec.swan,gfswave.NW-MTR60.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#BOUN SEG XY 234.2 39.40 235.95 39.40 VAR FILE 0.00 'gfswave.NW-MTR51.spec.swan'    1 &
-#0.50 'gfswave.NW-MTR72.spec.swan'    1 &
-#1.00 'gfswave.NW-MTR73.spec.swan'    1 &
-#1.50 'gfswave.NW-MTR74.spec.swan'    1 &
-#1.75 'gfswave.NW-MTR75.spec.swan'    1 
+#BOUN SEG XY 234.2 39.40 235.95 39.40 VAR FILE 0.00 'multi_1.NW-MTR51.spec.swan'    1 &
+#0.50 'multi_1.NW-MTR72.spec.swan'    1 &
+#1.00 'multi_1.NW-MTR73.spec.swan'    1 &
+#1.50 'multi_1.NW-MTR74.spec.swan'    1 &
+#1.75 'multi_1.NW-MTR75.spec.swan'    1 
 #$
-#BOUN SEG XY 234.2 35.00 234.2 39.40 VAR FILE 0.00 'gfswave.NW-MTR60.spec.swan'    1 &
-#0.40 'gfswave.NW-MTR59.spec.swan'    1 &
-#0.90 'gfswave.NW-MTR58.spec.swan'    1 &
-#1.40 'gfswave.NW-MTR57.spec.swan'    1 &
-#1.90 'gfswave.NW-MTR56.spec.swan'    1 &
-#2.40 'gfswave.NW-MTR55.spec.swan'    1 &
-#2.90 'gfswave.NW-MTR54.spec.swan'    1 &
-#3.40 'gfswave.NW-MTR53.spec.swan'    1 &
-#3.90 'gfswave.NW-MTR52.spec.swan'    1 &
-#4.40 'gfswave.NW-MTR51.spec.swan.cp' 1
+#BOUN SEG XY 234.2 35.00 234.2 39.40 VAR FILE 0.00 'multi_1.NW-MTR60.spec.swan'    1 &
+#0.40 'multi_1.NW-MTR59.spec.swan'    1 &
+#0.90 'multi_1.NW-MTR58.spec.swan'    1 &
+#1.40 'multi_1.NW-MTR57.spec.swan'    1 &
+#1.90 'multi_1.NW-MTR56.spec.swan'    1 &
+#2.40 'multi_1.NW-MTR55.spec.swan'    1 &
+#2.90 'multi_1.NW-MTR54.spec.swan'    1 &
+#3.40 'multi_1.NW-MTR53.spec.swan'    1 &
+#3.90 'multi_1.NW-MTR52.spec.swan'    1 &
+#4.40 'multi_1.NW-MTR51.spec.swan.cp' 1
 #$ 
-#BOUN SEG XY 239.2 35.00 234.2 35.00 VAR FILE 0.00 'gfswave.NW-MTR70.spec.swan'    1 &
-#0.50 'gfswave.NW-MTR69.spec.swan'    1 &
-#1.00 'gfswave.NW-MTR68.spec.swan'    1 &
-#1.50 'gfswave.NW-MTR67.spec.swan'    1 &
-#2.00 'gfswave.NW-MTR66.spec.swan'    1 &
-#2.50 'gfswave.NW-MTR65.spec.swan'    1 &
-#3.00 'gfswave.NW-MTR64.spec.swan'    1 &
-#3.50 'gfswave.NW-MTR63.spec.swan'    1 &
-#4.00 'gfswave.NW-MTR62.spec.swan'    1 &
-#4.50 'gfswave.NW-MTR61.spec.swan'    1 &
-#5.00 'gfswave.NW-MTR60.spec.swan.cp' 1
+#BOUN SEG XY 239.2 35.00 234.2 35.00 VAR FILE 0.00 'multi_1.NW-MTR70.spec.swan'    1 &
+#0.50 'multi_1.NW-MTR69.spec.swan'    1 &
+#1.00 'multi_1.NW-MTR68.spec.swan'    1 &
+#1.50 'multi_1.NW-MTR67.spec.swan'    1 &
+#2.00 'multi_1.NW-MTR66.spec.swan'    1 &
+#2.50 'multi_1.NW-MTR65.spec.swan'    1 &
+#3.00 'multi_1.NW-MTR64.spec.swan'    1 &
+#3.50 'multi_1.NW-MTR63.spec.swan'    1 &
+#4.00 'multi_1.NW-MTR62.spec.swan'    1 &
+#4.50 'multi_1.NW-MTR61.spec.swan'    1 &
+#5.00 'multi_1.NW-MTR60.spec.swan.cp' 1
 #$END BOUNSEG
 #
 #========================================================================
