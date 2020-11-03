@@ -169,11 +169,11 @@ export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="gfswave"
-export FTPPAT1B="gfswave"
+export FTPPAT1="multi_1"
+export FTPPAT1B="multi_1"
 export FTPPAT2="BRO"
 export NFTPATTEMPTS="3"
-export WAVECPS="gfswave.BRO54.spec.swan"
+export WAVECPS="multi_1.BRO54.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -182,18 +182,18 @@ export WAVECPS="gfswave.BRO54.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#BOUN SEG XY 263.09 25.26 264.59 25.26 VAR FILE 0.00 'gfswave.BRO51.spec.swan'    1 &
-#         0.50 'gfswave.BRO52.spec.swan'    1 &
-#         1.00 'gfswave.BRO53.spec.swan'    1 &
-#         1.50 'gfswave.BRO54.spec.swan'    1
+#BOUN SEG XY 263.09 25.26 264.59 25.26 VAR FILE 0.00 'multi_1.BRO51.spec.swan'    1 &
+#         0.50 'multi_1.BRO52.spec.swan'    1 &
+#         1.00 'multi_1.BRO53.spec.swan'    1 &
+#         1.50 'multi_1.BRO54.spec.swan'    1
 #$
-#BOUN SEG XY 264.59 28.26 264.59 25.26 VAR FILE 0.00 'gfswave.BRO60.spec.swan'    1 &
-#         0.50 'gfswave.BRO59.spec.swan'    1 &
-#         1.00 'gfswave.BRO58.spec.swan'    1 &
-#         1.50 'gfswave.BRO57.spec.swan'    1 &
-#         2.00 'gfswave.BRO56.spec.swan'    1 &
-#         2.50 'gfswave.BRO55.spec.swan'    1 &
-#         3.00 'gfswave.BRO54.spec.swan.cp' 1
+#BOUN SEG XY 264.59 28.26 264.59 25.26 VAR FILE 0.00 'multi_1.BRO60.spec.swan'    1 &
+#         0.50 'multi_1.BRO59.spec.swan'    1 &
+#         1.00 'multi_1.BRO58.spec.swan'    1 &
+#         1.50 'multi_1.BRO57.spec.swan'    1 &
+#         2.00 'multi_1.BRO56.spec.swan'    1 &
+#         2.50 'multi_1.BRO55.spec.swan'    1 &
+#         3.00 'multi_1.BRO54.spec.swan.cp' 1
 #$END BOUNSEG
 #
 #========================================================================
