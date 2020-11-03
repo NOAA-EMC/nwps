@@ -108,11 +108,11 @@ export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="gfswave"
-export FTPPAT1B="gfswave"
+export FTPPAT1="multi_1"
+export FTPPAT1B="multi_1"
 export FTPPAT2="NW-LWX"
 export NFTPATTEMPTS="3"
-export WAVECPS="gfswave.NW-LWX51.spec.swan"
+export WAVECPS="multi_1.NW-LWX51.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -121,15 +121,15 @@ export WAVECPS="gfswave.NW-LWX51.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#BOUN SEG XY 284.1 36.75 284.60 36.75 VAR FILE 0.00 'gfswave.NW-LWX53.spec.swan'    1 &
-#0.25 'gfswave.NW-LWX52.spec.swan'    1 &
-#0.50 'gfswave.NW-LWX51.spec.swan.cp' 1
+#BOUN SEG XY 284.1 36.75 284.60 36.75 VAR FILE 0.00 'multi_1.NW-LWX53.spec.swan'    1 &
+#0.25 'multi_1.NW-LWX52.spec.swan'    1 &
+#0.50 'multi_1.NW-LWX51.spec.swan.cp' 1
 #$
-#BOUN SEG XY 284.60 36.75 284.60 37.75 VAR FILE 0.00 'gfswave.NW-LWX51.spec.swan'    1 &
-#0.25 'gfswave.NW-LWX54.spec.swan'    1 &
-#0.50 'gfswave.NW-LWX55.spec.swan'    1 &
-#0.75 'gfswave.NW-LWX56.spec.swan'    1 &
-#1.00 'gfswave.NW-LWX57.spec.swan'    1
+#BOUN SEG XY 284.60 36.75 284.60 37.75 VAR FILE 0.00 'multi_1.NW-LWX51.spec.swan'    1 &
+#0.25 'multi_1.NW-LWX54.spec.swan'    1 &
+#0.50 'multi_1.NW-LWX55.spec.swan'    1 &
+#0.75 'multi_1.NW-LWX56.spec.swan'    1 &
+#1.00 'multi_1.NW-LWX57.spec.swan'    1
 #$END BOUNSEG
 #
 #========================================================================
