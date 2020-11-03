@@ -314,8 +314,8 @@ echo "Checking GFSdir: ${GFSdir}"
 for CYCLE in ${CYCLES}
 do
     echo "CYCLE = ${CYCLE}"
-    firstfile="${CYCLE}/atmos/gfs.t${CYCLE}z.pgrb2.0p25.f000"
-    lastfile="${CYCLE}/atmos/gfs.t${CYCLE}z.pgrb2.0p25.f${GFSHOURS}"
+    firstfile="${CYCLE}/gfs.t${CYCLE}z.pgrb2.0p25.f000"
+    lastfile="${CYCLE}/gfs.t${CYCLE}z.pgrb2.0p25.f${GFSHOURS}"
     if [ -e ${GFSdir}/${firstfile} ] && [ -e ${GFSdir}/${lastfile} ]
     then
 	echo "INFO - We have ${GFSHOURS} for the ${CYCLE} on ${PDY}"
@@ -333,8 +333,8 @@ then
     for CYCLE in ${CYCLES}
     do
 	echo "CYCLE = ${CYCLE}"
-	firstfile="${CYCLE}/atmos/gfs.t${CYCLE}z.pgrb2.0p25.f000"
-	lastfile="${CYCLE}/atmos/gfs.t${CYCLE}z.pgrb2.0p25.f${GFSHOURS}"
+	firstfile="${CYCLE}/gfs.t${CYCLE}z.pgrb2.0p25.f000"
+	lastfile="${CYCLE}/gfs.t${CYCLE}z.pgrb2.0p25.f${GFSHOURS}"
 	if [ -e ${GFSdir}/${firstfile} ] && [ -e ${GFSdir}/${lastfile} ]
 	then
 	    echo "INFO - We have ${GFSHOURS} for the ${CYCLE} on ${PDYm1}"
@@ -356,19 +356,19 @@ fi
 FF="000"
 file="gfs.t${CYCLE}z.pgrb2.0p25.f${FF}"
 
-echo "Copying ${GFSdir}/${CYCLE}/atmos/${file}" | tee -a ${LOGfile}
-if [ ! -e ${GFSdir}/${CYCLE}/atmos/${file} ]
+echo "Copying ${GFSdir}/${CYCLE}/${file}" | tee -a ${LOGfile}
+if [ ! -e ${GFSdir}/${CYCLE}/${file} ]
 then
-    echo "INFO - ${GFSdir}/${CYCLE}/atmos/${file} not available yet"
+    echo "INFO - ${GFSdir}/${CYCLE}/${file} not available yet"
     echo "Exiting"
     export err=1; err_chk
     exit 1
 fi
 
-${RSYNC} ${RSYNCargs} ${GFSdir}/${CYCLE}/atmos/${file} ${SPOOLdir}/${file}
+${RSYNC} ${RSYNCargs} ${GFSdir}/${CYCLE}/${file} ${SPOOLdir}/${file}
 if [ "$?" != "0" ] 
 then
-    echo "ERROR - copying file ${GFSdir}/atmos/${CYCLE}/${file}"
+    echo "ERROR - copying file ${GFSdir}/${CYCLE}/${file}"
     if [ -e ${SPOOLdir}/${file} ]; then rm -fv ${SPOOLdir}/${file}; fi
     export err=1; err_chk
     exit 1
@@ -426,20 +426,20 @@ until [ $end -gt $HOURS ]; do
     file="gfs.t${CYCLE}z.pgrb2.0p25.f${FF}"
     outfile="${file}"
     cd ${PRODUCTdir}
-    echo "Copying ${GFSdir}/${CYCLE}/atmos/${file}" | tee -a ${LOGfile}
+    echo "Copying ${GFSdir}/${CYCLE}/${file}" | tee -a ${LOGfile}
 
-    if [ ! -e ${GFSdir}/${CYCLE}/atmos/${file} ]
+    if [ ! -e ${GFSdir}/${CYCLE}/${file} ]
     then
-	echo "INFO - ${GFSdir}/${CYCLE}/atmos/${file} not available yet"
+	echo "INFO - ${GFSdir}/${CYCLE}/${file} not available yet"
 	echo "Exiting"
 	export err=1; err_chk
 	exit 1
     fi
 
-    ${RSYNC} ${RSYNCargs} ${GFSdir}/${CYCLE}/atmos/${file} ${PRODUCTdir}/${file}
+    ${RSYNC} ${RSYNCargs} ${GFSdir}/${CYCLE}/${file} ${PRODUCTdir}/${file}
     if [ "$?" != "0" ] 
     then
-	echo "ERROR - copying file ${GFSdir}/atmos/${CYCLE}/${file}"
+	echo "ERROR - copying file ${GFSdir}/${CYCLE}/${file}"
 	if [ -e ${PRODUCTdir}/${file} ]; then rm -fv ${PRODUCTdir}/${file}; fi
 	export err=1; err_chk
 	exit 1
