@@ -170,11 +170,11 @@ export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="gfswave"
-export FTPPAT1B="gfswave"
+export FTPPAT1="multi_1"
+export FTPPAT1B="multi_1"
 export FTPPAT2="PCB"
 export NFTPATTEMPTS="3"
-export WAVECPS="gfswave.PCB51.spec.swan"
+export WAVECPS="multi_1.PCB51.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -185,28 +185,28 @@ export WAVECPS="gfswave.PCB51.spec.swan"
 #$BOUNDARY COMMAND LINES
 #$UNSTR SWAN BOUNDARY COMMAND LINES - SITE NW-TAE
 #$ S OPEN GRID BOUNDARY
-#BOUNDspec SIDE 1 CCW CON FILE 'gfswave.PCB71.spec.swan' 1
-#BOUNDspec SIDE 2 CCW CON FILE 'gfswave.PCB70.spec.swan' 1
-#BOUNDspec SIDE 3 CCW CON FILE 'gfswave.PCB69.spec.swan' 1
-#BOUNDspec SIDE 4 CCW CON FILE 'gfswave.PCB68.spec.swan' 1
-#BOUNDspec SIDE 5 CCW CON FILE 'gfswave.PCB67.spec.swan' 1
-#BOUNDspec SIDE 6 CCW CON FILE 'gfswave.PCB66.spec.swan' 1
-#BOUNDspec SIDE 7 CCW CON FILE 'gfswave.PCB65.spec.swan' 1
-#BOUNDspec SIDE 8 CCW CON FILE 'gfswave.PCB64.spec.swan' 1
-#BOUNDspec SIDE 9 CCW CON FILE 'gfswave.PCB63.spec.swan' 1
-#BOUNDspec SIDE 10 CCW CON FILE 'gfswave.PCB62.spec.swan' 1
-#BOUNDspec SIDE 11 CCW CON FILE 'gfswave.PCB61.spec.swan' 1
-#BOUNDspec SIDE 12 CCW CON FILE 'gfswave.PCB60.spec.swan' 1
-#BOUNDspec SIDE 13 CCW CON FILE 'gfswave.PCB59.spec.swan' 1
-#BOUNDspec SIDE 14 CCW CON FILE 'gfswave.PCB58.spec.swan' 1
+#BOUNDspec SIDE 1 CCW CON FILE 'multi_1.PCB71.spec.swan' 1
+#BOUNDspec SIDE 2 CCW CON FILE 'multi_1.PCB70.spec.swan' 1
+#BOUNDspec SIDE 3 CCW CON FILE 'multi_1.PCB69.spec.swan' 1
+#BOUNDspec SIDE 4 CCW CON FILE 'multi_1.PCB68.spec.swan' 1
+#BOUNDspec SIDE 5 CCW CON FILE 'multi_1.PCB67.spec.swan' 1
+#BOUNDspec SIDE 6 CCW CON FILE 'multi_1.PCB66.spec.swan' 1
+#BOUNDspec SIDE 7 CCW CON FILE 'multi_1.PCB65.spec.swan' 1
+#BOUNDspec SIDE 8 CCW CON FILE 'multi_1.PCB64.spec.swan' 1
+#BOUNDspec SIDE 9 CCW CON FILE 'multi_1.PCB63.spec.swan' 1
+#BOUNDspec SIDE 10 CCW CON FILE 'multi_1.PCB62.spec.swan' 1
+#BOUNDspec SIDE 11 CCW CON FILE 'multi_1.PCB61.spec.swan' 1
+#BOUNDspec SIDE 12 CCW CON FILE 'multi_1.PCB60.spec.swan' 1
+#BOUNDspec SIDE 13 CCW CON FILE 'multi_1.PCB59.spec.swan' 1
+#BOUNDspec SIDE 14 CCW CON FILE 'multi_1.PCB58.spec.swan' 1
 #$ W OPEN GRID BOUNDARY
-#BOUNDspec SIDE 15 CCW CON FILE 'gfswave.PCB57.spec.swan' 1
-#BOUNDspec SIDE 16 CCW CON FILE 'gfswave.PCB56.spec.swan' 1
-#BOUNDspec SIDE 17 CCW CON FILE 'gfswave.PCB55.spec.swan' 1
-#BOUNDspec SIDE 18 CCW CON FILE 'gfswave.PCB54.spec.swan' 1
-#BOUNDspec SIDE 19 CCW CON FILE 'gfswave.PCB53.spec.swan' 1
-#BOUNDspec SIDE 20 CCW CON FILE 'gfswave.PCB52.spec.swan' 1
-#BOUNDspec SIDE 21 CCW CON FILE 'gfswave.PCB51.spec.swan' 1
+#BOUNDspec SIDE 15 CCW CON FILE 'multi_1.PCB57.spec.swan' 1
+#BOUNDspec SIDE 16 CCW CON FILE 'multi_1.PCB56.spec.swan' 1
+#BOUNDspec SIDE 17 CCW CON FILE 'multi_1.PCB55.spec.swan' 1
+#BOUNDspec SIDE 18 CCW CON FILE 'multi_1.PCB54.spec.swan' 1
+#BOUNDspec SIDE 19 CCW CON FILE 'multi_1.PCB53.spec.swan' 1
+#BOUNDspec SIDE 20 CCW CON FILE 'multi_1.PCB52.spec.swan' 1
+#BOUNDspec SIDE 21 CCW CON FILE 'multi_1.PCB51.spec.swan' 1
 #$END BOUNSEG for UNSTR SWAN
 #
 #========================================================================
