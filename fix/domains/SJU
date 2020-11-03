@@ -164,11 +164,11 @@ export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="gfswave"
-export FTPPAT1B="gfswave"
+export FTPPAT1="multi_1"
+export FTPPAT1B="multi_1"
 export FTPPAT2="SJU"
 export NFTPATTEMPTS="3"
-export WAVECPS="gfswave.SJU51.spec.swan,gfswave.SJU56.spec.swan,gfswave.SJU64.spec.swan,gfswave.SJU69.spec.swan"
+export WAVECPS="multi_1.SJU51.spec.swan,multi_1.SJU56.spec.swan,multi_1.SJU64.spec.swan,multi_1.SJU69.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -179,36 +179,36 @@ export WAVECPS="gfswave.SJU51.spec.swan,gfswave.SJU56.spec.swan,gfswave.SJU64.sp
 #$BOUNDARY COMMAND LINES
 #$UNSTR SWAN BOUNDARY COMMAND LINES - SITE SJU
 #$ W OPEN GRID BOUNDARY (LOWER HALF OF BOUNDARY)
-#BOUNDspec SIDE 1 CCW CON FILE 'gfswave.SJU53.spec.swan' 1
-#BOUNDspec SIDE 2 CCW CON FILE 'gfswave.SJU52.spec.swan' 1
+#BOUNDspec SIDE 1 CCW CON FILE 'multi_1.SJU53.spec.swan' 1
+#BOUNDspec SIDE 2 CCW CON FILE 'multi_1.SJU52.spec.swan' 1
 #$ S OPEN GRID BOUNDARY
-#BOUNDspec SIDE 3 CCW CON FILE 'gfswave.SJU51.spec.swan' 1
-#BOUNDspec SIDE 4 CCW CON FILE 'gfswave.SJU76.spec.swan' 1
-#BOUNDspec SIDE 5 CCW CON FILE 'gfswave.SJU75.spec.swan' 1
-#BOUNDspec SIDE 6 CCW CON FILE 'gfswave.SJU74.spec.swan' 1
-#BOUNDspec SIDE 7 CCW CON FILE 'gfswave.SJU73.spec.swan' 1
-#BOUNDspec SIDE 8 CCW CON FILE 'gfswave.SJU72.spec.swan' 1
-#BOUNDspec SIDE 9 CCW CON FILE 'gfswave.SJU71.spec.swan' 1
-#BOUNDspec SIDE 10 CCW CON FILE 'gfswave.SJU70.spec.swan' 1
-#BOUNDspec SIDE 11 CCW CON FILE 'gfswave.SJU69.spec.swan' 1
+#BOUNDspec SIDE 3 CCW CON FILE 'multi_1.SJU51.spec.swan' 1
+#BOUNDspec SIDE 4 CCW CON FILE 'multi_1.SJU76.spec.swan' 1
+#BOUNDspec SIDE 5 CCW CON FILE 'multi_1.SJU75.spec.swan' 1
+#BOUNDspec SIDE 6 CCW CON FILE 'multi_1.SJU74.spec.swan' 1
+#BOUNDspec SIDE 7 CCW CON FILE 'multi_1.SJU73.spec.swan' 1
+#BOUNDspec SIDE 8 CCW CON FILE 'multi_1.SJU72.spec.swan' 1
+#BOUNDspec SIDE 9 CCW CON FILE 'multi_1.SJU71.spec.swan' 1
+#BOUNDspec SIDE 10 CCW CON FILE 'multi_1.SJU70.spec.swan' 1
+#BOUNDspec SIDE 11 CCW CON FILE 'multi_1.SJU69.spec.swan' 1
 #$ E OPEN GRID BOUNDARY
-#BOUNDspec SIDE 12 CCW CON FILE 'gfswave.SJU68.spec.swan' 1
-#BOUNDspec SIDE 13 CCW CON FILE 'gfswave.SJU67.spec.swan' 1
-#BOUNDspec SIDE 14 CCW CON FILE 'gfswave.SJU66.spec.swan' 1
-#BOUNDspec SIDE 15 CCW CON FILE 'gfswave.SJU65.spec.swan' 1
-#BOUNDspec SIDE 16 CCW CON FILE 'gfswave.SJU64.spec.swan' 1
+#BOUNDspec SIDE 12 CCW CON FILE 'multi_1.SJU68.spec.swan' 1
+#BOUNDspec SIDE 13 CCW CON FILE 'multi_1.SJU67.spec.swan' 1
+#BOUNDspec SIDE 14 CCW CON FILE 'multi_1.SJU66.spec.swan' 1
+#BOUNDspec SIDE 15 CCW CON FILE 'multi_1.SJU65.spec.swan' 1
+#BOUNDspec SIDE 16 CCW CON FILE 'multi_1.SJU64.spec.swan' 1
 #$ N OPEN GRID BOUNDARY
-#BOUNDspec SIDE 17 CCW CON FILE 'gfswave.SJU63.spec.swan' 1
-#BOUNDspec SIDE 18 CCW CON FILE 'gfswave.SJU62.spec.swan' 1
-#BOUNDspec SIDE 19 CCW CON FILE 'gfswave.SJU61.spec.swan' 1
-#BOUNDspec SIDE 20 CCW CON FILE 'gfswave.SJU60.spec.swan' 1
-#BOUNDspec SIDE 21 CCW CON FILE 'gfswave.SJU59.spec.swan' 1
-#BOUNDspec SIDE 22 CCW CON FILE 'gfswave.SJU58.spec.swan' 1
-#BOUNDspec SIDE 23 CCW CON FILE 'gfswave.SJU57.spec.swan' 1
-#BOUNDspec SIDE 24 CCW CON FILE 'gfswave.SJU56.spec.swan' 1
+#BOUNDspec SIDE 17 CCW CON FILE 'multi_1.SJU63.spec.swan' 1
+#BOUNDspec SIDE 18 CCW CON FILE 'multi_1.SJU62.spec.swan' 1
+#BOUNDspec SIDE 19 CCW CON FILE 'multi_1.SJU61.spec.swan' 1
+#BOUNDspec SIDE 20 CCW CON FILE 'multi_1.SJU60.spec.swan' 1
+#BOUNDspec SIDE 21 CCW CON FILE 'multi_1.SJU59.spec.swan' 1
+#BOUNDspec SIDE 22 CCW CON FILE 'multi_1.SJU58.spec.swan' 1
+#BOUNDspec SIDE 23 CCW CON FILE 'multi_1.SJU57.spec.swan' 1
+#BOUNDspec SIDE 24 CCW CON FILE 'multi_1.SJU56.spec.swan' 1
 #$ W OPEN GRID BOUNDARY (UPPER HALF OF GRID BOUNDARY)
-#BOUNDspec SIDE 25 CCW CON FILE 'gfswave.SJU55.spec.swan' 1
-#BOUNDspec SIDE 26 CCW CON FILE 'gfswave.SJU54.spec.swan' 1
+#BOUNDspec SIDE 25 CCW CON FILE 'multi_1.SJU55.spec.swan' 1
+#BOUNDspec SIDE 26 CCW CON FILE 'multi_1.SJU54.spec.swan' 1
 #NUM DIRimpl cdd=1 cdlim=2
 #$END BOUNSEG for UNSTR SWAN
 #
