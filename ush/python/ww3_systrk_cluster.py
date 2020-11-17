@@ -352,26 +352,20 @@ print('Fitting data...')
 wavedat = StandardScaler().fit_transform(wavedat)
 silhouette_best = -1.
 # Test optimal number of clusters (between 2-5)
-for nclust in range(2, 6):
-   print('Trying nclust =',nclust)
-   k_means = cluster.KMeans(n_clusters=nclust, random_state=1)
-   k_means.fit(wavedat)
-   label=k_means.labels_.astype(np.float)
 
-   print('Calculating fit quality...')
-   if len(set(label[0:(nlon*nlat*5)])) > 1:
-      silhouette_avg = silhouette_score(wavedat[0:(nlon*nlat*5),:], label[0:(nlon*nlat*5)], 
-                                        sample_size=min(25000,nlon*nlat*5), random_state=1)
-   else:
-      silhouette_avg = 0.
-   print('Silhouette Coefficient:',silhouette_avg,'\n')
-   #silhouette_avg = 0.
+for nclust in range(2, 6):
+   silhouette_avg=np.loadtxt('silhouette_coeff_k'+str(nclust)+'.txt')
+   print('k='+str(nclust)+': silhouette coeff = '+str(silhouette_avg))
    if silhouette_avg > silhouette_best:
       silhouette_best = silhouette_avg
       nclust_best = nclust
-      label_best = label
+
 print('nclust_best = ',nclust_best)
 print('silhouette_best = ',silhouette_best)
+
+k_means = cluster.KMeans(n_clusters=nclust_best, random_state=1)
+k_means.fit(wavedat)
+label_best=k_means.labels_.astype(np.float)
 #--------------------------------
 
 lons=np.linspace(x0,x0+float(nlon-1)*dx,num=nlon)
