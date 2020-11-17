@@ -51,7 +51,29 @@ fi
 cat /dev/null > ${LOGdir}/systrk_info.log
 
 echo "Starting clustering-based Python script ww3_systrk_cluster.py"  
-echo " In ww3_systrackexe.sh, calling aprun" 
+echo " In ww3_systrackexe.sh, calling aprun"
+
+# Step 1: Search for optimum number of clusters in parallel using silhouette coefficient
+cat /dev/null > ${RUNdir}/ww3_systrk_elements.sh
+for i in {2..5}; do
+   echo "${PYTHON} ${NWPSdir}/ush/python/ww3_systrk_cluster_silhouette.py ${SITEID,,} ${i}" >> ${RUNdir}/ww3_systrk_elements.sh
+done
+aprun -n4 -N4 -j1 -d1 cfp ${RUNdir}/ww3_systrk_elements.sh
+export err=$?
+if [ "${err}" != "0" ];then
+    echo " ============  E R R O R ==============="                        | tee -a ${LOGdir}/systrk_info.log
+    echo "Exit Code: ${err}"                                               | tee -a ${LOGdir}/systrk_info.log 
+    echo " Something went wrong running ww3_systrk_cluster_silhouette.py"  | tee -a ${LOGdir}/systrk_info.log 
+    echo " HERE IS WHAT WE HAVE IN THE FILE "                              | tee -a ${LOGdir}/systrk_info.log 
+    echo " "                                                               | tee -a ${LOGdir}/systrk_info.log
+    echo "        ${DATAdir}/logs/run_wavetrack_exe_error.log"             | tee -a ${LOGdir}/systrk_info.log 
+    cat ${DATAdir}/logs/run_wavetrack_exe_error.log >> ${LOGdir}/systrk_info.log 
+    msg="FATAL ERROR: Wave system tracking script ww3_systrk_cluster_silhouette.py failed."
+    postmsg "$jlogfile" "$msg"
+    err_chk
+fi
+
+# Step 2: Calculate wave systems using optimum number of clusters
 aprun -n1 -N1 -d1 ${PYTHON} ${NWPSdir}/ush/python/ww3_systrk_cluster.py ${SITEID,,}
 export err=$?
 if [ "${err}" != "0" ];then
