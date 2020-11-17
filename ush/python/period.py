@@ -16,6 +16,10 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 
 print('*** period.py ***')
+TSTART = int(sys.argv[1])
+TEND = int(sys.argv[2])
+print('TSTART = '+str(TSTART))
+print('TEND = '+str(TEND))
 
 NWPSdir = os.environ['NWPSdir']
 cartopy.config['pre_existing_data_dir'] = NWPSdir+'/lib/cartopy'
@@ -80,7 +84,7 @@ else:
    sys.exit()
 
 # Extract GRIB2 files to text
-for tstep in range(1, (int(TDEF)+1)):
+for tstep in range(TSTART, (int(TEND)+1)):
    print('')
    print('Extracting Time step: '+str(tstep))
 
@@ -121,7 +125,7 @@ CGNUMPLOT = os.environ.get('CGNUMPLOT')
 
 plt.figure()
 # Read the extracted text file
-for tstep in range(1, (int(TDEF)+1)):
+for tstep in range(TSTART, (int(TEND)+1)):
    print('')
    print('Processing Time step: '+str(tstep))
 
@@ -243,5 +247,7 @@ for tstep in range(1, (int(TDEF)+1)):
    plt.clf()
 
 # Clean up text dump files
-os.system('rm PERPW_extract*f???.txt')
-os.system('rm DIRPWPER_extract*f???.txt')
+for tstep in range(TSTART, (int(TEND)+1)):
+   os.system('rm PERPW_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt')
+   os.system('rm DIRPWPER_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt')
+
