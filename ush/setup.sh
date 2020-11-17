@@ -394,7 +394,8 @@ function edit_inputCG_for_blockout () {
     if [ "${MODELCORE}" == "UNSWAN" ]; then
        # For UNSTRUC mode we output the mesh in netCDF format, and extract the AWIPS grids with swn_reginterpCG1.py
        # In the postproc step (GraphicOutput.pm) we will pack this mesh at the FRAMECG1 resolution.
-       lineprt1="BLOCK 'COMPGRID' NOHEAD 'CG_UNSTRUC.nc' LAY 3 XP YP HSIG WIND TPS DIR PDIR VEL WATL HSWE WLEN DEPTH \&"
+       #AW lineprt1="BLOCK 'COMPGRID' NOHEAD 'CG_UNSTRUC.nc' LAY 3 XP YP HSIG WIND TPS DIR PDIR VEL WATL HSWE WLEN DEPTH \&"
+       lineprt1="BLOCK 'COMPGRID' NOHEAD 'CG_UNSTRUC.nc' LAY 3 XP YP HSIG WIND TPS DIR PDIR VEL WATL HSWE \&"
        lineprt2="OUTPUT 20100301.1800 #TSTEP#.0 HR"
        lineprt3="$ FRAMECG1 'OUTGRID' #SWLONCIRC# #SWLAT# 0. #XLENC# #YLENC# #MESHLON# #MESHLAT#"
        lineprt4="$ FRAMECG2 'OUTGRID' #SWLONCIRCN1# #SWLATN1# 0. #XLENCN1# #YLENCN1# #MESHLONN1# #MESHLATN1#"
@@ -418,8 +419,8 @@ function edit_inputCG_for_blockout () {
        lineprt7="BLOCK 'OUTGRID' NOHEAD 'VEL.CG1.CGRID' LAY 3 VEL OUTPUT 20100301.1800 #TSTEP#.0 HR"
        lineprt8="BLOCK 'OUTGRID' NOHEAD 'WATL.CG1.CGRID' LAY 3 WATL OUTPUT 20100301.1800 #TSTEP#.0 HR"
        lineprt9="BLOCK 'OUTGRID' NOHEAD 'HSWE.CG1.CGRID' LAY 3 HSWE OUTPUT 20100301.1800 #TSTEP#.0 HR"
-       lineprt10="BLOCK 'OUTGRID' NOHEAD 'WLEN.CG1.CGRID' LAY 3 WLEN OUTPUT 20100301.1800 #TSTEP#.0 HR"
-       lineprt11="BLOCK 'OUTGRID' NOHEAD 'DEPTH.CG1.CGRID' LAY 3 DEPTH OUTPUT 20100301.1800 #TSTEP#.0 HR"
+       #AW lineprt10="BLOCK 'OUTGRID' NOHEAD 'WLEN.CG1.CGRID' LAY 3 WLEN OUTPUT 20100301.1800 #TSTEP#.0 HR"
+       #AW lineprt11="BLOCK 'OUTGRID' NOHEAD 'DEPTH.CG1.CGRID' LAY 3 DEPTH OUTPUT 20100301.1800 #TSTEP#.0 HR"
        sed -i "s/$ BLOCK REG LINE01/${lineprt1}/g" inputCG1
        sed -i "s/$ BLOCK REG LINE02/${lineprt2}/g" inputCG1
        sed -i "s/$ BLOCK REG LINE03/${lineprt3}/g" inputCG1
@@ -429,8 +430,8 @@ function edit_inputCG_for_blockout () {
        sed -i "s/$ BLOCK REG LINE07/${lineprt7}/g" inputCG1
        sed -i "s/$ BLOCK REG LINE08/${lineprt8}/g" inputCG1
        sed -i "s/$ BLOCK REG LINE09/${lineprt9}/g" inputCG1
-       sed -i "s/$ BLOCK REG LINE10/${lineprt10}/g" inputCG1
-       sed -i "s/$ BLOCK REG LINE11/${lineprt11}/g" inputCG1
+       #AW sed -i "s/$ BLOCK REG LINE10/${lineprt10}/g" inputCG1
+       #AW sed -i "s/$ BLOCK REG LINE11/${lineprt11}/g" inputCG1
     fi
 }
 
