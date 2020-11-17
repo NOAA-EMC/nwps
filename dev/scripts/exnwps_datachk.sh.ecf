@@ -255,11 +255,22 @@ else
 
                 if [ "$wfo" == "key" ] || [ "$wfo" == "mfl" ] || [ "$wfo" == "alu" ] \
                   || [ "$wfo" == "akq" ] || [ "$wfo" == "mlb" ] || [ "$wfo" == "box" ] \
-                  || [ "$wfo" == "ajk" ] || [ "$wfo" == "mtr" ]; then
+                  || [ "$wfo" == "hgxx" ] || [ "$wfo" == "mobx" ] || [ "$wfo" == "tbw" ] \
+                  || [ "$wfo" == "okx" ] || [ "$wfo" == "gyx" ] || [ "$wfo" == "sgx" ] \
+                  || [ "$wfo" == "ajkx" ] || [ "$wfo" == "mtrx" ] || [ "$wfo" == "mfr" ] \
+                  || [ "$wfo" == "chs" ] || [ "$wfo" == "ilm" ] || [ "$wfo" == "phi" ] \
+                  || [ "$wfo" == "car" ] || [ "$wfo" == "tae" ]; then
                    sed -i "s/NODES=2/NODES=4/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cg1.ecf.${wfo}
                 fi
-                if [ "$wfo" == "ajk" ] || [ "$wfo" == "mtr" ]; then
+                if [ "$wfo" == "ajk" ] || [ "$wfo" == "mtr" ] || [ "$wfo" == "hgx" ] \
+                  || [ "$wfo" == "mob" ]; then
+                   sed -i "s/NODES=2/NODES=5/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cg1.ecf.${wfo}
+                fi
+                if [ "$wfo" == "ajkx" ] || [ "$wfo" == "mtrx" ] || [ "$wfo" == "mfr" ]; then
                    sed -i "s/NODES=2/NODES=4/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cgn.ecf.${wfo}
+                fi
+                if [ "$wfo" == "ajk" ] || [ "$wfo" == "mtr" ] || [ "$wfo" == "mfr" ]; then
+                   sed -i "s/NODES=2/NODES=5/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cgn.ecf.${wfo}
                 fi
 
                 echo $runit                                               > ${NWPSdir}/dev/ecf/jobids_${wfo}.log; 
