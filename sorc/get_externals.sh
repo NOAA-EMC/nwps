@@ -14,7 +14,8 @@ fi
 
 echo 'Fetching externals...'
 scp /gpfs/hps3/emc/marine/noscrub/emc.wavepa/git/nwps-externals/v_1-3/fix/bathy_db.tar ${NWPSdir}/fix/
-tar -C ${NWPSdir}/fix/ -xvf ${NWPSdir}/fix/bathy_db.tar
+mkdir -p ${NWPSdir}/fix/bathy_db/
+tar -C ${NWPSdir}/fix/bathy_db/ -xvf ${NWPSdir}/fix/bathy_db.tar
 rm ${NWPSdir}/fix/bathy_db.tar
 scp /gpfs/hps3/emc/marine/noscrub/emc.wavepa/git/nwps-externals/v_1-3/fix/pdef_ncep_global ${NWPSdir}/fix/
 scp /gpfs/hps3/emc/marine/noscrub/emc.wavepa/git/nwps-externals/v_1-3/ush/rtofs/datfiles/pdef_ncep_global.gz ${NWPSdir}/ush/rtofs/datfiles/
