@@ -15,6 +15,10 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 
 print('*** swell.py ***')
+TSTART = int(sys.argv[1])
+TEND = int(sys.argv[2])
+print('TSTART = '+str(TSTART))
+print('TEND = '+str(TEND))
 
 NWPSdir = os.environ['NWPSdir']
 cartopy.config['pre_existing_data_dir'] = NWPSdir+'/lib/cartopy'
@@ -73,21 +77,20 @@ else:
    sys.exit()
 
 # Extract GRIB2 files to text
-for tstep in range(1, (int(TDEF)+1)):
+for tstep in range(TSTART, (int(TEND)+1)):
    print('')
    print('Extracting Time step: '+str(tstep))
 
    # Significant height of swell waves
    grib2dump = 'SWELL_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
-   fieldmax = 'SWELL_extract_fieldmax.txt'
    if tstep == 1:
       command = '$WGRIB2 '+DSET+' -s | grep "SWELL:surface:anl" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
-      command2 = '$WGRIB2 '+DSET+' -s | grep "SWELL:surface:anl" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
+      #command2 = '$WGRIB2 '+DSET+' -s | grep "SWELL:surface:anl" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
    else:
       command = '$WGRIB2 '+DSET+' -s | grep "SWELL:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
-      command2 = '$WGRIB2 '+DSET+' -s | grep "SWELL:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -max | cat >> '+fieldmax
+      #command2 = '$WGRIB2 '+DSET+' -s | grep "SWELL:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -max | cat >> '+fieldmax
    os.system(command)
-   os.system(command2)
+   #os.system(command2)
 
 # Set up lon/lat mesh
 lons=np.linspace(x0,x0+float(nlon-1)*dx,num=nlon)
@@ -108,12 +111,15 @@ else:
 SITEID = os.environ.get('SITEID')
 CGNUMPLOT = os.environ.get('CGNUMPLOT')
 
+fieldmax = 'SWELL_extract_fieldmax_TSTART'+str(TSTART)+'.txt'
+command = '$WGRIB2 '+DSET+' -s | grep "SWELL" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
+os.system(command)
 temp=np.loadtxt(fieldmax, delimiter='=', usecols=[1])
 maxval=max(temp)
 
 plt.figure()
 # Read the extracted text file
-for tstep in range(1, (int(TDEF)+1)):
+for tstep in range(TSTART, (int(TEND)+1)):
    print('')
    print('Processing Time step: '+str(tstep))
 
@@ -232,6 +238,8 @@ for tstep in range(1, (int(TDEF)+1)):
    plt.clf()
 
 # Clean up text dump files
-os.system('rm SWELL_extract*f???.txt')
+for tstep in range(TSTART, (int(TEND)+1)):
+   os.system('rm SWELL_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt')
+
 
 
