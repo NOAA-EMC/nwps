@@ -213,7 +213,7 @@ pwd
 
 # Run the Rip Current Model
 echo "RIP CURRENT WORKING ON ${CGnumber}"
-export INIT_DATE=${DATE}_$(printf %02d $CYCLE)00
+export INIT_DATE=${DATE}_$(printf %02d $((10#$CYCLE)))00
 siteid="${SITEID,,}"
 
 # ======================================================================
@@ -292,8 +292,8 @@ while read line; do
    do
       let CYC=0
       while (( $CYC <= 21 )) && [ "${found}" == "FALSE" ]; do
-         # JY if [[ $DAT == $DATE && $(printf %02d $CYC) == $(printf %02d $CYCLE) ]]; then
-         if [[ $DAT == $DATE && $(printf %02d $CYC) == $(printf %02d ${CYCLE#0}) ]]; then
+         # Note: We use the 10# prefix to prevent octal interpretation of CYCLE = 08 and 09
+         if [[ $DAT == $DATE && $(printf %02d $CYC) == $(printf %02d $((10#$CYCLE))) ]]; then
             break
          fi
          DAT_CYC="${DAT}_$(printf %02d $CYC)00"
