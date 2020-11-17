@@ -64,7 +64,13 @@ then
    yyyymmdd=`ls *.wnd | cut -c1-8`
    hh=`ls *.wnd | cut -c9-10`
 
-   if [ "${siteid}" == "mfr" ] || [ "${siteid}" == "aer" ] || [ "${siteid}" == "afg" ]
+   if [ "${siteid}" == "aer" ] || [ "${siteid}" == "afg" ] || [ "${siteid}" == "sew" ] \
+      || [ "${siteid}" == "bro" ] || [ "${siteid}" == "crp" ] || [ "${siteid}" == "lch" ] \
+      || [ "${siteid}" == "lix" ] || [ "${siteid}" == "lox" ] || [ "${siteid}" == "ekax" ] \
+      || ( [ "${siteid}" == "pqr" ] && [ "${CGNUM}" != "2" ] ) \
+      || ( [ "${siteid}" == "mfr" ] && [ "${CGNUM}" == "1" ] ) \
+      || ( [ "${siteid}" == "mfr" ] && [ "${CGNUM}" == "4" ] ) \
+      || ( [ "${siteid}" == "mfr" ] && [ "${CGNUM}" == "5" ] )
    then
       # Check that all hotfiles are present
       for i in {1..9}; do
@@ -93,7 +99,10 @@ then
       aprun -n48 -N24 -j1 -d1 ${EXECnwps}/swan.exe
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
-   elif [ "${siteid}" == "ajk" ] || [ "${siteid}" == "mtr" ]
+   elif [ "${siteid}" == "ajkx" ] || [ "${siteid}" == "mtrx" ] \
+        || ( [ "${siteid}" == "mfr" ] && [ "${CGNUM}" != "1" ] ) \
+        || ( [ "${siteid}" == "mfr" ] && [ "${CGNUM}" != "4" ] ) \
+        || ( [ "${siteid}" == "mfr" ] && [ "${CGNUM}" != "5" ] )
    then
       # Check that all hotfiles are present
       for i in {1..9}; do
@@ -122,7 +131,36 @@ then
       aprun -n96 -N24 -j1 -d1 ${EXECnwps}/swan.exe
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
-   elif [ "${siteid}" == "lch" ]
+   elif [ "${siteid}" == "ajk" ] || [ "${siteid}" == "mtr" ]
+   then
+      # Check that all hotfiles are present
+      for i in {1..9}; do
+         echo "Checking hotfile for "${yyyymmdd}.${hh}"00-00"${i}
+         # Note: Checking also for PDYm1 to allow running of a late cycle from previous day         
+         if [ -f ${RUNdir}/${yyyymmdd}.${hh}00-00${i} ] || [ -f ${RUNdir}/${PDYm1}.${hh}00-00${i} ]; then
+            echo "Found "${yyyymmdd}.${hh}"00-00"${i}
+         else
+            echo "Warning: Not found "${yyyymmdd}.${hh}"00-00"${i}
+            msg="WARNING - missing hotfile for core 0"${i}" for REGULAR GRID run. Will execute a cold start run."
+            postmsg "$jlogfile" "$msg"
+            sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
+         fi
+      done
+      for i in {10..120}; do
+         echo "Checking hotfile for "${yyyymmdd}.${hh}"00-0"${i}       
+         if [ -f ${RUNdir}/${yyyymmdd}.${hh}00-0${i} ] || [ -f ${RUNdir}/${PDYm1}.${hh}00-0${i} ]; then
+            echo "Found "${yyyymmdd}.${hh}"00-0"${i}
+         else
+            echo "Warning: Not found "${yyyymmdd}.${hh}"00-0"${i}
+            msg="WARNING - missing hotfile for core "${i}" for REGULAR GRID run. Will execute a cold start run."
+            postmsg "$jlogfile" "$msg"
+            sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
+         fi
+      done
+      aprun -n120 -N24 -j1 -d1 ${EXECnwps}/swan.exe
+      export err=$?;
+      echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
+   elif [ "${siteid}" == "loxx" ] || [ "${siteid}" == "ekax" ]
    then
       # Check that all hotfiles are present
       for i in {1..9}; do
@@ -207,7 +245,11 @@ then
 
       # Run each domain with appropriate number of cores.
       if [ "${siteid}" == "key" ] || [ "${siteid}" == "mfl" ] || [ "${siteid}" == "akq" ] \
-         || [ "${siteid}" == "mlb" ] || [ "${siteid}" == "box" ]
+         || [ "${siteid}" == "mlb" ] || [ "${siteid}" == "box" ] \
+         || [ "${siteid}" == "hgxx" ] || [ "${siteid}" == "mobx" ] || [ "${siteid}" == "tbw" ] \
+         || [ "${siteid}" == "okxx" ] || [ "${siteid}" == "gyx" ] || [ "${siteid}" == "sgx" ] \
+         || [ "${siteid}" == "chs" ] || [ "${siteid}" == "ilm" ] || [ "${siteid}" == "phi" ] \
+         || [ "${siteid}" == "car" ] || [ "${siteid}" == "tae" ]
       then
          echo "Copying required files for PuNSWAN run for "${siteid}
 
@@ -254,7 +296,68 @@ then
             postmsg "$jlogfile" "$msg"
          fi
          err_chk
-      elif [ "${siteid}" == "alu" ]
+      elif [ "${siteid}" == "hgx" ] || [ "${siteid}" == "mob" ]
+      then
+         echo "Copying required files for PuNSWAN run for "${siteid}
+
+         # Check that all hotfiles are present in the PE subfolders
+         for i in {0..9}; do
+            echo "Checking hotfile for PE000"${i}"/"${yyyymmdd}.${hh}"00"
+            # Note: Checking also for PDYm1 to allow running of a late cycle from previous day           
+            if [ -f ${RUNdir}/PE000${i}/${yyyymmdd}.${hh}00 ] || [ -f ${RUNdir}/PE000${i}/${PDYm1}.${hh}00 ]; then
+               echo "Found PE000"${i}"/"${yyyymmdd}.${hh}"00"
+            else
+               echo "Warning: Not found PE000"${i}"/"${yyyymmdd}.${hh}"00"
+               msg="WARNING - missing hotfile in PE000"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
+               postmsg "$jlogfile" "$msg"
+               sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
+            fi
+         done
+         for i in {10..99}; do
+            echo "Checking hotfile for PE00"${i}"/"${yyyymmdd}.${hh}"00"           
+            if [ -f ${RUNdir}/PE00${i}/${yyyymmdd}.${hh}00 ] || [ -f ${RUNdir}/PE00${i}/${PDYm1}.${hh}00 ]; then
+               echo "Found PE00"${i}"/"${yyyymmdd}.${hh}"00"
+            else
+               echo "Warning: Not found PE00"${i}"/"${yyyymmdd}.${hh}"00"
+               msg="WARNING - missing hotfile in PE00"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
+               postmsg "$jlogfile" "$msg"
+               sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
+            fi
+         done
+         for i in {100..119}; do
+            echo "Checking hotfile for PE0"${i}"/"${yyyymmdd}.${hh}"00"           
+            if [ -f ${RUNdir}/PE0${i}/${yyyymmdd}.${hh}00 ] || [ -f ${RUNdir}/PE0${i}/${PDYm1}.${hh}00 ]; then
+               echo "Found PE0"${i}"/"${yyyymmdd}.${hh}"00"
+            else
+               echo "Warning: Not found PE0"${i}"/"${yyyymmdd}.${hh}"00"
+               msg="WARNING - missing hotfile in PE0"${i}" directory for UNSTRUCTURED run. Will execute a cold start run."
+               postmsg "$jlogfile" "$msg"
+               sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
+            fi
+         done
+
+         for i in {0..9}; do        
+            cp ${RUNdir}/INPUT ${RUNdir}/PE000${i}/
+         done
+         for i in {10..99}; do
+            cp ${RUNdir}/INPUT ${RUNdir}/PE00${i}/
+         done
+         for i in {100..119}; do
+            cp ${RUNdir}/INPUT ${RUNdir}/PE0${i}/
+         done
+
+         echo "Starting PuNSWAN executable for "${siteid}
+         aprun -n120 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
+         export err=$?;
+         echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
+         cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
+         cp -f *CG1* ${DATA}/output/grid
+         if [ "${err}" != "0" ];then
+            msg="FATAL ERROR: Wave model executable punswan4110.exe failed."
+            postmsg "$jlogfile" "$msg"
+         fi
+         err_chk
+      elif [ "${siteid}" == "alu" ] || [ "${siteid}" == "okxx" ]
       then
          echo "Copying required files for PuNSWAN run for "${siteid}
 
@@ -301,11 +404,11 @@ then
             postmsg "$jlogfile" "$msg"
          fi
          err_chk
-      elif [ "${siteid}" == "car" ] || [ "${siteid}" == "tbw" ] || [ "${siteid}" == "sgx" ] \
+      elif [ "${siteid}" == "carx" ] || [ "${siteid}" == "tbwx" ] || [ "${siteid}" == "sgxx" ] \
          || [ "${siteid}" == "sju" ] || [ "${siteid}" == "okx" ] || [ "${siteid}" == "gum" ] \
-         || [ "${siteid}" == "jax" ] || [ "${siteid}" == "chs" ] || [ "${siteid}" == "ilm" ] \
-         || [ "${siteid}" == "phi" ] || [ "${siteid}" == "gyx" ] || [ "${siteid}" == "tae" ] \
-         || [ "${siteid}" == "mob" ] || [ "${siteid}" == "hgx" ] || [ "${siteid}" == "hfo" ] \
+         || [ "${siteid}" == "jax" ] || [ "${siteid}" == "chsx" ] || [ "${siteid}" == "ilmx" ] \
+         || [ "${siteid}" == "phix" ] || [ "${siteid}" == "gyxx" ] || [ "${siteid}" == "taex" ] \
+         || [ "${siteid}" == "mobx" ] || [ "${siteid}" == "hgxx" ] || [ "${siteid}" == "hfo" ] \
          || [ "${siteid}" == "mhx" ]
       then
          echo "Copying required files for PuNSWAN run for "${siteid}
@@ -369,10 +472,8 @@ then
    echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} VEL ${siteid}" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
    echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} WATL ${siteid}" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
    echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} HSWE ${siteid}" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
-   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} WLEN ${siteid}" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
-   echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} DEPTH ${siteid}" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
 
-   aprun -n10 -N10 -j1 -d1 cfp ${RUNdir}/reginterpCG${CGNUM}_cmdfile
+   aprun -n8 -N8 -j1 -d1 cfp ${RUNdir}/reginterpCG${CGNUM}_cmdfile
    export err=$?; err_chk
 fi
 
