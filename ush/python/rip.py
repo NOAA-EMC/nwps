@@ -16,6 +16,10 @@ from matplotlib.colors import LinearSegmentedColormap
 from matplotlib import colors
 
 print('*** rip.py ***')
+TSTART = int(sys.argv[1])
+TEND = int(sys.argv[2])
+print('TSTART = '+str(TSTART))
+print('TEND = '+str(TEND))
 
 NWPSdir = os.environ['NWPSdir']
 cartopy.config['pre_existing_data_dir'] = NWPSdir+'/lib/cartopy'
@@ -72,37 +76,31 @@ else:
    sys.exit()
 
 # Extract GRIB2 files to text
-for tstep in range(1, (int(TDEF)+1)):
+for tstep in range(TSTART, (int(TEND)+1)):
    print('')
    print('Extracting Time step: '+str(tstep))
 
    # Deviation of sea level from mean
    grib2dump = 'RIP_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
-   fieldmax = 'RIP_extract_fieldmax.txt'
-   fieldmin = 'RIP_extract_fieldmin.txt'
+   #fieldmax = 'RIP_extract_fieldmax.txt'
+   #fieldmin = 'RIP_extract_fieldmin.txt'
    if tstep == 1:
       command = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:anl" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
-      command2 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:anl" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
-      command3 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:anl" | $WGRIB2 -i '+DSET+' -min | cat > '+fieldmin
+      #command2 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:anl" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
+      #command3 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:anl" | $WGRIB2 -i '+DSET+' -min | cat > '+fieldmin
       #command = '$WGRIB2 '+DSET+' -s | grep "POP:surface:anl" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
       #command2 = '$WGRIB2 '+DSET+' -s | grep "POP:surface:anl" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
       #command3 = '$WGRIB2 '+DSET+' -s | grep "POP:surface:anl" | $WGRIB2 -i '+DSET+' -min | cat > '+fieldmin
    else:
       command = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
-      command2 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -max | cat >> '+fieldmax
-      command3 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -min | cat >> '+fieldmin
+      #command2 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -max | cat >> '+fieldmax
+      #command3 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -min | cat >> '+fieldmin
       #command = '$WGRIB2 '+DSET+' -s | grep "POP:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
       #command2 = '$WGRIB2 '+DSET+' -s | grep "POP:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -max | cat >> '+fieldmax
       #command3 = '$WGRIB2 '+DSET+' -s | grep "POP:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -min | cat >> '+fieldmin
    os.system(command)
-   os.system(command2)
-   os.system(command3)
-
-# Test whether GRIB2 file didn't contain any rip current data. This can happen 
-# the first time the rip program is run, before a run history is present.
-if (os.stat(fieldmax).st_size == 0):
-   print('*** TERMINATING ERROR: Rip current input file is empty.')
-   sys.exit()
+   #os.system(command2)
+   #os.system(command3)
 
 # Set up lon/lat mesh
 lons=np.linspace(x0,x0+float(nlon-1)*dx,num=nlon)
@@ -125,6 +123,19 @@ CGNUMPLOT = os.environ.get('CGNUMPLOT')
 WATERLEVELS = os.environ.get('WATERLEVELS')
 EXCD = os.environ.get('EXCD')
 
+fieldmax = 'RIP_extract_fieldmax_TSTART'+str(TSTART)+'.txt'
+command = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
+os.system(command)
+fieldmin = 'RIP_extract_fieldmin_TSTART'+str(TSTART)+'.txt'
+command = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4" | $WGRIB2 -i '+DSET+' -min | cat > '+fieldmin
+os.system(command)
+
+# Test whether GRIB2 file didn't contain any rip current data. This can happen 
+# the first time the rip program is run, before a run history is present.
+if (os.stat(fieldmax).st_size == 0):
+   print('*** TERMINATING ERROR: Rip current input file is empty.')
+   sys.exit()
+
 temp=np.loadtxt(fieldmax, delimiter='=', usecols=[1])
 maxval=max(temp)
 temp=np.loadtxt(fieldmin, delimiter='=', usecols=[1])
@@ -132,7 +143,7 @@ minval=min(temp)
 
 plt.figure()
 # Read the extracted text file
-for tstep in range(1, (int(TDEF)+1)):
+for tstep in range(TSTART, (int(TEND)+1)):
    print('')
    print('Processing Time step: '+str(tstep))
 
@@ -245,4 +256,6 @@ for tstep in range(1, (int(TDEF)+1)):
    plt.clf()
 
 # Clean up text dump files
-os.system('rm RIP_extract*f???.txt')
+for tstep in range(TSTART, (int(TEND)+1)):
+   os.system('rm RIP_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt')
+
