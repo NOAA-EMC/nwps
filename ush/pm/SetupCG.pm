@@ -454,13 +454,21 @@ sub makeInputCGx (%){
         }
         if ( ("${SITEID}" eq "MHX") || ("${SITEID}" eq "CAR") || ("${SITEID}" eq "MFL") 
           || ("${SITEID}" eq "TBW") || ("${SITEID}" eq "BOX") || ("${SITEID}" eq "SGX") 
-          || ("${SITEID}" eq "SJU") || ("${SITEID}" eq "AKQ") || ("${SITEID}" eq "OKX") 
+          || ("${SITEID}" eq "SJU") || ("${SITEID}" eq "AKQ") || ("${SITEID}" eq "OKXX") 
           || ("${SITEID}" eq "GUM") || ("${SITEID}" eq "ALU") || ("${SITEID}" eq "GUA") 
           || ("${SITEID}" eq "MLB") || ("${SITEID}" eq "JAX") || ("${SITEID}" eq "CHS") 
           || ("${SITEID}" eq "ILM") || ("${SITEID}" eq "PHI") || ("${SITEID}" eq "GYX")
           || ("${SITEID}" eq "KEY") || ("${SITEID}" eq "TAE") || ("${SITEID}" eq "MOB")
           || ("${SITEID}" eq "HGX") || ("${SITEID}" eq "HFO") ) {
            for (my $core=16; $core<48; $core++){
+	      #AW $hotfilelocation="${INPUTdir}/hotstart/PE00${core}/${hottime[0]}";
+	      $hotfilelocation="${hotfiles_cyc}/PE00${core}/${hottime[0]}";
+      	      $newhotfilelocation="${RUNdir}/PE00${core}/";
+	      system("cp -pfv $hotfilelocation $newhotfilelocation >> ${LOGdir}/hotstart.log 2>&1");
+           }
+        }
+        if ( "${SITEID}" eq "OKX" ) {
+           for (my $core=48; $core<60; $core++){
 	      #AW $hotfilelocation="${INPUTdir}/hotstart/PE00${core}/${hottime[0]}";
 	      $hotfilelocation="${hotfiles_cyc}/PE00${core}/${hottime[0]}";
       	      $newhotfilelocation="${RUNdir}/PE00${core}/";
@@ -488,13 +496,25 @@ sub makeInputCGx (%){
 	      system("cp -pfv $hotfilelocation $newhotfilelocation >> ${LOGdir}/hotstart.log 2>&1");
            }
         }
-        if ( ("${SITEID}" eq "HGX") || ("${SITEID}" eq "MOB") ) {
+        if ( ("${SITEID}" eq "HGX") || ("${SITEID}" eq "MOBX") ) {
            for (my $core=48; $core<100; $core++){
 	      $hotfilelocation="${hotfiles_cyc}/PE00${core}/${hottime[0]}";
       	      $newhotfilelocation="${RUNdir}/PE00${core}/";
 	      system("cp -pfv $hotfilelocation $newhotfilelocation >> ${LOGdir}/hotstart.log 2>&1");
            }
            for (my $core=100; $core<120; $core++){
+	      $hotfilelocation="${hotfiles_cyc}/PE0${core}/${hottime[0]}";
+      	      $newhotfilelocation="${RUNdir}/PE0${core}/";
+	      system("cp -pfv $hotfilelocation $newhotfilelocation >> ${LOGdir}/hotstart.log 2>&1");
+           }
+        }
+        if ( ("${SITEID}" eq "HGXX") || ("${SITEID}" eq "MOB") ) {
+           for (my $core=48; $core<100; $core++){
+	      $hotfilelocation="${hotfiles_cyc}/PE00${core}/${hottime[0]}";
+      	      $newhotfilelocation="${RUNdir}/PE00${core}/";
+	      system("cp -pfv $hotfilelocation $newhotfilelocation >> ${LOGdir}/hotstart.log 2>&1");
+           }
+           for (my $core=100; $core<144; $core++){
 	      $hotfilelocation="${hotfiles_cyc}/PE0${core}/${hottime[0]}";
       	      $newhotfilelocation="${RUNdir}/PE0${core}/";
 	      system("cp -pfv $hotfilelocation $newhotfilelocation >> ${LOGdir}/hotstart.log 2>&1");
