@@ -17,6 +17,11 @@ export NET=${model}
 export OFS=ofs
 export RUN=${OFSTYPE:-${OFSTYPE:?}}
 
+##### cycle - WW 20200918##
+export CYC=${cyc}
+export cycle=t${cyc}z
+############################
+
 ####################################
 # SENDECF  - Flag Events on ECFLOW
 # SENDCOM  - Copy Files From TMPDIR to $COMOUT
@@ -68,12 +73,11 @@ setpdy.sh
 ##############################################
 export COMOUT=${COMOUT:-${COMROOT}/${NET}/${envir}/${OFS}.${PDY}}
 export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
-export COMINestofs=${COMROOT}/estofs/prod/estofs_glo.${PDY}
-export COMINrtofs=${COMROOTp2}/rtofs/prod/rtofs.${PDY}
-export COMINsice=${COMROOTp2}/omb/prod/sice.${PDY}
-export COMINsicem1=${COMROOTp2}/omb/prod/sice.${PDYm1}
-#export COMINpsurge=${COMROOTp2}/nhc/${envir}/psurge.${PDY}
-export COMINpsurge=${COMROOT}/psurge/prod/psurge.${PDY}
+export COMINestofs=${COMINestofs:-$(compath.py estofs/prod/estofs.${PDY})}
+export COMINrtofs=${COMINrtofs:-$(compath.py rtofs/prod/rtofs.${PDY})}
+export COMINsice=${COMINsice:-$(compath.py omb/prod/sice.${PDY})}
+export COMINsicem1=${COMINsicem1:-$(compath.py omb/prod/sice.${PDYm1})}
+export COMINpsurge=${COMINpsurge:-$(compath.py psurge/prod/psurge.${PDY})}
 #
 # make sure NWPS COM directory exists
 if [ "${SENDCOM}" = YES ]; then
