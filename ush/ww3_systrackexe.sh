@@ -73,8 +73,12 @@ if [ "${err}" != "0" ];then
     err_chk
 fi
 
-# Step 2: Calculate wave systems using optimum number of clusters
-aprun -n1 -N1 -d1 ${PYTHON} ${NWPSdir}/ush/python/ww3_systrk_cluster.py ${SITEID,,}
+# Step 2: Calculate wave systems using optimum number of clusters (in parallel)
+cat /dev/null > ${RUNdir}/ww3_systrk_jobs.sh
+for i in {0..5}; do
+   echo "${PYTHON} ${NWPSdir}/ush/python/ww3_systrk_cluster_parallel.py ${SITEID,,} ${i}" >> ${RUNdir}/ww3_systrk_jobs.sh
+done
+aprun -n6 -N6 -j1 -d1 cfp ${RUNdir}/ww3_systrk_jobs.sh
 export err=$?
 if [ "${err}" != "0" ];then
     echo " ============  E R R O R ==============="                  | tee -a ${LOGdir}/systrk_info.log
@@ -91,6 +95,26 @@ else
     echo " ww3_systrk_cluster.py run was successful "   | tee -a ${LOGdir}/systrk_info.log 
     echo "     Exit Code: ${err}"           | tee -a ${LOGdir}/systrk_info.log 
 fi
+
+# Step 3: Combine component output files
+cat /dev/null > ${RUNdir}/SYS_HSIGN.OUT
+cat /dev/null > ${RUNdir}/SYS_DIR.OUT
+cat /dev/null > ${RUNdir}/SYS_TP.OUT
+cat /dev/null > ${RUNdir}/SYS_PNT.OUT
+cat ${RUNdir}/SYS_HSIGN.OUT-00? > ${RUNdir}/SYS_HSIGN.OUT
+cat ${RUNdir}/SYS_DIR.OUT-00? > ${RUNdir}/SYS_DIR.OUT
+cat ${RUNdir}/SYS_TP.OUT-00? > ${RUNdir}/SYS_TP.OUT
+cat ${RUNdir}/SYS_PNT.OUT-00? > ${RUNdir}/SYS_PNT.OUT
+yyyymmdd=`ls *.wnd | cut -c1-8`
+hh=`ls *.wnd | cut -c9-10`
+cat /dev/null > ${SITEID,,}_nwps_CG0_Trkng_${yyyymmdd}_${hh}00.bull
+cat ${SITEID,,}_nwps_CG0_Trkng_*.bull-00? > ${SITEID,,}_nwps_CG0_Trkng_${yyyymmdd}_${hh}00.bull
+
+rm ${RUNdir}/SYS_HSIGN.OUT-00?
+rm ${RUNdir}/SYS_DIR.OUT-00?
+rm ${RUNdir}/SYS_TP.OUT-00?
+rm ${RUNdir}/SYS_PNT.OUT-00?
+rm ${SITEID,,}_nwps_CG0_Trkng_*.bull-00?
 
 #if [ "${err}" == "0" ];then
 #   mv -fv sys_pnt.ww3   SYS_PNT.OUT
