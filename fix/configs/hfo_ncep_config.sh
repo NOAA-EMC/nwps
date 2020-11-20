@@ -8,7 +8,7 @@ export RTOFSNX="302"
 export RTOFSNY="244"
 
 # ESTOFS Domain for water level
-export ESTOFS_BASIN="estofs.glo"
+export ESTOFS_BASIN="estofs"
 export ESTOFS_REGION="hawaii"
 # ESFOTSDOMAIN="LON LAT 0. NX NY EW-RESOLUTION NS-RESOLUTION"
 export ESTOFSDOMAIN="198.03 17.30 0.0 301 243 0.029326 0.027027"
