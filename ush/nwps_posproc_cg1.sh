@@ -470,13 +470,21 @@ cd ${DATA}/output/grib2/CG${CGNUM}
            done
            # Additional copies for domains running on 48 cores
            if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CARX" ] || [ "${SITEID}" == "TBWX" ] \
-              || [ "${SITEID}" == "SGXX" ] || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "OKX" ] \
+              || [ "${SITEID}" == "SGXX" ] || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "OKXX" ] \
               || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "JAX" ] || [ "${SITEID}" == "CHSX" ] \
               || [ "${SITEID}" == "ILMX" ] || [ "${SITEID}" == "PHIX" ] || [ "${SITEID}" == "GYXX" ] \
               || [ "${SITEID}" == "TAEX" ] || [ "${SITEID}" == "MOBX" ] || [ "${SITEID}" == "HGXX" ] \
               || [ "${SITEID}" == "HFO" ]
            then
               for i in {10..47}; do
+                 mkdir -p ${COMOUTCYC}/PE00${i}/
+                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+              done
+           fi
+           # Additional copies for domains running on 84 cores
+           if [ "${SITEID}" == "OKX" ]
+           then
+              for i in {10..59}; do
                  mkdir -p ${COMOUTCYC}/PE00${i}/
                  cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
               done
@@ -503,13 +511,25 @@ cd ${DATA}/output/grib2/CG${CGNUM}
               done
            fi
            # Additional copies for domains running on 96 cores
-           if [ "${SITEID}" == "HGX" ] || [ "${SITEID}" == "MOB" ]
+           if [ "${SITEID}" == "HGX" ] || [ "${SITEID}" == "MOBX" ]
            then
               for i in {96..99}; do
                  mkdir -p ${COMOUTCYC}/PE00${i}/
                  cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
               done
               for i in {100..119}; do
+                 mkdir -p ${COMOUTCYC}/PE0${i}/
+                 cp -fv  ${RUNdir}/PE0${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE0${i}/
+              done
+           fi
+           # Additional copies for domains running on 96 cores
+           if [ "${SITEID}" == "MOB" ]
+           then
+              for i in {96..99}; do
+                 mkdir -p ${COMOUTCYC}/PE00${i}/
+                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+              done
+              for i in {100..143}; do
                  mkdir -p ${COMOUTCYC}/PE0${i}/
                  cp -fv  ${RUNdir}/PE0${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE0${i}/
               done
@@ -602,13 +622,21 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
    done
    # Additional copies for domains running on 48 cores
    if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CARX" ] || [ "${SITEID}" == "TBWX" ] \
-      || [ "${SITEID}" == "SGXX" ] || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "OKX" ] \
+      || [ "${SITEID}" == "SGXX" ] || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "OKXX" ] \
       || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "JAX" ] || [ "${SITEID}" == "CHSX" ] \
       || [ "${SITEID}" == "ILMX" ] || [ "${SITEID}" == "PHIX" ] || [ "${SITEID}" == "GYXX" ] \
       || [ "${SITEID}" == "TAEX" ] || [ "${SITEID}" == "MOBX" ] || [ "${SITEID}" == "HGXX" ] \
       || [ "${SITEID}" == "HFO" ]
    then
       for i in {10..47}; do
+         mkdir -p ${HOTdir}/PE00${i}
+         mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+      done
+   fi
+   # Additional copies for domains running on 84 cores
+   if [ "${SITEID}" == "OKX" ]
+   then
+      for i in {10..59}; do
          mkdir -p ${HOTdir}/PE00${i}
          mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
       done
@@ -635,13 +663,25 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
       done
    fi
    # Additional copies for domains running on 96 cores
-   if [ "${SITEID}" == "HGX" ] || [ "${SITEID}" == "MOB" ]
+   if [ "${SITEID}" == "HGX" ] || [ "${SITEID}" == "MOBX" ]
    then
       for i in {96..99}; do
          mkdir -p ${HOTdir}/PE00${i}
          mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
       done
       for i in {100..119}; do
+         mkdir -p ${HOTdir}/PE0${i}
+         mv -vf ${RUNdir}/PE0${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE0${i}/ >> ${LOGdir}/hotstart.log 2>&1
+      done
+   fi
+   # Additional copies for domains running on 96 cores
+   if [ "${SITEID}" == "MOB" ]
+   then
+      for i in {96..99}; do
+         mkdir -p ${HOTdir}/PE00${i}
+         mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+      done
+      for i in {100..143}; do
          mkdir -p ${HOTdir}/PE0${i}
          mv -vf ${RUNdir}/PE0${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE0${i}/ >> ${LOGdir}/hotstart.log 2>&1
       done
