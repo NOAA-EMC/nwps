@@ -559,3 +559,104 @@ afg    15     -     -     -     -     -
 hfo     -     -     -     -     -     -
 gum    24    36    16    16    15     -
 
+
+Update for tag 'v1.3.6':
+Date: 11/20/20
+
+This tag contains revised updates for the downstream dependency of NWPS (both v1.2.13 and v1.3.6) 
+on Global ESTOFS v1, as well as optimizations to reduce product delays in v1.3.6.
+
+IMPLEMENTATION INSTRUCTIONS (for v1.2.13):
+
+The scripts and config files listed below (only these) should be updated in the codebase 
+of v1.2.13 in order to correctly process the output from ESTOFS-Global v1. Since no executables 
+are modified, v1.2.13 does not need to be rebuilt for these changes to be incorporated. These 
+updates can be tested by running the jnwps_ofs_prep job for ESTOFS-Global.
+
+jobs/JNWPS_OFS_PREP
+ush/make_estofs.sh
+fix/configs/aer_ncep_config.sh
+fix/configs/afg_ncep_config.sh
+fix/configs/ajk_ncep_config.sh
+fix/configs/akq_ncep_config.sh
+fix/configs/alu_ncep_config.sh
+fix/configs/box_ncep_config.sh
+fix/configs/bro_ncep_config.sh
+fix/configs/car_ncep_config.sh
+fix/configs/chs_ncep_config.sh
+fix/configs/crp_ncep_config.sh
+fix/configs/eka_ncep_config.sh
+fix/configs/gum_ncep_config.sh
+fix/configs/gyx_ncep_config.sh
+fix/configs/hfo_ncep_config.sh
+fix/configs/hgx_ncep_config.sh
+fix/configs/ilm_ncep_config.sh
+fix/configs/jax_ncep_config.sh
+fix/configs/key_ncep_config.sh
+fix/configs/lch_ncep_config.sh
+fix/configs/lix_ncep_config.sh
+fix/configs/lox_ncep_config.sh
+fix/configs/lwx_ncep_config.sh
+fix/configs/mfl_ncep_config.sh
+fix/configs/mfr_ncep_config.sh
+fix/configs/mhx_ncep_config.sh
+fix/configs/mlb_ncep_config.sh
+fix/configs/mob_ncep_config.sh
+fix/configs/mtr_ncep_config.sh
+fix/configs/okx_ncep_config.sh
+fix/configs/phi_ncep_config.sh
+fix/configs/pqr_ncep_config.sh
+fix/configs/sew_ncep_config.sh
+fix/configs/sgx_ncep_config.sh
+fix/configs/sju_ncep_config.sh
+fix/configs/tae_ncep_config.sh
+fix/configs/tbw_ncep_config.sh
+fix/configs/txx_ncep_config.sh
+
+IMPLEMENTATION INSTRUCTIONS (for v1.3.6):
+
+In order to additionally implement the changes for code optimization in v1.3.6, check out this tag, 
+and rebuild the system with:
+
+> cd ${NWPSdir}/sorc
+> ./make_NWPS.sh
+
+New delivery times of v1.3 products (min):
+      CG1   CG0   CG2   CG3   CG4   CG5
+bro    16    20     -     -     -     -
+crp    19    24     -     -     -     -
+hgx    24    29    32     -     -     -
+lch    21    26     -     -     -     -
+lix    26    31    43     -     -     -
+mob    22    28    32    32    32    32
+tae    32    37    41    41    41    41
+tbw    26    32    36     -     -     -
+key    66    72    76     -     -     -
+mfl    68    78    83    83    84    84
+mlb    49    54    56     -     -     -
+jax    35    40    44    44    44    44
+sju    62    73    78    78     -     -
+chs    33    39    42    42     -     -
+ilm    33    39     -     -     -     -
+mhx    58    63    67    67    67    67
+akq    52    60     -     -     -     -
+lwx    13    17     -     -     -     -
+phi    25    31    35    35     -     -
+okx    51    57    61    61    61     -
+box    53    61    66     -     -     -
+gyx    32    37    42    42     -     -
+car    27    32    36    36     -     -
+sgx    32    39    43    43     -     -
+lox    19    31    46    46     -     -
+mtr    22    34    64    64    64     -
+eka    15    24    33     -     -     -
+mfr    19    29    55    55    55    55
+pqr    17    25    39    39    39    39
+sew    15    23    30     -     -     -
+ajk    24    30    86    86     -     -
+aer    23    30    94    94     -     -
+alu    54    63    71    71     -     -
+afg    34     -    67    67     -     -
+hfo    53    65    71    71    71    71
+gum    29    33    36    36    36     -
+
