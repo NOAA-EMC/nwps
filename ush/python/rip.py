@@ -82,25 +82,11 @@ for tstep in range(TSTART, (int(TEND)+1)):
 
    # Deviation of sea level from mean
    grib2dump = 'RIP_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
-   #fieldmax = 'RIP_extract_fieldmax.txt'
-   #fieldmin = 'RIP_extract_fieldmin.txt'
    if tstep == 1:
-      command = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:anl" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
-      #command2 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:anl" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
-      #command3 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:anl" | $WGRIB2 -i '+DSET+' -min | cat > '+fieldmin
-      #command = '$WGRIB2 '+DSET+' -s | grep "POP:surface:anl" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
-      #command2 = '$WGRIB2 '+DSET+' -s | grep "POP:surface:anl" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
-      #command3 = '$WGRIB2 '+DSET+' -s | grep "POP:surface:anl" | $WGRIB2 -i '+DSET+' -min | cat > '+fieldmin
+      command = '$WGRIB2 '+DSET+' -s | grep "RIPCOP:surface:anl" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
    else:
-      command = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
-      #command2 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -max | cat >> '+fieldmax
-      #command3 = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -min | cat >> '+fieldmin
-      #command = '$WGRIB2 '+DSET+' -s | grep "POP:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
-      #command2 = '$WGRIB2 '+DSET+' -s | grep "POP:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -max | cat >> '+fieldmax
-      #command3 = '$WGRIB2 '+DSET+' -s | grep "POP:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -min | cat >> '+fieldmin
+      command = '$WGRIB2 '+DSET+' -s | grep "RIPCOP:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
    os.system(command)
-   #os.system(command2)
-   #os.system(command3)
 
 # Set up lon/lat mesh
 lons=np.linspace(x0,x0+float(nlon-1)*dx,num=nlon)
@@ -124,10 +110,10 @@ WATERLEVELS = os.environ.get('WATERLEVELS')
 EXCD = os.environ.get('EXCD')
 
 fieldmax = 'RIP_extract_fieldmax_TSTART'+str(TSTART)+'.txt'
-command = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
+command = '$WGRIB2 '+DSET+' -s | grep "RIPCOP" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
 os.system(command)
 fieldmin = 'RIP_extract_fieldmin_TSTART'+str(TSTART)+'.txt'
-command = '$WGRIB2 '+DSET+' -s | grep "var discipline=10 master_table=2 parmcat=1 parm=4" | $WGRIB2 -i '+DSET+' -min | cat > '+fieldmin
+command = '$WGRIB2 '+DSET+' -s | grep "RIPCOP" | $WGRIB2 -i '+DSET+' -min | cat > '+fieldmin
 os.system(command)
 
 # Test whether GRIB2 file didn't contain any rip current data. This can happen 
@@ -156,14 +142,11 @@ for tstep in range(TSTART, (int(TEND)+1)):
    fo = open(grib2dump, "r")
    line = fo.readline()
    linesplit = line.split()
-   if linesplit[7] == 'anl':
-   #if linesplit[3] == 'anl':
+   if linesplit[3] == 'anl':
       forecastTime = 0
    else:
-      forecastTime = int(linesplit[7])
-      #forecastTime = int(linesplit[3])
-   temp = linesplit[6]
-   #temp = linesplit[2]
+      forecastTime = int(linesplit[3])
+   temp = linesplit[2]
    temp = temp[2:12]
    date = datetime.datetime(int(temp[0:4]),int(temp[4:6]),int(temp[6:8]),int(temp[8:10]))
    # Add the forecast hour to the start of the cycle timestamp
