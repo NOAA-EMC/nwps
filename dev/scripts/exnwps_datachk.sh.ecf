@@ -254,6 +254,9 @@ else
                 sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn.ecf.${wfo}
 
                 # Adjust node use for CG1
+                if [ "$wfo" == "lox" ] || [ "$wfo" == "hfo" ]; then
+                   sed -i "s/NODES=2/NODES=3/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cg1.ecf.${wfo}
+                fi
                 if [ "$wfo" == "key" ] || [ "$wfo" == "mfl" ] || [ "$wfo" == "alu" ] \
                   || [ "$wfo" == "akq" ] || [ "$wfo" == "mlb" ] || [ "$wfo" == "box" ] \
                   || [ "$wfo" == "tbw" ] || [ "$wfo" == "okx" ] || [ "$wfo" == "gyx" ] \
@@ -270,6 +273,9 @@ else
                 fi
 
                 # Adjust node use for CGn
+                if [ "$wfo" == "lox" ]; then
+                   sed -i "s/NODES=2/NODES=3/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cgn.ecf.${wfo}
+                fi
                 if [ "$wfo" == "mfr" ]; then
                    sed -i "s/NODES=2/NODES=4/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cgn.ecf.${wfo}
                 fi
