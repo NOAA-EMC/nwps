@@ -31,10 +31,9 @@ if [ "${NWPSdir}" == "" ]
     exit 1
 fi
 
-#loading the necessary modules 
-module purge
-module load ncep
-module load ../modulefiles/NWPS/v1.3.0
+#module purge
+#module load ncep
+#module load ../modulefiles/NWPS/v1.3.0
 module list
 
 cd nwps_utils.cd; ./build_utils.sh | tee -a ./nwps_utils_build.log 
