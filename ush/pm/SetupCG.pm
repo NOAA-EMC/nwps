@@ -454,7 +454,7 @@ sub makeInputCGx (%){
         }
         if ( ("${SITEID}" eq "MHX") || ("${SITEID}" eq "CAR") || ("${SITEID}" eq "MFL") 
           || ("${SITEID}" eq "TBW") || ("${SITEID}" eq "BOX") || ("${SITEID}" eq "SGX") 
-          || ("${SITEID}" eq "SJU") || ("${SITEID}" eq "AKQ") || ("${SITEID}" eq "OKXX") 
+          || ("${SITEID}" eq "SJU") || ("${SITEID}" eq "AKQ") || ("${SITEID}" eq "OKX") 
           || ("${SITEID}" eq "GUM") || ("${SITEID}" eq "ALU") || ("${SITEID}" eq "GUA") 
           || ("${SITEID}" eq "MLB") || ("${SITEID}" eq "JAX") || ("${SITEID}" eq "CHS") 
           || ("${SITEID}" eq "ILM") || ("${SITEID}" eq "PHI") || ("${SITEID}" eq "GYX")
