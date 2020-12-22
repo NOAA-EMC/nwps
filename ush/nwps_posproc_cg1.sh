@@ -596,7 +596,7 @@ echo " "  | tee -a $logfile
 # created: alex.gibbs@noaa.gov
 # 
 # Archives the latest hot files generated from a run to be used 
-# in the next run. Only 128 files (2 days) will be saved, the rest
+# in the next run. Only 17 files (2 days) will be saved, the rest
 # will be purged.
 #
 ###################################################################
@@ -611,14 +611,37 @@ then
 fi
 #rm -vf ${INPUTdir}/hotstart/* >> ${LOGdir}/hotstart.log 2>&1
 cd ${RUNdir}/
+
+# Use wind input analysis time as reference
+grep "^INPGRID WIND" inputCG${CGNUM} > blah1
+init=$(awk '{print $11;}' blah1)
+echo "$init" > datetime
+cut -c 1-4 datetime > year
+cut -c 5-6 datetime > mon
+cut -c 7-8 datetime > day
+cut -c 10-11 datetime > hh
+cut -c 12-13 datetime > mm
+
+yyyy=$(cat year)
+mon=$(cat mon)
+dd=$(cat day)
+hh=$(cat hh)
+mm=$(cat mm)
+
 if [ "${MODELCORE}" == "SWAN" ]
    then
-   mv -vf ${RUNdir}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/. >> ${LOGdir}/hotstart.log 2>&1
+   for hour in {0..48..3}; do 
+     mv -vf ${RUNdir}/$(date -d "${hh}:${mm} ${yyyy}-${mon}-${dd} +${hour} hours" +"%Y%m%d.%H%M")* \
+        ${HOTdir}/. >> ${LOGdir}/hotstart.log 2>&1
+   done
 elif [ "${MODELCORE}" == "UNSWAN" ]
    then
    for i in {0..9}; do
       mkdir -p ${HOTdir}/PE000${i}
-      mv -vf ${RUNdir}/PE000${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE000${i}/ >> ${LOGdir}/hotstart.log 2>&1
+      for hour in {0..48..3}; do 
+        mv -vf ${RUNdir}/PE000${i}/$(date -d "${hh}:${mm} ${yyyy}-${mon}-${dd} +${hour} hours" +"%Y%m%d.%H%M") \
+           ${HOTdir}/PE000${i}/ >> ${LOGdir}/hotstart.log 2>&1
+      done
    done
    # Additional copies for domains running on 48 cores
    if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CARX" ] || [ "${SITEID}" == "TBWX" ] \
@@ -630,7 +653,10 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
    then
       for i in {10..47}; do
          mkdir -p ${HOTdir}/PE00${i}
-         mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+         for hour in {0..48..3}; do 
+           mv -vf ${RUNdir}/PE00${i}/$(date -d "${hh}:${mm} ${yyyy}-${mon}-${dd} +${hour} hours" +"%Y%m%d.%H%M") \
+              ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+         done
       done
    fi
    # Additional copies for domains running on 84 cores
@@ -638,7 +664,10 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
    then
       for i in {10..59}; do
          mkdir -p ${HOTdir}/PE00${i}
-         mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+         for hour in {0..48..3}; do 
+           mv -vf ${RUNdir}/PE00${i}/$(date -d "${hh}:${mm} ${yyyy}-${mon}-${dd} +${hour} hours" +"%Y%m%d.%H%M") \
+              ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+         done
       done
    fi
    # Additional copies for domains running on 84 cores
@@ -646,7 +675,10 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
    then
       for i in {10..83}; do
          mkdir -p ${HOTdir}/PE00${i}
-         mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+         for hour in {0..48..3}; do 
+           mv -vf ${RUNdir}/PE00${i}/$(date -d "${hh}:${mm} ${yyyy}-${mon}-${dd} +${hour} hours" +"%Y%m%d.%H%M") \
+              ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+         done
       done
    fi
    # Additional copies for domains running on 96 cores
@@ -659,7 +691,10 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
    then
       for i in {10..95}; do
          mkdir -p ${HOTdir}/PE00${i}
-         mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+         for hour in {0..48..3}; do 
+           mv -vf ${RUNdir}/PE00${i}/$(date -d "${hh}:${mm} ${yyyy}-${mon}-${dd} +${hour} hours" +"%Y%m%d.%H%M") \
+              ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+         done
       done
    fi
    # Additional copies for domains running on 96 cores
@@ -667,11 +702,17 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
    then
       for i in {96..99}; do
          mkdir -p ${HOTdir}/PE00${i}
-         mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+         for hour in {0..48..3}; do 
+           mv -vf ${RUNdir}/PE00${i}/$(date -d "${hh}:${mm} ${yyyy}-${mon}-${dd} +${hour} hours" +"%Y%m%d.%H%M") \
+              ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+         done
       done
       for i in {100..119}; do
          mkdir -p ${HOTdir}/PE0${i}
-         mv -vf ${RUNdir}/PE0${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE0${i}/ >> ${LOGdir}/hotstart.log 2>&1
+         for hour in {0..48..3}; do 
+           mv -vf ${RUNdir}/PE0${i}/$(date -d "${hh}:${mm} ${yyyy}-${mon}-${dd} +${hour} hours" +"%Y%m%d.%H%M") \
+              ${HOTdir}/PE0${i}/ >> ${LOGdir}/hotstart.log 2>&1
+         done
       done
    fi
    # Additional copies for domains running on 96 cores
@@ -679,11 +720,17 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
    then
       for i in {96..99}; do
          mkdir -p ${HOTdir}/PE00${i}
-         mv -vf ${RUNdir}/PE00${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+         for hour in {0..48..3}; do 
+           mv -vf ${RUNdir}/PE00${i}/$(date -d "${hh}:${mm} ${yyyy}-${mon}-${dd} +${hour} hours" +"%Y%m%d.%H%M") \
+              ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+         done
       done
       for i in {100..143}; do
          mkdir -p ${HOTdir}/PE0${i}
-         mv -vf ${RUNdir}/PE0${i}/2[0-9][0-9][0-9][0-9][0-9][0-9][0-9].* ${HOTdir}/PE0${i}/ >> ${LOGdir}/hotstart.log 2>&1
+         for hour in {0..48..3}; do 
+           mv -vf ${RUNdir}/PE0${i}/$(date -d "${hh}:${mm} ${yyyy}-${mon}-${dd} +${hour} hours" +"%Y%m%d.%H%M") \
+              ${HOTdir}/PE0${i}/ >> ${LOGdir}/hotstart.log 2>&1
+         done
       done
    fi
 fi
