@@ -96,7 +96,11 @@ then
             sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
          fi
       done
-      aprun -n48 -N24 -j1 -d1 ${EXECnwps}/swan.exe
+      if [ "${siteid}" == "lox" ]; then
+         aprun -n48 -N16 -j1 -d1 ${EXECnwps}/swan.exe
+      else
+         aprun -n48 -N24 -j1 -d1 ${EXECnwps}/swan.exe
+      fi
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
    elif ( [ "${siteid}" == "mfr" ] && [ "${CGNUM}" != "1" ] ) \
@@ -530,7 +534,12 @@ then
          done
 
          echo "Starting PuNSWAN executable for "${siteid}
-         aprun -n48 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
+         #aprun -n48 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
+         if [ "${siteid}" == "hfo" ]; then
+            aprun -n48 -N16 -j1 -d1 ${EXECnwps}/punswan4110.exe
+         else
+            aprun -n48 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
+         fi
          export err=$?;
          echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
          cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
