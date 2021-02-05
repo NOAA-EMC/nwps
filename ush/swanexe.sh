@@ -231,7 +231,7 @@ then
       # Run each domain with appropriate number of cores.
       if [ "${siteid}" == "key" ] || [ "${siteid}" == "mfl" ] || [ "${siteid}" == "akq" ] \
          || [ "${siteid}" == "mlb" ] || [ "${siteid}" == "box" ] || [ "${siteid}" == "tbw" ] \
-         || [ "${siteid}" == "gyx" ] || [ "${siteid}" == "sgx" ] || [ "${siteid}" == "chs" ] \
+         || [ "${siteid}" == "sgx" ] || [ "${siteid}" == "chs" ] \
          || [ "${siteid}" == "ilm" ] || [ "${siteid}" == "phi" ] || [ "${siteid}" == "car" ] \
          || [ "${siteid}" == "tae" ]
       then
@@ -497,7 +497,7 @@ then
          fi
          err_chk
       elif [ "${siteid}" == "sju" ] || [ "${siteid}" == "gum" ] || [ "${siteid}" == "jax" ] \
-         || [ "${siteid}" == "hfo" ] || [ "${siteid}" == "mhx" ]
+         || [ "${siteid}" == "hfo" ] || [ "${siteid}" == "mhx" ] || [ "${siteid}" == "gyx" ]
       then
          echo "Copying required files for PuNSWAN run for "${siteid}
 
