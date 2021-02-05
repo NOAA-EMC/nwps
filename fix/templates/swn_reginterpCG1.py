@@ -60,21 +60,20 @@ def array_one_row(data,filename,cols):
         return s2
 
 #--- Added read triangulation from fort.14 to avoid interpolation over land mass ---
-if (siteid == 'hfo'):
-   def get_grid_tri(fname_grid):
-        # get triangulation from fort.14
-        grid = open(fname_grid)
-        tmp = grid.readlines()
-        n_points = int(tmp[1].split()[1])
-        n_elements = int(tmp[1].split()[0])
-        points_array = tmp[2:n_points+2]
-        element_array = tmp[n_points+2: n_points+n_elements+2]
-        arraywidth = len(np.array(element_array[0].split(),dtype=int))
-        elements = np.zeros((n_elements,arraywidth),dtype=int,order='C')
-        for i in range(0, n_elements):
-                elements[i] = np.array(element_array[i].split(),dtype=int)-1
-        tri_grid = elements[:,arraywidth-3:arraywidth]          # indices of grid point for each element
-        return tri_grid
+def get_grid_tri(fname_grid):
+     # get triangulation from fort.14
+     grid = open(fname_grid)
+     tmp = grid.readlines()
+     n_points = int(tmp[1].split()[1])
+     n_elements = int(tmp[1].split()[0])
+     points_array = tmp[2:n_points+2]
+     element_array = tmp[n_points+2: n_points+n_elements+2]
+     arraywidth = len(np.array(element_array[0].split(),dtype=int))
+     elements = np.zeros((n_elements,arraywidth),dtype=int,order='C')
+     for i in range(0, n_elements):
+             elements[i] = np.array(element_array[i].split(),dtype=int)-1
+     tri_grid = elements[:,arraywidth-3:arraywidth]          # indices of grid point for each element
+     return tri_grid
 #--- Added read triangulation from fort.14 to avoid interpolation over land mass ---
 
 # Load unstructured grid (Matlab binary)
@@ -134,11 +133,8 @@ reflat=np.linspace(Ypmin,Ypmax,myc+1)
 reflon,reflat=np.meshgrid(reflon,reflat)
 
 #--- Added read triangulation from fort.14 to avoid interpolation over land mass ---
-if (siteid == 'hfo'):
-   tri_grid = get_grid_tri(direc+'fort.14')
-   tri=Triangulation(Xp,Yp,triangles = tri_grid)
-else:
-   tri=Triangulation(Xp,Yp)
+tri_grid = get_grid_tri(direc+'fort.14')
+tri=Triangulation(Xp,Yp,triangles = tri_grid)
 #--- Added read triangulation from fort.14 to avoid interpolation over land mass ---
 
 #fout = open(direc+par+'.'+grid+'.CGRID',"w")
