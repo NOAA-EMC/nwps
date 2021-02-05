@@ -486,7 +486,7 @@ sub makeInputCGx (%){
         if ( ("${SITEID}" eq "KEY") || ("${SITEID}" eq "MFL") || ("${SITEID}" eq "AKQ") 
           || ("${SITEID}" eq "MLB") || ("${SITEID}" eq "BOX") 
           || ("${SITEID}" eq "HGX") || ("${SITEID}" eq "MOB") || ("${SITEID}" eq "TBW")
-          || ("${SITEID}" eq "OKXX") || ("${SITEID}" eq "GYX") || ("${SITEID}" eq "SGX")
+          || ("${SITEID}" eq "OKXX") || ("${SITEID}" eq "SGX")
           || ("${SITEID}" eq "CHS") || ("${SITEID}" eq "ILM") || ("${SITEID}" eq "PHI")
           || ("${SITEID}" eq "CAR") || ("${SITEID}" eq "TAE") ) {
            for (my $core=48; $core<96; $core++){
