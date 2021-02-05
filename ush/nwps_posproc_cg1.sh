@@ -472,7 +472,7 @@ cd ${DATA}/output/grib2/CG${CGNUM}
            if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CARX" ] || [ "${SITEID}" == "TBWX" ] \
               || [ "${SITEID}" == "SGXX" ] || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "OKXX" ] \
               || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "JAX" ] || [ "${SITEID}" == "CHSX" ] \
-              || [ "${SITEID}" == "ILMX" ] || [ "${SITEID}" == "PHIX" ] || [ "${SITEID}" == "GYXX" ] \
+              || [ "${SITEID}" == "ILMX" ] || [ "${SITEID}" == "PHIX" ] || [ "${SITEID}" == "GYX" ] \
               || [ "${SITEID}" == "TAEX" ] || [ "${SITEID}" == "MOBX" ] || [ "${SITEID}" == "HGXX" ] \
               || [ "${SITEID}" == "HFO" ]
            then
@@ -501,7 +501,7 @@ cd ${DATA}/output/grib2/CG${CGNUM}
            if [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "AKQ" ] \
               || [ "${SITEID}" == "MLB" ] || [ "${SITEID}" == "BOX" ] \
               || [ "${SITEID}" == "HGX" ] || [ "${SITEID}" == "MOB" ] || [ "${SITEID}" == "TBW" ] \
-              || [ "${SITEID}" == "OKXX" ] || [ "${SITEID}" == "GYX" ] || [ "${SITEID}" == "SGX" ] \
+              || [ "${SITEID}" == "OKXX" ] || [ "${SITEID}" == "SGX" ] \
               || [ "${SITEID}" == "CHS" ] || [ "${SITEID}" == "ILM" ] || [ "${SITEID}" == "PHI" ] \
               || [ "${SITEID}" == "CAR" ] || [ "${SITEID}" == "TAE" ]
            then
@@ -647,7 +647,7 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
    if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CARX" ] || [ "${SITEID}" == "TBWX" ] \
       || [ "${SITEID}" == "SGXX" ] || [ "${SITEID}" == "SJU" ] || [ "${SITEID}" == "OKXX" ] \
       || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "JAX" ] || [ "${SITEID}" == "CHSX" ] \
-      || [ "${SITEID}" == "ILMX" ] || [ "${SITEID}" == "PHIX" ] || [ "${SITEID}" == "GYXX" ] \
+      || [ "${SITEID}" == "ILMX" ] || [ "${SITEID}" == "PHIX" ] || [ "${SITEID}" == "GYX" ] \
       || [ "${SITEID}" == "TAEX" ] || [ "${SITEID}" == "MOBX" ] || [ "${SITEID}" == "HGXX" ] \
       || [ "${SITEID}" == "HFO" ]
    then
@@ -685,7 +685,7 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
    if [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "MFL" ] || [ "${SITEID}" == "AKQ" ] \
       || [ "${SITEID}" == "MLB" ] || [ "${SITEID}" == "BOX" ] \
       || [ "${SITEID}" == "HGX" ] || [ "${SITEID}" == "MOB" ] || [ "${SITEID}" == "TBW" ] \
-      || [ "${SITEID}" == "OKXX" ] || [ "${SITEID}" == "GYX" ] || [ "${SITEID}" == "SGX" ] \
+      || [ "${SITEID}" == "OKXX" ] || [ "${SITEID}" == "SGX" ] \
       || [ "${SITEID}" == "CHS" ] || [ "${SITEID}" == "ILM" ] || [ "${SITEID}" == "PHI" ] \
       || [ "${SITEID}" == "CAR" ] || [ "${SITEID}" == "TAE" ]
    then
