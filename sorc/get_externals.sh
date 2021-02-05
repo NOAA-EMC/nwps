@@ -14,6 +14,7 @@ fi
 
 echo 'Fetching externals...'
 scp /gpfs/hps3/emc/marine/noscrub/emc.wavepa/git/nwps-externals/v_1-3/fix/bathy_db.tar ${NWPSdir}/fix/
+if [ -d "${NWPSdir}/fix/bathy_db" ]; then rm -Rf "${NWPSdir}/fix/bathy_db"; fi
 mkdir -p ${NWPSdir}/fix/bathy_db/
 tar -C ${NWPSdir}/fix/bathy_db/ -xvf ${NWPSdir}/fix/bathy_db.tar
 rm ${NWPSdir}/fix/bathy_db.tar
