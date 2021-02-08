@@ -660,3 +660,38 @@ afg    34     -    67    67     -     -
 hfo    53    65    71    71    71    71
 gum    29    33    36    36    36     -
 
+
+Update for tag 'v1.3.8-gyx_landmask':
+Date: 02/08/21
+
+This tag contains fixes for (i) spurious results in WFO GYX's CG2 and CG3 nests, and 
+(ii) a land mask problem due to incorrect interpolation of model output from the 
+native unstructured CG1 mesh to the CG1-CG5 regular GRIB2 grids. To address issue (i), 
+the parallelization for GYX is reduced from 96 cores to 48 cores.
+
+IMPLEMENTATION INSTRUCTIONS:
+
+In order to implement this update, check out this tag, specifically the following files:
+
+   ush/pm/SetupCG.pm
+   ush/swanexe.sh
+   ush/nwps_posproc_cg1.sh
+   sorc/get_externals.sh
+   fix/templates/swn_reginterpCG1.py
+   fix/templates/swn_reginterpCG2.py
+   fix/templates/swn_reginterpCG3.py
+   fix/templates/swn_reginterpCG4.py
+   fix/templates/swn_reginterpCG5.py
+
+To incorporate the updated 48-core mesh decomposition for GYX, rebuild the system with:
+
+> cd ${NWPSdir}/sorc
+> ./make_NWPS.sh
+
+The reduction of the parallelization of the GYX domain has the following impact on 
+its product delivery times: 
+
+New delivery time of v1.3.8 products (min):    Delivery times of v1.3.7 products (min):
+      CG1   CG0   CG2   CG3   CG4   CG5              CG1   CG0   CG2   CG3   CG4   CG5
+gyx    49    55    60    60     -     -        gyx    34    39    44    44     -     -
+
