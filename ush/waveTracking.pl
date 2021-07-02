@@ -415,22 +415,6 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
 }
       our $PLOT="YES";
       if ($PLOT eq "YES" ) {
-         #For the time being NWPS do not make GH plots on the Nested Grids
-         my $gotoBin="$RUNdir";
-         chdir($gotoBin) or die "Cant chdir to $gotoBin $!";
-         system("cp -f CGinclude.pm CGinclude_backup.pm");
-         my $cgincludeIn="CGinclude.pm";
-         my $temp_file2="temporal_file2";
-         open my $in,  '<',  $cgincludeIn      or die "Can't read old file: $!";
-         open my $out, '>', "$temp_file2" or die "Can't write new file: $!";
-         while( <$in> ){
-            last if $_=~/\(CG2\)/;
-            print $out $_;
-            #XXX
-            print "$_ \n";
-         }
-         close $out;
-         system("cp -pfv $temp_file2 $cgincludeIn");
          chdir($RUNdir) or die "Cant chdir to $RUNdir $!";
          print "===============================================\n";
          print "PLOT PARTITION for CG${cgnum}\n";
@@ -443,9 +427,6 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
          system("mv -fv ${RUNdir}/SYS_* ${OUTPUTdir}/partition/CG${cgnum}/ ");
     } # End if ($cgnum ==1)
 
-    my $gotoBin="$RUNdir";
-    chdir($gotoBin) or die "Cant chdir to $gotoBin $!";
-    system("cp -f CGinclude_backup.pm CGinclude.pm");
     $CGNUMBER="CG$cgnum";
     print "$CGNUMBER \n";
     chdir($RUNdir) or die "Cant chdir to $RUNdir $!";
