@@ -30,7 +30,9 @@ use ConfigSwan;
 
 # Read all SWAN GCs and output config in CSV format
 foreach my $CG (reverse sort(values(%ConfigSwan::CGS))) {
-        %CG = %{$CG};
+    %CG = %{$CG};
+    # Wave tracking is currently limited to the CG1 domain
+    if($CG{CGNUM} == 1) {
         print "CG".$CG{CGNUM}.",".$CG{LENGTHTIMESTEP}.",".SWANFCSTLENGTH.",";
 	#
         my $NUMPRT = $CG{NUMOFOUTPUTPART};
@@ -58,12 +60,9 @@ foreach my $CG (reverse sort(values(%ConfigSwan::CGS))) {
 	    # Create a PIPE delimited list of our nested data types array
 	    if($i < ($CG{NUMOFOUTPUTPART}-1)) { print "|"; }
 	}
-
-
-
-#RPH end
 	# Print a single line feed after our last config read
 	print "\n";
+    }
 }
 
 exit 0;
