@@ -696,14 +696,22 @@ New delivery time of v1.3.8 products (min):    Delivery times of v1.3.7 products
 gyx    49    55    60    60     -     -        gyx    34    39    44    44     -     -
 
 
-Update for tag 'v1.3.9':
-Date: 07/02/21
+Update for tag 'v1.3.9-wtrk_psurge_ripcop':
+Date: 07/19/21
 
-This tag contains a fix for a reproducabilty issue in the jnwps_wavetrack_cg1 job, in
-which the config file CGinclude.pm could get corrupted if the job fails and is rerun. To 
-address this issue, runtime edits to the config file have been removed. Instead, the function 
-get_partition_parms.pl is now limited to only reading parameters for the CG1 domain over 
-which wave system tracking is performed.
+This tag contains three fixes:
+
+1) Fix for a reproducabilty issue in the jnwps_wavetrack_cg1 job, in which the config file 
+CGinclude.pm could get corrupted if the job fails and is rerun. To address this issue, 
+runtime edits to the config file have been removed. Instead, the function get_partition_parms.pl 
+is now limited to only reading parameters for the CG1 domain over which wave system tracking 
+is performed.
+
+2) Fix for a run failure for WFO KEY which occurred because the NWPS init time was earlier 
+than the most recent P-Surge water level field. The most suitable P-Surge cycle is now selected 
+from the NWPS init time, using the rule PSurge_cyc <= NWPS_init.
+
+3) The addition of the missing product RIPCOP to the WFO GUM CG1 wmo header file.
 
 IMPLEMENTATION INSTRUCTIONS:
 
@@ -711,6 +719,9 @@ In order to implement this update, check out this tag, ONLY updating the followi
 
    ush/waveTracking.pl
    ush/python/get_partition_parms.pl
+   ush/get_ncep_initfiles.sh
+   ush/psurge/bin/gen_waterlevel.sh
+   parm/wmo_headers/grib2_gum_nwps_CG1
 
 Rebuild the system by issuing the following commands:
 
@@ -719,9 +730,19 @@ Rebuild the system by issuing the following commands:
 
 TEST INSTRUCTIONS:
 
-Assess the correct functioning of this fix by running one WFO cycle, for example BOX. 
+Fix 1: Assess the correct functioning of this fix by running one WFO cycle, for example BOX. 
 Run up to and including the jnwps_wavetrack_cg1 job. Then rerun this job, and complete 
 the remaining jobs. These should complete without failure, in particular the CG2 job
 jnwps_prdgen_cgn.ecf.
+
+Fix 2: Rerun the WFO KEY 2021/07/05 cycles using the forcings and BCs saved to (Luna/Surge): 
+/gpfs/hps3/emc/marine/noscrub/emc.wavepa/key_20210705_failure/
+Specfically, test the following cycles, and verify that P-Surge is correctly ingested:
+00z - dcom/prod/20210705/wgrbbul/nwps/NWPSWINDGRID_key_202107051438_1303.tar.gz
+06z - dcom/prod/20210705/wgrbbul/nwps/NWPSWINDGRID_key_202107051751_23056.tar.gz
+12z - dcom/prod/20210705/wgrbbul/nwps/NWPSWINDGRID_key_202107051842_2332.tar.gz
+
+Fix 3: Run an NWPS cycle for WFO GUM, and verify that the product file grib2.CYC.awipsnwps_hfo_CG1 
+contants 145 RIPCOP fields.
 
 
