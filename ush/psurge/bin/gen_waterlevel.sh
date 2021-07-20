@@ -179,9 +179,15 @@ echo "Purging any old model ingest" | tee -a ${LOGfile}
 last_hour=${PSURGEHOURS}
 ${BINdir}/purge_psurge.sh ${INPUTdir} ${last_hour}
 
-psurge_waterlevel_start_time=`cat ${INPUTdir}/psurge_waterlevel_start_time.txt`
+# Find most recent water level file by comparing the model init epoch time 
+# to those of all available PSURGE files (ignoring psurge_waterlevel_start_time.txt)
+# This allows the same water level file to be used in case of a model rerun.
+# NOTE: The availability and age of wave_combnd_waterlevel* is checked in ush/get_ncep_initfiles.sh
+# NOTE: so that $psurge_waterlevel_start_time will always be defined, and <= $model_start_time.
+# NOTE: Otherwise, ush/get_ncep_initfiles.sh will fail over to using ESTOFS water levels.
+psurge_waterlevel_start_time=`ls ${INPUTdir}/wave_combnd_waterlevel* | xargs -n1 basename | cut -b24-33 | sort | uniq | awk -v thresh=$model_start_time '$1 <= thresh' | tail -1`
 psurge_date_str=`echo ${psurge_waterlevel_start_time} | awk '{ print strftime("%Y%m%d", $1) }'`
-psurge_end_time=${psurge_waterlevel_start_time}
+psurge_model_cycle=`echo ${psurge_waterlevel_start_time} | awk '{ print strftime("%H", $1) }'`
 
 let fin=psurge_waterlevel_start_time
 fin1=$(echo " ${PSURGEHOURS}* 3600" | bc -l)
@@ -190,7 +196,6 @@ psurge_end_time_str=`echo ${fin} | awk '{ print strftime("%Y%m%d%H", $1) }'`
 
 echo "PSURGE end TIME: ${psurge_end_time_str}"
 
-psurge_model_cycle=`echo ${psurge_waterlevel_start_time} | awk '{ print strftime("%H", $1) }'`
 if [ "$1" != "" ]
     then 
     YYYYMMDDHH=${1}
