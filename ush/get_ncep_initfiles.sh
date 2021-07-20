@@ -278,28 +278,49 @@ then
       echo "WARNING: Optional PSURGE data not available for Today."
    fi
 
-   echo "Cleaning OLD data from PSURGE Directory"
+   echo "Finding model init time"
+   windsource=`cat ${RUNdir}/windsource.flag`
+   if [ "$windsource" == "FORECASTWINDGRIDS" ]; then
+      model_start_time=`grep Wind_Mag_SFC:validTimes ${INPUTdir}/wind/*WIND.txt | cut -c29-38 | tail -1`
+   elif [ "$windsource" == "GFS" ]; then
+      NewestWind=$(basename $(ls -t ${VARdir}/gfe_grids_test/NWPSWINDGRID_${siteid}* | head -1))
+      if [ "$NewestWind" != "" ]; then
+         YYYY=$(echo $NewestWind|cut -c18-21)
+         MM=$(echo $NewestWind|cut -c22-23)
+         DD=$(echo $NewestWind|cut -c24-25)
+         windhour=$(echo $NewestWind|cut -c26-27)
+         time_str="${YYYY} ${MM} ${DD} ${windhour} 00 00"
+         model_start_time=`echo ${time_str} | awk -F: '{ print mktime($1 $2 $3 $4 $5 $6) }'`
+      fi
+   fi
+   echo "Model start UNIX time: ${model_start_time}" | tee -a ${LOGfile}
+
+   echo "Checking age of PSURGE data relative to model init time"
+   echo "If PSURGE data is absent, or newer than the model init time, fail over to ESTOFS"
    if [ -e psurge_waterlevel_start_time.txt ]
    then
-      start_time=`cat psurge_waterlevel_start_time.txt`
-      #file=`ls wave_psurge_waterlevel_${start_time}_*.dat`
-      file=`ls wave_combnd_waterlevel_${start_time}_*.dat`
-      ##1234567890123456789012345678901234567890123456789012345678
-      ##wave_psurge_waterlevel_1130112000_20051024_00_mfl_e10_f036.dat
-      cycle=`echo $file | cut -c35-45`
-      #for i in $(ls wave_psurge_waterlevel*.dat)
-      for i in $(ls wave_combnd_waterlevel*.dat)
-      do
-         init_time=`echo $i | cut -c24-33`
-         fhour=`echo $i | cut -c56-58`
-         echo "Processing $i $init_time $start_time $fhour $cycle"
-         #if [ $init_time -lt $start_time ]  && [ -e wave_psurge_waterlevel_${start_time}_${cycle}_*_*_f102.dat ]
-         if [ $init_time -lt $start_time ]  && [ -e wave_combnd_waterlevel_${start_time}_${cycle}_*_*_f102.dat ]
+      psurge_waterlevel_start_time=`ls wave_combnd_waterlevel* | xargs -n1 basename | cut -b24-33 | sort | uniq | awk -v thresh=$model_start_time '$1 <= thresh' | tail -1`
+
+      if [ "$psurge_waterlevel_start_time" == "" ]
+      then
+         touch ${RUNdir}/nopsurge
+         if [ ! -e ${RUNdir}/noestofs ]
          then
-            echo "Removing $i"
-            rm -f $i
+            echo "WARNING: PSURGE fields all newer than run init time. ESTOFS fields will be used instead." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+            msg="WARNING: PSURGE fields all newer than run init time. ESTOFS fields will be used instead."
+            postmsg "$jlogfile" "$msg"
+            export WATERLEVELS="ESTOFS"
+            export ESTOFS="YES"
+            export PSURGE="NO"
+         else
+            echo "WARNING: PSURGE fields all newer than run init time. Run will continue without water level variation." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+            msg="WARNING: PSURGE fields all newer than run init time. Run will continue without water level variation."
+            postmsg "$jlogfile" "$msg"
+            export WATERLEVELS="NO"
+            export ESTOFS="NO"
+            export PSURGE="NO"
          fi
-      done
+      fi
    else    
       touch ${RUNdir}/nopsurge
       if [ ! -e ${RUNdir}/noestofs ]
