@@ -142,11 +142,11 @@ export WVTRKPA="20. 2. 0.25 0.1 20. 2."
 # them from the interactive Run_NWPS GUI.
 #
 export BOUNCOND="1"
-export FTPPAT1="multi_1"
-export FTPPAT1B="multi_1"
+export FTPPAT1="gfswave"
+export FTPPAT1B="gfswave"
 export FTPPAT2="CCTX"
 export NFTPATTEMPTS="3"
-export WAVECPS="multi_1.CCTX55.spec.swan"
+export WAVECPS="gfswave.CCTX55.spec.swan"
 #
 # THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD BOUNDARY COMMAND LINES FOR YOUR
 # DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE BOUNARY
@@ -155,21 +155,21 @@ export WAVECPS="multi_1.CCTX55.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#BOUN SEG XY 263.00 26.00 265.00 26.00 VAR FILE 0.00 'multi_1.CCTX51.spec.swan'    1 &
-#         0.50 'multi_1.CCTX52.spec.swan'    1 &
-#         1.00 'multi_1.CCTX53.spec.swan'    1 &
-#         1.50 'multi_1.CCTX54.spec.swan'    1 &
-#         2.00 'multi_1.CCTX55.spec.swan'    1
+#BOUN SEG XY 263.00 26.00 265.00 26.00 VAR FILE 0.00 'gfswave.CCTX51.spec.swan'    1 &
+#         0.50 'gfswave.CCTX52.spec.swan'    1 &
+#         1.00 'gfswave.CCTX53.spec.swan'    1 &
+#         1.50 'gfswave.CCTX54.spec.swan'    1 &
+#         2.00 'gfswave.CCTX55.spec.swan'    1
 #$
 #$CRP Eastern Side of grid. (point 61 (-95W/28.8) to point 55 (-95W/26N)
 #$
-#BOUN SEG XY 265.00 28.80 265.00 26.00 VAR FILE 0.00 'multi_1.CCTX61.spec.swan'    1 &
-#         0.30 'multi_1.CCTX60.spec.swan'    1 &
-#         0.80 'multi_1.CCTX59.spec.swan'    1 &
-#         1.30 'multi_1.CCTX58.spec.swan'    1 &
-#         1.80 'multi_1.CCTX57.spec.swan'    1 &
-#         2.30 'multi_1.CCTX56.spec.swan'    1 &
-#         2.80 'multi_1.CCTX55.spec.swan.cp' 1
+#BOUN SEG XY 265.00 28.80 265.00 26.00 VAR FILE 0.00 'gfswave.CCTX61.spec.swan'    1 &
+#         0.30 'gfswave.CCTX60.spec.swan'    1 &
+#         0.80 'gfswave.CCTX59.spec.swan'    1 &
+#         1.30 'gfswave.CCTX58.spec.swan'    1 &
+#         1.80 'gfswave.CCTX57.spec.swan'    1 &
+#         2.30 'gfswave.CCTX56.spec.swan'    1 &
+#         2.80 'gfswave.CCTX55.spec.swan.cp' 1
 #$END BOUNSEG
 #
 #========================================================================
