@@ -10,10 +10,10 @@ puts stderr "for the Intel Compiler Suite $version\n"
 }
 module-whatis " NWPS whatis description"
 
-set ver v1.3.2
+set ver v1.3.6
 
 set sys [uname sysname]
-set NWPS /gpfs/hps/nco/ops/nwtest/nwps.v1.3.2/modulefiles/NWPS
+set NWPS /gpfs/hps/nco/ops/nwtest/nwps.v1.3.6/modulefiles/NWPS
 set lname NWPS
 
 module use /gpfs/hps/nco/ops/nwprod/modulefiles
