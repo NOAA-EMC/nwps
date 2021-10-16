@@ -1319,7 +1319,7 @@ then
     x=1
     while [ $x -le $NUMSPC ]
     do
-        if { [ "${SITEID}" == "HFOX" ] && [ $x -gt 1 ]; }; then
+        if { [ "${SITEID}" == "HFO" ] && [ $x -gt 1 ]; }; then
            linespc1="\$SPECOUT '${spcnames[$x]}' SPEC1D ABSOLUTE 'SPC1D.${spcnames[$x]}.CG1' OUTPUT 20100301.1800 3.0 HR"
            line2dspc1="\$SPECOUT '${spcnames[$x]}' SPEC2D ABSOLUTE 'SPC2D.${spcnames[$x]}.CG1' OUTPUT 20100301.1800 3.0 HR"
         else
