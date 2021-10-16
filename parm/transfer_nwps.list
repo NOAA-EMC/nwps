@@ -1,9 +1,10 @@
 # This file specifies the directories to be transfered and, optionally, the files within
 # those directories to include or exclude.  If one directory is specified per line, it
-# each will be used as both the source and destination.  If two directories are
-# specified per line, separated by one or more spaces, the first will be used as the
-# source and the second the destination.  Rules may be placed below each directory or
-# directory pair and must begin with one of the following characters:
+# will be used as both the source and destination.  If two directories are specified per
+# line, separated by one or more spaces, the first will be used as the source and the
+# second the destination.  Directories that begin with "com/" will be resolved using
+# the compath.py utility.  Rules may be placed below each directory or directory pair
+# and must begin with one of the following characters:
 #  -  exclude, specifies an exclude pattern
 #  +  include, specifies an include pattern
 #  .  merge, specifies a merge-file to read for more rules
@@ -15,37 +16,35 @@
 #  !  clear, clears the current include/exclude list (takes no arg)
 #  B  bytes, relative size of the path in relation to the other paths in the list
 #  D  delete, delete extraneous files from destination directories (takes no arg)
-#  Z  compress data as it is sent, reducing the amount transmitted (takes no arg)
+#  E  encrypt, enables data encryption [two cores should be allocated] (takes no arg)
+#  T  two-way syncronization will update both sides with latest changes (takes no arg)
+#  Z  compress data as it is sent, accepts optional compression level argument (1-9)
 # Rules higher in the list take precedence over lower ones.  By default, all files in a
 # directory are included, so if no exclude patterns match that file, it will be
-# transfered.
-_COMROOT_/nwps/_ENVIR_/ar._PDY_/
-B 5
-Z
-_COMROOT_/nwps/_ENVIR_/er._PDY_/
-B 5
-Z
-_COMROOT_/nwps/_ENVIR_/pr._PDY_/
-B 5
-Z
-_COMROOT_/nwps/_ENVIR_/sr._PDY_/
-B 5
-Z
-_COMROOT_/nwps/_ENVIR_/wr._PDY_/
-B 5
-Z
-_COMROOT_/nwps/_ENVIR_/ar._PDYm1_/
-B 5
-Z
-_COMROOT_/nwps/_ENVIR_/er._PDYm1_/
-B 5
-Z 
-_COMROOT_/nwps/_ENVIR_/pr._PDYm1_/
-B 5
-Z 
-_COMROOT_/nwps/_ENVIR_/sr._PDYm1_/
-B 5
-Z
-_COMROOT_/nwps/_ENVIR_/wr._PDYm1_/
-B 5
-Z
+# transferred.
+
+com/nwps/_ENVIR_/ar._PDYm1_/
+B 1320
+com/nwps/_ENVIR_/ar._PDY_/
+B 1320
+
+com/nwps/_ENVIR_/er._PDYm1_/
+B 4300
+com/nwps/_ENVIR_/er._PDY_/
+B 4300
+
+com/nwps/_ENVIR_/pr._PDYm1_/
+B 1500
+com/nwps/_ENVIR_/pr._PDY_/
+B 1500
+
+com/nwps/_ENVIR_/sr._PDYm1_/
+B 5200
+com/nwps/_ENVIR_/sr._PDY_/
+B 5200
+
+com/nwps/_ENVIR_/wr._PDYm1_/
+B 3700
+com/nwps/_ENVIR_/wr._PDY_/
+B 3700
+
