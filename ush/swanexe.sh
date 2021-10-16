@@ -534,12 +534,7 @@ then
          done
 
          echo "Starting PuNSWAN executable for "${siteid}
-         #aprun -n48 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
-         if [ "${siteid}" == "hfo" ]; then
-            aprun -n48 -N16 -j1 -d1 ${EXECnwps}/punswan4110.exe
-         else
-            aprun -n48 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
-         fi
+         aprun -n48 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
          export err=$?;
          echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
          cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
