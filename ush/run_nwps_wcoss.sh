@@ -159,7 +159,10 @@ Default_WINDS="forecaster"
 Default_SWELLS="WNAWave"
 Default_RTOFS="Yes"
 Default_WEB="NO"
-Default_HOTSTART="TRUE"
+# WW 20201016 set COLDSTART in ecFlow_ui if necessary
+# Default_HOTSTART="TRUE"
+[ ${COLDSTART} == "YES" ] && Default_HOTSTART="FALSE" || Default_HOTSTART="TRUE"
+#
 Default_WATERLEVELS="ESTOFS"
 Default_EXCD="10"
 
