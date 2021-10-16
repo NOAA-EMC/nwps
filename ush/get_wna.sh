@@ -231,9 +231,10 @@ echo "FTPPAT2:   ${FTPPAT2}"
 echo "WNA:      ${WNA}"
 if [ "${WNA^^}" = "WNAWAVE" ]
 then
-   bc_option="multi_1" 
-   bctarfile="${bc_option}.t${bcCYCLE}z.spec_tar.gz"
-   url="${COMINwave}/${bc_option}.${bcYYYYMMDD}"
+   bc_option="gfswave"
+   bctarfile="gfswave.t${bcCYCLE}z.ibp_tar"
+#   url="${COMINwave}/${bcCYCLE}/wave/station"
+   url="${COMINwave}/gfs.${bcYYYYMMDD}/${bcCYCLE}/wave/station"
 
 elif [ "${WNA^^}" = "HURWAVE" ]
    then
@@ -333,10 +334,10 @@ if [ -e "${url}/${bctarfile}" ];then
         #RemoveLockFile
         export err=1; err_chk
     fi
-elif [ -e "${COMINwave}/${bc_option}.${bcOLDYYYYMMDD}/${bc_option}.t${bcOLDCYCLE}z.spec_tar.gz" ];then
+elif [ -e "${COMINwave}/gfs.${bcOLDYYYYMMDD}/${bcOLDCYCLE}/wave/station/${bc_option}.t${bcOLDCYCLE}z.ibp_tar" ];then
     # Use BCs from one cycle ago (e.g. WW3_multi_2/HURwave is a late run)
-    bctarfile="${bc_option}.t${bcOLDCYCLE}z.spec_tar.gz"
-    url="${COMINwave}/${bc_option}.${bcOLDYYYYMMDD}"
+    bctarfile="${bc_option}.t${bcOLDCYCLE}z.ibp_tar"
+    url="${COMINwave}/gfs.${bcOLDYYYYMMDD}/${bcOLDCYCLE}/wave/station"
     DATABCdir="${GESOUT}/databc/${bc_option}.${bcOLDYYYYMMDD}_t${bcOLDCYCLE}z"
     file="${bc_option}.${FTPPAT2}"
 
