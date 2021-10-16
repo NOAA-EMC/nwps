@@ -96,7 +96,8 @@ export GESOUTm2=${GESROOT}/${envir}/${NET}.${PDYm2}
 
 export COMINgfs=${COMINgfs:-$(compath.py gfs/prod/gfs.${PDY})}
 export COMINgfsm1=${COMINgfsm1:-$(compath.py gfs/prod/gfs.${PDYm1})}
-export COMINwave=${COMINwave:-$(compath.py wave/prod)}
+#export COMINwave=${COMINwave:-$(compath.py gfs/prod/gfs.${PDY})}
+export COMINwave=${COMINwave:-$(compath.py gfs/prod)}
 #----Suggested paths for OFS PREP output (see get_ncep_initfiles.sh)-------
 export COMINestofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/estofs/${WFO}_output
 export COMINestofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/estofs/${WFO}_output
