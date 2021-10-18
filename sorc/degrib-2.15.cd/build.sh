@@ -42,17 +42,17 @@ function build_dir {
          exit
       fi
    fi
-   if [[ $1 == "drawshp.cd" || $1 == "degrib-2.15.cd" ]] ; then
-      LIB=$LIBDIR/libgd.a
-      if [ ! -e $LIB ] ; then
-         echo "$1 requires $LIB to exist."
-         echo "Please build it via:"
-         echo "   $ cd $LIBDIR/sorc/gd"
-         echo "   $ make clean ; make ; cp libgd.a ../../"
-         echo "   $ cd $srcDir"
-         exit
-      fi
-   fi
+   #if [[ $1 == "drawshp.cd" || $1 == "degrib-2.15.cd" ]] ; then
+   #   LIB=$LIBDIR/libgd.a
+   #   if [ ! -e $LIB ] ; then
+   #      echo "$1 requires $LIB to exist."
+   #      echo "Please build it via:"
+   #      echo "   $ cd $LIBDIR/sorc/gd"
+   #      echo "   $ make clean ; make ; cp libgd.a ../../"
+   #      echo "   $ cd $srcDir"
+   #      exit
+   #   fi
+   #fi
    echo ""
    echo "=============================="
    echo "Building $1"
