@@ -21,7 +21,7 @@ export NWPSdir=${pwd%/*}
 export srcDir=${NWPSdir}/sorc
 
 # Load the build module
-module load ./degrib-2.15.cd/build_psurge.module
+#module load ./degrib-2.15.cd/build_psurge.module
 module list
 
 # Clean all degrib object and archive files (including lib/libemapf.a and lib/libgd.a)
@@ -35,11 +35,11 @@ cd ${NWPSdir}/lib/sorc/emapf-c
 make clean install | tee -a ${srcDir}/degrib-2.15.cd/degrib_build.log
 
 # Build libgd.a
-echo "Building libgd.a..." | tee -a ${srcDir}/degrib-2.15.cd/degrib_build.log
-cd ${NWPSdir}/lib/sorc/gd
-make clean | tee -a ${srcDir}/degrib-2.15.cd/degrib_build.log
-make | tee -a ${srcDir}/degrib-2.15.cd/degrib_build.log
-mv libgd.a ../../ | tee -a ${srcDir}/degrib-2.15.cd/degrib_build.log
+#echo "Building libgd.a..." | tee -a ${srcDir}/degrib-2.15.cd/degrib_build.log
+#cd ${NWPSdir}/lib/sorc/gd
+#make clean | tee -a ${srcDir}/degrib-2.15.cd/degrib_build.log
+#make | tee -a ${srcDir}/degrib-2.15.cd/degrib_build.log
+#mv libgd.a ../../ | tee -a ${srcDir}/degrib-2.15.cd/degrib_build.log
 
 # Build and install degrib
 echo "Building degrib..." | tee -a ${srcDir}/degrib-2.15.cd/degrib_build.log
