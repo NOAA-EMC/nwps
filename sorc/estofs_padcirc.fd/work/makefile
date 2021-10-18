@@ -27,12 +27,14 @@ VTAG     := $(shell echo $(TAG) | sed -e 's/_/./g' -e 's/V//')
 
 PARALLEL_ADCIRC   := padcirc
 SWAN=enable
-NETCDF=enable
-NETCDF4=enable
+NETCDFen=enable
+NETCDF4en=enable
 $(warning (INFO) Name is $(NAME), Machine is $(MACHINE), Vendor is $(VENDOR), and OS is $(OS).)
 include cmplrflags.mk
 #Casey 090302: Include variables/flags from SWAN.
 include ../swan/macros.inc
+
+$(warning (INFO) NETCDF path set to $(NETCDF).)
 
 ifneq ($(compiler),)
 $(warning (INFO) The compiler variable in cmplrflags.mk is set to $(compiler).)
@@ -44,18 +46,20 @@ $(warning (INFO) The parallel Fortran compiler is set to $(PFC).)
 $(warning (INFO) The C compiler is set to $(CC).)
 
 # Specify NETCDF=enable to gmake on the command line to activate netcdf i/o
-ifeq ($(NETCDF),enable)
+ifeq ($(NETCDFen),enable)
 # jgf49.61: Don't add the -DADCNETCDF for the IBM compilers (see cmplrflags.mk)
 ifeq ($(IBM),)
-     PPFC    := $(PPFC) -DADCNETCDF -I$(NETCDFHOME)/include 
-     PFC     := $(PFC) -DADCNETCDF -I$(NETCDFHOME)/include 
-     FFLAGS1 := $(FFLAGS1) -DADCNETCDF -I$(NETCDFHOME)/include 
-     FFLAGS2 := $(FFLAGS2) -DADCNETCDF -I$(NETCDFHOME)/include 
-     FFLAGS3 := $(FFLAGS3) -DADCNETCDF -I$(NETCDFHOME)/include 
-     FFLAGS4 := $(FFLAGS4) -DADCNETCDF -I$(NETCDFHOME)/include 
+     $(warning (INFO) NETCDF activated (1).)
+     PPFC    := $(PPFC) -DADCNETCDF -I${NETCDF}/include 
+     PFC     := $(PFC) -DADCNETCDF -I${NETCDF}/include 
+     FFLAGS1 := $(FFLAGS1) -DADCNETCDF -I${NETCDF}/include 
+     FFLAGS2 := $(FFLAGS2) -DADCNETCDF -I${NETCDF}/include 
+     FFLAGS3 := $(FFLAGS3) -DADCNETCDF -I${NETCDF}/include 
+     FFLAGS4 := $(FFLAGS4) -DADCNETCDF -I${NETCDF}/include 
 endif
 endif
-ifeq ($(NETCDF4),enable)
+ifeq ($(NETCDF4en),enable)
+     $(warning (INFO) NETCDF activated (2).)
      PPFC    := $(PPFC) -DHAVE_NETCDF4 
      PFC     := $(PFC) -DHAVE_NETCDF4 
      FFLAGS1 := $(FFLAGS1) -DHAVE_NETCDF4 
@@ -64,6 +68,7 @@ ifeq ($(NETCDF4),enable)
      FFLAGS4 := $(FFLAGS4) -DHAVE_NETCDF4 
 endif
 ifeq ($(NETCDF4_COMPRESSION),enable)
+     $(warning (INFO) NETCDF activated (3).)
      PPFC    := $(PPFC) -DNETCDF_CAN_DEFLATE 
      PFC     := $(PFC) -DNETCDF_CAN_DEFLATE 
      FFLAGS1 := $(FFLAGS1) -DNETCDF_CAN_DEFLATE 
@@ -93,8 +98,10 @@ ifeq ($(BUILDTYPE),adcprep)
   ifeq ($(XDMF),enable)
      FLIBS    :=  -L$(XDMFLIBPATH) -lXdmfCore -lXdmfUtils -lXdmf $(FLIBS)
   endif
-  ifeq ($(NETCDF),enable)
-    LIBS  := -Lodir_metis -lmetis -L$(NETCDFHOME)/lib -lnetcdf $(FLIBS)
+  ifeq ($(NETCDFen),enable)
+    $(warning (INFO) NETCDF activated (4).)
+    LIBS  := -Lodir_metis -lmetis -L$(NETCDF)/lib -lnetcdf $(FLIBS)
+    $(warning (INFO) LIBS path set to $(LIBS).)
   else
     LIBS  := -Lodir_metis -lmetis $(FLIBS)
   endif
@@ -109,8 +116,9 @@ ifeq ($(BUILDTYPE),adcprep_be)
   ifeq ($(XDMF),enable)
      FLIBS    :=  -L$(XDMFLIBPATH) -lXdmfCore -lXdmfUtils -lXdmf $(FLIBS)
   endif
-  ifeq ($(NETCDF),enable)
-    LIBS  := -Lodir_metis -lmetis -L$(NETCDFHOME)/lib -lnetcdf $(FLIBS) 
+  ifeq ($(NETCDFen),enable)
+    $(warning (INFO) NETCDF activated (5).)
+    LIBS  := -Lodir_metis -lmetis -L$(NETCDF)/lib -lnetcdf $(FLIBS) 
   else
     LIBS  := -Lodir_metis_be -lmetis_be $(FLIBS)
   endif
@@ -125,8 +133,9 @@ ifeq ($(BUILDTYPE),adcirc)
   ifeq ($(XDMF),enable)
      FLIBS    :=  -L$(XDMFLIBPATH) -lXdmfCore -lXdmfUtils -lXdmf $(FLIBS)
   endif
-  ifeq ($(NETCDF),enable)
-    LIBS  := -L$(NETCDFHOME)/lib -lnetcdf $(FLIBS)
+  ifeq ($(NETCDFen),enable)
+     $(warning (INFO) NETCDF activated (6).)
+     LIBS  := -L$(NETCDF)/lib -lnetcdf $(FLIBS)
   endif
   MSG_MOBJ:= $(O_DIR)globalio.o
 endif
@@ -140,8 +149,8 @@ ifeq ($(BUILDTYPE),adcswan)
   ifeq ($(XDMF),enable)
      FLIBS    :=  -L$(XDMFLIBPATH) -lXdmfCore -lXdmfUtils -lXdmf $(FLIBS)
   endif
-  ifeq ($(NETCDF),enable)
-    LIBS  := -L$(NETCDFHOME)/lib -lnetcdf $(FLIBS)
+  ifeq ($(NETCDFen),enable)
+    LIBS  := -L$(NETCDF)/lib -lnetcdf $(FLIBS)
   endif
   MSG_MOBJ:= $(O_DIR)globalio.o
 endif
@@ -154,8 +163,10 @@ ifeq ($(BUILDTYPE),$(PARALLEL_ADCIRC))
   ifeq ($(XDMF),enable)
      FLIBS    :=  -L$(XDMFLIBPATH) -lXdmfCore -lXdmfUtils -lXdmf $(FLIBS)
   endif
-  ifeq ($(NETCDF),enable)
-    LIBS  := -L$(NETCDFHOME)/lib -lnetcdf $(FLIBS)
+  ifeq ($(NETCDFen),enable)
+    $(warning (INFO) NETCDF activated (7).)
+    LIBS  := -L$(NETCDF)/lib -lnetcdf $(FLIBS)
+    $(warning (INFO) LIBS path set to $(LIBS).)
   endif
   MSG_MOBJ:= $(O_DIR)messenger.o $(O_DIR)writer.o
 endif
@@ -169,8 +180,8 @@ ifeq ($(BUILDTYPE),padcswan)
   ifeq ($(XDMF),enable)
      FLIBS    :=  -L$(XDMFLIBPATH) -lXdmfCore -lXdmfUtils -lXdmf $(FLIBS)
   endif  
-  ifeq ($(NETCDF),enable)
-    LIBS  := -L$(NETCDFHOME)/lib -lnetcdf $(FLIBS)
+  ifeq ($(NETCDFen),enable)
+    LIBS  := -L$(NETCDF)/lib -lnetcdf $(FLIBS)
   endif
   MSG_MOBJ:= $(O_DIR)messenger.o $(O_DIR)writer.o
 endif
@@ -179,8 +190,8 @@ ifeq ($(BUILDTYPE),$(LIBADC))
   CF:= $(PFC)
   FFLAGS:= $(FFLAGS3) $(DP) $(IMODS) $(O_DIR)
   VPATH := $(SRCDIR):$(SRCDIR)/src:$(SRCDIR)/KDTREE2:$(SRCDIR)/wind:$(SRCDIR):$(SRCDIR)/prep 
-  ifeq ($(NETCDF),enable)
-    LIBS  := -L$(NETCDFHOME)/lib -lnetcdf $(FLIBS)
+  ifeq ($(NETCDFen),enable)
+    LIBS  := -L$(NETCDF)/lib -lnetcdf $(FLIBS)
   endif
   MSG_MOBJ:= $(O_DIR)messenger.o $(O_DIR)writer.o
 endif
@@ -245,8 +256,8 @@ ifeq ($(BUILDTYPE),hstime)
   CF:= $(PPFC)
   O_DIR:=odir12/
   FFLAGS:= $(FFLAGS2) $(IMODS) $(O_DIR) $(DA)
-  ifeq ($(NETCDF),enable)
-    LIBS  := -L$(NETCDFHOME)/lib -lnetcdf $(FLIBS)
+  ifeq ($(NETCDFen),enable)
+    LIBS  := -L$(NETCDF)/lib -lnetcdf $(FLIBS)
   endif
   VPATH :=  $(SRCDIR)/util
   MSG_MOBJ:=
@@ -481,14 +492,14 @@ else
    aswip::  $(O_DIR)
    adccmp:  $(O_DIR)
 
-ifeq ($(NETCDF),enable)
+ifeq ($(NETCDFen),enable)
    adcprep ::  $(NC_MOBJ) $(METIS_OBJ) $(KDTREE_MOBJ) $(WIND_MOBJ) $(PREP_OBJ) $(MESH_MOBJ) $(NA_MOBJ) $(SUBP_MOBJ)
 	$(CF) $(FFLAGS) -o $@ $(wildcard $(O_DIR)*.o) $(LIBS) $(LDFLAGS)
 else
    adcprep ::  $(METIS_OBJ) $(KDTREE_MOBJ) $(WIND_MOBJ) $(PREP_OBJ) $(MESH_MOBJ) $(NA_MOBJ) $(SUBP_MOBJ)
 	$(CF) $(FFLAGS) -o $@ $(wildcard $(O_DIR)*.o) $(LIBS) $(LDFLAGS)
 endif
-ifeq ($(NETCDF),enable)
+ifeq ($(NETCDFen),enable)
    adcprep_be :: $(NC_MOBJ) $(METIS_OBJ) $(KDTREE_MOBJ) $(PREP_OBJ) 
 	$(CF) $(FFLAGS) -o $@ $(wildcard $(O_DIR)*.o) $(LIBS) $(LDFLAGS)
 else
@@ -499,7 +510,7 @@ endif
 	$(CF) $(FFLAGS) -o $@ $(wildcard $(O_DIR)*.o) $(LIBS) $(LDFLAGS)
 
 ADCIRC_DEP := $(KDTREE_MOBJ) $(ADC_OBJ) $(O_DIR)driver.o
-ifeq ($(NETCDF),enable)
+ifeq ($(NETCDFen),enable)
    ADCIRC_DEP := $(ADCIRC_DEP) $(NC_MOBJ)
 endif
 ifeq ($(XDMF),enable)
@@ -517,7 +528,7 @@ endif
 
 #Casey 080106: Added the following lines.
    adcswan :: $(O_DIR)
-ifeq ($(NETCDF),enable)
+ifeq ($(NETCDFen),enable)
    adcswan ::  $(NC_MOBJ) $(SWAN_MOBJ) $(KDTREE_MOBJ) $(ADC_OBJ) $(SWAN_OBJ) $(O_DIR)driver.o
 	$(CF) $(FFLAGS) -o $@ $(wildcard $(O_DIR)*.o) $(LIBS) $(LDFLAGS)
 	if [ "`echo *.mod`" != '*.mod' ]; then mv *.mod $(O_DIR); fi
@@ -629,7 +640,7 @@ $(O_DIR)subprep.o     :  subprep.F $(O_DIR)subprep.o
 $(O_DIR)adcprep.o     :  adcprep.F  $(PGLO_MOBJ) $(PMSG_OBJ) $(ADC_MOBJ) $(SUBP_MOBJ)
 $(O_DIR)decomp.o      :  decomp.F   $(PGLO_MOBJ)
 $(O_DIR)read_global.o :  read_global.F  $(PGLO_MOBJ) $(KDTREE_MOBJ) $(ADC_MOBJ) $(NA_MOBJ) $(HARM_MOBJ) $(WIND_MOBJ)
-ifeq ($(NETCDF),enable)
+ifeq ($(NETCDFen),enable)
 $(O_DIR)prep.o        :  prep.F   $(PGLO_MOBJ) $(NC_MOBJ) $(HARM_MOBJ) $(NA_MOBJ)
 else
 $(O_DIR)prep.o        :  prep.F   $(PGLO_MOBJ) $(ADC_MOBJ) $(NA_MOBJ) $(HARM_MOBJ) $(WIND_MOBJ) $(NA_MOBJ)
@@ -664,7 +675,7 @@ $(O_DIR)nodalattr.o   :  nodalattr.F  $(ADC_MOBJ) $(MESH_MOBJ)
 $(O_DIR)messenger.o   :  messenger.F  $(ADC_MOBJ)
 #!st3 100711: Added globalio.o to writer.F for HSWRITER MODULE
 WRITER_DEP := writer.F  $(O_DIR)messenger.o $(O_DIR)globalio.o
-ifeq ($(NETCDF),enable)
+ifeq ($(NETCDFen),enable)
    WRITER_DEP := $(WRITER_DEP) $(O_DIR)netcdfio.o
 endif
 ifeq ($(XDMF),enable) 
@@ -692,7 +703,7 @@ endif
 $(O_DIR)boundaries.o  :  boundaries.F $(O_DIR)sizes.o
 # jgf51.21.24: promoted write_output to a module
 WRITE_OUTPUT_DEP := write_output.F $(O_DIR)mesh.o $(O_DIR)global.o $(O_DIR)boundaries.o
-ifeq ($(NETCDF),enable)
+ifeq ($(NETCDFen),enable)
    WRITE_OUTPUT_DEP := $(WRITE_OUTPUT_DEP) $(O_DIR)netcdfio.o
 endif
 ifeq ($(XDMF),enable)
@@ -711,7 +722,7 @@ $(O_DIR)transport.o   : transport.F
 $(O_DIR)cstart.o      : cstart.F    
 $(O_DIR)hstart.o      : hstart.F  
 $(O_DIR)timestep.o    : timestep.F
-ifeq ($(NETCDF),enable)
+ifeq ($(NETCDFen),enable)
 $(O_DIR)adcirc.o      : adcirc.F $(ADC_MOBJ) $(HARM_MOBJ) $(KDTREE_MOBJ) $(WIND_MOBJ)  $(SOLV_MOBJ) $(NA_MOBJ) $(GIO_MOBJ) $(NC_MOBJ) $(COUP_MOBJ) $(WRIT_MOBJ)
 else
 $(O_DIR)adcirc.o      : adcirc.F $(ADC_MOBJ) $(HARM_MOBJ) $(KDTREE_MOBJ) $(WIND_MOBJ) $(SOLV_MOBJ) $(NA_MOBJ) $(GIO_MOBJ) $(COUP_MOBJ) $(WRIT_MOBJ)
@@ -846,8 +857,8 @@ ifneq ($(BUILDTYPE),)
    # the following may have been supplied on the make command line
    $(shell echo 'compiler := $(compiler)' >> $(FLAGSFILE))
    $(shell echo 'MACHINENAME := $(MACHINENAME)' >> $(FLAGSFILE))
-   $(shell echo 'NETCDF := $(NETCDF)' >> $(FLAGSFILE))
-   $(shell echo 'NETCDF4 := $(NETCDF4)' >> $(FLAGSFILE))
+   $(shell echo 'NETCDFen := $(NETCDFen)' >> $(FLAGSFILE))
+   $(shell echo 'NETCDF4en := $(NETCDF4en)' >> $(FLAGSFILE))
    $(shell echo 'NETCDF4_COMPRESSION := $(NETCDF4_COMPRESSION)' >> $(FLAGSFILE))
    $(shell echo 'XDMF := $(XDMF)' >> $(FLAGSFILE))
    # get the compiler version while we're at it
