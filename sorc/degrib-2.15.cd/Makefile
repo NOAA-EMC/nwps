@@ -13,10 +13,8 @@ CC      = $(C_COMP)
 # Various directories
 BINDIR = ../../exec
 LIBDIR = ../../lib
-# GRIB2_SRC = $(LIBDIR)/sorc/g2clib-1.5.0
 EMAPF_SRC = $(LIBDIR)/sorc/emapf-c
-GD_SRC = $(LIBDIR)/sorc/gd
-SPADIR = /gpfs/hps/nco/ops/nwprod/spa_util
+GD_SRC = /usr/include
 
 # Compiler flags
 CFLAGS = -O3 -Wall
@@ -29,18 +27,15 @@ CFLAGS += -D__64BIT__#         # Use 64 bit compilation
 CFLAGS += -D_LINUX_#           # Assume linux (rather than windows)
 
 # Include paths
-# INC     = -I$(GRIB2_SRC)
-INC     = -I$(G2C_SRC)
+INC     = -I$(G2C_INC)
 INC    += -I$(EMAPF_SRC)
 INC    += -I$(GD_SRC)
 CFLAGS += -I. $(INC)
 
 # Libraries and linker flags
-# GRIB2_LIB = $(LIBDIR)/libgrib2c.a
 EMAPF_LIB = $(LIBDIR)/libemapf.a
-GD_LIB = $(LIBDIR)/libgd.a
-#LIBS    = $(GRIB2_LIB) $(GD_LIB) $(PNG_LIB) $(Z_LIB) $(EMAPF_LIB)
-LIBS    = $(G2C_LIB4) $(GD_LIB) $(PNG_LIB) $(Z_LIB) $(JASPER_LIB) $(EMAPF_LIB)
+GD_LIB = -L /usr/lib64/ -lgd
+LIBS    = $(G2C_LIB) $(GD_LIB) $(PNG_LIB) $(Z_LIB) $(JASPER_LIB) $(EMAPF_LIB)
 LDFLAGS =
 
 # Source, Headers and Objects
@@ -144,7 +139,8 @@ CMD     = degrib
 #######################################################################
 # Actual rules to build the program
 #######################################################################
-all: check_prereqs $(CMD)
+#all: check_prereqs $(CMD)
+all: $(CMD)
 
 $(CMD): $(OBJS) $(HEADERS) $(MAIN)
 	$(CC) $(MAIN) $(CMDFLAGS) $(LDFLAGS) $(OBJS) $(LIBS) -o $(CMD)
@@ -155,14 +151,14 @@ install: $(CMD)
 clean:
 	-rm -f $(OBJS) $(CMD)
 #	(cd $(GRIB2_SRC) && make clean)
-	(cd $(EMAPF_SRC) && make clean)
-	(cd $(GD_SRC) && make clean)
+#	(cd $(EMAPF_SRC) && make clean)
+#	(cd $(GD_SRC) && make clean)
 #	-rm -f $(GRIB2_LIB)
-	-rm -f $(EMAPF_LIB) $(GD_LIB)
+#	-rm -f $(EMAPF_LIB) $(GD_LIB)
 
 #check_prereqs: $(GRIB2_LIB) $(EMAPF_LIB) $(GD_LIB)
-check_prereqs: $(EMAPF_LIB) $(GD_LIB)
-	$(SPADIR)/check_libs.bash $(LIBS)
+#check_prereqs: $(EMAPF_LIB) $(GD_LIB)
+#	$(SPADIR)/check_libs.bash $(LIBS)
 
 .c.o: $(HEADERS)
 	$(CC) -c $(CFLAGS) $<
@@ -177,4 +173,3 @@ $(GD_LIB): $(GD_SRC)/Makefile
 	(cd $(GD_SRC) && make clean)
 	(cd $(GD_SRC) && make)
 	cp $(GD_SRC)/libgd.a $(GD_LIB)
-
