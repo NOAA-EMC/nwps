@@ -27,12 +27,18 @@ fi
 
 #Fetching external fix and binary files from rzdm
 cd ${NWPSdir}/sorc
-./get_externals.sh
+#AW ./get_externals.sh
+
+source ../versions/build.v1.4.0
+
+module purge
+#module load ncep
+source ../modulefiles/build_nwps.modules
+module list
 
 mkdir -p ${NWPSdir}/exec
 
 #FOR DEGRIB
-#Using the GNU compiler or the Jasper/JPEG compression library will not work properly
 echo "================== FOR DEGRIB : make_degrib-2.15.sh =================="
 cd ${NWPSdir}/sorc
 ./make_degrib-2.15.sh
@@ -41,11 +47,6 @@ if [[ $rc -ne 0 ]] ; then
     echo "Fatal error in building degrib-2.15."
     echo "The log file is in sorc/degrib-2.15.cd/degrib_build.log"
 fi
-
-module purge
-module load ncep
-module load ../modulefiles/NWPS/v1.3.0
-module list
 
 #FOR SWAN (REGULAR GRID)
 echo "================== FOR SWAN (REGULAR GRID) : make_swan.sh  =================="
