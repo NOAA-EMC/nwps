@@ -32,10 +32,10 @@ PATH:=$(BINDIR)
 # Set up the binary files and version info.
 ############################
 HEAD=/usr/bin/head
-CUT=/bin/cut
+CUT=/usr/bin/cut
 CP=/bin/cp
 RM=/bin/rm
-CC=gcc
+#CC=gcc
 STRIP=strip
 
 ############################
@@ -61,7 +61,8 @@ ifeq ($(BIT),64)
 endif
 
 # CC_VER ==> embeds the compiler version into exectuable.
-CC_VER := $(shell $(BINDIR)/$(CC) --version | $(HEAD) -n1 | $(CUT) -d' ' -f2,3 --output-delimiter='-')
+#CC_VER := $(shell $(BINDIR)/$(C_COMP) --version | $(HEAD) -n1 | $(CUT) -d' ' -f2,3 --output-delimiter='-')
+CC_VER := $(shell $(BINDIR)/$(C_COMP) --version | $(HEAD) -n1 | $(CUT) -d' ' -f4,4 --output-delimiter='-')
 STD_DEF += -DCC_VER="\"$(CC_VER)\""
 
 # Allow for MemWatch diagnostics.
@@ -99,8 +100,10 @@ STD_INC += -I../libaat
 STD_LIB += -L../libaat -laat
 
 # Add emapf-c to Build path
-STD_INC += -I../emapf-c
-STD_LIB += -L../emapf-c -lemapf
+#STD_INC += -I../emapf-c
+#STD_LIB += -L../emapf-c -lemapf
+STD_INC += -I../../lib/sorc/emapf-c
+STD_LIB += -L../../lib -lemapf
 
 ifeq ($(BIT),32)
   STD_LIB += -L/usr/lib -lm
@@ -114,8 +117,8 @@ endif
 SOURCE = mymapf.c
 
 OBJECTS = $(SOURCE:.c=.o) \
-          /opt/cray/iobuf/2.0.8/lib/iobuf.o \
-          $(MEMWATCH)
+          ${CRAY_IOBUF_DIR}/lib/iobuf.o \
+	  $(MEMWATCH)
 
 HEADERS = mymapf.h 
 
@@ -133,7 +136,7 @@ help:
 	@echo "make MEM=false, DEBUG=false, BIT=(32 | 64)"
 
 $(PRJ_NAME): $(OBJECTS) $(C_MAIN) $(HEADERS)
-	$(CC) $(C_MAIN) $(CFLAGS) $(LD_FLAGS) $(OBJECTS) $(STD_LIB) -o $(PRJ_NAME)
+	$(C_COMP) $(C_MAIN) $(CFLAGS) $(LD_FLAGS) $(OBJECTS) $(STD_LIB) -o $(PRJ_NAME)
 #	$(STRIP) -s $(PRJ_NAME)
 
 .PHONY: install
@@ -149,10 +152,10 @@ clean:
 # SUFFIXES
 ############################
 .c.o : $(HEADERS)
-	$(CC) -c $(CFLAGS) $<
+	$(C_COMP) -c $(CFLAGS) $<
 
 ############################
 # Dependencies
 ############################
 memwatch.o: ../memwatch-2.71/memwatch.c ../memwatch-2.71/memwatch.h
-	$(CC) -c $(CFLAGS) ../memwatch-2.71/memwatch.c
+	$(C_COMP) -c $(CFLAGS) ../memwatch-2.71/memwatch.c
