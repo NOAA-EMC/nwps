@@ -18,6 +18,11 @@ cd ${NWPSdir}/sorc/emapf-c
 make clean | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
 make | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
 
+cd ${NWPSdir}/sorc/libaat
+./configure --prefix=${NWPSdir}/sorc/libaat | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
+make clean | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
+make | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
+
 cd ${NWPSdir}/sorc/psurge2nwps.cd
 #ifort -O2 -g -traceback -v -o -o psoutTOnwps.exe psoutTOnwps_ver04.f
 ftn -o psoutTOnwps.exe psoutTOnwps.f | tee ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
