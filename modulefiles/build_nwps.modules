@@ -1,0 +1,39 @@
+#%Module######################################################################
+##                                             Andre.VanderWesthuysen@noaa.gov
+##                                                           NOAA/NWS/NCEP/EMC
+## NWPS v1.3.0
+##_____________________________________________________
+#proc ModulesHelp { } {
+#puts stderr "Set environment veriables for NWPS"
+#puts stderr "This module initializes the environment "
+#puts stderr "for the Intel Compiler Suite $version\n"
+#}
+#module-whatis " NWPS whatis description"
+
+set ver ${nwps_ver}
+
+set sys [uname sysname]
+set NWPS /gpfs/hps/nco/ops/nwtest/nwps.v1.3.6/modulefiles/NWPS
+set lname NWPS
+
+# Known conflicts ???
+
+# Loading Intel Compiler Suite
+module load envvar/${envvar_ver}
+module load PrgEnv-intel/${PrgEnv_intel_ver}
+module load intel/${intel_ver}
+module load craype/${craype_ver}
+module load cray-mpich/${cray_mpich_ver}
+module load hdf5/${hdf5_ver}
+module load netcdf/${netcdf_ver}
+# used for multiwavegrib2
+module load jasper/${jasper_ver}
+module load libpng/${libpng_ver}
+module load zlib/${zlib_ver}
+module load g2/${g2_ver}
+module load g2c/${g2c_ver} 
+# used for multiwavegrib1 and grib2
+module load w3nco/${w3nco_ver}
+module load bacio/${bacio_ver}
+# used for io buffering
+module load iobuf/${iobuf_ver}
