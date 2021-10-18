@@ -20,7 +20,8 @@ ifeq ($(compiler),ncep)
   PPFC          := ${COMP} 
   FC            := ${COMP}
   PFC           := ${COMP_MPI} 
-  INCDIRS       := $(INCDIRS) ${NETCDF_INCLUDE} ${HDF5_INCLUDE} -I ${Z_INC}
+  INCDIRS       := $(INCDIRS) -I ${NETCDF_INCLUDES} -I ${HDF5_INCLUDES} -I ${Z_INC}
+  $(warning (INFO) In cmplrflags.mk, INCDIRS = $(INCDIRS).)
   FFLAGS1       :=  $(INCDIRS) -O1 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source
 #  FFLAGS1       :=  $(INCDIRS) -O3 -FI -assume byterecl -132 -assume buffered_io -axCORE-AVX2
   ifeq ($(DEBUG),full)
@@ -45,11 +46,16 @@ ifeq ($(compiler),ncep)
   CLIBS         :=
   FLIBS         :=
   MSGLIBS       :=
-  NETCDFHOME    :=/usrx/local/prod/NetCDF/4.2/intel/haswell
+#  NETCDFHOME    :=/usrx/local/prod/NetCDF/4.2/intel/haswell
+  NETCDFHOME    := ${NETCDF_ROOT} 
 #  HDF5HOME      :=/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib
 #  ZHOME         :=/usrx/local/prod/zlib/1.2.7/intel/haswell/lib
-  ifeq ($(NETCDF),enable)
-     FLIBS          := $(FLIBS) ${NETCDF_LDFLAGS} ${NETCDF_LDFLAGS_C} ${HDF5_LDFLAGS} ${Z_LIB}
+  ifeq ($(NETCDFen),enable)
+     $(warning (INFO) NETCDF enabled in cmplrflags.mk.)
+     #FLIBS          := $(FLIBS) ${NETCDF_LDFLAGS} ${NETCDF_LDFLAGS_C} ${HDF5_LDFLAGS} ${Z_LIB}
+     #FLIBS          := $(FLIBS) ${NETCDF_LIBRARIES} -lnetcdff -lnetcdf ${HDF5_LIBRARIES} -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran ${Z_LIB}
+     FLIBS          := $(FLIBS) ${NETCDF_LIBRARIES} -lnetcdff -lnetcdf ${HDF5_LIBRARIES} -lhdf5_h1 -lhdf5 ${Z_LIB} -lz -ldl -lm ${NETCDF_LIBRARIES}
+     $(warning (INFO) In cmplrflags.mk, FLIBS = $(FLIBS).)
   endif
   $(warning (INFO) Corresponding machine found in cmplrflags.mk.)
   ifneq ($(FOUND),TRUE)
