@@ -19,13 +19,11 @@ compiler=ncep
 ifeq ($(compiler),ncep)
   PPFC          := ${COMP} 
   FC            := ${COMP}
-  PFC           := ${COMP_MPI} 
-  INCDIRS       := $(INCDIRS) -I ${NETCDF_INCLUDES} -I ${HDF5_INCLUDES} -I ${Z_INC}
-  $(warning (INFO) In cmplrflags.mk, INCDIRS = $(INCDIRS).)
-  FFLAGS1       :=  $(INCDIRS) -O1 -FI -assume byterecl -132 -assume buffered_io -fp-model strict -fp-model source
-#  FFLAGS1       :=  $(INCDIRS) -O3 -FI -assume byterecl -132 -assume buffered_io -axCORE-AVX2
+  PFC           := ${COMP_MPI}
+  INCDIRS       := $(INCDIRS) -I ${NETCDF_INC} -I ${HDF5_INC} -I ${Z_INC}
+  FFLAGS1       :=  $(INCDIRS) -O2 -FI -assume byterecl -132 -assume buffered_io -fp-model strict
   ifeq ($(DEBUG),full)
-     FFLAGS1       :=  $(INCDIRS) -g -O0 -traceback -debug -check all -i-dynamic -FI -assume byterecl -132 -DALL_TRACE -DFULL_STACK -DFLUSH_MESSAGES
+     FFLAGS1       :=  $(INCDIRS) -g -O0 -traceback -debug -check all -FI -assume byterecl -132 -DALL_TRACE -DFULL_STACK -DFLUSH_MESSAGES
   endif
   FFLAGS2       :=  $(FFLAGS1)
   FFLAGS3       :=  $(FFLAGS1)
@@ -37,25 +35,20 @@ ifeq ($(compiler),ncep)
   endif
   IMODS         :=  -I
   CC            := ${C_COMP} 
-  CCBE		:= ${C_COMP_MP} 
+  CCBE          := ${C_COMP_MP} 
   CFLAGS        := $(INCDIRS) -O1 -m64 -DLINUX
 #  CFLAGS        := $(INCDIRS) -O3 -m64 -DLINUX
   ifeq ($(DEBUG),full)
-     CFLAGS        := $(INCDIRS) -g -O0 -march=k8 -m64 -mcmodel=medium -DLINUX
+     CFLAGS        := $(INCDIRS) -g -O0 -m64 -mcmodel=medium -DLINUX
   endif
   CLIBS         :=
   FLIBS         :=
   MSGLIBS       :=
-#  NETCDFHOME    :=/usrx/local/prod/NetCDF/4.2/intel/haswell
-  NETCDFHOME    := ${NETCDF_ROOT} 
-#  HDF5HOME      :=/usrx/local/prod/HDF5/1.8.9/serial/intel/haswell/lib
-#  ZHOME         :=/usrx/local/prod/zlib/1.2.7/intel/haswell/lib
+  NETCDFHOME    :=${NETCDF_ROOT}
+  HDF5HOME      :=${HDF5_ROOT}
+#  ZHOME         :=
   ifeq ($(NETCDFen),enable)
-     $(warning (INFO) NETCDF enabled in cmplrflags.mk.)
-     #FLIBS          := $(FLIBS) ${NETCDF_LDFLAGS} ${NETCDF_LDFLAGS_C} ${HDF5_LDFLAGS} ${Z_LIB}
-     #FLIBS          := $(FLIBS) ${NETCDF_LIBRARIES} -lnetcdff -lnetcdf ${HDF5_LIBRARIES} -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran ${Z_LIB}
-     FLIBS          := $(FLIBS) ${NETCDF_LIBRARIES} -lnetcdff -lnetcdf ${HDF5_LIBRARIES} -lhdf5_h1 -lhdf5 ${Z_LIB} -lz -ldl -lm ${NETCDF_LIBRARIES}
-     $(warning (INFO) In cmplrflags.mk, FLIBS = $(FLIBS).)
+     FLIBS          := $(FLIBS) -L${NETCDFHOME}/lib -lnetcdff -L$(HDF5HOME)/lib -lhdf5
   endif
   $(warning (INFO) Corresponding machine found in cmplrflags.mk.)
   ifneq ($(FOUND),TRUE)
