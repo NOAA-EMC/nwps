@@ -25,12 +25,12 @@ if ($os =~ /Linux/i) {
     print OUTFILE "FLAGS_MPI =\n";
     print OUTFILE "NETCDFROOT = \$(NETCDF) \n";
     print OUTFILE "ifneq (\$(NETCDF),)\n";
-    print OUTFILE "  INCS_SER = \$(NETCDF_INCLUDE) \n";
-    print OUTFILE "  INCS_OMP = \$(NETCDF_INCLUDE) \n";
-    print OUTFILE "  INCS_MPI = \$(NETCDF_INCLUDE) \n";
-    print OUTFILE "  LIBS_SER = \$(NETCDF_LDFLAGS) \$(HDF5_LDFLAGS) \$(Z_LIB)\n";
-    print OUTFILE "  LIBS_OMP = \$(NETCDF_LDFLAGS) \$(HDF5_LDFLAGS) \$(Z_LIB)\n";
-    print OUTFILE "  LIBS_MPI = \$(NETCDF_LDFLAGS) \$(HDF5_LDFLAGS) \$(Z_LIB)\n";
+    print OUTFILE "  INCS_SER = -I\$(NETCDF_INCLUDES) \n";
+    print OUTFILE "  INCS_OMP = -I\$(NETCDF_INCLUDES) \n";
+    print OUTFILE "  INCS_MPI = -I\$(NETCDF_INCLUDES) \n";
+    print OUTFILE "  LIBS_SER = \$(NETCDF_LIBRARIES) \$(HDF5_LIBRARIES) \$(Z_LIB)\n";
+    print OUTFILE "  LIBS_OMP = \$(NETCDF_LIBRARIES) \$(HDF5_LIBRARIES) \$(Z_LIB)\n";
+    print OUTFILE "  LIBS_MPI = \$(NETCDF_LIBRARIES) \$(HDF5_LIBRARIES) \$(Z_LIB)\n";
     print OUTFILE "  NCF_OBJS = nctablemd.o agioncmd.o swn_outnc.o\n";
     print OUTFILE "else\n";
     print OUTFILE "  INCS_SER =\n";
