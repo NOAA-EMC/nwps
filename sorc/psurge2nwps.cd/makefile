@@ -7,8 +7,8 @@ SHELL = /bin/bash
 # USAGE:
 #    make MEM=false, DEBUG=false, BIT=32 | 64
 ############################
-MEM=true
-DEBUG=true
+MEM=false
+DEBUG=false
 
 # Determine platform specific options
 UNAME := $(shell uname)
@@ -26,7 +26,7 @@ endif
 ############################
 # Set up the path.
 ############################
-PATH:=$(BINDIR)
+#PATH:=$(BINDIR)
 
 ############################
 # Set up the binary files and version info.
@@ -63,7 +63,7 @@ endif
 # CC_VER ==> embeds the compiler version into exectuable.
 #CC_VER := $(shell $(BINDIR)/$(C_COMP) --version | $(HEAD) -n1 | $(CUT) -d' ' -f2,3 --output-delimiter='-')
 CC_VER := $(shell $(BINDIR)/$(C_COMP) --version | $(HEAD) -n1 | $(CUT) -d' ' -f4,4 --output-delimiter='-')
-STD_DEF += -DCC_VER="\"$(CC_VER)\""
+STD_DEF += -DCC_VER="\"$(intel_ver)\""
 
 # Allow for MemWatch diagnostics.
 ifeq ($(MEM),true)
@@ -92,7 +92,7 @@ CFLAGS += $(STD_DEF) $(STD_INC)
 # Set up Linker flags...
 #    STD_LIB and LD_FLAGS
 ############################
-LD_FLAGS= -static
+LD_FLAGS=
 STD_LIB=
 
 # Add libaat to Build path
@@ -117,7 +117,7 @@ endif
 SOURCE = mymapf.c
 
 OBJECTS = $(SOURCE:.c=.o) \
-          ${CRAY_IOBUF_DIR}/lib/iobuf.o \
+#          ${CRAY_IOBUF_DIR}/lib/iobuf.o \
 	  $(MEMWATCH)
 
 HEADERS = mymapf.h 
