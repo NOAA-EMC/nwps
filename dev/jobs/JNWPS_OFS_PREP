@@ -44,13 +44,12 @@ export pgmout=OUTPUT.$$
 export utilscript=${UTILROOT}/ush
 export USHutil=${UTILROOT}/ush
 sh $utilscript/setpdy.sh
-
 . ./PDY
 
 sh $utilscript/setup.sh
 export pgm="ofs.psurge"
 
-export DATA=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/ofs.${PDY}
+export DATA=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/data/ofs.${PDY}
 #export COMROOT=${DATA}/com
 export GESROOT=${DATA}/nwges
 
@@ -109,11 +108,17 @@ export COMOUT=${COMROOT}/${NET}/${envir}/${OFS}.${PDY}
 export COMOUTm1=${COMROOT}/${NET}/${envir}/${OFS}.${PDYm1}
 export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
 #export COMINgfs=${COMROOT}/gfs/prod/gfs.${PDY}
-export COMINwave=${COMROOTp1}/wave/prod
-export COMINestofs=/gpfs/dell1/nco/ops/com/estofs/prod/estofs.${PDY}
-export COMINrtofs=${COMROOTp3}/rtofs/prod/rtofs.${PDY}
-export COMINsice=${COMROOTp3}/omb/prod/sice.${PDY}
-export COMINsicem1=${COMROOTp3}/omb/prod/sice.${PDYm1}
+#export COMINwave=${COMROOTp1}/wave/prod
+#export COMINestofs=/gpfs/dell1/nco/ops/com/estofs/prod/estofs.${PDY}
+#export COMINrtofs=${COMROOTp3}/rtofs/prod/rtofs.${PDY}
+#export COMINsice=${COMROOTp3}/omb/prod/sice.${PDY}
+#export COMINsicem1=${COMROOTp3}/omb/prod/sice.${PDYm1}
+#export COMINpsurge=/gpfs/hps/nco/ops/com/psurge/prod/psurge.${PDY}
+export COMINwave=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/gfs/prod/
+export COMINestofs=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/estofs/prod/estofs.${PDY}
+export COMINrtofs=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/rtofs/prod/rtofs.${PDY}
+export COMINsice=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/omb/prod/sice.${PDY}
+export COMINsicem1=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/omb/prod/sice.${PDYm1}
 export COMINpsurge=/gpfs/hps/nco/ops/com/psurge/prod/psurge.${PDY}
 
 export COMROOTp2=/gpfs/hps/nco/ops/com
@@ -143,6 +148,10 @@ export COMROOTp2=/gpfs/hps/nco/ops/com
 #export COMINpsurge=/gpfs/hps3/emc/marine/noscrub/Andre.VanderWesthuysen/nwps_para_20160501/psurge.20180501
 #export COMINpsurge=/gpfs/hps/nco/ops/com/psurge/para/psurge.20200726
 #export COMINpsurge=/gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/psurge_tmp/
+#------------------------
+# TEST WCOSS2
+#export COMINpsurge=/lfs/h1/mdl/marine/noscrub/Keep/psurge.v2.10/2018-Florence-Adv54-2.10.1/com/psurge/v2.10/psurge.20180912
+export COMINpsurge=/lfs/h1/mdl/marine/noscrub/Keep/psurge.v2.10/2017-Harvey-Adv12-2.10.1/com/psurge/v2.10/psurge.20170823/
 #------------------------
 
 export dcom=${dcom:-/dcom/us007003}
