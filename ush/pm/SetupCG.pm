@@ -628,7 +628,7 @@ sub fixDate {
 
         #NOTE: Set output time step to $suffix, except for contour output 
         #      where a smaller value is needed for rip current and runup (1.0 H)
-        my $_=$inputCGx[$line];
+        local $_=$inputCGx[$line];
         my $otype = (split)[1];
         if (($otype eq "'5mcont'") || ($otype eq "'20mcont'")) {
            Logs::bug("Output is of type $otype, time step set at 1.0 H",9);
