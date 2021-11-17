@@ -55,7 +55,7 @@ import numpy as np
 # 02/26/2016: Generate images without having a window appear
 # http://matplotlib.org/faq/howto_faq.html
 import matplotlib
-matplotlib.use('Agg')
+#matplotlib.use('Agg')
 
 import cartopy
 import matplotlib.pyplot as plt
