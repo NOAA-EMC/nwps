@@ -4,7 +4,7 @@ import cartopy.feature as cfeature
 import sys
 import os
 import matplotlib
-matplotlib.use('Agg',warn=False)
+#matplotlib.use('Agg',warn=False)
 import time
 import datetime
 import numpy as np
@@ -676,7 +676,9 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
          axlist[plotloc].quiver(x[0::rowskip,0::colskip],y[0::rowskip,0::colskip],\
              u[0::rowskip,0::colskip],v[0::rowskip,0::colskip], \
              color='black',pivot='middle',scale=6.,width=0.015,units='inches',transform=ccrs.PlateCarree())
-         axlist[plotloc].coastlines(resolution='10m', color='black', linewidth=1)
+         #axlist[plotloc].coastlines(resolution='10m', color='black', linewidth=1)
+         coast = cfeature.GSHHSFeature(scale='high',edgecolor='black',facecolor=cfeature.COLORS['land'])
+         axlist[plotloc].add_feature(coast)
          axlist[plotloc].set_extent([lons.min()-360.,lons.max()-360., lats.min(), lats.max()])
          gl = axlist[plotloc].gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
                   linewidth=0.5, color='gray', alpha=0.5, linestyle='--')
@@ -698,7 +700,9 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
          axlist[plotloc+3].quiver(x[0::rowskip,0::colskip],y[0::rowskip,0::colskip],\
              u[0::rowskip,0::colskip],v[0::rowskip,0::colskip], \
              color='black',pivot='middle',scale=6.,width=0.015,units='inches',transform=ccrs.PlateCarree())
-         axlist[plotloc+3].coastlines(resolution='10m', color='black', linewidth=1)
+         #axlist[plotloc+3].coastlines(resolution='10m', color='black', linewidth=1)
+         coast = cfeature.GSHHSFeature(scale='high',edgecolor='black',facecolor=cfeature.COLORS['land'])
+         axlist[plotloc+3].add_feature(coast)
          axlist[plotloc+3].set_extent([lons.min()-360.,lons.max()-360., lats.min(), lats.max()])
          gl = axlist[plotloc+3].gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
                   linewidth=0.5, color='gray', alpha=0.5, linestyle='--')
