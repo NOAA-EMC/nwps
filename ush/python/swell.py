@@ -6,7 +6,7 @@ import cartopy
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import matplotlib
-matplotlib.use('Agg',warn=False)
+#matplotlib.use('Agg',warn=False)
 import sys
 import os
 import datetime
