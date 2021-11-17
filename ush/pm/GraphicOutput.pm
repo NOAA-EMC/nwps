@@ -785,10 +785,13 @@ sub createHeader {
 
 sub getValuesFromCommandFile 
 {
-    Logs::bug("begin getValuesFromCommandFile",1);
+    #Logs::bug("begin getValuesFromCommandFile",1);
     #declare all the following variables
     my $pwd=`pwd`;
     chdir "${RUNdir}";
+    #print "RUNdir: $RUNdir\n";
+    #print "MODELCORE: $MODELCORE\n";
+    #print "Input file: input$_[0]\n";    
     if ($MODELCORE eq "SWAN") {
        open (INPUT,"input$_[0]") or &report ("open file issue\ncan't open the
                    file input$_[0]",2);
@@ -864,7 +867,7 @@ sub getValuesFromCommandFile
     $latExtent=sprintf "%8.4f",$latExtent;
     $lonExtent=sprintf "%8.4f",$lonExtent;
     
-    Logs::bug("end getValuesFromCommandFile",1);
+    #Logs::bug("end getValuesFromCommandFile",1);
     return ($dimRecord,$dimXY,$fileName,$latOrigin,$lonOrigin,$centraLat,$centralLon,$latExtent,$lonExtent);
 }
 
