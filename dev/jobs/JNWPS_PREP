@@ -52,8 +52,8 @@ mv PDY PDY.${WFO}
 #sh $utilscript/setup.sh
 export pgm="NWPS"
 
-export DATA=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/${WFO}.${PDY}
-export GESROOT=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/nwges
+export DATA=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/data/${WFO}.${PDY}
+export GESROOT=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/data/nwges
 
 mkdir -p $DATA
 cd $DATA
@@ -129,16 +129,29 @@ export GESIN=${GESROOT}/${envir}/${NET}.${PDY}
 export GESINm1=${GESROOT}/${envir}/${NET}.${PDYm1}
 export GESINm2=${GESROOT}/${envir}/${NET}.${PDYm2}
 
-export COMINgfs=/gpfs/dell1/nco/ops/com/gfs/prod/gfs.${PDY}
-export COMINwave=/gpfs/dell1/nco/ops/com/wave/prod/
+#export COMINgfs=/gpfs/dell1/nco/ops/com/gfs/prod/gfs.${PDY}
+#export COMINwave=/gpfs/dell1/nco/ops/com/wave/prod/
+#export COMINestofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/estofs/${WFO}_output
+#export COMINestofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/estofs/${WFO}_output
+#export COMINrtofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/rtofs/${WFO}_output
+#export COMINrtofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/rtofs/${WFO}_output
+#export COMINpsurge=${COMROOT}/${NET}/${envir}/ofs.${PDY}/psurge/${WFO}_output
+#export COMINpsurgem1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/psurge/${WFO}_output
+#export dcom="/gpfs/dell1/nco/ops/dcom/prod"
+##AW export COMINwaveTAFB=$dcom
+#export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
+#export COM_nwps_R_ES_TOFS="/com"
+#export COMOUTwmo=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/wmo
+
+export COMINgfs=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/gfs/prod/gfs.${PDY}
+export COMINwave=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/gfs/prod/
 export COMINestofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/estofs/${WFO}_output
 export COMINestofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/estofs/${WFO}_output
 export COMINrtofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/rtofs/${WFO}_output
 export COMINrtofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/rtofs/${WFO}_output
 export COMINpsurge=${COMROOT}/${NET}/${envir}/ofs.${PDY}/psurge/${WFO}_output
 export COMINpsurgem1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/psurge/${WFO}_output
-export dcom="/gpfs/dell1/nco/ops/dcom/prod"
-#AW export COMINwaveTAFB=$dcom
+export dcom="/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/dcom/prod"
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 export COM_nwps_R_ES_TOFS="/com"
 export COMOUTwmo=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/wmo
