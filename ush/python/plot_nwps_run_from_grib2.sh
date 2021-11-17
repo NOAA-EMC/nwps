@@ -412,7 +412,7 @@ for parm in ${SWANPARMS}
      then
      njobs=`wc -l ${TEMPDIR}/python_grib2_elements.sh | cut -c1-2`
      echo "Executing ${njobs} plotting jobs using cfp"
-     aprun -n${njobs} -N24 -j1 -d1 cfp ${TEMPDIR}/python_grib2_elements.sh
+     mpiexec -np ${njobs} --cpu-bind verbose,core cfp ${TEMPDIR}/python_grib2_elements.sh
      export err=$?; err_chk
   elif [ "${SITEID}" == "alu" ] || [ "${SITEID}" == "aer" ] || [ "${SITEID}" == "ajk" ]
      then
