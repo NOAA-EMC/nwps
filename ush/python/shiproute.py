@@ -58,7 +58,7 @@ import numpy as np
 # Generate images without having a window appear
 # http://matplotlib.org/faq/howto_faq.html
 import matplotlib
-matplotlib.use('Agg')
+#matplotlib.use('Agg')
 
 from pylab import *
 import matplotlib.pyplot as plt
