@@ -97,9 +97,9 @@ then
          fi
       done
       if [ "${siteid}" == "lox" ]; then
-         aprun -n48 -N16 -j1 -d1 ${EXECnwps}/swan.exe
+	 mpiexec -n 48 -ppn 48 ${EXECnwps}/swan.exe
       else
-         aprun -n48 -N24 -j1 -d1 ${EXECnwps}/swan.exe
+	 mpiexec -n 48 -ppn 48 ${EXECnwps}/swan.exe
       fi
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
@@ -131,7 +131,7 @@ then
             sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
          fi
       done
-      aprun -n96 -N24 -j1 -d1 ${EXECnwps}/swan.exe
+      mpiexec -n 96 -ppn 96 ${EXECnwps}/swan.exe
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
    elif [ "${siteid}" == "ajk" ] || [ "${siteid}" == "mtr" ]
@@ -171,7 +171,7 @@ then
             sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
          fi
       done
-      aprun -n120 -N24 -j1 -d1 ${EXECnwps}/swan.exe
+      mpiexec -n 120 -ppn 120 ${EXECnwps}/swan.exe
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
    else
@@ -199,7 +199,7 @@ then
             sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
          fi
       done
-      aprun -n16 -N16 -j1 -d1 ${EXECnwps}/swan.exe
+      mpiexec -n 16 -ppn 16 ${EXECnwps}/swan.exe
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
    fi
@@ -270,7 +270,7 @@ then
          done
 
          echo "Starting PuNSWAN executable for "${siteid}
-         aprun -n96 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
+         mpiexec -n 96 -ppn 96 ${EXECnwps}/punswan4110.exe
          export err=$?;
          echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
          cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
@@ -331,7 +331,7 @@ then
          done
 
          echo "Starting PuNSWAN executable for "${siteid}
-         aprun -n120 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
+	 mpiexec -n 120 -ppn 120 ${EXECnwps}/punswan4110.exe
          export err=$?;
          echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
          cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
@@ -392,7 +392,7 @@ then
          done
 
          echo "Starting PuNSWAN executable for "${siteid}
-         aprun -n144 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
+	 mpiexec -n 144 -ppn 72 ${EXECnwps}/punswan4110.exe
          export err=$?;
          echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
          cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
@@ -439,7 +439,7 @@ then
          done
 
          echo "Starting PuNSWAN executable for "${siteid}
-         aprun -n84 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
+	 mpiexec -n 84 -ppn 84 ${EXECnwps}/punswan4110.exe
          export err=$?;
          echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
          cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
@@ -486,7 +486,7 @@ then
          done
 
          echo "Starting PuNSWAN executable for "${siteid}
-         aprun -n60 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
+	 mpiexec -n 60 -ppn 60 ${EXECnwps}/punswan4110.exe
          export err=$?;
          echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
          cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
@@ -534,7 +534,7 @@ then
          done
 
          echo "Starting PuNSWAN executable for "${siteid}
-         aprun -n48 -N24 -j1 -d1 ${EXECnwps}/punswan4110.exe
+	 mpiexec -n 48 -ppn 48 ${EXECnwps}/punswan4110.exe
          export err=$?;
          echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
          cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
@@ -546,6 +546,8 @@ then
          err_chk
       fi
    fi
+
+   exit 0
 
    # Interpolate unstructured mesh results onto regular grid for AWIPS (parameter names from SWAN manual)
    echo "Interpolating unstructured mesh results for "${siteid}" on CG"${CGNUM}
@@ -561,7 +563,7 @@ then
    echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} WATL ${siteid}" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
    echo "${PYTHON} ${RUNdir}/swn_reginterpCG${CGNUM}.py ${RUNdir}/ CG_UNSTRUC.nc CG${CGNUM} HSWE ${siteid}" >> ${RUNdir}/reginterpCG${CGNUM}_cmdfile
 
-   aprun -n8 -N8 -j1 -d1 cfp ${RUNdir}/reginterpCG${CGNUM}_cmdfile
+   mpiexec -np 8 --cpu-bind verbose,core cfp ${RUNdir}/reginterpCG${CGNUM}_cmdfile
    export err=$?; err_chk
 fi
 
