@@ -51,14 +51,14 @@ fi
 cat /dev/null > ${LOGdir}/systrk_info.log
 
 echo "Starting clustering-based Python script ww3_systrk_cluster.py"  
-echo " In ww3_systrackexe.sh, calling aprun"
+echo " In ww3_systrackexe.sh, calling mpiexec"
 
 # Step 1: Search for optimum number of clusters in parallel using silhouette coefficient
 cat /dev/null > ${RUNdir}/ww3_systrk_elements.sh
 for i in {2..5}; do
    echo "${PYTHON} ${NWPSdir}/ush/python/ww3_systrk_cluster_silhouette.py ${SITEID,,} ${i}" >> ${RUNdir}/ww3_systrk_elements.sh
 done
-aprun -n4 -N4 -j1 -d1 cfp ${RUNdir}/ww3_systrk_elements.sh
+mpiexec -np 4 --cpu-bind verbose,core cfp ${RUNdir}/ww3_systrk_elements.sh
 export err=$?
 if [ "${err}" != "0" ];then
     echo " ============  E R R O R ==============="                        | tee -a ${LOGdir}/systrk_info.log
@@ -78,7 +78,7 @@ cat /dev/null > ${RUNdir}/ww3_systrk_jobs.sh
 for i in {0..5}; do
    echo "${PYTHON} ${NWPSdir}/ush/python/ww3_systrk_cluster_parallel.py ${SITEID,,} ${i}" >> ${RUNdir}/ww3_systrk_jobs.sh
 done
-aprun -n6 -N6 -j1 -d1 cfp ${RUNdir}/ww3_systrk_jobs.sh
+mpiexec -np 6 --cpu-bind verbose,core cfp ${RUNdir}/ww3_systrk_jobs.sh
 export err=$?
 if [ "${err}" != "0" ];then
     echo " ============  E R R O R ==============="                  | tee -a ${LOGdir}/systrk_info.log
