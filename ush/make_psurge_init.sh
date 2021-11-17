@@ -209,7 +209,7 @@ echo "DEGRIB these GRIB2 files, using multi-core processing..."
 # aprun -j 1 -n 24 -N 6 -S 3 -d 3 -cc depth cfp ${RUNdir}/degrib_cmdfile
 # cmd="aprun -j 1 -n 24 -N 6 -S 3 -d 3 -cc depth cfp ${RUNdir}/degrib_cmdfile"
 export MPICH_RANK_REORDER_METHOD=1  # 0=RR ; 1=SMP=dflt ; 2=folded
-cmd="aprun -j 1 -n 24 -N 6 -S 3 -d 4 -cc depth cfp ${RUNdir}/degrib_cmdfile"
+cmd="mpiexec -np 24 --cpu-bind verbose,core cfp ${RUNdir}/degrib_cmdfile"
 echo "${0}: info: before ${cmd} at `date`"
 t0=$SECONDS
 eval ${cmd}
