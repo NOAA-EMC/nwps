@@ -119,11 +119,11 @@ done
 mv /tmp/wfo_cmdfile /tmp/wfo_cmdfile.orig ${RUNdir}
 
 export CFP_VERBOSE=1
-cmd="aprun -j 1 -n 24 -N 6 -S 3 -d 4 -cc depth cfp ${RUNdir}/wfo_cmdfile"
+cmd="mpiexec -np 24 --cpu-bind verbose,core cfp ${RUNdir}/wfo_cmdfile"
 echo "${0}: info: before ${cmd} at `date`"
 t0=$SECONDS
 # eval ${cmd}
-aprun -j 1 -n 24 -N 6 -S 3 -d 4 -cc depth cfp ${RUNdir}/wfo_cmdfile
+mpiexec -np 24 --cpu-bind verbose,core cfp ${RUNdir}/wfo_cmdfile
 export err=$?; err_chk
 t1=$SECONDS
 echo "${0}: info: after ${cmd} at `date`"
