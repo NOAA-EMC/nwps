@@ -22,28 +22,39 @@
 #
 # ----------------------------------------------------------- 
 
-#BSUB -J ofs_prep
-#BSUB -oo /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/ofs_prep.o
-#     -e /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/ofs_prep.o
-#BSUB -q "dev"
-#BSUB -W 2:00
-#BSUB -R rusage[mem=1700]
-#BSUB -P NWPS-T2O
-#BSUB -extsched 'CRAYLINUX[]'
-export NODES=4
+#PBS -N ofs_prep
+#PBS -j oe
+#PBS -S /bin/bash
+#PBS -q dev
+#PBS -A NWPS-DEV
+#PBS -l walltime=02:00:00
+#PBS -l select=1:ncpus=96:mem=5000MB
+#PBS -l place=excl
+#PBS -l debug=true
+#PBS -V
+#PBS -o /lfs/h2/emc/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/ofs_prep.o
+#PBS -e /lfs/h2/emc/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/ofs_prep.o
 
-#module load %MODULES%
-module use /gpfs/hps/nco/ops/nwprod/modulefiles
-module load prod_envir
-module load prod_util
-module load PrgEnv-intel
-module load iobuf
-export IOBUF_PARAMS="*:count=24:size=32M:prefetch=1:preflush=1:verbose"
-module load grib_util/1.0.3
-module load python/2.7.14
-module load cfp-intel-sandybridge
+cd $PBS_O_WORKDIR
 
+# Setup and load modules
+source ../../versions/run.v1.4.0
+module purge
+module load envvar/${envvar_ver}
+module load prod_envir/${prod_envir_ver}
+module load prod_util/${prod_util_ver}
+module load PrgEnv-intel/${PrgEnv_intel_ver}
+module load craype/${craype_ver}
+module load intel/${inter_ver}
+module load cray-mpich/${cray_mpich_ver}
+module load cray-pals/${cray_pals_ver}
+module load cfp/${cfp_ver}
+module load wgrib2/${wgrib2_ver}
+module load python/${python_ver}
+module load iobuf/${iobuf_ver}
 module list
+
+export IOBUF_PARAMS="*:count=24:size=32M:prefetch=1:preflush=1:verbose"
 
 export FORT_BUFFERED=true
 export NWPSplatform="DEVWCOSS"
@@ -56,7 +67,7 @@ export MODEL=${model^^}
 export envir="para"
 
 export DEVWCOSS_USER=$(whoami)
-export COMROOT=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/com
+export COMROOT=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/data/com
 
 #Dev environment value for $job and $jobid
 export job=pnwps_ofs_prep
