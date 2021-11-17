@@ -278,12 +278,12 @@ for $i (0..0){
    system("${USHnwps}/ww3_systrackexe.sh > ${LOGdir}/run_ww3_systrk.log 2> ${LOGdir}/run_ww3_systrk_exe_error.log");
    system("date +%s > ${VARdir}/wavetrackrun_end_secs.txt");
    #Print a warning that NWPS is not using wavetracking mpi (if requested) but the serial version
-   my $mpiORser = "${LOGdir}/waveTrck_mpiORser.log";
-   if (-e $mpiORser) {
-     print "***********************************************************************************\n";
-     system("cat ${LOGdir}/waveTrck_mpiORser.log");
-     print "***********************************************************************************\n";
-   } 
+   #my $mpiORser = "${LOGdir}/waveTrck_mpiORser.log";
+   #if (-e $mpiORser) {
+   #  print "***********************************************************************************\n";
+   #  system("cat ${LOGdir}/waveTrck_mpiORser.log");
+   #  print "***********************************************************************************\n";
+   #} 
    ($dimRecord,$dimValue,$filename,$lat00,$lon00,$centralLat,$centralLon,$latNxNy,$lonNxNy)=&getValuesFromCommandFile("CG$cgnum");
    my (undef,$prtyear,$prtmonth,$prtday,undef,$prthour)=unpack"A2 A2 A2 A2 A A2",$filename;
    my $prtdateSuffix="YY".$prtyear.".MO".$prtmonth.".DD".$prtday.".HH".$prthour;
