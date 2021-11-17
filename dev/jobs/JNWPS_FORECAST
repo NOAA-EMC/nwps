@@ -43,13 +43,13 @@ set -xa
 export utilscript=${UTILROOT}/ush
 export USHutil=${UTILROOT}/ush
 
-cd /gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/
+cd /lfs/h2/emc/ptmp/${DEVWCOSS_USER}/data/
 . ./PDY.${WFO}
 
 export pgm="NWPS"
 
-export DATA=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/${WFO}.${PDY}
-export GESROOT=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/nwges
+export DATA=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/data/${WFO}.${PDY}
+export GESROOT=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/data/nwges
 
 mkdir -p $DATA
 cd $DATA
@@ -126,8 +126,6 @@ export COMINm2=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm2}/${WFO}
 export COMINm3=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm3}/${WFO}
 export COMOUT=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
 export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
-#export COMINgfs=${COMROOT}/gfs/prod/gfs.${PDY}
-export COMINwave=${COMROOTp1}/wave/prod
 export COMINestofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/estofs/${WFO}_output
 export COMINestofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/estofs/${WFO}_output
 export COMINrtofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/rtofs/${WFO}_output
