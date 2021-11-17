@@ -8,8 +8,7 @@
 # File Creation Date: 09/17/2015
 # Date Last Modified:
 #
-# Version control: 1.14
-#
+# Version control: 1.14#
 # Support Team:
 #
 # Contributors: Floyd fayton
@@ -22,20 +21,12 @@
 #
 # ----------------------------------------------------------- 
 
-##BSUB -J NWPS_datachk
-##BSUB -oo NWPS_datachk.o
-##     -e NWPS_datachk.o
-##BSUB -q "dev"
-##BSUB -W 0:15
-##BSUB -R rusage[mem=1700]
-##BSUB -P NWPS-T2O
-
-#module load %MODULES%
-. /usrx/local/Modules/3.2.9/init/bash
-module load prod_envir
-module load prod_util
-
-module list
+# Setup and load modules
+source ../../versions/run.ver
+module purge
+module load envvar/${envvar_ver}
+module load prod_envir/${prod_envir_ver}
+module load prod_util/${prod_util_ver}
 
 export FORT_BUFFERED=true
 export NWPSplatform="DEVWCOSS"
