@@ -49,8 +49,8 @@ module load intel/${inter_ver}
 module load cray-pals/${cray_pals_ver}
 module load cray-mpich/${cray_mpich_ver}
 module load wgrib2/${wgrib2_ver}
-module load hdf5/${hdf5_ver}
-module load netcdf/${netcdf_ver}
+#module load hdf5/${hdf5_ver}
+#module load netcdf/${netcdf_ver}
 module load python/${python_ver}
 module load jasper/${jasper_ver}
 module load libpng/${libpng_ver}
@@ -59,6 +59,20 @@ module load w3nco/${w3nco_ver}
 module load cfp/${cfp_ver}
 module load iobuf/${iobuf_ver}
 module list
+
+PATH=${NWPSdir}/lib/netcdf/4.2/bin:$PATH
+PATH=${NWPSdir}/lib/hdf5/1.8.9/bin:$PATH
+LD_LIBRARY_PATH=${NWPSdir}/lib/netcdf/4.2/lib:$LD_LIBRARY_PATH
+LD_LIBRARY_PATH=${NWPSdir}/lib/hdf5/1.8.9/lib:$LD_LIBRARY_PATH
+
+NETCDF_VERSION=4.2.1.1
+NetCDF=${NWPSdir}/lib/netcdf/4.2
+NETCDF_ROOT=${NWPSdir}/lib/netcdf/4.2
+HDF5_ROOT=${NWPSdir}/lib/hdf5/1.8.9
+NETCDF_LIBRARIES=${NWPSdir}/lib/netcdf/4.2/lib
+HDF5_LIBRARIES=${NWPSdir}/lib/hdf5/1.8.9/lib
+NETCDF_INCLUDES=${NWPSdir}/lib/netcdf/4.2/include
+HDF5_INCLUDES=${NWPSdir}/lib/hdf5/1.8.9/include
 
 export IOBUF_PARAMS="*:count=4:size=32M:prefetch=1:preflush=1"
 
