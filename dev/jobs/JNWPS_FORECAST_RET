@@ -151,7 +151,7 @@ startmsg
 
 ##############################################
 # Execute the script
-${HOMEnwps}/dev/scripts/exnwps_forecast.sh.ecf
+${HOMEnwps}/dev/scripts/exnwps_forecast.sh
 ##############################################
 
 msg="JOB $job HAS COMPLETED NORMALLY."
