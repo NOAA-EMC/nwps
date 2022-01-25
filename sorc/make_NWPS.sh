@@ -100,8 +100,6 @@ if [[ $rc -ne 0 ]] ; then
     echo "The log file is in sorc/punswan4110.fd/punswan_build.log"
 fi
 
-exit 0
-
 #FOR RIP CURRENTS
 #The executable is ripforecast.exe
 echo "================== FOR RIP CURRENTS : make_ripforecast.sh =================="
