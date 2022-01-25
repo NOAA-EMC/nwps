@@ -123,7 +123,7 @@ env
 
 ##############################################
 # Execute the script
-${HOMEnwps}/scripts/exnwps_prep.sh.ecf
+${HOMEnwps}/scripts/exnwps_prep.sh
 export err=$?; err_chk
 ##############################################
 
