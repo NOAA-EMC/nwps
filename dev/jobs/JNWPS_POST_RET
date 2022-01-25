@@ -154,7 +154,7 @@ startmsg
 
 ##############################################
 # Execute the script
-${HOMEnwps}/dev/scripts/exnwps_post.sh.ecf
+${HOMEnwps}/dev/scripts/exnwps_post.sh
 ##############################################
 #if [ "$?" -eq 0 ] && [ "${N,,}" == "n" ]; then
 #    dfile=$(ecflow_client --group="get ${ECF_NAME%/*}/jnwps_prep ; show state"|grep label|awk '{print $NF}'|sed 's/\"//g')
