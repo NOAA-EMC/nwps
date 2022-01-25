@@ -547,8 +547,6 @@ then
       fi
    fi
 
-   exit 0
-
    # Interpolate unstructured mesh results onto regular grid for AWIPS (parameter names from SWAN manual)
    echo "Interpolating unstructured mesh results for "${siteid}" on CG"${CGNUM}
    cp ${DATA}/install/swn_reginterpCG${CGNUM}.py ${RUNdir}/
