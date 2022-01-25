@@ -156,7 +156,7 @@ startmsg
 
 ##############################################
 # Execute the script
-${HOMEnwps}/dev/scripts/exnwps_prep_ret.sh.ecf
+${HOMEnwps}/dev/scripts/exnwps_prep_ret.sh
 ##############################################
 
 msg="JOB $job HAS COMPLETED NORMALLY."
