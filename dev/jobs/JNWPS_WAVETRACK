@@ -119,7 +119,7 @@ startmsg
 
 ##############################################
 # Execute the script
-${HOMEnwps}/scripts/exnwps_wavetrack.sh.ecf
+${HOMEnwps}/scripts/exnwps_wavetrack.sh
 ##############################################
 
 msg="JOB $job HAS COMPLETED NORMALLY."
