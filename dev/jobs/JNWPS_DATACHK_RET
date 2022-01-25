@@ -108,7 +108,7 @@ export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 
 ##############################################
 # Execute the script
-${HOMEnwps}/dev/scripts/exnwps_datachk_ret.sh.ecf
+${HOMEnwps}/dev/scripts/exnwps_datachk_ret.sh
 #${HOMEnwps}/dev/scripts/extract_prod_archive.sh
 ##############################################
 
