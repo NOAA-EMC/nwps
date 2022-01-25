@@ -139,7 +139,7 @@ startmsg
 
 ##############################################
 # Execute the script
-${HOMEnwps}/dev/scripts/exnwps_prdgen.sh.ecf
+${HOMEnwps}/dev/scripts/exnwps_prdgen.sh
 ##############################################
 #if [ "$?" -eq 0 ] && [ "${N,,}" == "n" ]; then
 if [ "${N,,}" == "n" ]; then
