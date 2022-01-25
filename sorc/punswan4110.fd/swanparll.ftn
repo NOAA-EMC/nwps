@@ -4054,6 +4054,14 @@
 !
       SAVE IENT
       DATA IENT/0/
+! pjj
+      include 'mpif.h'
+      real(kind=8) :: pjt(10)
+      logical :: exist2(mnproc), opened2(mnproc)
+      exist2(:) = .false.
+      opened2(:) = .false.
+      pjt = 0.
+
       IF (LTRACE) CALL STRACE (IENT,'SWCOLOUT')
 
       IF ( NREOQ.EQ.0 ) RETURN
@@ -4077,6 +4085,8 @@
          TIMCO = TINIC
 
 !        --- do for all time steps
+!        write(6,*) 'joe90',ic,ncompt,it0,it1,nreoq,LCOMPGRD,nproc
+!        call flush(6)
 
          DO IT = IT0, IT1
 
@@ -4086,6 +4096,7 @@
 
             CORQ => FORQ
             DO 100 IRQ = 1, NREOQ
+       pjt(1) = mpi_wtime()
 
 !              --- processing of output instructions necessary
 !                  for collection
@@ -4197,12 +4208,18 @@
 !PUN                  YC =  0.
 !PUN                  FILENM = TRIM(LOCALDIR)//DIRCH2//'output.set'
 !PUN                  ILPOS  = LEN(TRIM(LOCALDIR))
+!PUN!                 write(6,*) 'joe91',it,irq,ilpos,trim(filenm)
+!PUN!                 pjt(3) = mpi_wtime()
 !PUN                  DO IPROC = 1, NPROC
 !PUN                     WRITE(FILENM(ILPOS-3:ILPOS),'(I4.4)') IPROC-1
 !PUN                     IUNIT = HIOPEN+NREOQ*(NPROC+1)+IPROC
-!PUN                     INQUIRE ( FILE=FILENM, EXIST=EXIST, OPENED=OPENED )
-!PUN                     IF ( .NOT.OPENED ) THEN
-!PUN                        IF (EXIST) THEN
+!PUN                     IF ( .NOT.opened2(iproc) ) THEN
+!PUN!                 pjt(5) = mpi_wtime()
+!PUN                        INQUIRE ( FILE=FILENM, EXIST=exist2(iproc),
+!PUN     &                      OPENED=opened2(iproc) )
+!PUN!                 pjt(6) = mpi_wtime()
+!PUN!                    IF ( .NOT.OPENED ) THEN
+!PUN                        IF (exist2(iproc)) THEN
 !PUN                           OPEN ( UNIT=IUNIT, FILE=FILENM,
 !PUN     &                            FORM='UNFORMATTED' )
 !PUN                        ELSE
@@ -4213,6 +4230,7 @@
 !PUN                     ELSE
 !PUN                        IF ( IRQ.EQ.1 ) REWIND(IUNIT)
 !PUN                     ENDIF
+!PUN!                 pjt(7) = mpi_wtime()
 !PUN                     READ(IUNIT) ITMP1, ITMP2
 !PUN                     IF (ITMP1.EQ.IRQ) THEN
 !PUN                        DO IP = 1, ITMP2
@@ -4224,7 +4242,12 @@
 !PUN     &        'inconsistency found in SWCOLOUT: wrong request number ' )
 !PUN                        RETURN
 !PUN                     ENDIF
+!PUN!                 pjt(8) = mpi_wtime()
+!PUN!                 write(6,*) 'joe93',irq,iproc,iunit,
+!PUN!    &               pjt(6)-pjt(5),pjt(8)-pjt(7)
 !PUN                  ENDDO
+!PUN!                 pjt(4) = mpi_wtime()
+!PUN!                 write(6,*) 'joe92',irq,pjt(4)-pjt(3)
 !PUN               ELSE
 !PUN                  DO IP = 1, MIP
 !PUN                     XC(IP) = REAL(IP) - 1.
@@ -4287,6 +4310,9 @@
   50           CONTINUE
                CORQ => CORQ%NEXTORQ
 
+!      pjt(2) = mpi_wtime()
+!              write(6,*) 'joe99',ic,it,irq,pjt(2)-pjt(1)
+!        call flush(6)
  100        CONTINUE
 
             IF ( NSTATC.EQ.1.AND.IT.LT.IT1 ) TIMCO = TIMCO + DT
@@ -4296,6 +4322,8 @@
       END DO
 
 !     --- close all files and delete process files
+!     write(6,*) 'joe94'
+!     call flush(6)
 
       DO IUNIT = HIOPEN+1, HIOPEN+NREOQ
         INQUIRE ( UNIT=IUNIT, OPENED=OPENED )
@@ -4306,6 +4334,8 @@
         INQUIRE ( UNIT=IUNIT, OPENED=OPENED )
         IF (OPENED) CLOSE ( UNIT=IUNIT, STATUS='delete' )
       END DO
+!     write(6,*) 'joe95'
+!     call flush(6)
 
       RETURN
       END
