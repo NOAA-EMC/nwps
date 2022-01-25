@@ -95,7 +95,7 @@ env
 
 ##############################################
 # Execute the script
-${HOMEnwps}/scripts/exnwps_wavetrack.sh.ecf
+${HOMEnwps}/scripts/exnwps_wavetrack.sh
 export err=$?; err_chk
 ##############################################
 
