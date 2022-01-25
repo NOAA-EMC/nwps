@@ -38,6 +38,20 @@ module list
 
 mkdir -p ${NWPSdir}/exec
 
+#FOR NETCDF
+echo "================== FOR NETCDF 4.2 : make_netcdf-4.2.sh =================="
+cd ${NWPSdir}/sorc
+./make_netcdf-4.2.sh
+
+export NETCDF=${NWPSdir}/lib/netcdf/4.2
+export NETCDF_ROOT=${NWPSdir}/lib/netcdf/4.2
+export HDF5_ROOT=${NWPSdir}/lib/hdf5/1.8.9
+export NETCDF_INC=${NWPSdir}/lib/netcdf/4.2/include
+export HDF5_INC=${NWPSdir}/lib/hdf5/1.8.9/include
+export NETCDF_INCLUDES=${NWPSdir}/lib/netcdf/4.2/include
+export NETCDF_LIBRARIES=${NWPSdir}/lib/netcdf/4.2/lib
+export HDF5_LIBRARIES=${NWPSdir}/lib/hdf5/1.8.9/lib
+
 #FOR DEGRIB
 echo "================== FOR DEGRIB : make_degrib-2.15.sh =================="
 cd ${NWPSdir}/sorc
@@ -85,6 +99,8 @@ if [[ $rc -ne 0 ]] ; then
     echo "Fatal error in building punswan4110."
     echo "The log file is in sorc/punswan4110.fd/punswan_build.log"
 fi
+
+exit 0
 
 #FOR RIP CURRENTS
 #The executable is ripforecast.exe
