@@ -86,7 +86,7 @@ env
 
 ##############################################
 # Execute the script
-${HOMEnwps}/scripts/exnwps_datachk.sh.ecf
+${HOMEnwps}/scripts/exnwps_datachk.sh
 export err=$?; err_chk
 
 # JY if [ $(hostname |cut -c1) = 's'  ]; then
