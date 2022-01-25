@@ -5,7 +5,7 @@ F90_SER = ifort
 F90_OMP = ifort
 F90_MPI = ftn
 FLAGS_OPT = -c
-FLAGS_MSC = -O1 
+FLAGS_MSC = -O1 -g 
 FLAGS90_MSC = $(FLAGS_MSC)
 FLAGS_DYN = -fPIC
 FLAGS_SER =
@@ -13,12 +13,12 @@ FLAGS_OMP = -openmp
 FLAGS_MPI =
 NETCDFROOT = $(NETCDF) 
 ifneq ($(NETCDF),)
-  INCS_SER = $(NETCDF_INCLUDE) 
-  INCS_OMP = $(NETCDF_INCLUDE) 
-  INCS_MPI = $(NETCDF_INCLUDE) 
-  LIBS_SER = $(NETCDF_LDFLAGS) $(HDF5_LDFLAGS) $(Z_LIB)
-  LIBS_OMP = $(NETCDF_LDFLAGS) $(HDF5_LDFLAGS) $(Z_LIB)
-  LIBS_MPI = $(NETCDF_LDFLAGS) $(HDF5_LDFLAGS) $(Z_LIB)
+  INCS_SER = -I$(NETCDF_INCLUDES) 
+  INCS_OMP = -I$(NETCDF_INCLUDES) 
+  INCS_MPI = -I$(NETCDF_INCLUDES) 
+  LIBS_SER = -L$(NETCDF_LIBRARIES) -lnetcdff -lnetcdf -L$(HDF5_LIBRARIES) -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran $(Z_LIB)
+  LIBS_OMP = -L$(NETCDF_LIBRARIES) -lnetcdff -lnetcdf -L$(HDF5_LIBRARIES) -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran $(Z_LIB)
+  LIBS_MPI = -L$(NETCDF_LIBRARIES) -lnetcdff -lnetcdf -L$(HDF5_LIBRARIES) -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran $(Z_LIB)
   NCF_OBJS = nctablemd.o agioncmd.o swn_outnc.o
 else
   INCS_SER =
