@@ -94,7 +94,7 @@ env
 
 ##############################################
 # Execute the script
-${HOMEnwps}/scripts/exnwps_forecast.sh.ecf
+${HOMEnwps}/scripts/exnwps_forecast.sh
 export err=$?; err_chk
 ##############################################
 
