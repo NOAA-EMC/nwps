@@ -28,9 +28,9 @@ if ($os =~ /Linux/i) {
     print OUTFILE "  INCS_SER = -I\$(NETCDF_INCLUDES) \n";
     print OUTFILE "  INCS_OMP = -I\$(NETCDF_INCLUDES) \n";
     print OUTFILE "  INCS_MPI = -I\$(NETCDF_INCLUDES) \n";
-    print OUTFILE "  LIBS_SER = -L\$(NETCDF_LIBRARIES) -lnetcdf -lnetcdff -L\$(HDF5_LIBRARIES) -lhdf5 -lhdf5_hl \$(Z_LIB)\n";
-    print OUTFILE "  LIBS_OMP = -L\$(NETCDF_LIBRARIES) -lnetcdf -lnetcdff -L\$(HDF5_LIBRARIES) -lhdf5 -lhdf5_hl \$(Z_LIB)\n";
-    print OUTFILE "  LIBS_MPI = -L\$(NETCDF_LIBRARIES) -lnetcdf -lnetcdff -L\$(HDF5_LIBRARIES) -lhdf5 -lhdf5_hl \$(Z_LIB)\n";
+    print OUTFILE "  LIBS_SER = -L\$(NETCDF_LIBRARIES) -lnetcdff -lnetcdf -L\$(HDF5_LIBRARIES) -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran \$(Z_LIB)\n";
+    print OUTFILE "  LIBS_OMP = -L\$(NETCDF_LIBRARIES) -lnetcdff -lnetcdf -L\$(HDF5_LIBRARIES) -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran \$(Z_LIB)\n";
+    print OUTFILE "  LIBS_MPI = -L\$(NETCDF_LIBRARIES) -lnetcdff -lnetcdf -L\$(HDF5_LIBRARIES) -lhdf5_hl -lhdf5hl_fortran -lhdf5 -lhdf5_fortran \$(Z_LIB)\n";
     print OUTFILE "  NCF_OBJS = nctablemd.o agioncmd.o swn_outnc.o\n";
     print OUTFILE "else\n";
     print OUTFILE "  INCS_SER =\n";
