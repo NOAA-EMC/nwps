@@ -90,7 +90,7 @@ env
 
 ##############################################
 # Execute the script
-${HOMEnwps}/scripts/exnwps_ofs_prep.sh.ecf
+${HOMEnwps}/scripts/exnwps_ofs_prep.sh
 export err=$?; err_chk
 ##############################################
 
