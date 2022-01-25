@@ -5,13 +5,6 @@ set -eux
 mkdir -p ${NWPSdir}/lib
 install_prefix=${NWPSdir}/lib
 
-module load PrgEnv-intel/8.1.0
-module load intel/19.1.3.304
-module load craype/2.7.10
-module load cray-mpich/8.1.7
-module load zlib/1.2.11
-module load curl/7.72.0
-
 export CC=cc
 export FC=ftn
 export CXX=CC
