@@ -119,7 +119,7 @@ env
 
 ##############################################
 # Execute the script
-${HOMEnwps}/scripts/exnwps_prdgen.sh.ecf
+${HOMEnwps}/scripts/exnwps_prdgen.sh
 export err=$?; err_chk
 ##############################################
 if [ "$?" -eq 0 ] && [ "${N,,}" == "n" ]; then
