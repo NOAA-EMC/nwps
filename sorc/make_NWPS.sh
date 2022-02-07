@@ -29,28 +29,27 @@ fi
 cd ${NWPSdir}/sorc
 #AW ./get_externals.sh
 
-source ../versions/build.v1.4.0
+source ../versions/build.ver
 
 module purge
-#module load ncep
 source ../modulefiles/build_nwps.modules
 module list
 
 mkdir -p ${NWPSdir}/exec
 
 #FOR NETCDF
-echo "================== FOR NETCDF 4.2 : make_netcdf-4.2.sh =================="
-cd ${NWPSdir}/sorc
-./make_netcdf-4.2.sh
+echo "================== FOR NETCDF : make_netcdf-4.2.sh =================="
+cd ${NWPSdir}/lib
+./make_netcdf-4.2.sh | tee ./netcdf-4.2_build.log
 
-export NETCDF=${NWPSdir}/lib/netcdf/4.2
-export NETCDF_ROOT=${NWPSdir}/lib/netcdf/4.2
-export HDF5_ROOT=${NWPSdir}/lib/hdf5/1.8.9
-export NETCDF_INC=${NWPSdir}/lib/netcdf/4.2/include
-export HDF5_INC=${NWPSdir}/lib/hdf5/1.8.9/include
-export NETCDF_INCLUDES=${NWPSdir}/lib/netcdf/4.2/include
-export NETCDF_LIBRARIES=${NWPSdir}/lib/netcdf/4.2/lib
-export HDF5_LIBRARIES=${NWPSdir}/lib/hdf5/1.8.9/lib
+export NETCDF=${NWPSdir}/lib/netcdf/${netcdf_ver}
+export NETCDF_ROOT=${NWPSdir}/lib/netcdf/${netcdf_ver}
+export HDF5_ROOT=${NWPSdir}/lib/hdf5/${hdf5_ver}
+export NETCDF_INC=${NWPSdir}/lib/netcdf/${netcdf_ver}/include
+export HDF5_INC=${NWPSdir}/lib/hdf5/${hdf5_ver}/include
+export NETCDF_INCLUDES=${NWPSdir}/lib/netcdf/${netcdf_ver}/include
+export NETCDF_LIBRARIES=${NWPSdir}/lib/netcdf/${netcdf_ver}/lib
+export HDF5_LIBRARIES=${NWPSdir}/lib/hdf5/${hdf5_ver}/lib
 
 #FOR DEGRIB
 echo "================== FOR DEGRIB : make_degrib-2.15.sh =================="
