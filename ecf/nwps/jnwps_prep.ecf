@@ -1,13 +1,17 @@
-#BSUB -J %E%%MODEL%_%FAMILY1%_prep
-#BSUB -o %COMROOT%/output/%ENVIR%/today/%MODEL%_%FAMILY1%_prep.o%J
-#BSUB -L /bin/sh
-#BSUB -q %QUEUE%
-#BSUB -cwd /tmp
-#BSUB -W 1:30
-#BSUB -M 1700
-#BSUB -P %PROJ%-%PROJENVIR%
-#BSUB -extsched 'CRAYLINUX[]'
-export NODES=1
+#PBS -N %MODEL%_%FAMILY1%_prep
+#PBS -j oe
+#PBS -S /bin/bash
+#PBS -q %QUEUE%
+#PBS -A %PROJ%-%PROJENVIR%
+#PBS -l walltime=01:30:00
+#PBS -l select=1:ncpus=120:mem=3000MB
+#PBS -l place=excl
+#PBS -l debug=true
+#PBS -V
+#PBS -o %COMROOT%/output/%ENVIR%/today/%MODEL%_%FAMILY1%_prep.o%J
+#PBS -e %COMROOT%/output/%ENVIR%/today/%MODEL%_%FAMILY1%_prep.o%J
+
+cd $PBS_O_WORKDIR
 
 %include <head.h>
 sleep 10
@@ -16,12 +20,26 @@ sleep 10
 export model=%MODEL%
 %include <model_ver.h>
 
-module load %MODULES%
-#---- Suggested modules -----------------------------------------
-module load PrgEnv-intel/${intel_ver}
-module load grib_util/${grib_util_ver}
+VERSION_FILE=${HOMEnwps}/versions/run.ver
+if [ -f $VERSION_FILE ]; then
+  . $VERSION_FILE
+else
+  ECFNAME="jnwps_prep.ecf"
+  echo "***JOB ${ECFNAME} ERROR: Version File $VERSION_FILE does not exist ***"
+  exit
+fi
 
-#----------------------------------------------------------------
+module purge
+module load %MODULES%
+module load envvar/${envvar_ver}
+module load prod_envir/${prod_envir_ver}
+module load prod_util/${prod_util_ver}
+module load PrgEnv-intel/${PrgEnv_intel_ver}
+module load craype/${craype_ver}
+module load intel/${inter_ver}
+module load cray-pals/${cray_pals_ver}
+module load wgrib2/${wgrib2_ver}
+
 export FORT_BUFFERED=true
 export NWPSplatform="WCOSS"
 export MP_PGMMODEL=mpmd
