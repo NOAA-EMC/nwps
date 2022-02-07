@@ -96,16 +96,16 @@ echo ${REGION}
 ##############################################
 # Define COM directory
 ##############################################
-export COMIN=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
-export COMINm1=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm1}/${WFO}
-export COMINm2=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm2}/${WFO}
-export COMINm3=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm3}/${WFO}
-export COMOUT=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
-export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
+export COMIN=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDY}/${WFO}
+export COMINm1=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDYm1}/${WFO}
+export COMINm2=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDYm2}/${WFO}
+export COMINm3=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDYm3}/${WFO}
+export COMOUT=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDY}/${WFO}
+export GESOUT=${COMROOT}/${NET}/${nwps_ver}/${NET}.${PDY}/nwges
 export COMOUTwmo=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/wmo
 #--------------------------------------------------------------------------
 export dcom_hist="$GESOUT/dcom_hist.txt"
-dcom=${dcom:-${DCOMROOT}/prod}
+dcom=${dcom:-${DCOMROOT}}
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 
 # make sure NWPS COM directory exists
