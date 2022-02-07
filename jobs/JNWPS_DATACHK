@@ -65,12 +65,12 @@ setpdy.sh
 ##############################################
 # Define COM directory
 ##############################################
-export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
-export GESOUTm1=${GESROOT}/${envir}/${NET}.${PDYm1}
+export GESOUT=${COMROOT}/${NET}/${nwps_ver}/${NET}.${PDY}/nwges
+export GESOUTm1=${COMROOT}/${NET}/${nwps_ver}/${NET}.${PDYm1}/nwges
 export dcom_hist="$GESOUT/dcom_hist.txt"
 export dcom_histm1="$GESOUTm1/dcom_hist.txt"
 export web_status_file="$GESOUT/status_file.txt"
-export dcom=${dcom:-${DCOMROOT}/prod}
+export dcom=${dcom:-${DCOMROOT}}
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 
 # Establish rsync timeout and retry limits
@@ -89,11 +89,10 @@ env
 ${HOMEnwps}/scripts/exnwps_datachk.sh
 export err=$?; err_chk
 
-# JY if [ $(hostname |cut -c1) = 's'  ]; then
-if [ $(echo $SITE |cut -c1) = 'S'  ]; then
-    export machine=surge
+if [ $(hostname |cut -c1) = 'c'  ]; then
+    export machine=cactus
 else
-    export machine=luna
+    export machine=dogwood
 fi
 
 function rsync_sh {
