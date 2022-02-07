@@ -1,11 +1,15 @@
-#BSUB -J %E%%MODEL%_datachk
-#BSUB -o %COMROOT%/output/%ENVIR%/today/%MODEL%_datachk.o%J
-#BSUB -L /bin/sh
-#BSUB -q %QUEUESERV%
-#BSUB -cwd /tmp
-#BSUB -W 0:05
-#BSUB -M 1700
-#BSUB -P %PROJ%-%PROJENVIR%
+#PBS -N %MODEL%_datachk
+#PBS -j oe
+#PBS -S /bin/bash
+#PBS -q %QUEUESERV%
+#PBS -A %PROJ%-%PROJENVIR%
+#PBS -l walltime=00:05:00
+#PBS -l select=1:ncpus=1:mem=5000MB
+#PBS -l place=excl
+#PBS -l debug=true
+#PBS -V
+#PBS -o %COMROOT%/output/%ENVIR%/today/%MODEL%_datachk.o%J
+#PBS -e %COMROOT%/output/%ENVIR%/today/%MODEL%_datachk.o%J
 
 %include <head.h>
 %include <envir-xc40.h>
@@ -16,7 +20,22 @@ export model=%MODEL%
 
 %include <model_ver.h>
 
+# Setup and load modules
+VERSION_FILE=${HOMEnwps}/versions/run.ver
+if [ -f $VERSION_FILE ]; then
+  . $VERSION_FILE
+else
+  ECFNAME="jnwps_datachk.ecf"
+  echo "***JOB ${ECFNAME} ERROR: Version File $VERSION_FILE does not exist ***"
+  exit
+fi
+
+module purge
 module load %MODULES%
+module load envvar/${envvar_ver}
+module load prod_envir/${prod_envir_ver}
+module load prod_util/${prod_util_ver}
+
 export FORT_BUFFERED=true
 export NWPSplatform="WCOSS"
 export MP_PGMMODEL=mpmd
