@@ -32,13 +32,22 @@
 #PBS -l place=excl
 #PBS -l debug=true
 #PBS -V
-#PBS -o /lfs/h2/emc/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_prep.o
-#PBS -e /lfs/h2/emc/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_prep.o
+#PBS -o /lfs/h2/emc/ptmp/Andre.VanderWesthuysen/com/nwps/v1.4.0/NWPS_%WFO%_prep.o
+#PBS -e /lfs/h2/emc/ptmp/Andre.VanderWesthuysen/com/nwps/v1.4.0/NWPS_%WFO%_prep.o
 
 cd $PBS_O_WORKDIR
 
 # Setup and load modules
-source ../../versions/run.v1.4.0
+export HOMEnwps=${NWPSdir}
+VERSION_FILE=${HOMEnwps}/versions/run.ver
+if [ -f $VERSION_FILE ]; then
+  . $VERSION_FILE
+else
+  ECFNAME="jnwps_prep.ecf"
+  echo "***JOB ${ECFNAME} ERROR: Version File $VERSION_FILE does not exist ***"
+  exit
+fi
+
 module purge
 module load envvar/${envvar_ver}
 module load prod_envir/${prod_envir_ver}
@@ -64,32 +73,22 @@ export MODEL=${model^^}
 export envir="para"
 
 export DEVWCOSS_USER=$(whoami)
-export COMROOT=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/data/com
+export COMROOT=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/com
 
 #Dev environment value for $job and $jobid
 export job=pnwps_${WFO}_prep
 export jobid=pnwps_${WFO}_prep.$$
 
 #Dev environment jlogfile
-mkdir -p ${COMROOT}/logs/${envir}
-export jlogfile=${COMROOT}/logs/${envir}/jlogfile.${job}
+export ver=${nwps_ver}
+mkdir -p /lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver/logs/jlogfiles
+export jlogfile=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver/logs/jlogfiles/jlogfile.${job}
 
 #Set platform
 export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )d1
 export WCOSS_SYSTEM_COM=$( echo $COMROOTp1 | cut -c7-9 )
 
-export NWROOT=${NWPSdir}
-
-VERSION_FILE=${NWROOT}/dev/nwps_test.ver
-if [ -f $VERSION_FILE ]; then
-  . $VERSION_FILE
-else
-  ECFNAME="jnwps_prep.ecf"
-  echo "***JOB ${ECFNAME} ERROR: Version File $VERSION_FILE does not exist ***"
-  exit
-fi
-
-${NWROOT}/dev/jobs/J${MODEL}_PREP
+${HOMEnwps}/dev/jobs/J${MODEL}_PREP
 
 #%include <tail.h>
 
@@ -102,8 +101,8 @@ ${NWROOT}/dev/jobs/J${MODEL}_PREP
 #DATE:           SEP 2014
 #FULL NAME:    /nwps_para/nwps/SR/j%WFO%
 #PURPOSE:  To execute the job that creates NWPS %WFO% GRIB output files
-#JOB SCRIPT CALLED: ${NWROOT}/jobs/JNWPS ==>
-#                            ${NWROOT}/scripts/exnwps_prep.sh.ecf
+#JOB SCRIPT CALLED: ${HOMEnwps}/jobs/JNWPS ==>
+#                            ${HOMEnwps}/scripts/exnwps_prep.sh.ecf
 #################################################################################
 ######################################################################
 # Job specific troubleshooting instructions:
