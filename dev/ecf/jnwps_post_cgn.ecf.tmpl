@@ -32,13 +32,22 @@
 #PBS -l place=excl
 #PBS -l debug=true
 #PBS -V
-#PBS -o /lfs/h2/emc/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_post_cgn.o
-#PBS -e /lfs/h2/emc/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/NWPS_%WFO%_post_cgn.o
+#PBS -o /lfs/h2/emc/ptmp/Andre.VanderWesthuysen/com/nwps/v1.4.0/NWPS_%WFO%_post_cgn.o
+#PBS -e /lfs/h2/emc/ptmp/Andre.VanderWesthuysen/com/nwps/v1.4.0/NWPS_%WFO%_post_cgn.o
 
 cd $PBS_O_WORKDIR
 
 # Setup and load modules
-source ../../versions/run.v1.4.0
+export HOMEnwps=${NWPSdir}
+VERSION_FILE=${HOMEnwps}/versions/run.ver
+if [ -f $VERSION_FILE ]; then
+  . $VERSION_FILE
+else
+  ECFNAME="jnwps_prep.ecf"
+  echo "***JOB ${ECFNAME} ERROR: Version File $VERSION_FILE does not exist ***"
+  exit
+fi
+
 module purge
 module load envvar/${envvar_ver}
 module load prod_envir/${prod_envir_ver}
@@ -71,35 +80,25 @@ export MODEL=${model^^}
 export envir="para"
 
 export DEVWCOSS_USER=$(whoami)
-export COMROOT=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/data/com
+export COMROOT=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/com
 
 #Dev environment value for $job
 export job=pnwps_${WFO}_po_cgn
 export jobid=pnwps_${WFO}_po_cgn.$$
 
 #Dev environment jlogfile
-mkdir -p ${COMROOT}/logs/${envir}
-export jlogfile=${COMROOT}/logs/${envir}/jlogfile.${job}
+export ver=${nwps_ver}
+mkdir -p /lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver/logs/jlogfiles
+export jlogfile=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver/logs/jlogfiles/jlogfile.${job}
 
 #Set platform
 export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )d1
 export WCOSS_SYSTEM_COM=$( echo $COMROOTp1 | cut -c7-9 )
 
-export NWROOT=${NWPSdir}
-
-VERSION_FILE=${NWROOT}/dev/nwps_test.ver
-if [ -f $VERSION_FILE ]; then
-  . $VERSION_FILE
-else
-  ECFNAME="jnwps_prep.ecf"
-  echo "***JOB ${ECFNAME} ERROR: Version File $VERSION_FILE does not exist ***"
-  exit
-fi
-
 # Wait for upstream component job to finish
-while [ -z $(grep 'COMPLETED NORMALLY' ${COMROOT}/logs/${envir}/jlogfile.pnwps_%WFO%_fc_cgn | awk '{print $1}') ]
+while [ -z $(grep 'COMPLETED NORMALLY' /lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver/logs/jlogfiles/jlogfile.pnwps_%WFO%_fc_cgn | awk '{print $1}') ]
 do
-   if [ ! -z $(grep 'FAILED' ${COMROOT}/logs/${envir}/jlogfile.pnwps_%WFO%_fc_cgn | awk '{print $1}') ]
+   if [ ! -z $(grep 'FAILED' /lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver/logs/jlogfiles/jlogfile.pnwps_%WFO%_fc_cgn | awk '{print $1}') ]
    then
        msg="FATAL ERROR: Upstream job pnwps_%WFO%_fc_cgn failed"
        postmsg "$jlogfile" "$msg"
@@ -110,7 +109,7 @@ do
    sleep 60
 done
 
-${NWROOT}/dev/jobs/J${MODEL}_POST
+${HOMEnwps}/dev/jobs/J${MODEL}_POST
 
 #%include <tail.h>
 
