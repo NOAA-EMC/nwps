@@ -47,8 +47,7 @@ export USHutil=${UTILROOT}/ush
 
 export pgm="NWPS"
 
-export DATA=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/data/${WFO}.${PDY}
-export GESROOT=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/data/nwges
+export DATA=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver/${WFO}.${PDY}
 
 mkdir -p $DATA
 cd $DATA
@@ -73,8 +72,7 @@ export SENDDBN=${SENDDBN:-NO}
 ####################################
 # Specify Execution Areas
 ####################################
-#export HOMEnwps=${NWROOT}/${model}.${nwps_ver}
-export HOMEnwps=${NWROOT}
+export HOMEnwps=${HOMEnwps:-${NWROOT}/${model}.${nwps_ver}}
 export FIXnwps=${FIXnwps:-${HOMEnwps}/fix}
 export EXECnwps=${EXECnwps:-${HOMEnwps}/exec}
 export SORCnwps=${SORCnwps:-${HOMEnwps}/sorc}
@@ -112,22 +110,23 @@ echo ${REGION}
 ##############################################
 # Define COM directory
 ##############################################
-export COMIN=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
-export COMINm1=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm1}/${WFO}
-export COMINm2=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm2}/${WFO}
-export COMINm3=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm3}/${WFO}
-export COMOUT=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
-export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
-export COMINestofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/estofs/${WFO}_output
-export COMINestofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/estofs/${WFO}_output
-export COMINrtofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/rtofs/${WFO}_output
-export COMINrtofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/rtofs/${WFO}_output
-export COMINpsurge=${COMROOT}/${NET}/${envir}/ofs.${PDY}/psurge/${WFO}_output
-export COMINpsurgem1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/psurge/${WFO}_output
-export dcom=${dcom:-/gpfs/${WCOSS_SYSTEM_COM}/dcomdev/us007003}
+export COMIN=${COMROOT}/${NET}/$ver/${REGION}.${PDY}/${WFO}
+export COMINm1=${COMROOT}/${NET}/$ver/${REGION}.${PDYm1}/${WFO}
+export COMINm2=${COMROOT}/${NET}/$ver/${REGION}.${PDYm2}/${WFO}
+export COMINm3=${COMROOT}/${NET}/$ver/${REGION}.${PDYm3}/${WFO}
+export COMOUT=${COMROOT}/${NET}/$ver/${REGION}.${PDY}/${WFO}
+export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}/nwges
+
+export COMINestofs=${COMROOT}/${NET}/${ver}/ofs.${PDY}/estofs/${WFO}_output
+export COMINestofsm1=${COMROOT}/${NET}/${ver}/ofs.${PDYm1}/estofs/${WFO}_output
+export COMINrtofs=${COMROOT}/${NET}/${ver}/ofs.${PDY}/rtofs/${WFO}_output
+export COMINrtofsm1=${COMROOT}/${NET}/${ver}/ofs.${PDYm1}/rtofs/${WFO}_output
+export COMINpsurge=${COMROOT}/${NET}/${ver}/ofs.${PDY}/psurge/${WFO}_output
+export COMINpsurgem1=${COMROOT}/${NET}/${ver}/ofs.${PDYm1}/psurge/${WFO}_output
+#export dcom=/lfs/h1/ops/prod/dcom
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 export COM_nwps_R_ES_TOFS="/com"
-export COMOUTwmo=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/wmo
+export COMOUTwmo=${COMROOT}/${NET}/${ver}/${REGION}.${PDY}/wmo
 
 if [ "${SENDCOM}" = YES ]; then
     mkdir -p $COMOUT
