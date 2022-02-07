@@ -30,7 +30,9 @@ set -xa
 #export TS_f=21600
 export TS_f=3600
 
-curhour=$(date -u +%H)
+#AW curhour=$(date -u +%H)
+#AW curhour=0
+curhour=22
 if [ $curhour -lt 12 ]; then CYCLE="00"; fi
 if [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
 if [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
@@ -43,18 +45,43 @@ export pgmout=OUTPUT.$$
 
 export utilscript=${UTILROOT}/ush
 export USHutil=${UTILROOT}/ush
-sh $utilscript/setpdy.sh
-. ./PDY
+#AW sh $utilscript/setpdy.sh
+
+#AW . ./PDY
+#export PDYm7=20170816
+#export PDYm6=20170817
+#export PDYm5=20170818
+#export PDYm4=20170819
+#export PDYm3=20170820
+#export PDYm2=20170821
+#export PDYm1=20170822
+#export PDY=20170823
+#export PDYp1=20170824
+#export PDYp2=20170825
+#export PDYp3=20170826
+#export PDYp4=20170827
+#export PDYp5=20170828
+#export PDYp6=20170829
+#export PDYp7=20170830
+
+export PDYm7=20220118
+export PDYm6=20220119
+export PDYm5=20220120
+export PDYm4=20220121
+export PDYm3=20220122
+export PDYm2=20220123
+export PDYm1=20220124
+export PDY=20220125
+export PDYp1=20220126
+export PDYp2=20220127
+export PDYp3=20220128
+export PDYp4=20220129
+export PDYp5=20220130
+export PDYp6=20220131
+export PDYp7=20220201
 
 sh $utilscript/setup.sh
 export pgm="ofs.psurge"
-
-export DATA=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/data/ofs.${PDY}
-#export COMROOT=${DATA}/com
-export GESROOT=${DATA}/nwges
-
-mkdir -p $DATA
-cd $DATA
 
 ####################################
 # Specify NET and RUN Name and model
@@ -62,6 +89,11 @@ cd $DATA
 export NET=${model}
 export OFS=ofs
 export RUN=$(echo ${job}|awk -F"_" '{print $2}')
+
+export DATA=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver/ofs.${PDY}
+
+mkdir -p $DATA
+cd $DATA
 
 ####################################
 # SENDECF  - Flag Events on ECFLOW
@@ -75,9 +107,7 @@ export SENDDBN=${SENDDBN:-NO}
 ####################################
 # Specify Execution Areas
 ####################################
-#export HOMEnwps=${NWROOT}/${model}.${nwps_ver}
-export HOMEnwps=${NWROOT}
-export NWPSdir=${NWROOT}
+export HOMEnwps=${HOMEnwps:-${NWROOT}/${model}.${nwps_ver}}
 export FIXnwps=${FIXnwps:-${HOMEnwps}/fix}
 export EXECnwps=${EXECnwps:-${HOMEnwps}/exec}
 export SORCnwps=${SORCnwps:-${HOMEnwps}/sorc}
@@ -103,10 +133,10 @@ export SITETYPE=${SITETYPE:-EMC}
 ##############################################
 # Define COM directory
 ##############################################
-export COMIN=${COMROOT}/${NET}/${envir}/${OFS}.${PDY}
-export COMOUT=${COMROOT}/${NET}/${envir}/${OFS}.${PDY}
-export COMOUTm1=${COMROOT}/${NET}/${envir}/${OFS}.${PDYm1}
-export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
+export COMIN=${COMROOT}/${NET}/${ver}/${OFS}.${PDY}
+export COMOUT=${COMROOT}/${NET}/${ver}/${OFS}.${PDY}
+export COMOUTm1=${COMROOT}/${NET}/${ver}/${OFS}.${PDYm1}
+export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}/nwges
 #export COMINgfs=${COMROOT}/gfs/prod/gfs.${PDY}
 #export COMINwave=${COMROOTp1}/wave/prod
 #export COMINestofs=/gpfs/dell1/nco/ops/com/estofs/prod/estofs.${PDY}
@@ -151,11 +181,12 @@ export COMROOTp2=/gpfs/hps/nco/ops/com
 #------------------------
 # TEST WCOSS2
 #export COMINpsurge=/lfs/h1/mdl/marine/noscrub/Keep/psurge.v2.10/2018-Florence-Adv54-2.10.1/com/psurge/v2.10/psurge.20180912
-export COMINpsurge=/lfs/h1/mdl/marine/noscrub/Keep/psurge.v2.10/2017-Harvey-Adv12-2.10.1/com/psurge/v2.10/psurge.20170823/
+#export COMINpsurge=/lfs/h1/mdl/marine/noscrub/Keep/psurge.v2.10/2017-Harvey-Adv12-2.10.1/com/psurge/v2.10/psurge.20170823/
+export COMINpsurge=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/psurge.v2.10/2017-Harvey-Adv12-2.10.1/com/psurge/v2.10/psurge.20170823/
 #------------------------
 
 export dcom=${dcom:-/dcom/us007003}
-export COMOUTwmo=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/wmo
+export COMOUTwmo=${COMROOT}/${NET}/${ver}/${REGION}.${PDY}/wmo
 
 if [ "${SENDCOM}" = YES ]; then
     mkdir -p $COMOUT
@@ -166,7 +197,7 @@ mkdir -p $COMIN $LOGdir $RUNdir $TMPdir $OUTPUTdir $ARCHdir $DATAdir $INPUTdir $
 
 ##############################################
 # Execute the script
-${HOMEnwps}/dev/scripts/exnwps_ofs_prep.sh.ecf
+${HOMEnwps}/dev/scripts/exnwps_ofs_prep.sh
 ##############################################
 
 msg="JOB $job HAS COMPLETED NORMALLY."
