@@ -22,7 +22,17 @@
 # ----------------------------------------------------------- 
 
 # Setup and load modules
-source ../../versions/run.ver
+VERSION_FILE=../../versions/run.ver
+if [ -f $VERSION_FILE ]; then
+  . $VERSION_FILE
+else
+  ECFNAME="jnwps_datachk.ecf"
+  echo "***JOB ${ECFNAME} ERROR: Version File $VERSION_FILE does not exist ***"
+  exit
+fi
+
+export HOMEnwps=${NWPSdir}
+
 module purge
 module load envvar/${envvar_ver}
 module load prod_envir/${prod_envir_ver}
@@ -43,18 +53,8 @@ export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )d1
 export WCOSS_SYSTEM_COM=$( echo $COMROOTp1 | cut -c7-9 )
 
 export DEVWCOSS_USER=$(whoami)
-export NWROOT=${NWPSdir}
 
-VERSION_FILE=${NWROOT}/dev/nwps_test.ver
-if [ -f $VERSION_FILE ]; then
-  . $VERSION_FILE
-else
-  ECFNAME="jnwps_datachk.ecf"
-  echo "***JOB ${ECFNAME} ERROR: Version File $VERSION_FILE does not exist ***"
-  exit
-fi
-
-${NWROOT}/dev/jobs/J${MODEL}_DATACHK
+${HOMEnwps}/dev/jobs/J${MODEL}_DATACHK
 
 #%include <tail.h>
 
