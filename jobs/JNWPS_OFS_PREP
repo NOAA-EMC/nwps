@@ -71,13 +71,13 @@ setpdy.sh
 ##############################################
 # Define COM directory
 ##############################################
-export COMOUT=${COMOUT:-${COMROOT}/${NET}/${envir}/${OFS}.${PDY}}
-export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
-export COMINestofs=${COMINestofs:-$(compath.py estofs/prod/estofs.${PDY})}
-export COMINrtofs=${COMINrtofs:-$(compath.py rtofs/prod/rtofs.${PDY})}
-export COMINsice=${COMINsice:-$(compath.py omb/prod/sice.${PDY})}
-export COMINsicem1=${COMINsicem1:-$(compath.py omb/prod/sice.${PDYm1})}
-export COMINpsurge=${COMINpsurge:-$(compath.py psurge/prod/psurge.${PDY})}
+export COMOUT=${COMOUT:-${COMROOT}/${NET}/${nwps_ver}/${OFS}.${PDY}}
+export GESOUT=${COMROOT}/${NET}/${nwps_ver}/${NET}.${PDY}/nwges
+export COMINestofs=${COMINestofs:-$(compath.py -v -o estofs/${estofs_ver}/estofs.${PDY})} 
+export COMINrtofs=${COMINrtofs:-$(compath.py rtofs/${rtofs_ver}/rtofs.${PDY})}
+export COMINsice=${COMINsice:-$(compath.py seaice_analysis/${seaice_analysis_ver}/seaice_analysis.${PDY})}
+export COMINsicem1=${COMINsicem1:-$(compath.py seaice_analysis/${seaice_analysis_ver}/seaice_analysis.${PDYm1})}
+export COMINpsurge=${COMINpsurge:-$(compath.py psurge/${psurge_ver}/psurge.${PDY})}
 #
 # make sure NWPS COM directory exists
 if [ "${SENDCOM}" = YES ]; then
