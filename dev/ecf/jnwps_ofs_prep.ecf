@@ -32,13 +32,24 @@
 #PBS -l place=excl
 #PBS -l debug=true
 #PBS -V
-#PBS -o /lfs/h2/emc/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/ofs_prep.o
-#PBS -e /lfs/h2/emc/ptmp/Andre.VanderWesthuysen/data/com/nwps/para/ofs_prep.o
+#PBS -o /lfs/h2/emc/ptmp/Andre.VanderWesthuysen/com/nwps/v1.4.0/ofs_prep.o
+#PBS -e /lfs/h2/emc/ptmp/Andre.VanderWesthuysen/com/nwps/v1.4.0/ofs_prep.o
 
 cd $PBS_O_WORKDIR
 
+set -xa
+
 # Setup and load modules
-source ../../versions/run.v1.4.0
+VERSION_FILE=../../versions/run.ver
+if [ -f $VERSION_FILE ]; then
+  . $VERSION_FILE
+else
+  echo "***JOB ${job} ERROR: Version File $VERSION_FILE does not exist ***"
+  exit
+fi
+
+export HOMEnwps=${NWPSdir}
+
 module purge
 module load envvar/${envvar_ver}
 module load prod_envir/${prod_envir_ver}
@@ -64,18 +75,25 @@ export KEEPDATA="YES"
 export model="nwps"
 export MODEL=${model^^}
 
+####################################
+# Specify NET and RUN Name and model
+####################################
+export NET=${model}
+export RUN=$(echo ${job}|awk -F"_" '{print $2}')
+
 export envir="para"
 
 export DEVWCOSS_USER=$(whoami)
-export COMROOT=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/data/com
+export COMROOT=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/com
 
 #Dev environment value for $job and $jobid
 export job=pnwps_ofs_prep
 export jobid=pnwps_ofs_prep.$$
 
 #Dev environment jlogfile
-mkdir -p ${COMROOT}/logs/${envir}
-export jlogfile=${COMROOT}/logs/${envir}/jlogfile.${job}
+export ver=${nwps_ver}
+mkdir -p /lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver/logs/jlogfiles
+export jlogfile=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver/logs/jlogfiles/jlogfile.${job}
 
 #************IMPORTANT ****************
 #* ADJUST THE PSURGE FIELDS TIME STEP *
@@ -87,21 +105,12 @@ export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )d1
 export WCOSS_SYSTEM_COM=$( echo $COMROOTp1 | cut -c7-9 )
 
 export DEVWCOSS_USER=$(whoami)
-export NWROOT=${NWPSdir}
-
-VERSION_FILE=${NWROOT}/dev/psurge2nwps_test.ver
-if [ -f $VERSION_FILE ]; then
-  . $VERSION_FILE
-else
-  echo "***JOB ${job} ERROR: Version File $VERSION_FILE does not exist ***"
-  exit
-fi
 
 #export OFSTYPE="psurge"
-#export OFSTYPE="estofs"
+export OFSTYPE="estofs"
 #export OFSTYPE="rtofs"
 
-${NWROOT}/dev/jobs/JNWPS_OFS_PREP
+${HOMEnwps}/dev/jobs/JNWPS_OFS_PREP
 
 #%include <tail.h>
 
@@ -115,8 +124,8 @@ ${NWROOT}/dev/jobs/JNWPS_OFS_PREP
 #FULL NAME:    
 #PURPOSE:  To execute the job that creates output files from Psurge to bused 
 #          by NWPS
-#JOB SCRIPT CALLED: ${NWROOT}/jobs/JPSURGENWPS ==>
-#                            ${NWROOT}/scripts/expsurgenwps.sh.ecf
+#JOB SCRIPT CALLED: ${HOMEnwps}/jobs/JPSURGENWPS ==>
+#                            ${HOMEnwps}/scripts/expsurgenwps.sh.ecf
 #################################################################################
 ######################################################################
 # Job specific troubleshooting instructions:
