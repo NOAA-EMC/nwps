@@ -58,8 +58,6 @@ function process_nwps_dcom {
     else
         echo "PROCESSING LASTEST WFO FILES FOR THE LAST 6 CYCLES ONLY."
         for dfile in ${DCOM_FILES[@]}; do
-            # remove the path with /gpfs/?p1/nco/ops from dfile for dcom_hist.txt
-            #dfileH=`echo $dfile|awk -Fops '{print $2}'`
             dfileH=`basename $dfile`
             wfo=$(echo ${dfile} ${dcom}|awk -F_ '{print $2}')
             ecf_wfo=$(grep ${wfo} ${PARMnwps}/wfo.tbl)
