@@ -73,8 +73,6 @@ export TMPdir=${TMPdir:-${DATA}/tmp}
 export LOGdir=${LOGdir:-${DATA}/logs}
 export GEN_NETCDF=${GEN_NETCDF:-FALSE}
 export GEN_HDF5=${GEN_HDF5:-TRUE}
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOMEnwps}/lib64/python/basemap-1.0.7/geos-3.3.3/lib
-export PYTHONPATH=${HOMEnwps}/lib64/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
 export PYTHON=python
 
 # Set NWPS run conditions
@@ -97,17 +95,17 @@ echo ${REGION}
 ##############################################
 # Define COM directory
 ##############################################
-export COMIN=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
-export COMINm1=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm1}/${WFO}
-export COMINm2=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm2}/${WFO}
-export COMINm3=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm3}/${WFO}
-export COMOUT=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
-export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
-export GESIN=${GESROOT}/${envir}/${NET}.${PDY}
-export GESINm1=${GESROOT}/${envir}/${NET}.${PDYm1}
-export GESINm2=${GESROOT}/${envir}/${NET}.${PDYm2}
-export GESINm3=${GESROOT}/${envir}/${NET}.${PDYm3}
-export COMOUTwmo=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/wmo
+export COMIN=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDY}/${WFO}
+export COMINm1=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDYm1}/${WFO}
+export COMINm2=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDYm2}/${WFO}
+export COMINm3=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDYm3}/${WFO}
+export COMOUT=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDY}/${WFO}
+export GESOUT=${COMROOT}/${NET}/${nwps_ver}/${NET}.${PDY}/nwges
+export GESIN=${COMROOT}/${NET}/${nwps_ver}/${NET}.${PDY}/nwges
+export GESINm1=${COMROOT}/${NET}/${nwps_ver}/${NET}.${PDYm1}/nwges
+export GESINm2=${COMROOT}/${NET}/${nwps_ver}/${NET}.${PDYm2}/nwges
+export GESINm3=${COMROOT}/${NET}/${nwps_ver}/${NET}.${PDYm3}/nwges
+export COMOUTwmo=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDY}/wmo
 #--------------------------------------------------------------------------
 export dcom_hist="$GESOUT/dcom_hist.txt"
 #export dcom=${dcom:-${DCOMROOT}}
