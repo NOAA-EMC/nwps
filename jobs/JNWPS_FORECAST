@@ -51,7 +51,6 @@ export LOGdir=${LOGdir:-${DATA}/logs}
 export GEN_NETCDF=${GEN_NETCDF:-FALSE}
 export GEN_HDF5=${GEN_HDF5:-TRUE}
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOMEnwps}/lib/szip:${HOMEnwps}/lib/proj
-export PYTHONPATH=${HOMEnwps}/lib64/python/python_modules/lib64/python2.6/site-packages:${PYTHONPATH}
 export PYTHON=python
 
 # Set NWPS run conditions
@@ -75,13 +74,13 @@ echo ${REGION}
 ##############################################
 # Define COM directory
 ##############################################
-export COMIN=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
-export COMINm1=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm1}/${WFO}
-export COMINm2=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm2}/${WFO}
-export COMINm3=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm3}/${WFO}
-export COMOUT=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
-export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
-export COMOUTwmo=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/wmo
+export COMIN=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDY}/${WFO}
+export COMINm1=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDYm1}/${WFO}
+export COMINm2=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDYm2}/${WFO}
+export COMINm3=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDYm3}/${WFO}
+export COMOUT=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDY}/${WFO}
+export GESOUT=${COMROOT}/${NET}/${nwps_ver}/${NET}.${PDY}/nwges
+export COMOUTwmo=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDY}/wmo
 #--------------------------------------------------------------------------
 # make sure NWPS COM directory exists
 if [ "${SENDCOM}" = YES ]; then
