@@ -1,7 +1,7 @@
 #%Module######################################################################
 ##                                             Andre.VanderWesthuysen@noaa.gov
 ##                                                           NOAA/NWS/NCEP/EMC
-## NWPS v1.3.0
+## NWPS
 ##_____________________________________________________
 #proc ModulesHelp { } {
 #puts stderr "Set environment veriables for NWPS"
@@ -13,7 +13,6 @@
 set ver ${nwps_ver}
 
 set sys [uname sysname]
-set NWPS /gpfs/hps/nco/ops/nwtest/nwps.v1.3.6/modulefiles/NWPS
 set lname NWPS
 
 # Known conflicts ???
