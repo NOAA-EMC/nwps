@@ -212,7 +212,7 @@ else
     echo "============"
     for runit in ${DCOM_FILES[@]}; do
         if [ "$nrunning" -lt 18 ]; then
-            wfo=$(echo ${runit}|awk -F_ '{print $2}')
+		wfo=$(echo ${runit}|awk -F_ '{print $2}')
             ecf_wfo=$(grep ${wfo} ${PARMnwps}/wfo.tbl)
             region=$(echo ${ecf_wfo} |awk -F"/" '{print $1}')
             #if ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:active; then
@@ -222,25 +222,25 @@ else
             else
                 echo -ne "QUEUEING:\t\t$wfo\n"
 
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_prep.o 
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_forecast_cg1.o
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_post_cg1.o
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_prdgen_cg1.o
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_wavetrack_cg1.o
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_prdgen_cg0.o
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_forecast_cgn.o
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_post_cgn.o
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_prdgen_cgn.o
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_prep.o 
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_forecast_cg1.o
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_post_cg1.o
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_prdgen_cg1.o
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_wavetrack_cg1.o
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_prdgen_cg0.o
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_forecast_cgn.o
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_post_cgn.o
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_prdgen_cgn.o
 
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_prep
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_fc_cg1
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_po_cg1
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_pd_cg1
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_wt_cg1
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_pd_cg0
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_fc_cgn
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_po_cgn
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_pd_cgn
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_prep
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_fc_cg1
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_po_cg1
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_pd_cg1
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_wt_cg1
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_pd_cg0
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_fc_cgn
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_po_cgn
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_pd_cgn
 
                 echo "Populating jobcards for "${wfo}"..."
                 sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_prep.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_prep.ecf.${wfo}
