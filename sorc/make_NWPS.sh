@@ -27,7 +27,7 @@ fi
 
 #Fetching external fix and binary files from rzdm
 cd ${NWPSdir}/sorc
-#AW ./get_externals.sh
+./get_externals.sh
 
 source ../versions/build.ver
 
