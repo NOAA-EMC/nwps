@@ -161,8 +161,6 @@ NOTE: Renamed files are indicated with an ->
 versions/build.ver
 versions/run.ver
 
-
-
 modulefiles/build_nwps.modules
 Removed: modulefiles/NWPS/v1.3.0
 Removed: sorc/degrib-2.15.cd/build_psurge.module
@@ -321,7 +319,6 @@ parm/transfer_nwps_nwges_hotstart4.list
 parm/transfer_nwps_nwges_histlog.list
 parm/transfer_nwps_regions.list
 parm/transfer_nwps_ofs.list
-
 
 
 Were any other changes made that aren’t directly related to the transition?
