@@ -20,8 +20,6 @@ export pwd=`pwd`
 export NWPSdir=${pwd%/*}
 export srcDir=${NWPSdir}/sorc
 
-# Load the build module
-#module load ./degrib-2.15.cd/build_psurge.module
 module list
 
 # Clean all degrib object and archive files (including lib/libemapf.a and lib/libgd.a)
