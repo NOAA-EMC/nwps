@@ -48,21 +48,21 @@ export USHutil=${UTILROOT}/ush
 #AW sh $utilscript/setpdy.sh
 
 #AW . ./PDY
-#export PDYm7=20170816
-#export PDYm6=20170817
-#export PDYm5=20170818
-#export PDYm4=20170819
-#export PDYm3=20170820
-#export PDYm2=20170821
-#export PDYm1=20170822
-#export PDY=20170823
-#export PDYp1=20170824
-#export PDYp2=20170825
-#export PDYp3=20170826
-#export PDYp4=20170827
-#export PDYp5=20170828
-#export PDYp6=20170829
-#export PDYp7=20170830
+#export PDYm7=20180905
+#export PDYm6=20180906
+#export PDYm5=20180907
+#export PDYm4=20180908
+#export PDYm3=20180909
+#export PDYm2=20180910
+#export PDYm1=20180911
+#export PDY=20180912
+#export PDYp1=20180913
+#export PDYp2=20180914
+#export PDYp3=20180915
+#export PDYp4=20180916
+#export PDYp5=20180917
+#export PDYp6=20180918
+#export PDYp7=20180919
 
 export PDYm7=20220118
 export PDYm6=20220119
@@ -182,7 +182,8 @@ export COMROOTp2=/gpfs/hps/nco/ops/com
 # TEST WCOSS2
 #export COMINpsurge=/lfs/h1/mdl/marine/noscrub/Keep/psurge.v2.10/2018-Florence-Adv54-2.10.1/com/psurge/v2.10/psurge.20180912
 #export COMINpsurge=/lfs/h1/mdl/marine/noscrub/Keep/psurge.v2.10/2017-Harvey-Adv12-2.10.1/com/psurge/v2.10/psurge.20170823/
-export COMINpsurge=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/psurge.v2.10/2017-Harvey-Adv12-2.10.1/com/psurge/v2.10/psurge.20170823/
+#export COMINpsurge=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/psurge.v2.10/2017-Harvey-Adv12-2.10.1/com/psurge/v2.10/psurge.20170823/
+export COMINpsurge=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/psurge.v2.10/2018-Florence-Adv54-2.10.1/com/psurge/v2.10/psurge.20180912/
 #------------------------
 
 export dcom=${dcom:-/dcom/us007003}
