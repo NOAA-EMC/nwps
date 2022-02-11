@@ -38,8 +38,6 @@ module load craype/${craype_ver}
 module load intel/${inter_ver}
 module load cray-pals/${cray_pals_ver}
 module load wgrib2/${wgrib2_ver}
-module load hdf5/${hdf5_ver}
-module load netcdf/${netcdf_ver}
 module load python/${python_ver}
 module load jasper/${jasper_ver}
 module load libpng/${libpng_ver}
