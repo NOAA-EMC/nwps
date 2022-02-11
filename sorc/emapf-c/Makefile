@@ -4,7 +4,7 @@ SHELL = /bin/sh
 #      Conformal Map Transforms - ellipsoidal 3.1
 #  Report bugs to albion.taylor@noaa.gov
 
-prefix = /lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/nwps/sorc/emapf-c
+prefix = /lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/nwps.v1.4.0/sorc/emapf-c
 exec_prefix = ${prefix}
 bindir = ${exec_prefix}/bin
 srcdir = .
