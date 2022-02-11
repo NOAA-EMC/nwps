@@ -31,8 +31,7 @@ set -xa
 export TS_f=3600
 
 #AW curhour=$(date -u +%H)
-#AW curhour=0
-curhour=22
+curhour=0
 if [ $curhour -lt 12 ]; then CYCLE="00"; fi
 if [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
 if [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
