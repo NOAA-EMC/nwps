@@ -1,0 +1,36 @@
+Variables to Consider for running as DEVWCOSS
+ECF VARIABLES:
+
+module load cfp NetCDF prod_util grib_util
+
+export FORT_BUFFERED=true
+export NWPSplatform=WCOSS (DEVWCOSS)
+export MP_PGMMODEL=mpmd
+export MP_CSS_INTERRUPT=yes
+export WFO=mfl
+export siteid=mfl
+export SITEID=MFL
+export KEEPDATA=YES
+export model=nwps
+export MODEL=NWPS
+export job=pnwps_mfl_prep
+export jobid=pnwps_mfl_prep.17613 (17613 will be $$)
+export RUN_ENVIR=nco
+export envir=para
+export DCOMROOT=/dcom/us007003 (this will be dcomdev during testing)
+export COMROOT=/com (Very important to change for DEVWCOSS!!)
+export GESROOT=/nwges (Assign to dev directory for bcdata)
+export NWROOT=/nwpara
+export UTILROOT=/nwprod2/prod_util.v1.0.0
+export jlogfile=/com/logs/para/jlogfile
+export DATAROOT=/tmpnwprd2 (replace with DEV working directory)
+export DBNROOT=/nwprod/spa_util/fakedbn
+export SENDDBN=YES
+export SENDDBN_NTC=YES
+export SENDECF=YES
+export SENDCOM=YES
+export KEEPDATA=YES (NO will erase working directory)
+VERSION_FILE=/nwpara/versions/nwps_test.ver (Copy and make your own version file)
+. $VERSION_FILE
+export DATA=${DATAROOT}/p${model}_${siteid}l_${envir} (Working directory!!)
+
