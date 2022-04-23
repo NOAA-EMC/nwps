@@ -1,0 +1,748 @@
+TITLE: 
+Nearshore Wave Prediction System (NWPS) v1.3.0
+
+CHANGE REQUEST CLASS: 
+Major change
+
+DESCRIPTION OF CHANGE:  
+This upgrade includes the following major changes:
+- Improved algorithm for wave system tracking guidance, incl. 
+reducing low-frequency cut-off to 0.035 Hz (all 36 WFO domains).
+- For 12 WFO domains (HGX, MOB, TAE, KEY, MLB, JAX, CHS, ILM,
+PHI, GYX, ALU, GUM), computation on unstructured domain meshes
+with variable resolution of 5 km to 200 m. (These are, however,
+interpolated onto existing regular CG1-CG5 output grids for
+AWIPS ingest.)
+- For 9 WFO domains (HGX, MOB, TAE, MLB, JAX, CHS, ILM, PHI,
+GYX), the addition of rip current and runup (erosion/overwash)
+guidance. For WFOs KEY and GUM, only rip current guidance is
+added.
+- Inclusion of wave field transect output graphics.
+
+The NWPS is run 1-8 times per day, on demand, depending on the 
+coastal Weather Forecast Office (WFO). The 1-hourly grids will 
+be disseminated in GRIB2 format, as well as in graphical (png) 
+format on http://polar.ncep.noaa.gov/nwps/. Grid resolutions will 
+be dependent upon individual coastal WFO. Each WFO will receive 
+integral (total wave field) model guidance on a CG1 grid, and 
+on up to 4 nested grids (CG2-CG5). In addition, partitioned wave 
+fields will be available on a lower-resolution CG0 grid, if requested:
+
+   CG0 grid - partition output on low-resolution version of overall computational domain CG1
+   CG1 grid - integral output on overall computational grid
+   CG2 grid - integral output on first nested grid, if applicable
+   CG3 grid - integral output on second nested grid, if applicable
+   CG4 grid - integral output on third nested grid, if applicable
+   CG5 grid - integral output on fourth nested grid, if applicable
+
+In the case of the 12 new unstructured meshes, the results on the 
+native unstructured meshes are interpolated on the above regular 
+grids for AWIPS display.
+
+JOB DEPENDENCIES:
+This system has upstream dependencies on the following WCOSS models:
+ - WW3 Multi_1 (wave boundary conditions)
+ - RTOFS Global (surface current fields)
+ - ESTOFS Atlantic, Pacific and Micronesia (water level fields)
+ - MMAB Sea Ice Analysis (sea ice fields) 
+ - P-Surge (water level fields)
+ - GFS pgrb files (U10 fields for GFS fail-over option) 
+
+The system has upstream data dependencies on:
+ - User input received from AWIPS via LDM
+
+This system currently has no downstream dependencies.
+
+REQUIRED SYSTEM USAGE:
+
+i) Input field preprocessing:
+Preprocessing module to extract input fields from upstream models 
+ESTOFS, Sea Ice, RTOFS and P-Surge to grids directly ingestible 
+in NWPS. These run in parallel to the on-demand runs for each WFO 
+(see below), and are staged for on-demand use in the latter.
+
+ESTOFS water level and Sea Ice extraction:
+   CPU time:   0:46:54 h:min:sec
+   Max/Ave Memory :   29 MB / 22.04 MB
+   Num of CPUs :   36 (cfp parallel, distrib. over 2 nodes)
+
+RTOFS surface current extraction:
+   CPU time:   0:10:24 h:min:sec
+   Max/Ave Memory :   131 MB / 39.11 MB
+   Num of CPUs :   1 (Serial, on 1 node)
+
+P-Surge water level extraction (tropical conditions in SR/ER):
+   CPU time :   0:34:34 h:min:sec
+   Max/Ave Memory :   28 MB / 22.18 MB
+   Num of CPUs :   22 (cfp parallel, distrib. over 2 nodes)
+
+ii) Real-time, on-demand model:
+For each of the 36 on-demand WFO runs, the following tasks are 
+executed: PREP, FORECAST_CG1, POST_CG1, PRDGEN_CG1,  WAVETRACK_CG1, 
+PRDGEN_CG0. Additionally, up to 4 nested domains are run, using 
+the tasks FORECAST_CGn, POST_CGn and PRDGEN_CGn in a loop of n. 
+The system usage for each of these tasks depends on the specific 
+WFO domain, and number of nest grids. Example system usage values 
+for the unstructured-mesh domain for WFO Miami, FL (MFL) are:
+
+JNWPS_PREP
+   CPU time :   07:45 min:sec
+   Max/Ave Memory :   79 MB / 48.64 MB
+   Num of CPUs :   1 (Serial)
+
+JNWPS_FORECAST_CG1
+   CPU time :   53:01 min:sec
+   Max/Ave Memory :   40 MB / 32.65 MB
+   Num of CPUs :   96 (Parallel)
+
+JNWPS_POST_CG1
+   CPU time :   18:53 min:sec
+   Max/Ave Memory :   158 MB / 27.68 MB
+   Num of CPUs :   11 (Parallel)
+
+JNWPS_PRDGEN_CG1
+   CPU time :   00:07 min:sec
+   Max/Ave Memory :   523 MB / 20.05 MB
+   Num of CPUs :   11 (Parallel)
+
+JNWPS_WAVETRACK_CG1
+   CPU time :   19:20 min:sec
+   Max/Ave Memory :   313 MB / 25.26 MB
+   Num of CPUs :   1 (Serial)
+
+JNWPS_PRDGEN_CG0
+   CPU time :   00:02 min:sec
+   Max/Ave Memory :   142 MB / 20.14 MB
+   Num of CPUs :   8 (Parallel)
+
+JNWPS_FORECAST_CGn
+   CPU time :   06:44 min:sec
+    Max/Ave Memory :   41 MB / 20.85 MB
+   Num of CPUs :   10 (Parallel)
+
+JNWPS_POST_CGn
+   CPU time :   0:46 min:sec
+   Max/Ave Memory :   52 MB / 20.52 MB
+   Num of CPUs :   Up to 4 (Parallel)
+
+JNWPS_PRDGEN_CGn 
+   CPU time :   0:08 min:sec
+   Max/Ave Memory :   172 MB / 20.22 MB
+   Num of CPUs :   Up to 4 (Parallel)
+
+Estimated average system usage for each of the 36 WFOs: 16-96 cores. 
+This is determined by the size of the JNWPS_FORECAST_CG1 job above, 
+which depends on the size/complexity of each WFO domain:
+
+MFL, KEY, AKQ:      96 CPUs
+ALU:                84 CPUs
+AER, AFG, LCH, MHX: 24 CPUs
+HFO:                16 CPUs
+Remaining WFOs:     48 CPUs
+
+A total of 44 nodes on WCOSS TO4 (Cray) should be reserved for the 
+on-demand operation, preferably EXCLUSIVE. 
+
+NWPS v1.3 has some product delays relative to v1.2. The tables below 
+detail the delivery times per job for each WFO, measured relative to the 
+run initiation time. The table on the left shows the timing for v1.3, and 
+the table on the right shows the corresponding values for v1.2:
+
+Delivery time of v1.3 products (min):        Delivery times of v1.2 products (min):
+      CG1   CG0   CG2   CG3   CG4   CG5            CG1   CG0   CG2   CG3   CG4   CG5
+bro    25    37     -     -     -     -      bro    31    32     -     -     -     -
+crp    33    41     -     -     -     -      crp    33    34     -     -     -     -
+hgx    36    46    50     -     -     -      hgx    54    56     -     -     -     -
+lch    31    42     -     -     -     -      lch    35    37     -     -     -     -
+lix    43    54    74     -     -     -      lix    42    44    76     -     -     -
+mob    36    47    51    52    52    53      mob    40    42    65    66    67    68
+tae    45    58    63    64    64    65      tae    26    27    65    66    66    67
+tbw    36    46    49     -     -     -      tbw    38    40    55     -     -     -
+key    64    79    84     -     -     -      key    31    32    86     -     -     -
+mfl    80    99   105   106   106   107      mfl    98   101   114   115   115   116
+mlb    41    54    58     -     -     -      mlb    33    36    68     -     -     -
+jax    31    43    47    48    48    49      jax    22    27    58    59    59    60
+sju    57    74    80    81     -     -      sju    58    63    79    80     -     -
+chs    42    54    57    58     -     -      chs    28    31    68    69     -     -
+ilm    47    62     -     -     -     -      ilm    23    29     -     -     -     -
+mhx    69    79    84    85    85    86      mhx    72    74    88    89    89    90
+akq    51    63     -     -     -     -      akq    55    58     -     -     -     -
+lwx    16    25     -     -     -     -      lwx    15     -     -     -     -     -
+phi    34    46    49    50     -     -      phi    17    21    52    53     -     -
+okx    53    68    72    73    73     -      okx    59    62    74    74    75     -
+box    67    84    89     -     -     -      box    64    67    82     -     -     -
+gyx    44    56    61    62     -     -      gyx    17    19    66    67     -     -
+car    38    45    49    50     -     -      car    41    42    58    59     -     -
+sgx    40    50    53    54     -     -      sgx    51    54    66    67     -     -
+lox    23    42    59    60     -     -      lox    25    37    74    75     -     -
+mtr    28    44    77    78    79     -      mtr    22    31    80    81    82     -
+eka    19    34    41     -     -     -      eka    17    29    45     -     -     -
+mfr    25    40    69    70    70    71      mfr    23    33    74    75    75    76
+pqr    26    40    57    58    58    59      pqr    24    29    58    59    59    60
+sew    22    36    46     -     -     -      sew    23    31    57     -     -     -
+ajk    30    41   120   121     -     -      ajk    25    27   138   139     -     -
+aer    29    40   123   124     -     -      aer    24    27   134   135     -     -
+alu    55    72    79    80     -     -      alu    41    47     -     -     -     -
+afg    43     -    86    87     -     -      afg    40     -   101   102     -     -
+hfo    92   113   120   121   121   122      hfo    95   106   123   124   124   125
+gum    32    45    48    49    49     -      gum    18    21    43    44    45     -
+
+The table below summarizes all product delays >5 min. Note that new 
+products in v1.3 is indicated by "new":
+
+      CG1   CG0   CG2   CG3   CG4   CG5
+bro     -     -                       
+crp     -     7                       
+hgx     -     -   new                 
+lch     -     -                       
+lix     -    10     -                 
+mob     -     -     -     -     -     -
+tae    19    31     -     -     -     -
+tbw     -     6     -                 
+key    33    47     -                 
+mfl     -     -     -     -     -     -
+mlb     8    18     -                 
+jax     9    16     -     -     -     -
+sju     -    11     -     -           
+chs    14    23     -     -           
+ilm    24    33                       
+mhx     -     -     -     -     -     -
+akq     -     -                       
+lwx     -   new                       
+phi    17    25     -     -           
+okx     -     6     -     -     -     
+box     -    17     7                 
+gyx    27    37     -     -           
+car     -     -     -     -                  
+sgx     -     -     -     -    
+lox     -     -     -     -    
+mtr     6    13     -     -     -    
+eka     -     -     -    
+mfr     -     7     -     -     -     -
+pqr     -    11     -     -     -     -
+sew     -     -     -    
+ajk     -    14     -     -          
+aer     -    13     -     -          
+alu    14    25   new   new          
+afg     -           -     -   
+hfo     -     7     -     -     -     -
+gum    14    24     -     -     -     
+
+Disk storage: Total disk footprint in all run directories, nwges, 
+com and pcom is 2.5T (up from 19.T in v1.2.13). Request data to be 
+stored for 5 days.
+
+HPSS tape storage: Total volume (36 WFOs, all domains) = 111 GB/day, 
+incl. space of retrospective inputs (up from 88.5 GB/day in v1.2.13). 
+Request data to be archived for 2 years.
+
+BENEFITS OF CHANGE:
+- Improved quality of wave system tracking guidance to aid in
+the production of separate wind sea and swell forecasts
+- For 12 unstructured WFO domains: Higher nearshore grid
+resolution improves representation of the coastal geography and
+nearshore wave growth and propagation
+- For 12 unstructured WFO domains: High resolution enables the
+computation of rip current and erosion/overwash guidance to aid
+in the production of coastal hazard forecasts
+- Transect output provides a view of the wave guidance
+along high-impact tracks.
+
+USER IMPACT STATEMENT:
+Coastal WFOs in SR, ER, WR, PR and AR will be provided with enhanced, 
+more consistent wave system guidance available in GFE (for editing) 
+and D2D (for display). For the 12 WFOs transitioning to unstructured 
+meshes, coastal wave physics will be resolved with more detail. For 
+21 WFOs (existing and new unstructured mesh domains), probabilistic 
+rip current probability guidance will be available in GFE/D2D for the 
+first time. Similarly for 16 WFOs probabilistic erosion and overwash 
+guidance will be available for the first time in GFE/D2D.
+
+TECHNICAL IMPACT STATEMENT:
+Three technical impacts will be seen at the user (WFO) level:
+1) The product delays listed above
+2) The following GRIB2 fields will be removed from the SBN (see PNS20-47):
+   - Water depth (WDEPTH) [m]
+   - Wave length (WLENG) [m]
+3) The following GRIB2 fields will be added to the SBN (configured in AWIPS v20.2.1):
+   - Rip current probability (RIPCOP) [0-100%]
+   - Erosion Occurrence Probability (EROSNP) [0-100%]
+   - Overwash Occurrence Probability (OWASHP) [0-100%]
+   - Total Water Level Accounting for Tide, Wind and Waves (TWLWAV) [m MSL]
+   - Total Water Level Increase due to Waves (RUNUP) [m]
+   - Mean Increase in Water Level due to Waves (SETUP) [m]
+   - Time-varying Increase in Water Level due to Waves (SWASH) [m]
+   - Total Water Level Above Dune Toe (TWLDT) [m]
+   - Total Water Level Above Dune Crest (TWLDC) [m]
+
+RISKS:
+This on-demand system has two primary technical risks:
+1. Dataflow: Each of the 23 coastal WFOs will submit a set of three files 
+via LDM for their respective runs. The data volume of each submission will 
+be up to 3 MB. There is a risk that there would be insufficient capacity 
+on the LDM to relay this data, or that the transmission would be interrupted 
+by a network outage. If this would occur, the NWPS runs will not initiate 
+on WCOSS.
+
+2. The NWPS will handle individual runs of up to 23 coastal WFOs, but 
+typically not all concurrently. Projections suggest that 44 nodes on 
+WCOSS T04 (Cray) will provide sufficient capacity, but the actual operational 
+loading could vary.  
+
+PROPOSED IMPLEMENTATION
+DATE:  December 21, 2020
+TIME: 00z
+
+BUGFIXES
+- Bug 926: Add wind initialization time window checking in nwps (01/21/20)
+- Bug 903: decrease rsync timeout time in JNWPS_DATACHK (07/31/19)
+- Bug 828: nwps_hfo_post_cg1 job failure with CYCLE 09 (07/31/19)
+- Bug 881: Fix nwps_forecast_cg1 hung when missing restart files (06/03/19)
+- Bug 860: improve handling bad WFO submission in nwps prep job (04/29/19)
+- Bug 845: Check for empty NWPS submission file (03/11/19)
+- Bug 828: Nwps_hfo_post_cg1 job failure with CYCLE 09 (11/20/18)
+- Bug 678: Remove the Python warnings in NWPS code in next (11/17/17)
+- Bug 677: NWPS executables do not match their top level source directory names (11/16/17)
+- Bug 676: Memory leaking in nwps_forecast job (11/16/17)
+- Bug 671: Add the warning in prep job if fail over to gfs data (11/15/17)
+
+IMPLEMENTATION INSTRUCTIONS
+
+I) Checking out the code from VLab
+
+Make the $NWROOT home directory for the model:
+> mkdir nwps
+> cd nwps
+
+Clone the NWPS code from the following VLab repo, and checkout the tag v1.3.0:
+> git clone https://vlab.ncep.noaa.gov/code-review/EMC_nwps
+> git checkout v1.3.0
+
+II) Building the executables
+
+First define the path variable ${NWPSdir} in your profile file, which points to the base of the code checked out under (I) above.
+> export NWPSdir=$(pwd)
+
+Next, change directory to ${NWPSdir}/sorc/, and execute the general NWPS install script. This single step will install the total package, including all binary compilations:
+
+> cd ${NWPSdir}/sorc
+> ./make_NWPS.sh
+
+Once the compilations are done, all executables are moved to ${NWPSdir}/exec, and the system will be ready.
+
+The table below lists the executables, their respective source code directories, and build logs:
+
+Executable                 | Source directory name                 | Build log
+---------------------------+---------------------------------------+---------------------
+punswan4110.exe            | punswan4110.fd                        | punswan_build.log
+swan.exe                   | swan.fd                               | swan_build.log
+runupforecast.exe          | runupforecast.fd                      | runup_build.log
+ripforecast.exe            | ripforecast.fd                        | ripcurrent_build.log
+estofs_padcirc             | estofs_padcirc.fd                     | padcirc_build.log
+estofs_adcprep (util)      | estofs_padcirc.fd                     | padcirc_build.log
+ww3_sysprep.exe            | ww3_sysprep.fd                        | sysprep_build.log
+degrib                     | degrib-2.15.cd                        | degrib_build.log
+psurge2nwps                | psurge2nwps.cd                        | psurge2nwps_build.log
+psurge_identify.exe (util) | psurge2nwps.cd                        | psurge_identify_build.log
+psoutTOnwps.exe (util)     | psurge2nwps.cd                        | psoutTOnwps_build.log
+psurge_combine.exe (util)  | psurge2nwps.cd                        | psurge_combine_build.log
+                           |                                       |
+check_awips_windfile       | nwps_utils.cd/check_awips_windfile    | nwps_utils_build.log
+wave_runup_to_bin          | nwps_utils.cd/wave_runup_to_bin       | nwps_utils_build.log
+rip_current_to_bin         | nwps_utils.cd/rip_current_to_bin      | nwps_utils_build.log
+fix_ascii_point_data       | nwps_utils.cd/fix_ascii_point_data    | nwps_utils_build.log
+read_awips_windfile        | nwps_utils.cd/read_awips_windfile     | nwps_utils_build.log
+readdat                    | nwps_utils.cd/readdat                 | nwps_utils_build.log
+seaice_mask                | nwps_utils.cd/seaice_mask             | nwps_utils_build.log
+swan_out_to_bin            | nwps_utils.cd/swan_out_to_bin         | nwps_utils_build.log
+swan_wavetrack_to_bin      | nwps_utils.cd/swan_wavetrack_to_bin   | nwps_utils_build.log
+writedat                   | nwps_utils.cd/writedat                | nwps_utils_build.log
+g2_write_template          | nwps_utils.cd/g2_write_template       | nwps_utils_build.log
+shiproute_to_bin           | nwps_utils.cd/shiproute_to_bin        | nwps_utils_build.log
+
+
+Update for tag 'v1.3.3-estofs':
+Date: 10/01/20
+
+This tag contains updates for the downstream dependency of NWPS v1.3 on Global ESTOFS v1.
+
+IMPLEMENTATION INSTRUCTIONS (v1.3.3-estofs):
+
+The script files listed below need to be updated in the codebase in order to correctly 
+process the output from Global ESTOFS v1. Since no executables are modified, the system 
+does not need to be rebuilt for these changes to be incorporated.
+
+jobs/JNWPS_OFS_PREP
+ush/make_estofs.sh
+fix/configs/mtr_ncep_config.sh
+fix/configs/lox_ncep_config.sh
+fix/configs/bro_ncep_config.sh
+fix/configs/mfr_ncep_config.sh
+fix/configs/afg_ncep_config.sh
+fix/configs/mhx_ncep_config.sh
+fix/configs/aer_ncep_config.sh
+fix/configs/ilm_ncep_config.sh
+fix/configs/chs_ncep_config.sh
+fix/configs/car_ncep_config.sh
+fix/configs/tae_ncep_config.sh
+fix/configs/key_ncep_config.sh
+fix/configs/crp_ncep_config.sh
+fix/configs/sew_ncep_config.sh
+fix/configs/pqr_ncep_config.sh
+fix/configs/gum_ncep_config.sh
+fix/configs/jax_ncep_config.sh
+fix/configs/ajk_ncep_config.sh
+fix/configs/phi_ncep_config.sh
+fix/configs/mob_ncep_config.sh
+fix/configs/box_ncep_config.sh
+fix/configs/lix_ncep_config.sh
+fix/configs/akq_ncep_config.sh
+fix/configs/alu_ncep_config.sh
+fix/configs/mfl_ncep_config.sh
+fix/configs/eka_ncep_config.sh
+fix/configs/hgx_ncep_config.sh
+fix/configs/mlb_ncep_config.sh
+fix/configs/sju_ncep_config.sh
+fix/configs/hfo_ncep_config.sh
+fix/configs/okx_ncep_config.sh
+fix/configs/sgx_ncep_config.sh
+fix/configs/txx_ncep_config.sh
+fix/configs/tbw_ncep_config.sh
+
+
+Update for tag 'v1.3.4':
+Date: 10/09/20
+
+This tag contains updates for the downstream dependency of NWPS v1.3 on GFSv16 (both 
+atmosphere and wave).
+
+IMPLEMENTATION INSTRUCTIONS (v1.3.4):
+
+The script files listed below need to be updated in the codebase in order to correctly 
+process the output from GFSv16. Since no executables are modified, the system 
+does not need to be rebuilt for these changes to be incorporated.
+
+jobs/JNWPS_PREP
+ush/get_wna.sh
+ush/gfswind/bin/get_gfswind.sh
+fix/domains/AER
+fix/domains/AFG
+fix/domains/AJK
+fix/domains/AKQ
+fix/domains/ALU
+fix/domains/BOX
+fix/domains/BRO
+fix/domains/CAR
+fix/domains/CHS
+fix/domains/CRP
+fix/domains/EKA
+fix/domains/GUM
+fix/domains/GYX
+fix/domains/HFO
+fix/domains/HGX
+fix/domains/ILM
+fix/domains/JAX
+fix/domains/KEY
+fix/domains/LCH
+fix/domains/LIX
+fix/domains/LOX
+fix/domains/LWX
+fix/domains/MFL
+fix/domains/MFR
+fix/domains/MHX
+fix/domains/MLB
+fix/domains/MOB
+fix/domains/MTR
+fix/domains/OKX
+fix/domains/PHI
+fix/domains/PQR
+fix/domains/SEW
+fix/domains/SGX
+fix/domains/SJU
+fix/domains/TAE
+fix/domains/TBW
+
+
+Update for tag 'v1.3.5':
+Date: 11/02/20
+
+This tag contains updates to ensure bitwise reproducibility. The Fortran compiler 
+flags for SWAN and ADCIRC now feature reduced optimization, from -O2 to -O1. In 
+addition, core assignments have been updated to minimize the product delays due 
+to the resulting longer run times. The tables below list the new delivery times 
+of v1.3, which replace those listed above.
+
+IMPLEMENTATION INSTRUCTIONS (v1.3.5):
+
+In order to implement these changes, check out this tag, and rebuild the system with:
+
+> cd ${NWPSdir}/sorc
+> ./make_NWPS.sh
+
+New delivery time of v1.3 products (min):    Delivery times of v1.2 products (min):
+      CG1   CG0   CG2   CG3   CG4   CG5            CG1   CG0   CG2   CG3   CG4   CG5
+bro    30    40     -     -     -     -      bro    31    32     -     -     -     -
+crp    37    47     -     -     -     -      crp    33    34     -     -     -     -
+hgx    41    51    53     -     -     -      hgx    54    56     -     -     -     -
+lch    33    45     -     -     -     -      lch    35    37     -     -     -     -
+lix    48    59    84     -     -     -      lix    42    44    76     -     -     -
+mob    40    53    54    55    55    56      mob    40    42    65    66    67    68
+tae    57    67    71    72    72    73      tae    26    27    65    66    66    67
+tbw    40    55    55     -     -     -      tbw    38    40    55     -     -     -
+key    79    91    96     -     -     -      key    31    32    86     -     -     -
+mfl    82    99   103   104   104   105      mfl    98   101   114   115   115   116
+mlb    65    78    83     -     -     -      mlb    33    36    68     -     -     -
+jax    39    54     -     -     -     -      jax    22    27    58    59    59    60
+sju    71    87    92    93     -     -      sju    58    63    79    80     -     -   
+chs    53    66    67    68     -     -      chs    28    31    68    69     -     -
+ilm    57    73     -     -     -     -      ilm    23    29     -     -     -     -
+mhx    63    74    79    80    80    81      mhx    72    74    88    89    89    90
+akq    57    70     -     -     -     -      akq    55    58     -     -     -     -
+lwx    17    27     -     -     -     -      lwx    15     -     -     -     -     -
+phi    41    50    57    58     -     -      phi    17    21    52    53     -     -
+okx    64    74    79    79    80     -      okx    59    62    74    74    75     -
+box    65    75    84     -     -     -      box    64    67    82     -     -     -
+gyx    56    66    71    72     -     -      gyx    17    19    66    67     -     -
+car    45    52    58    59     -     -      car    41    42    58    59     -     -
+sgx    54    65    68    68     -     -      sgx    51    54    66    67     -     -
+lox    25    45    65    65     -     -      lox    25    37    74    75     -     -
+mtr    34    55    89    89    90     -      mtr    22    31    80    81    82     -
+eka    21    38    40     -     -     -      eka    17    29    45     -     -     -
+mfr    25    42    75    76    76    77      mfr    23    33    74    75    75    76
+pqr    29    44    66    67    67    68      pqr    24    29    58    59    59    60
+sew    24    39    52     -     -     -      sew    23    31    57     -     -     -
+ajk    32    41    109    110    -    -      ajk    25    27   138   139     -     -
+aer    34    44    109    110    -    -      aer    24    27   134   135     -     -
+alu    81    98    105    106    -    -      alu    41    47     -     -     -     -
+afg    55     -     86     87    -    -      afg    40     -   101   102     -     -
+hfo    57    75    82    83    83    84      hfo    95   106   123   124   124   125
+gum    42    57    59    60    60     -      gum    18    21    43    44    45     -
+
+The table below summarizes all product delays >5 min. Note that new 
+products in v1.3 is indicated by "new":
+
+      CG1   CG0   CG2   CG3   CG4   CG5
+bro     -     8     -     -     -     -
+crp     -    13     -     -     -     -
+hgx     -     -   new     -     -     -
+lch     -     8     -     -     -     -
+lix     6    14     8     -     -     -
+mob     -    11     -     -     -     -
+tae    31    40     6     6     6     6
+tbw     -    15     -     -     -     -
+key    48    59    10     -     -     -
+mfl     -    -      -     -     -     -
+mlb    32    42    15     -     -     -
+jax    17    27     -     -     -     -
+sju    13    24    13    13     -     -
+chs    25    35     -     -     -     -
+ilm    34    44     -     -     -     -
+mhx     -     -     -     -     -     -
+akq     -    12     -     -     -     -
+lwx     -   new     -     -     -     -
+phi    23    29     -     -     -     -
+okx     -    12     -     -     -     -
+box     -     8     -     -     -     -
+gyx    39    47     -     -     -     -
+car     -    10     -     -     -     -
+sgx     -    11     -     -     -     -
+lox     -     8     -     -     -     -
+mtr    11    24     9     8     8     -
+eka     -     9     -     -     -     -
+mfr     -     9     -     -     -     -
+pqr     -    14     7     7     7     7
+sew     -     7     -     -     -     -
+ajk     7    14     -     -     -     -
+aer    10    17     -     -     -     -
+alu    40    51   new   new     -     -
+afg    15     -     -     -     -     -
+hfo     -     -     -     -     -     -
+gum    24    36    16    16    15     -
+
+
+Update for tag 'v1.3.6':
+Date: 11/20/20
+
+This tag contains revised updates for the downstream dependency of NWPS (both v1.2.13 and v1.3.6) 
+on Global ESTOFS v1, as well as optimizations to reduce product delays in v1.3.6.
+
+IMPLEMENTATION INSTRUCTIONS (for v1.2.13):
+
+The scripts and config files listed below (only these) should be updated in the codebase 
+of v1.2.13 in order to correctly process the output from ESTOFS-Global v1. Since no executables 
+are modified, v1.2.13 does not need to be rebuilt for these changes to be incorporated. These 
+updates can be tested by running the jnwps_ofs_prep job for ESTOFS-Global.
+
+jobs/JNWPS_OFS_PREP
+ush/make_estofs.sh
+fix/configs/aer_ncep_config.sh
+fix/configs/afg_ncep_config.sh
+fix/configs/ajk_ncep_config.sh
+fix/configs/akq_ncep_config.sh
+fix/configs/alu_ncep_config.sh
+fix/configs/box_ncep_config.sh
+fix/configs/bro_ncep_config.sh
+fix/configs/car_ncep_config.sh
+fix/configs/chs_ncep_config.sh
+fix/configs/crp_ncep_config.sh
+fix/configs/eka_ncep_config.sh
+fix/configs/gum_ncep_config.sh
+fix/configs/gyx_ncep_config.sh
+fix/configs/hfo_ncep_config.sh
+fix/configs/hgx_ncep_config.sh
+fix/configs/ilm_ncep_config.sh
+fix/configs/jax_ncep_config.sh
+fix/configs/key_ncep_config.sh
+fix/configs/lch_ncep_config.sh
+fix/configs/lix_ncep_config.sh
+fix/configs/lox_ncep_config.sh
+fix/configs/lwx_ncep_config.sh
+fix/configs/mfl_ncep_config.sh
+fix/configs/mfr_ncep_config.sh
+fix/configs/mhx_ncep_config.sh
+fix/configs/mlb_ncep_config.sh
+fix/configs/mob_ncep_config.sh
+fix/configs/mtr_ncep_config.sh
+fix/configs/okx_ncep_config.sh
+fix/configs/phi_ncep_config.sh
+fix/configs/pqr_ncep_config.sh
+fix/configs/sew_ncep_config.sh
+fix/configs/sgx_ncep_config.sh
+fix/configs/sju_ncep_config.sh
+fix/configs/tae_ncep_config.sh
+fix/configs/tbw_ncep_config.sh
+fix/configs/txx_ncep_config.sh
+
+IMPLEMENTATION INSTRUCTIONS (for v1.3.6):
+
+In order to additionally implement the changes for code optimization in v1.3.6, check out this tag, 
+and rebuild the system with:
+
+> cd ${NWPSdir}/sorc
+> ./make_NWPS.sh
+
+New delivery times of v1.3 products (min):
+      CG1   CG0   CG2   CG3   CG4   CG5
+bro    16    20     -     -     -     -
+crp    19    24     -     -     -     -
+hgx    24    29    32     -     -     -
+lch    21    26     -     -     -     -
+lix    26    31    43     -     -     -
+mob    22    28    32    32    32    32
+tae    32    37    41    41    41    41
+tbw    26    32    36     -     -     -
+key    66    72    76     -     -     -
+mfl    68    78    83    83    84    84
+mlb    49    54    56     -     -     -
+jax    35    40    44    44    44    44
+sju    62    73    78    78     -     -
+chs    33    39    42    42     -     -
+ilm    33    39     -     -     -     -
+mhx    58    63    67    67    67    67
+akq    52    60     -     -     -     -
+lwx    13    17     -     -     -     -
+phi    25    31    35    35     -     -
+okx    51    57    61    61    61     -
+box    53    61    66     -     -     -
+gyx    32    37    42    42     -     -
+car    27    32    36    36     -     -
+sgx    32    39    43    43     -     -
+lox    19    31    46    46     -     -
+mtr    22    34    64    64    64     -
+eka    15    24    33     -     -     -
+mfr    19    29    55    55    55    55
+pqr    17    25    39    39    39    39
+sew    15    23    30     -     -     -
+ajk    24    30    86    86     -     -
+aer    23    30    94    94     -     -
+alu    54    63    71    71     -     -
+afg    34     -    67    67     -     -
+hfo    53    65    71    71    71    71
+gum    29    33    36    36    36     -
+
+
+Update for tag 'v1.3.8-gyx_landmask':
+Date: 02/08/21
+
+This tag contains fixes for (i) spurious results in WFO GYX's CG2 and CG3 nests, and 
+(ii) a land mask problem due to incorrect interpolation of model output from the 
+native unstructured CG1 mesh to the CG1-CG5 regular GRIB2 grids. To address issue (i), 
+the parallelization for GYX is reduced from 96 cores to 48 cores.
+
+IMPLEMENTATION INSTRUCTIONS:
+
+In order to implement this update, check out this tag, specifically the following files:
+
+   ush/pm/SetupCG.pm
+   ush/swanexe.sh
+   ush/nwps_posproc_cg1.sh
+   sorc/get_externals.sh
+   fix/templates/swn_reginterpCG1.py
+   fix/templates/swn_reginterpCG2.py
+   fix/templates/swn_reginterpCG3.py
+   fix/templates/swn_reginterpCG4.py
+   fix/templates/swn_reginterpCG5.py
+
+To incorporate the updated 48-core mesh decomposition for GYX, rebuild the system with:
+
+> cd ${NWPSdir}/sorc
+> ./make_NWPS.sh
+
+The reduction of the parallelization of the GYX domain has the following impact on 
+its product delivery times: 
+
+New delivery time of v1.3.8 products (min):    Delivery times of v1.3.7 products (min):
+      CG1   CG0   CG2   CG3   CG4   CG5              CG1   CG0   CG2   CG3   CG4   CG5
+gyx    49    55    60    60     -     -        gyx    34    39    44    44     -     -
+
+
+Update for tag 'v1.3.9-wtrk_psurge_ripcop':
+Date: 07/19/21
+
+This tag contains three fixes:
+
+1) Fix for a reproducabilty issue in the jnwps_wavetrack_cg1 job, in which the config file 
+CGinclude.pm could get corrupted if the job fails and is rerun. To address this issue, 
+runtime edits to the config file have been removed. Instead, the function get_partition_parms.pl 
+is now limited to only reading parameters for the CG1 domain over which wave system tracking 
+is performed.
+
+2) Fix for a run failure for WFO KEY which occurred because the NWPS init time was earlier 
+than the most recent P-Surge water level field. The most suitable P-Surge cycle is now selected 
+from the NWPS init time, using the rule PSurge_cyc <= NWPS_init.
+
+3) The addition of the missing product RIPCOP to the WFO GUM CG1 wmo header file.
+
+IMPLEMENTATION INSTRUCTIONS:
+
+In order to implement this update, check out this tag, ONLY updating the following files:
+
+   ush/waveTracking.pl
+   ush/python/get_partition_parms.pl
+   ush/get_ncep_initfiles.sh
+   ush/psurge/bin/gen_waterlevel.sh
+   parm/wmo_headers/grib2_gum_nwps_CG1
+
+Rebuild the system by issuing the following commands:
+
+> cd ${NWPSdir}/sorc
+> ./make_NWPS.sh
+
+TEST INSTRUCTIONS:
+
+Fix 1: Assess the correct functioning of this fix by running one WFO cycle, for example BOX. 
+Run up to and including the jnwps_wavetrack_cg1 job. Then rerun this job, and complete 
+the remaining jobs. These should complete without failure, in particular the CG2 job
+jnwps_prdgen_cgn.ecf.
+
+Fix 2: Rerun the WFO KEY 2021/07/05 cycles using the forcings and BCs saved to (Luna/Surge): 
+/gpfs/hps3/emc/marine/noscrub/emc.wavepa/key_20210705_failure/
+Specfically, test the following cycles, and verify that P-Surge is correctly ingested:
+00z - dcom/prod/20210705/wgrbbul/nwps/NWPSWINDGRID_key_202107051438_1303.tar.gz
+06z - dcom/prod/20210705/wgrbbul/nwps/NWPSWINDGRID_key_202107051751_23056.tar.gz
+12z - dcom/prod/20210705/wgrbbul/nwps/NWPSWINDGRID_key_202107051842_2332.tar.gz
+
+Fix 3: Run an NWPS cycle for WFO GUM, and verify that the product file grib2.CYC.awipsnwps_hfo_CG1 
+contants 145 RIPCOP fields.
+
+
