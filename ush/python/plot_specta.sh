@@ -80,7 +80,8 @@ echo $$ > ${TMPdir}/${USERNAME}/nwps/7787_postprocess_plot_specta_sh.pid
 export NESTS="NO"
 hasnest=$(cat ${RUNdir}/nests.flag)
 if [ "${hasnest}" == "TRUE" ]; then export NESTS="YES"; fi
-SWANPARMS=`perl -I${USHnwps} -I${RUNdir} ${PYTHdir}/get_specta_parms.pl`
+#SWANPARMS=`perl -I${USHnwps} -I${RUNdir} ${PYTHdir}/get_specta_parms.pl`
+SWANPARMS=`${PYTHdir}/get_specta_parms.pl`
 echo ${SWANPARMS}
 # Process all CGs
 for parm in ${SWANPARMS}
@@ -133,7 +134,7 @@ do
     echo "Copying LOGO from ${ETCdir}/*.gif files"
     cp -f ${ETCdir}/default/*.gif ${TEMPDIR}/.
     cp -f ${ETCdir}/default/*.png ${TEMPDIR}/.
-    cp -f ${USHlocal}/python/spc1d.py ${TEMPDIR}/.
+    cp -fp ${USHlocal}/python/spc1d.py ${TEMPDIR}/.
 
     
     cd ${SPECTRADIR}
@@ -199,7 +200,7 @@ do
         cd ${TEMPDIR}
 	echo "Plotting specta-1d images"
         #------------------------ PYTHON SCRIPT CODE ---------------------------------------------
-        python spc1d.py ${LOCATION} ${LONGITUDE} ${LATITUDE} # Added by E. Rodriguez on 5/5/2015
+        ./spc1d.py ${LOCATION} ${LONGITUDE} ${LATITUDE} # Added by E. Rodriguez on 5/5/2015
         #-----------------------------------------------------------------------------------------
 	# NOTE: We must clean up the PNG files before they are copied to ${GRAPHICSdir} 
 	echo "Copying PNG images to ${GRAPHICSdir}"
