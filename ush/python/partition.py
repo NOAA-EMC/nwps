@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #--------------------------------------------------------
 # partition.py script
 # Author: Ernesto Rodriguez, NWS WFO San Juan
