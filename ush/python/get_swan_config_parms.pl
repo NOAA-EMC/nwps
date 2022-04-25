@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 # ----------------------------------------------------------- 
 # Perl Script
 # Operating System(s): RHEL 5
@@ -25,6 +25,7 @@
 #
 # ----------------------------------------------------------- 
 
+use lib ("$ENV{'RUNdir'}");
 use ConfigSwan;
 
 # Read all SWAN GCs and output config in CSV format
