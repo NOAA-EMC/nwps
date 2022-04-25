@@ -80,7 +80,8 @@ echo $$ > ${TMPdir}/${USERNAME}/nwps/7785_plot_partition_sh.pid
 export NESTS="NO"
 hasnest=$(cat ${RUNdir}/nests.flag)
 if [ "${hasnest}" == "TRUE" ]; then export NESTS="YES"; fi
-SWANPARMS=`perl -I${USHnwps} -I${RUNdir} ${PYTHdir}/get_partition_parms.pl`
+#SWANPARMS=`perl -I${USHnwps} -I${RUNdir} ${PYTHdir}/get_partition_parms.pl`
+SWANPARMS=`${PYTHdir}/get_partition_parms.pl`
 echo ${SWANPARMS}
 # Process all CGs
 for parm in ${SWANPARMS}
@@ -231,7 +232,7 @@ do
 
       #------------------------------------- RUN PYTHON SCRIPT --------------------------------------------------
       echo "Plotting partition images"
-      python partition.py ${LOCATION} ${LONGITUDE} ${LATITUDE} ${windsource} ${REGION} # Added by E. Rodriguez on 5/18/2015
+      ./partition.py ${LOCATION} ${LONGITUDE} ${LATITUDE} ${windsource} ${REGION} # Added by E. Rodriguez on 5/18/2015
       #----------------------------------------------------------------------------------------------------------
 
 	# NOTE: We must clean up the PNG files before they are copied to ${GRAPHICSdir} 
