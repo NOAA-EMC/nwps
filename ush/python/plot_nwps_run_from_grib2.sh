@@ -101,7 +101,8 @@ echo $$ > ${TMPdir}/${USERNAME}/nwps/7790_plot_nwps_run_from_grib2_sh.pid
 export NESTS="NO"
 hasnest=$(cat ${RUNdir}/nests.flag)
 if [ "${hasnest}" == "TRUE" ]; then export NESTS="YES"; fi
-SWANPARMS=`perl -I${NWPSdir}/ush/bin -I${RUNdir} ${PYPdir}/get_swan_config_parms.pl`
+#SWANPARMS=`perl -I${NWPSdir}/ush/bin -I${RUNdir} ${PYPdir}/get_swan_config_parms.pl`
+SWANPARMS=`${PYPdir}/get_swan_config_parms.pl`
 
 # Process all CGs
 for parm in ${SWANPARMS}
@@ -211,7 +212,7 @@ for parm in ${SWANPARMS}
 
   echo "Creating run-time PYTHON files from ${PYPdir}/*.py files"
   echo "This will not overwrite your site template file"
-  cp -f ${PYPdir}/* ${TEMPDIR}/.
+  cp -fp ${PYPdir}/* ${TEMPDIR}/.
 
   # AG 11/27/2011: This script will adjust all color scales from latest run.
   #echo ""
@@ -337,74 +338,74 @@ for parm in ${SWANPARMS}
 #      echo "Will plot all elements by default"
       echo "Creating new site specific python element file for GRIB2 plot"
       #cat /dev/null > ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} wind.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} wind.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} wind.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} wind.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} wind.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} wind.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./wind.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./wind.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./wind.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./wind.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./wind.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./wind.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
 
-      echo "${PYTHON} htsgw.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} htsgw.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} htsgw.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} htsgw.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} htsgw.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} htsgw.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./htsgw.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./htsgw.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./htsgw.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./htsgw.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./htsgw.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./htsgw.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
 
-      echo "${PYTHON} period.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} period.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} period.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} period.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} period.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} period.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./period.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./period.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./period.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./period.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./period.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./period.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
 
-      echo "${PYTHON} cur.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} cur.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} cur.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} cur.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} cur.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} cur.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./cur.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./cur.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./cur.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./cur.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./cur.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./cur.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
 
-      echo "${PYTHON} wlev.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} wlev.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} wlev.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} wlev.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} wlev.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} wlev.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./wlev.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./wlev.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./wlev.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./wlev.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./wlev.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./wlev.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
 
-      echo "${PYTHON} swell.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} swell.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} swell.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} swell.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} swell.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
-      echo "${PYTHON} swell.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./swell.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./swell.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./swell.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./swell.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./swell.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
+      echo "./swell.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
       if [ "${RIPPROG}" == "1" ] && [ CG"${CGNUMPLOT}" == "${RIPDOMAIN}" ]
       then
-         echo "${PYTHON} rip.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "${PYTHON} rip.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "${PYTHON} rip.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "${PYTHON} rip.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "${PYTHON} rip.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "${PYTHON} rip.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./rip.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./rip.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./rip.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./rip.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./rip.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./rip.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
       fi
       if [ "${RUNUPPROG}" == "1" ] && [ CG"${CGNUMPLOT}" == "${RUNUPDOMAIN}" ]
       then
-         echo "${PYTHON} erosion.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "${PYTHON} erosion.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "${PYTHON} erosion.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "${PYTHON} erosion.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "${PYTHON} erosion.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "${PYTHON} erosion.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./erosion.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./erosion.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./erosion.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./erosion.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./erosion.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./erosion.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
 
-         echo "${PYTHON} owash.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "${PYTHON} owash.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "${PYTHON} owash.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "${PYTHON} owash.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "${PYTHON} owash.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
-         echo "${PYTHON} owash.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./owash.py 1 8" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./owash.py 9 16" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./owash.py 17 24" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./owash.py 25 32" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./owash.py 33 40" >> ${TEMPDIR}/python_grib2_elements.sh
+         echo "./owash.py 41 49" >> ${TEMPDIR}/python_grib2_elements.sh
       fi
 #      echo '##echo "Creating PYTHON plot for Specific Locations"' >> ${TEMPDIR}/python_grib2_elements.sh
-#      echo "##${PYTHON} graph-dvd.py" >> ${TEMPDIR}/python_grib2_elements.sh
+#      echo "##./graph-dvd.py" >> ${TEMPDIR}/python_grib2_elements.sh
 #  fi
 
   echo "Executing ${TEMPDIR}/python_grib2_elements.sh"
@@ -417,7 +418,7 @@ for parm in ${SWANPARMS}
   elif [ "${SITEID}" == "alu" ] || [ "${SITEID}" == "aer" ] || [ "${SITEID}" == "ajk" ]
      then
      echo "Executing plotting jobs in serial"
-     bash ${TEMPDIR}/python_grib2_elements.sh
+     ${TEMPDIR}/python_grib2_elements.sh
      export err=$?; err_chk
   else
      #AW echo "Executing plotting jobs in serial"
