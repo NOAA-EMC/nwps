@@ -1,39 +1,19 @@
-#PBS -N %MODEL%_%FAMILY1%_forecast_cg%N%
+#PBS -N nwps_%FAMILY1%_forecast_cg1
 #PBS -j oe
 #PBS -S /bin/bash
 #PBS -q %QUEUE%
 #PBS -A %PROJ%-%PROJENVIR%
 #PBS -l walltime=03:00:00
-#PBS -l select=1:ncpus=120
-#PBS -l place=excl
+#PBS -l place=vscatter,select=2:ncpus=72:mpiprocs=72:ompthreads=1:mem=230GB
 #PBS -l debug=true
-#PBS -V
-#PBS -o %COMROOT%/output/%ENVIR%/today/%MODEL%_%FAMILY1%_forecast_cg%N%.o%J
-#PBS -e %COMROOT%/output/%ENVIR%/today/%MODEL%_%FAMILY1%_forecast_cg%N%.o%J
 
-cd $PBS_O_WORKDIR
+# #PBS -l place=vscatter,select=2:ncpus=72:mem=230GB
+
+export model=nwps
 
 %include <head.h>
-%include <envir-xc40.h>
+%include <envir-p1.h>
 
-export model=%MODEL%
-%include <model_ver.h>
-
-VERSION_FILE=${HOMEnwps}/versions/run.ver
-if [ -f $VERSION_FILE ]; then
-  . $VERSION_FILE
-else
-  ECFNAME="jnwps_prep.ecf"
-  echo "***JOB ${ECFNAME} ERROR: Version File $VERSION_FILE does not exist ***"
-  exit
-fi
-
-module purge
-module load %MODULES%
-module load envvar/${envvar_ver}
-module load prod_envir/${prod_envir_ver}
-module load prod_util/${prod_util_ver}
-module load PrgEnv-intel/${PrgEnv_intel_ver}
 module load craype/${craype_ver}
 module load intel/${inter_ver}
 module load cray-pals/${cray_pals_ver}
@@ -45,8 +25,8 @@ module load libpng/${libpng_ver}
 module load zlib/${zlib_ver}
 module load w3nco/${w3nco_ver}
 module load cfp/${cfp_ver}
-module load iobuf/${iobuf_ver}
-
+module load perl/${perl_ver}
+module list
 
 PATH=${NWPSdir}/lib/netcdf/${netcdf_ver}/bin:$PATH
 PATH=${NWPSdir}/lib/hdf5/${hdf5_ver}/bin:$PATH
@@ -62,8 +42,6 @@ HDF5_LIBRARIES=${NWPSdir}/lib/hdf5/${hdf5_ver}/lib
 NETCDF_INCLUDES=${NWPSdir}/lib/netcdf/${netcdf_ver}/include
 HDF5_INCLUDES=${NWPSdir}/lib/hdf5/${hdf5_ver}/include
 
-export IOBUF_PARAMS="*:count=4:size=32M:prefetch=1:preflush=1"
-
 export FORT_BUFFERED=true
 export NWPSplatform="WCOSS"
 export MP_PGMMODEL=mpmd
@@ -71,26 +49,24 @@ export MP_CSS_INTERRUPT=yes
 export WFO=%FAMILY1%
 export siteid=${WFO}
 export SITEID=${WFO^^}
-export N=%N%
+export N=1
 export KEEPDATA=%KEEPDATA%
-export model=%MODEL%
-export MODEL=${model^^}
 
-${HOMEnwps}/jobs/J${MODEL}_FORECAST
+${HOMEnwps}/jobs/JNWPS_FORECAST
 
 %include <tail.h>
 
 %manual
 ################################################################################
 #TASKSCRIPT DOCUMENTATION BLOCK
-#TASKSCRIPT:     jnwps_%FAMILY1%_forecast_cg%N%
+#TASKSCRIPT:     jnwps_%FAMILY1%_forecast_cg1
 #LAST MODIFIER:  Floyd Fayton
 #ORGANIZATION:   NP11
 #DATE:           SEP 2014
 #FULL NAME:    /nwps_para/nwps/SR/jmfl
 #PURPOSE:  To execute the job that creates NWPS MFL GRIB output files
 #JOB SCRIPT CALLED: /nwprod/nwps.${nwps_ver}/jobs/JNWPS ==>
-#                            /nwprod/nwps.${nwps_ver}/scripts/exnwps_forecast_cg%N%.sh.ecf
+#                            /nwprod/nwps.${nwps_ver}/scripts/exnwps_forecast_cg1.sh.ecf
 #################################################################################
 ######################################################################
 # Job specific troubleshooting instructions:
