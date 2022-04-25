@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # swell.py script
 # Author: Andre van der Westhuysen, 04/28/15
 # Purpose: Plots SWAN output parameters from GRIB2.
