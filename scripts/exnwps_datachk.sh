@@ -1,11 +1,24 @@
 #!/bin/sh
-ncyc="_$($NDATE)"
-dncyc=".$($NDATE)"
-ncycm1="_$($NDATE -1)"
-ncycm2="_$($NDATE -2)"
-ncycm3="_$($NDATE -3)"
-ncycm4="_$($NDATE -4)"
-ncycm5="_$($NDATE -5)"
+set -xa
+if [ "${envir}" != para ]; then
+   ncyc="_$($NDATE)"
+   dncyc=".$($NDATE)"
+   ncycm1="_$($NDATE -1)"
+   ncycm2="_$($NDATE -2)"
+   ncycm3="_$($NDATE -3)"
+   ncycm4="_$($NDATE -4)"
+   ncycm5="_$($NDATE -5)"
+else
+   # for testing in para, set hour
+   nhour=23
+   ncyc="_$($NDATE 0 ${PDY}${nhour})"
+   dncyc=".$($NDATE 0 ${PDY}${nhour})"
+   ncycm1="_$($NDATE -1 ${PDY}${nhour})"
+   ncycm2="_$($NDATE -2 ${PDY}${nhour})"
+   ncycm3="_$($NDATE -3 ${PDY}${nhour})"
+   ncycm4="_$($NDATE -4 ${PDY}${nhour})"
+   ncycm5="_$($NDATE -5 ${PDY}${nhour})"
+fi
 
 export ECF_NAME_ORIG=${ECF_NAME}
 export ECF_PASS_ORIG=${ECF_PASS}
@@ -271,6 +284,7 @@ else
     echo "============"
 fi
 
+set -xa
 echo " "
 echo "\"STATUS WHEN DATACHK ENDS\":"
 process_nwps_dcom
