@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # erosion.py script
 # Author: Andre van der Westhuysen, 12/15/16
 # Purpose: Plots SWAN output parameters from GRIB2.
