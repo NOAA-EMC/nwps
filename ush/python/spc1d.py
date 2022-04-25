@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #--------------------------------------------------------
 # spc1d.py script
 # Author: Ernesto Rodriguez, 05/03/2015
