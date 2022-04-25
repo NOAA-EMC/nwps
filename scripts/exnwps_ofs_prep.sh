@@ -84,7 +84,8 @@ if [ $SENDDBN = YES ]; then
 
         echo "tar cvf ${DATA}/tars/${i##*/}.tar -C ${i} -T ${DATA}/tars/${i##*/}.list; if [ "$?" = "0" ]; then mv ${DATA}/tars/${i##*/}.tar ${COMOUT}/${OFSTYPE}/; $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_TAR $job ${COMOUT}/${OFSTYPE}/${i##*/}.tar; fi" >> ${DATA}/tars/tar_cmdfile
     done
-    aprun -n24 -N24 -j1 -d1 cfp ${DATA}/tars/tar_cmdfile
+    #aprun -n24 -N24 -j1 -d1 cfp ${DATA}/tars/tar_cmdfile
+    mpiexec -np 24 --cpu-bind verbose,core cfp ${DATA}/tars/tar_cmdfile
 fi
 
 #####################################################################
