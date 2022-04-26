@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export ARCHBITS="64"
-export MPIEXEC="mpirun.lsf"
+export MPIEXEC="mpiexec"
 export OPAL_PREFIX="${LSF_BINDIR}/.."
 export NCDUMP="ncdump"
 export NCGEN="ncgen"
