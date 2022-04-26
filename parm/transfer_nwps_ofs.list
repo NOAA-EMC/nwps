@@ -23,10 +23,18 @@
 # directory are included, so if no exclude patterns match that file, it will be
 # transferred.
 
-com/nwps/_ENVIR_/ofs._PDYm1_/
+#ops.prod@dlogin05:/lfs/h1/ops/prod/com/nwps/v1.4> ls
+#ar.20220317  ar.20220320  er.20220318  er.20220321    nwps.20220318  nwps.20220321  ofs.20220318  ofs.20220321  pr.20220319  pr.20220322  sr.20220319  sr.20220322  wr.20220319  wr.20220322
+#ar.20220318  ar.20220321  er.20220319  er.20220322    nwps.20220319  nwps.20220322  ofs.20220319  pr.20220317   pr.20220320  sr.20220317  sr.20220320  wr.20220317  wr.20220320
+#ar.20220319  er.20220317  er.20220320  nwps.20220317  nwps.20220320  ofs.20220317   ofs.20220320  pr.20220318   pr.20220321  sr.20220318  sr.20220321  wr.20220318  wr.2022032
+
+_COMROOT_/nwps/_SHORTVER_/ofs._PDYm1_/
+#com/nwps/_ENVIR_/ofs._PDYm1_/
 B 13000
 Z
-com/nwps/_ENVIR_/ofs._PDY_/
+
+_COMROOT_/nwps/_SHORTVER_/ofs._PDY_/
+#com/nwps/_ENVIR_/ofs._PDY_/
 B 13000
 Z
 
