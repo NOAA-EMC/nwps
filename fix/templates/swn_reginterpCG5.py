@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # swn_reginterp.py script
 # Purpose: Interpolates SWAN results from an unstructured mesh onto a regular grid
 # Andre van der Westhuysen, 10/30/13
