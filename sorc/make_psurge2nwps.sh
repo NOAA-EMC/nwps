@@ -14,12 +14,12 @@ fi
 
 echo "Building psoutTOnwps"  | tee ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
 cd ${NWPSdir}/sorc/emapf-c
-./configure --prefix=${NWPSdir}/sorc/emapf-c | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
+./configure --prefix=${NWPSdir}/sorc/emapf-c CC=cc | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
 make clean | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
 make | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
 
 cd ${NWPSdir}/sorc/libaat
-./configure --prefix=${NWPSdir}/sorc/libaat | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
+./configure --prefix=${NWPSdir}/sorc/libaat CC=cc | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
 make clean | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
 make | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
 
