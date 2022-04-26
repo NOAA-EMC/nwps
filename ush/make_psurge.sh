@@ -145,5 +145,5 @@ rm ${RUNdir}/*.txt
 rm ${RUNdir}/*.dat
 rm ${RUNdir}/*.datum
 rm ${RUNdir}/*.grib2 
-echo "mpirun.lsf complete"
+echo "mpiexec complete"
 exit 0
