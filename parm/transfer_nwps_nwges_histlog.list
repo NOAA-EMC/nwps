@@ -23,14 +23,20 @@
 # directory are included, so if no exclude patterns match that file, it will be
 # transferred.
 
-_GESROOT_/_ENVIR_/nwps._PDYm1_/
+#ops.prod@dlogin05:/lfs/h1/ops/prod/com/nwps/v1.4/nwps.20220321/nwges> ls
+#databc  dcom_hist.txt  hotstart  riphist  status_file.txt  warnings
+
+#_COMROOT_/nwps/_SHORTVER_/nwps._PDYm1_/nwges/
+#_GESROOT_/_ENVIR_/nwps._PDYm1_/
+
+_COMROOT_/nwps/_SHORTVER_/nwps._PDYm1_/nwges/ 
 + dcom_hist.txt
 + status_file.txt
 - *
 B 100
 Z
 
-_GESROOT_/_ENVIR_/nwps._PDY_/
+_COMROOT_/nwps/_SHORTVER_/nwps._PDY_/nwges/
 + dcom_hist.txt
 + status_file.txt
 - *
