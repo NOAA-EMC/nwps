@@ -28,8 +28,7 @@
 #PBS -q dev
 #PBS -A NWPS-DEV
 #PBS -l walltime=04:15:00
-#PBS -l select=1:ncpus=120
-#PBS -l place=excl
+#PBS -l place=vscatter,select=2:ncpus=72:mpiprocs=72:ompthreads=1:mem=230GB
 #PBS -l debug=true
 #PBS -V
 #PBS -o /lfs/h2/emc/ptmp/Andre.VanderWesthuysen/com/nwps/v1.4.0/NWPS_%WFO%_forecast_cg1.o
