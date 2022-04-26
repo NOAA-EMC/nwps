@@ -84,7 +84,8 @@ echo "Generating current files for NWPS model" | tee -a ${LOGfile}
 if [ "${RETROSPECTIVE}" == "TRUE" ]; then    #RETROSPECTIVE
    echo "Extracting currents configuration from archived inputCG"
    cd ${RUNdir}
-   SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/rtofs_match.pl`
+   #SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/rtofs_match.pl`
+   SWANPARMS=`${BINdir}/rtofs_match.pl`
    for parm in ${SWANPARMS}
       do
       CG=`echo ${parm} | awk -F, '{ print $1 }'`
@@ -237,7 +238,8 @@ let start-=rtofs_current_start_time
 let start/=3600
 
 # Lets clean the current data from all inputCG files
-SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/rtofs_match.pl`
+#SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/rtofs_match.pl`
+SWANPARMS=`${BINdir}/rtofs_match.pl`
 for parm in ${SWANPARMS}
   do
   CG=`echo ${parm} | awk -F, '{ print $1 }'`
@@ -268,7 +270,8 @@ fi
 # Lets check our forecast length and compare it against the hours we have for 
 # the current data. If the forecaster has exceeded the number number of hours
 # we will truncate the forecast hours to match the current data.
-SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/rtofs_match.pl`
+#SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/rtofs_match.pl`
+SWANPARMS=`${BINdir}/rtofs_match.pl`
 FCSTLENGTH=`echo ${parm} | awk -F, '{ print $3 }'`
 lencheck=$FCSTLENGTH
 let lencheck*=3600
@@ -327,7 +330,8 @@ if [ $lencheck -gt $maxhours ]
 fi
 
 # Generate the current data for SWAN and update all inputCG files
-SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/rtofs_match.pl`
+#SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/rtofs_match.pl`
+SWANPARMS=`${BINdir}/rtofs_match.pl`
 for parm in ${SWANPARMS}
   do
   echo "Processing SWAN parameters: ${parm}" | tee -a ${LOGfile}
