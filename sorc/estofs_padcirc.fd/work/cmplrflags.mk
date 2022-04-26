@@ -36,7 +36,7 @@ ifeq ($(compiler),ncep)
   IMODS         :=  -I
   CC            := ${C_COMP} 
   CCBE          := ${C_COMP_MP} 
-  CFLAGS        := $(INCDIRS) -O1 -m64 -DLINUX
+  CFLAGS        := $(INCDIRS) -O1 -DLINUX #-m64
 #  CFLAGS        := $(INCDIRS) -O3 -m64 -DLINUX
   ifeq ($(DEBUG),full)
      CFLAGS        := $(INCDIRS) -g -O0 -m64 -mcmodel=medium -DLINUX
