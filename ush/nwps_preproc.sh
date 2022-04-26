@@ -587,8 +587,8 @@ then
     perl -w ${USHnwps}/nwps_preproc.pl | tee -a $logfile
     export err=$?; err_chk
 else
-    echo "perl ${USHnwps}/nwps_preproc.pl" | tee -a $logfile    
-    perl ${USHnwps}/nwps_preproc.pl | tee -a $logfile
+    echo "${USHnwps}/nwps_preproc.pl" | tee -a $logfile    
+    ${USHnwps}/nwps_preproc.pl | tee -a $logfile
     export err=$?; err_chk
 fi
 #for WCOSS
