@@ -253,8 +253,8 @@ function process_wfolist() {
        echo "${WGRIB2} -no_header -match ${PARM} -bin ${CLIPdir}/ice.bin ${CLIPdir}/ice.grib2"
        ${WGRIB2} -no_header -match ${PARM} -bin ${CLIPdir}/ice.bin ${CLIPdir}/ice.grib2
     fi
-
-    while [ "${epoc_time}" == "" ]; do
+  
+    while [ "${epoc_time}" == "" ] || [ "${epoc_time}" == "-1" ]; do
        echo "Extracting epoc time for ${wfo}"
        epoc_time=`${WGRIB2} -unix_time ${SPOOLdir}/${file} | grep "1:4:unix" | awk -F= '{ print $3 }'`
     done
@@ -275,7 +275,9 @@ function process_wfolist() {
     if [ ! -e ${swan_wl_ofile} ];then
         #MakeClip ${SPOOLdir} ${file} 0 ${WFO}
         #--- Make local copy of input file and check size -----------
-        cp ${SPOOLdir}/${file} ${CLIPdir}/${file}
+        while [ ! -s ${CLIPdir}/${file} ]; do
+           cp ${SPOOLdir}/${file} ${CLIPdir}/${file}
+        done
         $WGRIB2 -count ${CLIPdir}/${file} > ${CLIPdir}/filechk
         nrecords=`wc -l ${CLIPdir}/filechk | cut -c1`
         while [ ${nrecords} -ne 3 ]; do
@@ -291,7 +293,7 @@ function process_wfolist() {
         if [ ${WFO} != "NHC" -a ${WFO} != "OPC" ]
         then
             cd ${OUTPUTdir}
-            python ${USHnwps}/estofs/bin/estofs_extend.py  ${swan_wl_ifname}
+            ${USHnwps}/estofs/bin/estofs_extend.py  ${swan_wl_ifname}
             export err=$?; err_chk
             mv -f extend_${swan_wl_ifname} ${swan_wl_ifname}
         fi
@@ -369,7 +371,7 @@ function process_wfolist() {
         if [ ${WFO} != "NHC" -a ${WFO} != "OPC" ]
         then
             cd ${OUTPUTdir}
-            python ${USHnwps}/estofs/bin/estofs_extend.py  ${swan_wl_ifname}
+            ${USHnwps}/estofs/bin/estofs_extend.py  ${swan_wl_ifname}
             export err=$?; err_chk
             mv -f extend_${swan_wl_ifname} ${swan_wl_ifname}
         fi
@@ -426,9 +428,10 @@ for site in ${WFOLIST};do
     #export site=${site}; process_wfolist
 done
 
-aprun -n36 -N18 -j1 -d1 cfp ${RUNdir}/cgn_cmdfile
+#aprun -n36 -N18 -j1 -d1 cfp ${RUNdir}/cgn_cmdfile
+mpiexec -np 36 --cpu-bind verbose,core cfp ${RUNdir}/cgn_cmdfile
 
-export err=$?; err_check
+export err=$?; err_chk
 
 datetime=`date -u`
 echo "Ending download at $datetime UTC" 
