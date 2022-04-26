@@ -1068,8 +1068,8 @@ function auto_run()
     fi
 
 
-    distx=`perl ${USHnwps}/dist_lat_lon.pl $SWLATWT $SWLONWT $SWLATWT $NELONWT`
-    disty=`perl ${USHnwps}/dist_lat_lon.pl $SWLATWT $SWLONWT $NELATWT $SWLONWT`
+    distx=`${USHnwps}/dist_lat_lon.pl $SWLATWT $SWLONWT $SWLATWT $NELONWT`
+    disty=`${USHnwps}/dist_lat_lon.pl $SWLATWT $SWLONWT $NELATWT $SWLONWT`
     MESHLATWT=$(echo "$disty/$GEORESWT" | bc)
     MESHLATWT=$(printf "%4d" $MESHLATWT)
     MESHLONWT=$(echo "$distx/$GEORESWT" | bc)
@@ -1242,8 +1242,8 @@ fi
 
 cd ${DATA}
 
-distx=`perl ${USHnwps}/dist_lat_lon.pl $SWLAT $SWLON $SWLAT $NELON`
-disty=`perl ${USHnwps}/dist_lat_lon.pl $SWLAT $SWLON $NELAT $SWLON`
+distx=`${USHnwps}/dist_lat_lon.pl $SWLAT $SWLON $SWLAT $NELON`
+disty=`${USHnwps}/dist_lat_lon.pl $SWLAT $SWLON $NELAT $SWLON`
 
 MESHLAT=$(echo "$disty/$RES" | bc)
 MESHLON=$(echo "$distx/$RES" | bc)
@@ -1255,8 +1255,8 @@ if [ ${NESTGRIDS} -gt 0 ] && [ ${NESTCG} == "Yes" ]
 then
     for (( j = 1 ; j < ${NESTGRIDS}+1 ; j++ ))
     do
-    	distxN[$j]=`perl ${USHnwps}/dist_lat_lon.pl ${SWLATN[$j]} ${SWLONN[$j]} ${SWLATN[$j]} ${NELONN[$j]}`
-    	distyN[$j]=`perl ${USHnwps}/dist_lat_lon.pl ${SWLATN[$j]} ${SWLONN[$j]} ${NELATN[$j]} ${SWLONN[$j]}`
+    	distxN[$j]=`${USHnwps}/dist_lat_lon.pl ${SWLATN[$j]} ${SWLONN[$j]} ${SWLATN[$j]} ${NELONN[$j]}`
+    	distyN[$j]=`${USHnwps}/dist_lat_lon.pl ${SWLATN[$j]} ${SWLONN[$j]} ${NELATN[$j]} ${SWLONN[$j]}`
     	MESHLATN[$j]=$(echo "${distyN[$j]}/${RESN[$j]}" | bc)
     	MESHLONN[$j]=$(echo "${distxN[$j]}/${RESN[$j]}" | bc)
     	XLENCN[$j]=$(echo "${NELONCIRCN[$j]} - ${SWLONCIRCN[$j]}" | bc)
