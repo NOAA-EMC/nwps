@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 # ----------------------------------------------------------- 
 # PERL Script
 # PERL Version(s): 5
@@ -31,6 +31,8 @@
 ######################################################
 #      Packages and exportation requirements         #
 ######################################################
+use lib ("$ENV{'RUNdir'}");
+use lib ("$ENV{'PMnwps'}");
 use POSIX;
 use Math::Trig;
 use GraphicOutput qw(getValuesFromCommandFile);
@@ -309,7 +311,6 @@ for $i (0..0){
 	    &createDataPartition('partition', ${partitionName}, "CG${cgnum}");
          }
       }
-
 
 
 if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
