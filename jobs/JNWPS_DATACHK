@@ -38,7 +38,7 @@ export SENDDBN=${SENDDBN:-YES}
 ####################################
 # Specify Execution Areas
 ####################################
-export HOMEnwps=${HOMEnwps:-${NWROOT}/${model}.${nwps_ver}}
+export HOMEnwps=${HOMEnwps:-${PACKAGEROOT}/${model}.${nwps_ver}}
 export FIXnwps=${FIXnwps:-${HOMEnwps}/fix}
 export EXECnwps=${EXECnwps:-${HOMEnwps}/exec}
 export SORCnwps=${SORCnwps:-${HOMEnwps}/sorc}
@@ -65,8 +65,8 @@ setpdy.sh
 ##############################################
 # Define COM directory
 ##############################################
-export GESOUT=${COMROOT}/${NET}/${nwps_ver}/${NET}.${PDY}/nwges
-export GESOUTm1=${COMROOT}/${NET}/${nwps_ver}/${NET}.${PDYm1}/nwges
+export GESOUT=${GESOUT:-$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDY}/nwges}
+export GESOUTm1=${GESOUTm1:-$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDYm1}/nwges}
 export dcom_hist="$GESOUT/dcom_hist.txt"
 export dcom_histm1="$GESOUTm1/dcom_hist.txt"
 export web_status_file="$GESOUT/status_file.txt"
@@ -82,18 +82,16 @@ if [ "${SENDCOM}" = YES ]; then
     mkdir -p $GESOUT $GESOUT/warnings
 fi
 
-env
-
 ##############################################
 # Execute the script
 ${HOMEnwps}/scripts/exnwps_datachk.sh
 export err=$?; err_chk
 
-if [ $(hostname |cut -c1) = 'c'  ]; then
-    export machine=cactus
-else
-    export machine=dogwood
-fi
+#if [ $(hostname |cut -c1) = 'c'  ]; then
+#    export machine=cactus
+#else
+#    export machine=dogwood
+#fi
 
 function rsync_sh {
     #source=$(echo ${@: -2}|awk '{print $1}')
@@ -137,17 +135,18 @@ function rsync_sh {
     fi
 }
 
-if [ "${envir}" = "prod" -a "$(cat /etc/prod)" = "${machine}" ]; then
-# if [ "${envir}" = "prod" ]; then
+#if [ "${envir}" = "prod" -a "$(cat /etc/prod)" = "${machine}" ]; then
+if [ "${envir}" = prod -a "${PARATEST}" != "YES" ]; then
     export remote_stat="ncorzdm.ncep.noaa.gov:~/pmb/spa/nwps/status_file.txt"
     export remote_warn="ncorzdm.ncep.noaa.gov:~/pmb/spa/nwps/warnings/"
     export options=(-aWzv --timeout=${RSYNC_MAX_SECONDS} --delete)
-    rsync_sh ${web_status_file} ${remote_stat}
-    rsync_sh ${GESOUT}/warnings/ ${remote_warn}
 else
     export remote_stat="intra.ncep.noaa.gov:~/pmb/spatools/nwps_status/status_file.txt"
     export remote_warn="intra.ncep.noaa.gov:~/pmb/spatools/nwps_status/warnings/"
     export options=(-aWzv --timeout=${RSYNC_MAX_SECONDS} --delete)
+fi
+
+if [ "${SENDWEB}" = "YES" ]; then
     rsync_sh ${web_status_file} ${remote_stat}
     rsync_sh ${GESOUT}/warnings/ ${remote_warn}
 fi
