@@ -1,5 +1,6 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
+use lib ("$ENV{'RUNdir'}");
 use lib ("$ENV{'PMnwps'}");
 use ConfigSwan;
 
