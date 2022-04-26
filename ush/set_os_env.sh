@@ -59,8 +59,8 @@ else
 fi
 
 # NOTE: Path for extra LIB files 
-export MPIEXEC=aprun
-export MPIRUN=aprun
+export MPIEXEC=mpiexec
+export MPIRUN=mpiexec
 export OPAL_PREFIX="${LSF_BINDIR}/.."
 export PATH=$PATH:${EXECnwps}
 export NCDUMP=ncdump
