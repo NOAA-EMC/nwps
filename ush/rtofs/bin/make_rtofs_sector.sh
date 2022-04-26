@@ -1,4 +1,5 @@
 #!/bin/bash
+set -xa
 # -----------------------------------------------------------
 # UNIX Shell Script
 # Tested Operating System(s): RHEL 5, 6
@@ -286,7 +287,10 @@ do
 	continue
     fi
 
-    epoc_time=`${WGRIB2} -unix_time ${SPOOLdir}/rtofs_glo.t${CYCLE}z.n024_${RTOFSSECTOR}_std.grb2 | grep "1:0:unix" | awk -F= '{ print $3 }'`
+    epoc_time=""
+    while [ "${epoc_time}" == "" ] || [ "${epoc_time}" == "-1" ]; do
+       epoc_time=$(${WGRIB2} -d 1 -unix_time ${SPOOLdir}/rtofs_glo.t${CYCLE}z.n024_${RTOFSSECTOR}_std.grb2 | grep "1:0" | grep "unix" | awk -F= '{ print $3 }')
+    done
     epoc_time=$(echo "$epoc_time - 3600" | bc)
     date_str=`echo ${epoc_time} | awk '{ print strftime("%Y%m%d", $1) }'`
     if [ -e  ${OUTPUTdir}/wave_rtofs_uv_${epoc_time}_${date_str}_${CYCLE}_f000.dat ] &&
