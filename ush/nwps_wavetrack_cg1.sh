@@ -29,7 +29,8 @@ if [ "${hastracking}" == "TRUE" ]
 
    # ----- Call script to perform cluster-based wave tracking ----
    cd ${RUNdir}
-   perl -I${PMnwps} -I${RUNdir} ${USHnwps}/waveTracking.pl | tee -a $logfile
+   #perl -I${PMnwps} -I${RUNdir} ${USHnwps}/waveTracking.pl | tee -a $logfile
+   ${USHnwps}/waveTracking.pl | tee -a $logfile
 
    # ----- Copy outputs to COMOUT ----
    cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
