@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 # ----------------------------------------------------------- 
 # PERL Script
 # PERL Version(s): 5
@@ -237,7 +237,8 @@ sub bug{
 sub writefile {
 	my $self = shift;
 	my $text = shift;
-	my $SAVEHND = select $$self;
+	#my $SAVEHND = select $$self;
+	my $SAVEHND = select $self;
 	$|=1; # Flushes the output buffer
 	print  $text, "\n";
 	select  $SAVEHND;
