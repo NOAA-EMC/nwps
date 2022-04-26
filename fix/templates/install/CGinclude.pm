@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 # CGinclude.pm for NWPS
 # Version: 1.02
 # ----------------------------------------------------------- 
