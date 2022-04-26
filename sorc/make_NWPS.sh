@@ -16,6 +16,7 @@
 #  for NWPS
 #
 # ----------------------------------------------------------- 
+set -xa
 export pwd=`pwd`
 export NWPSdir=${pwd%/*}
 
@@ -29,10 +30,21 @@ fi
 cd ${NWPSdir}/sorc
 ./get_externals.sh
 
+export CONFIG_SITE=/tmp/dummy
+
 source ../versions/build.ver
 
-module purge
-source ../modulefiles/build_nwps.modules
+# moved from build.ver
+export optFlag="-O3"
+export COMP=ftn
+export COMPC=cc
+export C_COMP=cc
+
+#module purge
+module reset
+#source ../modulefiles/build_nwps.modules
+module use ../modulefiles
+module load build_nwps.modules.lua
 module list
 
 mkdir -p ${NWPSdir}/exec
