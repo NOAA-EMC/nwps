@@ -253,10 +253,10 @@ else
                 sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_post_cgn.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_post_cgn.ecf.${wfo}
                 sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn.ecf.${wfo}
 
-                # Adjust node use for CG1
-                if [ "$wfo" == "mob" ]; then
-                   sed -i "s/select=1:ncpus=120/select=2:ncpus=72/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cg1.ecf.${wfo}
-                fi
+                ## Adjust node use for CG1
+                #if [ "$wfo" == "mob" ]; then
+                #   sed -i "s/select=1:ncpus=120/select=2:ncpus=72/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cg1.ecf.${wfo}
+                #fi
 
                 echo $runit                                               > ${NWPSdir}/dev/ecf/jobids_${wfo}.log; 
                 qsub ${NWPSdir}/dev/ecf/jnwps_prep.ecf.${wfo}          >> ${NWPSdir}/dev/ecf/jobids_${wfo}.log; 
