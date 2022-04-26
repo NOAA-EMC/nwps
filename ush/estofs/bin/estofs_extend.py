@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # estofs_extend.py script
 # Author: Andre van der Westhuysen, 04/19/15
 #
