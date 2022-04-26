@@ -112,11 +112,13 @@ cat ${INPUTGRIB2file} > ${GRIB2file}
 echo "Reading GRIB2 file ${GRIB2file}" | tee -a ${LOGFILE}
 
 # Get our model time from the GRIB2 file
-g2_etime=$(${WGRIB2} -unix_time ${GRIB2file} | grep "1:0:unix" | awk -F= '{ print $3 }')
+#g2_etime=$(${WGRIB2} -unix_time ${GRIB2file} | grep "1:0:unix" | awk -F= '{ print $3 }')
+g2_etime=$(${WGRIB2} -d 1 -unix_time ${GRIB2file} | grep "1:0" | grep "unix" | awk -F= '{ print $3 }')
 yyyy=$(echo ${g2_etime} | awk '{ print strftime("%Y", $1) }')
 mon=$(echo ${g2_etime} | awk '{ print strftime("%m", $1) }')
 dd=$(echo ${g2_etime} | awk '{ print strftime("%d", $1) }')
-g2_etime=$(${WGRIB2} -unix_time ${GRIB2file} | grep "1:0:unix" | awk -F= '{ print $3 }')
+#g2_etime=$(${WGRIB2} -unix_time ${GRIB2file} | grep "1:0:unix" | awk -F= '{ print $3 }')
+g2_etime=$(${WGRIB2} -d 1 -unix_time ${GRIB2file} | grep "1:0" | grep "unix" | awk -F= '{ print $3 }')
 hh=$(echo ${g2_etime} | awk '{ print strftime("%H", $1) }')
 mm=$(echo ${g2_etime} | awk '{ print strftime("%M", $1) }')
 ss=$(echo ${g2_etime} | awk '{ print strftime("%S", $1) }')
@@ -387,15 +389,17 @@ do
 	#cat ${TEMPLATEDIR}/NWS_Logo.png > ${PROCdirparll}/NWS_Logo.png
 	cp ${TEMPLATEDIR}/NOAA-Transparent-Logo.png ${PROCdirparll}/NOAA-Transparent-Logo.png
 	cp ${TEMPLATEDIR}/NWS_Logo.png ${PROCdirparll}/NWS_Logo.png
-	cat ${NWPSdir}/ush/python/shiproute_cur.py > ${PROCdirparll}/shiproute_cur.py
-	cat ${NWPSdir}/ush/python/shiproute.py > ${PROCdirparll}/shiproute.py
+	#cat ${NWPSdir}/ush/python/shiproute_cur.py > ${PROCdirparll}/shiproute_cur.py
+	#cat ${NWPSdir}/ush/python/shiproute.py > ${PROCdirparll}/shiproute.py
+	cp -p ${NWPSdir}/ush/python/shiproute_cur.py ${PROCdirparll}/shiproute_cur.py
+	cp -p ${NWPSdir}/ush/python/shiproute.py ${PROCdirparll}/shiproute.py
 	cd ${PROCdir}
 	#${PYTHON} ${PROCdirparll}/shiproute_cur.py ${PROCdirparll}/pyplot_shiproutes.cfg | tee -a ${DEBUGLOGfile}
 	#${PYTHON} ${PROCdirparll}/shiproute.py ${PROCdirparll}/pyplot_shiproutes.cfg | tee -a ${DEBUGLOGfile}
 
         #echo "${PYTHON} ${PROCdirparll}/shiproute_cur.py ${PROCdirparll} pyplot_shiproutes.cfg" >> ${PROCdir}/python_shiproute_cur_elements.sh
-        echo "${PYTHON} ${PROCdirparll}/shiproute_cur.py ${PROCdirparll} pyplot_shiproutes.cfg; ${PYTHON} ${PROCdirparll}/shiproute.py ${PROCdirparll} pyplot_shiproutes.cfg" >> ${PROCdir}/python_shiproute_elements.sh
-        echo "${PYTHON} ${PROCdirparll}/shiproute_cur.py ${PROCdirparll} pyplot_shiproutes.cfg; ${PYTHON} ${PROCdirparll}/shiproute.py ${PROCdirparll} pyplot_shiproutes.cfg" >> ${TEMPDIR}/python_grib2_elements.sh
+        echo "${PROCdirparll}/shiproute_cur.py ${PROCdirparll} pyplot_shiproutes.cfg; ${PROCdirparll}/shiproute.py ${PROCdirparll} pyplot_shiproutes.cfg" >> ${PROCdir}/python_shiproute_elements.sh
+        echo "${PROCdirparll}/shiproute_cur.py ${PROCdirparll} pyplot_shiproutes.cfg; ${PROCdirparll}/shiproute.py ${PROCdirparll} pyplot_shiproutes.cfg" >> ${TEMPDIR}/python_grib2_elements.sh
 
 # End of config line read	
     fi
