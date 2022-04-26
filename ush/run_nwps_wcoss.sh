@@ -36,7 +36,7 @@ then
     export err=1; err_chk
 fi
 
-VERSION=$(cat ${HOMEnwps}/version.txt)
+#VERSION=$(cat ${HOMEnwps}/version.txt)
 NODOWNLOAD="TRUE"
 export DEBUGGING="FALSE"
 
