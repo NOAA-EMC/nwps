@@ -53,7 +53,7 @@ export SENDDBN_NTC=YES
 ####################################
 # Specify Execution Areas
 ####################################
-export HOMEnwps=${HOMEnwps:-${NWROOT}/${model}.${nwps_ver}}
+export HOMEnwps=${HOMEnwps:-${PACKAGEROOT}/${model}.${nwps_ver}}
 export FIXnwps=${FIXnwps:-${HOMEnwps}/fix}
 export EXECnwps=${EXECnwps:-${HOMEnwps}/exec}
 export SORCnwps=${SORCnwps:-${HOMEnwps}/sorc}
@@ -84,7 +84,7 @@ export ISPRODUCTION=${ISPRODUCTION:-TRUE}
 export SITETYPE=${SITETYPE:-EMC}
 export MODELTYPE="SWAN"
 
-export utilexec=${NWROOT}/util/exec
+#export utilexec=${NWROOT}/util/exec
 export pgmout=OUTPUT.$$
 #setpdy.sh
 . ./PDY
@@ -96,13 +96,13 @@ echo ${REGION}
 ##############################################
 # Define COM directory
 ##############################################
-export COMIN=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDY}/${WFO}
-export COMINm1=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDYm1}/${WFO}
-export COMINm2=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDYm2}/${WFO}
-export COMINm3=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDYm3}/${WFO}
-export COMOUT=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDY}/${WFO}
-export GESOUT=${COMROOT}/${NET}/${nwps_ver}/${NET}.${PDY}/nwges
-export COMOUTwmo=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/wmo
+export COMIN=$(compath.py ${NET}/${nwps_ver}/${REGION}.${PDY}/${WFO})
+export COMINm1=$(compath.py ${NET}/${nwps_ver}/${REGION}.${PDYm1}/${WFO})
+export COMINm2=$(compath.py ${NET}/${nwps_ver}/${REGION}.${PDYm2}/${WFO})
+export COMINm3=$(compath.py ${NET}/${nwps_ver}/${REGION}.${PDYm3}/${WFO})
+export COMOUT=$(compath.py -o ${NET}/${nwps_ver})/${REGION}.${PDY}/${WFO}
+export GESOUT=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDY}/nwges
+export COMOUTwmo=$(compath.py -o ${NET}/${nwps_ver})/${REGION}.${PDY}/wmo
 #--------------------------------------------------------------------------
 export dcom_hist="$GESOUT/dcom_hist.txt"
 dcom=${dcom:-${DCOMROOT}}
