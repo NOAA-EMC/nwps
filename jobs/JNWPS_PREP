@@ -3,10 +3,9 @@ date
 export PS4='$SECONDS ${0/\/nw.*\/nwps.*\/} + '
 set -xa
 
-# #### 04/01/15 ###############################
+# #############################################
 # SETUP NWPS SHELL VARIABLES
 # #############################################
-#export DATA=${DATA:-${DATAROOT}/${jobid}}
 export DATA=$DATAROOT/p${model}_${WFO}_${envir}
 rm -rf $DATA
 mkdir $DATA
@@ -41,7 +40,7 @@ export SENDDBN=${SENDDBN:-NO}
 ####################################
 # Specify Execution Areas
 ####################################
-export HOMEnwps=${HOMEnwps:-${NWROOT}/${model}.${nwps_ver}}
+export HOMEnwps=${HOMEnwps:-${PACKAGEROOT}/${model}.${nwps_ver}}
 export FIXnwps=${FIXnwps:-${HOMEnwps}/fix}
 export EXECnwps=${EXECnwps:-${HOMEnwps}/exec}
 export SORCnwps=${SORCnwps:-${HOMEnwps}/sorc}
@@ -82,33 +81,33 @@ export REGION=$( grep ${WFO,,} ${PARMnwps}/wfo.tbl | cut -c1-2 | tr '[:upper:]' 
 ##############################################
 # Define COM directory
 ##############################################
-export COMIN=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
-export COMINm1=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm1}/${WFO}
-export COMINm2=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm2}/${WFO}
-export COMINm3=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm3}/${WFO}
-export COMOUT=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
-export GESIN=${GESROOT}/${envir}/${NET}.${PDY}
-export GESINm1=${GESROOT}/${envir}/${NET}.${PDYm1}
-export GESINm2=${GESROOT}/${envir}/${NET}.${PDYm2}
-export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
-export GESOUTm1=${GESROOT}/${envir}/${NET}.${PDYm1}
-export GESOUTm2=${GESROOT}/${envir}/${NET}.${PDYm2}
+export COMIN=$(compath.py ${NET}/${nwps_ver}/${REGION}.${PDY}/${WFO})
+export COMINm1=$(compath.py ${NET}/${nwps_ver}/${REGION}.${PDYm1}/${WFO})
+export COMINm2=$(compath.py ${NET}/${nwps_ver}/${REGION}.${PDYm2}/${WFO})
+export COMINm3=$(compath.py ${NET}/${nwps_ver}/${REGION}.${PDYm3}/${WFO})
+export COMOUT=$(compath.py -o ${NET}/${nwps_ver}/${REGION}.${PDY}/${WFO})
 
-export COMINgfs=${COMINgfs:-$(compath.py -v -o gfs/${gfs_ver}/gfs.${PDY})}
-export COMINgfsm1=${COMINgfsm1:-$(compath.py -v -o gfs/${gfs_ver}/gfs.${PDYm1})}
-export COMINwave=${COMINwave:-$(compath.py -v -o gfs/${gfs_ver})}
-#----Suggested paths for OFS PREP output (see get_ncep_initfiles.sh)-------
-export COMINestofs=${COMROOT}/${NET}/${nwps_ver}/ofs.${PDY}/estofs/${WFO}_output
-export COMINestofsm1=${COMROOT}/${NET}/${nwps_ver}/ofs.${PDYm1}/estofs/${WFO}_output
-export COMINrtofs=${COMROOT}/${NET}/${nwps_ver}/ofs.${PDY}/rtofs/${WFO}_output
-export COMINrtofsm1=${COMROOT}/${NET}/${nwps_ver}/ofs.${PDYm1}/rtofs/${WFO}_output
-export COMINpsurge=${COMROOT}/${NET}/${nwps_ver}/ofs.${PDY}/psurge/${WFO}_output
-export COMINpsurgem1=${COMROOT}/${NET}/${nwps_ver}/ofs.${PDYm1}/psurge/${WFO}_output
+export GESIN=$(compath.py ${NET}/${nwps_ver}/${NET}.${PDY}/nwges)
+export GESINm1=$(compath.py ${NET}/${nwps_ver}/${NET}.${PDYm1}/nwges)
+export GESINm2=$(compath.py ${NET}/${nwps_ver}/${NET}.${PDYm2}/nwges)
+export GESOUT=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDY}/nwges
+export GESOUTm1=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDYm1}/nwges
+export GESOUTm2=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDYm2}/nwges
+
+export COMINgfs=${COMINgfs:-$(compath.py gfs/${gfs_ver}/gfs.${PDY})}
+export COMINgfsm1=${COMINgfsm1:-$(compath.py gfs/${gfs_ver}/gfs.${PDYm1})}
+export COMINwave=${COMINwave:-$(compath.py gfs/${gfs_ver})}
+export COMINestofs=$(compath.py ${NET}/${nwps_ver}/ofs.${PDY}/estofs/${WFO}_output)
+export COMINestofsm1=$(compath.py ${NET}/${nwps_ver}/ofs.${PDYm1}/estofs/${WFO}_output)
+export COMINrtofs=$(compath.py ${NET}/${nwps_ver}/ofs.${PDY}/rtofs/${WFO}_output)
+export COMINrtofsm1=$(compath.py ${NET}/${nwps_ver}/ofs.${PDYm1}/rtofs/${WFO}_output)
+export COMINpsurge=$(compath.py ${NET}/${nwps_ver}/ofs.${PDY}/psurge/${WFO}_output)
+export COMINpsurgem1=$(compath.py ${NET}/${nwps_ver}/ofs.${PDYm1}/psurge/${WFO}_output)
 #--------------------------------------------------------------------------
 export dcom=${dcom:-${DCOMROOT}}
 
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
-export COMOUTwmo=${COMROOT}/${NET}/${nwps_ver}/${REGION}.${PDY}/wmo
+export COMOUTwmo=$(compath.py -o ${NET}/${nwps_ver})/${REGION}.${PDY}/wmo
 export dcom_hist="$GESOUT/dcom_hist.txt"
 
 # make sure NWPS COM directory exists
@@ -125,7 +124,6 @@ env
 ${HOMEnwps}/scripts/exnwps_prep.sh
 export err=$?; err_chk
 ##############################################
-
 
 msg="JOB $job HAS COMPLETED NORMALLY."
 postmsg $jlogfile "$msg"
