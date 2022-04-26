@@ -175,7 +175,8 @@ fi
 YYYYMMDDHH="${YYYY}${MM}${DD}${HH}"
 #AW
 
-SWANPARMS=`perl -I${RUNdir} -I${PMnwps} ${BINdir}/gfswind_match.pl`
+#SWANPARMS=`perl -I${RUNdir} -I${PMnwps} ${BINdir}/gfswind_match.pl`
+SWANPARMS=`${BINdir}/gfswind_match.pl`
 for parm in ${SWANPARMS}
 do
     FCSTLENGTH=`echo ${parm} | awk -F, '{ print $3 }'`
