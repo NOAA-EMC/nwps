@@ -230,7 +230,8 @@ let start-=psurge_waterlevel_start_time
 let start/=3600
 
 # Lets clean the waterlevel data from all inputCG files
-SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/psurge_match.pl`
+#SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/psurge_match.pl`
+SWANPARMS=`${BINdir}/psurge_match.pl`
 for parm in ${SWANPARMS}
   do
   CG=`echo ${parm} | awk -F, '{ print $1 }'`
@@ -261,7 +262,8 @@ fi
 # Lets check our forecast length and compare it against the hours we have for 
 # the waterlevel data. If the forecaster has exceeded the number number of hours
 # we will truncate the forecast hours to match the waterlevel data.
-SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/psurge_match.pl`
+#SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/psurge_match.pl`
+SWANPARMS=`${BINdir}/psurge_match.pl`
 FCSTLENGTH=`echo ${parm} | awk -F, '{ print $3 }'`
 lencheck=$FCSTLENGTH
 let lencheck*=3600
@@ -318,7 +320,8 @@ fi
 let lencheck/=3600
 
 # Generate the waterlevel data for SWAN and update all inputCG files
-SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/psurge_match.pl`
+#SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/psurge_match.pl`
+SWANPARMS=`${BINdir}/psurge_match.pl`
 for parm in ${SWANPARMS}
   do
   echo "Processing SWAN parameters: ${parm}" | tee -a ${LOGfile}
