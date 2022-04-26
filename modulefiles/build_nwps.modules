@@ -18,7 +18,7 @@ set lname NWPS
 # Known conflicts ???
 
 # Loading Intel Compiler Suite
-module load envvar/${envvar_ver}
+#module load envvar/${envvar_ver}
 module load PrgEnv-intel/${PrgEnv_intel_ver}
 module load intel/${intel_ver}
 module load craype/${craype_ver}
@@ -29,11 +29,11 @@ module load cray-mpich/${cray_mpich_ver}
 module load jasper/${jasper_ver}
 module load libpng/${libpng_ver}
 module load zlib/${zlib_ver}
-module load curl/7.72.0
+module load curl/${curl_ver}
 module load g2/${g2_ver}
 module load g2c/${g2c_ver} 
 # used for multiwavegrib1 and grib2
 module load w3nco/${w3nco_ver}
 module load bacio/${bacio_ver}
 # used for io buffering
-module load iobuf/${iobuf_ver}
+#module load iobuf/${iobuf_ver}
