@@ -42,11 +42,12 @@ export CPP="${CC} -E"
 export F90="ftn"
 export F77="ftn"
 export FC="ftn"
-export CFLAGS="-v -Wall -O2 -axCore-AVX2"
-export CXXFLAGS="-v -Wall -O2 -axCore-AVX2"
-export FFLAGS="-v -warn all -O2 -mp1 -assume buffered_io -axCore-AVX2"
-export FCFLAGS="-v -warn all -O2 -mp1 -assume buffered_io -axCore-AVX2"
-export FFLAGS90="-v -warn all -O2 -mp1 -assume buffered_io -axCore-AVX2"
+# removed "-axCore-AVX2" from following:
+export CFLAGS="-v -Wall -O2"
+export CXXFLAGS="-v -Wall -O2"
+export FFLAGS="-v -warn all -O2 -mp1 -assume buffered_io"
+export FCFLAGS="-v -warn all -O2 -mp1 -assume buffered_io"
+export FFLAGS90="-v -warn all -O2 -mp1 -assume buffered_io"
 
 # Set addtional variables for builds
 export NUMCPUS=$(cat /proc/cpuinfo | grep processor | wc -l | tr -d " ")
