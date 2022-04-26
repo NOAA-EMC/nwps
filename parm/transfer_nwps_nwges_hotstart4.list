@@ -23,21 +23,11 @@
 # directory are included, so if no exclude patterns match that file, it will be
 # transferred.
 
-_GESROOT_/_ENVIR_/nwps._PDYm1_/
-+ /hotstart/
-+ /hotstart/MTR/***
-+ /hotstart/OKX/***
-+ /hotstart/PHI/***
-+ /hotstart/PQR/***
-+ /hotstart/SEW/***
-+ /hotstart/SGX/***
-+ /hotstart/SJU/***
-+ /hotstart/TAE/***
-+ /hotstart/TBW/***
-- *
-B 425000
-Z
-_GESROOT_/_ENVIR_/nwps._PDY_/
+#ops.prod@dlogin05:/lfs/h1/ops/prod/com/nwps/v1.4/nwps.20220321/nwges> ls
+#databc  dcom_hist.txt  hotstart  riphist  status_file.txt  warnings
+
+_COMROOT_/nwps/_SHORTVER_/nwps._PDYm1_/nwges/
+#_GESROOT_/_ENVIR_/nwps._PDYm1_/
 + /hotstart/
 + /hotstart/MTR/***
 + /hotstart/OKX/***
@@ -52,3 +42,18 @@ _GESROOT_/_ENVIR_/nwps._PDY_/
 B 425000
 Z
 
+_COMROOT_/nwps/_SHORTVER_/nwps._PDY_/nwges/
+#_GESROOT_/_ENVIR_/nwps._PDY_/
++ /hotstart/
++ /hotstart/MTR/***
++ /hotstart/OKX/***
++ /hotstart/PHI/***
++ /hotstart/PQR/***
++ /hotstart/SEW/***
++ /hotstart/SGX/***
++ /hotstart/SJU/***
++ /hotstart/TAE/***
++ /hotstart/TBW/***
+- *
+B 425000
+Z
