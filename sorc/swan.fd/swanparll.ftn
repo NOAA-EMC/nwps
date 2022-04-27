@@ -3696,7 +3696,11 @@
                WRITE(FILENM(ILPOS-3:ILPOS),100) IPROC
  100           FORMAT('-',I3.3)
                IUNIT = HIOPEN+NREOQ+(NREF-HIOPEN-1)*NPROC+IPROC
-               INQUIRE ( FILE=FILENM, EXIST=EXIST, OPENED=OPENED )
+!>>>> pjj/gdit if we're here file is not open yet
+!              INQUIRE ( FILE=FILENM, EXIST=EXIST, OPENED=OPENED )
+               INQUIRE ( FILE=FILENM, EXIST=EXIST)
+               opened = .false.
+!<<<< pjj/gdit
                IF ( .NOT.OPENED ) THEN
                   IF (EXIST) THEN
                      OPEN ( UNIT=IUNIT, FILE=FILENM )
@@ -3953,7 +3957,7 @@
 !     it in appropriate manner to generic output file                     40.51
 !
 ! 13. Source text
-!
+
       SAVE IENT
       DATA IENT/0/
       IF (LTRACE) CALL STRACE (IENT,'SWCOLSPC')
@@ -3998,8 +4002,12 @@
                WRITE(FILENM(ILPOS-3:ILPOS),100) IPROC
  100           FORMAT('-',I3.3)
                IUNIT = HIOPEN+NREOQ+(NREF-HIOPEN-1)*NPROC+IPROC
-               INQUIRE ( FILE=FILENM, EXIST=EXIST, OPENED=OPENED )
-               IF ( .NOT.OPENED ) THEN
+!>>>> pjj/gdit if we're here file is not open yet
+!              INQUIRE ( FILE=FILENM, EXIST=EXIST, OPENED=OPENED) 
+               INQUIRE ( FILE=FILENM, EXIST=EXIST)
+               opened = .false.
+!<<<< pjj/gdit
+               IF ( .NOT. OPENED ) THEN
                   IF (EXIST) THEN
                      OPEN ( UNIT=IUNIT, FILE=FILENM )
                   ELSE
@@ -4133,6 +4141,12 @@
            END IF                                                         40.51
          END DO PROCLOOP                                                  40.51
       END DO IPLOOP
+
+!     DO IPROC = 1, NPROC
+!        iunit=HIOPEN+NREOQ+(NREF-HIOPEN-1)*NPROC+IPROC
+!        close(iunit)
+!     end do
+!     close(nref)
 
       RETURN
       END
@@ -4304,9 +4318,10 @@
 !     it in appropriate manner to generic output file                     40.51
 !
 ! 13. Source text
-!
+
       SAVE IENT
       DATA IENT/0/
+
       IF (LTRACE) CALL STRACE (IENT,'SWCOLBLK')
 
       NREF = OQI(1)
@@ -4322,6 +4337,8 @@
         IPD = 3
       ENDIF
 
+!     write(6,*) 'joe60',nref
+
 !     --- if generic output file exist
 
       IF ( NREF.NE.0 .AND. NREF.NE.PRINTF ) THEN
@@ -4330,6 +4347,7 @@
          ILPOS  = INDEX(FILENM, '-0')
          FILENM = FILENM(1:ILPOS-1)
          INQUIRE ( FILE=FILENM, OPENED=OPENED, NUMBER=IUT )
+
          MATLAB = INDEX( FILENM, '.MAT' ).NE.0 .OR.                       40.41
      &            INDEX (FILENM, '.mat' ).NE.0                            40.41
          RAWPRT = INDEX( FILENM, '.RAW' ).NE.0 .OR.                       40.PARTRAW
@@ -4371,7 +4389,11 @@
                WRITE(FILENM(ILPOS-3:ILPOS),100) IPROC
  100           FORMAT('-',I3.3)
                IUNIT = HIOPEN+NREOQ+(NREF-HIOPEN-1)*NPROC+IPROC
-               INQUIRE ( FILE=FILENM, EXIST=EXIST, OPENED=OPENED )
+!>>>> pjj/gdit if we're here file not open yet
+!              INQUIRE ( FILE=FILENM, EXIST=EXIST, OPENED=OPENED )
+               INQUIRE ( FILE=FILENM, EXIST=EXIST)
+               opened = .false.
+!<<<< pjj/gdit
                IF ( .NOT.OPENED ) THEN
                   IF (EXIST) THEN
                      OPEN ( UNIT=IUNIT, FILE=FILENM )
@@ -4382,7 +4404,6 @@
                   END IF
                END IF
             END DO
-
          END IF
 
       END IF
