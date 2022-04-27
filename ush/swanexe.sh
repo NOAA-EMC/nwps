@@ -66,7 +66,7 @@ then
 
    if [ "${siteid}" == "aer" ] || [ "${siteid}" == "afg" ] || [ "${siteid}" == "sew" ] \
       || [ "${siteid}" == "bro" ] || [ "${siteid}" == "crp" ] || [ "${siteid}" == "lch" ] \
-      || [ "${siteid}" == "lix" ] || [ "${siteid}" == "lox" ] \
+      || [ "${siteid}" == "lix" ] || ( [ "${siteid}" == "mtr" ] && [ "${CGNUM}" == "1" ] ) \
       || ( [ "${siteid}" == "pqr" ] && [ "${CGNUM}" != "2" ] ) \
       || ( [ "${siteid}" == "mfr" ] && [ "${CGNUM}" == "1" ] ) \
       || ( [ "${siteid}" == "mfr" ] && [ "${CGNUM}" == "4" ] ) \
@@ -96,11 +96,7 @@ then
             sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
          fi
       done
-      if [ "${siteid}" == "lox" ]; then
-	 mpiexec -n 48 -ppn 48 ${EXECnwps}/swan.exe
-      else
-	 mpiexec -n 48 -ppn 48 ${EXECnwps}/swan.exe
-      fi
+      mpiexec -n 48 -ppn 48 ${EXECnwps}/swan.exe
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
    elif ( [ "${siteid}" == "mfr" ] && [ "${CGNUM}" != "1" ] ) \
@@ -131,10 +127,42 @@ then
             sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
          fi
       done
-      mpiexec -n 96 -ppn 96 ${EXECnwps}/swan.exe
+      mpiexec -n 96 -ppn 48 ${EXECnwps}/swan.exe
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
-   elif [ "${siteid}" == "ajk" ] || [ "${siteid}" == "mtr" ]
+   elif [ "${siteid}" == "lox" ]
+   then
+      # Check that all hotfiles are present
+      for i in {1..9}; do
+         echo "Checking hotfile for "${yyyymmdd}.${hh}"00-00"${i}
+         # Note: Checking also for PDYm1 to allow running of a late cycle from previous day         
+         if [ -f ${RUNdir}/${yyyymmdd}.${hh}00-00${i} ] || [ -f ${RUNdir}/${PDYm1}.${hh}00-00${i} ]; then
+            echo "Found "${yyyymmdd}.${hh}"00-00"${i}
+         else
+            echo "Warning: Not found "${yyyymmdd}.${hh}"00-00"${i}
+            msg="WARNING - missing hotfile for core 0"${i}" for REGULAR GRID run. Will execute a cold start run."
+            postmsg "$jlogfile" "$msg"
+            sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
+         fi
+      done
+      for i in {10..24}; do
+         echo "Checking hotfile for "${yyyymmdd}.${hh}"00-0"${i}       
+         if [ -f ${RUNdir}/${yyyymmdd}.${hh}00-0${i} ] || [ -f ${RUNdir}/${PDYm1}.${hh}00-0${i} ]; then
+            echo "Found "${yyyymmdd}.${hh}"00-0"${i}
+         else
+            echo "Warning: Not found "${yyyymmdd}.${hh}"00-0"${i}
+            msg="WARNING - missing hotfile for core "${i}" for REGULAR GRID run. Will execute a cold start run."
+            postmsg "$jlogfile" "$msg"
+            sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
+         fi
+      done
+      mpiexec -n 24 -ppn 24 ${EXECnwps}/swan.exe
+      export err=$?;
+      echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
+   elif [ "${siteid}" == "ajk" ] \
+     || ( [ "${siteid}" == "mtr" ] && [ "${CGNUM}" == "2" ] ) \
+     || ( [ "${siteid}" == "mtr" ] && [ "${CGNUM}" == "3" ] ) \
+     || ( [ "${siteid}" == "mtr" ] && [ "${CGNUM}" == "4" ] )
    then
       # Check that all hotfiles are present
       for i in {1..9}; do
@@ -171,7 +199,7 @@ then
             sed -i '/INITial HOTStart/c\INIT DEFault' INPUT
          fi
       done
-      mpiexec -n 120 -ppn 120 ${EXECnwps}/swan.exe
+      mpiexec -n 120 -ppn 60 ${EXECnwps}/swan.exe
       export err=$?;
       echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
    else
@@ -270,7 +298,7 @@ then
          done
 
          echo "Starting PuNSWAN executable for "${siteid}
-         mpiexec -n 96 -ppn 96 ${EXECnwps}/punswan4110.exe
+         mpiexec -n 96 -ppn 48 ${EXECnwps}/punswan4110.exe
          export err=$?;
          echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
          cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
@@ -331,7 +359,7 @@ then
          done
 
          echo "Starting PuNSWAN executable for "${siteid}
-	 mpiexec -n 120 -ppn 120 ${EXECnwps}/punswan4110.exe
+	 mpiexec -n 120 -ppn 60 ${EXECnwps}/punswan4110.exe
          export err=$?;
          echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
          cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
@@ -439,7 +467,7 @@ then
          done
 
          echo "Starting PuNSWAN executable for "${siteid}
-	 mpiexec -n 84 -ppn 84 ${EXECnwps}/punswan4110.exe
+	 mpiexec -n 84 -ppn 42 ${EXECnwps}/punswan4110.exe
          export err=$?;
          echo "Exit Code: ${err}" | tee -a ${LOGdir}/swan_exe_error.log
          cp ${RUNdir}/PE0000/PRINT ${RUNdir}/
