@@ -1565,6 +1565,13 @@
       type(verttype), dimension(:), pointer :: vert                       40.91
       SAVE IENT
       DATA IENT /0/
+
+! >>>> pjj/gdit - save open output file unit number
+      integer :: openedu
+      save openedu
+      data openedu/0/
+! <<<< pjj/gdit
+
       CALL STRACE (IENT, 'SWOEXD')
 !
       vert => gridobject%vert_grid                                        40.91
@@ -2646,7 +2653,14 @@
 !PUN         NREF   =  0
 !PUN         IOSTAT = -1
 !PUN         FILENM = TRIM(LOCALDIR)//DIRCH2//'output.set'
-!PUN         CALL FOR (NREF, FILENM, 'UU', IOSTAT)
+! >>>> pjj/gdit - only call FOR (INQUIRE) if we know file is not open
+             if (openedu .eq. 0) then
+!PUN            CALL FOR (NREF, FILENM, 'UU', IOSTAT)
+                openedu = NREF
+             else
+                NREF = openedu
+             end if
+! <<<< pjj/gdit
 !PUN         IF (STPNOW()) RETURN
 !PUN         WRITE(NREF) IRQ, NOWNV
 !PUN         DO IP = 1, MIP
@@ -2657,7 +2671,12 @@
 !PUN            ENDIF
 !PUN            IF ( IONOD(IP).EQ.MYPROC ) WRITE(NREF) IP, IVERTP
 !PUN         ENDDO
-!PUN         IF (IRQ.EQ.NREOQ) CLOSE(NREF)
+!PUN         IF (IRQ.EQ.NREOQ) then
+               CLOSE(NREF)
+! >>>> pjj/gdit - clear saved unit number when closed
+               openedu = 0
+! <<<< pjj/gdit
+             endif
 !PUN      ENDIF
 !
  900  IF (ALLOCATED(KVERT)) DEALLOCATE(KVERT)                             41.07
