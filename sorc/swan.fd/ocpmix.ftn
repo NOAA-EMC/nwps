@@ -1823,9 +1823,11 @@
             IOSTAT= IENODD
             RETURN
          ELSE
-!           Was the file opened already ?
+!>>>> pjj/gdit if we're here file is not open yet
+            OPENED=.false.
             INQUIRE (FILE=DDNAME, IOSTAT=IOSTTM, EXIST=EXIST,
-     &      OPENED=OPENED, NUMBER=IUTTM)
+     &          NUMBER=IUTTM)
+!<<<< pjj/gdit
             IF (IOSTTM .NE. IESUCC) THEN
                IF (IOSTAT.GT.-1) CALL MSGERR (2,
      &               'Inquire failed, filename: '//DDNAME_L)              40.03
