@@ -1,0 +1,384 @@
+Release Notes:  nwps v1.4.1 - released to NCO on April 28, 2022
+
+Transition from WCOSS Cray to WCOSS2 (update for run time optimization)
+
+Where is the release tag on subversion/git/vlab?
+https://github.com/NOAA-EMC/nwps.git Tag: IT-nwps.v1.4.1-20220428
+
+List of external software used (anything outside of your vertical structure), 
+including compilers and version numbers for everything. Software used must be 
+a minimal list of modules/versions specified per job:
+
+jnwps_ofs_prep.ecf/jnwps_rtofs_prep.ecf/jnwps_estofs_prep.ecf/jnwps_psurge_prep.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-mpich/8.1.7
+cray-pals/1.0.12
+cfp/2.0.4
+wgrib2/2.0.8
+python/3.8.6
+
+jnwps_prep.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+wgrib2/2.0.8
+perl/5.32.0
+
+jnwps_forecast_cg1.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+cray-mpich/8.1.7
+wgrib2/2.0.8
+python/3.8.6
+jasper/2.0.25
+libpng/1.6.37
+zlib/1.2.11
+w3nco/2.4.1
+cfp/2.0.4
+perl/5.32.0
+
+jnwps_post_cg1.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+wgrib2/2.0.8
+cfp/2.0.4
+cpe/21.09
+proj/7.1.0
+geos/3.8.1
+libjpeg/9c
+python/3.8.6
+perl/5.32.0
+
+jnwps_prdgen_cg1.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+wgrib2/2.0.8
+libjpeg/9c
+grib_util/1.2.2
+util_shared/1.4.0
+perl/5.32.0
+
+jnwps_wavetrack_cg1.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+wgrib2/2.0.8
+cfp/2.0.4
+cpe/21.09
+proj/7.1.0
+geos/3.8.1
+libjpeg/9c
+python/3.8.6
+perl/5.32.0
+
+jnwps_prdgen_cg0.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+wgrib2/2.0.8
+libjpeg/9c
+grib_util/1.2.2
+util_shared/1.4.0
+perl/5.32.0
+
+jnwps_forecast_cgn.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+wgrib2/2.0.8
+python/3.8.6
+jasper/2.0.25
+libpng/1.6.37
+zlib/1.2.11
+w3nco/2.4.1
+cfp/2.0.4
+perl/5.32.0
+
+jnwps_post_cgn.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+wgrib2/2.0.8
+cfp/2.0.4
+cpe/21.09
+proj/7.1.0
+geos/3.8.1
+libjpeg/9c
+python/3.8.6
+perl/5.32.0
+
+jnwps_prdgen_cgn.ecf
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+wgrib2/2.0.8
+libjpeg/9c
+grib_util/1.2.2
+util_shared/1.4.0
+perl/5.32.0
+
+List of all code/scripts modified with this release (relative to v1.4.0)
+
+For run time optimization:
+sorc/punswan4110.fd/swanparll.ftn
+sorc/punswan4110.fd/swanout1.ftn
+sorc/swan.fd/swanparll.ftn
+sorc/swan.fd/ocpmix.ftn
+ush/swanexe.sh
+
+Fix to build NetCDF 4.2 on Cactus:
+sorc/make_NWPS.sh
+
+Fix to run WGRIB2 on Cactus:
+ush/gfswind/bin/get_gfswind.sh
+ush/make_estofs.sh
+ush/rtofs/bin/make_rtofs_sector.sh differ
+ush/shiproutes/plot_shiproutes.sh
+
+Removed exclusion of lib directory:
+.gitignore
+
+Removed redundant CYCLE assignments
+jobs/JNWPS_FORECAST
+jobs/JNWPS_POST
+jobs/JNWPS_PRDGEN
+jobs/JNWPS_WAVETRACK
+
+Fixed typo:
+ush/rtofs/bin/gen_current.sh
+
+Changed to development files (not relevant to production):
+
+dev/scripts/exnwps_datachk.sh
+dev/ecf/jnwps_forecast_cg1.ecf.tmpl
+
+
+What changes were made to the above code/scripts to support the new architecture?
+ush/swanexe.sh: Processor assignments optimized for LOX and MTR
+
+Were any other changes made that aren’t directly related to the transition?
+No
+
+Are there any changes to incoming data needs or outgoing products? 
+No
+
+If output filenames are changing, list the current and new filename
+N/A
+
+Compute resource information, for every job:
+*** Providing PBS and/or ecFlow submission scripts as part of release tag is preferred; 
+if they are provided then resource information is not needed in the release notes.
+See ecf/ directory.
+
+Runtime changes compared to current production (/gpfs/dell1/nco/ops/com/logs/runtime/daily/* for current stats)
+
+OFS_PREP:
+                   WCOSS2    WCOSS1 prod
+OFS_PREP estofs    60 min    48 min
+OFS_PREP rtofs     32 min    11 min
+OFS_PREP psurge    16 min    32 min
+
+WFO domains (>5 min delays in parentheses):
+       WCOSS2    WCOSS1 prod
+bro:   22 min    20 min
+crp:   23 min    22 min
+hgx:   33 min    34 min
+lch:   31 min    30 min
+lix:   47 min    50 min
+mob:   30 min    35 min
+tae:   40 min    46 min
+tbw:   34 min    38 min
+key:   77 min    89 min
+mfl:   99 min   102 min
+sju:   75 min    80 min
+mlb:   53 min    61 min
+jax:   37 min    41 min
+chs:   56 min    43 min  (+13 min)
+ilm:   45 min    44 min
+mhx:   68 min    69 min
+akq:   75 min    63 min  (+12 min)
+lwx:   19 min    15 min
+phi:   38 min    35 min
+okx:   64 min    62 min
+box:   66 min    62 min
+gyx:   55 min    60 min
+car:   36 min    37 min
+sgx:   49 min    45 min
+lox:   55 min    46 min  (+9 min)
+mtr:   66 min    66 min
+eka:   28 min    33 min
+mfr:   53 min    58 min
+pqr:   38 min    39 min
+sew:   29 min    29 min
+hfo:   69 min    79 min
+gum:   34 min    45 min
+ajk:   82 min    89 min
+aer:   86 min    96 min
+alu:   67 min    90 min
+afg:   44 min    60 min
+
+
+Disk space required per day or per cycle; data retention on disk will remain the same unless otherwise requested.
+Unchanged
+
+Dissemination will remain the same unless otherwise communicated to NCO and a PNS/SCN issued
+Unchanged.
+
+HPSS archive retention will remain the same unless approval granted by HPCRAC
+Unchanged.
+
+What are your up and downstream dependencies?
+Unchanged.
+Upstream: GFE forecaster wind fields from DCOM.
+          GFS v16.2
+          ESTOFS v2.1
+          Seaice_analysis v4.5
+          RTOFS v2.2
+          PSURGE v2.10
+Downstream: None.
+
+Provide a pointer to your COMOUT directory that was used during testing: 
+
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/nwps/v1.4/
+ofs.20220125              <- Output of jnwps_estofs_prep and jnwps_rtofs_prep
+sr.20220125
+er.20220125
+wr.20220125
+ar.20220125
+pr.20220125
+ofs.20180912_test_psurge  <- Output of jnwps_psurge_prep test (H Florence)
+sr.20220125_test_gfs      <- Output of GFS failover test
+
+Canned data from WCOSS1 Cray for comparison:
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/nwps/prod/
+ofs.20220125
+sr.20220125
+er.20220125
+wr.20220125
+ar.20220125
+pr.20220125
+ofs.20180912_test_psurge
+
+
+IMPLEMENTATION INSTRUCTIONS
+
+I) Checking out the code from VLab
+
+Make the home directory for the model in $NWROOT:
+> mkdir nwps
+> cd nwps
+
+Clone the NWPS code from the following Github repo, and checkout the release tag:
+> git clone https://github.com/NOAA-EMC/nwps.git
+> git checkout IT-nwps.v1.4.1-20220428
+
+II) Building the executables
+
+First define the path variable ${NWPSdir} in your profile file, which points to the base of the code checked out under (I) above.
+> export NWPSdir=$(pwd)
+
+Next, change directory to ${NWPSdir}/sorc/, and execute the general NWPS install script. This single step will install the total package, including all libraries and binary compilations:
+
+> cd ${NWPSdir}/sorc
+> ./make_NWPS.sh
+
+Once the compilations are done, all executables are moved to ${NWPSdir}/exec, and the system will be ready.
+
+
+TEST INSTRUCTIONS:
+
+1. Run jnwps_estofs_prep from canned data for 2022/01/25
+
+In jobs/JNWPS_OFS_PREP, point COMINestofs to the canned input data here:
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/estofs/prod/estofs.20220125
+
+Point COMINsicem1 and COMINsice to respectively:
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/omb/prod/sice.20220124
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/omb/prod/sice.20220125
+
+Set PDY=20220125, execute the job, and compare to results under:
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/nwps/v1.4/ofs.20220125/estofs
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/nwps/prod/ofs.20220125/estofs
+
+2. Run jnwps_rtofs_prep from canned data for 2022/01/25
+
+In jobs/JNWPS_OFS_PREP, point COMINrtofs to the canned input data in this path:
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/rtofs/prod/rtofs.20220125
+
+Set PDY=20220125, execute the job, and compare to results under:
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/nwps/v1.4/ofs.20220125/rtofs
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/nwps/prod/ofs.20220125/rtofs
+
+3. Run jnwps_purge_prep from canned data for 2018/09/12
+
+Since PSurge is run on demand, there was no recent input or output available on WCOSS1. However, MDL made canned input data from H FLorence (2018) available. This can be used to run jnwps_purge_prep, and verify against the COMOUT results obtained during testing. Note also that the PSurge results are blended onto the output water levels from jnwps_estofs_prep. This output has been obtained from WCOSS1, and is used here.
+
+In jobs/JNWPS_OFS_PREP, point COMINpsurge to the canned input data in this path:
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/psurge.v2.10/2018-Florence-Adv54-2.10.1/com/psurge/v2.10/psurge.20180912/
+
+Copy the following WCOSS1 canned *output* data from jnwps_estofs_prep to the working directory $DATA:
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/nwps/prod/ofs.20180912_test_psurge/estofs
+
+Set PDY=20180912, execute jnwps_purge_prep, and compare to results under:
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/nwps/v1.4/ofs.20180912_test_psurge/psurge
+
+4. Test the NWPS on-demand runs (36 domains) for 2022/01/25
+
+The NWPS on-demand runs use the following jnwps_ofs_prep output in $COMOUT prepared under 1 and 2 above:
+ofs.20220125/estofs
+ofs.20220125/rtofs
+
+In addition, in jobs/JNWPS_PREP, point COMINgfs and COMINwave to this canned data:
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/gfs/prod/gfs.20220125
+
+Also, copy the following hotstart (restart) files to $NWGES:
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/nwges/hotstart
+
+Note that these hotstart files cannot be older than 3 days, otherwise NWPS will reject them. Therefore, before running the model, perform:
+
+touch hotstart/???/??/20220125.??00*
+touch hotstart/???/??/PE????/20220125.??00
+touch hotstart/???/??/PE????/20220126.??00
+
+Finally, in jobs/JNWPS_PREP, point dcom to the canned data here:
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/dcom/prod/20220125/wgrbbul/nwps
+
+Next, set PDY=20220125, and execute the suite of on-demand NWPS runs for all of its 36 domains. This will use the GFE forecaster wind fields from the canned dcom directory above. Note that NWPS will only run the newest of the input cycles available from each WFO, so expect the model to run only once for each of the 36 domains.
+
+Compare the results of this test to the WCOSS2 test output here:
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/nwps/v1.4/
+sr.20220125
+er.20220125
+wr.20220125
+ar.20220125
+pr.20220125
+
+Also compare against the WCOSS1 prod output below. Note that these directories contain the output for *all* of the cycles on 20220125. Compare the above results against the last cycle for each WFO only:
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/nwps/prod/
+sr.20220125
+er.20220125
+wr.20220125
+ar.20220125
+pr.20220125
+
+5. Test the NWPS on-demand runs in GFS fail-over mode for 2022/01/25 (1 domain)
+
+When there is an error in the GFE forecaster wind fields, NWPS is configured to fail over to GFS wind fields. This did not occur on 2022/01/25, but has been simulated by removing the GFE forcing file from the dcom tarball for WFO TBW. To execute this test, set dcom to:
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/dcom/prod/20220125/wgrbbul/nwps_test_gfs
+
+Now execute the on-demand run for the TBW domain as done in 4 above. Compare the output to the WCOSS2 test data here (no WCOSS1 prod output available for comparison):
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/nwps/v1.4/sr.20220125_test_gfs
+
+Note that the output below should be displayed in the log file:
+/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/nwps/v1.4/sr.20220125_test_gfs/tbw/18/Warn_Forecaster_TBW.20220125.txt
+
+NWPS run started on Tue Feb  8 17:07:40 UTC 2022
+WARNING: We received bad GFE wind file, forecaster wind file has bad values. Will fail over to GFS data.
+Starting model run with gfs winds
+Run settings: RUNLEN=144 WNA=WNAWave NESTS=Yes RTOFS=No WINDS=GFS WEB=Yes PLOT=Yes USERDELTAC=600 HOTSTART=TRUE WATERLEVELS=ESTOFS MODELCORE=UNSWAN
+Forecast analysis time: 20220125 18Z
+
