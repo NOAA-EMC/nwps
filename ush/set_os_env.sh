@@ -71,7 +71,8 @@ echo "Detecting CPU info and number of processors"
 export CPU=$(cat /proc/cpuinfo | grep -m 1 "model name" | awk -F: '{ print $2 }' | tr -s " ")
 export NUMCPUS=$(cat /proc/cpuinfo | grep processor | wc -l | tr -d " ")
 export NCPUS="$NUMCPUS"
-export OMP_NUM_THREADS="$NUMCPUS"
+#export OMP_NUM_THREADS="$NUMCPUS"
+export OMP_NUM_THREADS=${OMP_NUM_THREADS:-$NUMCPUS}
 if [ ${NUMCPUS} -eq 1 ]; then echo "${NUMCPUS} CPU detected:${CPU}"; fi
 if [ ${NUMCPUS} -gt 1 ]; then echo "${NUMCPUS} CPUs detected:${CPU}"; fi
 export CPUMHZ=$(cat /proc/cpuinfo | grep -m 1 "cpu MHz" | awk -F: '{ print $2 }' | tr -d " ")
