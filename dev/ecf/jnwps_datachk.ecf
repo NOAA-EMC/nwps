@@ -22,7 +22,7 @@
 # ----------------------------------------------------------- 
 
 # Setup and load modules
-VERSION_FILE=../../versions/run.ver
+VERSION_FILE=${NWPSdir}/versions/run.ver
 if [ -f $VERSION_FILE ]; then
   . $VERSION_FILE
 else
