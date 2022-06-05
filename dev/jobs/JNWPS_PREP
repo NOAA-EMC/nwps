@@ -46,23 +46,7 @@ cd /lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver
 
 export utilscript=${UTILROOT}/ush
 export USHutil=${UTILROOT}/ush
-#AW sh $utilscript/setpdy.sh
-
-echo 'export PDYm7=20220118' > PDY
-echo 'export PDYm6=20220119' >> PDY
-echo 'export PDYm5=20220120' >> PDY
-echo 'export PDYm4=20220121' >> PDY
-echo 'export PDYm3=20220122' >> PDY
-echo 'export PDYm2=20220123' >> PDY
-echo 'export PDYm1=20220124' >> PDY
-echo 'export PDY=20220125' >> PDY
-echo 'export PDYp1=20220126' >> PDY
-echo 'export PDYp2=20220127' >> PDY
-echo 'export PDYp3=20220128' >> PDY
-echo 'export PDYp4=20220129' >> PDY
-echo 'export PDYp5=20220130' >> PDY
-echo 'export PDYp6=20220131' >> PDY
-echo 'export PDYp7=20220201' >> PDY
+sh $utilscript/setpdy.sh
 
 mv PDY PDY.${WFO}
 . ./PDY.${WFO}
@@ -144,16 +128,18 @@ export GESIN=${COMROOT}/${NET}/$ver/${NET}.${PDY}/nwges
 export GESINm1=${COMROOT}/${NET}/$ver/${NET}.${PDYm1}/nwges
 export GESINm2=${COMROOT}/${NET}/$ver/${NET}.${PDYm2}/nwges
 
-export COMINgfs=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/gfs/prod/gfs.${PDY}
-export COMINwave=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/gfs/prod/
+#export COMINgfs=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/gfs/prod/gfs.${PDY}
+#export COMINwave=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/gfs/prod/
+export COMINgfs=/lfs/h1/ops/prod/com/gfs/${gfs_ver}/gfs.${PDY}
+export COMINwave=/lfs/h1/ops/prod/com/gfs/${gfs_ver}
 export COMINestofs=${COMROOT}/${NET}/${ver}/ofs.${PDY}/estofs/${WFO}_output
 export COMINestofsm1=${COMROOT}/${NET}/${ver}/ofs.${PDYm1}/estofs/${WFO}_output
 export COMINrtofs=${COMROOT}/${NET}/${ver}/ofs.${PDY}/rtofs/${WFO}_output
 export COMINrtofsm1=${COMROOT}/${NET}/${ver}/ofs.${PDYm1}/rtofs/${WFO}_output
 export COMINpsurge=${COMROOT}/${NET}/${ver}/ofs.${PDY}/psurge/${WFO}_output
 export COMINpsurgem1=${COMROOT}/${NET}/${ver}/ofs.${PDYm1}/psurge/${WFO}_output
-#export dcom=/lfs/h1/ops/prod/dcom
-export dcom="/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/dcom/prod"
+export dcom=/lfs/h1/ops/prod/dcom
+#export dcom="/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/dcom/prod"
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 export COM_nwps_R_ES_TOFS="/com"
 export COMOUTwmo=${COMROOT}/${NET}/${ver}/${REGION}.${PDY}/wmo
