@@ -30,8 +30,7 @@ set -xa
 #export TS_f=21600
 export TS_f=3600
 
-#AW curhour=$(date -u +%H)
-curhour=0
+curhour=$(date -u +%H)
 if [ $curhour -lt 12 ]; then CYCLE="00"; fi
 if [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
 if [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
@@ -42,42 +41,12 @@ export cyc=${CYCLE}
 export cycle=t${cyc}z
 export pgmout=OUTPUT.$$
 
+cd /lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver
+
 export utilscript=${UTILROOT}/ush
 export USHutil=${UTILROOT}/ush
-#AW sh $utilscript/setpdy.sh
-
-#AW . ./PDY
-#export PDYm7=20180905
-#export PDYm6=20180906
-#export PDYm5=20180907
-#export PDYm4=20180908
-#export PDYm3=20180909
-#export PDYm2=20180910
-#export PDYm1=20180911
-#export PDY=20180912
-#export PDYp1=20180913
-#export PDYp2=20180914
-#export PDYp3=20180915
-#export PDYp4=20180916
-#export PDYp5=20180917
-#export PDYp6=20180918
-#export PDYp7=20180919
-
-export PDYm7=20220118
-export PDYm6=20220119
-export PDYm5=20220120
-export PDYm4=20220121
-export PDYm3=20220122
-export PDYm2=20220123
-export PDYm1=20220124
-export PDY=20220125
-export PDYp1=20220126
-export PDYp2=20220127
-export PDYp3=20220128
-export PDYp4=20220129
-export PDYp5=20220130
-export PDYp6=20220131
-export PDYp7=20220201
+sh $utilscript/setpdy.sh
+. ./PDY
 
 sh $utilscript/setup.sh
 export pgm="ofs.psurge"
@@ -136,19 +105,17 @@ export COMIN=${COMROOT}/${NET}/${ver}/${OFS}.${PDY}
 export COMOUT=${COMROOT}/${NET}/${ver}/${OFS}.${PDY}
 export COMOUTm1=${COMROOT}/${NET}/${ver}/${OFS}.${PDYm1}
 export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}/nwges
-#export COMINgfs=${COMROOT}/gfs/prod/gfs.${PDY}
-#export COMINwave=${COMROOTp1}/wave/prod
-#export COMINestofs=/gpfs/dell1/nco/ops/com/estofs/prod/estofs.${PDY}
-#export COMINrtofs=${COMROOTp3}/rtofs/prod/rtofs.${PDY}
-#export COMINsice=${COMROOTp3}/omb/prod/sice.${PDY}
-#export COMINsicem1=${COMROOTp3}/omb/prod/sice.${PDYm1}
+export COMINestofs=/lfs/h1/ops/prod/com/estofs/${estofs_ver}/estofs.${PDY}
+export COMINrtofs=/lfs/h1/ops/prod/com/rtofs/${rtofs_ver}/rtofs.${PDY}
+export COMINsice=/lfs/h1/ops/prod/com/seaice_analysis/${seaice_analysis_ver}/seaice_analysis.${PDY}
+export COMINsicem1=/lfs/h1/ops/prod/com/seaice_analysis/${seaice_analysis_ver}/seaice_analysis.${PDYm1}
+export COMINpsurge=/lfs/h1/ops/prod/com/psurge/${psurge_ver}/psurge.${PDY}
+#export COMINwave=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/gfs/prod/
+#export COMINestofs=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/estofs/prod/estofs.${PDY}
+#export COMINrtofs=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/rtofs/prod/rtofs.${PDY}
+#export COMINsice=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/omb/prod/sice.${PDY}
+#export COMINsicem1=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/omb/prod/sice.${PDYm1}
 #export COMINpsurge=/gpfs/hps/nco/ops/com/psurge/prod/psurge.${PDY}
-export COMINwave=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/gfs/prod/
-export COMINestofs=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/estofs/prod/estofs.${PDY}
-export COMINrtofs=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/rtofs/prod/rtofs.${PDY}
-export COMINsice=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/omb/prod/sice.${PDY}
-export COMINsicem1=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/omb/prod/sice.${PDYm1}
-export COMINpsurge=/gpfs/hps/nco/ops/com/psurge/prod/psurge.${PDY}
 
 export COMROOTp2=/gpfs/hps/nco/ops/com
 
@@ -182,7 +149,7 @@ export COMROOTp2=/gpfs/hps/nco/ops/com
 #export COMINpsurge=/lfs/h1/mdl/marine/noscrub/Keep/psurge.v2.10/2018-Florence-Adv54-2.10.1/com/psurge/v2.10/psurge.20180912
 #export COMINpsurge=/lfs/h1/mdl/marine/noscrub/Keep/psurge.v2.10/2017-Harvey-Adv12-2.10.1/com/psurge/v2.10/psurge.20170823/
 #export COMINpsurge=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/psurge.v2.10/2017-Harvey-Adv12-2.10.1/com/psurge/v2.10/psurge.20170823/
-export COMINpsurge=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/psurge.v2.10/2018-Florence-Adv54-2.10.1/com/psurge/v2.10/psurge.20180912/
+#export COMINpsurge=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/psurge.v2.10/2018-Florence-Adv54-2.10.1/com/psurge/v2.10/psurge.20180912/
 #------------------------
 
 export dcom=${dcom:-/dcom/us007003}
