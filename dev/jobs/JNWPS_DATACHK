@@ -87,23 +87,23 @@ export MODELTYPE="SWAN"
 #export pgmout=OUTPUT.$$
 export utilscript=${UTILROOT}/ush
 export USHutil=${UTILROOT}/ush
-#AW sh $utilscript/setpdy.sh
+sh $utilscript/setpdy.sh
 
-echo 'export PDYm7=20220118' > PDY
-echo 'export PDYm6=20220119' >> PDY
-echo 'export PDYm5=20220120' >> PDY
-echo 'export PDYm4=20220121' >> PDY
-echo 'export PDYm3=20220122' >> PDY
-echo 'export PDYm2=20220123' >> PDY
-echo 'export PDYm1=20220124' >> PDY
-echo 'export PDY=20220125' >> PDY
-echo 'export PDYp1=20220126' >> PDY
-echo 'export PDYp2=20220127' >> PDY
-echo 'export PDYp3=20220128' >> PDY
-echo 'export PDYp4=20220129' >> PDY
-echo 'export PDYp5=20220130' >> PDY
-echo 'export PDYp6=20220131' >> PDY
-echo 'export PDYp7=20220201' >> PDY
+#echo 'export PDYm7=20220118' > PDY
+#echo 'export PDYm6=20220119' >> PDY
+#echo 'export PDYm5=20220120' >> PDY
+#echo 'export PDYm4=20220121' >> PDY
+#echo 'export PDYm3=20220122' >> PDY
+#echo 'export PDYm2=20220123' >> PDY
+#echo 'export PDYm1=20220124' >> PDY
+#echo 'export PDY=20220125' >> PDY
+#echo 'export PDYp1=20220126' >> PDY
+#echo 'export PDYp2=20220127' >> PDY
+#echo 'export PDYp3=20220128' >> PDY
+#echo 'export PDYp4=20220129' >> PDY
+#echo 'export PDYp5=20220130' >> PDY
+#echo 'export PDYp6=20220131' >> PDY
+#echo 'export PDYp7=20220201' >> PDY
 
 . ./PDY
 
@@ -115,8 +115,8 @@ export GESOUTm1=${COMROOT}/${NET}/$ver/${NET}.${PDYm1}/nwges
 export dcom_hist="$GESOUT/dcom_hist.txt"
 export dcom_histm1="$GESOUTm1/dcom_hist.txt"
 export web_status_file="$GESOUT/status_file.txt"
-#export dcom=/lfs/h1/ops/prod/dcom
-export dcom="/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/dcom/prod/"
+export dcom=/lfs/h1/ops/prod/dcom
+#export dcom="/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/dcom/prod/"
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 
 # make sure NWPS COM directory exists
