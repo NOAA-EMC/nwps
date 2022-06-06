@@ -32,8 +32,8 @@
 #PBS -l place=excl
 #PBS -l debug=true
 #PBS -V
-#PBS -o /lfs/h2/emc/ptmp/Andre.VanderWesthuysen/com/nwps/v1.4.1/ofs_prep.o
-#PBS -e /lfs/h2/emc/ptmp/Andre.VanderWesthuysen/com/nwps/v1.4.1/ofs_prep.o
+#PBS -o /lfs/h2/emc/ptmp/andre.vanderwesthuysen/com/nwps/v1.4.1/ofs_prep.o
+#PBS -e /lfs/h2/emc/ptmp/andre.vanderwesthuysen/com/nwps/v1.4.1/ofs_prep.o
 
 cd $PBS_O_WORKDIR
 
