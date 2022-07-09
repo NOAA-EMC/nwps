@@ -474,7 +474,12 @@ cd ${DATA}/output/grib2/CG${CGNUM}
               || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "JAX" ] || [ "${SITEID}" == "CHSX" ] \
               || [ "${SITEID}" == "ILMX" ] || [ "${SITEID}" == "PHIX" ] || [ "${SITEID}" == "GYX" ] \
               || [ "${SITEID}" == "TAEX" ] || [ "${SITEID}" == "MOBX" ] || [ "${SITEID}" == "HGXX" ] \
-              || [ "${SITEID}" == "HFO" ]
+              || [ "${SITEID}" == "HFO" ] \
+              || [ "${SITEID}" == "LOX" ] || [ "${SITEID}" == "MTR" ] || [ "${SITEID}" == "EKA" ] \
+              || [ "${SITEID}" == "MFR" ] || [ "${SITEID}" == "PQR" ] || [ "${SITEID}" == "SEW" ] \
+              || [ "${SITEID}" == "AJK" ] || [ "${SITEID}" == "AER" ] || [ "${SITEID}" == "AFG" ] \
+              || [ "${SITEID}" == "BRO" ] || [ "${SITEID}" == "CRP" ] || [ "${SITEID}" == "LCH" ] \
+              || [ "${SITEID}" == "LIX" ] || [ "${SITEID}" == "LWX" ]
            then
               for i in {10..47}; do
                  mkdir -p ${COMOUTCYC}/PE00${i}/
@@ -649,7 +654,12 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
       || [ "${SITEID}" == "GUM" ] || [ "${SITEID}" == "JAX" ] || [ "${SITEID}" == "CHSX" ] \
       || [ "${SITEID}" == "ILMX" ] || [ "${SITEID}" == "PHIX" ] || [ "${SITEID}" == "GYX" ] \
       || [ "${SITEID}" == "TAEX" ] || [ "${SITEID}" == "MOBX" ] || [ "${SITEID}" == "HGXX" ] \
-      || [ "${SITEID}" == "HFO" ]
+      || [ "${SITEID}" == "HFO" ] \
+      || [ "${SITEID}" == "LOX" ] || [ "${SITEID}" == "MTR" ] || [ "${SITEID}" == "EKA" ] \
+      || [ "${SITEID}" == "MFR" ] || [ "${SITEID}" == "PQR" ] || [ "${SITEID}" == "SEW" ] \
+      || [ "${SITEID}" == "AJK" ] || [ "${SITEID}" == "AER" ] || [ "${SITEID}" == "AFG" ] \
+      || [ "${SITEID}" == "BRO" ] || [ "${SITEID}" == "CRP" ] || [ "${SITEID}" == "LCH" ] \
+      || [ "${SITEID}" == "LIX" ] || [ "${SITEID}" == "LWX" ]
    then
       for i in {10..47}; do
          mkdir -p ${HOTdir}/PE00${i}
