@@ -459,7 +459,13 @@ sub makeInputCGx (%){
           || ("${SITEID}" eq "MLB") || ("${SITEID}" eq "JAX") || ("${SITEID}" eq "CHS") 
           || ("${SITEID}" eq "ILM") || ("${SITEID}" eq "PHI") || ("${SITEID}" eq "GYX")
           || ("${SITEID}" eq "KEY") || ("${SITEID}" eq "TAE") || ("${SITEID}" eq "MOB")
-          || ("${SITEID}" eq "HGX") || ("${SITEID}" eq "HFO") ) {
+          || ("${SITEID}" eq "HGX") || ("${SITEID}" eq "HFO")
+          || ("${SITEID}" eq "LOX") || ("${SITEID}" eq "MTR")
+          || ("${SITEID}" eq "EKA") || ("${SITEID}" eq "MFR")
+          || ("${SITEID}" eq "PQR") || ("${SITEID}" eq "SEW")
+          || ("${SITEID}" eq "AER") || ("${SITEID}" eq "AFG") || ("${SITEID}" eq "AJK")
+          || ("${SITEID}" eq "BRO") || ("${SITEID}" eq "CRP") || ("${SITEID}" eq "LCH")
+          || ("${SITEID}" eq "LIX") || ("${SITEID}" eq "LWX") ) {
            for (my $core=16; $core<48; $core++){
 	      #AW $hotfilelocation="${INPUTdir}/hotstart/PE00${core}/${hottime[0]}";
 	      $hotfilelocation="${hotfiles_cyc}/PE00${core}/${hottime[0]}";
