@@ -121,16 +121,15 @@ export WAVECPS="gfswave.NW-LWX51.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#BOUN SEG XY 284.1 36.75 284.60 36.75 VAR FILE 0.00 'gfswave.NW-LWX53.spec.swan'    1 &
-#0.25 'gfswave.NW-LWX52.spec.swan'    1 &
-#0.50 'gfswave.NW-LWX51.spec.swan.cp' 1
-#$
-#BOUN SEG XY 284.60 36.75 284.60 37.75 VAR FILE 0.00 'gfswave.NW-LWX51.spec.swan'    1 &
-#0.25 'gfswave.NW-LWX54.spec.swan'    1 &
-#0.50 'gfswave.NW-LWX55.spec.swan'    1 &
-#0.75 'gfswave.NW-LWX56.spec.swan'    1 &
-#1.00 'gfswave.NW-LWX57.spec.swan'    1
-#$END BOUNSEG
+#$UNSTR SWAN BOUNDARY COMMAND LINES - SITE NW-LWX
+#BOUNDspec SIDE 53 CCW CON FILE 'gfswave.NW-LWX53.spec.swan' 1
+#BOUNDspec SIDE 52 CCW CON FILE 'gfswave.NW-LWX52.spec.swan' 1
+#BOUNDspec SIDE 51 CCW CON FILE 'gfswave.NW-LWX51.spec.swan' 1
+#BOUNDspec SIDE 54 CCW CON FILE 'gfswave.NW-LWX54.spec.swan' 1
+#BOUNDspec SIDE 55 CCW CON FILE 'gfswave.NW-LWX55.spec.swan' 1
+#BOUNDspec SIDE 56 CCW CON FILE 'gfswave.NW-LWX56.spec.swan' 1
+#BOUNDspec SIDE 57 CCW CON FILE 'gfswave.NW-LWX57.spec.swan' 1
+#$END BOUNSEG for UNSTR SWAN
 #
 #========================================================================
 #                    RIP CURRENT PROGRAM (SEE NWPS MANUAL)              =
