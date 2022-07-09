@@ -95,7 +95,7 @@ export SPECPOINTS="46085:55.868:-142.494 46083:58.300:-137.997 FFIA2:57.272:-133
 # IF WAVE TRACKING IS REQUIRED THEN WVTRCK="ON", OTHER WISE SET IT AS "OFF"
 # IF WVTRCK IS "ON", ADDTIONAL INFORMATION IS REQUIRED, SEE BELOW
 #
-export WVTRCK="ON"
+export WVTRCK="OFF"
 #
 # IF WAVE TRACKING IS REQUIRED EXACTLY OVER THE COMPUTATIONAL GRID AND SAME SPATIAL 
 # RESOLUTION: SET WVTONCG="1"  
@@ -145,48 +145,49 @@ export WAVECPS="gfswave.NW-AJK51.spec.swan,gfswave.NW-AJK65.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#BOUN SEG XY 215.50 53.90 215.50 60.00 VAR FILE 0.00 'gfswave.NW-AJK51.spec.swan'    1 &
-#0.10 'gfswave.NW-AJK52.spec.swan'    1 &
-#0.60 'gfswave.NW-AJK53.spec.swan'    1 &
-#1.10 'gfswave.NW-AJK54.spec.swan'    1 &
-#1.60 'gfswave.NW-AJK55.spec.swan'    1 &
-#2.10 'gfswave.NW-AJK56.spec.swan'    1 &
-#2.60 'gfswave.NW-AJK57.spec.swan'    1 &
-#3.10 'gfswave.NW-AJK58.spec.swan'    1 &
-#3.60 'gfswave.NW-AJK59.spec.swan'    1 &
-#4.10 'gfswave.NW-AJK60.spec.swan'    1 &
-#4.60 'gfswave.NW-AJK61.spec.swan'    1 &
-#5.10 'gfswave.NW-AJK62.spec.swan'    1 &
-#5.60 'gfswave.NW-AJK63.spec.swan'    1 &
-#6.10 'gfswave.NW-AJK64.spec.swan'    1
-#$
-#BOUN SEG XY 229.00 53.90 215.50 53.90 VAR FILE 0.00 'gfswave.NW-AJK65.spec.swan.cp'    1 &
-#0.50 'gfswave.NW-AJK66.spec.swan'    1 &
-#2.50 'gfswave.NW-AJK67.spec.swan'    1 &
-#3.00 'gfswave.NW-AJK68.spec.swan'    1 &
-#3.50 'gfswave.NW-AJK69.spec.swan'    1 &
-#4.00 'gfswave.NW-AJK70.spec.swan'    1 &
-#4.50 'gfswave.NW-AJK71.spec.swan'    1 &
-#5.00 'gfswave.NW-AJK72.spec.swan'    1 &
-#5.50 'gfswave.NW-AJK73.spec.swan'    1 &
-#6.00 'gfswave.NW-AJK74.spec.swan'    1 &
-#6.50 'gfswave.NW-AJK75.spec.swan'    1 &
-#7.00 'gfswave.NW-AJK76.spec.swan'    1 &
-#7.50 'gfswave.NW-AJK77.spec.swan'    1 &
-#8.00 'gfswave.NW-AJK78.spec.swan'    1 &
-#8.50 'gfswave.NW-AJK79.spec.swan'    1 &
-#9.00 'gfswave.NW-AJK80.spec.swan'    1 &
-#9.50 'gfswave.NW-AJK81.spec.swan'    1 &
-#10.00 'gfswave.NW-AJK82.spec.swan'    1 &
-#10.50 'gfswave.NW-AJK83.spec.swan'    1 &
-#11.00 'gfswave.NW-AJK84.spec.swan'    1 &
-#11.50 'gfswave.NW-AJK85.spec.swan'    1 &
-#12.00 'gfswave.NW-AJK86.spec.swan'    1 &
-#12.50 'gfswave.NW-AJK87.spec.swan'    1 &
-#13.00 'gfswave.NW-AJK88.spec.swan'    1 &
-#13.50 'gfswave.NW-AJK51.spec.swan.cp' 1
+#$UNSTR SWAN BOUNDARY COMMAND LINES - SITE NW-AJK
+#$ W OPEN GRID BOUNDARY
+#BOUNDspec SIDE 64 CCW CON FILE 'gfswave.NW-AJK64.spec.swan' 1
+#BOUNDspec SIDE 63 CCW CON FILE 'gfswave.NW-AJK63.spec.swan' 1
+#BOUNDspec SIDE 62 CCW CON FILE 'gfswave.NW-AJK62.spec.swan' 1
+#BOUNDspec SIDE 61 CCW CON FILE 'gfswave.NW-AJK61.spec.swan' 1
+#BOUNDspec SIDE 60 CCW CON FILE 'gfswave.NW-AJK60.spec.swan' 1
+#BOUNDspec SIDE 59 CCW CON FILE 'gfswave.NW-AJK59.spec.swan' 1
+#BOUNDspec SIDE 58 CCW CON FILE 'gfswave.NW-AJK58.spec.swan' 1
+#BOUNDspec SIDE 57 CCW CON FILE 'gfswave.NW-AJK57.spec.swan' 1
+#BOUNDspec SIDE 56 CCW CON FILE 'gfswave.NW-AJK56.spec.swan' 1
+#BOUNDspec SIDE 55 CCW CON FILE 'gfswave.NW-AJK55.spec.swan' 1
+#BOUNDspec SIDE 54 CCW CON FILE 'gfswave.NW-AJK54.spec.swan' 1
+#BOUNDspec SIDE 53 CCW CON FILE 'gfswave.NW-AJK53.spec.swan' 1
+#BOUNDspec SIDE 52 CCW CON FILE 'gfswave.NW-AJK52.spec.swan' 1
+#BOUNDspec SIDE 51 CCW CON FILE 'gfswave.NW-AJK51.spec.swan' 1
+#$ S OPEN GRID BOUNDARY
+#BOUNDspec SIDE 88 CCW CON FILE 'gfswave.NW-AJK88.spec.swan' 1
+#BOUNDspec SIDE 87 CCW CON FILE 'gfswave.NW-AJK87.spec.swan' 1
+#BOUNDspec SIDE 86 CCW CON FILE 'gfswave.NW-AJK86.spec.swan' 1
+#BOUNDspec SIDE 85 CCW CON FILE 'gfswave.NW-AJK85.spec.swan' 1
+#BOUNDspec SIDE 84 CCW CON FILE 'gfswave.NW-AJK84.spec.swan' 1
+#BOUNDspec SIDE 83 CCW CON FILE 'gfswave.NW-AJK83.spec.swan' 1
+#BOUNDspec SIDE 82 CCW CON FILE 'gfswave.NW-AJK82.spec.swan' 1
+#BOUNDspec SIDE 81 CCW CON FILE 'gfswave.NW-AJK81.spec.swan' 1
+#BOUNDspec SIDE 80 CCW CON FILE 'gfswave.NW-AJK80.spec.swan' 1
+#BOUNDspec SIDE 79 CCW CON FILE 'gfswave.NW-AJK79.spec.swan' 1
+#BOUNDspec SIDE 78 CCW CON FILE 'gfswave.NW-AJK78.spec.swan' 1
+#BOUNDspec SIDE 77 CCW CON FILE 'gfswave.NW-AJK77.spec.swan' 1
+#BOUNDspec SIDE 76 CCW CON FILE 'gfswave.NW-AJK76.spec.swan' 1
+#BOUNDspec SIDE 75 CCW CON FILE 'gfswave.NW-AJK75.spec.swan' 1
+#BOUNDspec SIDE 74 CCW CON FILE 'gfswave.NW-AJK74.spec.swan' 1
+#BOUNDspec SIDE 73 CCW CON FILE 'gfswave.NW-AJK73.spec.swan' 1
+#BOUNDspec SIDE 72 CCW CON FILE 'gfswave.NW-AJK72.spec.swan' 1
+#BOUNDspec SIDE 71 CCW CON FILE 'gfswave.NW-AJK71.spec.swan' 1
+#BOUNDspec SIDE 70 CCW CON FILE 'gfswave.NW-AJK70.spec.swan' 1
+#BOUNDspec SIDE 69 CCW CON FILE 'gfswave.NW-AJK69.spec.swan' 1
+#BOUNDspec SIDE 68 CCW CON FILE 'gfswave.NW-AJK68.spec.swan' 1
+#BOUNDspec SIDE 67 CCW CON FILE 'gfswave.NW-AJK67.spec.swan' 1
+#BOUNDspec SIDE 66 CCW CON FILE 'gfswave.NW-AJK66.spec.swan' 1
+#BOUNDspec SIDE 65 CCW CON FILE 'gfswave.NW-AJK65.spec.swan' 1
 #NUM DIRimpl cdd=1 cdlim=2
-#$END BOUNSEG
+#$END BOUNSEG for UNSTR SWAN
 #
 #========================================================================
 #                    RIP CURRENT PROGRAM (SEE NWPS MANUAL)              =
