@@ -28,12 +28,13 @@
 #PBS -q dev
 #PBS -A NWPS-DEV
 #PBS -l walltime=02:00:00
-#PBS -l select=1:ncpus=96:mem=5000MB
+##PBS -l select=1:ncpus=96:mem=5000MB
+#PBS -l select=1:ncpus=96
 #PBS -l place=excl
 #PBS -l debug=true
 #PBS -V
-#PBS -o /lfs/h2/emc/ptmp/andre.vanderwesthuysen/com/nwps/v1.4.1/ofs_prep.o
-#PBS -e /lfs/h2/emc/ptmp/andre.vanderwesthuysen/com/nwps/v1.4.1/ofs_prep.o
+#PBS -o /lfs/h2/emc/ptmp/andre.vanderwesthuysen/com/nwps/v1.5.0/ofs_prep.o
+#PBS -e /lfs/h2/emc/ptmp/andre.vanderwesthuysen/com/nwps/v1.5.0/ofs_prep.o
 
 cd $PBS_O_WORKDIR
 
@@ -61,6 +62,10 @@ module load cray-mpich/${cray_mpich_ver}
 module load cray-pals/${cray_pals_ver}
 module load cfp/${cfp_ver}
 module load wgrib2/${wgrib2_ver}
+module load cpe/${cpe_ver}
+module load proj/${proj_ver}
+module load geos/${geos_ver}
+module load libjpeg/${libjpeg_ver}
 module load python/${python_ver}
 module load iobuf/${iobuf_ver}
 module list
