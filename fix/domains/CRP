@@ -155,22 +155,21 @@ export WAVECPS="gfswave.CCTX55.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#BOUN SEG XY 263.00 26.00 265.00 26.00 VAR FILE 0.00 'gfswave.CCTX51.spec.swan'    1 &
-#         0.50 'gfswave.CCTX52.spec.swan'    1 &
-#         1.00 'gfswave.CCTX53.spec.swan'    1 &
-#         1.50 'gfswave.CCTX54.spec.swan'    1 &
-#         2.00 'gfswave.CCTX55.spec.swan'    1
-#$
-#$CRP Eastern Side of grid. (point 61 (-95W/28.8) to point 55 (-95W/26N)
-#$
-#BOUN SEG XY 265.00 28.80 265.00 26.00 VAR FILE 0.00 'gfswave.CCTX61.spec.swan'    1 &
-#         0.30 'gfswave.CCTX60.spec.swan'    1 &
-#         0.80 'gfswave.CCTX59.spec.swan'    1 &
-#         1.30 'gfswave.CCTX58.spec.swan'    1 &
-#         1.80 'gfswave.CCTX57.spec.swan'    1 &
-#         2.30 'gfswave.CCTX56.spec.swan'    1 &
-#         2.80 'gfswave.CCTX55.spec.swan.cp' 1
-#$END BOUNSEG
+#$UNSTR SWAN BOUNDARY COMMAND LINES - SITE CRP
+#$ S OPEN GRID BOUNDARY
+#$BOUNDspec SIDE 51 CCW CON FILE 'gfswave.CCTX51.spec.swan' 1
+#$BOUNDspec SIDE 52 CCW CON FILE 'gfswave.CCTX52.spec.swan' 1
+#$BOUNDspec SIDE 53 CCW CON FILE 'gfswave.CCTX53.spec.swan' 1
+#$BOUNDspec SIDE 54 CCW CON FILE 'gfswave.CCTX54.spec.swan' 1
+#$BOUNDspec SIDE 55 CCW CON FILE 'gfswave.CCTX55.spec.swan' 1
+#$ E OPEN GRID BOUNDARY
+#$BOUNDspec SIDE 56 CCW CON FILE 'gfswave.CCTX56.spec.swan' 1
+#$BOUNDspec SIDE 57 CCW CON FILE 'gfswave.CCTX57.spec.swan' 1
+#$BOUNDspec SIDE 58 CCW CON FILE 'gfswave.CCTX58.spec.swan' 1
+#$BOUNDspec SIDE 59 CCW CON FILE 'gfswave.CCTX59.spec.swan' 1
+#$BOUNDspec SIDE 60 CCW CON FILE 'gfswave.CCTX60.spec.swan' 1
+#$BOUNDspec SIDE 61 CCW CON FILE 'gfswave.CCTX61.spec.swan' 1
+#$END BOUNSEG for UNSTR SWAN
 #
 #========================================================================
 #                    RIP CURRENT PROGRAM (SEE NWPS MANUAL)              =
@@ -178,9 +177,202 @@ export WAVECPS="gfswave.CCTX55.spec.swan"
 # IF RIP CURRENT PROGRAM WILL BE RUN, then RIPCONT=1, Otherwise =0;
 # Setting up RIPCONT here to zero will permanently disable RIP program.
 #
-export RIPPROG="0"
+export RIPPROG="1"
 export RIPDOMAIN="CG1"
 export RIPCONT="5m"
+#
+#___________________________________________________________________________
+# RAY Section: Define a pair of rays to drop data out along critical contours
+#              for rip current program.
+#
+# Example: for data output every 2km along a 5m bathy contour
+#
+# RAY 'rayname' xp yp xq yq int xp yp xq yq
+#
+# RAY 'ray1' 282.85 34.628 282.85 34.62 2000 283.00 34.655 283.00 34.62
+#
+# ISOLINE '5mcont' 'ray1' BOTtom 10
+# TABLE '5mcont' HEAD '5mtable' HSIGN TPS PDIR OUTPUT 20110825.1200 1.0 HR
+#_____________________________________________________________________________
+#
+# THE FOLLOWING LINES MUST BE COMMENTED. IF YOU ADD RIP COMMAND LINES FOR YOUR
+# DOMAIN, ADD THEM WITH THE "#" AS A FIRST CHARACTER, IF YOU DECIDE NOT TO USE RIP
+# CURRENTS (RIPCONT="0") THEY WILL REMAIN AS A COMMENTED LINES. IF YOU DECIDE TO USE
+# BOUNDARY CONDITIONS (BOUNCOND="1") NWPS WILL INCLUDE THE INFORMATION IN THE ACTUAL
+# INPUT FILES WITH NOT COMMENT CHARACTER
+# POIN '5mcont' 279.887  25.8725 
+#
+#$RIP LINES
+#$ Ray for 5m contour data.
+#$
+#POINTS '5mcont' &
+#263.651 28.3958 &
+#263.645 28.3884 &
+#263.640 28.3804 &
+#263.636 28.3723 &
+#263.631 28.3643 &
+#263.627 28.3561 &
+#263.623 28.3477 &
+#263.620 28.3391 &
+#263.615 28.3312 &
+#263.608 28.3251 &
+#263.599 28.3215 & 
+#263.589 28.3196 & 
+#263.579 28.3174 & 
+#263.569 28.3138 & 
+#263.560 28.3099 & 
+#263.551 28.3058 & 
+#263.542 28.3022 & 
+#263.532 28.2987 & 
+#263.523 28.2952 & 
+#263.514 28.2914 & 
+#263.505 28.2874 & 
+#263.496 28.2834 & 
+#263.486 28.2794 & 
+#263.477 28.2752 & 
+#263.469 28.2707 & 
+#263.460 28.2665 & 
+#263.451 28.2624 & 
+#263.442 28.2576 & 
+#263.433 28.2528 & 
+#263.425 28.2483 & 
+#263.416 28.2436 & 
+#263.407 28.2387 & 
+#263.399 28.2338 & 
+#263.390 28.2288 & 
+#263.382 28.2235 & 
+#263.374 28.2184 & 
+#263.365 28.2132 & 
+#263.357 28.2078 & 
+#263.349 28.2025 & 
+#263.341 28.1972 & 
+#263.333 28.1919 & 
+#263.324 28.1866 & 
+#263.316 28.1811 & 
+#263.308 28.1756 & 
+#263.300 28.1701 & 
+#263.292 28.1645 & 
+#263.284 28.1588 & 
+#263.276 28.1534 & 
+#263.268 28.1478 & 
+#263.260 28.1421 & 
+#263.253 28.1360 & 
+#263.245 28.1302 & 
+#263.237 28.1246 & 
+#263.229 28.1187 & 
+#263.222 28.1127 & 
+#263.214 28.1068 & 
+#263.207 28.1008 & 
+#263.199 28.0948 & 
+#263.191 28.0888 & 
+#263.184 28.0827 & 
+#263.176 28.0766 &  
+#263.169 28.0704 & 
+#263.162 28.0641 & 
+#263.154 28.0581 & 
+#263.147 28.0516 & 
+#263.140 28.0452 & 
+#263.133 28.0390 & 
+#263.125 28.0326 & 
+#263.118 28.0261 & 
+#263.111 28.0196 & 
+#263.105 28.0129 & 
+#263.098 28.0064 & 
+#263.091 27.9996 & 
+#263.084 27.9929 & 
+#263.077 27.9861 & 
+#263.071 27.9795 & 
+#263.064 27.9727 & 
+#263.057 27.9658 & 
+#263.051 27.9591 & 
+#263.044 27.9520 & 
+#263.038 27.9450 & 
+#263.032 27.9379 & 
+#263.026 27.9307 & 
+#263.019 27.9235 & 
+#263.013 27.9164 & 
+#263.007 27.9093 & 
+#263.001 27.9019 & 
+#262.995 27.8945 & 
+#262.989 27.8873 & 
+#262.983 27.8799 & 
+#262.978 27.8723 &  
+#262.973 27.8645 & 
+#262.968 27.8564 & 
+#262.964 27.8481 & 
+#262.963 27.8392 & 
+#262.963 27.8304 & 
+#262.956 27.8235 & 
+#262.949 27.8175 & 
+#262.942 27.8113 & 
+#262.935 27.8045 & 
+#262.929 27.7975 & 
+#262.922 27.7902 & 
+#262.916 27.7830 & 
+#262.911 27.7755 & 
+#262.905 27.7679 & 
+#262.900 27.7603 & 
+#262.894 27.7529 & 
+#262.889 27.7453 & 
+#262.883 27.7376 & 
+#262.878 27.7300 & 
+#262.873 27.7223 & 
+#262.867 27.7147 & 
+#262.862 27.7070 & 
+#262.857 27.6993 & 
+#262.852 27.6915 & 
+#262.846 27.6837 & 
+#262.842 27.6758 & 
+#262.837 27.6679 & 
+#262.832 27.6599 & 
+#262.827 27.6519 & 
+#262.823 27.6438 &  
+#262.818 27.6358 & 
+#262.814 27.6278 & 
+#262.809 27.6197 & 
+#262.805 27.6116 & 
+#262.800 27.6035 & 
+#262.796 27.5953 & 
+#262.792 27.5871 & 
+#262.788 27.5789 & 
+#262.784 27.5707 & 
+#262.779 27.5625 & 
+#262.775 27.5544 & 
+#262.770 27.5463 & 
+#262.766 27.5383 & 
+#262.761 27.5301 & 
+#262.757 27.5220 & 
+#262.753 27.5139 & 
+#262.748 27.5057 & 
+#262.744 27.4974 & 
+#262.740 27.4892 & 
+#262.736 27.4809 & 
+#262.732 27.4727 & 
+#262.728 27.4644 & 
+#262.724 27.4561 & 
+#262.721 27.4477 & 
+#262.717 27.4393 & 
+#262.713 27.4309 & 
+#262.710 27.4225 & 
+#262.706 27.4140 & 
+#262.703 27.4055 & 
+#262.699 27.3971 &  
+#262.696 27.3886 & 
+#262.693 27.3800 & 
+#262.690 27.3714 & 
+#262.686 27.3629 & 
+#262.683 27.3543 & 
+#262.681 27.3456 & 
+#262.678 27.3369 & 
+#262.675 27.3283 & 
+#262.672 27.3196 & 
+#262.670 27.3109 & 
+#262.667 27.3023 & 
+#262.664 27.2935 & 
+#262.662 27.2848
+#TABLE '5mcont' HEAD '5m_contour_CG1' TIME XP YP HSIGN TPS DIR DSPR VEL WATL WIND DEP OUTPUT 20140804.0000 1.0 HR
+#$
+#$END RIP
 #
 #========================================================================
 #                    RUNUP PROGRAM (SEE NWPS MANUAL)              =
