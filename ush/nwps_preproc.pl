@@ -188,6 +188,15 @@ if ($RTOFS eq "YES") {
     Logs::run("Proceeding without current interactions.");
   }
 }
+elsif ($RTOFS eq "ESTOFSCUR") {
+  if (-e "${USHnwps}/estofs/bin/gen_estofs_current.sh" ) {
+    system("${USHnwps}/estofs/bin/gen_estofs_current.sh ${date}");
+  }
+  else {
+    Logs::run("You do not have the current processing scripts installed.");
+    Logs::run("Proceeding without current interactions.");
+  }
+}
 
 if ($WATERLEVELS eq "ESTOFS" && $ESTOFS eq "YES") {
   if (-e "${USHnwps}/estofs/bin/gen_waterlevel.sh" ) {
