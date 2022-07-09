@@ -525,7 +525,12 @@ then
          fi
          err_chk
       elif [ "${siteid}" == "sju" ] || [ "${siteid}" == "gum" ] || [ "${siteid}" == "jax" ] \
-         || [ "${siteid}" == "hfo" ] || [ "${siteid}" == "mhx" ] || [ "${siteid}" == "gyx" ]
+         || [ "${siteid}" == "hfo" ] || [ "${siteid}" == "mhx" ] || [ "${siteid}" == "gyx" ] \
+	 || [ "${siteid}" == "lox" ] || [ "${siteid}" == "mtr" ] || [ "${siteid}" == "eka" ] \
+         || [ "${siteid}" == "mfr" ] || [ "${siteid}" == "pqr" ] || [ "${siteid}" == "sew" ] \
+         || [ "${siteid}" == "ajk" ] || [ "${siteid}" == "aer" ] || [ "${siteid}" == "afg" ] \
+         || [ "${siteid}" == "bro" ] || [ "${siteid}" == "crp" ] || [ "${siteid}" == "lch" ] \
+         || [ "${siteid}" == "lix" ] || [ "${siteid}" == "lwx" ]
       then
          echo "Copying required files for PuNSWAN run for "${siteid}
 
