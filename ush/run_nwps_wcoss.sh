@@ -551,11 +551,25 @@ if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "TBW" ] || [ "${SITEID}" == "MFL
    || [ "${SITEID}" == "GUA" ] || [ "${SITEID}" == "MLB" ] || [ "${SITEID}" == "JAX" ] \
    || [ "${SITEID}" == "CHS" ] || [ "${SITEID}" == "ILM" ] || [ "${SITEID}" == "PHI" ] \
    || [ "${SITEID}" == "GYX" ] || [ "${SITEID}" == "KEY" ] || [ "${SITEID}" == "TAE" ] \
-   || [ "${SITEID}" == "MOB" ] || [ "${SITEID}" == "HGX" ]
+   || [ "${SITEID}" == "MOB" ] || [ "${SITEID}" == "HGX" ] \
+   || [ "${SITEID}" == "LOX" ] || [ "${SITEID}" == "MTR" ] \
+   || [ "${SITEID}" == "EKA" ] || [ "${SITEID}" == "MFR" ] \
+   || [ "${SITEID}" == "PQR" ] || [ "${SITEID}" == "SEW" ] \
+   || [ "${SITEID}" == "AER" ] || [ "${SITEID}" == "AFG" ] \
+   || [ "${SITEID}" == "AJK" ] \
+   || [ "${SITEID}" == "BRO" ] || [ "${SITEID}" == "CRP" ] \
+   || [ "${SITEID}" == "LCH" ] || [ "${SITEID}" == "LIX" ] \
+   || [ "${SITEID}" == "LWX" ]
 then
    export MODELCORE="UNSWAN"
 else
    export MODELCORE="SWAN"
+fi
+
+# Set selected WFOs to use depth-integrated currents from ESTOFS
+if [ "${SITEID}" == "PQR" ] || [ "${SITEID}" == "EKA" ] || [ "${SITEID}" == "SEW" ]
+then
+   export RTOFS="ESTOFSCUR"
 fi
 
 cat /dev/null > ${LOGdir}/run_nwps.log
