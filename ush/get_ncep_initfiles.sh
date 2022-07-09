@@ -177,6 +177,65 @@ then
       touch ${RUNdir}/nortofs
    fi
 
+elif [ $1 == "ESTOFSCUR" ]
+then
+   cd ${LDMdir}/estofs
+   pwd
+   if [ $# -eq 1 ]
+   then
+      echo "Downloading ESTOFS current Data. Checking Yesterday First."
+      #${WGET} ${WGETargs} http://${SITE}/${ESTOFSPATHY}
+      if [ -e ${COMINestofsm1}/LOCKFILE ]; then sleep 600; fi 
+      if [ -e ${COMINestofsm1}/estofs_current_start_time.txt ]
+      then
+         cp -pfv ${COMINestofsm1}/wave_estofs_uv* .
+         cp -pfv ${COMINestofsm1}/estofs_current_domain.txt .
+         cp -pfv ${COMINestofsm1}/estofs_current_start_time.txt .
+         rm -fr index.* robots.*
+      else
+         echo "WARNING: Optional ESTOFS current data not available for Yesterday."
+      fi
+   fi
+   echo "Downloading ESTOFS current data for Today"
+   ##${WGET} ${WGETargs} http://${SITE}/${ESTOFSPATH}
+   if [ -e ${COMINestofs}/LOCKFILE ]; then sleep 600; fi
+   if [ -e ${COMINestofs}/estofs_current_start_time.txt ]
+   then
+      cp -pfv ${COMINestofs}/wave_estofs_uv* .
+      cp -pfv ${COMINestofs}/estofs_current_domain.txt .
+      cp -pfv ${COMINestofs}/estofs_current_start_time.txt .
+      rm -fr index.* robots.*
+   else
+      echo "WARNING: Optional ESTOFS current data not available for Today."
+   fi
+   echo "Cleaning OLD data from ESTOFS Directory"
+   if [ -e estofs_current_start_time.txt ]
+   then
+      start_time=`cat estofs_current_start_time.txt`
+      file=`ls wave_estofs_uv_${start_time}_*_f000.dat`
+      #XXXXXXXXXXXcycle=`echo $file | cut -c35-45`
+      #send inside the next for
+      for i in $(ls wave_estofs_uv*.dat)
+      do
+         init_time=`echo $i | cut -c24-33`
+         fhour=`echo $i | cut -c48-50`
+         cycle=`echo $i | cut -c44-45`
+         echo "Processing $i $init_time $start_time $fhour $cycle"
+         if [ $init_time -lt $start_time ]  && [ -e wave_estofs_uv_${start_time}_${cycle}_f144.dat ]
+         then
+            echo "Removing $i"
+            rm -f $i
+         fi
+      done
+   else
+      echo "WARNING: There are no ESTOFS current data available (neither today nor yesterday). Run will continue without wave-current interaction." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+      msg="WARNING: There are no ESTOFS current data available (neither today nor yesterday). Run will continue without wave-current interaction."
+      postmsg "$jlogfile" "$msg"
+      #AW touch ${RUNdir}/noestofs
+   fi
+   # Remove any erroneous files from the extraction script
+   #rm ${LDMdir}/estofs/wave_estofs_waterlevel__19700101_??_f???.dat
+
 elif [ $1 == "ESTOFS" ]
 then
    cd ${LDMdir}/estofs
@@ -188,7 +247,7 @@ then
       if [ -e ${COMINestofsm1}/LOCKFILE ]; then sleep 600; fi 
       if [ -e ${COMINestofsm1}/estofs_waterlevel_start_time.txt ]
       then
-         cp -pfv ${COMINestofsm1}/wave_estofs* .
+         cp -pfv ${COMINestofsm1}/wave_estofs_waterlevel* .
          cp -pfv ${COMINestofsm1}/estofs_waterlevel_domain.txt .
          cp -pfv ${COMINestofsm1}/estofs_waterlevel_start_time.txt .
          rm -fr index.* robots.*
@@ -201,7 +260,7 @@ then
    if [ -e ${COMINestofs}/LOCKFILE ]; then sleep 600; fi
    if [ -e ${COMINestofs}/estofs_waterlevel_start_time.txt ]
    then
-      cp -pfv ${COMINestofs}/wave_estofs* .
+      cp -pfv ${COMINestofs}/wave_estofs_waterlevel* .
       cp -pfv ${COMINestofs}/estofs_waterlevel_domain.txt .
       cp -pfv ${COMINestofs}/estofs_waterlevel_start_time.txt .
       rm -fr index.* robots.*
