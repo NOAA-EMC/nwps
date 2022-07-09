@@ -129,46 +129,134 @@ export WAVECPS="gfswave.NW-AFG51.spec.swan,gfswave.NW-AFG119.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#BOUN SEG XY 183.50 73.00 221.00 73.00 VAR FILE 0.00 'gfswave.NW-AFG51.spec.swan'    1 &
-#2.00 'gfswave.NW-AFG55.spec.swan'    1 &
-#4.00 'gfswave.NW-AFG59.spec.swan'    1 &
-#6.00 'gfswave.NW-AFG63.spec.swan'    1 &
-#8.00 'gfswave.NW-AFG67.spec.swan'    1 &
-#10.00 'gfswave.NW-AFG71.spec.swan'    1 &
-#12.00 'gfswave.NW-AFG75.spec.swan'    1 &
-#14.00 'gfswave.NW-AFG79.spec.swan'    1 &
-#16.00 'gfswave.NW-AFG83.spec.swan'    1 &
-#18.00 'gfswave.NW-AFG87.spec.swan'    1 &
-#20.00 'gfswave.NW-AFG91.spec.swan'    1 &
-#22.00 'gfswave.NW-AFG95.spec.swan'    1 &
-#24.00 'gfswave.NW-AFG99.spec.swan'    1 &
-#26.00 'gfswave.NW-AFG103.spec.swan'    1 &
-#28.00 'gfswave.NW-AFG107.spec.swan'    1 &
-#30.00 'gfswave.NW-AFG111.spec.swan'    1 &
-#32.00 'gfswave.NW-AFG115.spec.swan'    1 &
-#34.00 'gfswave.NW-AFG119.spec.swan'    1 &
-#36.00 'gfswave.NW-AFG123.spec.swan'    1 &
-#37.50 'gfswave.NW-AFG126.spec.swan'    1 
-#$
-#BOUN SEG XY 183.50 61.00 183.50 72.50 VAR FILE 0.00 'gfswave.NW-AFG151.spec.swan'    1 &
-#1.00 'gfswave.NW-AFG149.spec.swan'    1 &
-#2.00 'gfswave.NW-AFG147.spec.swan'    1 &
-#3.00 'gfswave.NW-AFG145.spec.swan'    1 &
-#4.00 'gfswave.NW-AFG143.spec.swan'    1 &
-#8.00 'gfswave.NW-AFG141.spec.swan'    1 &
-#9.00 'gfswave.NW-AFG139.spec.swan'    1 &
-#10.00 'gfswave.NW-AFG137.spec.swan'    1 &
-#11.00 'gfswave.NW-AFG135.spec.swan'    1 &
-#11.50 'gfswave.NW-AFG134.spec.swan'    1 
-#$
-#BOUN SEG XY 184.00 61.00 194.00 61.00 VAR FILE 0.00 'gfswave.NW-AFG152.spec.swan'    1 &
-#2.00 'gfswave.NW-AFG156.spec.swan'    1 &
-#4.00 'gfswave.NW-AFG160.spec.swan'    1 &
-#6.00 'gfswave.NW-AFG164.spec.swan'    1 &
-#8.00 'gfswave.NW-AFG168.spec.swan'    1 &
-#10.00 'gfswave.NW-AFG172.spec.swan'    1
-#$
-#$END BOUNSEG
+#$UNSTR SWAN BOUNDARY COMMAND LINES - SITE NW-AFG
+#$ E OPEN GRID BOUNDARY
+#$BOUNDspec SIDE 133 CCW CON FILE 'gfswave.NW-AFG133.spec.swan' 1
+#$BOUNDspec SIDE 132 CCW CON FILE 'gfswave.NW-AFG132.spec.swan' 1
+#$BOUNDspec SIDE 131 CCW CON FILE 'gfswave.NW-AFG131.spec.swan' 1
+#$BOUNDspec SIDE 130 CCW CON FILE 'gfswave.NW-AFG130.spec.swan' 1
+#$BOUNDspec SIDE 129 CCW CON FILE 'gfswave.NW-AFG129.spec.swan' 1
+#$BOUNDspec SIDE 128 CCW CON FILE 'gfswave.NW-AFG128.spec.swan' 1
+#$BOUNDspec SIDE 127 CCW CON FILE 'gfswave.NW-AFG127.spec.swan' 1
+#$BOUNDspec SIDE 126 CCW CON FILE 'gfswave.NW-AFG126.spec.swan' 1
+#$ N OPEN GRID BOUNDARY
+#$BOUNDspec SIDE 125 CCW CON FILE 'gfswave.NW-AFG125.spec.swan' 1
+#$BOUNDspec SIDE 124 CCW CON FILE 'gfswave.NW-AFG124.spec.swan' 1
+#$BOUNDspec SIDE 123 CCW CON FILE 'gfswave.NW-AFG123.spec.swan' 1
+#$BOUNDspec SIDE 122 CCW CON FILE 'gfswave.NW-AFG122.spec.swan' 1
+#$BOUNDspec SIDE 121 CCW CON FILE 'gfswave.NW-AFG121.spec.swan' 1
+#$BOUNDspec SIDE 120 CCW CON FILE 'gfswave.NW-AFG120.spec.swan' 1
+#$BOUNDspec SIDE 119 CCW CON FILE 'gfswave.NW-AFG119.spec.swan' 1
+#$BOUNDspec SIDE 118 CCW CON FILE 'gfswave.NW-AFG118.spec.swan' 1
+#$BOUNDspec SIDE 117 CCW CON FILE 'gfswave.NW-AFG117.spec.swan' 1
+#$BOUNDspec SIDE 116 CCW CON FILE 'gfswave.NW-AFG116.spec.swan' 1
+#$BOUNDspec SIDE 115 CCW CON FILE 'gfswave.NW-AFG115.spec.swan' 1
+#$BOUNDspec SIDE 114 CCW CON FILE 'gfswave.NW-AFG114.spec.swan' 1
+#$BOUNDspec SIDE 113 CCW CON FILE 'gfswave.NW-AFG113.spec.swan' 1
+#$BOUNDspec SIDE 112 CCW CON FILE 'gfswave.NW-AFG112.spec.swan' 1
+#$BOUNDspec SIDE 111 CCW CON FILE 'gfswave.NW-AFG111.spec.swan' 1
+#$BOUNDspec SIDE 110 CCW CON FILE 'gfswave.NW-AFG110.spec.swan' 1
+#$BOUNDspec SIDE 109 CCW CON FILE 'gfswave.NW-AFG109.spec.swan' 1
+#$BOUNDspec SIDE 108 CCW CON FILE 'gfswave.NW-AFG108.spec.swan' 1
+#$BOUNDspec SIDE 107 CCW CON FILE 'gfswave.NW-AFG107.spec.swan' 1
+#$BOUNDspec SIDE 106 CCW CON FILE 'gfswave.NW-AFG106.spec.swan' 1
+#$BOUNDspec SIDE 105 CCW CON FILE 'gfswave.NW-AFG105.spec.swan' 1
+#$BOUNDspec SIDE 104 CCW CON FILE 'gfswave.NW-AFG104.spec.swan' 1
+#$BOUNDspec SIDE 103 CCW CON FILE 'gfswave.NW-AFG103.spec.swan' 1
+#$BOUNDspec SIDE 102 CCW CON FILE 'gfswave.NW-AFG102.spec.swan' 1
+#$BOUNDspec SIDE 101 CCW CON FILE 'gfswave.NW-AFG101.spec.swan' 1
+#$BOUNDspec SIDE 100 CCW CON FILE 'gfswave.NW-AFG100.spec.swan' 1
+#$BOUNDspec SIDE 99 CCW CON FILE 'gfswave.NW-AFG99.spec.swan' 1
+#$BOUNDspec SIDE 98 CCW CON FILE 'gfswave.NW-AFG98.spec.swan' 1
+#$BOUNDspec SIDE 97 CCW CON FILE 'gfswave.NW-AFG97.spec.swan' 1
+#$BOUNDspec SIDE 96 CCW CON FILE 'gfswave.NW-AFG96.spec.swan' 1
+#$BOUNDspec SIDE 95 CCW CON FILE 'gfswave.NW-AFG95.spec.swan' 1
+#$BOUNDspec SIDE 94 CCW CON FILE 'gfswave.NW-AFG94.spec.swan' 1
+#$BOUNDspec SIDE 93 CCW CON FILE 'gfswave.NW-AFG93.spec.swan' 1
+#$BOUNDspec SIDE 92 CCW CON FILE 'gfswave.NW-AFG92.spec.swan' 1
+#$BOUNDspec SIDE 91 CCW CON FILE 'gfswave.NW-AFG91.spec.swan' 1
+#$BOUNDspec SIDE 90 CCW CON FILE 'gfswave.NW-AFG90.spec.swan' 1
+#$BOUNDspec SIDE 89 CCW CON FILE 'gfswave.NW-AFG89.spec.swan' 1
+#$BOUNDspec SIDE 88 CCW CON FILE 'gfswave.NW-AFG88.spec.swan' 1
+#$BOUNDspec SIDE 87 CCW CON FILE 'gfswave.NW-AFG87.spec.swan' 1
+#$BOUNDspec SIDE 86 CCW CON FILE 'gfswave.NW-AFG86.spec.swan' 1
+#$BOUNDspec SIDE 85 CCW CON FILE 'gfswave.NW-AFG85.spec.swan' 1
+#$BOUNDspec SIDE 84 CCW CON FILE 'gfswave.NW-AFG84.spec.swan' 1
+#$BOUNDspec SIDE 83 CCW CON FILE 'gfswave.NW-AFG83.spec.swan' 1
+#$BOUNDspec SIDE 82 CCW CON FILE 'gfswave.NW-AFG82.spec.swan' 1
+#$BOUNDspec SIDE 81 CCW CON FILE 'gfswave.NW-AFG81.spec.swan' 1
+#$BOUNDspec SIDE 80 CCW CON FILE 'gfswave.NW-AFG80.spec.swan' 1
+#$BOUNDspec SIDE 79 CCW CON FILE 'gfswave.NW-AFG79.spec.swan' 1
+#$BOUNDspec SIDE 78 CCW CON FILE 'gfswave.NW-AFG78.spec.swan' 1
+#$BOUNDspec SIDE 77 CCW CON FILE 'gfswave.NW-AFG77.spec.swan' 1
+#$BOUNDspec SIDE 76 CCW CON FILE 'gfswave.NW-AFG76.spec.swan' 1
+#$BOUNDspec SIDE 75 CCW CON FILE 'gfswave.NW-AFG75.spec.swan' 1
+#$BOUNDspec SIDE 74 CCW CON FILE 'gfswave.NW-AFG74.spec.swan' 1
+#$BOUNDspec SIDE 73 CCW CON FILE 'gfswave.NW-AFG73.spec.swan' 1
+#$BOUNDspec SIDE 72 CCW CON FILE 'gfswave.NW-AFG72.spec.swan' 1
+#$BOUNDspec SIDE 71 CCW CON FILE 'gfswave.NW-AFG71.spec.swan' 1
+#$BOUNDspec SIDE 70 CCW CON FILE 'gfswave.NW-AFG70.spec.swan' 1
+#$BOUNDspec SIDE 69 CCW CON FILE 'gfswave.NW-AFG69.spec.swan' 1
+#$BOUNDspec SIDE 68 CCW CON FILE 'gfswave.NW-AFG68.spec.swan' 1
+#$BOUNDspec SIDE 67 CCW CON FILE 'gfswave.NW-AFG67.spec.swan' 1
+#$BOUNDspec SIDE 66 CCW CON FILE 'gfswave.NW-AFG66.spec.swan' 1
+#$BOUNDspec SIDE 65 CCW CON FILE 'gfswave.NW-AFG65.spec.swan' 1
+#$BOUNDspec SIDE 64 CCW CON FILE 'gfswave.NW-AFG64.spec.swan' 1
+#$BOUNDspec SIDE 63 CCW CON FILE 'gfswave.NW-AFG63.spec.swan' 1
+#$BOUNDspec SIDE 62 CCW CON FILE 'gfswave.NW-AFG62.spec.swan' 1
+#$BOUNDspec SIDE 61 CCW CON FILE 'gfswave.NW-AFG61.spec.swan' 1
+#$BOUNDspec SIDE 60 CCW CON FILE 'gfswave.NW-AFG60.spec.swan' 1
+#$BOUNDspec SIDE 59 CCW CON FILE 'gfswave.NW-AFG59.spec.swan' 1
+#$BOUNDspec SIDE 58 CCW CON FILE 'gfswave.NW-AFG58.spec.swan' 1
+#$BOUNDspec SIDE 57 CCW CON FILE 'gfswave.NW-AFG57.spec.swan' 1
+#$BOUNDspec SIDE 56 CCW CON FILE 'gfswave.NW-AFG56.spec.swan' 1
+#$BOUNDspec SIDE 55 CCW CON FILE 'gfswave.NW-AFG55.spec.swan' 1
+#$BOUNDspec SIDE 54 CCW CON FILE 'gfswave.NW-AFG54.spec.swan' 1
+#$BOUNDspec SIDE 53 CCW CON FILE 'gfswave.NW-AFG53.spec.swan' 1
+#$BOUNDspec SIDE 52 CCW CON FILE 'gfswave.NW-AFG52.spec.swan' 1
+#$BOUNDspec SIDE 51 CCW CON FILE 'gfswave.NW-AFG51.spec.swan' 1
+#$ W OPEN GRID BOUNDARY
+#$BOUNDspec SIDE 134 CCW CON FILE 'gfswave.NW-AFG134.spec.swan' 1
+#$BOUNDspec SIDE 135 CCW CON FILE 'gfswave.NW-AFG135.spec.swan' 1
+#$BOUNDspec SIDE 136 CCW CON FILE 'gfswave.NW-AFG136.spec.swan' 1
+#$BOUNDspec SIDE 137 CCW CON FILE 'gfswave.NW-AFG137.spec.swan' 1
+#$BOUNDspec SIDE 138 CCW CON FILE 'gfswave.NW-AFG138.spec.swan' 1
+#$BOUNDspec SIDE 139 CCW CON FILE 'gfswave.NW-AFG139.spec.swan' 1
+#$BOUNDspec SIDE 140 CCW CON FILE 'gfswave.NW-AFG140.spec.swan' 1
+#$BOUNDspec SIDE 141 CCW CON FILE 'gfswave.NW-AFG141.spec.swan' 1
+#$BOUNDspec SIDE 142 CCW CON FILE 'gfswave.NW-AFG142.spec.swan' 1
+#$BOUNDspec SIDE 143 CCW CON FILE 'gfswave.NW-AFG143.spec.swan' 1
+#$BOUNDspec SIDE 144 CCW CON FILE 'gfswave.NW-AFG144.spec.swan' 1
+#$BOUNDspec SIDE 145 CCW CON FILE 'gfswave.NW-AFG145.spec.swan' 1
+#$BOUNDspec SIDE 146 CCW CON FILE 'gfswave.NW-AFG146.spec.swan' 1
+#$BOUNDspec SIDE 147 CCW CON FILE 'gfswave.NW-AFG147.spec.swan' 1
+#$BOUNDspec SIDE 148 CCW CON FILE 'gfswave.NW-AFG148.spec.swan' 1
+#$BOUNDspec SIDE 149 CCW CON FILE 'gfswave.NW-AFG149.spec.swan' 1
+#$BOUNDspec SIDE 150 CCW CON FILE 'gfswave.NW-AFG150.spec.swan' 1
+#$BOUNDspec SIDE 151 CCW CON FILE 'gfswave.NW-AFG151.spec.swan' 1
+#$ S OPEN GRID BOUNDARY
+#$BOUNDspec SIDE 152 CCW CON FILE 'gfswave.NW-AFG152.spec.swan' 1
+#$BOUNDspec SIDE 153 CCW CON FILE 'gfswave.NW-AFG153.spec.swan' 1
+#$BOUNDspec SIDE 154 CCW CON FILE 'gfswave.NW-AFG154.spec.swan' 1
+#$BOUNDspec SIDE 155 CCW CON FILE 'gfswave.NW-AFG155.spec.swan' 1
+#$BOUNDspec SIDE 156 CCW CON FILE 'gfswave.NW-AFG156.spec.swan' 1
+#$BOUNDspec SIDE 157 CCW CON FILE 'gfswave.NW-AFG157.spec.swan' 1
+#$BOUNDspec SIDE 158 CCW CON FILE 'gfswave.NW-AFG158.spec.swan' 1
+#$BOUNDspec SIDE 159 CCW CON FILE 'gfswave.NW-AFG159.spec.swan' 1
+#$BOUNDspec SIDE 160 CCW CON FILE 'gfswave.NW-AFG160.spec.swan' 1
+#$BOUNDspec SIDE 161 CCW CON FILE 'gfswave.NW-AFG161.spec.swan' 1
+#$BOUNDspec SIDE 162 CCW CON FILE 'gfswave.NW-AFG162.spec.swan' 1
+#$BOUNDspec SIDE 163 CCW CON FILE 'gfswave.NW-AFG163.spec.swan' 1
+#$BOUNDspec SIDE 164 CCW CON FILE 'gfswave.NW-AFG164.spec.swan' 1
+#$BOUNDspec SIDE 165 CCW CON FILE 'gfswave.NW-AFG165.spec.swan' 1
+#$BOUNDspec SIDE 166 CCW CON FILE 'gfswave.NW-AFG166.spec.swan' 1
+#$BOUNDspec SIDE 167 CCW CON FILE 'gfswave.NW-AFG167.spec.swan' 1
+#$BOUNDspec SIDE 168 CCW CON FILE 'gfswave.NW-AFG168.spec.swan' 1
+#$BOUNDspec SIDE 169 CCW CON FILE 'gfswave.NW-AFG169.spec.swan' 1
+#$BOUNDspec SIDE 170 CCW CON FILE 'gfswave.NW-AFG170.spec.swan' 1
+#$BOUNDspec SIDE 171 CCW CON FILE 'gfswave.NW-AFG171.spec.swan' 1
+#$BOUNDspec SIDE 172 CCW CON FILE 'gfswave.NW-AFG172.spec.swan' 1
+#$END BOUNSEG for UNSTR SWAN
 #
 #========================================================================
 #                    RIP CURRENT PROGRAM (SEE NWPS MANUAL)              =
