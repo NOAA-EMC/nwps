@@ -391,6 +391,11 @@ then
    echo "Setting up Currents from RTOFS" | tee -a $logfile
    source ${USHnwps}/get_ncep_initfiles.sh RTOFS
    export err=$?; err_chk
+elif [ "${RTOFS}" == "ESTOFSCUR" ] 
+then
+   echo "Setting up Currents from ESTOFS" | tee -a $logfile
+   source ${USHnwps}/get_ncep_initfiles.sh ESTOFSCUR
+   export err=$?; err_chk
 else
    export RTOFS="NO"
    echo "RTOFS Currents will NOT be used" | tee -a $logfile
