@@ -22,10 +22,17 @@ fi
 #module load ../modulefiles/NWPS/v1.3.0
 #module list
 
+# Original Stockdon et al. formulation for SR and ER
 cd ${NWPSdir}/sorc/runupforecast.fd/
 make runupforecast | tee ./runup_build.log
 rm *.o
 mv -v runupforecast.exe ${NWPSdir}/exec/runupforecast.exe
+
+# Multi-formula version for WR
+cd ${NWPSdir}/sorc/runupforecast.fd/wr/
+make runupforecast_wr | tee ./runup_build.log
+rm *.o
+mv -v runupforecast_wr.exe ${NWPSdir}/exec/runupforecast_wr.exe
 
 echo "Build complete"
 exit 0
