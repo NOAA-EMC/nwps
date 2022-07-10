@@ -118,6 +118,7 @@ if [ ! -e ${INPUTdir}/estofs_current_start_time.txt ] || [ ! -e ${INPUTdir}/esto
        export err=1; err_chk
     fi
     rsync -av --force --stats --progress ${LDMdir}/wave_estofs_uv* ${INPUTdir}/.
+    rsync -av --force --stats --progress ${LDMdir}/estofs_current* ${INPUTdir}/.
 fi
 
 
