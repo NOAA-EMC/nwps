@@ -1,0 +1,235 @@
+Release Notes:  nwps v1.4.3 - released to NCO on August 1, 2022
+
+Transition from WCOSS Cray to WCOSS2 (update for shiproutes date bugfix)
+
+Where is the release tag on subversion/git/vlab?
+https://github.com/NOAA-EMC/nwps.git Tag: IT-nwps.v1.4.3-20220801
+
+List of external software used (anything outside of your vertical structure), 
+including compilers and version numbers for everything. Software used must be 
+a minimal list of modules/versions specified per job:
+
+NOTE: This list of external software is unchanged relative to nwps v1.4.2
+
+jnwps_ofs_prep.ecf/jnwps_rtofs_prep.ecf/jnwps_estofs_prep.ecf/jnwps_psurge_prep.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-mpich/8.1.7
+cray-pals/1.0.12
+cfp/2.0.4
+wgrib2/2.0.8
+python/3.8.6
+
+jnwps_prep.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+wgrib2/2.0.8
+perl/5.32.0
+
+jnwps_forecast_cg1.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+cray-mpich/8.1.7
+wgrib2/2.0.8
+python/3.8.6
+jasper/2.0.25
+libpng/1.6.37
+zlib/1.2.11
+w3nco/2.4.1
+cfp/2.0.4
+perl/5.32.0
+
+jnwps_post_cg1.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+wgrib2/2.0.8
+cfp/2.0.4
+cpe/21.09
+proj/7.1.0
+geos/3.8.1
+libjpeg/9c
+python/3.8.6
+perl/5.32.0
+
+jnwps_prdgen_cg1.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+wgrib2/2.0.8
+libjpeg/9c
+grib_util/1.2.2
+util_shared/1.4.0
+perl/5.32.0
+
+jnwps_wavetrack_cg1.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+wgrib2/2.0.8
+cfp/2.0.4
+cpe/21.09
+proj/7.1.0
+geos/3.8.1
+libjpeg/9c
+python/3.8.6
+perl/5.32.0
+
+jnwps_prdgen_cg0.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+wgrib2/2.0.8
+libjpeg/9c
+grib_util/1.2.2
+util_shared/1.4.0
+perl/5.32.0
+
+jnwps_forecast_cgn.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+wgrib2/2.0.8
+python/3.8.6
+jasper/2.0.25
+libpng/1.6.37
+zlib/1.2.11
+w3nco/2.4.1
+cfp/2.0.4
+perl/5.32.0
+
+jnwps_post_cgn.ecf:
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+wgrib2/2.0.8
+cfp/2.0.4
+cpe/21.09
+proj/7.1.0
+geos/3.8.1
+libjpeg/9c
+python/3.8.6
+perl/5.32.0
+
+jnwps_prdgen_cgn.ecf
+craype/2.7.8
+intel/19.1.3.304
+cray-pals/1.0.12
+wgrib2/2.0.8
+libjpeg/9c
+grib_util/1.2.2
+util_shared/1.4.0
+perl/5.32.0
+
+
+List of all code/scripts modified with this release (relative to v1.4.2)
+
+For shiproutes display date bugfix:
+ush/shiproutes/plot_shiproutes.sh
+
+Update to file path for large fix files:
+sorc/get_externals.sh
+
+Updated model version:
+versions/build.ver
+versions/run.ver
+
+Updated documentation:
+docs/relnotes.readme.v1.4.3 (new)
+
+
+What changes were made to the above code/scripts to support the new architecture?
+None relative to v1.4.2
+
+Were any other changes made that aren’t directly related to the transition?
+No
+
+Are there any changes to incoming data needs or outgoing products? 
+No
+
+If output filenames are changing, list the current and new filename
+N/A
+
+Compute resource information, for every job:
+*** Providing PBS and/or ecFlow submission scripts as part of release tag is preferred; 
+if they are provided then resource information is not needed in the release notes.
+Unchanged relative to v1.4.2
+
+Runtime changes compared to current production (/gpfs/dell1/nco/ops/com/logs/runtime/daily/* for current stats)
+Unchanged relative to v1.4.2
+
+Disk space required per day or per cycle; data retention on disk will remain the same unless otherwise requested.
+Unchanged relative to v1.4.2
+
+Dissemination will remain the same unless otherwise communicated to NCO and a PNS/SCN issued
+Unchanged relative to v1.4.2
+
+HPSS archive retention will remain the same unless approval granted by HPCRAC
+Unchanged relative to v1.4.2
+
+What are your up and downstream dependencies?
+Unchanged relative to v1.4.2
+Upstream: GFE forecaster wind fields from DCOM.
+          GFS v16.2
+          ESTOFS v2.1
+          Seaice_analysis v4.5
+          RTOFS v2.2
+          PSURGE v2.10
+Downstream: None.
+
+Provide a pointer to your COMOUT directory that was used during testing: 
+
+/lfs/h2/emc/ptmp/andre.vanderwesthuysen/com/nwps/v1.4.3/
+sr.20220801
+er.20220801
+wr.20220801
+ar.20220801
+
+Specifically, check the following files:
+sr.20220801/mfl/18/CG1/shiproute_plots_CG1_2022080118.tar.gz
+sr.20220801/key/06/CG1/shiproute_plots_CG1_2022080106.tar.gz
+sr.20220801/lix/12/CG1/shiproute_plots_CG1_2022080112.tar.gz
+er.20220801/akq/18/CG1/shiproute_plots_CG1_2022080118.tar.gz
+wr.20220801/lox/18/CG1/shiproute_plots_CG1_2022080118.tar.gz
+ar.20220801/afg/18/CG1/shiproute_plots_CG1_2022080118.tar.gz
+
+IMPLEMENTATION INSTRUCTIONS
+
+I) Checking out the code from VLab
+
+Make the home directory for the model in $NWROOT:
+> mkdir nwps
+> cd nwps
+
+Clone the NWPS code from the following Github repo, and checkout the release tag:
+> git clone https://github.com/NOAA-EMC/nwps.git
+> git checkout IT-nwps.v1.4.3-20220801
+
+II) Building the executables
+
+First define the path variable ${NWPSdir} in your profile file, which points to the base of the code checked out under (I) above.
+> export NWPSdir=$(pwd)
+
+Next, change directory to ${NWPSdir}/sorc/, and execute the general NWPS install script. This single step will install the total 
+package, including all libraries and binary compilations:
+
+> cd ${NWPSdir}/sorc
+> ./make_NWPS.sh
+
+Once the compilations are done, all executables are moved to ${NWPSdir}/exec, and the system will be ready.
+
+TEST INSTRUCTIONS:
+
+1. Test the NWPS on-demand runs
+
+Conduct on-demand runs for the six WFOS domains listed above, namely MFL, KEY,
+LIX, AKQ, LOX, AFG. Compare the results of this test to the COMOUT listed 
+above: /lfs/h2/emc/ptmp/andre.vanderwesthuysen/com/nwps/v1.4.3/
+
+The files shiproute_plots_CG1_${PDY}${CYC}.tar.gz should be present. After 
+unzipping this tarball, the graphics files it contains should display the
+correct date of each forecast hour (compare hour 0 with the analysis time 
+listed in the Warn_Forecaster*.txt file).
+
