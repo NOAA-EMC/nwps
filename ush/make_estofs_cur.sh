@@ -52,7 +52,7 @@ TIMESTEP="${ESTOFSTIMESTEP}"
 
 #exit 0
 
-if [ "${ESTOFS_REGION}" == "" ]; then ESTOFS_REGION="conus.east"; fi
+if [ "${ESTOFSCUR_REGION}" == "" ]; then ESTOFSCUR_REGION="conus.east"; fi
 
 function process_wfolist() {
     WFO=$(echo ${site} | tr [:lower:] [:upper:])
@@ -60,24 +60,24 @@ function process_wfolist() {
     echo "Creating ESTOFS init files for ${WFO}" 
     source ${FIXnwps}/configs/${wfo}_ncep_config.sh    
     export err=$?; err_chk
-    ESTOFS_REGION=$(echo ${ESTOFS_REGION} | tr [:upper:] [:lower:])
+    ESTOFSCUR_REGION=$(echo ${ESTOFSCUR_REGION} | tr [:upper:] [:lower:])
 #..........................................
-     if [ "${ESTOFS_BASIN}" == "estofs" ] && [ "${ESTOFS_REGION}" == "conus.east" ]
+     if [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "conus.east" ]
      then
        hasdownload_000=${hasDL[1]}
-     elif [ "${ESTOFS_BASIN}" == "estofs" ] && [ "${ESTOFS_REGION}" == "puertori" ]
+     elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "puertori" ]
      then
        hasdownload_000=${hasDL[2]}
-     elif [ "${ESTOFS_BASIN}" == "estofs" ] && [ "${ESTOFS_REGION}" == "conus.west" ]
+     elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "conus.west" ]
      then
        hasdownload_000=${hasDL[3]}
-     elif [ "${ESTOFS_BASIN}" == "estofs" ] && [ "${ESTOFS_REGION}" == "hawaii" ]
+     elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "hawaii" ]
      then
        hasdownload_000=${hasDL[4]}
-     elif [ "${ESTOFS_BASIN}" == "estofs" ] && [ "${ESTOFS_REGION}" == "alaska" ]
+     elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "alaska" ]
      then
        hasdownload_000=${hasDL[5]}
-     elif [ "${ESTOFS_BASIN}" == "estofs" ] && [ "${ESTOFS_REGION}" == "guam" ]
+     elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "guam" ]
      then
        hasdownload_000=${hasDL[6]}
      fi
@@ -89,7 +89,7 @@ function process_wfolist() {
     if [ ! -e ${CLIPdir} ]; then mkdir -p ${CLIPdir}; fi
 #    if [ ! -e ${INGESTdir} ]; then mkdir -p ${INGESTdir}; fi
 
-    if [ "${ESTOFS_REGION}" == "none" ];then
+    if [ "${ESTOFSCUR_REGION}" == "none" ];then
     	echo "ERROR - No ESTOFS region for ${WFO}" 
     	echo "ERROR - Skipping init files for ${WFO}" 
     	continue
@@ -102,7 +102,7 @@ function process_wfolist() {
     DX=$(echo ${ESTOFSCURDOMAIN} | awk '{ print $6}')
     DY=$(echo ${ESTOFSCURDOMAIN} | awk '{ print $7}')
     
-    echo "ESTOFS_REGION = ${ESTOFS_REGION}"
+    echo "ESTOFSCUR_REGION = ${ESTOFSCUR_REGION}"
     echo "ESTOFSCURDOMAIN = ${ESTOFSCURDOMAIN}"
     echo "NX = ${NX}"
     echo "NY = ${NY}"
@@ -114,8 +114,8 @@ function process_wfolist() {
     # Get the first forecast cycle
     touch ${OUTPUTdir}/LOCKFILE
     FF="000"
-    file1="${ESTOFS_BASIN}.t${CYCLE}z.fields.cwl.vel.nowcast.nc"
-    file2="${ESTOFS_BASIN}.t${CYCLE}z.fields.cwl.vel.forecast.nc"
+    file1="${ESTOFSCUR_BASIN}.t${CYCLE}z.fields.cwl.vel.nc"
+    file2="${ESTOFSCUR_BASIN}.t${CYCLE}z.fields.cwl.vel.nc"
     outfile1="${file1}"
     outfile2="${file2}"
     cd ${SPOOLdir}
@@ -123,30 +123,30 @@ function process_wfolist() {
     if [ "${hasdownload_000}" == "" ]; then hasdownload_000="false"; fi
     
     if [ "${hasdownload_000}" == "false" ];then
-        if [ "${ESTOFS_BASIN}" == "estofs" ] && [ "${ESTOFS_REGION}" == "conus.east" ];then
+        if [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "conus.east" ];then
            hasDL[1]="true"
-        elif [ "${ESTOFS_BASIN}" == "estofs" ] && [ "${ESTOFS_REGION}" == "puertori" ];then
+        elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "puertori" ];then
            hasDL[2]="true"
-        elif [ "${ESTOFS_BASIN}" == "estofs" ] && [ "${ESTOFS_REGION}" == "conus.west" ];then
+        elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "conus.west" ];then
            hasDL[3]="true"
-        elif [ "${ESTOFS_BASIN}" == "estofs" ] && [ "${ESTOFS_REGION}" == "hawaii" ];then
+        elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "hawaii" ];then
            hasDL[4]="true"
-        elif [ "${ESTOFS_BASIN}" == "estofs" ] && [ "${ESTOFS_REGION}" == "alaska" ];then
+        elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "alaska" ];then
            hasDL[5]="true"
-        elif [ "${ESTOFS_BASIN}" == "estofs" ] && [ "${ESTOFS_REGION}" == "guam" ];then
+        elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "guam" ];then
            hasDL[6]="true"
         fi
 
         # Copy ESTOFS nowcast output
         echo "Downloading ${SPOOLdir}/$file1 to $outfile1" 
-        echo "cp -p ${COMINestofs}/${file1} ."
-        cp -rp ${COMINestofs}/${file1} .
+        echo "cp -p ${COMINestofscur}/${file1} ."
+        cp -rp ${COMINestofscur}/${file1} .
         sleep 10
         if [ "$?" != "0" ] && [ ! -e ${file1} ];then
            sleep 2
            echo "ERROR - downling file ${PRODUCTdir}/${file1}" 
         fi
-        cp -rp ${COMINestofs}/${file1} .
+        cp -rp ${COMINestofscur}/${file1} .
         sleep 10
         if [ "$?" != "0" ] && [ ! -e ${file1} ];then
            echo "ERROR - downling file ${PRODUCTdir}/${file1}" 
@@ -155,14 +155,14 @@ function process_wfolist() {
 
         # Copy ESTOFS forecast output
         echo "Downloading ${SPOOLdir}/$file2 to $outfile2" 
-        echo "cp -p ${COMINestofs}/${file2} ."
-        cp -rp ${COMINestofs}/${file2} .
+        echo "cp -p ${COMINestofscur}/${file2} ."
+        cp -rp ${COMINestofscur}/${file2} .
         sleep 10
         if [ "$?" != "0" ] && [ ! -e ${file2} ];then
            sleep 2
            echo "ERROR - downling file ${PRODUCTdir}/${file2}" 
         fi
-        cp -rp ${COMINestofs}/${file2} .
+        cp -rp ${COMINestofscur}/${file2} .
         sleep 10
         if [ "$?" != "0" ] && [ ! -e ${file2} ];then
            echo "ERROR - downling file ${PRODUCTdir}/${file2}" 
@@ -210,10 +210,10 @@ function process_wfolist() {
         echo "CLIPdir/file2 = ${CLIPdir}/${file2}"
 	echo "swan_wl_ofile = ${swan_wl_ofile}"
         echo "swan_time_ofile = ${swan_time_ofile}"
-        ${USHnwps}/estofs/bin/get_estofs_currents.py ${lonmin} ${lonmax} ${latmin} ${latmax} ${NCHOURS} ${CLIPdir}/${file1} ${swan_wl_ofile} ${swan_time_ofile} nowcast
-    	export err=$?; err_chk
+        #AW ${USHnwps}/estofs/bin/get_estofs_currents.py ${lonmin} ${lonmax} ${latmin} ${latmax} ${NCHOURS} ${CLIPdir}/${file1} ${swan_wl_ofile} ${swan_time_ofile} nowcast
+    	#AW export err=$?; err_chk
         ${USHnwps}/estofs/bin/get_estofs_currents.py ${lonmin} ${lonmax} ${latmin} ${latmax} ${HOURS} ${CLIPdir}/${file2} ${swan_wl_ofile} ${swan_time_ofile} forecast
-    	export err=$?; err_chk
+	export err=$?; err_chk
         #------------------------------------------------------------
     else
     	echo "Already created ${swan_wl_ofile}" 
