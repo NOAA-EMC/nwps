@@ -125,7 +125,8 @@ def plot_cur(storm, datafile, lonmin, lonmax, latmin, latmax):
       if mode == 'nowcast':
          dt_init = datetime_basedate + datetime.timedelta(seconds=(timeinseconds[0]+(estofshours-1)*3600)) # Add 5 hours to get nowcast time at f000
       else:
-         dt_init = datetime_basedate + datetime.timedelta(seconds=(timeinseconds[0]-3600)) # Count back 1 hour since forecast file starts at f001
+         #AW dt_init = datetime_basedate + datetime.timedelta(seconds=(timeinseconds[0]-3600)) # Count back 1 hour since forecast file starts at f001
+         dt_init = datetime_basedate + datetime.timedelta(seconds=(timeinseconds[0]+5*3600)) # Add 5 hours to get nowcast time at f000
       dstr = datetime.date.strftime(dt,'%Y%m%d%H:%M:%S')
       dstr_init = datetime.date.strftime(dt_init,'%Y%m%d_%H')[0:12]
       epoch_init = int(dt_init.timestamp())
@@ -204,7 +205,7 @@ def plot_cur(storm, datafile, lonmin, lonmax, latmin, latmax):
                np.savetxt(f, u_interp_1d, fmt='%1.2f')
                np.savetxt(f, v_interp_1d, fmt='%1.2f')
       else:
-         with open(outputdir+"/"+"wave_estofs_uv_"+str(epoch_init)+"_"+dstr_init+"_f"+str(hour+1).zfill(3)+".dat", "w") as f:
+         with open(outputdir+"/"+"wave_estofs_uv_"+str(epoch_init)+"_"+dstr_init+"_f"+str(hour).zfill(3)+".dat", "w") as f:
             np.savetxt(f, u_interp_1d, fmt='%1.2f')
             np.savetxt(f, v_interp_1d, fmt='%1.2f')
     
