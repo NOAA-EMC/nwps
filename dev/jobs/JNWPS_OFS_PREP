@@ -36,6 +36,9 @@ if [ $curhour -ge 12 ] && [ $curhour -lt 18 ]; then CYCLE="06"; fi
 if [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
 if [ $curhour -ge 22 ]; then CYCLE="18"; fi
 echo ""
+##### 07/20/22: Realtime test of Global STOFS upgrade ###############
+if [ "${OFSTYPE}" == "estofs_cur" ]; then CYCLE="00"; fi
+#####################################################################
 echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
 export cyc=${CYCLE}
 export cycle=t${cyc}z
@@ -106,6 +109,9 @@ export COMOUT=${COMROOT}/${NET}/${ver}/${OFS}.${PDY}
 export COMOUTm1=${COMROOT}/${NET}/${ver}/${OFS}.${PDYm1}
 export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}/nwges
 export COMINestofs=/lfs/h1/ops/prod/com/estofs/${estofs_ver}/estofs.${PDY}
+##### 07/20/22: Realtime test of Global STOFS upgrade ###############
+export COMINestofscur=/lfs/h1/nos/estofs/noscrub/Yuji.Funakoshi/stofs.v1.1.0/com/stofs/v1.1/stofs.${PDY}
+#####################################################################
 export COMINrtofs=/lfs/h1/ops/prod/com/rtofs/${rtofs_ver}/rtofs.${PDY}
 export COMINsice=/lfs/h1/ops/prod/com/seaice_analysis/${seaice_analysis_ver}/seaice_analysis.${PDY}
 export COMINsicem1=/lfs/h1/ops/prod/com/seaice_analysis/${seaice_analysis_ver}/seaice_analysis.${PDYm1}
