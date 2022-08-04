@@ -1,0 +1,89 @@
+#!/bin/bash --login
+# --------------------------------------------------------------------------- #
+#                                                                             #
+# nwps_ftp_devwr.cron : Script manages the running of the NWPS ftp scripts    #
+#                             bsub < nwps_ftp_devwr.lsf                       #
+#                                                                             #
+# Remarks   - Can be run interactively, or from LL.                           #
+#                                                                             #
+# Last Changed : 01-25-2016                                     January 2016  #
+# --------------------------------------------------------------------------- #
+
+# Set up the modules
+
+module load prod_envir
+module load prod_util
+module load alps
+module load xt-lsfhpc
+
+module list
+
+# 0. Host assessment
+
+export script='nwps_ftp_all_retro.cron'
+export runon='dev'
+
+  echo '                  **************************************************'
+  echo '                  *** NWPS HOOK-IN SCRIPT nwps_ftp_all_retro.cron  ***'
+  echo '                  **************************************************'
+  echo ' '
+  echo " Time : `date`"
+  echo ' '
+  echo '        Host assessment :'
+  echo '        ------------------------------------------------------------'
+  echo "           script to run      : $script"
+  echo "           running on         : $runon"
+
+  export host_s="`cat /etc/HOSTNAME | cut -c1-1`"
+  case $host_s in
+   's' ) host='surge' ;;
+   'l' ) host='luna' ;;
+    *  ) echo ' '
+         echo ' *****************************'
+         echo " *** HOST $host_s NOT RECOGNIZED ***"
+         echo ' *****************************'
+         echo ' '
+         date=`date -u +"%Y%m%d t%Hz"`
+         echo "nwps.cron $date : host [$host] not recognized."
+         exit 1 ;;
+  esac
+
+  echo ' '
+  echo "           host machine       : $host"
+
+  prod=`cat /etc/prod | awk '{ print $1 }'`
+  echo "           production  mach.  : $prod"
+
+  if [ "$runon" = 'none' ]
+  then
+    target='none'
+  else
+    target=`cat /etc/$runon | awk '{ print $1 }'`
+  fi
+  echo "           running on         : $runon [$target]"
+
+  if [ "$host" != "$target" ]
+  then
+    echo ' '
+    echo " Time : `date`"
+    echo ' '
+    echo ' '
+    echo '                        *** End of nwps_ftp_all_retro.cron ***'
+    exit 0
+  fi
+
+# --------------------------------------------------------------------------- #
+# 1.  Manage batch job
+
+bsub < nwps_ftp_all_retro.lsf
+
+# --------------------------------------------------------------------------- #
+# 2.  End of all.
+
+  echo ' '
+  echo ' '
+  echo " Time : `date`"
+  echo ' '
+  echo '                        *** End of nwps_ftp_all_retro.cron ***'
+
+# - end of nwps_ftp_all_retro.cron -------------------------------------------------- #

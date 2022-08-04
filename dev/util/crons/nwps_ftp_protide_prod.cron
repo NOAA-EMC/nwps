@@ -1,0 +1,84 @@
+#!/bin/bash --login
+# --------------------------------------------------------------------------- #
+#                                                                             #
+# nwps_ftp_all_prod.cron : Script manages the running of the NWPS ftp scripts #
+#                             bsub < nwps_ftp_protide_prod.lsf                #
+#                                                                             #
+# Remarks   - Can be run interactively, or from LL.                           #
+#                                                                             #
+# Last Changed : 01-25-2016                                     January 2016  #
+# --------------------------------------------------------------------------- #
+
+# Set up the modules
+
+module load prod_envir
+module load prod_util
+#module load ics
+#module load ibmpe
+#module load lsf
+module load alps
+module load xt-lsfhpc
+
+module list
+
+# 0. Host assessment
+
+export script='nwps_ftp_protide_prod.cron'
+export runon='PRIMARYSYS'
+
+  echo '                  ******************************************************'
+  echo '                  *** NWPS HOOK-IN SCRIPT nwps_ftp_protide_prod.cron ***'
+  echo '                  ******************************************************'
+  echo ' '
+  echo " Time : `date`"
+  echo ' '
+  echo '        Host assessment :'
+  echo '        ------------------------------------------------------------'
+  echo "           script to run      : $script"
+  echo "           running on         : $runon"
+
+  export host_s="`cat /etc/HOSTNAME | cut -c1-1`"
+  case $host_s in
+   'c' ) host='cactus' ;;
+   'd' ) host='dogwood' ;;
+    *  ) echo ' '
+         echo ' *****************************'
+         echo " *** HOST $host_s NOT RECOGNIZED ***"
+         echo ' *****************************'
+         echo ' '
+         date=`date -u +"%Y%m%d t%Hz"`
+         echo "nwps.cron $date : host [$host] not recognized."
+         exit 1 ;;
+  esac
+
+  echo ' '
+  echo "           host machine       : $host"
+
+  sec_profile=`cat /etc/wcoss.conf | grep sec_profile | cut -d ':' -f 2`
+  echo "           machine function   : $sec_profile"
+
+  if [ "$sec_profile" != "$runon" ]
+  then
+    echo ' '
+    echo " Time : `date`"
+    echo ' '
+    echo ' '
+    echo '                        *** End of nwps_ftp_protide_prod.cron ***'
+    exit 0
+  fi
+
+# --------------------------------------------------------------------------- #
+# 1.  Manage batch job
+
+  qsub nwps_ftp_protide_prod.lsf
+
+# --------------------------------------------------------------------------- #
+# 2.  End of all.
+
+  echo ' '
+  echo ' '
+  echo " Time : `date`"
+  echo ' '
+  echo '                        *** End of nwps_ftp_protide_prod.cron ***'
+
+# - end of nwps_ftp_protide_prod.cron --------------------------------------- #

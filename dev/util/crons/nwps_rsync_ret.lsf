@@ -1,0 +1,33 @@
+#!/bin/bash --login
+# ----------------------------------------------------------- 
+# UNIX Shell Script File
+# Tested Operating System(s): RHEL 5,6
+# Tested Run Level(s): 3, 5
+# Shell Used: BASH shell
+# Original Author(s): Andre van der Westhuysen
+# File Creation Date: 10/02/2015
+# Date Last Modified:
+#
+# Version control:
+#
+# Support Team:
+#
+# Contributors:
+#
+# ----------------------------------------------------------- 
+# ------------- Program Description and Details ------------- 
+# ----------------------------------------------------------- 
+#
+# rsync script for data backup
+#
+# ----------------------------------------------------------- 
+
+#BSUB -J rsync_nwps
+#BSUB -oo /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/rsync_nwps_ret.o
+#     -e /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/rsync_nwps_ret.e
+#BSUB -q "dev_transfer"
+#BSUB -W 6:00
+#BSUB -R rusage[mem=1700]
+#BSUB -P NWPS-T2O
+
+rsync -ax --include=*/ --include='Warn*' --include='*.grib2' --include='SPC2D*' --include='*runup*' --include='*rip*' --include='*.sys' --exclude='PE*' --exclude='*' /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/retro/com/nwps/para/ /gpfs/hps3/emc/marine/noscrub/Andre.VanderWesthuysen/nwps_para_20160501/retro/com/nwps/para/

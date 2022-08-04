@@ -1,0 +1,90 @@
+#!/bin/bash --login
+# --------------------------------------------------------------------------- #
+#                                                                             #
+# nwps_ofs_estofs.cron : Script manages the running of the NWPS water level   #
+#                        extraction script ${NWPSdir}/dev/nwps_ofs_prep.ecf   #
+#                                                                             #
+# Remarks   - Can be run interactively, or from LL.                           #
+#                                                                             #
+# Last Changed : 04-12-2016                                       April 2016  #
+# --------------------------------------------------------------------------- #
+
+# Set up the modules
+
+module load prod_envir
+module load prod_util
+#module load ics
+#module load ibmpe
+#module load lsf
+module load alps
+module load xt-lsfhpc
+
+module list
+
+# 0.a Set necessary variables
+export OFSTYPE="estofs"
+
+# 0.b Host assessment
+
+export script='nwps_ofs_estofs.cron'
+export runon='BACKUPSYS'
+
+  echo '                  ************************************************'
+  echo '                  *** NWPS HOOK-IN SCRIPT nwps_ofs_estofs.cron ***'
+  echo '                  ************************************************'
+  echo ' '
+  echo " Time : `date`"
+  echo ' '
+  echo '        Host assessment :'
+  echo '        ------------------------------------------------------------'
+  echo "           script to run      : $script"
+  echo "           running on         : $runon"
+
+  export host_s="`cat /etc/HOSTNAME | cut -c1-1`"
+  case $host_s in
+   'c' ) host='cactus' ;;
+   'd' ) host='dogwood' ;;
+    *  ) echo ' '
+         echo ' *****************************'
+         echo " *** HOST $host_s NOT RECOGNIZED ***"
+         echo ' *****************************'
+         echo ' '
+         date=`date -u +"%Y%m%d t%Hz"`
+         echo "nwps.cron $date : host [$host] not recognized."
+         exit 1 ;;
+  esac
+
+  echo ' '
+  echo "           host machine       : $host"
+
+  sec_profile=`cat /etc/wcoss.conf | grep sec_profile | cut -d ':' -f 2`
+  echo "           machine function   : $sec_profile"
+
+  if [ "$sec_profile" != "$runon" ]
+  then
+    echo ' '
+    echo " Time : `date`"
+    echo ' '
+    echo ' '
+    echo '                        *** End of nwps_ofs_estofs.cron ***'
+    exit 0
+  fi
+
+# --------------------------------------------------------------------------- #
+# 1.  Manage batch job
+
+  echo " "
+  echo "        -> Submitting nwps_ofs_prep.ecf at: `date`"
+  qsub ${NWPSdir}/dev/ecf/jnwps_ofs_prep.ecf
+  echo " "
+
+# --------------------------------------------------------------------------- #
+# 2.  End of all.
+
+  echo ' '
+  echo ' '
+  echo " Time : `date`"
+  echo ' '
+  echo '                        *** End of nwps_ofs_estofs.cron ***'
+
+# - end of nwps_ofs_estofs.cron --------------------------------------------- #

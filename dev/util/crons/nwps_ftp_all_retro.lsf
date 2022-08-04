@@ -1,0 +1,20 @@
+#!/bin/bash --login
+# --------------------------------------------------------------------------- #
+#                                                                             #
+# nwps_val.cron : Script manages the running of the NWPS validation script    #
+#             ${workdir}/nwps_webgraph.sh                                     #
+#                                                                             #
+# Remarks   - Can be run interactively, or from LL.                           #
+#                                                                             #
+# Last Changed : 10-26-2015                                     October 2015  #
+# --------------------------------------------------------------------------- #
+#BSUB -J nwps_ftpr
+#BSUB -oo /u/Andre.VanderWesthuysen/nwps_ftp_retro.o
+#BSUB -e /u/Andre.VanderWesthuysen/nwps_ftp_retro.o
+#BSUB -q "dev_transfer"
+#BSUB -W 0:30
+#BSUB -R rusage[mem=800]
+#BSUB -P NWPS-T2O
+
+#mpirun.lsf cfp /u/$USER/wfo_cmdfile
+/u/$USER/nwps_ftp_all_retro.sh > ${HOME}/nwps_ftp_all_retro.log 2>&1

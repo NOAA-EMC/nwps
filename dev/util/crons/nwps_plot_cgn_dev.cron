@@ -1,0 +1,135 @@
+#!/bin/bash --login
+# --------------------------------------------------------------------------- #
+#                                                                             #
+# nwps_plot_cgn_dev.cron : Cron manages the running of the NWPS script to     #
+#             plot plot_cgn_fields_sr.lsf                                     #
+#                                                                             #
+# Remarks   - Can be run interactively, or from LL.                           #
+#                                                                             #
+# Last Changed : 01-23-2021                                     January 2021  #
+# --------------------------------------------------------------------------- #
+
+# Set up the modules
+
+#module use /gpfs/hps/nco/ops/nwpara/modulefiles
+#module load prod_envir
+#module load prod_util
+#module load grib_util/1.0.3
+#module load alps
+
+#module use /gpfs/hps3/emc/marine/noscrub/Todd.Spindler/modulefiles
+#module load anaconda_no_mpi
+
+#module list
+
+# 0.a Set necessary variables
+workdir='/lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/nwps_para/var_offline_dev'
+
+# 0.b Host assessment
+
+export script='nwps_plot_cgn_dev.cron'
+export runon='BACKUPSYS'
+
+  echo '                  ************************************************'
+  echo '                  *** NWPS HOOK-IN SCRIPT nwps_plot_cgn_dev.cron  ***'
+  echo '                  ************************************************'
+  echo ' '
+  echo " Time : `date`"
+  echo ' '
+  echo '        Host assessment :'
+  echo '        ------------------------------------------------------------'
+  echo "           script to run      : $script"
+  echo "           running on         : $runon"
+
+  export host_s="`cat /etc/HOSTNAME | cut -c1-1`"
+  case $host_s in
+   'c' ) host='cactus' ;;
+   'd' ) host='dogwood' ;;
+    *  ) echo ' '	    
+         echo ' *****************************'
+         echo " *** HOST $host_s NOT RECOGNIZED ***"
+         echo ' *****************************'
+         echo ' '
+         date=`date -u +"%Y%m%d t%Hz"`
+         echo "nwps.cron $date : host [$host] not recognized."
+         exit 1 ;;
+  esac
+
+  echo ' '
+  echo "           host machine       : $host"
+
+  #prod=`cat /etc/prod | awk '{ print $1 }'`
+  sec_profile=`cat /etc/wcoss.conf | grep sec_profile | cut -d ':' -f 2`
+  echo "           machine function   : $sec_profile"
+
+  #if [ "$runon" = 'none' ]
+  #then
+  #  target='none'
+  #else
+  #  target=`cat /etc/$runon | awk '{ print $1 }'`
+  #fi
+  #echo "           running on         : $runon [$target]"
+
+  if [ "$sec_profile" != "$runon" ]
+  then
+    echo ' '
+    echo " Time : `date`"
+    echo ' '
+    echo ' '
+    echo '                        *** End of nwps_plot_cgn_dev.cron ***'
+    exit 0
+  fi
+
+# --------------------------------------------------------------------------- #
+# 1.  Manage batch job
+
+  echo " "
+  echo "        -> Submitting nwps_plot_cgn_dev.lsf at: `date`"
+  qsub ${workdir}/plot_cgn_fields_aer.lsf
+  qsub ${workdir}/plot_cgn_fields_alu.lsf
+  qsub ${workdir}/plot_cgn_fields_afg.lsf
+  qsub ${workdir}/plot_cgn_fields_ajk.lsf
+#  qsub ${workdir}/plot_cgn_fields_akq.lsf
+  qsub ${workdir}/plot_cgn_fields_box.lsf
+#  qsub ${workdir}/plot_cgn_fields_bro.lsf
+  qsub ${workdir}/plot_cgn_fields_car.lsf
+  qsub ${workdir}/plot_cgn_fields_chs.lsf
+#  qsub ${workdir}/plot_cgn_fields_crp.lsf
+  qsub ${workdir}/plot_cgn_fields_eka.lsf
+  qsub ${workdir}/plot_cgn_fields_gum.lsf
+  qsub ${workdir}/plot_cgn_fields_gyx.lsf
+  qsub ${workdir}/plot_cgn_fields_hfo.lsf
+  qsub ${workdir}/plot_cgn_fields_hgx.lsf
+#  qsub ${workdir}/plot_cgn_fields_ilm.lsf
+  qsub ${workdir}/plot_cgn_fields_jax.lsf
+  qsub ${workdir}/plot_cgn_fields_key.lsf
+#  qsub ${workdir}/plot_cgn_fields_lch.lsf
+  qsub ${workdir}/plot_cgn_fields_lix.lsf
+  qsub ${workdir}/plot_cgn_fields_lox.lsf
+#  qsub ${workdir}/plot_cgn_fields_lwx.lsf
+  qsub ${workdir}/plot_cgn_fields_mfl.lsf
+  qsub ${workdir}/plot_cgn_fields_mfr.lsf
+  qsub ${workdir}/plot_cgn_fields_mhx.lsf
+  qsub ${workdir}/plot_cgn_fields_mlb.lsf
+  qsub ${workdir}/plot_cgn_fields_mob.lsf
+  qsub ${workdir}/plot_cgn_fields_mtr.lsf
+  qsub ${workdir}/plot_cgn_fields_okx.lsf
+  qsub ${workdir}/plot_cgn_fields_phi.lsf
+  qsub ${workdir}/plot_cgn_fields_pqr.lsf
+  qsub ${workdir}/plot_cgn_fields_sew.lsf
+  qsub ${workdir}/plot_cgn_fields_sgx.lsf
+  qsub ${workdir}/plot_cgn_fields_sju.lsf
+  qsub ${workdir}/plot_cgn_fields_tae.lsf
+  qsub ${workdir}/plot_cgn_fields_tbw.lsf
+  echo " "
+
+# --------------------------------------------------------------------------- #
+# 2.  End of all.
+
+  echo ' '
+  echo ' '
+  echo " Time : `date`"
+  echo ' '
+  echo '                        *** End of nwps_plot_cgn_dev.cron ***'
+
+# - end of nwps_plot_cgn_dev.cron ----------------------------------------------- #

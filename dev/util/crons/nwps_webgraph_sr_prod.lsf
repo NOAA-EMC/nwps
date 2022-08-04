@@ -1,0 +1,24 @@
+#!/bin/bash --login
+# --------------------------------------------------------------------------- #
+#                                                                             #
+# nwps_val.cron : Script manages the running of the NWPS validation script    #
+#             ${workdir}/nwps_webgraph.sh                                     #
+#                                                                             #
+# Remarks   - Can be run interactively, or from LL.                           #
+#                                                                             #
+# Last Changed : 10-26-2015                                     October 2015  #
+# --------------------------------------------------------------------------- #
+#PBS -N nwps_websr
+#PBS -j oe
+#PBS -S /bin/bash
+#PBS -q dev_transfer
+#PBS -A NWPS-DEV
+#PBS -l walltime=00:30:00
+#PBS -l select=1:ncpus=1
+#PBS -l debug=true
+#PBS -V
+#PBS -o /u/andre.vanderwesthuysen/nwps_websr.o
+#PBS -e /u/andre.vanderwesthuysen/nwps_websr.o
+
+#mpirun.lsf cfp /u/$USER/wfo_cmdfile
+/u/$USER/nwps_webgraph_sr_prod.sh > ${HOME}/nwps_web_sr.log 2>&1

@@ -1,0 +1,175 @@
+#!/bin/bash --login
+# --------------------------------------------------------------------------- #
+#                                                                             #
+# nwps_val_rt_dev.cron : This script manages the running of the script        #
+#             ${workdir}/nwps_validation.lsf                                  #
+#                                                                             #
+# Remarks   - Set the WFOs to process in ${NWPSdir}/parm/wfo_dev.tbl          #
+#                                                                             #
+# Last Changed : 12-05-2015                                    December 2015  #
+# --------------------------------------------------------------------------- #
+
+# Set up the modules
+
+#. /usrx/local/Modules/3.2.9/init/bash
+module load prod_envir
+module load prod_util
+#module load ics
+#module load ibmpe
+#module load lsf
+module load alps
+module load xt-lsfhpc
+
+module list
+
+# 0.a Set necessary variables
+workdir='/lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/nwps_para/validation/'
+
+# 0.b Host assessment
+
+export script='nwps_val_rt_dev.cron'
+export runon='BACKUPSYS'
+
+  echo '                  ************************************************'
+  echo '                  *** NWPS HOOK-IN SCRIPT nwps_val_rt_dev.cron ***'
+  echo '                  ************************************************'
+  echo ' '
+  echo " Time : `date`"
+  echo ' '
+  echo '        Host assessment :'
+  echo '        ------------------------------------------------------------'
+  echo "           script to run      : $script"
+  echo "           running on         : $runon"
+
+  export host_s="`cat /etc/HOSTNAME | cut -c1-1`"
+  case $host_s in
+   'c' ) host='cactus' ;;
+   'd' ) host='dogwood' ;;
+    *  ) echo ' '
+         echo ' *****************************'
+         echo " *** HOST $host_s NOT RECOGNIZED ***"
+         echo ' *****************************'
+         echo ' '
+         date=`date -u +"%Y%m%d t%Hz"`
+         echo "nwps.cron $date : host [$host] not recognized." >> $weblog
+         exit 1 ;;
+  esac
+
+  echo ' '
+  echo "           host machine       : $host"
+
+  #prod=`cat /etc/prod | awk '{ print $1 }'`
+  sec_profile=`cat /etc/wcoss.conf | grep sec_profile | cut -d ':' -f 2`
+  echo "           machine function   : $sec_profile"
+
+  #if [ "$runon" = 'none' ]
+  #then
+  #  target='none'
+  #else
+  #  target=`cat /etc/$runon | awk '{ print $1 }'`
+  #fi
+  #echo "           running on         : $runon [$target]"
+
+  if [ "$sec_profile" != "$runon" ]
+  then
+    echo ' '
+    echo " Time : `date`"
+    echo ' '
+    echo ' '
+    echo '                        *** End of nwps.cron ***'
+    exit 0
+  fi
+
+  #check_queue="$(bqueues | grep -E 'dev |dev_shared|devmax|devhigh' | grep Open)"
+  check_queue="$(qstat -q | grep -E 'dev |dev_shared|devmax|devhigh')"
+  if [ "$check_queue" == "" ]
+  then
+    echo ' '
+    echo " Time : `date`"
+    echo ' '
+    echo " nwps.cron $date : Dev run queues are closed. Exiting..."
+    echo ' '
+    echo '                        *** End of nwps_val_rt_dev.cron ***'
+    exit 0
+  fi  
+
+# --------------------------------------------------------------------------- #
+# 1.  Manage batch job
+
+  cd ${workdir}
+
+  wget -O https://www.ndbc.noaa.gov/data/5day2/42020_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/42019_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/42035_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/42040_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/42012_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/42039_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/42036_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/42023_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/41114_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/41009_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/41113_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/41112_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/41008_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/41053_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/41115_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/42085_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/41056_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/41008_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/41029_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/41033_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/41004_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/41013_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44095_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/41159_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/41025_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44056_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44100_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44014_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44093_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44096_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44064_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44072_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44099_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44089_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44058_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44043_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44062_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44042_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44009_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44091_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44065_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44094_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44025_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44040_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44039_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44060_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44069_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44017_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44020_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44013_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44018_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44029_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44090_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44098_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44033_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44007_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44032_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44034_5day.txt
+  wget -O https://www.ndbc.noaa.gov/data/5day2/44027_5day.txt
+
+  echo " "
+  echo "        -> Submitting nwps_validation_ts_dev.lsf at: `date`"
+  qsub ${workdir}/nwps_validation_ts_dev.lsf
+  echo " "
+
+# --------------------------------------------------------------------------- #
+# 2.  End of all.
+
+  echo ' '
+  echo ' '
+  echo " Time : `date`"
+  echo ' '
+  echo '                        *** End of nwps_val_rt_dev.cron ***'
+
+# - end of nwps_val_rt_dev.cron --------------------------------------------- #

@@ -1,0 +1,37 @@
+#!/bin/bash --login
+# ----------------------------------------------------------- 
+# UNIX Shell Script File
+# Tested Operating System(s): RHEL 5,6
+# Tested Run Level(s): 3, 5
+# Shell Used: BASH shell
+# Original Author(s): Andre van der Westhuysen
+# File Creation Date: 10/02/2015
+# Date Last Modified:
+#
+# Version control:
+#
+# Support Team:
+#
+# Contributors:
+#
+# ----------------------------------------------------------- 
+# ------------- Program Description and Details ------------- 
+# ----------------------------------------------------------- 
+#
+# rsync script for data backup
+#
+# ----------------------------------------------------------- 
+
+#PBS -N rsync_nwps
+#PBS -j oe
+#PBS -S /bin/bash
+#PBS -q dev_transfer
+#PBS -A NWPS-DEV
+#PBS -l walltime=06:00:00
+#PBS -l select=1:ncpus=1
+#PBS -l debug=true
+#PBS -V
+#PBS -o /u/andre.vanderwesthuysen/rsync_nwps_dev.o
+#PBS -e /u/andre.vanderwesthuysen/rsync_nwps_dev.o
+
+rsync -ax --include=*/ --include='Warn*' --include='*.grib2' --include='SPC2D*' --include='*runup*' --include='*rip*' --include='*.sys' --exclude='PE*' --exclude='*' /lfs/h2/emc/ptmp/andre.vanderwesthuysen/com/nwps/v1.5.0/ /lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/nwps_para/com/nwps/v1.5.0/

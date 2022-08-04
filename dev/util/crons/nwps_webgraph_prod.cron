@@ -1,0 +1,116 @@
+#!/bin/bash --login
+# --------------------------------------------------------------------------- #
+#                                                                             #
+# nwps_webgraph_prod.cron : Script manages the running of the NWPS             #
+#                          webgraphics scripts                                #
+#                             bsub < nwps_webgraph_sr_prod.lsf                 #
+#                             bsub < nwps_webgraph_er_prod.lsf                 #
+#                             bsub < nwps_webgraph_wr_prod.lsf                 #
+#                             bsub < nwps_webgraph_pr_prod.lsf                 #
+#                             bsub < nwps_webgraph_ar_prod.lsf                 #
+#                                                                             #
+# Remarks   - Can be run interactively, or from LL.                           #
+#                                                                             #
+# Last Changed : 01-02-2017                                     January 2017  #
+# --------------------------------------------------------------------------- #
+
+# Set up the modules
+
+#. /usrx/local/Modules/3.2.9/init/bash
+module load prod_envir
+module load prod_util
+#module load ics
+#module load ibmpe
+#module load lsf
+module load alps
+module load xt-lsfhpc
+
+module list
+
+# 0. Host assessment
+
+export script='nwps_webgraph_prod.cron'
+export runon='BACKUPSYS'
+
+  echo '                  *********************************************'
+  echo '                  *** NWPS HOOK-IN SCRIPT nwps_webgraph_prod.cron ***'
+  echo '                  *********************************************'
+  echo ' '
+  echo " Time : `date`"
+  echo ' '
+  echo '        Host assessment :'
+  echo '        ------------------------------------------------------------'
+  echo "           script to run      : $script"
+  echo "           running on         : $runon"
+
+  export host_s="`cat /etc/HOSTNAME | cut -c1-1`"
+  case $host_s in
+   'c' ) host='cactus' ;;
+   'd' ) host='dogwood' ;;
+    *  ) echo ' '
+         echo ' *****************************'
+         echo " *** HOST $host_s NOT RECOGNIZED ***"
+         echo ' *****************************'
+         echo ' '
+         date=`date -u +"%Y%m%d t%Hz"`
+         echo "nwps.cron $date : host [$host] not recognized." >> $weblog
+         exit 1 ;;
+  esac
+
+  echo ' '
+  echo "           host machine       : $host"
+
+  #prod=`cat /etc/prod | awk '{ print $1 }'`
+  sec_profile=`cat /etc/wcoss.conf | grep sec_profile | cut -d ':' -f 2`
+  echo "           machine function   : $sec_profile"
+
+  #if [ "$runon" = 'none' ]
+  #then
+  #  target='none'
+  #else
+  #  target=`cat /etc/$runon | awk '{ print $1 }'`
+  #fi
+  #echo "           running on         : $runon [$target]"
+
+  if [ "$sec_profile" != "$runon" ]
+  then
+    echo ' '
+    echo " Time : `date`"
+    echo ' '
+    echo ' '
+    echo '                        *** End of nwps_webgraph_prod.cron ***'
+    exit 0
+  fi
+
+  #check_queue="$(bqueues | grep -E 'dev |dev_shared|devmax|devhigh' | grep Open)"
+  check_queue="$(qstat -q | grep -E 'dev |dev_shared|devmax|devhigh')"
+  if [ "$check_queue" == "" ]
+  then
+    echo ' '
+    echo " Time : `date`"
+    echo ' '
+    echo " nwps.cron $date : Dev run queues are closed. Exiting..."
+    echo ' '
+    echo '                        *** End of nwps_webgraph_prod.cron ***'
+    exit 0
+  fi  
+
+# --------------------------------------------------------------------------- #
+# 1.  Manage batch job
+
+qsub nwps_webgraph_sr_prod.lsf
+qsub nwps_webgraph_er_prod.lsf
+qsub nwps_webgraph_wr_prod.lsf
+qsub nwps_webgraph_pr_prod.lsf
+qsub nwps_webgraph_ar_prod.lsf
+
+# --------------------------------------------------------------------------- #
+# 2.  End of all.
+
+  echo ' '
+  echo ' '
+  echo " Time : `date`"
+  echo ' '
+  echo '                        *** End of nwps_webgraph_prod.cron ***'
+
+# - end of nwps_webgraph_prod.cron -------------------------------------------------- #
