@@ -1,0 +1,74 @@
+#!/bin/bash -l
+#AW SHELL=/bin/sh
+#AW USER=Andre.VanderWesthuysen
+#PATH=/usrx/local/prod:/gpfs/hps/nco/ops/nwprod/lib:/gpfs/hps/nco/ops/nwprod/prod_util.v1.1.0/ush:/gpfs/hps3/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/trunk/exec/:/gpfs/slsf/xt-lsfhpc/9.1/linux2.6-glibc2.3-x86_64-cray/etc:/gpfs/slsf/xt-lsfhpc/9.1/linux2.6-glibc2.3-x86_64-cray/bin:/opt/cray/alps/5.2.3-2.0502.9295.14.14.ari/sbin:/opt/cray/alps/5.2.3-2.0502.9295.14.14.ari/bin:/opt/cray/dvs/2.5_0.9.0-1.0502.1958.2.55.ari/bin:/opt/cray/xpmem/0.1-2.0502.57015.1.15.ari/bin:/opt/cray/ugni/6.0-1.0502.10245.9.9.ari/bin:/opt/cray/switch/1.0-1.0502.57058.1.58.ari/bin:/opt/cray/eslogin/eswrap/1.1.0-1.020200.1231.0/bin:/opt/modules/3.2.6.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/X11R6/bin:/usr/games:/opt/bin:/usr/lib/mit/bin:/usr/lib/mit/sbin:/sbin:/usr/sbin:.:/usr/lib/qt3/bin
+PWD=/u/andre.vanderwesthuysen
+LANG=en_US.UTF-8
+SHLVL=1
+HOME=/u/andre.vanderwesthuysen
+LOGNAME=andre.vanderwesthuysen
+NWPSdir=/lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/nwps/nwps.v1.5.0/
+GLWdir=/lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/glwu/glwu.v2.0.0/
+_=/usr/bin/env
+
+# GLWU development crons
+glwu_ver='v2.0.0'
+*/5 * * * *      ${GLWdir}/dev/lsf_scripts/glwu.cron ${glwu_ver} > ${GLWdir}/dev/lsf_scripts/glwu.cron.out 2>&1
+*/5 * * * *      ${GLWdir}/dev/lsf_scripts_plots/glwu.cron ${glwu_ver} > ${GLWdir}/dev/lsf_scripts_plots/glwu.cron.out 2>&1
+# GLWU production crons (plotting)
+glwu_ver='v1.1.1'
+#7,17,27,37,47,57 * * * *  /lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/glwu/ops/lsf_scripts/glwu.${glwu_ver}/glwu.cron ${glwu.ver} > /lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/glwu/ops/lsf_scripts/glwu.${glwu_ver}/glwu.cron.out 2>&1
+
+#Rsync crons from LUNA (Reston)
+#0 0 * * *        ${HOME}/rsync_crons.cron > ${HOME}/cronlog.rsync_crons 2>&1
+
+#Retrospectives
+#6 * * * *       ${HOME}/nwps_ret_extract.cron > ${HOME}/cronlog.dev.nwps_ret_extract 2>&1
+#*/10 * * * *     ${HOME}/nwps_ret.cron > ${HOME}/cronlog.dev.nwps_ret 2>&1
+#0 2 * * *       ${HOME}/nwps_rsync_ret.cron > ${HOME}/cronlog.ret.nwps_rsync 2>&1
+#*/10 * * * *     ${HOME}/nwps_ftp_all_retro.cron > ${HOME}/cronlog.retro_all.nwps_ftp 2>&1
+
+# 1. Development crons -----------------------
+
+# 1.0 Model runs
+0 7,13,19 * * *  ${HOME}/nwps_ofs_estofs.cron > ${HOME}/cronlog.ofs_estofs 2>&1
+0 8,14,20 * * *  ${HOME}/nwps_ofs_estofs_cur.cron > ${HOME}/cronlog.ofs_estofs_cur 2>&1
+#0 6,12,18 * * *  ${HOME}/nwps_ofs_psurge.cron > ${HOME}/cronlog.ofs_estofs 2>&1
+0 22 * * *       ${HOME}/nwps_ofs_rtofs.cron > ${HOME}/cronlog.ofs_rtofs 2>&1
+*/5 * * * *      ${HOME}/nwps.cron > ${HOME}/cronlog.dev.nwps 2>&1
+
+# 1.1 Model data
+0 2 * * *        ${HOME}/nwps_rsync_dev.cron > ${HOME}/cronlog.dev.nwps_rsync 2>&1
+*/10 * * * *     ${HOME}/nwps_ftp_all_dev.cron > ${HOME}/cronlog.para.nwps_ftp 2>&1
+
+# 1.2 Web graphics
+0,30 * * * *     ${HOME}/nwps_webgraph_dev.cron > ${HOME}/cronlog.dev.nwps_web 2>&1
+0 */2 * * *      ${HOME}/nwps_plot_cgn_dev.cron > ${HOME}/cronlog.plot_cgn_dev 2>&1
+0 * * * *        ${HOME}/nwps_rips_dev.cron > ${HOME}/cronlog.plot_rips 2>&1
+
+# 1.3 Validation
+0 6 * * *        ${HOME}/nwps_val_dev.cron > ${HOME}/cronlog.dev.nwps_val 2>&1
+0 6 * * *        ${HOME}/nwps_val_devwr.cron > ${HOME}/cronlog.devwr.nwps_val 2>&1
+0 * * * *        ${HOME}/nwps_val_rt_dev.cron > ${HOME}/cronlog.dev.nwps_val_rt 2>&1
+0 * * * *        ${HOME}/nwps_val_rt_devwr.cron > ${HOME}/cronlog.devwr.nwps_val_rt 2>&1
+0 * * * *        ${HOME}/nwps_val_rt_dev_prar.cron > ${HOME}/cronlog.dev_prar.nwps_val_rt 2>&1
+
+# 2. Production crons -----------------------
+
+# 2.1 Model data
+0 2 * * *        ${HOME}/nwps_rsync_prod.cron > ${HOME}/cronlog.prod.nwps_rsync 2>&1
+*/10 * * * *     ${HOME}/nwps_ftp_all_prod.cron > ${HOME}/cronlog.para.nwps_ftp 2>&1
+*/10 * * * *     ${HOME}/nwps_ftp_protide_prod.cron > ${HOME}/cronlog.prod.nwps_ftp_protide 2>&1
+
+# 2.2 Web graphics
+0,30 * * * *     ${HOME}/nwps_webgraph_prod.cron > ${HOME}/cronlog.prod.nwps_web 2>&1
+0 */2 * * *      ${HOME}/nwps_plot_cgn_prod.cron > ${HOME}/cronlog.plot_cgn_prod 2>&1
+0,30 * * * *     ${HOME}/nwps_rips_prod.cron > ${HOME}/cronlog.plot_rips_prod 2>&1
+
+# 2.3 Validation
+0 6 * * *        ${HOME}/nwps_val_prod.cron > ${HOME}/cronlog.prod.nwps_val 2>&1
+0 6 * * *        ${HOME}/nwps_val_prodwr.cron > ${HOME}/cronlog.prodwr.nwps_val 2>&1
+0 * * * *        ${HOME}/nwps_val_rt_prod.cron > ${HOME}/cronlog.prod.nwps_val_rt 2>&1
+0 * * * *        ${HOME}/nwps_val_rt_prodwr.cron > ${HOME}/cronlog.prodwr.nwps_val_rt 2>&1
+0 * * * *        ${HOME}/nwps_val_rt_prod_prar.cron > ${HOME}/cronlog.prod_prar.nwps_val_rt 2>&1
+
