@@ -24,8 +24,6 @@
 
 echo 'Running run_nwps_validation.sh...'
 
-export workdir='/lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/nwps_para/validation/'
-
 cd $workdir
 pwd
 

@@ -23,7 +23,8 @@ module load xt-lsfhpc
 module list
 
 # 0.a Set necessary variables
-workdir='/u/andre.vanderwesthuysen'
+workdir=${HOME}
+echo 'Running in '${workdir}
 
 # 0.b Host assessment
 
