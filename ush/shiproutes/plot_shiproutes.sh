@@ -111,27 +111,25 @@ cat ${INPUTGRIB2file} > ${GRIB2file}
 
 echo "Reading GRIB2 file ${GRIB2file}" | tee -a ${LOGFILE}
 
-# Get our model time from the GRIB2 file
-#g2_etime=$(${WGRIB2} -unix_time ${GRIB2file} | grep "1:0:unix" | awk -F= '{ print $3 }')
-g2_etime=""
-while [ "${g2_etime}" == "" ] || [ "${g2_etime}" == "-1" ]; do
-   #g2_etime=$(${WGRIB2} -d 1 -unix_time ${GRIB2file} | grep "1:0" | grep "unix" | awk -F= '{ print $3 }')
-   g2_etime=$(${WGRIB2} -unix_time ${GRIB2file} | head -2 | tail -1 | grep "2:" | grep "unix" | awk -F= '{ print $3 }')
-done
-g2_etime=$(( g2_etime - 3600 ))
-yyyy=$(echo ${g2_etime} | awk '{ print strftime("%Y", $1) }')
-mon=$(echo ${g2_etime} | awk '{ print strftime("%m", $1) }')
-dd=$(echo ${g2_etime} | awk '{ print strftime("%d", $1) }')
-#g2_etime=$(${WGRIB2} -unix_time ${GRIB2file} | grep "1:0:unix" | awk -F= '{ print $3 }')
-g2_etime=""
-while [ "${g2_etime}" == "" ] || [ "${g2_etime}" == "-1" ]; do
-   #g2_etime=$(${WGRIB2} -d 1 -unix_time ${GRIB2file} | grep "1:0" | grep "unix" | awk -F= '{ print $3 }')
-   g2_etime=$(${WGRIB2} -unix_time ${GRIB2file} | head -2 | tail -1 | grep "2:" | grep "unix" | awk -F= '{ print $3 }')
-done
-g2_etime=$(( g2_etime - 3600 ))
-hh=$(echo ${g2_etime} | awk '{ print strftime("%H", $1) }')
-mm=$(echo ${g2_etime} | awk '{ print strftime("%M", $1) }')
-ss=$(echo ${g2_etime} | awk '{ print strftime("%S", $1) }')
+# Get our model time from the input CG1 file
+grep "^INPGRID WIND" ${RUNdir}/inputCG1 > blah1
+init=$(awk '{print $11;}' blah1)
+echo "$init" > datetime
+cut -c 1-4 datetime > year
+cut -c 5-6 datetime > mon
+cut -c 7-8 datetime > day
+cut -c 10-11 datetime > hh
+cut -c 12-13 datetime > mm
+yyyy=$(cat year)
+mon=$(cat mon)
+dd=$(cat day)
+hh=$(cat hh)
+mm=$(cat mm)
+ss="00"
+
+time_str="${yyyy} ${mon} ${dd} ${hh} ${mm} ${ss}"
+g2_etime=`echo ${time_str} | awk -F: '{ print mktime($1 $2 $3 $4 $5 $6) }'`
+
 echo "GRIB2 Unix time: ${g2_etime}" | tee -a ${LOGFILE}
 echo "GRIB2 sting time: ${yyyy}/${mon}/${dd} ${hh}:${mm}:${ss}" | tee -a ${LOGFILE}
 
