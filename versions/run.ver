@@ -1,6 +1,6 @@
-export nwps_ver=v1.4.3
+export nwps_ver=v1.4.4
 export estofs_ver=v2.1
-export rtofs_ver=v2.2
+export rtofs_ver=v2.3
 export seaice_analysis_ver=v4.5
 export psurge_ver=v2.10
 export gfs_ver=v16.2
