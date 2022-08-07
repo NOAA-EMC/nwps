@@ -22,12 +22,18 @@
 #
 # ----------------------------------------------------------- 
 
-#BSUB -J rsync_nwps
-#BSUB -oo /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/rsync_nwps_ret.o
-#     -e /gpfs/hps/ptmp/Andre.VanderWesthuysen/data/rsync_nwps_ret.e
-#BSUB -q "dev_transfer"
-#BSUB -W 6:00
-#BSUB -R rusage[mem=1700]
-#BSUB -P NWPS-T2O
+#PBS -N rsync_nwps
+#PBS -j oe
+#PBS -S /bin/bash
+#PBS -q dev_transfer
+#PBS -A NWPS-DEV
+#PBS -l walltime=06:00:00
+#PBS -l select=1:ncpus=1
+#PBS -l debug=true
+#PBS -V
+#PBS -o /u/andre.vanderwesthuysen/rsync_nwps_ret.o
+#PBS -e /u/andre.vanderwesthuysen/rsync_nwps_ret.o
 
-rsync -ax --include=*/ --include='Warn*' --include='*.grib2' --include='SPC2D*' --include='*runup*' --include='*rip*' --include='*.sys' --exclude='PE*' --exclude='*' /gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/retro/com/nwps/para/ /gpfs/hps3/emc/marine/noscrub/Andre.VanderWesthuysen/nwps_para_20160501/retro/com/nwps/para/
+mkdir -p /lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/nwps_para/com/retro/nwps/v1.5.0/
+
+rsync -ax --include=*/ --include='Warn*' --include='*.grib2' --include='SPC2D*' --include='*runup*' --include='*rip*' --include='*.sys' --exclude='PE*' --exclude='*' /gpfs/hps3/ptmp/Andre.VanderWesthuysen/com/retro/nwps/v1.5.0/ /lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/nwps_para/com/retro/nwps/v1.5.0/
