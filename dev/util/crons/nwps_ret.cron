@@ -1,12 +1,12 @@
 #!/bin/bash --login
 # --------------------------------------------------------------------------- #
 #                                                                             #
-# nwps.cron : This script manages the running of the parallel script          #
-#             ${NWPSdir}/dev/ecf/jnwps_datachk_ret.ecf                        #
+# nwps_ret.cron : This script manages the running of the parallel script      #
+#                 ${NWPSdir}/dev/ecf/jnwps_datachk_ret.ecf                    #
 #                                                                             #
 # Remarks   - Set the WFOs to process in ${NWPSdir}/parm/wfo_dev.tbl          #
 #                                                                             #
-# Last Changed : 11-25-2016                                    November 2016  #
+# Last Changed : 08-06-2022                                      August 2022  #
 # --------------------------------------------------------------------------- #
 
 # Set up the modules
@@ -25,7 +25,7 @@ module list
 # 0. Host assessment
 
 export script='nwps_ret.cron'
-export runon='dev'
+export runon='BACKUPSYS'
 
   echo '                  *****************************************'
   echo '                  *** NWPS HOOK-IN SCRIPT nwps_ret.cron ***'
@@ -40,8 +40,8 @@ export runon='dev'
 
   export host_s="`cat /etc/HOSTNAME | cut -c1-1`"
   case $host_s in
-   's' ) host='surge' ;;
-   'l' ) host='luna' ;;
+   'c' ) host='cactus' ;;
+   'd' ) host='dogwood' ;;
     *  ) echo ' '
          echo ' *****************************'
          echo " *** HOST $host_s NOT RECOGNIZED ***"
@@ -55,22 +55,36 @@ export runon='dev'
   echo ' '
   echo "           host machine       : $host"
 
-  prod=`cat /etc/prod | awk '{ print $1 }'`
-  echo "           production  mach.  : $prod"
+  #prod=`cat /etc/prod | awk '{ print $1 }'`
+  sec_profile=`cat /etc/wcoss.conf | grep sec_profile | cut -d ':' -f 2`
+  echo "           machine function   : $sec_profile"
 
-  if [ "$runon" = 'none' ]
-  then
-    target='none'
-  else
-    target=`cat /etc/$runon | awk '{ print $1 }'`
-  fi
-  echo "           running on         : $runon [$target]"
+  #if [ "$runon" = 'none' ]
+  #then
+  #  target='none'
+  #else
+  #  target=`cat /etc/$runon | awk '{ print $1 }'`
+  #fi
+  #echo "           running on         : $runon [$target]"
 
-  if [ "$host" != "$target" ]
+  if [ "$sec_profile" != "$runon" ]
   then
     echo ' '
     echo " Time : `date`"
     echo ' '
+    echo ' '
+    echo '                        *** End of nwps_ret.cron ***'
+    exit 0
+  fi
+
+  #check_queue="$(bqueues | grep -E 'dev |dev_shared|devmax|devhigh' | grep Open)"
+  check_queue="$(qstat -q | grep -E 'dev |dev_shared|devmax|devhigh')"
+  if [ "$check_queue" == "" ]
+  then
+    echo ' '
+    echo " Time : `date`"
+    echo ' '
+    echo " nwps.cron $date : Dev run queues are closed. Exiting..."
     echo ' '
     echo '                        *** End of nwps_ret.cron ***'
     exit 0
@@ -93,4 +107,4 @@ export runon='dev'
   echo ' '
   echo '                        *** End of nwps_ret.cron ***'
 
-# - end of nwps_ret.cron ----------------------------------------------------- #
+# - end of nwps_ret.cron ---------------------------------------------------- #
