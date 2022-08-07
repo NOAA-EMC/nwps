@@ -34,4 +34,6 @@
 #PBS -o /u/andre.vanderwesthuysen/rsync_nwps_prod.o
 #PBS -e /u/andre.vanderwesthuysen/rsync_nwps_prod.o
 
+mkdir -p /lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/nwps_para/prod/com/nwps/v1.4/
+
 rsync -ax --include=*/ --include='Warn*' --include='*.grib2' --include='SPC2D*' --include='*runup*' --include='*rip*' --include='*.sys' --exclude='PE*' --exclude='*' /lfs/h1/ops/prod/com/nwps/v1.4/ /lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/nwps_para/prod/com/nwps/v1.4/
