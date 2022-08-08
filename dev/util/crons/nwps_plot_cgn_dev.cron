@@ -23,8 +23,10 @@
 #module list
 
 # 0.a Set necessary variables
-export workdir=${VALIDATIONdir}'/var_offline_dev'
+export workdir=${VALIDATIONdir}'/graphics_cgn_dev'
+export comroot=/lfs/h2/emc/ptmp/andre.vanderwesthuysen/com/nwps/v1.5.0
 echo 'Running in '${workdir}
+echo 'With COMROOT='${comroot}
 
 # 0.b Host assessment
 
