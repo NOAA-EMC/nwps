@@ -34,6 +34,6 @@
 #PBS -o /u/andre.vanderwesthuysen/rsync_nwps_ret.o
 #PBS -e /u/andre.vanderwesthuysen/rsync_nwps_ret.o
 
-mkdir -p /lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/nwps_para/com/retro/nwps/v1.5.0/
+mkdir -p ${VALIDATIONdir}/com/retro/nwps/v1.5.0/
 
-rsync -ax --include=*/ --include='Warn*' --include='*.grib2' --include='SPC2D*' --include='*runup*' --include='*rip*' --include='*.sys' --exclude='PE*' --exclude='*' /gpfs/hps3/ptmp/Andre.VanderWesthuysen/com/retro/nwps/v1.5.0/ /lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/nwps_para/com/retro/nwps/v1.5.0/
+rsync -ax --include=*/ --include='Warn*' --include='*.grib2' --include='SPC2D*' --include='*runup*' --include='*rip*' --include='*contour*' --include='*.sys' --exclude='PE*' --exclude='*' /lfs/h2/emc/ptmp/andre.vanderwesthuysen/com/retro/nwps/v1.5.0/ ${VALIDATIONdir}/com/retro/nwps/v1.5.0/
