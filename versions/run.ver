@@ -1,4 +1,4 @@
-export nwps_ver=v1.4.4
+export nwps_ver=v1.4.5
 export estofs_ver=v2.1
 export rtofs_ver=v2.3
 export seaice_analysis_ver=v4.5
