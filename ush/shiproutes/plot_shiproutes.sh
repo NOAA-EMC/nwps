@@ -314,7 +314,14 @@ do
 	
 	echo "Writing Fortran BIN of horizontal points for HTSGW DIRPW WIND PERPW out to ${num_forcast_hours} forecast hours" | tee -a ${LOGFILE}
         echo "Filter table file to 3-hourly..."
-        for h in {0..21..3}; do
+	# Accounting for init hours that differ from the 3-hourly cadence (00z, 03z, 06z, 09z, ...)
+	cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
+	hourshift=`expr $cycle % 3`
+	starthour=$(( `expr $hourshift % 3` - 3 ))
+	endhour=$(( 21 + `expr $hourshift % 3` ))
+
+	#for h in {0..21..3}; do
+	for (( h=$starthour; h<=$endhour; h+=3 )); do
            hp1=$(printf "%02d" $((h+1)) )
            hp2=$(printf "%02d" $((h+2)) )
            echo "Deleting rows for forecast hour .${hp1}0000"
