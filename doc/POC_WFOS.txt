@@ -22,7 +22,7 @@ POC MHX donnie.king@noaa.gov
 POC ILM carl.r.morgan@noaa.gov
 POC CHS jeffrey.stewart@noaa.gov
 POC SGX ivory.small@noaa.gov, michael.khuat@noaa.gov
-POC LOX william.forwood@noaa.gov, mark.jackson@noaa.gov
+POC LOX ryan.kittell@noaa.gov, john.dumas@noaa.gov
 POC MTR drew.peterson@noaa.gov, warren.blier@noaa.gov
 POC EKA sten.tjaden@noaa.gov
 POC MFR michael.stavish@noaa.gov, john.lovegrove@noaa.gov
