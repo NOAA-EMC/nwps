@@ -58,9 +58,9 @@ rhcycle=t${rhcyc}z
 
 if [ $TSM_FLAG = 'NO' ]
 then
-  hpssdir0=${HPSSOUT}/5year/Andre.VanderWesthuysen/rh${year}/${yearmo}/$yrmoday
-  hpssdir1=${HPSSOUT}/1year/Andre.VanderWesthuysen/rh${year}/${yearmo}/$yrmoday
-  hpssdir2=${HPSSOUT}/2year/Andre.VanderWesthuysen/rh${year}/${yearmo}/$yrmoday
+  hpssdir0=${HPSSOUT}/5year/Saeideh.Banihashemi/rh${year}/${yearmo}/$yrmoday
+  hpssdir1=${HPSSOUT}/1year/Saeideh.Banihashemi/rh${year}/${yearmo}/$yrmoday
+  hpssdir2=${HPSSOUT}/2year/Saeideh.Banihashemi/rh${year}/${yearmo}/$yrmoday
 
 elif [ $TSM_FLAG = 'YES' ]
 then

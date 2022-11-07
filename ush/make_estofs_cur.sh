@@ -62,22 +62,22 @@ function process_wfolist() {
     export err=$?; err_chk
     ESTOFSCUR_REGION=$(echo ${ESTOFSCUR_REGION} | tr [:upper:] [:lower:])
 #..........................................
-     if [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "conus.east" ]
+     if [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "conus.east" ]
      then
        hasdownload_000=${hasDL[1]}
-     elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "puertori" ]
+     elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "puertori" ]
      then
        hasdownload_000=${hasDL[2]}
-     elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "conus.west" ]
+     elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "conus.west" ]
      then
        hasdownload_000=${hasDL[3]}
-     elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "hawaii" ]
+     elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "hawaii" ]
      then
        hasdownload_000=${hasDL[4]}
-     elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "alaska" ]
+     elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "alaska" ]
      then
        hasdownload_000=${hasDL[5]}
-     elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "guam" ]
+     elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "guam" ]
      then
        hasdownload_000=${hasDL[6]}
      fi
@@ -123,17 +123,17 @@ function process_wfolist() {
     if [ "${hasdownload_000}" == "" ]; then hasdownload_000="false"; fi
     
     if [ "${hasdownload_000}" == "false" ];then
-        if [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "conus.east" ];then
+        if [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "conus.east" ];then
            hasDL[1]="true"
-        elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "puertori" ];then
+        elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "puertori" ];then
            hasDL[2]="true"
-        elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "conus.west" ];then
+        elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "conus.west" ];then
            hasDL[3]="true"
-        elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "hawaii" ];then
+        elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "hawaii" ];then
            hasDL[4]="true"
-        elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "alaska" ];then
+        elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "alaska" ];then
            hasDL[5]="true"
-        elif [ "${ESTOFSCUR_BASIN}" == "stofs" ] && [ "${ESTOFSCUR_REGION}" == "guam" ];then
+        elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "guam" ];then
            hasDL[6]="true"
         fi
 

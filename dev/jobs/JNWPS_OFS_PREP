@@ -108,9 +108,12 @@ export COMIN=${COMROOT}/${NET}/${ver}/${OFS}.${PDY}
 export COMOUT=${COMROOT}/${NET}/${ver}/${OFS}.${PDY}
 export COMOUTm1=${COMROOT}/${NET}/${ver}/${OFS}.${PDYm1}
 export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}/nwges
-export COMINestofs=/lfs/h1/ops/prod/com/estofs/${estofs_ver}/estofs.${PDY}
-##### 07/20/22: Realtime test of Global STOFS upgrade ###############
-export COMINestofscur=/lfs/h1/nos/estofs/noscrub/Yuji.Funakoshi/stofs.v1.1.0/com/stofs/v1.1/stofs.${PDY}
+#export COMINestofs=/lfs/h1/ops/prod/com/estofs/${estofs_ver}/estofs.${PDY}
+export COMINestofs=/lfs/h1/ops/prod/com/stofs/${stofs_ver}/stofs_2d_glo.${PDY}
+#### 10/01/22:  Realtime test of NCO Global STOFS parallel run 
+export COMINstofs=/lfs/h1/ops/para/com/stofs/${stofs_ver}/stofs_2d_glo.${PDY}
+##### 09/16/22: Realtime test of Global STOFS upgrade ###############
+export COMINestofscur=/lfs/h1/ops/prod/com/stofs/${stofs_ver}/stofs_2d_glo.${PDY}
 #####################################################################
 export COMINrtofs=/lfs/h1/ops/prod/com/rtofs/${rtofs_ver}/rtofs.${PDY}
 export COMINsice=/lfs/h1/ops/prod/com/seaice_analysis/${seaice_analysis_ver}/seaice_analysis.${PDY}

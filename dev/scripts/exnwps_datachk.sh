@@ -89,7 +89,7 @@ function process_nwps_dcom {
                 echo -ne "$dfile\t\tFINISHED\n"
                 #update_web
             #elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && (ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:aborted); then
-            elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && [ -z $(qstat -wu $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}.log | awk -F"<" '{print $1}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
+            elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && [ -z $( qselect -u $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}.log | awk -F"<" '{print $1}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
                 #--- Run has been aborted. Remove wind file from execution list. ---
                 echo -ne "$dfile\t\t${wfo}\t\t\ta ${ecf_wfo^^} aborted\n"
                 export status="ABORTED"
@@ -101,7 +101,7 @@ function process_nwps_dcom {
                 ((nignored++))
                 #update_web
             #elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && ! (ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:aborted); then
-            elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && [ ! -z $(qstat -wu $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}.log | awk -F"<" '{print $1}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
+            elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && [ ! -z $(qselect -u $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}.log | awk -F"<" '{print $1}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
                 #--- Run is still being executed. Remove wind file from execution list. ---
                 DCOM_FILES=( "${DCOM_FILES[@]/${dfile}}" )
                 export status="RUNNING"
@@ -124,7 +124,7 @@ function process_nwps_dcom {
                 #update_web
                 err=254; err_chk
             #elif ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:active; then
-            elif [ ! -z $(qstat -wu $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}.log | awk -F"<" '{print $1}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
+            elif [ ! -z $(qselect -u $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}.log | awk -F"<" '{print $1}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
                 #--- WFO for this run cannot be traced. Remove wind file from execution list. ---
                 echo -ne "$dfile\t\t${wfo}\t\t\ta ${ecf_wfo^^} running\n"
                 export status="UNKN_RUN"
@@ -216,7 +216,7 @@ else
             ecf_wfo=$(grep ${wfo} ${PARMnwps}/wfo.tbl)
             region=$(echo ${ecf_wfo} |awk -F"/" '{print $1}')
             #if ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:active; then
-            if [ ! -z $(qstat -wu $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}.log | awk -F"<" '{print $1}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
+            if [ ! -z $(qselect -u $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}.log | awk -F"<" '{print $1}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
                 echo "Not starting ${ecf_wfo} with ${runint}, ${ecf_wfo^^} is active."
                 DCOM_FILES=( "${DCOM_FILES[@]/${runit}}" )
             else
