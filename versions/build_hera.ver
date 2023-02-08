@@ -1,0 +1,17 @@
+export nwps_ver=v1.5.0
+export PrgEnv_intel_ver=8.1.0
+export hpc_ver=1.1.0
+export intel_ver=18.0.5.274
+export impi_ver=2018.0.4
+export craype_ver=2.7.10
+export cray_mpich_ver=8.1.7
+export jasper_ver=2.0.25
+export libpng_ver=1.6.35
+export zlib_ver=1.2.8
+export curl_ver=7.72.0
+export g2_ver=3.4.5
+export g2c_ver=1.6.2
+export w3nco_ver=2.4.1
+export bacio_ver=2.4.1
+export hdf5_ver=1.8.9
+export netcdf_ver=4.2

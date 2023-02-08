@@ -1,8 +1,18 @@
 # makefile : makes the program ripforecast.x
 # Author: Andre van der Westhuysen (andre.vanderwesthuysen@noaa.gov)
 # File Creation Date: 06/16/2016
+# Ali Salimi 2/8/2023 changed it to be machine based
+#
+MACHINE_NAME:=$(shell uname -n)
 
+ifeq ($(MACHINE_NAME),wcoss2)
 FC = ftn
+
+else
+FC = ifort
+
+endif
+
 
 clean :
 	rm ripforecast.exe ripforecast.o bulkmodel.o eventcalc.o read_nwps.o read_shore.o

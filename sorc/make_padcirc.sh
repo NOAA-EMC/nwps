@@ -18,10 +18,23 @@ set -x
 module list
 
 # 1. Preparations: seek source codes to be compiled
+source $NWPSdir/env/detect_machine.sh
+if [[ $MACHINE_ID = hera* ]] ; then
+export COMP=ifort
+export COMP_MPI=ifort
+export C_COMP=icc
+export C_COMP_MP=icc
+
+elif [[ $MACHINE_ID = wcoss2 ]]; then
+
 export COMP=ftn
 export COMP_MPI=ftn
 export C_COMP=cc
 export C_COMP_MP=cc
+
+else 
+ echo WARNING: UNKNOWN PLATFORM 1>&2
+fi
 
   fcodes=`ls -d estofs_padcirc.fd | sed 's/\.fd//g'`
   echo " FORTRAN codes found: "$fcodes

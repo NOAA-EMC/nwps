@@ -1,4 +1,4 @@
-export nwps_ver=v1.5.0
+export nwps_ver=v1.4.6
 export estofs_ver=v2.1
 export stofs_ver=v1.1
 export rtofs_ver=v2.3

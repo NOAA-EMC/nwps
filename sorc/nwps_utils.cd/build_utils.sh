@@ -28,6 +28,9 @@ export NODETYPE="LOGIN"
 export BUILD="intel"
 export COMPILER="intel"
 
+source $NWPSdir/env/detect_machine.sh  #ALI SALIMI 2/5/23 start
+
+
 # NOTE: Do not invoke the Intel compilers directly through the 
 # NOTE: icc, icpc, or ifort commands. The resulting executable 
 # NOTE: will not run on the Cray XT series system.
@@ -36,12 +39,26 @@ export COMPILER="intel"
 # NOTE: will not run on the Cray XT series system.
 # Set make vars for all builds
 # https://www.gnu.org/software/make/manual/html_node/Implicit-Variables.html
+
+if [[ $MACHINE_ID = wcoss2 ]] ; then
 export CC="cc"
 export CXX="CC"
 export CPP="${CC} -E"
 export F90="ftn"
 export F77="ftn"
 export FC="ftn"
+
+elif [[ $MACHINE_ID = wcoss2 ]]; then
+export CC="icc"
+export CXX="icc"
+export CPP="${CC} -E"
+export F90="ifort"
+export F77="ifort"
+export FC="ifort"
+else
+    echo WARNING: UNKNOWN PLATFORM 1>&2
+fi
+
 # removed "-axCore-AVX2" from following:
 export CFLAGS="-v -Wall -O2"
 export CXXFLAGS="-v -Wall -O2"

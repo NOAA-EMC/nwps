@@ -10,6 +10,10 @@
 #######################################################################
 CC      = $(C_COMP)
 
+MACHINE_NAME:=$(shell uname -n)
+
+ifeq ($(MACHINE_NAME),wcoss2)
+
 # Various directories
 BINDIR = ../../exec
 LIBDIR = ../../lib
@@ -38,6 +42,44 @@ GD_LIB = -L /usr/lib64/ -lgd
 LIBS    = $(G2C_LIB) $(GD_LIB) $(PNG_LIB) $(Z_LIB) $(JASPER_LIB) $(EMAPF_LIB)
 LDFLAGS =
 
+else
+BINDIR = ../../exec
+LIBDIR = ../../lib
+EMAPF_SRC = $(LIBDIR)/sorc/emapf-c
+GD_SRC = /scratch2/NCEPDEV/marine/alisalimi/NWPS/nwps-dev/nwps/lib/libgd/2.2.5/include
+
+
+# Compiler flags
+CFLAGS = -O3 -Wall
+# CFLAGS += -strict-ansi
+# CFLAGS += -fsigned-char -Wextra -pedantic -ansi
+# Program #defines
+CFLAGS += -DSIZEOF_LONG_INT=8# # Compile on a 64 bit platform
+CFLAGS += -D__64BIT__#         # Use 64 bit compilation
+CFLAGS += -D_LINUX_#           # Assume linux (rather than windows)
+
+# Include paths
+INC     = -I/scratch2/NCEPDEV/nwprod/hpc-stack/libs/hpc-stack/intel-18.0.5.274/g2c/1.6.2/include
+INC    += -I$(EMAPF_SRC)
+INC    += -I$(GD_SRC)
+CFLAGS += -I. $(INC)
+
+# Include paths
+INC     = -I/scratch2/NCEPDEV/nwprod/hpc-stack/libs/hpc-stack/intel-18.0.5.274/g2c/1.6.2/include
+INC    += -I$(EMAPF_SRC)
+INC    += -I$(GD_SRC)
+CFLAGS += -I. $(INC)
+
+EMAPF_LIB = $(LIBDIR)/libemapf.a
+GD_LIB =-L /scratch2/NCEPDEV/marine/alisalimi/NWPS/nwps-dev/nwps/lib/libgd/2.2.5/lib/ -lgd
+G2C_LB =/scratch2/NCEPDEV/nwprod/hpc-stack/libs/hpc-stack/intel-18.0.5.274/g2c/1.6.2/lib/libg2c.a
+PNG_LIB=/scratch2/NCEPDEV/nwprod/hpc-stack/libs/hpc-stack/intel-18.0.5.274/png/1.6.35/lib64/libpng.a
+JASPER_LIB=/scratch2/NCEPDEV/nwprod/hpc-stack/libs/hpc-stack/intel-18.0.5.274/jasper/2.0.25/lib64/libjasper.a
+Z_LIB = /scratch2/NCEPDEV/nwprod/hpc-stack/libs/hpc-stack/intel-18.0.5.274/zlib/1.2.11/lib/libz.a
+LIBS    = $(G2C_LB) $(GD_LIB) $(PNG_LIB) $(Z_LIB)  $(JASPER_LIB) $(EMAPF_LIB)
+LDFLAGS =
+
+endif
 # Source, Headers and Objects
 SOURCE=chain.c
 SOURCE+=clock.c

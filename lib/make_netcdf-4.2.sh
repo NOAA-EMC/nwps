@@ -4,9 +4,36 @@ set -eux
 
 install_prefix=${NWPSdir}/lib
 
-export CC=cc
-export FC=ftn
-export CXX=CC
+# Detect machine (sets MACHINE_ID)
+source $NWPSdir/env/detect_machine.sh  #ALI SALIMI 2/5/23 start
+
+if [[ $MACHINE_ID = hera* ]] ; then
+  export CC=icc
+  export FC=ifort
+  export CXX=icc
+
+elif [[ $MACHINE_ID = wcoss2 ]]; then
+    export CC=cc
+    export FC=ftn
+    export CXX=CC
+else
+    echo WARNING: UNKNOWN PLATFORM 1>&2
+fi
+
+
+cd ${NWPSdir}/lib/sorc
+# Ali Salimi
+git clone https://github.com/fmrico/zlib-1.2.8.git zlib-1.2.8
+chmod -R 777 .*
+cd zlib-1.2.8
+
+./configure \
+--prefix=$install_prefix/zlib/1.2.8
+make
+make check
+make install
+
+#Ali Salimi
 
 cd ${NWPSdir}/lib/sorc
 
@@ -22,7 +49,7 @@ cd hdf5-1_8_9
 --enable-fortran \
 --enable-fortran2003 \
 --enable-cxx \
---with-zlib=${ZLIB_LIBDIR}
+--with-zlib=${NWPSdir}/lib/zlib/1.2.8/lib
 make -j6
 make install
 
@@ -30,7 +57,7 @@ cd ${NWPSdir}/lib/sorc
 
 export HDF5_ROOT=${install_prefix}/hdf5/1.8.9
 export NETCDF_ROOT=${install_prefix}/netcdf/4.2
-
+export ZLIB_LIBDIR=${install_prefix}/zlib/1.2.8/lib
 export CPPFLAGS="-I${HDF5_ROOT}/include"
 export LDFLAGS="-L${HDF5_ROOT}/lib -L${ZLIB_LIBDIR}"
 export LIBS="-lhdf5_hl -lhdf5 -lz"
