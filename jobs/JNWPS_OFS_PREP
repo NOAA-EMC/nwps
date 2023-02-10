@@ -73,7 +73,7 @@ setpdy.sh
 ##############################################
 export COMOUT=${COMOUT:-$(compath.py -o ${NET}/${nwps_ver})/${OFS}.${PDY}}
 export GESOUT=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDY}/nwges
-export COMINestofs=${COMINestofs:-$(compath.py estofs/${estofs_ver}/estofs.${PDY})} 
+export COMINestofs=${COMINestofs:-$(compath.py stofs/${stofs_ver}/stofs_2d_glo.${PDY})} 
 export COMINrtofs=${COMINrtofs:-$(compath.py rtofs/${rtofs_ver}/rtofs.${PDY})}
 export COMINsice=${COMINsice:-$(compath.py seaice_analysis/${seaice_analysis_ver}/seaice_analysis.${PDY})}
 export COMINsicem1=${COMINsicem1:-$(compath.py seaice_analysis/${seaice_analysis_ver}/seaice_analysis.${PDYm1})}

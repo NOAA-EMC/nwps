@@ -1,11 +1,11 @@
-#PBS -N nwps_datachk
+#PBS -N nwps_datachk_%TIME%
 #PBS -j oe
 #PBS -S /bin/bash
 #PBS -q %QUEUE%
 #PBS -A %PROJ%-%PROJENVIR%
 #PBS -l walltime=00:05:00
-#PBS -l select=1:ncpus=1:mem=1700MB
-# #PBS -l place=excl
+#PBS -l select=1:ncpus=1:mem=1GB
+# #PBS -l place=exclhost
 #PBS -l debug=true
 
 export model=nwps
@@ -25,7 +25,7 @@ export KEEPDATA=%KEEPDATA%
 
 ${HOMEnwps}/jobs/JNWPS_DATACHK
 
-export PSURGE_JOB=/%SUITE%/nwps/prep/psurge/jnwps_psurge_prep
+export PSURGE_JOB=/%SUITE%/%FAMILY%/prep/psurge/jnwps_psurge_prep
 if $(ecflow_client --group="get ${PSURGE_JOB}; show state" 2> /dev/null|grep --quiet state:complete); then 
     ecflow_client --requeue ${PSURGE_JOB}
 fi

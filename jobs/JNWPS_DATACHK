@@ -137,12 +137,12 @@ function rsync_sh {
 
 #if [ "${envir}" = "prod" -a "$(cat /etc/prod)" = "${machine}" ]; then
 if [ "${envir}" = prod -a "${PARATEST}" != "YES" ]; then
-    export remote_stat="ncorzdm.ncep.noaa.gov:~/pmb/spa/nwps/status_file.txt"
-    export remote_warn="ncorzdm.ncep.noaa.gov:~/pmb/spa/nwps/warnings/"
+    export remote_stat="nwprod@ncorzdm.ncep.noaa.gov:~/pmb/spa/nwps/status_file.txt"
+    export remote_warn="nwprod@ncorzdm.ncep.noaa.gov:~/pmb/spa/nwps/warnings/"
     export options=(-aWzv --timeout=${RSYNC_MAX_SECONDS} --delete)
 else
-    export remote_stat="intra.ncep.noaa.gov:~/pmb/spatools/nwps_status/status_file.txt"
-    export remote_warn="intra.ncep.noaa.gov:~/pmb/spatools/nwps_status/warnings/"
+    export remote_stat="nwprod@intra.ncep.noaa.gov:~/pmb/spatools/nwps_status/status_file.txt"
+    export remote_warn="nwprod@intra.ncep.noaa.gov:~/pmb/spatools/nwps_status/warnings/"
     export options=(-aWzv --timeout=${RSYNC_MAX_SECONDS} --delete)
 fi
 
