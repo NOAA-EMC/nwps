@@ -94,9 +94,9 @@ export GESOUT=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDY}/nwges
 export GESOUTm1=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDYm1}/nwges
 export GESOUTm2=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDYm2}/nwges
 
-export COMINgfs=${COMINgfs:-$(compath.py gfs/${gfs_ver}/gfs.${PDY})}
-export COMINgfsm1=${COMINgfsm1:-$(compath.py gfs/${gfs_ver}/gfs.${PDYm1})}
-export COMINwave=${COMINwave:-$(compath.py gfs/${gfs_ver})}
+export COMINgfs=${COMINgfs:-$(compath.py prod/gfs/${gfs_ver}/gfs.${PDY})}
+export COMINgfsm1=${COMINgfsm1:-$(compath.py prod/gfs/${gfs_ver}/gfs.${PDYm1})}
+export COMINwave=${COMINwave:-$(compath.py prod/gfs/${gfs_ver})}
 export COMINestofs=$(compath.py ${NET}/${nwps_ver}/ofs.${PDY}/estofs/${WFO}_output)
 export COMINestofsm1=$(compath.py ${NET}/${nwps_ver}/ofs.${PDYm1}/estofs/${WFO}_output)
 export COMINrtofs=$(compath.py ${NET}/${nwps_ver}/ofs.${PDY}/rtofs/${WFO}_output)

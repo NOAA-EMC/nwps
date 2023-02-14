@@ -1,0 +1,45 @@
+#PBS -N nwps_stofs_prep_%CYC%
+#PBS -j oe
+#PBS -S /bin/bash
+#PBS -q %QUEUE%
+#PBS -A %PROJ%-%PROJENVIR%
+#PBS -l walltime=05:00:00
+#PBS -l select=1:ncpus=96:mpiprocs=96:ompthreads=1:mem=288GB
+# #PBS -l select=1:ncpus=96:mpiprocs=96:ompthreads=1:mem=5000MB
+#PBS -l debug=true
+
+export model=nwps
+
+%include <head.h>
+%include <envir-p1.h>
+
+module load craype/${craype_ver}
+module load intel/${inter_ver}
+module load cray-mpich/${cray_mpich_ver}
+module load cray-pals/${cray_pals_ver}
+module load cfp/${cfp_ver}
+module load wgrib2/${wgrib2_ver}
+module load python/${python_ver}
+module list
+
+export FORT_BUFFERED=true
+export NWPSplatform="WCOSS"
+export MP_PGMMODEL=mpmd
+export MP_CSS_INTERRUPT=yes
+export cyc=%CYC%
+export KEEPDATA=%KEEPDATA%
+export OFSTYPE=estofs
+
+export OMP_NUM_THREADS=1
+
+${HOMEnwps}/jobs/JNWPS_OFS_PREP
+
+%include <tail.h>
+
+%manual
+######################################################################
+# Job specific troubleshooting instructions:
+#  see generic troubleshoot manual page
+#
+######################################################################
+%end
