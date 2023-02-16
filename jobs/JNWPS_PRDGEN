@@ -124,8 +124,8 @@ export err=$?; err_chk
 ##############################################
 if [ "$?" -eq 0 ] && [ "${N,,}" == "n" ]; then
     dfile=$(ecflow_client --group="get ${ECF_NAME%/*}/jnwps_prep ; show state"|grep label|awk '{print $NF}'|sed 's/\"//g')
-    # echo "FINISHED ${FORECASTWINDdir}/$dfile AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
-    echo "FINISHED ${FORECASTWINDdir}/$dfile for $WFO AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
+     echo "FINISHED ${FORECASTWINDdir}/$dfile AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
+#    echo "FINISHED ${FORECASTWINDdir}/$dfile for $WFO AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
 fi
 
 msg="JOB $job HAS COMPLETED NORMALLY."

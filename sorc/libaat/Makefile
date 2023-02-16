@@ -3,7 +3,7 @@ SHELL = /bin/sh
 top_srcdir = .
 MEMWATCH_DIR = 
 
-CC = gcc
+CC = cc
 CFLAGS = -g -O2 -DSIZEOF_LONG_INT=8    
 AR = ar
 ARFLAGS = 

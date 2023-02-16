@@ -1,6 +1,6 @@
 #!/bin/sh
 set -xa
-if [ "${envir}" != para ]; then
+# JY -08/03/22  if [ "${envir}" != para ]; then
    ncyc="_$($NDATE)"
    dncyc=".$($NDATE)"
    ncycm1="_$($NDATE -1)"
@@ -8,17 +8,18 @@ if [ "${envir}" != para ]; then
    ncycm3="_$($NDATE -3)"
    ncycm4="_$($NDATE -4)"
    ncycm5="_$($NDATE -5)"
-else
-   # for testing in para, set hour
-   nhour=23
-   ncyc="_$($NDATE 0 ${PDY}${nhour})"
-   dncyc=".$($NDATE 0 ${PDY}${nhour})"
-   ncycm1="_$($NDATE -1 ${PDY}${nhour})"
-   ncycm2="_$($NDATE -2 ${PDY}${nhour})"
-   ncycm3="_$($NDATE -3 ${PDY}${nhour})"
-   ncycm4="_$($NDATE -4 ${PDY}${nhour})"
-   ncycm5="_$($NDATE -5 ${PDY}${nhour})"
-fi
+# JY - should not have this setting in para?
+# else
+#   # for testing in para, set hour
+#   nhour=23
+#   ncyc="_$($NDATE 0 ${PDY}${nhour})"
+#   dncyc=".$($NDATE 0 ${PDY}${nhour})"
+#   ncycm1="_$($NDATE -1 ${PDY}${nhour})"
+#   ncycm2="_$($NDATE -2 ${PDY}${nhour})"
+#   ncycm3="_$($NDATE -3 ${PDY}${nhour})"
+#   ncycm4="_$($NDATE -4 ${PDY}${nhour})"
+#   ncycm5="_$($NDATE -5 ${PDY}${nhour})"
+#fi
 
 export ECF_NAME_ORIG=${ECF_NAME}
 export ECF_PASS_ORIG=${ECF_PASS}

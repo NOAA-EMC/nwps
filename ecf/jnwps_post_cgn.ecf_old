@@ -1,0 +1,59 @@
+#PBS -N nwps_%FAMILY1%_post_cgn
+#PBS -j oe
+#PBS -S /bin/bash
+#PBS -q %QUEUE%
+#PBS -A %PROJ%-%PROJENVIR%
+#PBS -l walltime=01:30:00
+#PBS -l select=1:ncpus=120:mpiprocs=120:ompthreads=1:mem=1700MB
+#PBS -l debug=true
+
+export model=nwps
+
+%include <head.h>
+%include <envir-p1.h>
+
+module load craype/${craype_ver}
+module load intel/${inter_ver}
+module load cray-pals/${cray_pals_ver}
+module load wgrib2/${wgrib2_ver}
+module load cfp/${cfp_ver}
+module load cpe/${cpe_ver}
+module load proj/${proj_ver}
+module load geos/${geos_ver}
+module load libjpeg/${libjpeg_ver}
+module load python/${python_ver}
+module load perl/${perl_ver}
+module list
+
+export FORT_BUFFERED=true
+export NWPSplatform="WCOSS"
+export MP_PGMMODEL=mpmd
+export MP_CSS_INTERRUPT=yes
+export WFO=%FAMILY1%
+export siteid=${WFO}
+export SITEID=${WFO^^}
+export N=n
+export KEEPDATA=%KEEPDATA%
+
+${HOMEnwps}/jobs/JNWPS_POST
+
+%include <tail.h>
+
+%manual
+################################################################################
+#TASKSCRIPT DOCUMENTATION BLOCK
+#TASKSCRIPT:     jnwps_%FAMILY1%_post_cgn
+#LAST MODIFIER:  Floyd Fayton
+#ORGANIZATION:   NP11
+#DATE:           SEP 2014
+#FULL NAME:    /nwps_para/nwps/SR/jmfl
+#PURPOSE:  To execute the job that creates NWPS MFL GRIB output files
+#JOB SCRIPT CALLED: /nwprod/nwps.${nwps_ver}/jobs/JNWPS ==>
+#                            /nwprod/nwps.${nwps_ver}/scripts/exnwps_post_cg%N%.sh.ecf
+#################################################################################
+######################################################################
+# Job specific troubleshooting instructions:
+#  see generic troubleshoot manual page
+#
+######################################################################
+%end
