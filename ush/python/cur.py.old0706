@@ -211,7 +211,6 @@ for tstep in range(TSTART, (int(TEND)+1)):
       else:
       # Basemap streamplot does not plot correctly at higher latitudes (WFOs AFG and ALU). Do surface plot and vectors instead
          par[np.where(par==0.)] = np.nan
-         norm = matplotlib.colors.Normalize(vmin=0.,vmax=(int(unitconvert*maxval)+1))
          culim = int(unitconvert*maxval)+1
          if (culim > 2):
             clevs = np.arange(0, culim+0.5, 0.5)      #Have to add an additional 0.5 to get the right array upper limit

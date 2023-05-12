@@ -1,0 +1,20 @@
+Only in /lfs/h1/ops/para/packages/nwps.v1.4.5.prod/def: nwps_prod_para_diff.txt
+Only in /lfs/h1/ops/para/packages/nwps.v1.4.5.prod/ecf: jnwps_post_cg1.ecf.orig0803
+Only in /lfs/h1/ops/prod/packages/nwps.v1.4.4/jobs: JNWPS_DATACHK.saveOrig
+Only in /lfs/h1/ops/prod/packages/nwps.v1.4.4/jobs: JNWPS_DATACHK.turnoff_rzdm
+Only in /lfs/h1/ops/para/packages/nwps.v1.4.5.prod/scripts: exnwps_datachk.sh.orig0803
+diff -r /lfs/h1/ops/prod/packages/nwps.v1.4.4/ush/shiproutes/plot_shiproutes.sh /lfs/h1/ops/para/packages/nwps.v1.4.5.prod/ush/shiproutes/plot_shiproutes.sh
+317c317,324
+<         for h in {0..21..3}; do
+---
+> 	# Accounting for init hours that differ from the 3-hourly cadence (00z, 03z, 06z, 09z, ...)
+> 	cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
+> 	hourshift=`expr $cycle % 3`
+> 	starthour=$(( `expr $hourshift % 3` - 3 ))
+> 	endhour=$(( 21 + `expr $hourshift % 3` ))
+> 
+> 	#for h in {0..21..3}; do
+> 	for (( h=$starthour; h<=$endhour; h+=3 )); do
+Only in /lfs/h1/ops/prod/packages/nwps.v1.4.4/ush/shiproutes: plot_shiproutes.sh.debug
+Only in /lfs/h1/ops/prod/packages/nwps.v1.4.4/ush/shiproutes: plot_shiproutes.sh.old
+Only in /lfs/h1/ops/para/packages/nwps.v1.4.5.prod/ush/shiproutes: plot_shiproutes.sh.old0822
