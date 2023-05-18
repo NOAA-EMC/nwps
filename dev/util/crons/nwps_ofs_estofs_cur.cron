@@ -1,4 +1,4 @@
-#!/bin/bash --login
+#!/bin/bash  
 # --------------------------------------------------------------------------- #
 #                                                                             #
 # nwps_ofs_estofs_cur.cron : Script manages the running of the NWPS water level   #

@@ -1,4 +1,4 @@
-#!/bin/bash --login
+#!/bin/bash  
 # --------------------------------------------------------------------------- #
 #                                                                             #
 # nwps_plot_cgn_dev.cron : Cron manages the running of the NWPS script to     #

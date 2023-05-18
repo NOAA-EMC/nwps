@@ -1,4 +1,4 @@
-#!/bin/bash --login
+#!/bin/bash  
 # --------------------------------------------------------------------------- #
 #                                                                             #
 # nwps_webgraph_dev.cron : Script manages the running of the NWPS             #

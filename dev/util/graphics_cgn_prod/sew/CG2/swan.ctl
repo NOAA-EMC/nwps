@@ -3,8 +3,8 @@ index swan.idx
 DTYPE grib2
 TITLE SWAN CG2 Control File
 UNDEF 9.999E+20
-XDEF 25 linear -124.26 .0066666666
-YDEF 38 linear 46.84 .0045945945
+XDEF 79 linear -127 0.065257
+YDEF 74 linear 46.1 0.045480
 ZDEF 1 levels 1 1
 TDEF 145 linear 18z23jan2021 1hr
 VARS 11

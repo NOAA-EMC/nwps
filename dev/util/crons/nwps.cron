@@ -1,4 +1,4 @@
-#!/bin/bash --login
+#!/bin/bash  
 # --------------------------------------------------------------------------- #
 #                                                                             #
 # nwps.cron : This script manages the running of the parallel script          #

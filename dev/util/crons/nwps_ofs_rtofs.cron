@@ -1,4 +1,4 @@
-#!/bin/bash --login
+#!/bin/bash  
 # --------------------------------------------------------------------------- #
 #                                                                             #
 # nwps_ofs_rtofs.cron : Script manages the running of the NWPS surface current#

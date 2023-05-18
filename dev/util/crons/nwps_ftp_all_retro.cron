@@ -1,4 +1,4 @@
-#!/bin/bash --login
+#!/bin/bash  
 # --------------------------------------------------------------------------- #
 #                                                                             #
 # nwps_ftp_devwr.cron : Script manages the running of the NWPS ftp scripts    #
