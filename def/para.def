@@ -1,0 +1,873 @@
+suite para
+  family primary
+    family cron
+
+      family nwps
+        defstatus complete
+        edit PROJ 'NWPS'
+        edit PACKAGEHOME '/lfs/h1/ops/%ENVIR%/packages/nwps.%nwps_ver%'
+        edit KEEPDATA 'NO'
+
+        family v1.4
+          limit nwps_jobs 20
+          task jnwps_datachk
+            #edit QUEUE 'prod_transfer'
+            cron 00:01 23:57 00:01
+          task jnwps_datachk_info
+            defstatus complete
+            label queued " "
+          family regions
+            edit KEEPDATA 'YES'
+            edit NODES '2'
+            inlimit nwps_jobs
+            family ER
+              defstatus complete
+              family box
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '4'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family gyx
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '4'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family car
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '4'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family okx
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '4'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family phi
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '4'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family lwx
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family akq
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '4'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family mhx
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family ilm
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '4'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family chs
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '4'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+            endfamily
+            family SR
+              defstatus complete
+              family mfl
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '4'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family bro
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family crp
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family hgx
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '5'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family lch
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family lix
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family mob
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '6'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family tae
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '4'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family tbw
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '4'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family key
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '4'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family mlb
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '4'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family jax
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family sju
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+            endfamily
+            family WR
+              defstatus complete
+              family sgx
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '4'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family lox
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '3'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '3'
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family mtr
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '5'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '5'
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family eka
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family mfr
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '4'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '4'
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family pqr
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family sew
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+            endfamily
+            family PR
+              defstatus complete
+              family hfo
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family gum
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+            endfamily
+            family AR
+              defstatus complete
+              family ajk
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '5'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                  edit NODES '5'
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family aer
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family alu
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                  edit NODES '4'
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+              family afg
+                task jnwps_prep
+                  label DCOM ""
+                task jnwps_forecast_cg1
+                  trigger jnwps_prep == complete
+                task jnwps_post_cg1
+                  trigger jnwps_forecast_cg1 == complete
+                task jnwps_prdgen_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_wavetrack_cg1
+                  trigger jnwps_post_cg1 == complete
+                task jnwps_prdgen_cg0
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_forecast_cgn
+                  trigger jnwps_wavetrack_cg1 == complete
+                task jnwps_post_cgn
+                  trigger jnwps_forecast_cgn == complete
+                task jnwps_prdgen_cgn
+                  trigger jnwps_post_cgn == complete
+              endfamily
+            endfamily
+          endfamily
+
+          family prep
+            edit KEEPDATA 'YES'
+            family psurge
+              edit CYC '12'
+              task jnwps_psurge_prep
+                defstatus complete
+                trigger /para/primary/ondemand/psurge/v2.10/psurge_01/jpsurge_cleanup == active
+                edit CYC '00'
+            endfamily
+
+            family rtofs
+              edit CYC '18'
+              task jnwps_rtofs_prep
+                cron 21:00
+            endfamily
+
+            family estofs
+              family 00
+                edit CYC '00'
+                task jnwps_estofs_prep
+                  trigger /para/primary/00/estofs/v2.1/jestofs_post == complete
+                  cron 06:30
+              endfamily
+              family 06
+                edit CYC '06'
+                task jnwps_estofs_prep
+                  trigger (/para/primary/06/estofs/v2.1/jestofs_post == complete)
+                  cron 12:30
+              endfamily
+              family 12
+                edit CYC '12'
+                task jnwps_estofs_prep
+                  trigger (/para/primary/12/estofs/v2.1/jestofs_post == complete)
+                  cron 18:30
+              endfamily
+              family 18
+                edit CYC '18'
+                task jnwps_estofs_prep
+                  trigger (/para/primary/18/estofs/v2.1/jestofs_post == complete)
+                  cron 00:30
+              endfamily
+            endfamily
+          endfamily
+
+        endfamily #v1.4
+      endfamily #nwps
+    endfamily #cron
+
+    # just for the triggers
+    family ondemand
+      family psurge
+        family v2.10
+          family psurge_01
+            task jpsurge_cleanup
+          endfamily
+        endfamily
+      endfamily
+    endfamily
+    family 00
+      family estofs 
+        family v2.1
+          task jestofs_post
+        endfamily
+      endfamily
+    endfamily
+    family 06
+      family estofs 
+        family v2.1
+          task jestofs_post
+        endfamily
+      endfamily
+    endfamily
+    family 12
+      family estofs 
+        family v2.1
+          task jestofs_post
+        endfamily
+      endfamily
+    endfamily
+    family 18
+      family estofs 
+        family v2.1
+          task jestofs_post
+        endfamily
+      endfamily
+    endfamily
+
+  endfamily #primary
+endsuite

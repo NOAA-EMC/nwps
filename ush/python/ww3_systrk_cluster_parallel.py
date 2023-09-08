@@ -360,7 +360,11 @@ silhouette_best = -1.
 # Test optimal number of clusters (between 2-5)
 
 for nclust in range(2, 6):
-   silhouette_avg=np.loadtxt('silhouette_coeff_k'+str(nclust)+'.txt')
+   try:
+      silhouette_avg=np.loadtxt('silhouette_coeff_k'+str(nclust)+'.txt')
+   except:            
+      silhouette_avg=0.
+      print('*** Warning: No valid silhouette coefficient found for k='+str(nclust))
    print('k='+str(nclust)+': silhouette coeff = '+str(silhouette_avg))
    if silhouette_avg > silhouette_best:
       silhouette_best = silhouette_avg
