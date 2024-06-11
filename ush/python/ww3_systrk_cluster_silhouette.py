@@ -120,12 +120,16 @@ silhouette_best = -1.
 print('Trying nclust =',nclust)
 k_means = cluster.KMeans(n_clusters=nclust, random_state=1)
 k_means.fit(wavedat)
-label=k_means.labels_.astype(np.float)
+label=k_means.labels_.astype(float)
 
 print('Calculating fit quality...')
 if len(set(label[0:(nlon*nlat*5)])) > 1:
-   silhouette_avg = silhouette_score(wavedat[0:(nlon*nlat*5),:], label[0:(nlon*nlat*5)], 
+   try:  
+     silhouette_avg = silhouette_score(wavedat[0:(nlon*nlat*5),:], label[0:(nlon*nlat*5)], 
                                      sample_size=min(25000,nlon*nlat*5), random_state=1)
+   except:
+      silhouette_avg=0.
+      print('*** Warning: silhouette_avg could not be calculated')
 else:
    silhouette_avg = 0.
 

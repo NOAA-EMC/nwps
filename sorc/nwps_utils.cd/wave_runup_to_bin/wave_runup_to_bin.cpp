@@ -563,7 +563,10 @@ int main(int argc, char **argv)
   gxString next_hour(points_ptr_next->data->DATE, 9, 2);
   int fhour = starting_hour.Atoi();
   int next_fhour = next_hour.Atoi();
-  int time_step = next_fhour - fhour; 
+  int time_step = next_fhour - fhour;
+  if (time_step < 0) {
+	   time_step += 24;
+  } 
 
   std::cout << "Number of time steps = " << num_time_steps << "\n";
   std::cout << "Time step = " << time_step << "\n";
