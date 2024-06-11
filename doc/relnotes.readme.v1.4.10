@@ -1,0 +1,134 @@
+TITLE:
+Nearshore Wave Prediction System (NWPS) v1.4.10
+
+CHANGE REQUEST CLASS:
+Routine change: cosmetic upgrade, bug fix, patch
+
+DESCRIPTION OF CHANGE:
+Bugfix for a run failure for wave system tracking for nclust=2. In rare occasions, the silhouette_coeff_k2.txt file will not be created and consequently the ww3_systrk_cluster_parallel.py python script fails to run.
+
+When WFOs submit runs at 23Z, it causes a failure in the post_cg1 job due to an incorrect calculation of the time_step parameter for runup and rip current grib2 encoding. This incorrect calculation leads to the failure of Python scripts responsible for plotting runup, overwash, and rip current data.
+
+The $NWPSdir/dev/ecf and /job scripts are changed to be able to run retro runs on WCOSS2 machine.
+
+JOB DEPENDENCIES:
+(Same as NWPSv1.4.9)
+This system has upstream dependencies on the following WCOSS models:
+ - GFS (wave boundary conditions)
+ - RTOFS Global (surface current fields)
+ - Global STOFS (water level fields)
+ - MMAB Sea Ice Analysis (sea ice fields)
+ - P-Surge (water level fields)
+ - GFS pgrb files (U10 fields for GFS fail-over option)
+
+The system has upstream data dependencies on:
+ - User input received from AWIPS via LDM
+
+This system currently has no downstream dependencies.
+
+REQUIRED SYSTEM USAGE:
+Same as NWPSv1.4.9
+
+BENEFITS OF CHANGE:
+Greater system stability.
+
+USER IMPACT STATEMENT:
+Same as NWPSv1.4.9
+
+TECHNICAL IMPACT STATEMENT:
+Same as NWPSv1.4.9
+
+RISKS:
+Same as NWPSv1.4.9
+
+PROPOSED IMPLEMENTATION
+At the first available opportunity.
+
+BUGFIXES
+Fix to multiple files:
+For wave system tracking:
+ush/python/ww3_systrk_cluster_parallel.py
+ush/python/ww3_systrk_cluster_silhouette.py
+
+For wave post_cg1 failure:
+sorc/nwps_utils.cd/rip_current_to_bin/rip_current_to_bin.cpp
+sorc/nwps_utils.cd/wave_runup_to_bin/wave_runup_to_bin.cpp
+
+For the NWPS main retro run (this is development only due to transferring from wcoss to wcoss2)
+sorc/get_externals.sh
+dev/ecf/jnwps_datachk_ret.ecf
+dev/ecf/jnwps_forecast_cg1.ecf.tmpl
+dev/ecf/jnwps_forecast_cg1_ret.ecf.tmpl
+dev/ecf/jnwps_forecast_cgn.ecf.tmpl
+dev/ecf/jnwps_forecast_cgn_ret.ecf.tmpl
+dev/ecf/jnwps_ofs_prep.ecf
+dev/ecf/jnwps_post_cg1.ecf.tmpl
+dev/ecf/jnwps_post_cg1_ret.ecf.tmpl
+dev/ecf/jnwps_post_cgn.ecf.tmpl
+dev/ecf/jnwps_post_cgn_ret.ecf.tmpl
+dev/ecf/jnwps_prdgen_cg0.ecf.tmpl
+dev/ecf/jnwps_prdgen_cg0_ret.ecf.tmpl
+dev/ecf/jnwps_prdgen_cg1.ecf.tmpl
+dev/ecf/jnwps_prdgen_cg1_ret.ecf.tmpl
+dev/ecf/jnwps_prdgen_cgn.ecf.tmpl
+dev/ecf/jnwps_prdgen_cgn_ret.ecf.tmpl
+dev/ecf/jnwps_prep.ecf.tmpl
+dev/ecf/jnwps_prep_ret.ecf.tmpl
+dev/ecf/jnwps_wavetrack_cg1.ecf.tmpl
+dev/ecf/jnwps_wavetrack_cg1_ret.ecf.tmpl
+dev/jobs/JNWPS_DATACHK_RET
+dev/jobs/JNWPS_FORECAST_RET
+dev/jobs/JNWPS_POST_RET
+dev/jobs/JNWPS_PRDGEN_RET
+dev/jobs/JNWPS_PREP_RET
+dev/jobs/JNWPS_WAVETRACK_RET
+
+IMPLEMENTATION INSTRUCTIONS
+
+I) Checking out the code from Github
+
+Make the home directory for the model in $NWROOT:
+> mkdir nwps
+> cd nwps
+
+Clone the NWPS code from the following Github repo, and check out the release tag:
+> git clone https://github.com/AliS-Noaa/nwps.git
+> git checkout nwps_sys_trk
+
+II) Building the executables
+
+First define the path variable ${NWPSdir} in your profile file, which points to the base of the code checked out under (I) above.
+> export NWPSdir=$(pwd)
+
+Next, change directory to ${NWPSdir}/sorc/, and execute the general NWPS install script. This single step will install the total
+package, including all libraries and binary compilations:
+
+> cd ${NWPSdir}/sorc
+> ./make_NWPS.sh
+
+Once the compilations are done, all executables are moved to ${NWPSdir}/exec, and the system will be ready.
+
+TEST INSTRUCTIONS
+For wave system tracking:
+Conduct retro runs using for the reported failed jobs for the CRP and PHI domains:
+The failed jobs path: /lfs/h2/emc/couple/noscrub/ali.salimi/work/pnwps_crp_prod_20230702_1057Z
+/lfs/h2/emc/couple/noscrub/ali.salimi/work/pnwps_phi_prod.failed_wavetrack_cg1.20230526
+
+The fixed job path:
+/lfs/h2/emc/couple/noscrub/ali.salimi/work/runs/crp.20230702
+/lfs/h2/emc/couple/noscrub/ali.salimi/work/runs/phi.20230526
+
+For wave post_cg1 failure:
+Conduct retro run using the reported failed job for JAX domain:
+The failed jobs path: 
+/lfs/h2/emc/couple/noscrub/ali.salimi/work/runs/jax.20230711-failed
+
+wgrib2 /lfs/h2/emc/couple/noscrub/ali.salimi/work/runs/jax.20230711-failed/output/grib2/CG1/jax_nwps_CG1_20230710_2300.grib2
+Will show a negative hour fcst for runup and rip current.
+
+The fixed job path:
+/lfs/h2/emc/couple/noscrub/ali.salimi/work/runs/jax.20230711-fixed
+
+wgrib2 /lfs/h2/emc/couple/noscrub/ali.salimi/work/runs/jax.20230711-fixed/output/grib2/CG1/jax_nwps_CG1_20230710_2300.grib2
+Will show 1:144 (correct) hour fcst for runup and rip current.
+
