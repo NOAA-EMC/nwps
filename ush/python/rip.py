@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 # rip.py script
 # Author: Andre van der Westhuysen, 12/15/16
-# Purpose: Plots SWAN output parameters from GRIB2.
+# Purpose: Plots SWAN output parameters from GRIB2 using scatter plot.
 
 import cartopy
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import matplotlib
-#matplotlib.use('Agg',warn=False)
+#matplotlib.use('Agg')
 import sys
 import os
 import datetime
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap
-from matplotlib import colors
+from matplotlib.colors import ListedColormap, BoundaryNorm
+import numpy.ma as ma
 
 print('*** rip.py ***')
 TSTART = int(sys.argv[1])
@@ -22,7 +22,7 @@ TEND = int(sys.argv[2])
 print('TSTART = '+str(TSTART))
 print('TEND = '+str(TEND))
 
-NWPSdir = os.environ['NWPSdir']
+NWPSdir = os.environ['NWPSdir'] 
 cartopy.config['pre_existing_data_dir'] = NWPSdir+'/lib/cartopy'
 print('Reading cartopy shapefiles from:')
 print(cartopy.config['pre_existing_data_dir'])
@@ -105,6 +105,8 @@ if (lats.max()-lats.min()) > 0.5:
 else:
    dlat = (lats.max()-lats.min())/5.
 
+# Now, lons and lats are rounded, and dlon/dlat are calculated based on the rounded values.
+
 SITEID = os.environ.get('SITEID')
 CGNUMPLOT = os.environ.get('CGNUMPLOT')
 WATERLEVELS = os.environ.get('WATERLEVELS')
@@ -117,7 +119,7 @@ fieldmin = 'RIP_extract_fieldmin_TSTART'+str(TSTART)+'.txt'
 command = '$WGRIB2 '+DSET+' -s | grep "RIPCOP" | $WGRIB2 -i '+DSET+' -min | cat > '+fieldmin
 os.system(command)
 
-# Test whether GRIB2 file didn't contain any rip current data. This can happen 
+# Test whether GRIB2 file didn't contain any rip current data. This can happen
 # the first time the rip program is run, before a run history is present.
 if (os.stat(fieldmax).st_size == 0):
    print('*** TERMINATING ERROR: Rip current input file is empty.')
@@ -157,11 +159,7 @@ for tstep in range(TSTART, (int(TEND)+1)):
 
    # Deviation of sea level from mean
    grib2dump = 'RIP_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
-   data=np.loadtxt(grib2dump,delimiter=',',comments='l') 
-
-   #lons=np.linspace(x0,x0+float(nlon-1)*dx,num=nlon)
-   #lats=np.linspace(y0,y0+float(nlat-1)*dy,num=nlat)
-   #reflon,reflat=np.meshgrid(lons,lats)
+   data=np.loadtxt(grib2dump,delimiter=',',comments='l')
 
    # Set up parameter field
    for lat in range(0, nlat):
@@ -169,7 +167,7 @@ for tstep in range(TSTART, (int(TEND)+1)):
          par[lat,lon] = data[nlon*lat+lon,2:3]
 
    # Remove exception values
-   par[np.where(par==-9999)] = np.nan
+   par = np.where(par==-9999, np.nan, par)
 
    # Plot data
    ax = plt.axes(projection=ccrs.Mercator())
@@ -177,35 +175,34 @@ for tstep in range(TSTART, (int(TEND)+1)):
    # specify the bounds for the colors
    bounds=[0,25,50,75,100]
    # create the custom colormap
-   cmap = colors.ListedColormap(['grey', 'yellow','red','red'])
+   cmap = ListedColormap(['grey', 'yellow','red','red'])
    # specify the mapping from value-->color
-   norm = colors.BoundaryNorm(bounds, cmap.N)
+   norm = BoundaryNorm(bounds, cmap.N)
 
-   plt.contourf(reflon, reflat, par, clevs, cmap=cmap, transform=ccrs.PlateCarree())
-   plt.colorbar(ax=ax,spacing='proportional').set_label("", size=8)
+   # Flatten the arrays for scatter plot
+   x = reflon.flatten()
+   y = reflat.flatten()
+   z = par.flatten()
+
+   # Filter out NaN values
+   mask = ~np.isnan(z)
+   x = x[mask]
+   y = y[mask]
+   z = z[mask]
+
+   scatter = plt.scatter(x, y, c=z, cmap=cmap, norm=norm, transform=ccrs.PlateCarree())
+   plt.colorbar(scatter, ax=ax, spacing='proportional').set_label("", size=8)
    ax.set_aspect('auto', adjustable=None)
    ax.set_extent([lons.min(), lons.max(), lats.min(), lats.max()])
 
-   # There is an issue with plotting m.fillcontinents with inland lakes, so omitting it in
-   # the case of WFO-GYX, CG2 and CG3 (Lakes Sebago and Winni)
-   #if (not ((SITEID == 'mfl') & (CGNUMPLOT == '3'))) & \
-   #   (not ((SITEID == 'gyx') & (CGNUMPLOT == '2'))) & \
-   #   (not ((SITEID == 'gyx') & (CGNUMPLOT == '3'))):
-   #   land_50m = cfeature.NaturalEarthFeature('physical','land','50m',edgecolor='face',facecolor=cfeature.COLORS['land'])
-   #   ax.add_feature(land_50m)
    coast = cfeature.GSHHSFeature(scale='high',edgecolor='black')
    ax.add_feature(coast)
-   #ax.coastlines(resolution='10m', color='black', linewidth=1)
    gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
                   linewidth=0.5, color='gray', alpha=0.5, linestyle='--')
    gl.xlabels_top = False
    gl.ylabels_right = False
    gl.xlabel_style = {'size': 7}
    gl.ylabel_style = {'size': 7}
-
-   # Draw CWA zones from ESRI shapefiles. NB: Make sure the lon convention is -180:180.
-   #m.readshapefile('marine_zones','marine_zones')
-   #m.drawcounties()
 
    # Draw Columbia River Mouth piers
    if ((SITEID == 'pqr') & (CGNUMPLOT == '3')):
@@ -227,6 +224,7 @@ for tstep in range(TSTART, (int(TEND)+1)):
               +monthstr[int(date.month)-1]+str(date.year)+')'
    plt.title(figtitle,fontsize=10)
 
+
    # Set up subaxes and plot the logos in them
    plt.axes([0.00,.87,.08,.08])
    plt.axis('off')
@@ -237,7 +235,6 @@ for tstep in range(TSTART, (int(TEND)+1)):
 
    filenm = 'swan_rip_hr'+str(forecastTime).zfill(3)+'.png'
    plt.savefig(filenm,dpi=150,bbox_inches='tight',pad_inches=0.1)
-   plt.clf()
 
 # Clean up text dump files
 for tstep in range(TSTART, (int(TEND)+1)):
