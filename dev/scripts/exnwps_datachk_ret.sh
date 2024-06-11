@@ -215,7 +215,6 @@ function process_nwps_dcom {
 #AW111116    for runit in ${DCOM_FILES[@]}; do
 
 regions="sr er wr ar pr"
-#regions="sr"
 cycles="00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23"
 
 while read line
@@ -224,7 +223,6 @@ do                             #read line
   do                             #region
    if [ "${region}" == "sr" ]; then
       wfos="bro crp hgx lch lix mob tae tbw key mfl mlb jax sju"
-      #wfos="bro mob mfl"
    elif [ "${region}" == "er" ]; then
       wfos="chs ilm mhx akq lwx phi okx box gyx car"
    elif [ "${region}" == "wr" ]; then
@@ -246,8 +244,8 @@ do                             #read line
    yy=`echo ${PDY} | cut -c1-4`
    yymm=`echo ${PDY} | cut -c1-6`
 
-   export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
-   export GESOUTm1=${GESROOT}/${envir}/${NET}.${PDYm1}
+   export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}/nwges
+   export GESOUTm1=${COMROOT}/${NET}/$ver/${NET}.${PDYm1}/nwges
 
    #mkdir $HPSSARCHdir
    #cd $HPSSARCHdir
@@ -315,31 +313,31 @@ do                             #read line
             ecf_wfo=$(grep ${wfo} ${PARMnwps}/wfo.tbl)
             #region=$(echo ${ecf_wfo} |awk -F"/" '{print $1}')
             #if ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:active; then
-            if [ ! -z $(bjobs -u $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log | awk -F"<" '{print $2}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
-                echo "Not starting ${ecf_wfo} with ${runint}, ${ecf_wfo^^} is active."
-                #DCOM_FILES=( "${DCOM_FILES[@]/${runit}}" )
+	    if [ ! -z $( qstat -u $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log) | awk '{print $1}' ) ]; then
+                echo "Not starting ${ecf_wfo} with ${runit}, ${ecf_wfo^^} is active."
+		#DCOM_FILES=( "${DCOM_FILES[@]/${runit}}" )
             else
                 echo -ne "QUEUEING:\t\t$wfo\n"
 
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_prep_ret.o 
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_forecast_cg1_ret.o
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_post_cg1_ret.o
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_prdgen_cg1_ret.o
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_wavetrack_cg1_ret.o
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_prdgen_cg0_ret.o
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_forecast_cgn_ret.o
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_post_cgn_ret.o
-                rm ${COMROOT}/${NET}/${envir}/NWPS_${wfo}_prdgen_cgn_ret.o
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_prep_ret.o 
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_forecast_cg1_ret.o
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_post_cg1_ret.o
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_prdgen_cg1_ret.o
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_wavetrack_cg1_ret.o
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_prdgen_cg0_ret.o
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_forecast_cgn_ret.o
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_post_cgn_ret.o
+                rm ${COMROOT}/${NET}/${ver}/NWPS_${wfo}_prdgen_cgn_ret.o
 
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_prep_ret
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_fc_cg1_ret
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_po_cg1_ret
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_pd_cg1_ret
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_wt_cg1_ret
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_pd_cg0_ret
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_fc_cgn_ret
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_po_cgn_ret
-                rm ${COMROOT}/logs/${envir}/jlogfile.pnwps_${wfo}_pd_cgn_ret
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_prep_ret
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_fc_cg1_ret
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_po_cg1_ret
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_pd_cg1_ret
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_wt_cg1_ret
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_pd_cg0_ret
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_fc_cgn_ret
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_po_cgn_ret
+                rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_pd_cgn_ret
 
                 echo "Setting PDY and CYC for "${wfo}"..."
                 echo "export PDYm3=$PDYm3" > ${DATA}/PDY.${wfo^^}
@@ -362,20 +360,16 @@ do                             #read line
                 sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_post_cgn_ret.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_post_cgn_ret.ecf.${wfo}
                 sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn_ret.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn_ret.ecf.${wfo}
 
-                if [ "$wfo" == "key" ] || [ "$wfo" == "mfl" ] || [ "$wfo" == "alu" ] || [ "$wfo" == "akq" ]; then
-                   sed -i "s/NODES=2/NODES=4/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cg1.ecf.${wfo}
-                fi
-
                 echo $runit                                                  > ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                bsub < ${NWPSdir}/dev/ecf/jnwps_prep_ret.ecf.${wfo}          >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                bsub < ${NWPSdir}/dev/ecf/jnwps_forecast_cg1_ret.ecf.${wfo}  >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                bsub < ${NWPSdir}/dev/ecf/jnwps_post_cg1_ret.ecf.${wfo}      >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                bsub < ${NWPSdir}/dev/ecf/jnwps_prdgen_cg1_ret.ecf.${wfo}    >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                bsub < ${NWPSdir}/dev/ecf/jnwps_wavetrack_cg1_ret.ecf.${wfo} >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                bsub < ${NWPSdir}/dev/ecf/jnwps_prdgen_cg0_ret.ecf.${wfo}    >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                bsub < ${NWPSdir}/dev/ecf/jnwps_forecast_cgn_ret.ecf.${wfo}  >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                bsub < ${NWPSdir}/dev/ecf/jnwps_post_cgn_ret.ecf.${wfo}      >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                bsub < ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn_ret.ecf.${wfo}    >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log
+                qsub ${NWPSdir}/dev/ecf/jnwps_prep_ret.ecf.${wfo}          >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
+                qsub ${NWPSdir}/dev/ecf/jnwps_forecast_cg1_ret.ecf.${wfo}  >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
+                qsub ${NWPSdir}/dev/ecf/jnwps_post_cg1_ret.ecf.${wfo}      >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
+                qsub ${NWPSdir}/dev/ecf/jnwps_prdgen_cg1_ret.ecf.${wfo}    >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
+                qsub ${NWPSdir}/dev/ecf/jnwps_wavetrack_cg1_ret.ecf.${wfo} >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
+                qsub ${NWPSdir}/dev/ecf/jnwps_prdgen_cg0_ret.ecf.${wfo}    >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
+                qsub ${NWPSdir}/dev/ecf/jnwps_forecast_cgn_ret.ecf.${wfo}  >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
+                qsub ${NWPSdir}/dev/ecf/jnwps_post_cgn_ret.ecf.${wfo}      >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
+                qsub ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn_ret.ecf.${wfo}    >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log
 
                 echo 'Submitted run for '${wfo}': '${runit}
 

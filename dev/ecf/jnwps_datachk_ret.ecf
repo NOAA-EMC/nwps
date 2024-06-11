@@ -1,4 +1,4 @@
-#!/bin/bash  
+#!/bin/bash 
 # ----------------------------------------------------------- 
 # UNIX Shell Script File
 # Tested Operating System(s): RHEL 5,6
@@ -22,21 +22,23 @@
 #
 # ----------------------------------------------------------- 
 
-##BSUB -J NWPS_datachk
-##BSUB -oo NWPS_datachk.o
-##     -e NWPS_datachk.o
-##BSUB -q "dev"
-##BSUB -W 0:15
-##BSUB -R rusage[mem=1700]
-##BSUB -P NWPS-T2O
+# Setup and load modules
+VERSION_FILE=${NWPSdir}/versions/run.ver
+if [ -f $VERSION_FILE ]; then
+  . $VERSION_FILE
+else
+  ECFNAME="jnwps_datachk_ret.ecf"
+  echo "***JOB ${ECFNAME} ERROR: Version File $VERSION_FILE does not exist ***"
+  exit
+fi
 
-#module load %MODULES%
-. /usrx/local/Modules/3.2.9/init/bash
-module load prod_envir
-module load prod_util
-module load hpss
+export HOMEnwps=${NWPSdir}
+export NWROOT=${NWPSdir}
 
-module list
+module purge
+module load envvar/${envvar_ver}
+module load prod_envir/${prod_envir_ver}
+module load prod_util/${prod_util_ver}
 
 export FORT_BUFFERED=true
 export NWPSplatform="DEVWCOSS"
@@ -53,32 +55,22 @@ export WCOSS_SYSTEM=$( echo $COMROOTp1 | cut -c7 )d1
 export WCOSS_SYSTEM_COM=$( echo $COMROOTp1 | cut -c7-9 )
 
 export DEVWCOSS_USER=$(whoami)
-export NWROOT=${NWPSdir}
 
-VERSION_FILE=${NWROOT}/dev/nwps_test.ver
-if [ -f $VERSION_FILE ]; then
-  . $VERSION_FILE
-else
-  ECFNAME="jnwps_datachk.ecf"
-  echo "***JOB ${ECFNAME} ERROR: Version File $VERSION_FILE does not exist ***"
-  exit
-fi
-
-${NWROOT}/dev/jobs/J${MODEL}_DATACHK_RET
+${HOMEnwps}/dev/jobs/J${MODEL}_DATACHK_RET
 
 #%include <tail.h>
 
 #%manual
 ################################################################################
 #TASKSCRIPT DOCUMENTATION BLOCK
-#TASKSCRIPT:     jnwps_datachk
+#TASKSCRIPT:     jnwps_datachk_ret
 #LAST MODIFIER:  Andre van der Westhuysen
-#ORGANIZATION:   NP11
-#DATE:           SEP 2014
-#FULL NAME:    /nwps/regions/jnwps_datachk
+#ORGANIZATION:   NCEP/EMC
+#DATE:           AUG 2022
+#FULL NAME:    /nwps/regions/jnwps_datachk_ret
 #PURPOSE:  To execute the job that creates NWPS MFL GRIB output files
-#JOB SCRIPT CALLED: /nwprod/nwps.${nwps_ver}/jobs/JNWPS_DATACHK ==>
-#                            /nwprod/nwps.${nwps_ver}/scripts/exnwps_datachk.sh.ecf
+#JOB SCRIPT CALLED: /nwprod/nwps.${nwps_ver}/jobs/JNWPS_DATACHK_RET ==>
+#                            /nwprod/nwps.${nwps_ver}/scripts/exnwps_datachk_ret.sh.ecf
 #################################################################################
 ######################################################################
 # Job specific troubleshooting instructions:

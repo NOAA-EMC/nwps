@@ -1,4 +1,4 @@
-#!/bin/bash  
+#!/bin/bash --login
 # ----------------------------------------------------------- 
 # UNIX Shell Script File
 # Tested Operating System(s): RHEL 5,6
@@ -38,7 +38,7 @@ set -xa
 #echo ""
 #echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
 
-cd /gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/retro
+cd /lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver/retro
 
 #export cyc=${CYCLE}
 export cyc=`cat CYC.${WFO^^}`
@@ -54,8 +54,7 @@ export USHutil=${UTILROOT}/ush
 sh $utilscript/setup.sh
 export pgm="NWPS"
 
-export DATA=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/retro/${WFO}.${PDY}
-export GESROOT=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/retro/nwges
+export DATA=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver/retro/${WFO}.${PDY}
 
 mkdir -p $DATA
 cd $DATA
@@ -92,7 +91,7 @@ export BATHYdb=${BATHYdb:-${FIXnwps}/bathy_db}
 export SHAPEFILEdb=${SHAPEFILEdb:-${FIXnwps}/shapefile_db}
 
 # Set processing DIRs here
-export HPSSARCHdir=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/retro/archive4
+export HPSSARCHdir=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver/retro/archive
 export ARCHdir=${ARCHdir:-${DATA}/archive}
 export DATAdir=${DATAdir:-${DATA}/data}
 export INPUTdir=${INPUTdir:-${DATA}/input}
@@ -120,31 +119,33 @@ echo ${REGION}
 ##############################################
 # Define COM directory
 ##############################################
-export COMIN=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
-export COMINm1=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm1}/${WFO}
-export COMINm2=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm2}/${WFO}
-export COMINm3=${COMROOT}/${NET}/${envir}/${REGION}.${PDYm3}/${WFO}
-export COMOUT=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/${WFO}
-export GESOUT=${GESROOT}/${envir}/${NET}.${PDY}
-export GESOUTm1=${GESROOT}/${envir}/${NET}.${PDYm1}
-export GESOUTm2=${GESROOT}/${envir}/${NET}.${PDYm2}
-export GESIN=${GESROOT}/${envir}/${NET}.${PDY}
-export GESINm1=${GESROOT}/${envir}/${NET}.${PDYm1}
-export GESINm2=${GESROOT}/${envir}/${NET}.${PDYm2}
-export ARCHIVE=${DATA}/archive
-#export COMINgfs=${COMROOT}/gfs/prod/gfs.${PDY}
-export COMINwave=${COMROOTp1}/wave/prod
-export COMINestofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/estofs/${WFO}_output
-export COMINestofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/estofs/${WFO}_output
-export COMINrtofs=${COMROOT}/${NET}/${envir}/ofs.${PDY}/rtofs/${WFO}_output
-export COMINrtofsm1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/rtofs/${WFO}_output
-export COMINpsurge=${COMROOT}/${NET}/${envir}/ofs.${PDY}/psurge/${WFO}_output
-export COMINpsurgem1=${COMROOT}/${NET}/${envir}/ofs.${PDYm1}/psurge/${WFO}_output
-export dcom=${dcom:-${DCOMROOT}/us007003}
-export COMINwaveTAFB=$dcom
+export COMIN=${COMROOT}/${NET}/$ver/${REGION}.${PDY}/${WFO}
+export COMINm1=${COMROOT}/${NET}/$ver/${REGION}.${PDYm1}/${WFO}
+export COMINm2=${COMROOT}/${NET}/$ver/${REGION}.${PDYm2}/${WFO}
+export COMINm3=${COMROOT}/${NET}/$ver/${REGION}.${PDYm3}/${WFO}
+export COMOUT=${COMROOT}/${NET}/$ver/${REGION}.${PDY}/${WFO}
+export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}/nwges
+export GESOUTm1=${COMROOT}/${NET}/$ver/${NET}.${PDYm1}/nwges
+export GESOUTm2=${COMROOT}/${NET}/$ver/${NET}.${PDYm2}/nwges
+export GESIN=${COMROOT}/${NET}/$ver/${NET}.${PDY}/nwges
+export GESINm1=${COMROOT}/${NET}/$ver/${NET}.${PDYm1}/nwges
+export GESINm2=${COMROOT}/${NET}/$ver/${NET}.${PDYm2}/nwges
+
+#export COMINgfs=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/gfs/prod/gfs.${PDY}
+#export COMINwave=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/gfs/prod/
+export COMINgfs=/lfs/h1/ops/prod/com/gfs/${gfs_ver}/gfs.${PDY}
+export COMINwave=/lfs/h1/ops/prod/com/gfs/${gfs_ver}
+export COMINestofs=${COMROOT}/${NET}/${ver}/ofs.${PDY}/estofs/${WFO}_output
+export COMINestofsm1=${COMROOT}/${NET}/${ver}/ofs.${PDYm1}/estofs/${WFO}_output
+export COMINrtofs=${COMROOT}/${NET}/${ver}/ofs.${PDY}/rtofs/${WFO}_output
+export COMINrtofsm1=${COMROOT}/${NET}/${ver}/ofs.${PDYm1}/rtofs/${WFO}_output
+export COMINpsurge=${COMROOT}/${NET}/${ver}/ofs.${PDY}/psurge/${WFO}_output
+export COMINpsurgem1=${COMROOT}/${NET}/${ver}/ofs.${PDYm1}/psurge/${WFO}_output
+export dcom=/lfs/h1/ops/prod/dcom
+#export dcom="/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/dcom/prod"
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 export COM_nwps_R_ES_TOFS="/com"
-export COMOUTwmo=${COMROOT}/${NET}/${envir}/${REGION}.${PDY}/wmo
+export COMOUTwmo=${COMROOT}/${NET}/${ver}/${REGION}.${PDY}/wmo
 
 if [ "${SENDCOM}" = YES ]; then
     mkdir -p $COMOUT
