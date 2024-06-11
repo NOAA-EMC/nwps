@@ -184,6 +184,7 @@ for tstep in range(TSTART, (int(TEND) + 1)):
 
     # Convert units to feet if necessary
     if unit == 'm':
+        unitconvert = 1 / 0.3048
         par = unitconvert * par
 
     # Custom colormap centered around zero
