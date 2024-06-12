@@ -235,6 +235,7 @@ for tstep in range(TSTART, (int(TEND)+1)):
 
    filenm = 'swan_rip_hr'+str(forecastTime).zfill(3)+'.png'
    plt.savefig(filenm,dpi=150,bbox_inches='tight',pad_inches=0.1)
+   plt.clf()
 
 # Clean up text dump files
 for tstep in range(TSTART, (int(TEND)+1)):
