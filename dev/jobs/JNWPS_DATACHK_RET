@@ -25,14 +25,20 @@
 date
 export PS4='$SECONDS ${0/\/nw.*\/nwps.*\/} + '
 set -xa
+####################################
+# Specify NET and RUN Name and model
+####################################
+export NET=${model}
+export RUN=$(echo ${job}|awk -F"_" '{print $2}')
+
 # #### 04/01/15 ###############################
 # SETUP NWPS SHELL VARIABLES
 # #############################################
-export DATA=/gpfs/hps3/ptmp/${DEVWCOSS_USER}/data/retro                # Add the ${siteid} ???
-export COMROOT=${DATA}/com
-export GESROOT=${DATA}/nwges
+export ver=${nwps_ver}
+export DATA=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver/retro
+export COMROOT=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/com/retro
 
-mkdir -p $DATA $COMROOT $GESROOT
+mkdir -p $DATA $COMROOT
 cd $DATA
 
 curhour=$(date -u +%H)
@@ -63,8 +69,7 @@ export SENDDBN=${SENDDBN:-NO}
 ####################################
 # Specify Execution Areas
 ####################################
-#export HOMEnwps=${NWROOT}/${model}.${nwps_ver}
-export HOMEnwps=${NWROOT}
+export HOMEnwps=${HOMEnwps:-${NWROOT}/${model}.${nwps_ver}}
 export FIXnwps=${FIXnwps:-${HOMEnwps}/fix}
 export EXECnwps=${EXECnwps:-${HOMEnwps}/exec}
 export SORCnwps=${SORCnwps:-${HOMEnwps}/sorc}
