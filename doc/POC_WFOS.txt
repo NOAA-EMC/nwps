@@ -13,7 +13,7 @@ POC JAX andrew.shashy@noaa.gov
 POC SJU andrew.shashy@noaa.gov, carlos.anselmi@noaa.gov
 POC CAR anthony.mignone@noaa.gov 
 POC GYX andrew.pohl@noaa.gov
-POC BOX	james.notchey@noaa.gov
+POC BOX	hayden.frank@noaa.gov
 POC NYC nelson.vaz@noaa.gov, jeffrey.tongue@noaa.gov
 POC PHI alan.cope@noaa.gov, walter.drag@noaa.gov
 POC LWX bryan.jackson@noaa.gov, steven.zubrick@noaa.gov
