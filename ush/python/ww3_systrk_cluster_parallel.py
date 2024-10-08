@@ -20,6 +20,7 @@ from sklearn import cluster
 from sklearn.neighbors import kneighbors_graph
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score
+from scipy.interpolate import interp1d
 
 print
 print('                   *** WAVEWATCH III Wave system tracking ***  ')
@@ -30,128 +31,58 @@ NWPSdir = os.environ['NWPSdir']
 cartopy.config['pre_existing_data_dir'] = NWPSdir+'/lib/cartopy'
 print('Reading cartopy shapefiles from:')
 print(cartopy.config['pre_existing_data_dir'])
-
 # Parameters
 monthstr = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']
 wfo = sys.argv[1]
 core = int(sys.argv[2])
 plot_output = True
 
-if (wfo == 'bro'):
-   buoy = '42020'
-   fracwet = 0.7368   # Fraction of domain containing wet points
-if (wfo == 'crp'):
-   buoy = '42019'
-   fracwet = 0.5043
-if (wfo == 'hgx'):
-   buoy = '42019'
-   fracwet = 0.5751
-if (wfo == 'lch'):
-   buoy = '42035'
-   fracwet = 0.8328
-if (wfo == 'lix'):
-   buoy = '42040'
-   fracwet = 0.8447
-if (wfo == 'mob'):
-   buoy = '42040'
-   fracwet = 0.7528
-if (wfo == 'tae'):
-   buoy = '42039'
-   fracwet = 0.7052
-if (wfo == 'tbw'):
-   buoy = '42036'
-   fracwet = 0.7159
-if (wfo == 'mfl'):
-   buoy = '41114'
-   fracwet = 0.7703
-if (wfo == 'key'):
-   buoy = 'GSTRM'
-   fracwet = 0.9120
-if (wfo == 'mlb'):
-   buoy = '41009'
-   fracwet = 0.7416
-if (wfo == 'jax'):
-   buoy = '41112'
-   fracwet = 0.8252
-if (wfo == 'sju'):
-   buoy = '41053'
-   fracwet = 0.9255
+# Define buoy and fracwet based on wfo
+wfo_dict = {
+    'bro': ('42020', 0.7368),
+    'crp': ('42019', 0.5043),
+    'hgx': ('42019', 0.5751),
+    'lch': ('42035', 0.8328),
+    'lix': ('42040', 0.8447),
+    'mob': ('42040', 0.7528),
+    'tae': ('42039', 0.7052),
+    'tbw': ('42036', 0.7159),
+    'mfl': ('41114', 0.7703),
+    'key': ('GSTRM', 0.9120),
+    'mlb': ('41009', 0.7416),
+    'jax': ('41112', 0.8252),
+    'sju': ('41053', 0.9255),
+    'chs': ('41004', 0.7009),
+    'ilm': ('41013', 0.5599),
+    'mhx': ('41025', 0.5868),
+    'akq': ('44093', 0.5187),
+    'lwx': ('44062', 0.2647),
+    'phi': ('44091', 0.5663),
+    'okx': ('44025', 0.7183),
+    'box': ('44018', 0.6663),
+    'gyx': ('44032', 0.5136),
+    'car': ('44034', 0.7279),
+    'sew': ('46041', 0.5482),
+    'pqr': ('46248', 0.7504),
+    'mfr': ('46015', 0.8301),
+    'eka': ('46213', 0.7865),
+    'mtr': ('46012', 0.7008),
+    'lox': ('46069', 0.6416),
+    'sgx': ('46086', 0.6348),
+    'hfo': ('51003', 0.9614),
+    'gum': ('52202', 1.00),
+    'gua': ('52202', 0.9874),
+    'ajk': ('46085', 0.6384),
+    'aer': ('46080', 0.6473),
+    'alu': ('46073', 0.7692),
+    'afg': ('48114', 0.1568),
+}
 
-if (wfo == 'chs'):
-   buoy = '41004'
-   fracwet = 0.7009
-if (wfo == 'ilm'):
-   buoy = '41013'
-   fracwet = 0.5599
-if (wfo == 'mhx'):
-   buoy = '41025'
-   fracwet = 0.5868
-if (wfo == 'akq'):
-   buoy = '44093'
-   fracwet = 0.5187
-if (wfo == 'lwx'):
-   buoy = '44062'
-   fracwet = 0.2647
-if (wfo == 'phi'):
-   buoy = '44091'
-   fracwet = 0.5663
-if (wfo == 'okx'):
-   buoy = '44025'
-   fracwet = 0.7183
-if (wfo == 'box'):
-   buoy = '44018'
-   fracwet = 0.6663
-if (wfo == 'gyx'):
-   buoy = '44032'
-   fracwet = 0.5136
-if (wfo == 'car'):
-   buoy = '44034'
-   fracwet = 0.7279
-
-if (wfo == 'sew'):
-   buoy = '46041'
-   fracwet = 0.5482
-if (wfo == 'pqr'):
-   buoy = '46248'
-   fracwet = 0.7504
-if (wfo == 'mfr'):
-   buoy = '46015'
-   fracwet = 0.8301
-if (wfo == 'eka'):
-   buoy = '46213'
-   fracwet = 0.7865
-if (wfo == 'mtr'):
-   buoy = '46012'
-   fracwet = 0.7008
-if (wfo == 'lox'):
-   buoy = '46069'
-   fracwet = 0.6416
-if (wfo == 'sgx'):
-   buoy = '46086'
-   fracwet = 0.6348
-
-if (wfo == 'hfo'):
-   buoy = '51003'
-   fracwet = 0.9614
-if (wfo == 'gum'):
-   buoy = '52202'
-   fracwet = 1.00
-if (wfo == 'gua'):
-   buoy = '52202'
-   fracwet = 0.9874
-
-if (wfo == 'ajk'):
-   buoy = '46085'
-   fracwet = 0.6384
-if (wfo == 'aer'):
-   buoy = '46080'
-   fracwet = 0.6473
-if (wfo == 'alu'):
-   buoy = '46073'
-   fracwet = 0.7692
-if (wfo == 'afg'):
-   buoy = '48114'
-   fracwet = 0.1568
+if wfo in wfo_dict:
+    buoy, fracwet = wfo_dict[wfo]
+else:
+    print(f"Invalid wfo: {wfo}")
+    sys.exit(1)
 
 def array2cols(data,filename,cols):
 	rows=data.shape[0]
@@ -321,13 +252,24 @@ with open(fname) as ff:
       #print(factor)
       for ifreq in range(1, nfreq):
           line = ff.readline()
-          vardens[fhour,ifreq,0:(ndir-1)] = line.split()
+          #vardens[fhour,ifreq,0:(ndir-1)] = line.split()
+          vardens[fhour, ifreq, 0:(ndir - 1)] = [float(x.strip().replace('****', 'nan')) if wfo == 'bro' else float(x.strip()) for x in line.split()]
       vardens[fhour,:,:] = float(factor)*np.asarray(vardens[fhour,:,:])
       vardens[fhour,:,(ndir-1)] = vardens[fhour,:,0]
       vardens[fhour,0,:] = np.zeros(ndir)
       #print('variance density:')
       #print(vardens[fhour,:,:])
       #vardens[vardens < 100.*float(factor)] = np.nan
+      if wfo == 'bro':
+      # Interpolation
+          for ifreq in range(1, nfreq):
+              for idir in range(ndir - 1):
+                  if np.isnan(vardens[fhour, ifreq, idir]):
+                      non_nan_indices = np.where(~np.isnan(vardens[fhour, ifreq, :ndir - 1]))[0]
+                      if len(non_nan_indices) > 1:
+                          interp_func = interp1d(non_nan_indices, vardens[fhour, ifreq, non_nan_indices], kind='linear', fill_value="extrapolate")
+                          vardens[fhour, ifreq, idir] = interp_func(idir)
+
 
 # Format zeniths/azimuths
 r, theta = np.meshgrid(zeniths, azimuths)
@@ -669,6 +611,9 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
             clevs = np.arange(0, int(hsmax)+1,0.2)
          if hsmax < 1.:
             clevs = np.arange(0, int(hsmax)+1,0.1)
+
+         if len(clevs) > 256:
+             clevs = np.linspace(clevs.min(), clevs.max(), 256)
          norm = BoundaryNorm(clevs, ncolors=plt.cm.jet.N, clip=True)
          cf = axlist[plotloc].pcolormesh(x,y,convfac*np.asarray(par),cmap=plt.cm.jet, norm=norm, transform=ccrs.PlateCarree())
          cb = fig.colorbar(cf, ax=axlist[plotloc])
