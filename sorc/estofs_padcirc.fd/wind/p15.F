@@ -1225,7 +1225,7 @@ C
       J1=ILN(NPLONG)                                          
       J2=LLN(NPLONG)                                            
       PRINT 20, KT,ISTART,IZONE,(ILONG(J),J=J1,J2)       
-   20 FORMAT('1 STORM ',A6,'  GULF OF MEXICO WINDS AT HOUR ',I3, 
+   20 FORMAT('1 STORM ',A6,'  GULF OF AMERICA WINDS AT HOUR ',I3, 
      1  8X,'1ST HOUR IS ',I10,1X,A3//5X,20I6)          
       DO 30 L=LLATSQ,ILATSQ                                    
       LAT=ILATSQ+LLATSQ-L                       
