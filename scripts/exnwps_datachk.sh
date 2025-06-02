@@ -45,10 +45,19 @@ elif [ "${status}" == "ERROR" ];then
 else
     export color=magenta
 fi
-if [ "a${step}" == "a" ]; then
-    echo "{\"wfo\":\"${wfo^^}\",\"tstart\":\"<b><font color='darkslategray'>$tstart</font></b>\",\"tstop\":\"<b><font color='darkslategray'>$tstop</font></b>\",\"region\":\"$region\",\"stat\":\"<font color='$color'>$status</font>\",\"job\":\"<b><font color='$color'>${step^^}</font></b>\",\"options\":\"<a href='warnings/Warn_Forecaster_${wfo^^}${dncyc:0:9}.txt'>click</a>\"}," >> ${web_status_file}
+
+## RFC NWPS website refresh, new site on 2/11/25
+## https://www.nco.ncep.noaa.gov/status/nwps/
+if [ "${envir}" = prod ]; then
+    htdir='/pmb/spa/nwps/warnings'
 else
-    echo "{\"wfo\":\"${wfo^^}\",\"tstart\":\"<b><font color='darkslategray'>$tstart</font></b>\",\"tstop\":\"<b><font color='darkslategray'>$tstop</font></b>\",\"region\":\"$region\",\"stat\":\"<font color='$color'>${status}</font>\",\"job\":\"<b><font color='$color'>${step^^}</font></b>\",\"options\":\"<a href='warnings/Warn_Forecaster_${wfo^^}${dncyc:0:9}.txt'>click</a>\"}," >> ${web_status_file}
+    htdir='/pmb/spatools/nwps_status/warnings'
+fi
+
+if [ "a${step}" == "a" ]; then
+    echo "{\"wfo\":\"${wfo^^}\",\"tstart\":\"<b><font color='darkslategray'>$tstart</font></b>\",\"tstop\":\"<b><font color='darkslategray'>$tstop</font></b>\",\"region\":\"$region\",\"stat\":\"<font color='$color'>$status</font>\",\"job\":\"<b><font color='$color'>${step^^}</font></b>\",\"options\":\"<a href='${htdir}/Warn_Forecaster_${wfo^^}${dncyc:0:9}.txt'>click</a>\"}," >> ${web_status_file}
+else
+    echo "{\"wfo\":\"${wfo^^}\",\"tstart\":\"<b><font color='darkslategray'>$tstart</font></b>\",\"tstop\":\"<b><font color='darkslategray'>$tstop</font></b>\",\"region\":\"$region\",\"stat\":\"<font color='$color'>${status}</font>\",\"job\":\"<b><font color='$color'>${step^^}</font></b>\",\"options\":\"<a href='${htdir}/Warn_Forecaster_${wfo^^}${dncyc:0:9}.txt'>click</a>\"}," >> ${web_status_file}
 fi
 }
 

@@ -22,6 +22,7 @@ export NWPSplatform="WCOSS"
 export MP_PGMMODEL=mpmd
 export MP_CSS_INTERRUPT=yes
 export KEEPDATA=%KEEPDATA%
+export SENDWEB=%SENDWEB%
 
 ${HOMEnwps}/jobs/JNWPS_DATACHK
 

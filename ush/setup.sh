@@ -1417,7 +1417,7 @@ cat /dev/null > ${RUNdir}/cgn_cmdfile
           fi
 
           # Creating the command file to postprocess nested grids in a "parallel way"
-          echo "${USHnwps}/run_posproc_cgn_parallel.sh $cgrid " >> ${RUNdir}/cgn_cmdfile
+          echo "${USHnwps}/run_posproc_cgn_parallel.sh $cgrid > ${LOGdir}/griblog_${cgrid}.log 2>&1" >> ${RUNdir}/cgn_cmdfile
        done
     fi
 

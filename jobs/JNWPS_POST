@@ -133,8 +133,4 @@ fi
 
 cd $DATAROOT
 
-TS=`date +%Y%m%d%H%S`
-
-cp -rp $DATA ${model}_${WFO}_${envir}_${TS} #save working directory for developer
-
 date
