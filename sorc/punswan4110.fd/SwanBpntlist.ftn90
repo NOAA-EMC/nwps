@@ -97,6 +97,7 @@ subroutine SwanBpntlist
     integer                            :: vmk        ! marker value of a boundary point                 41.14
     integer                            :: JJ         ! counter of points on a curve                     41.14
     integer                            :: VM         ! index of a boundary part                         41.14
+    integer                            :: VMM        ! index of a boundary part                         41.14
     integer                            :: VMMAX      ! highest value of VM                              41.14
     integer                            :: JBG        ! index of a full boundary                         41.14
     integer                            :: IP, IPP    ! point counter                                    41.14
@@ -483,12 +484,26 @@ subroutine SwanBpntlist
         OPSTMP%MIP = MIP
         ALLOCATE(OPSTMP%XP(MIP))
         ALLOCATE(OPSTMP%YP(MIP))
-        write (PSNAME, 101) VM
+! DSK
+        if(VM>99) then
+          VMM=99
+        else
+          vmm=vm
+        endif
+        write(6,'("SwanBpntlist: VM ",I8,A,I2.2,A,I8)') &
+                   VMM,' ',VMM,' ',VMMAX
+        flush(6)
+!       character (len=8)                  :: PSNAME
+        write (PSNAME, 101) VMM
  101    format ('BOUND_',I2.2)
         OPSTMP%PSNAME = PSNAME
         DO IPP = 1, MIP
           IP = IARR2(IPP)
           IX = blist(IP,JJ)
+          if(IX==0) cycle
+          !write(6,'("SwanBpntlist: XP ",7I9)')  &
+          !IPP,IP,IX,size(OPSTMP%XP),size(vert),size(vert(IX)%attr),VERTX
+          !flush(6)
           OPSTMP%XP(IPP) = vert(IX)%attr(VERTX)
           OPSTMP%YP(IPP) = vert(IX)%attr(VERTY)
         ENDDO

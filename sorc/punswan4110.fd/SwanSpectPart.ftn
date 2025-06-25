@@ -1371,7 +1371,12 @@
               IS     = 0
               RD     = MAX ( 0., RD+1. )
            END IF
-           FCDIR(ITH) = RD*SPCSIG(IS+1) + (1.-RD)*SPCSIG(IS)
+! DSK
+           if(IS==0) then
+             FCDIR(ITH) = RD*SPCSIG(IS+1)
+           else
+             FCDIR(ITH) = RD*SPCSIG(IS+1) + (1.-RD)*SPCSIG(IS)
+           endif
         END IF
       END DO
 !

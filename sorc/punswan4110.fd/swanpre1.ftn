@@ -1358,6 +1358,10 @@
         IF (STPNOW()) RETURN                                              34.01
 !       --- call CGINIT once as soon as both coordinates and bottom       40.31
 !           have been read and AC2 is not allocated                       40.31
+!        write(6,'("SWREAD: before call to CGINIT",I8,6L4)')
+!     &          OPTG,LOGCOM(1),LOGCOM(2),LOGCOM(3),
+!     &               LOGCOM(4),LOGCOM(5),LOGCOM(6)
+!        flush(6)
  444    IF (OPTG .EQ. 1) THEN                                             40.80
 !         regular grid
           IF (LOGCOM(3) .AND. .NOT. LOGCOM(6)) THEN                       30.90
@@ -1416,6 +1420,10 @@
             ENDIF                                                         40.80
           ENDIF                                                           40.80
         ENDIF
+!        IF (.NOT.ALLOCATED(XGRDGL)) then
+!          write(6,'("SWREAD: XGRDGL still not allocated")')
+!          flush(6)
+!        endif
         GOTO 100
       ENDIF
 !
@@ -1714,6 +1722,13 @@
         MYC    = MYCGL                                                    40.31
         MCGRD  = MCGRDGL                                                  40.31
         NGRBND = NGRBGL                                                   40.31
+! DSK
+!        if(.NOT.ALLOCATED(XGRDGL)) then
+!          write(6,'("SWREAD: XGRDGL not allocated")')
+!          flush(6)
+!        endif
+!        write(6,'("SWREAD: Array sizes ",4I8)'),MXCGL,MYCGL,MXC,MYC
+!        flush(6)
         CALL SWBOUN ( XGRDGL, YGRDGL, KGRPGL, XYTST, KGRBGL )             40.31
         IF (STPNOW()) RETURN                                              34.01
         MXC    = ITMP1                                                    40.31
@@ -4145,6 +4160,7 @@
 !JAC!                 of subdomains (.TRUE.) or not (.FALSE.)                 40.31
 !     MSGSTR:     string to pass message to call MSGERR                   40.41
 !
+      integer ierr
       INTEGER IENT, INDX, IX, IY, MCGRDL                                  40.31
       INTEGER ISTAT, IF1, IL1                                             40.41
       INTEGER, ALLOCATABLE :: IARR(:)                                     40.31
@@ -4186,6 +4202,7 @@
       SAVE IENT
       DATA IENT/0/
       CALL STRACE(IENT,'CGINIT')
+!      write(6,'("CGINIT: Enter ",2I8)'),MXCGL,MYCGL
 !
 !     --- Calculation of computational grid dimension ***
 !
@@ -4237,9 +4254,20 @@
       END DO                                                              40.31
 
 !     --- Create copies of parts of XCGRID, YCGRID for each subdomain     40.31
+! DSK
+!      write(6,'("CGINIT: before allocate",2I8)'),MXCGL,MYCGL
+      IF (.NOT.ALLOCATED(XGRDGL)) then
+        write(6,'("CGINIT: Array sizes ",2I8)'),MXCGL,MYCGL
+        ALLOCATE(XGRDGL(MXCGL,MYCGL), STAT=ierr)
+        if(ierr/=0) write(6,'("CGINIT: Alloc XGRDGL failed ",I6)') ierr
+      endif
+      IF (.NOT.ALLOCATED(YGRDGL)) then
+        write(6,'("CGINIT: Array sizes ",2I8)'),MXCGL,MYCGL
+        ALLOCATE(YGRDGL(MXCGL,MYCGL), STAT=ierr)
+        if(ierr/=0) write(6,'("CGINIT: Alloc YGRDGL failed ",I6)') ierr
+      endif
+      flush(6)
 
-      IF (.NOT.ALLOCATED(XGRDGL)) ALLOCATE(XGRDGL(MXCGL,MYCGL))           40.31
-      IF (.NOT.ALLOCATED(YGRDGL)) ALLOCATE(YGRDGL(MXCGL,MYCGL))           40.31
       XGRDGL = XCGRID                                                     40.31
       YGRDGL = YCGRID                                                     40.31
       DEALLOCATE(XCGRID,YCGRID)                                           40.31
