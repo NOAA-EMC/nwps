@@ -1,20 +1,22 @@
 #!/usr/bin/env python
 # period.py script
 # Author: Andre van der Westhuysen, 04/28/15
+# Ali Salimi-Tarazouj revised it, 09/25/2025
 # Purpose: Plots SWAN output parameters from GRIB2.
 
 import cartopy
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import matplotlib
-#matplotlib.use('Agg',warn=False)
+#matplotlib.use('Agg')
 import sys
 import os
 import datetime
 import numpy as np
 import numpy.ma as ma
 import matplotlib.pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap
+import warnings
+warnings.filterwarnings("ignore", message="Shapefile shape has invalid polygon")
 
 print('*** period.py ***')
 TSTART = int(sys.argv[1])
@@ -22,6 +24,7 @@ TEND = int(sys.argv[2])
 print('TSTART = '+str(TSTART))
 print('TEND = '+str(TEND))
 
+#NWPSdir ='/scratch4/NCEPDEV/marine/Ali.Salimi/Hera_Data/NWPS/featureV_1.5'
 NWPSdir = os.environ['NWPSdir']
 cartopy.config['pre_existing_data_dir'] = NWPSdir+'/lib/cartopy'
 print('Reading cartopy shapefiles from:')
@@ -155,10 +158,6 @@ for tstep in range(TSTART, (int(TEND)+1)):
    grib2dump = 'PERPW_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
    data=np.loadtxt(grib2dump,delimiter=',',comments='l') 
 
-   #lons=np.linspace(x0,x0+float(nlon-1)*dx,num=nlon)
-   #lats=np.linspace(y0,y0+float(nlat-1)*dy,num=nlat)
-   #reflon,reflat=np.meshgrid(lons,lats)
-
    # Set up parameter field
    for lat in range(0, nlat):
       for lon in range(0, nlon):
@@ -177,13 +176,14 @@ for tstep in range(TSTART, (int(TEND)+1)):
          par2[lat,lon] = data[nlon*lat+lon,2:3]
 
    par2ma = ma.masked_where(par2==-9999, par2)
-   u=np.cos(3.1416/180*(270-par2ma))
-   v=np.sin(3.1416/180*(270-par2ma))
+   u=np.cos(np.pi/180*(270-par2ma))
+   v=np.sin(np.pi/180*(270-par2ma))
 
-   # Plot data
    ax = plt.axes(projection=ccrs.Mercator())
-   plt.contourf(reflon, reflat, par, clevs, cmap=plt.cm.jet, transform=ccrs.PlateCarree())
-   plt.colorbar(ax=ax).set_label("", size=8)
+   mesh = plt.pcolormesh(reflon, reflat, par, cmap=plt.cm.jet,
+                         vmin=min(clevs), vmax=max(clevs),
+                         transform=ccrs.PlateCarree())
+   plt.colorbar(mesh, ax=ax, ticks=clevs).set_label("", size=8)
    ax.set_aspect('auto', adjustable=None)
    ax.set_extent([lons.min(), lons.max(), lats.min(), lats.max()])
 
@@ -205,8 +205,9 @@ for tstep in range(TSTART, (int(TEND)+1)):
    #ax.coastlines(resolution='10m', color='black', linewidth=1)
    gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
                   linewidth=0.5, color='gray', alpha=0.5, linestyle='--')
-   gl.xlabels_top = False
-   gl.ylabels_right = False
+   
+   gl.top_labels = False
+   gl.right_labels = False
    gl.xlabel_style = {'size': 7}
    gl.ylabel_style = {'size': 7}
 
