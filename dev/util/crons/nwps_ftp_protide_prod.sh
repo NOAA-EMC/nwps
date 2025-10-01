@@ -35,10 +35,10 @@ do
                pwd
                cgnum='CG1'
                ssh waves@emcrzdm 'mkdir -p /home/www/polar/nwps/protide_data/'${region}'.'${PDY}'/'${wfo}'/'${cycle}'/'${cgnum}
-               scp ${workdir}/${wfo}/${cycle}/${cgnum}/SPC2D.*.HH${cycle} waves@emcrzdm:/home/www/polar/nwps/protide_data/${region}.${PDY}/${wfo}/${cycle}/${cgnum}/
+               scp ${workdir}/${wfo}/${cycle}/${cgnum}/nwps.t${cycle}z.spc2d_*_${cgnum}.${wfo}.txt waves@emcrzdm:/home/www/polar/nwps/protide_data/${region}.${PDY}/${wfo}/${cycle}/${cgnum}/
                cgnum='CG2'
                ssh waves@emcrzdm 'mkdir -p /home/www/polar/nwps/protide_data/'${region}'.'${PDY}'/'${wfo}'/'${cycle}'/'${cgnum}
-               scp ${workdir}/${wfo}/${cycle}/${cgnum}/SPC2D.*.HH${cycle} waves@emcrzdm:/home/www/polar/nwps/protide_data/${region}.${PDY}/${wfo}/${cycle}/${cgnum}/
+               scp ${workdir}/${wfo}/${cycle}/${cgnum}/nwps.t${cycle}z.spc2d_*_${cgnum}.${wfo}.txt waves@emcrzdm:/home/www/polar/nwps/protide_data/${region}.${PDY}/${wfo}/${cycle}/${cgnum}/
             fi
          done
       fi

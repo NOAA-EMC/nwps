@@ -99,25 +99,25 @@ export runon='BACKUPSYS'
 
   cd ${workdir}
 
-  wget -O https://www.ndbc.noaa.gov/data/5day2/52200_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/52211_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/46001_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/46080_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/46076_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/46082_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/46061_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/46060_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/46108_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/46081_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/46077_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/46066_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/46073_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/46075_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/46085_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/46083_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/48114_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/48012_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/48212_5day.txt
+  wget -O 52200_5day.txt https://www.ndbc.noaa.gov/data/5day2/52200_5day.txt
+  wget -O 52211_5day.txt https://www.ndbc.noaa.gov/data/5day2/52211_5day.txt
+  wget -O 46001_5day.txt https://www.ndbc.noaa.gov/data/5day2/46001_5day.txt
+  wget -O 46080_5day.txt https://www.ndbc.noaa.gov/data/5day2/46080_5day.txt
+  wget -O 46076_5day.txt https://www.ndbc.noaa.gov/data/5day2/46076_5day.txt
+  wget -O 46082_5day.txt https://www.ndbc.noaa.gov/data/5day2/46082_5day.txt
+  wget -O 46061_5day.txt https://www.ndbc.noaa.gov/data/5day2/46061_5day.txt
+  wget -O 46060_5day.txt https://www.ndbc.noaa.gov/data/5day2/46060_5day.txt
+  wget -O 46108_5day.txt https://www.ndbc.noaa.gov/data/5day2/46108_5day.txt
+  wget -O 46081_5day.txt https://www.ndbc.noaa.gov/data/5day2/46081_5day.txt
+  wget -O 46077_5day.txt https://www.ndbc.noaa.gov/data/5day2/46077_5day.txt
+  wget -O 46066_5day.txt https://www.ndbc.noaa.gov/data/5day2/46066_5day.txt
+  wget -O 46073_5day.txt https://www.ndbc.noaa.gov/data/5day2/46073_5day.txt
+  wget -O 46075_5day.txt https://www.ndbc.noaa.gov/data/5day2/46075_5day.txt
+  wget -O 46085_5day.txt https://www.ndbc.noaa.gov/data/5day2/46085_5day.txt
+  wget -O 46083_5day.txt https://www.ndbc.noaa.gov/data/5day2/46083_5day.txt
+  wget -O 48114_5day.txt https://www.ndbc.noaa.gov/data/5day2/48114_5day.txt
+  wget -O 48012_5day.txt https://www.ndbc.noaa.gov/data/5day2/48012_5day.txt
+  wget -O 48212_5day.txt https://www.ndbc.noaa.gov/data/5day2/48212_5day.txt
 
   echo " "
   echo "        -> Submitting nwps_validation_ts_dev_prar.lsf at: `date`"

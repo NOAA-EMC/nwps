@@ -27,7 +27,7 @@ do
    if [ -d ${workdir} ]
    then
       ssh waves@emcrzdm 'mkdir -p /home/ftp/polar/nwps/'
-      rsync -rav --include=*/ --include='Warn*' --include='*.grib2' --include='*.bull' --include='SPC2D*' --include='*runup*' --include='*rip*' --include='*contour*' --exclude='*' --exclude='PE*' ${workdir} waves@emcrzdm:/home/ftp/polar/nwps/
+      rsync -rav --include=*/ --include='Warn*' --include='*.grib2' --include='*.bull' --include='*spc2d*' --include='*runup*' --include='*rip*' --include='*contour*' --exclude='*' --exclude='PE*' ${workdir} waves@emcrzdm:/home/ftp/polar/nwps/
    fi
 
    #Check for today's runs
@@ -36,6 +36,6 @@ do
    if [ -d ${workdir} ]
    then
       ssh waves@emcrzdm 'mkdir -p /home/ftp/polar/nwps/' 
-      rsync -rav --include=*/ --include='Warn*' --include='*.grib2' --include='*.bull' --include='SPC2D*' --include='*runup*' --include='*rip*' --include='*contour*' --exclude='*' --exclude='PE*' ${workdir} waves@emcrzdm:/home/ftp/polar/nwps/
+      rsync -rav --include=*/ --include='Warn*' --include='*.grib2' --include='*.bull' --include='*spc2d*' --include='*runup*' --include='*rip*' --include='*contour*' --exclude='*' --exclude='PE*' ${workdir} waves@emcrzdm:/home/ftp/polar/nwps/
    fi
 done

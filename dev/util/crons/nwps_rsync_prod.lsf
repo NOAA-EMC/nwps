@@ -28,12 +28,12 @@
 #PBS -q dev_transfer
 #PBS -A NWPS-DEV
 #PBS -l walltime=06:00:00
-#PBS -l select=1:ncpus=1
+#PBS -l select=1:ncpus=1:mem=3g
 #PBS -l debug=true
 #PBS -V
-#PBS -o /u/andre.vanderwesthuysen/rsync_nwps_prod.o
-#PBS -e /u/andre.vanderwesthuysen/rsync_nwps_prod.o
+#PBS -o /lfs/h2/emc/ptmp/ali.salimi/com/nwps/v1.5.0/rsync_nwps_prod.o
+#PBS -e /lfs/h2/emc/ptmp/ali.salimi/com/nwps/v1.5.0/rsync_nwps_prod.o
 
 mkdir -p ${VALIDATIONdir}/prod/com/nwps/v1.4/
 
-rsync -ax --include=*/ --include='Warn*' --include='*.grib2' --include='SPC2D*' --include='*runup*' --include='*rip*' --include='*contour*' --include='*.sys' --exclude='PE*' --exclude='*' /lfs/h1/ops/prod/com/nwps/v1.4/ ${VALIDATIONdir}/prod/com/nwps/v1.4/
+rsync -ax --include=*/ --include='Warn*' --include='*.grib2' --include='*spc2d*' --include='*runup*' --include='*rip*' --include='*contour*' --include='*.sys' --exclude='PE*' --exclude='*' /lfs/h1/ops/prod/com/nwps/v1.4/ ${VALIDATIONdir}/prod/com/nwps/v1.4/

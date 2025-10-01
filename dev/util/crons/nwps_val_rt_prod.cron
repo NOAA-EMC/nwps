@@ -99,65 +99,65 @@ export runon='BACKUPSYS'
 
   cd ${workdir}
 
-  wget -O https://www.ndbc.noaa.gov/data/5day2/42020_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/42019_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/42035_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/42040_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/42012_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/42039_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/42036_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/42023_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/41114_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/41009_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/41113_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/41112_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/41008_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/41053_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/41115_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/42085_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/41056_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/41008_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/41029_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/41033_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/41004_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/41013_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44095_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/41159_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/41025_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44056_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44100_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44014_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44093_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44096_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44064_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44072_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44099_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44089_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44058_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44043_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44062_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44042_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44009_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44091_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44065_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44094_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44025_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44040_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44039_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44060_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44069_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44017_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44020_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44013_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44018_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44029_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44090_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44098_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44033_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44007_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44032_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44034_5day.txt
-  wget -O https://www.ndbc.noaa.gov/data/5day2/44027_5day.txt
+  wget -O 42020_5day.txt https://www.ndbc.noaa.gov/data/5day2/42020_5day.txt
+  wget -O 42019_5day.txt https://www.ndbc.noaa.gov/data/5day2/42019_5day.txt
+  wget -O 42035_5day.txt https://www.ndbc.noaa.gov/data/5day2/42035_5day.txt
+  wget -O 42040_5day.txt https://www.ndbc.noaa.gov/data/5day2/42040_5day.txt
+  wget -O 42012_5day.txt https://www.ndbc.noaa.gov/data/5day2/42012_5day.txt
+  wget -O 42039_5day.txt https://www.ndbc.noaa.gov/data/5day2/42039_5day.txt
+  wget -O 42036_5day.txt https://www.ndbc.noaa.gov/data/5day2/42036_5day.txt
+  wget -O 42023_5day.txt https://www.ndbc.noaa.gov/data/5day2/42023_5day.txt
+  wget -O 41114_5day.txt https://www.ndbc.noaa.gov/data/5day2/41114_5day.txt
+  wget -O 41009_5day.txt https://www.ndbc.noaa.gov/data/5day2/41009_5day.txt
+  wget -O 41113_5day.txt https://www.ndbc.noaa.gov/data/5day2/41113_5day.txt
+  wget -O 41112_5day.txt https://www.ndbc.noaa.gov/data/5day2/41112_5day.txt
+  wget -O 41008_5day.txt https://www.ndbc.noaa.gov/data/5day2/41008_5day.txt
+  wget -O 41053_5day.txt https://www.ndbc.noaa.gov/data/5day2/41053_5day.txt
+  wget -O 41115_5day.txt https://www.ndbc.noaa.gov/data/5day2/41115_5day.txt
+  wget -O 42085_5day.txt https://www.ndbc.noaa.gov/data/5day2/42085_5day.txt
+  wget -O 41056_5day.txt https://www.ndbc.noaa.gov/data/5day2/41056_5day.txt
+  wget -O 41008_5day.txt https://www.ndbc.noaa.gov/data/5day2/41008_5day.txt
+  wget -O 41029_5day.txt https://www.ndbc.noaa.gov/data/5day2/41029_5day.txt
+  wget -O 41033_5day.txt https://www.ndbc.noaa.gov/data/5day2/41033_5day.txt
+  wget -O 41004_5day.txt https://www.ndbc.noaa.gov/data/5day2/41004_5day.txt
+  wget -O 41013_5day.txt https://www.ndbc.noaa.gov/data/5day2/41013_5day.txt
+  wget -O 44095_5day.txt https://www.ndbc.noaa.gov/data/5day2/44095_5day.txt
+  wget -O 41159_5day.txt https://www.ndbc.noaa.gov/data/5day2/41159_5day.txt
+  wget -O 41025_5day.txt https://www.ndbc.noaa.gov/data/5day2/41025_5day.txt
+  wget -O 44056_5day.txt https://www.ndbc.noaa.gov/data/5day2/44056_5day.txt
+  wget -O 44100_5day.txt https://www.ndbc.noaa.gov/data/5day2/44100_5day.txt
+  wget -O 44014_5day.txt https://www.ndbc.noaa.gov/data/5day2/44014_5day.txt
+  wget -O 44093_5day.txt https://www.ndbc.noaa.gov/data/5day2/44093_5day.txt
+  wget -O 44096_5day.txt https://www.ndbc.noaa.gov/data/5day2/44096_5day.txt
+  wget -O 44064_5day.txt https://www.ndbc.noaa.gov/data/5day2/44064_5day.txt
+  wget -O 44072_5day.txt https://www.ndbc.noaa.gov/data/5day2/44072_5day.txt
+  wget -O 44099_5day.txt https://www.ndbc.noaa.gov/data/5day2/44099_5day.txt
+  wget -O 44089_5day.txt https://www.ndbc.noaa.gov/data/5day2/44089_5day.txt
+  wget -O 44058_5day.txt https://www.ndbc.noaa.gov/data/5day2/44058_5day.txt
+  wget -O 44043_5day.txt https://www.ndbc.noaa.gov/data/5day2/44043_5day.txt
+  wget -O 44062_5day.txt https://www.ndbc.noaa.gov/data/5day2/44062_5day.txt
+  wget -O 44042_5day.txt https://www.ndbc.noaa.gov/data/5day2/44042_5day.txt
+  wget -O 44009_5day.txt https://www.ndbc.noaa.gov/data/5day2/44009_5day.txt
+  wget -O 44091_5day.txt https://www.ndbc.noaa.gov/data/5day2/44091_5day.txt
+  wget -O 44065_5day.txt https://www.ndbc.noaa.gov/data/5day2/44065_5day.txt
+  wget -O 44094_5day.txt https://www.ndbc.noaa.gov/data/5day2/44094_5day.txt
+  wget -O 44025_5day.txt https://www.ndbc.noaa.gov/data/5day2/44025_5day.txt
+  wget -O 44040_5day.txt https://www.ndbc.noaa.gov/data/5day2/44040_5day.txt
+  wget -O 44039_5day.txt https://www.ndbc.noaa.gov/data/5day2/44039_5day.txt
+  wget -O 44060_5day.txt https://www.ndbc.noaa.gov/data/5day2/44060_5day.txt
+  wget -O 44069_5day.txt https://www.ndbc.noaa.gov/data/5day2/44069_5day.txt
+  wget -O 44017_5day.txt https://www.ndbc.noaa.gov/data/5day2/44017_5day.txt
+  wget -O 44020_5day.txt https://www.ndbc.noaa.gov/data/5day2/44020_5day.txt
+  wget -O 44013_5day.txt https://www.ndbc.noaa.gov/data/5day2/44013_5day.txt
+  wget -O 44018_5day.txt https://www.ndbc.noaa.gov/data/5day2/44018_5day.txt
+  wget -O 44029_5day.txt https://www.ndbc.noaa.gov/data/5day2/44029_5day.txt
+  wget -O 44090_5day.txt https://www.ndbc.noaa.gov/data/5day2/44090_5day.txt
+  wget -O 44098_5day.txt https://www.ndbc.noaa.gov/data/5day2/44098_5day.txt
+  wget -O 44033_5day.txt https://www.ndbc.noaa.gov/data/5day2/44033_5day.txt
+  wget -O 44007_5day.txt https://www.ndbc.noaa.gov/data/5day2/44007_5day.txt
+  wget -O 44032_5day.txt https://www.ndbc.noaa.gov/data/5day2/44032_5day.txt
+  wget -O 44034_5day.txt https://www.ndbc.noaa.gov/data/5day2/44034_5day.txt
+  wget -O 44027_5day.txt https://www.ndbc.noaa.gov/data/5day2/44027_5day.txt
 
   echo " "
   echo "        -> Submitting nwps_validation_ts_prod.lsf at: `date`"
