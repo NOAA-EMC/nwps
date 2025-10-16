@@ -473,7 +473,8 @@ sub makeInputCGx (%){
 	      system("cp -pfv $hotfilelocation $newhotfilelocation >> ${LOGdir}/hotstart.log 2>&1");
            }
         }
-        if ( "${SITEID}" eq "OKX" ) {
+
+        if ( ("${SITEID}" eq "OKX") || ("${SITEID}" eq "SEW") ) {
            for (my $core=48; $core<60; $core++){
 	      #AW $hotfilelocation="${INPUTdir}/hotstart/PE00${core}/${hottime[0]}";
 	      $hotfilelocation="${hotfiles_cyc}/PE00${core}/${hottime[0]}";

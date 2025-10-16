@@ -477,7 +477,7 @@ then
             postmsg "$jlogfile" "$msg"
          fi
          err_chk
-      elif [ "${siteid}" == "okx" ]
+      elif [ "${siteid}" == "okx" ] || [ "${siteid}" == "sew" ]
       then
          echo "Copying required files for PuNSWAN run for "${siteid}
 
@@ -527,7 +527,7 @@ then
       elif [ "${siteid}" == "sju" ] || [ "${siteid}" == "gum" ] || [ "${siteid}" == "jax" ] \
          || [ "${siteid}" == "hfo" ] || [ "${siteid}" == "mhx" ] || [ "${siteid}" == "gyx" ] \
 	 || [ "${siteid}" == "lox" ] || [ "${siteid}" == "mtr" ] || [ "${siteid}" == "eka" ] \
-         || [ "${siteid}" == "mfr" ] || [ "${siteid}" == "pqr" ] || [ "${siteid}" == "sew" ] \
+         || [ "${siteid}" == "mfr" ] || [ "${siteid}" == "pqr" ] \
          || [ "${siteid}" == "ajk" ] || [ "${siteid}" == "aer" ] || [ "${siteid}" == "afg" ] \
          || [ "${siteid}" == "bro" ] || [ "${siteid}" == "crp" ] || [ "${siteid}" == "lch" ] \
          || [ "${siteid}" == "lix" ] || [ "${siteid}" == "lwx" ]

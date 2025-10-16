@@ -517,7 +517,7 @@ cd ${DATA}/output/grib2/CG${CGNUM}
               || [ "${SITEID}" == "TAEX" ] || [ "${SITEID}" == "MOBX" ] || [ "${SITEID}" == "HGXX" ] \
               || [ "${SITEID}" == "HFO" ] \
               || [ "${SITEID}" == "LOX" ] || [ "${SITEID}" == "MTR" ] || [ "${SITEID}" == "EKA" ] \
-              || [ "${SITEID}" == "MFR" ] || [ "${SITEID}" == "PQR" ] || [ "${SITEID}" == "SEW" ] \
+              || [ "${SITEID}" == "MFR" ] || [ "${SITEID}" == "PQR" ] || [ "${SITEID}" == "SEWX" ] \
               || [ "${SITEID}" == "AJK" ] || [ "${SITEID}" == "AER" ] || [ "${SITEID}" == "AFG" ] \
               || [ "${SITEID}" == "BRO" ] || [ "${SITEID}" == "CRP" ] || [ "${SITEID}" == "LCH" ] \
               || [ "${SITEID}" == "LIX" ] || [ "${SITEID}" == "LWX" ]
@@ -529,6 +529,14 @@ cd ${DATA}/output/grib2/CG${CGNUM}
            fi
            # Additional copies for domains running on 84 cores
            if [ "${SITEID}" == "OKX" ]
+           then
+              for i in {10..59}; do
+                 mkdir -p ${COMOUTCYC}/PE00${i}/
+                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+              done
+           fi
+	   
+	   if [ "${SITEID}" == "SEW" ] 
            then
               for i in {10..59}; do
                  mkdir -p ${COMOUTCYC}/PE00${i}/
@@ -703,7 +711,7 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
       || [ "${SITEID}" == "TAEX" ] || [ "${SITEID}" == "MOBX" ] || [ "${SITEID}" == "HGXX" ] \
       || [ "${SITEID}" == "HFO" ] \
       || [ "${SITEID}" == "LOX" ] || [ "${SITEID}" == "MTR" ] || [ "${SITEID}" == "EKA" ] \
-      || [ "${SITEID}" == "MFR" ] || [ "${SITEID}" == "PQR" ] || [ "${SITEID}" == "SEW" ] \
+      || [ "${SITEID}" == "MFR" ] || [ "${SITEID}" == "PQR" ] || [ "${SITEID}" == "SEWX" ] \
       || [ "${SITEID}" == "AJK" ] || [ "${SITEID}" == "AER" ] || [ "${SITEID}" == "AFG" ] \
       || [ "${SITEID}" == "BRO" ] || [ "${SITEID}" == "CRP" ] || [ "${SITEID}" == "LCH" ] \
       || [ "${SITEID}" == "LIX" ] || [ "${SITEID}" == "LWX" ]
@@ -718,6 +726,17 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
    fi
    # Additional copies for domains running on 84 cores
    if [ "${SITEID}" == "OKX" ]
+   then
+      for i in {10..59}; do
+         mkdir -p ${HOTdir}/PE00${i}
+         for hour in {0..48..3}; do 
+           mv -vf ${RUNdir}/PE00${i}/$(date -d "${hh}:${mm} ${yyyy}-${mon}-${dd} +${hour} hours" +"%Y%m%d.%H%M") \
+              ${HOTdir}/PE00${i}/ >> ${LOGdir}/hotstart.log 2>&1
+         done
+      done
+   fi
+   
+   if [ "${SITEID}" == "SEW" ] 
    then
       for i in {10..59}; do
          mkdir -p ${HOTdir}/PE00${i}

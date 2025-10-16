@@ -136,24 +136,24 @@ export WAVECPS="gfswave.NW-SEW51.spec.swan,gfswave.NW-SEW58.spec.swan"
 #$BOUNDARY COMMAND LINES
 #$UNSTR SWAN BOUNDARY COMMAND LINES - SITE NW-SEW
 #$ N OPEN GRID BOUNDARY
-#$BOUNDspec SIDE 59 CCW CON FILE 'gfswave.NW-SEW59.spec.swan' 1
+#BOUNDspec SIDE 59 CCW CON FILE 'gfswave.NW-SEW59.spec.swan' 1
 #$ W OPEN GRID BOUNDARY
-#$BOUNDspec SIDE 58 CCW CON FILE 'gfswave.NW-SEW58.spec.swan' 1
-#$BOUNDspec SIDE 57 CCW CON FILE 'gfswave.NW-SEW57.spec.swan' 1
-#$BOUNDspec SIDE 56 CCW CON FILE 'gfswave.NW-SEW56.spec.swan' 1
-#$BOUNDspec SIDE 55 CCW CON FILE 'gfswave.NW-SEW55.spec.swan' 1
-#$BOUNDspec SIDE 54 CCW CON FILE 'gfswave.NW-SEW54.spec.swan' 1
-#$BOUNDspec SIDE 53 CCW CON FILE 'gfswave.NW-SEW53.spec.swan' 1
-#$BOUNDspec SIDE 52 CCW CON FILE 'gfswave.NW-SEW52.spec.swan' 1
-#$BOUNDspec SIDE 51 CCW CON FILE 'gfswave.NW-SEW51.spec.swan' 1
+#BOUNDspec SIDE 58 CCW CON FILE 'gfswave.NW-SEW58.spec.swan' 1
+#BOUNDspec SIDE 57 CCW CON FILE 'gfswave.NW-SEW57.spec.swan' 1
+#BOUNDspec SIDE 56 CCW CON FILE 'gfswave.NW-SEW56.spec.swan' 1
+#BOUNDspec SIDE 55 CCW CON FILE 'gfswave.NW-SEW55.spec.swan' 1
+#BOUNDspec SIDE 54 CCW CON FILE 'gfswave.NW-SEW54.spec.swan' 1
+#BOUNDspec SIDE 53 CCW CON FILE 'gfswave.NW-SEW53.spec.swan' 1
+#BOUNDspec SIDE 52 CCW CON FILE 'gfswave.NW-SEW52.spec.swan' 1
+#BOUNDspec SIDE 51 CCW CON FILE 'gfswave.NW-SEW51.spec.swan' 1
 #$ S OPEN GRID BOUNDARY
-#$BOUNDspec SIDE 66 CCW CON FILE 'gfswave.NW-SEW66.spec.swan' 1
-#$BOUNDspec SIDE 65 CCW CON FILE 'gfswave.NW-SEW65.spec.swan' 1
-#$BOUNDspec SIDE 64 CCW CON FILE 'gfswave.NW-SEW64.spec.swan' 1
-#$BOUNDspec SIDE 63 CCW CON FILE 'gfswave.NW-SEW63.spec.swan' 1
-#$BOUNDspec SIDE 62 CCW CON FILE 'gfswave.NW-SEW62.spec.swan' 1
-#$BOUNDspec SIDE 61 CCW CON FILE 'gfswave.NW-SEW61.spec.swan' 1
-#$BOUNDspec SIDE 60 CCW CON FILE 'gfswave.NW-SEW60.spec.swan' 1
+#BOUNDspec SIDE 66 CCW CON FILE 'gfswave.NW-SEW66.spec.swan' 1
+#BOUNDspec SIDE 65 CCW CON FILE 'gfswave.NW-SEW65.spec.swan' 1
+#BOUNDspec SIDE 64 CCW CON FILE 'gfswave.NW-SEW64.spec.swan' 1
+#BOUNDspec SIDE 63 CCW CON FILE 'gfswave.NW-SEW63.spec.swan' 1
+#BOUNDspec SIDE 62 CCW CON FILE 'gfswave.NW-SEW62.spec.swan' 1
+#BOUNDspec SIDE 61 CCW CON FILE 'gfswave.NW-SEW61.spec.swan' 1
+#BOUNDspec SIDE 60 CCW CON FILE 'gfswave.NW-SEW60.spec.swan' 1
 #$END BOUNSEG for UNSTR SWAN
 #BOUNDspec SIDE 1 CCW CON FILE 'gfswave.NW-SEW55.spec.swan' 1
 #
