@@ -243,9 +243,9 @@ cp ${RIPDATA}/${contour}m_RipForecastShoreline_${SITEID}.txt ${RIPDATA}/fort.21
 # ======================================================================
 # Copy the data from the previous 72 hrs
 # ======================================================================
-cp -f $GESINm1/riphist/${SITEID}/${contour}*${CGnumber}*${SITEID} ${RIPDATA}
-cp -f $GESINm2/riphist/${SITEID}/${contour}*${CGnumber}*${SITEID} ${RIPDATA}
 cp -f $GESINm3/riphist/${SITEID}/${contour}*${CGnumber}*${SITEID} ${RIPDATA}
+cp -f $GESINm4/riphist/${SITEID}/${contour}*${CGnumber}*${SITEID} ${RIPDATA}
+cp -f $GESINm5/riphist/${SITEID}/${contour}*${CGnumber}*${SITEID} ${RIPDATA}
 
 # ======================================================================
 # Create output file and add header
@@ -283,39 +283,71 @@ while read line; do
       awk "/${LAT}/ && /${LON}/" | \
       head -${ntimes} >> fort.20
    fi
-   # Get the data for the previous three days (just the first 24h for each run)
+   # Get the data for the previous three days (PDYm3–PDYm5, 72 h window)
    if [ -f fort.22 ]; then
       rm -f fort.22
    fi
+   
    export found="FALSE"
-   for DAT in ${PDYm3} ${PDYm2} ${PDYm1} $DATE
-   do
-      let CYC=0
-      while (( $CYC <= 21 )) && [ "${found}" == "FALSE" ]; do
-         # Note: We use the 10# prefix to prevent octal interpretation of CYCLE = 08 and 09
-         if [[ $DAT == $DATE && $(printf %02d $CYC) == $(printf %02d $((10#$CYCLE))) ]]; then
-            break
-         fi
-         DAT_CYC="${DAT}_$(printf %02d $CYC)00"
-         if [[ -f ${RIPDATA}/${CONT}m_contour_${CG}.${DAT_CYC}_${SITEID} ]]; then
-            cat ${RIPDATA}/${CONT}m_contour_${CG}.${DAT_CYC}_${SITEID} | \
-            awk "/${LAT}/ && /${LON}/" > rawout
-            # Clip the raw output to only the start and end 72 hours needed
-            startline=$(grep -n ${PDYm3}.${CYCLE}0000 rawout | cut -f1 -d: | tail -1)
-            endline=$(grep -n ${DATE}.${CYCLE}0000 rawout | cut -f1 -d: | tail -1)
-            if [ ! -z "$startline" ];
-            then
-               tail -n +$startline rawout | head -n $((endline-startline)) > fort.22
-               export found="TRUE"
-            else
-               head -n $((endline-1)) rawout > fort.22
-               export found="TRUE"
-            fi
-         fi
-         let CYC=$CYC+3
-      done
+
+   candidate_list=()
+   for offset in 0 -3 -6 -9 -12 -15 -18 -21; do
+     cyc=$((10#$CYCLE + offset))
+     if ((cyc < 0)); then
+       cyc=$((cyc + 24))
+       candidate_list+=("${PDYm4}_$(printf %02d $cyc)00")
+     else
+       candidate_list+=("${PDYm3}_$(printf %02d $cyc)00")
+     fi
    done
-   rm rawout
+   candidate_list+=("${PDYm4}_2100" "${PDYm4}_1800" "${PDYm4}_1500" "${PDYm4}_1200" \
+                    "${PDYm4}_0900" "${PDYm4}_0600" "${PDYm4}_0300" "${PDYm4}_0000")
+   candidate_list+=("${PDYm5}_2100" "${PDYm5}_1800" "${PDYm5}_1500" "${PDYm5}_1200" \
+                    "${PDYm5}_0900" "${PDYm5}_0600" "${PDYm5}_0300" "${PDYm5}_0000")
+
+   # --- Remove duplicates while preserving order ---
+   declare -A seen=() 
+   unique_list=()          
+   for item in "${candidate_list[@]}"; do
+     if [[ -z "${seen[$item]}" ]]; then
+       unique_list+=("$item")
+       seen["$item"]=1
+     fi
+   done
+   candidate_list=("${unique_list[@]}")
+
+   printf "%s\n" "${candidate_list[@]}"
+
+   STARTTAG=${PDYm3}.${CYCLE}0000
+   ENDTAG=${DATE}.${CYCLE}0000
+
+   for DAT_CYC in "${candidate_list[@]}"; do
+     [[ "$found" == "TRUE" ]] && break
+     file="${RIPDATA}/${CONT}m_contour_${CG}.${DAT_CYC}_${SITEID}"
+     [[ ! -f "$file" ]] && continue
+
+     echo "→ Found source: $file"
+     awk "/${LAT}/ && /${LON}/" "$file" > rawout
+     [[ ! -s rawout ]] && continue
+
+     startline=$(grep -n "${STARTTAG}" rawout | cut -f1 -d: | tail -1)
+     endline=$(grep -n "${ENDTAG}" rawout | cut -f1 -d: | tail -1)
+
+     if [[ -n "$startline" && -n "$endline" && "$endline" -gt "$startline" ]]; then
+       tail -n +$startline rawout | head -n $((endline - startline)) > fort.22
+       nlines=$(wc -l < fort.22)
+       echo "   fort.22 built ($nlines lines)"
+       found="TRUE"
+     fi
+   done
+
+   rm -f rawout
+
+   # --- If no fort.22 was found ---
+   if [[ "$found" == "FALSE" ]]; then
+     echo "WARNING: No suitable 72 h data found for LAT=$LAT LON=$LON"
+   fi
+
    # ======================================================================
    # Execute the program
    # ======================================================================
