@@ -1,0 +1,80 @@
+TITLE: 
+Nearshore Wave Prediction System (NWPS) v1.4.5
+
+CHANGE REQUEST CLASS: 
+Accelerated change: rapid response required for change or corrective action
+
+DESCRIPTION OF CHANGE:  
+Bugfix for a run failure when WFOs submit runs outside of the 3-hourly cadence of 00z, 03z, 06z, 09z, etc. This specifically 
+impacts the WFO domains where ship route plots are produced, namely AKQ, MFL, KEY, LIX, LOX, AJK, AER, ALU, and AFG.
+
+JOB DEPENDENCIES:
+(Same as NWPSv1.4.4)
+This system has upstream dependencies on the following WCOSS models:
+ - GFS (wave boundary conditions)
+ - RTOFS Global (surface current fields)
+ - Global ESTOFS (water level fields)
+ - MMAB Sea Ice Analysis (sea ice fields) 
+ - P-Surge (water level fields)
+ - GFS pgrb files (U10 fields for GFS fail-over option) 
+
+The system has upstream data dependencies on:
+ - User input received from AWIPS via LDM
+
+This system currently has no downstream dependencies.
+
+REQUIRED SYSTEM USAGE:
+Same as NWPSv1.4.4
+
+BENEFITS OF CHANGE:
+Greater system stability.
+
+USER IMPACT STATEMENT:
+Same as NWPSv1.4.4
+
+TECHNICAL IMPACT STATEMENT:
+Same as NWPSv1.4.4
+
+RISKS:
+Same as NWPSv1.4.4
+
+PROPOSED IMPLEMENTATION
+At the first available opportunity.
+
+BUGFIXES
+Fix to a single file:
+ush/shiproutes/plot_shiproutes.sh
+
+IMPLEMENTATION INSTRUCTIONS
+
+I) Checking out the code from Github
+
+Make the home directory for the model in $NWROOT:
+> mkdir nwps
+> cd nwps
+
+Clone the NWPS code from the following Github repo, and check out the release tag:
+> git clone https://github.com/NOAA-EMC/nwps.git
+> git checkout IT-nwps.v1.4.5-20220812
+
+II) Building the executables
+
+First define the path variable ${NWPSdir} in your profile file, which points to the base of the code checked out under (I) above.
+> export NWPSdir=$(pwd)
+
+Next, change directory to ${NWPSdir}/sorc/, and execute the general NWPS install script. This single step will install the total 
+package, including all libraries and binary compilations:
+
+> cd ${NWPSdir}/sorc
+> ./make_NWPS.sh
+
+Once the compilations are done, all executables are moved to ${NWPSdir}/exec, and the system will be ready.
+
+TEST INSTRUCTIONS
+
+Conduct on-demand runs for the 9 WFO domains listed above, namely AKQ, MFL, KEY, LIX, LOX, AJK, AER, ALU, and AFG. The files 
+shiproute_plots_CG1_${PDY}${CYC}.tar.gz should be present. After unzipping this tarball, the graphics files it contains should 
+display the correct date of each forecast hour (compare hour 0 with the analysis time listed in the Warn_Forecaster*.txt file). 
+If possible, select WFO on-demand run submissions with initialization times unequal to the usual 3-hourly cadence of 00z, 03z, 
+06z, 09z, ..., 18z, 21z.
+

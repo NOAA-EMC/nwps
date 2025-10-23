@@ -13,7 +13,7 @@ POC JAX andrew.shashy@noaa.gov
 POC SJU andrew.shashy@noaa.gov, carlos.anselmi@noaa.gov
 POC CAR anthony.mignone@noaa.gov 
 POC GYX andrew.pohl@noaa.gov
-POC BOX	hayden.frank@noaa.gov
+POC BOX	james.notchey@noaa.gov
 POC NYC nelson.vaz@noaa.gov, jeffrey.tongue@noaa.gov
 POC PHI alan.cope@noaa.gov, walter.drag@noaa.gov
 POC LWX bryan.jackson@noaa.gov, steven.zubrick@noaa.gov
@@ -22,7 +22,7 @@ POC MHX donnie.king@noaa.gov
 POC ILM carl.r.morgan@noaa.gov
 POC CHS jeffrey.stewart@noaa.gov
 POC SGX ivory.small@noaa.gov, michael.khuat@noaa.gov
-POC LOX william.forwood@noaa.gov, mark.jackson@noaa.gov
+POC LOX ryan.kittell@noaa.gov, john.dumas@noaa.gov
 POC MTR drew.peterson@noaa.gov, warren.blier@noaa.gov
 POC EKA sten.tjaden@noaa.gov
 POC MFR michael.stavish@noaa.gov, john.lovegrove@noaa.gov
