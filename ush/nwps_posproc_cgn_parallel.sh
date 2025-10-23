@@ -122,6 +122,45 @@ fi
 echo " "                                            | tee -a $logrunup
 echo -n "SWAN Run Finished OK Preparing for Post-Process"     | tee -a $logrunup                                                
 echo " " | tee -a $logrunup
+
+export inputparm="${RUNdir}/inputCG${CGNUM}"
+if [ ! -e ${inputparm} ]
+then
+   msg="FATAL ERROR: Missing inputCG${CGNUM} file. Cannot open ${inputparm}"
+   postmsg $jlogfile "$msg"
+   export err=1; err_chk
+fi
+
+
+# 1) Parse YYYY MM DD HH MM from the INPGRID WIND line
+init="$(awk '/^INPGRID[[:space:]]+WIND/{print $11; exit}' "$inputparm")"  # e.g., 20250911.1800
+ts="${init//[^0-9]/}"
+yyyy="${ts:0:4}"; mon="${ts:4:2}"; dd="${ts:6:2}"; hh="${ts:8:2}"; mm="${ts:10:2}"
+
+# Sanity check
+if [ -z "$yyyy$mon$dd$hh$mm" ]; then
+  echo "ERROR: could not parse INPGRID WIND time from $inputparm" >&2
+  export err=1; err_chk
+fi
+
+# 2) Build PDY and cycle
+export PDY_INPUT="${yyyy}${mon}${dd}"
+
+# Prefer workflow cycle file; fallback to parsed hour
+cycleout="$(awk 'NR==1{print $1}' "${RUNdir}/CYCLE" 2>/dev/null || true)"
+[ -z "${cycleout}" ] && cycleout="${hh}"
+cycleout="$(printf '%02d' "${cycleout#0}")"
+export cycleout
+
+# 3) Rebuild COMOUT for the correct day from the existing COMOUT path
+COMOUT_WFO="$(basename -- "$COMOUT")"            # -> <WFO> (site folder, e.g., box)
+COMOUT_PARENT="$(dirname -- "$COMOUT")"          # -> .../<REGION>.<PDY>
+REGION_DOT_PDY="$(basename -- "$COMOUT_PARENT")" # -> <REGION>.<PDY> (e.g., er.20250911)
+REGION_ONLY="${REGION_DOT_PDY%%.*}"              # -> <REGION> (e.g., er)
+export COMOUT_ROOT="$(dirname -- "$COMOUT_PARENT")"     # -> .../nwps/v1.5.0
+
+export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
+
 #____________________________RUNUP PROGRAM________________________________
 #Run Program    
   echo "DATA: ${DATA}  DATAdir: ${DATAdir}"   | tee -a $logrunup
@@ -194,13 +233,15 @@ echo " " | tee -a $logrunup
      cp -fv  ${FORT22} ${OUTDIRrunup}/${FORT22}
 
      cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
-     COMOUTCYC="${COMOUT}/${cycle}/CG${CGNUM}"
+     COMOUTCYC="${COMOUT_CORRECT}/${cycle}/CG${CGNUM}"
      if [ "${SENDCOM}" == "YES" ]; then
         mkdir -p $COMOUTCYC
         cp -fv  ${OUTDIRrunup}/${filein} ${COMOUTCYC}/${filein}
         cp -fv  ${OUTDIRrunup}/${FORT22} ${COMOUTCYC}/${FORT22}
-        if [ "${SENDDBN}" == "YES" ]; then
-            ${DBNROOT}
+        if [ "${SENDDBN}" == "YES" ]
+        then
+             echo "Sending ${FORT22} to DBNET."
+             $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_RUNUP ${job} ${COMOUTCYC}/${FORT22}
         fi
      fi
 
@@ -273,10 +314,16 @@ echo " " | tee -a $logrunup
 
      # Copy results to output directories
      cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
-     COMOUTCYC="${COMOUT}/${cycleout}/${RIPDOMAIN}"
+     COMOUTCYC="${COMOUT_CORRECT}/${cycleout}/${RIPDOMAIN}"
      mkdir -p $COMOUTCYC
      cp -fv  ${RIPDATA}/${CGCONT} ${COMOUTCYC}/${CGCONT}
      cp -fv  ${RIPDATA}/${FORT23} ${COMOUTCYC}/${FORT23}
+
+     if [ "$SENDDBN" = 'YES' ]
+     then
+         echo "Sending ${FORT23} to DBNET."
+         $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_RIPPROB ${job} ${COMOUTCYC}/${FORT23}
+     fi
 
      mkdir -p $GESOUT/riphist/${SITEID}
      cp -fv  ${RIPDATA}/${CGCONT} ${GESOUT}/riphist/${SITEID}/${CGCONT}
@@ -343,7 +390,7 @@ then
   export err=$?; err_chk 
 
   cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
-  COMOUTCYC="${COMOUT}/${cycleout}/CG${CGNUM}"
+  COMOUTCYC="${COMOUT_CORRECT}/${cycleout}/CG${CGNUM}"
   mkdir -p $COMOUTCYC
 
   inputparm="${RUNdir}/inputCG${CGNUM}"
@@ -410,7 +457,7 @@ cd ${DATA}/output/grib2/CG${CGNUM}
      date_stamp="${yyyy}${mon}${dd}"
      grib2File="${siteid}_nwps_CG${CGNUM}_${date_stamp}_${hh}${mm}.grib2"
      cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
-     COMOUTCYC="${COMOUT}/${cycle}/CG${CGNUM}"
+     COMOUTCYC="${COMOUT_CORRECT}/${cycle}/CG${CGNUM}"
      if [ "${SENDCOM}" == "YES" ]; then
         mkdir -p $COMOUTCYC
         cp -fv  ${grib2File} ${COMOUTCYC}/${grib2File}
@@ -434,11 +481,31 @@ cd ${DATA}/output/grib2/CG${CGNUM}
 if [[ -d "${DATA}/output/spectra/CG${CGNUM}" ]]; then
    cd ${DATA}/output/spectra/CG${CGNUM}
    yy=$(echo $yyyy | cut -c 3-4)
-   spec2dFile="SPC2D.*.CG${CGNUM}.YY${yy}.MO${mon}.DD${dd}.HH${hh}"
+   #spec2dFile="SPC2D.*.CG${CGNUM}.YY${yy}.MO${mon}.DD${dd}.HH${hh}"
+   spec2dFile=$(ls SPC2D.*.CG${CGNUM}.YY${yy}.MO${mon}.DD${dd}.HH${hh} 2>/dev/null)
    if [ "${SENDCOM}" == "YES" ]; then
       mkdir -p $COMOUTCYC
-      cp -fv  ${spec2dFile} ${COMOUTCYC}/
+      for orig_file in ${spec2dFile}; do
+	suffix=$(echo "$orig_file" | cut -d '.' -f2)
+	new_spc2d="nwps.t${cycle}z.spc2d_${suffix}_CG${CGNUM}.${WFO}.txt"
+	cp -fv "$orig_file" "${COMOUTCYC}/${new_spc2d}"
+      done
    fi
+  # ----------------------------------------
+  # Send alerts to DBNet
+  # ----------------------------------------
+  if [ "${SENDDBN}" == "YES" ]; then
+    for file in ${spec2dFile}; do
+      suffix=$(echo "$file" | cut -d '.' -f2)
+      new_spc2d="nwps.t${cycle}z.spc2d_${suffix}_CG${CGNUM}.${WFO}.txt"
+      if [ -f "${COMOUTCYC}/${new_spc2d}" ]; then
+        echo "Sending ${new_spc2d} to DBNet"
+        $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_SPECTRA ${job} ${COMOUTCYC}/${new_spc2d}
+      else
+        echo "Warning: ${COMOUTCYC}/${new_spc2d} does not exist, skipping DBNet alert"
+      fi
+    done
+  fi
 else
    echo "Wave spectra not computed over this domain (CG${CGNUM})"
 fi

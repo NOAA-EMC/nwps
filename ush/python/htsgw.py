@@ -1,20 +1,22 @@
 #!/usr/bin/env python
 # htsgw.py script
 # Author: Andre van der Westhuysen, 04/28/15
+# Ali Salimi-Tarazouj revised it, 09/25/2025
 # Purpose: Plots SWAN output parameters from GRIB2.
 
 import cartopy
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import matplotlib
-#matplotlib.use('Agg',warn=False)
+#matplotlib.use('Agg', warn=False)
 import sys
 import os
 import datetime
 import numpy as np
 import numpy.ma as ma
 import matplotlib.pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap
+import warnings
+warnings.filterwarnings("ignore", message="Shapefile shape has invalid polygon")
 
 print('*** htsgw.py ***')
 TSTART = int(sys.argv[1])
@@ -22,6 +24,7 @@ TEND = int(sys.argv[2])
 print('TSTART = '+str(TSTART))
 print('TEND = '+str(TEND))
 
+#NWPSdir ='/scratch4/NCEPDEV/marine/Ali.Salimi/Hera_Data/NWPS/featureV_1.5'
 NWPSdir = os.environ['NWPSdir']
 cartopy.config['pre_existing_data_dir'] = NWPSdir+'/lib/cartopy'
 print('Reading cartopy shapefiles from:')
@@ -29,8 +32,6 @@ print(cartopy.config['pre_existing_data_dir'])
 
 # Parameters
 monthstr = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']
-#clevs = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-#excpt = -9.0
 
 # Read NOAA and NWS logos
 noaa_logo = plt.imread('NOAA-Transparent-Logo.png')
@@ -66,7 +67,6 @@ if os.path.isfile("swan.ctl"):
    TINCR_OLD = TINCR
    TINCR = 3
    TDEF = (TDEF-1)/(TINCR/TINCR_OLD)+1
-   #-------------------------------------------------------------------------
 else:
    print('*** TERMINATING ERROR: Missing control file: swan.ctl')
    sys.exit()
@@ -87,12 +87,9 @@ for tstep in range(TSTART, (int(TEND)+1)):
    grib2dump = 'HTSGW_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
    if tstep == 1:
       command = '$WGRIB2 '+DSET+' -s | grep "HTSGW:surface:anl" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
-      #command2 = '$WGRIB2 '+DSET+' -s | grep "HTSGW:surface:anl" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
    else:
       command = '$WGRIB2 '+DSET+' -s | grep "HTSGW:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
-      #command2 = '$WGRIB2 '+DSET+' -s | grep "HTSGW:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -max | cat >> '+fieldmax
    os.system(command)
-   #os.system(command2)
 
    # Primary wave direction
    grib2dump = 'DIRPW_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
@@ -102,6 +99,7 @@ for tstep in range(TSTART, (int(TEND)+1)):
       command = '$WGRIB2 '+DSET+' -s | grep "DIRPW:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
    os.system(command)
 
+# Set up lon/lat mesh
 lons=np.linspace(x0,x0+float(nlon-1)*dx,num=nlon)
 lats=np.linspace(y0,y0+float(nlat-1)*dy,num=nlat)
 reflon,reflat=np.meshgrid(lons,lats)
@@ -120,11 +118,15 @@ else:
 SITEID = os.environ.get('SITEID')
 CGNUMPLOT = os.environ.get('CGNUMPLOT')
 
+# === Find global max wave height once (fix colorbar range) ===
 fieldmax = 'HTSGW_extract_fieldmax_TSTART'+str(TSTART)+'.txt'
 command = '$WGRIB2 '+DSET+' -s | grep "HTSGW" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
 os.system(command)
 temp=np.loadtxt(fieldmax, delimiter='=', usecols=[1])
 maxval=max(temp)
+
+unitconvert = 1/0.3048  # meters -> feet
+culim = int(unitconvert*maxval) + 1
 
 plt.figure()
 # Read the extracted text file
@@ -132,7 +134,7 @@ for tstep in range(TSTART, (int(TEND)+1)):
    print('')
    print('Processing Time step: '+str(tstep))
 
-   # Create a matrices of nlat x nlon initialized to 0
+   # Create matrices of nlat x nlon initialized to 0
    par = np.zeros((nlat, nlon))
    par2 = np.zeros((nlat, nlon))
 
@@ -155,31 +157,20 @@ for tstep in range(TSTART, (int(TEND)+1)):
 
    # Significant height of combined wind waves and swell
    grib2dump = 'HTSGW_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
-   data=np.loadtxt(grib2dump,delimiter=',',comments='l') 
+   data=np.loadtxt(grib2dump,delimiter=',',comments='l')
 
-   #lons=np.linspace(x0,x0+float(nlon-1)*dx,num=nlon)
-   #lats=np.linspace(y0,y0+float(nlat-1)*dy,num=nlat)
-   #reflon,reflat=np.meshgrid(lons,lats)
-
-   # Set up parameter field
    for lat in range(0, nlat):
       for lon in range(0, nlon):
          par[lat,lon] = data[nlon*lat+lon,2:3]
 
-   # Remove exception values
+   # Remove exception values and convert to feet
    par[np.where(par==-9999)] = np.nan
-
-   # Convert units to feet
-   unit = 'm'
-   if unit == 'm':
-      unitconvert = 1/0.3048
-      par = unitconvert*par
+   par = unitconvert*par
 
    # Primary wave direction
    grib2dump = 'DIRPW_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
-   data=np.loadtxt(grib2dump,delimiter=',',comments='l') 
+   data=np.loadtxt(grib2dump,delimiter=',',comments='l')
 
-   # Set up parameter field
    for lat in range(0, nlat):
       for lon in range(0, nlon):
          par2[lat,lon] = data[nlon*lat+lon,2:3]
@@ -188,20 +179,13 @@ for tstep in range(TSTART, (int(TEND)+1)):
    u=ma.cos(3.1416/180*(270-par2ma))
    v=ma.sin(3.1416/180*(270-par2ma))
 
-   # Plot data
+   # Plot data (pcolormesh with fixed vmin/vmax)
    ax = plt.axes(projection=ccrs.Mercator())
-   culim = int(unitconvert*maxval)+1
-   if (not ((SITEID == 'gyx') & (CGNUMPLOT == '2'))) & \
-      (not ((SITEID == 'gyx') & (CGNUMPLOT == '3'))) & \
-      (not ((SITEID == 'mfl') & (CGNUMPLOT == '3'))):
-      if (culim > 5):
-         clevs = np.arange(0, culim+1)      #Have to add an additional 1 to get the right array upper limit
-      else:
-         clevs = np.arange(0, culim+0.5, 0.5)      #Have to add an additional 0.5 to get the right array upper limit
-   else:
-      clevs = np.arange(0, culim+1, 0.1)      #Have to add an additional 1 to get the right array upper limit
-   plt.contourf(reflon, reflat, par, clevs, cmap=plt.cm.jet, transform=ccrs.PlateCarree())
-   plt.colorbar(ax=ax).set_label("", size=8)
+   cs = ax.pcolormesh(reflon, reflat, par,
+                      cmap=plt.cm.jet,
+                      vmin=0, vmax=culim,
+                      transform=ccrs.PlateCarree())
+   plt.colorbar(cs, ax=ax).set_label("", size=8)
    ax.set_aspect('auto', adjustable=None)
    ax.set_extent([lons.min(), lons.max(), lats.min(), lats.max()])
 
@@ -211,26 +195,19 @@ for tstep in range(TSTART, (int(TEND)+1)):
        u[0::rowskip,0::colskip],v[0::rowskip,0::colskip], \
        color='black',pivot='middle',alpha=0.7,scale=6.,width=0.015,units='inches',transform=ccrs.PlateCarree())
 
-   # There is an issue with plotting m.fillcontinents with inland lakes, so omitting it in
-   # the case of WFO-GYX, CG2 and CG3 (Lakes Sebago and Winni)
+   # Land / gridlines
    if (not ((SITEID == 'mfl') & (CGNUMPLOT == '3'))) & \
       (not ((SITEID == 'gyx') & (CGNUMPLOT == '2'))) & \
       (not ((SITEID == 'gyx') & (CGNUMPLOT == '3'))):
-      #land_50m = cfeature.NaturalEarthFeature('physical','land','50m',edgecolor='face',facecolor=cfeature.COLORS['land'])
-      #ax.add_feature(land_50m)
       coast = cfeature.GSHHSFeature(scale='high',edgecolor='black',facecolor=cfeature.COLORS['land'])
       ax.add_feature(coast)
-   #ax.coastlines(resolution='10m', color='black', linewidth=1)
+
    gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
-                  linewidth=0.5, color='gray', alpha=0.5, linestyle='--')
-   gl.xlabels_top = False
-   gl.ylabels_right = False
+                     linewidth=0.5, color='gray', alpha=0.5, linestyle='--')
+   gl.top_labels = False
+   gl.right_labels = False
    gl.xlabel_style = {'size': 7}
    gl.ylabel_style = {'size': 7}
-
-   # Draw CWA zones from ESRI shapefiles. NB: Make sure the lon convention is -180:180.
-   #m.readshapefile('marine_zones','marine_zones')
-   #m.drawcounties()
 
    # Draw Columbia River Mouth piers
    if ((SITEID == 'pqr') & (CGNUMPLOT == '3')):
@@ -251,9 +228,8 @@ for tstep in range(TSTART, (int(TEND)+1)):
               +str(forecastTime)+' ('+str(date.hour).zfill(2)+'Z'+str(date.day).zfill(2)\
               +monthstr[int(date.month)-1]+str(date.year)+')'
    plt.title(figtitle,fontsize=10)
-   #plt.figtext(0.40, 0.06, '**EXPERIMENTAL**',fontsize=9)
 
-   # Set up subaxes and plot the logos in them
+   # Logos
    plt.axes([0.00,.87,.08,.08])
    plt.axis('off')
    plt.imshow(noaa_logo,interpolation='gaussian')

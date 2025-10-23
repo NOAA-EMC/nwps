@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # erosion.py script
 # Author: Andre van der Westhuysen, 12/15/16
-# Purpose: Plots SWAN output parameters from GRIB2.
+# Ali Salimi-Tarazouj revised it, 09/25/2025
+# Purpose: Plots SWAN output parameters from GRIB2 using scatter plot.
 
 import cartopy
 import cartopy.crs as ccrs
@@ -13,15 +14,17 @@ import os
 import datetime
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap
 from matplotlib import colors
+import warnings
+warnings.filterwarnings("ignore", message="Shapefile shape has invalid polygon")
 
 print('*** erosion.py ***')
 TSTART = int(sys.argv[1])
 TEND = int(sys.argv[2])
-print('TSTART = '+str(TSTART))
-print('TEND = '+str(TEND))
+print('TSTART = ' + str(TSTART))
+print('TEND = ' + str(TEND))
 
+#NWPSdir ='/scratch4/NCEPDEV/marine/Ali.Salimi/Hera_Data/NWPS/featureV_1.5'
 NWPSdir = os.environ['NWPSdir']
 cartopy.config['pre_existing_data_dir'] = NWPSdir+'/lib/cartopy'
 print('Reading cartopy shapefiles from:')
@@ -82,7 +85,6 @@ for tstep in range(TSTART, (int(TEND)+1)):
    print('')
    print('Extracting Time step: '+str(tstep))
 
-   # Deviation of sea level from mean
    grib2dump = 'EROSION_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
    if tstep == 1:
       command = '$WGRIB2 '+DSET+' -s | grep "EROSNP:surface:anl" | $WGRIB2 -i '+DSET+' -rpn "sto_1:-9999:rcl_1:merge" -spread '+grib2dump
@@ -128,9 +130,7 @@ for tstep in range(TSTART, (int(TEND)+1)):
    print('')
    print('Processing Time step: '+str(tstep))
 
-   # Create a matrices of nlat x nlon initialized to 0
    par = np.zeros((nlat, nlon))
-   par2 = np.zeros((nlat, nlon))
 
    # Read dates
    grib2dump = 'EROSION_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
@@ -144,64 +144,50 @@ for tstep in range(TSTART, (int(TEND)+1)):
    temp = linesplit[2]
    temp = temp[2:12]
    date = datetime.datetime(int(temp[0:4]),int(temp[4:6]),int(temp[6:8]),int(temp[8:10]))
-   # Add the forecast hour to the start of the cycle timestamp
    date = date + datetime.timedelta(hours=forecastTime)
    fo.close()
    print('Cycle: '+str(forecastTime)+', Hour: '+str(date))
 
-   # Erosion probability (0-1)
-   grib2dump = 'EROSION_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
+   # Erosion probability
    data=np.loadtxt(grib2dump,delimiter=',',comments='l') 
-
-   #lons=np.linspace(x0,x0+float(nlon-1)*dx,num=nlon)
-   #lats=np.linspace(y0,y0+float(nlat-1)*dy,num=nlat)
-   #reflon,reflat=np.meshgrid(lons,lats)
-
-   # Set up parameter field
    for lat in range(0, nlat):
       for lon in range(0, nlon):
          par[lat,lon] = data[nlon*lat+lon,2:3]
 
    # Remove exception values
-   par[np.where(par==-9999)] = np.nan
+   par = np.where(par == -9999, np.nan, par)
 
-   # Plot data
+   # Plot data (scatter style like rip.py)
    ax = plt.axes(projection=ccrs.Mercator())
-   clevs = [0,5,50,95,100]
-   # specify the bounds for the colors
    bounds=[0,5,50,95,100]
-   # create the custom colormap
    cmap = colors.ListedColormap(['grey', 'blue', 'yellow','red'])
-   # specify the mapping from value-->color
    norm = colors.BoundaryNorm(bounds, cmap.N)
 
-   plt.contourf(reflon, reflat, par, clevs, cmap=cmap, transform=ccrs.PlateCarree())
-   plt.colorbar(ax=ax,spacing='proportional').set_label("", size=8)
+   # Flatten
+   x = reflon.flatten()
+   y = reflat.flatten()
+   z = par.flatten()
+
+   # Mask NaNs
+   mask = ~np.isnan(z)
+   x = x[mask]
+   y = y[mask]
+   z = z[mask]
+
+   scatter = plt.scatter(x, y, c=z, cmap=cmap, norm=norm, transform=ccrs.PlateCarree(), s=8)
+   plt.colorbar(scatter, ax=ax, spacing='proportional').set_label("", size=8)
    ax.set_aspect('auto', adjustable=None)
    ax.set_extent([lons.min(), lons.max(), lats.min(), lats.max()])
 
-   # There is an issue with plotting m.fillcontinents with inland lakes, so omitting it in
-   # the case of WFO-GYX, CG2 and CG3 (Lakes Sebago and Winni)
-   #if (not ((SITEID == 'mfl') & (CGNUMPLOT == '3'))) & \
-   #   (not ((SITEID == 'gyx') & (CGNUMPLOT == '2'))) & \
-   #   (not ((SITEID == 'gyx') & (CGNUMPLOT == '3'))):
-   #   land_50m = cfeature.NaturalEarthFeature('physical','land','50m',edgecolor='face',facecolor=cfeature.COLORS['land'])
-   #   ax.add_feature(land_50m)
    coast = cfeature.GSHHSFeature(scale='high',edgecolor='black')
    ax.add_feature(coast)
-   #ax.coastlines(resolution='10m', color='black', linewidth=1)
    gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
                   linewidth=0.5, color='gray', alpha=0.5, linestyle='--')
-   gl.xlabels_top = False
-   gl.ylabels_right = False
+   gl.top_labels = False
+   gl.right_labels = False
    gl.xlabel_style = {'size': 7}
    gl.ylabel_style = {'size': 7}
 
-   # Draw CWA zones from ESRI shapefiles. NB: Make sure the lon convention is -180:180.
-   #m.readshapefile('marine_zones','marine_zones')
-   #m.drawcounties()
-
-   # Draw Columbia River Mouth piers
    if ((SITEID == 'pqr') & (CGNUMPLOT == '3')):
       ipierlons = [(235.96161-360),(235.96173-360),(235.95755-360)]
       ipierlats = [46.265216,46.267288,46.276829]
@@ -221,7 +207,7 @@ for tstep in range(TSTART, (int(TEND)+1)):
               +monthstr[int(date.month)-1]+str(date.year)+')'
    plt.title(figtitle,fontsize=10)
 
-   # Set up subaxes and plot the logos in them
+   # Logos
    plt.axes([0.00,.87,.08,.08])
    plt.axis('off')
    plt.imshow(noaa_logo,interpolation='gaussian')

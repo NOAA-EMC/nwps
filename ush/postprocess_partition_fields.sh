@@ -68,6 +68,35 @@ DIRpartition="${RUNwvtrck}/SYS_DIR.OUT"
 TPpartition="${RUNwvtrck}/SYS_TP.OUT"
 inputCG="${NWPSDATA}/run/input${CGnumber}"
 
+
+# 1) Parse YYYY MM DD HH MM from the INPGRID WIND line
+init="$(awk '/^INPGRID[[:space:]]+WIND/{print $11; exit}' "$inputCG")"
+ts="${init//[^0-9]/}"
+yyyy="${ts:0:4}"; mon="${ts:4:2}"; dd="${ts:6:2}"; hh="${ts:8:2}"; mm="${ts:10:2}"
+
+# Sanity check
+if [ -z "$yyyy$mon$dd$hh$mm" ]; then
+  echo "ERROR: could not parse INPGRID WIND time from $inputCG" >&2
+  export err=1; err_chk
+fi
+
+# 2) Build PDY and cycle
+export PDY_INPUT="${yyyy}${mon}${dd}"
+
+# Prefer workflow cycle file; fallback to parsed hour
+cycleout="$(awk 'NR==1{print $1}' "${RUNdir}/CYCLE" 2>/dev/null || true)"
+[ -z "${cycleout}" ] && cycleout="${hh}"
+cycleout="$(printf '%02d' "${cycleout#0}")"
+export cycleout
+
+# 3) Rebuild COMOUT for the correct day from the existing COMOUT path
+COMOUT_WFO="$(basename -- "$COMOUT")"            # -> <WFO> (site folder, e.g., box)
+COMOUT_PARENT="$(dirname -- "$COMOUT")"          # -> .../<REGION>.<PDY>
+REGION_DOT_PDY="$(basename -- "$COMOUT_PARENT")" # -> <REGION>.<PDY> (e.g., er.20250911)
+REGION_ONLY="${REGION_DOT_PDY%%.*}"              # -> <REGION> (e.g., er)
+export COMOUT_ROOT="$(dirname -- "$COMOUT_PARENT")"     # -> .../nwps/v1.5.0
+export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
+
 export WTVARdir=${VARdir}/wavetracking
 mkdir -pv ${grib2dir} ${WTVARdir}
 
@@ -95,7 +124,7 @@ if [ $systems -eq 0 ]
 then
    echo "WARNING: No wave systems identified. Not producing wave tracking CG0 GRIB2 file for this run." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID^^}.${PDY}.txt
    cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
-   COMOUTCYC="${COMOUT}/${cycle}"
+   COMOUTCYC="${COMOUT_CORRECT}/${cycle}"
    if [ "${SENDCOM}" == "YES" ]; then
       mkdir -p $COMOUTCYC $GESOUT/warnings
       cp -fv  ${RUNdir}/Warn_Forecaster_${SITEID^^}.${PDY}.txt ${COMOUTCYC}/Warn_Forecaster_${SITEID^^}.${PDY}.txt
@@ -247,7 +276,7 @@ then
 fi
 
 cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
-COMOUTCYC="${COMOUT}/${cycle}/CG0"
+COMOUTCYC="${COMOUT_CORRECT}/${cycle}/CG0"
 if [ "${SENDCOM}" == "YES" ]; then
    mkdir -p $COMOUTCYC
    cp -fv  ${grib2dir}/tracking/CG0/${siteid}_nwps_CG0_Trkng_${time_stamp}.grib2 $COMOUTCYC/

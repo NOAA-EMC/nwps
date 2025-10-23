@@ -199,8 +199,8 @@ for tstep in range(TSTART, (int(TEND)+1)):
    ax.add_feature(coast)
    gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
                   linewidth=0.5, color='gray', alpha=0.5, linestyle='--')
-   gl.xlabels_top = False
-   gl.ylabels_right = False
+   gl.top_labels = False
+   gl.right_labels = False
    gl.xlabel_style = {'size': 7}
    gl.ylabel_style = {'size': 7}
 

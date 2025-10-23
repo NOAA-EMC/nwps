@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # cur.py script
 # Author: Andre van der Westhuysen, 04/28/15
+# Ali Salimi-Tarazouj revised it, 09/25/2025
 # Purpose: Plots SWAN output parameters from GRIB2.
 
 import cartopy
@@ -13,8 +14,9 @@ import os
 import datetime
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.colors import Normalize
+import warnings
+warnings.filterwarnings("ignore", message="Shapefile shape has invalid polygon")
 
 print('*** cur.py ***')
 TSTART = int(sys.argv[1])
@@ -22,6 +24,7 @@ TEND = int(sys.argv[2])
 print('TSTART = '+str(TSTART))
 print('TEND = '+str(TEND))
 
+#NWPSdir ='/scratch4/NCEPDEV/marine/Ali.Salimi/Hera_Data/NWPS/featureV_1.5'
 NWPSdir = os.environ['NWPSdir']
 cartopy.config['pre_existing_data_dir'] = NWPSdir+'/lib/cartopy'
 print('Reading cartopy shapefiles from:')
@@ -85,17 +88,13 @@ for tstep in range(TSTART, (int(TEND)+1)):
 
    # Current speed
    grib2dump = 'SPC_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
-   #fieldmax = 'SPC_extract_fieldmax.txt'
    if tstep == 1:
       command = '$WGRIB2 '+DSET+' -s | grep "SPC:surface:anl" | $WGRIB2 -i '+DSET+' -spread '+grib2dump
-      #command2 = '$WGRIB2 '+DSET+' -s | grep "SPC:surface:anl" | $WGRIB2 -i '+DSET+' -max | cat > '+fieldmax
    else:
       command = '$WGRIB2 '+DSET+' -s | grep "SPC:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -spread '+grib2dump
-      #command2 = '$WGRIB2 '+DSET+' -s | grep "SPC:surface:'+str((tstep-1)*TINCR)+' hour" | $WGRIB2 -i '+DSET+' -max | cat >> '+fieldmax
    os.system(command)
-   #os.system(command2)
 
-   # Primary wave direction
+   # Current direction
    grib2dump = 'DIRC_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
    if tstep == 1:
       command = '$WGRIB2 '+DSET+' -s | grep "DIRC:surface:anl" | $WGRIB2 -i '+DSET+' -spread '+grib2dump
@@ -150,7 +149,6 @@ for tstep in range(TSTART, (int(TEND)+1)):
    temp = linesplit[2]
    temp = temp[2:12]
    date = datetime.datetime(int(temp[0:4]),int(temp[4:6]),int(temp[6:8]),int(temp[8:10]))
-   # Add the forecast hour to the start of the cycle timestamp
    date = date + datetime.timedelta(hours=forecastTime)
    fo.close()
    print('Cycle: '+str(forecastTime)+', Hour: '+str(date))
@@ -158,31 +156,20 @@ for tstep in range(TSTART, (int(TEND)+1)):
    # Current speed
    grib2dump = 'SPC_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
    data=np.loadtxt(grib2dump,delimiter=',',comments='l') 
-
-   #lons=np.linspace(x0,x0+float(nlon-1)*dx,num=nlon)
-   #lats=np.linspace(y0,y0+float(nlat-1)*dy,num=nlat)
-   #reflon,reflat=np.meshgrid(lons,lats)
-
-   # Set up parameter field
    for lat in range(0, nlat):
       for lon in range(0, nlon):
          par[lat,lon] = data[nlon*lat+lon,2:3]
-
-   # Remove exception values
-   #par[np.where(par==excpt)] = np.nan
    par[np.where(par==excpt)] = 0.
 
-   # Convert units to feet
+   # Convert units to knots
    unit = 'm s-1'
    if unit == 'm s-1':
       unitconvert = 1/0.514444
       par = unitconvert*par
 
-   # Mean current direction
+   # Current direction
    grib2dump = 'DIRC_extract_f'+str((tstep-1)*TINCR).zfill(3)+'.txt'
    data=np.loadtxt(grib2dump,delimiter=',',comments='l') 
-
-   # Set up parameter field
    for lat in range(0, nlat):
       for lon in range(0, nlon):
          par2[lat,lon] = data[nlon*lat+lon,2:3]
@@ -195,63 +182,49 @@ for tstep in range(TSTART, (int(TEND)+1)):
    u = par*u
    v = par*v
 
-   # To avoid error in streamplot, only plot currents when the field in nonzero
    if (maxval > 0.):
-      if (not (SITEID == 'afg')) & (not (SITEID == 'alu')):
-         norm = matplotlib.colors.Normalize(vmin=0.,vmax=(int(unitconvert*maxval)+1))
-         culim = int(unitconvert*maxval)+1
-         if (culim > 2):
-            clevs = np.arange(0, culim+0.5, 0.5)      #Have to add an additional 0.5 to get the right array upper limit
-         else:
-            clevs = np.arange(0, culim+0.2, 0.2)      #Have to add an additional 0.2 to get the right array upper limit
-         lw = 1.0*par / par.max()
-         plt.contourf(reflon,reflat,par,clevs,cmap=plt.cm.jet,norm=norm,transform=ccrs.PlateCarree())
-         ax.streamplot(reflon,reflat,u,v,color='k',density=2,linewidth=1.5*lw,arrowsize=0.75,norm=norm,transform=ccrs.PlateCarree())
-         plt.colorbar(ax=ax)
+      norm = Normalize(vmin=0., vmax=(int(unitconvert*maxval)+1))
+      culim = int(unitconvert*maxval)+1
+      if (culim > 2):
+         clevs = np.arange(0, culim+0.5, 0.5)
       else:
-      # Basemap streamplot does not plot correctly at higher latitudes (WFOs AFG and ALU). Do surface plot and vectors instead
-         par[np.where(par==0.)] = np.nan
-         norm = matplotlib.colors.Normalize(vmin=0.,vmax=(int(unitconvert*maxval)+1))
-         culim = int(unitconvert*maxval)+1
-         if (culim > 2):
-            clevs = np.arange(0, culim+0.5, 0.5)      #Have to add an additional 0.5 to get the right array upper limit
-         else:
-            clevs = np.arange(0, culim+0.2, 0.2)      #Have to add an additional 0.2 to get the right array upper limit
+         clevs = np.arange(0, culim+0.2, 0.2)
 
-         plt.contourf(reflon,reflat,par,clevs,cmap=plt.cm.jet,norm=norm,transform=ccrs.PlateCarree())
-         plt.colorbar(ax=ax)
+      mesh = plt.pcolormesh(reflon, reflat, par,
+                            cmap=plt.cm.jet,
+                            norm=norm,
+                            transform=ccrs.PlateCarree())
+      plt.colorbar(mesh, ax=ax, ticks=clevs)
 
+      if (not (SITEID == 'afg')) & (not (SITEID == 'alu')):
+         lw = 1.0*par / par.max()
+         ax.streamplot(reflon,reflat,u,v,
+                       color='k',density=2,linewidth=1.5*lw,arrowsize=0.75,
+                       transform=ccrs.PlateCarree())
+      else:
          rowskip=int(np.floor(par2.shape[0]/20))
          colskip=int(np.floor(par2.shape[1]/20))
          plt.quiver(reflon[0::rowskip,0::colskip],reflat[0::rowskip,0::colskip],\
              u[0::rowskip,0::colskip],v[0::rowskip,0::colskip], \
-             color='black',pivot='middle',alpha=0.7,scale=6.,width=0.015,units='inches')
+             color='black',pivot='middle',alpha=0.7,scale=6.,width=0.015,units='inches',
+             transform=ccrs.PlateCarree())
 
    ax.set_aspect('auto', adjustable=None)
    ax.set_extent([lons.min(), lons.max(), lats.min(), lats.max()])
 
-   # There is an issue with plotting m.fillcontinents with inland lakes, so omitting it in
-   # the case of WFO-GYX, CG2 and CG3 (Lakes Sebago and Winni)
    if (not ((SITEID == 'mfl') & (CGNUMPLOT == '3'))) & \
       (not ((SITEID == 'gyx') & (CGNUMPLOT == '2'))) & \
       (not ((SITEID == 'gyx') & (CGNUMPLOT == '3'))):
-      #land_50m = cfeature.NaturalEarthFeature('physical','land','50m',edgecolor='face',facecolor=cfeature.COLORS['land'])
-      #ax.add_feature(land_50m)
       coast = cfeature.GSHHSFeature(scale='high',edgecolor='black',facecolor=cfeature.COLORS['land'])
       ax.add_feature(coast)
-   #ax.coastlines(resolution='10m', color='black', linewidth=1)
+
    gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
                   linewidth=0.5, color='gray', alpha=0.5, linestyle='--')
-   gl.xlabels_top = False
-   gl.ylabels_right = False
+   gl.top_labels = False
+   gl.right_labels = False
    gl.xlabel_style = {'size': 7}
    gl.ylabel_style = {'size': 7}
 
-   # Draw CWA zones from ESRI shapefiles. NB: Make sure the lon convention is -180:180.
-   #m.readshapefile('marine_zones','marine_zones')
-   #m.drawcounties()
-
-   # Draw Columbia River Mouth piers
    if ((SITEID == 'pqr') & (CGNUMPLOT == '3')):
       ipierlons = [(235.96161-360),(235.96173-360),(235.95755-360)]
       ipierlats = [46.265216,46.267288,46.276829]
@@ -270,9 +243,7 @@ for tstep in range(TSTART, (int(TEND)+1)):
               +str(forecastTime)+' ('+str(date.hour).zfill(2)+'Z'+str(date.day).zfill(2)\
               +monthstr[int(date.month)-1]+str(date.year)+')'
    plt.title(figtitle,fontsize=10)
-   #plt.figtext(0.40, 0.06, '**EXPERIMENTAL**',fontsize=9)
 
-   # Set up subaxes and plot the logos in them
    plt.axes([0.00,.87,.08,.08])
    plt.axis('off')
    plt.imshow(noaa_logo,interpolation='gaussian')
