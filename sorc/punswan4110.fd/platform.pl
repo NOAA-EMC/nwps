@@ -18,11 +18,6 @@ if ($os =~ /Linux/i) {
     print OUTFILE "F90_MPI = ftn\n";
     print OUTFILE "FLAGS_OPT = -c\n";
     print OUTFILE "FLAGS_MSC = -O1 -g -traceback\n";
-    #print OUTFILE "FLAGS_MSC = -O1 -g -traceback -check all\n";
-    #print OUTFILE "FLAGS_MSC = -g -O0 -traceback -mcmodel=medium\n";
-    #print OUTFILE "FLAGS_MSC = -g -O0 -traceback -check bounds\n";
-    #print OUTFILE "FLAGS_MSC = -g -O0 -traceback -check all\n";
-    #print OUTFILE "FLAGS_MSC = -g -O0 -traceback -init=arrays,snan -fpe0 -check all\n";
     print OUTFILE "FLAGS90_MSC = \$(FLAGS_MSC)\n";
     print OUTFILE "FLAGS_DYN = -fPIC\n";
     print OUTFILE "FLAGS_SER =\n";
