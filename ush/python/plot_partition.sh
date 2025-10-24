@@ -279,7 +279,9 @@ do
   cycle="$(printf '%02d' "${cycle#0}")"
   export cycle
 
+
   # 3) Rebuild COMOUT for the correct day from the existing COMOUT path
+  #     COMOUT shape: .../<REGION>.<PDY>/<WFO>   (e.g., .../er.20250911/box)
   COMOUT_WFO="$(basename -- "$COMOUT")"            # -> <WFO> (site folder, e.g., box)
   COMOUT_PARENT="$(dirname -- "$COMOUT")"          # -> .../<REGION>.<PDY>
   REGION_DOT_PDY="$(basename -- "$COMOUT_PARENT")" # -> <REGION>.<PDY> (e.g., er.20250911)
@@ -292,7 +294,7 @@ do
   figsTarFile="plots_CG0_${YYYY}${MM}${DD}${HH}.tar.gz"
   tar cvfz ${figsTarFile} *.png
   cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
-# 0 tarbal with plots send to CG0
+# tarbal with plots send to CG0
   COMOUTCYCold="${COMOUTold}/${cycleout}/CG0"
   mkdir -p $COMOUTCYCold
   cp ${figsTarFile} $COMOUTCYCold/${figsTarFile}
