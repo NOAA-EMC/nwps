@@ -122,7 +122,7 @@ for iter in range(1,niter+1):
             for ysearch in range(-1, 2):
                for xsearch in range(-1, 2):
                   #print(lon+xsearch,lat+ysearch)
-                  if (rawpar[lat+ysearch,lon+xsearch] != 0.): # and not(xsearch==0 and ysearch==0) ):
+                  if (rawpar[lat + ysearch, lon + xsearch] != 0.0 and rawpar[lat + ysearch, lon + xsearch] != -9999.0): # and not(xsearch==0 and ysearch==0) ):
                      #print('Adding: '+str(rawpar[lat+ysearch,lon+xsearch]))
                      nghsum = nghsum+rawpar[lat+ysearch,lon+xsearch]
                      nngh = nngh+1
