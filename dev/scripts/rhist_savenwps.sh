@@ -85,7 +85,7 @@ for region in sr er wr pr ar
 do
    find ./${region}.${yrmoday}/ -maxdepth 4 \( -name "*input*" -o -name "${yrmoday}.*" -o -name "*.wnd" -o -name "*.wlev" \
                                             -o -name "*.cur" -o -name "*.tar" -o -name "bc_*" -o -name "Warn*" \) > ${region}.keep
-   find ./${region}.${yrmoday}/ -maxdepth 4 \( -name "*.grib2" -o -name "SPC2D.*" -o -name "Warn*" \) > ${region}.output
+   find ./${region}.${yrmoday}/ -maxdepth 4 \( -name "*.grib2" -o -name "*spc2d.*" -o -name "Warn*" \) > ${region}.output
 done
 
 cd $dir
