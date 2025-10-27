@@ -18,6 +18,12 @@ if [ -d "${NWPSdir}/fix/bathy_db" ]; then rm -Rf "${NWPSdir}/fix/bathy_db"; fi
 mkdir -p ${NWPSdir}/fix/bathy_db/
 tar -C ${NWPSdir}/fix/bathy_db/ -xvf ${NWPSdir}/fix/bathy_db_v1-5.tar
 rm ${NWPSdir}/fix/bathy_db_v1-5.tar
+
+rm -rf ${NWPSdir}/fix/bathy_db/sew
+scp /lfs/h2/emc/couple/noscrub/ali.salimi/git/fv3gfs/fix/fix_nwps/v_1p5/fix/bathy_db_v1p5.tar ${NWPSdir}/fix/
+tar -C ${NWPSdir}/fix/bathy_db/ -xvf ${NWPSdir}/fix/bathy_db_v1p5.tar
+rm ${NWPSdir}/fix/bathy_db_v1p5.tar
+
 scp /lfs/h2/emc/couple/noscrub/ali.salimi/git/fv3gfs/fix/fix_nwps/v_1-5/fix/pdef_ncep_global ${NWPSdir}/fix/
 scp /lfs/h2/emc/couple/noscrub/ali.salimi/git/fv3gfs/fix/fix_nwps/v_1-5/ush/rtofs/datfiles/pdef_ncep_global.gz ${NWPSdir}/ush/rtofs/datfiles/
 scp /lfs/h2/emc/couple/noscrub/ali.salimi/git/fv3gfs/fix/fix_nwps/v_1-5/ush/rtofs/datfiles/pdef_ncep_reg1.gz ${NWPSdir}/ush/rtofs/datfiles/
