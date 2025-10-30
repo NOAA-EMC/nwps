@@ -19,7 +19,7 @@ PDYm1=$(date +%Y%m%d -d "1 day ago")
 #Check for yesterday's runs completed (shortly) after midnight.
 for wfo in $wfos
 do
-   wfodir=/lfs/h2/emc/ptmp/andre.vanderwesthuysen/com/nwps/v1.5.0/${region}.${PDYm1}/${wfo}
+   wfodir=/lfs/h2/emc/ptmp/$USER/com/nwps/v1.5.0/${region}.${PDYm1}/${wfo}
    cd ${wfodir}
    #Find most recent cycle
    export cycle=$(ls -t | head -1)
@@ -74,7 +74,7 @@ done
 #Check for today's runs
 for wfo in $wfos
 do
-   wfodir=/lfs/h2/emc/ptmp/andre.vanderwesthuysen/com/nwps/v1.5.0/${region}.${PDY}/${wfo}
+   wfodir=/lfs/h2/emc/ptmp/$USER/com/nwps/v1.5.0/${region}.${PDY}/${wfo}
    cd ${wfodir}
    #Find most recent cycle
    export cycle=$(ls -t | head -1)

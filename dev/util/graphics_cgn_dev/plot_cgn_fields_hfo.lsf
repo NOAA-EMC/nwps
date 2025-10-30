@@ -31,8 +31,8 @@
 #PBS -l select=1:ncpus=1
 #PBS -l debug=true
 #PBS -V
-#PBS -o /u/andre.vanderwesthuysen/nwps_hfo_post_cgn.o
-#PBS -e /u/andre.vanderwesthuysen/nwps_hfo_post_cgn.o
+#PBS -o /u/$USER/nwps_hfo_post_cgn.o
+#PBS -e /u/$USER/nwps_hfo_post_cgn.o
 
 cd $PBS_O_WORKDIR
 

@@ -24,7 +24,7 @@ do
    do
       if [ ${datafound} == 'false' ]
       then
-         workdir=/lfs/h2/emc/ptmp/andre.vanderwesthuysen/com/nwps/v1.5.0/${region}.${PDY}/${wfo}/${cycle}
+         workdir=/lfs/h2/emc/ptmp/$USER/com/nwps/v1.5.0/${region}.${PDY}/${wfo}/${cycle}
          echo ${workdir}
          for cgnum in $cgnums
          do

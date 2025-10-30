@@ -24,8 +24,8 @@
 
 echo 'Running run_nwps_validation_dev.sh...'
 
-export COMOUT='/lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/nwps_para/com/nwps/v1.5.0/'
-export COMOUTm1='/lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/nwps_para/com/nwps/v1.5.0/'
+export COMOUT='/lfs/h2/emc/couple/noscrub/$USER/nwps_para/com/nwps/v1.5.0/'
+export COMOUTm1='/lfs/h2/emc/couple/noscrub/$USER/nwps_para/com/nwps/v1.5.0/'
 
 cd $workdir
 pwd
