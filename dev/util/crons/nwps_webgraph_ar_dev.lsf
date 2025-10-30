@@ -17,8 +17,8 @@
 #PBS -l select=1:ncpus=1
 #PBS -l debug=true
 #PBS -V
-#PBS -o /u/andre.vanderwesthuysen/nwps_webar.o
-#PBS -e /u/andre.vanderwesthuysen/nwps_webar.o
+#PBS -o /u/$USER/nwps_webar.o
+#PBS -e /u/$USER/nwps_webar.o
 
 #mpirun.lsf cfp /u/$USER/wfo_cmdfile
 /u/$USER/nwps_webgraph_ar_dev.sh > ${HOME}/nwps_web_ar.log 2>&1

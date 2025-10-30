@@ -2,14 +2,14 @@
 #AW SHELL=/bin/sh
 #AW USER=Andre.VanderWesthuysen
 #PATH=/usrx/local/prod:/gpfs/hps/nco/ops/nwprod/lib:/gpfs/hps/nco/ops/nwprod/prod_util.v1.1.0/ush:/gpfs/hps3/emc/marine/noscrub/Andre.VanderWesthuysen/NWPS/trunk/exec/:/gpfs/slsf/xt-lsfhpc/9.1/linux2.6-glibc2.3-x86_64-cray/etc:/gpfs/slsf/xt-lsfhpc/9.1/linux2.6-glibc2.3-x86_64-cray/bin:/opt/cray/alps/5.2.3-2.0502.9295.14.14.ari/sbin:/opt/cray/alps/5.2.3-2.0502.9295.14.14.ari/bin:/opt/cray/dvs/2.5_0.9.0-1.0502.1958.2.55.ari/bin:/opt/cray/xpmem/0.1-2.0502.57015.1.15.ari/bin:/opt/cray/ugni/6.0-1.0502.10245.9.9.ari/bin:/opt/cray/switch/1.0-1.0502.57058.1.58.ari/bin:/opt/cray/eslogin/eswrap/1.1.0-1.020200.1231.0/bin:/opt/modules/3.2.6.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/X11R6/bin:/usr/games:/opt/bin:/usr/lib/mit/bin:/usr/lib/mit/sbin:/sbin:/usr/sbin:.:/usr/lib/qt3/bin
-PWD=/u/andre.vanderwesthuysen
+PWD=/u/$USER
 LANG=en_US.UTF-8
 SHLVL=1
-HOME=/u/andre.vanderwesthuysen
-LOGNAME=andre.vanderwesthuysen
-NWPSdir=/lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/nwps/nwps.v1.5.0/
-GLWdir=/lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/glwu/glwu.v2.0.0/
-VALIDATIONdir=/lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/nwps_para
+HOME=/u/$USER
+LOGNAME=$USER
+NWPSdir=/lfs/h2/emc/couple/noscrub/$USER/nwps/nwps.v1.5.0/
+GLWdir=/lfs/h2/emc/couple/noscrub/$USER/glwu/glwu.v2.0.0/
+VALIDATIONdir=/lfs/h2/emc/couple/noscrub/$USER/nwps_para
 _=/usr/bin/env
 
 # GLWU development crons
@@ -18,10 +18,10 @@ glwu_ver='v2.0.0'
 */5 * * * *      ${GLWdir}/dev/lsf_scripts_plots_dangerseas/glwu.cron ${glwu_ver} > ${GLWdir}/dev/lsf_scripts_plots_dangerseas/glwu.cron.out 2>&1
 # GLWU production crons (plotting)
 glwu_ver='v1.1'
-7,17,27,37,47,57 * * * *  /lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/glwu/glwu.${glwu_ver}/dev/lsf_scripts_plots/glwu.cron ${glwu_ver} > /lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/glwu/glwu.${glwu_ver}/dev/lsf_scripts_plots/glwu.cron.out 2>&1 
+7,17,27,37,47,57 * * * *  /lfs/h2/emc/couple/noscrub/$USER/glwu/glwu.${glwu_ver}/dev/lsf_scripts_plots/glwu.cron ${glwu_ver} > /lfs/h2/emc/couple/noscrub/$USER/glwu/glwu.${glwu_ver}/dev/lsf_scripts_plots/glwu.cron.out 2>&1 
 
 #glwu_ver='v1.1.1'
-#7,17,27,37,47,57 * * * *  /lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/glwu/ops/lsf_scripts/glwu.${glwu_ver}/glwu.cron ${glwu.ver} > /lfs/h2/emc/couple/noscrub/andre.vanderwesthuysen/glwu/ops/lsf_scripts/glwu.${glwu_ver}/glwu.cron.out 2>&1
+#7,17,27,37,47,57 * * * *  /lfs/h2/emc/couple/noscrub/$USER/glwu/ops/lsf_scripts/glwu.${glwu_ver}/glwu.cron ${glwu.ver} > /lfs/h2/emc/couple/noscrub/$USER/glwu/ops/lsf_scripts/glwu.${glwu_ver}/glwu.cron.out 2>&1
 
 #Rsync crons from LUNA (Reston)
 #0 0 * * *        ${HOME}/rsync_crons.cron > ${HOME}/cronlog.rsync_crons 2>&1

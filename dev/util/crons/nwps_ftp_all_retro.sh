@@ -33,14 +33,14 @@ while [ "$d" != $enddate ]; do
    do
       #Clean up old directories
       #echo 'Scrubbing /home/ftp/polar/nwps/dev/'${region}'.'${PDYm5}
-      #ssh andre.westhuysen@emcrzdm 'cd /home/ftp/polar/nwps/dev/; rm -r '${region}'.'${PDYm5}
+      #ssh $USER@emcrzdm 'cd /home/ftp/polar/nwps/dev/; rm -r '${region}'.'${PDYm5}
 
       #Check for today's runs
       workdir=/gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/retro/com/nwps/para/${region}.${PDY}
       echo ${workdir}
       if [ -d ${workdir} ]
       then
-         rsync -rav --include=*/ --include='Warn*' --include='*rip*' --include='5m_contour*' --exclude='*' --exclude='PE[0-9][0-9][0-9][0-9]/' ${workdir} andre.westhuysen@vm-lnx-emcrzdm02:/home/ftp/polar/nwps/retro/
+         rsync -rav --include=*/ --include='Warn*' --include='*rip*' --include='5m_contour*' --exclude='*' --exclude='PE[0-9][0-9][0-9][0-9]/' ${workdir} $USER@vm-lnx-emcrzdm02:/home/ftp/polar/nwps/retro/
       fi
    done
 

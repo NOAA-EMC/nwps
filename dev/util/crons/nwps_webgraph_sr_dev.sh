@@ -22,7 +22,7 @@ do
    #datafound='false'
    #for cycle in $cycles
    #do
-   workdir=/lfs/h2/emc/ptmp/andre.vanderwesthuysen/com/nwps/v1.5.0/${region}.${PDY}/${wfo}
+   workdir=/lfs/h2/emc/ptmp/$USER/com/nwps/v1.5.0/${region}.${PDY}/${wfo}
    echo ${workdir}
    cd ${workdir}
    cycle=$(ls -t | head -1)
