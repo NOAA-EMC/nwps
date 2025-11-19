@@ -155,21 +155,22 @@ export WAVECPS="gfswave.CCTX55.spec.swan"
 # INPUT FILES WITH NOT COMMENT CHARACTER
 #
 #$BOUNDARY COMMAND LINES
-#$UNSTR SWAN BOUNDARY COMMAND LINES - SITE CRP
-#$ S OPEN GRID BOUNDARY
-#$BOUNDspec SIDE 51 CCW CON FILE 'gfswave.CCTX51.spec.swan' 1
-#$BOUNDspec SIDE 52 CCW CON FILE 'gfswave.CCTX52.spec.swan' 1
-#$BOUNDspec SIDE 53 CCW CON FILE 'gfswave.CCTX53.spec.swan' 1
-#$BOUNDspec SIDE 54 CCW CON FILE 'gfswave.CCTX54.spec.swan' 1
-#$BOUNDspec SIDE 55 CCW CON FILE 'gfswave.CCTX55.spec.swan' 1
-#$ E OPEN GRID BOUNDARY
-#$BOUNDspec SIDE 56 CCW CON FILE 'gfswave.CCTX56.spec.swan' 1
-#$BOUNDspec SIDE 57 CCW CON FILE 'gfswave.CCTX57.spec.swan' 1
-#$BOUNDspec SIDE 58 CCW CON FILE 'gfswave.CCTX58.spec.swan' 1
-#$BOUNDspec SIDE 59 CCW CON FILE 'gfswave.CCTX59.spec.swan' 1
-#$BOUNDspec SIDE 60 CCW CON FILE 'gfswave.CCTX60.spec.swan' 1
-#$BOUNDspec SIDE 61 CCW CON FILE 'gfswave.CCTX61.spec.swan' 1
-#$END BOUNSEG for UNSTR SWAN
+#BOUN SEG XY 263.00 26.00 265.00 26.00 VAR FILE 0.00 'gfswave.CCTX51.spec.swan'    1 &
+#         0.50 'gfswave.CCTX52.spec.swan'    1 &
+#         1.00 'gfswave.CCTX53.spec.swan'    1 &
+#         1.50 'gfswave.CCTX54.spec.swan'    1 &
+#         2.00 'gfswave.CCTX55.spec.swan'    1
+#$
+#$CRP Eastern Side of grid. (point 61 (-95W/28.8) to point 55 (-95W/26N)
+#$
+#BOUN SEG XY 265.00 28.80 265.00 26.00 VAR FILE 0.00 'gfswave.CCTX61.spec.swan'    1 &
+#         0.30 'gfswave.CCTX60.spec.swan'    1 &
+#         0.80 'gfswave.CCTX59.spec.swan'    1 &
+#         1.30 'gfswave.CCTX58.spec.swan'    1 &
+#         1.80 'gfswave.CCTX57.spec.swan'    1 &
+#         2.30 'gfswave.CCTX56.spec.swan'    1 &
+#         2.80 'gfswave.CCTX55.spec.swan.cp' 1
+#$END BOUNSEG
 #
 #========================================================================
 #                    RIP CURRENT PROGRAM (SEE NWPS MANUAL)              =

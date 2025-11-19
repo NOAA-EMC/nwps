@@ -20,6 +20,7 @@ tar -C ${NWPSdir}/fix/bathy_db/ -xvf ${NWPSdir}/fix/bathy_db_v1-5.tar
 rm ${NWPSdir}/fix/bathy_db_v1-5.tar
 
 rm -rf ${NWPSdir}/fix/bathy_db/sew
+rm -rf ${NWPSdir}/fix/bathy_db/crp
 scp /lfs/h2/emc/couple/noscrub/ali.salimi/git/fv3gfs/fix/fix_nwps/v_1p5/fix/bathy_db_v1p5.tar ${NWPSdir}/fix/
 tar -C ${NWPSdir}/fix/bathy_db/ -xvf ${NWPSdir}/fix/bathy_db_v1p5.tar
 rm ${NWPSdir}/fix/bathy_db_v1p5.tar
