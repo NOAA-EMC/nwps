@@ -554,10 +554,10 @@ if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "TBW" ] || [ "${SITEID}" == "MFL
    || [ "${SITEID}" == "MOB" ] || [ "${SITEID}" == "HGX" ] \
    || [ "${SITEID}" == "LOX" ] || [ "${SITEID}" == "MTR" ] \
    || [ "${SITEID}" == "EKA" ] || [ "${SITEID}" == "MFR" ] \
-   || [ "${SITEID}" == "PQR" ] || [ "${SITEID}" == "SEW" ] \
+   || [ "${SITEID}" == "PQR" ] \
    || [ "${SITEID}" == "AER" ] || [ "${SITEID}" == "AFG" ] \
    || [ "${SITEID}" == "AJK" ] \
-   || [ "${SITEID}" == "BRO" ] || [ "${SITEID}" == "CRP" ] \
+   || [ "${SITEID}" == "BRO" ] \
    || [ "${SITEID}" == "LCH" ] || [ "${SITEID}" == "LIX" ] \
    || [ "${SITEID}" == "LWX" ]
 then
