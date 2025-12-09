@@ -22,17 +22,17 @@
 #
 # -----------------------------------------------------------
 
-#PBS -N hfo_po_cgn
+#PBS -N trans_cgn
 #PBS -j oe
 #PBS -S /bin/bash
-#PBS -q dev
+#PBS -q dev_transfer
 #PBS -A NWPS-DEV
-#PBS -l walltime=02:00:00
+#PBS -l walltime=03:00:00
 #PBS -l select=1:ncpus=1
 #PBS -l debug=true
 #PBS -V
-#PBS -o /u/$USER/nwps_hfo_post_cgn.o
-#PBS -e /u/$USER/nwps_hfo_post_cgn.o
+#PBS -o /lfs/h2/emc/couple/noscrub/$USER/nwps_para/graphics_cgn_dev/nwps_trans_cgn_dev.o
+#PBS -e /lfs/h2/emc/couple/noscrub/$USER/nwps_para/graphics_cgn_dev/nwps_trans_cgn_dev.o
 
 cd $PBS_O_WORKDIR
 
@@ -46,5 +46,5 @@ module load python/3.8.6
 module list
 
 
-${workdir}/plot_cgn_fields_wfo.sh "pr" "hfo" > ${workdir}/plot_cgn_fields_hfo.log 2>&1
+${workdir}/trans_cgn_fields_wfo.sh
 

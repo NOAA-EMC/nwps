@@ -22,20 +22,11 @@
 #
 # ----------------------------------------------------------- 
 
-#PBS -N n_rips_%WFO%
-#PBS -j oe
-#PBS -S /bin/bash
-#PBS -q dev
-#PBS -A NWPS-DEV
-#PBS -l walltime=01:00:00
-#PBS -l select=1:ncpus=1
-#PBS -l debug=true
-#PBS -V
-#PBS -o /lfs/h2/emc/couple/noscrub/$USER/nwps_para/validation_prod/nwps_plot_rips_%WFO%.o
-#PBS -e /lfs/h2/emc/couple/noscrub/$USER/nwps_para/validation_prod/nwps_plot_rips_%WFO%.o
+echo 'Running run_nwps_validation.sh...'
 
-module load intel/19.1.3.304
-module load wgrib2/2.0.8
-module load python/3.8.6
-
-${workdir}/run_nwps_rips_prod.sh '%REGION%' '%WFO%' 'CG1'
+cd $workdir
+pwd
+scp ${workdir}/nwps_*_ripprob_stat?.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
+scp ${workdir}/nwps_*_ripprob_stat??.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
+scp ${workdir}/nwps_*_ripprob_stat???.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
+scp ${workdir}/*1.rip waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/

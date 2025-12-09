@@ -54,9 +54,3 @@ echo ${2}
 echo ${3}
 python ${workdir}/nwps_plot_rips_6day.py ${1} ${2} ${3}
 
-echo "Copying: nwps_"${2}"_ripprob_stat???.png..."
-echo "Copying: "${2^^}"1.rip..."
-scp ${workdir}/nwps_${2}_ripprob_stat?.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
-scp ${workdir}/nwps_${2}_ripprob_stat??.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
-scp ${workdir}/nwps_${2}_ripprob_stat???.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
-scp ${workdir}/${2^^}1.rip waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
