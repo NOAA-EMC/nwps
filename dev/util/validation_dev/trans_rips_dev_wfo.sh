@@ -24,7 +24,8 @@
 
 echo 'Running run_nwps_validation.sh...'
 
-daily_dir= $workdir/daily_plots/$(date +%Y%m%d)
+export daily_dir=${workdir}/daily_plots/$(date +%Y%m%d)
+cd $daily_dir
 pwd
 
 scp ${daily_dir}/nwps_*_ripprob_stat?.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
