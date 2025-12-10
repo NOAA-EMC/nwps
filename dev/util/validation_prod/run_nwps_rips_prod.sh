@@ -54,3 +54,19 @@ echo ${2}
 echo ${3}
 python ${workdir}/nwps_plot_rips_6day.py ${1} ${2} ${3}
 
+echo "Copying: nwps_"${2}"_ripprob_stat???.png..."
+echo "Copying: "${2^^}"1.rip..."
+
+# === Create local output directory for each day ===
+daily_dir="${workdir}/daily_plots/${STARTDATE}"
+mkdir -p "${daily_dir}"
+
+echo "Copying daily figures to ${daily_dir} ..."
+
+# Copy all possible rip probability plots and the .rip file
+cp -v ${workdir}/nwps_${2}_ripprob_stat?.png "${daily_dir}" 2>/dev/null || true
+cp -v ${workdir}/nwps_${2}_ripprob_stat??.png "${daily_dir}" 2>/dev/null || true
+cp -v ${workdir}/nwps_${2}_ripprob_stat???.png "${daily_dir}" 2>/dev/null || true
+cp -v ${workdir}/${2^^}1.rip "${daily_dir}" 2>/dev/null || true
+
+echo "Figures copied successfully for ${STARTDATE}"
