@@ -24,9 +24,10 @@
 
 echo 'Running run_nwps_validation.sh...'
 
-cd $workdir
+daily_dir= $workdir/daily_plots/$(date +%Y%m%d)
 pwd
-scp ${workdir}/nwps_*_ripprob_stat?.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
-scp ${workdir}/nwps_*_ripprob_stat??.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
-scp ${workdir}/nwps_*_ripprob_stat???.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
-scp ${workdir}/*1.rip waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
+
+scp ${daily_dir}/nwps_*_ripprob_stat?.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
+scp ${daily_dir}/nwps_*_ripprob_stat??.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
+scp ${daily_dir}/nwps_*_ripprob_stat???.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
+scp ${daily_dir}/*1.rip waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
