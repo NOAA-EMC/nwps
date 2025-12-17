@@ -25,7 +25,7 @@
 #PBS -N rsync_nwps
 #PBS -j oe
 #PBS -S /bin/bash
-#PBS -q dev_transfer
+#PBS -q dev
 #PBS -A NWPS-DEV
 #PBS -l walltime=06:00:00
 #PBS -l select=1:ncpus=1:mem=3g

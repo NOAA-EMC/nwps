@@ -236,10 +236,4 @@ cp ${workdir}/nwps_${ENDDATE}_afg_48114_scatter.png ${workdir}/nwps_afg_48114_sc
 cp ${workdir}/nwps_${ENDDATE}_afg_48012_scatter.png ${workdir}/nwps_afg_48012_scatter.png
 cp ${workdir}/nwps_${ENDDATE}_afg_48212_scatter.png ${workdir}/nwps_afg_48212_scatter.png
 
-scp ${workdir}/nwps_??_scatter.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/val_monthly/
-scp ${workdir}/nwps_????_scatter.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/val_monthly/
-scp ${workdir}/nwps_stats_??_ts.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/val_monthly/
-scp ${workdir}/nwps_stats_????_ts.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/val_monthly/
-scp ${workdir}/nwps_???_?????_scatter.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
-scp ${workdir}/nwps_???_????_scatter.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
 
