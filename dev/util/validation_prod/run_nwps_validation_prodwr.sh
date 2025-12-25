@@ -24,8 +24,8 @@
 
 echo 'Running run_nwps_validation_devwr.sh...'
 
-export COMOUT='/lfs/h1/ops/prod/com/nwps/v1.4/'
-export COMOUTm1='/lfs/h1/ops/prod/com/nwps/v1.4/'
+export COMOUT='/lfs/h2/emc/couple/noscrub/ali.salimi/nwps_para/prod/com/nwps/v1.4/'
+export COMOUTm1='/lfs/h2/emc/couple/noscrub/ali.salimi/nwps_para/prod/com/nwps/v1.4/'
 
 cd $workdir
 pwd
@@ -47,8 +47,8 @@ echo 'ENDDATE = '${ENDDATE}
 echo ''
 
 # Run Python validation scripts
-python ${workdir}/nwps_stats_wr_rt30day_6day.py
-python ${workdir}/nwps_stats_prar_rt30day_6day.py
+#python ${workdir}/nwps_stats_wr_rt30day_6day.py
+#python ${workdir}/nwps_stats_prar_rt30day_6day.py
 #
 #cat nwps_val_stats_wr_????????.dat > nwps_val_stats_wr.dat
 #cat nwps_val_stats_prar_????????.dat > nwps_val_stats_prar.dat

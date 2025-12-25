@@ -37,5 +37,5 @@ scp ${workdir}/nwps_stats_????_ts.png waves@emcrzdm:/home/www/polar/nwps/images/
 scp ${workdir}/nwps_???_?????_scatter.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
 scp ${workdir}/nwps_???_????_scatter.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
 
-rm ${workdir}/nwps_??_scatter.png
-rm ${workdir}/nwps_stats_??_ts.png
+#rm ${workdir}/nwps_??_scatter.png
+#rm ${workdir}/nwps_stats_??_ts.png

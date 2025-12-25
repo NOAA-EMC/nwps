@@ -213,3 +213,4 @@ mv ${workdir}/nwps_${STARTDATEm5}_gyx_44032_ts_6day.png ${copydir}/nwps_gyx_4403
 mv ${workdir}/nwps_${STARTDATEm5}_car_44034_ts_6day.png ${copydir}/nwps_car_44034_ts_6day.png
 mv ${workdir}/nwps_${STARTDATEm5}_car_44027_ts_6day.png ${copydir}/nwps_car_44027_ts_6day.png
 
+

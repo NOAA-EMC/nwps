@@ -43,8 +43,8 @@ echo 'ENDDATE = '${ENDDATE}
 echo ''
 
 # Run Python validation scripts
-python ${workdir}/nwps_stats_sr_rt30day_6day.py
-python ${workdir}/nwps_stats_er_rt30day_6day.py
+#python ${workdir}/nwps_stats_sr_rt30day_6day.py
+#python ${workdir}/nwps_stats_er_rt30day_6day.py
 #
 #cat nwps_val_stats_sr_${ENDDATE}.dat >> nwps_val_stats_sr.dat
 #cat nwps_val_stats_er_${ENDDATE}.dat >> nwps_val_stats_er.dat

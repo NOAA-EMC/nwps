@@ -31,8 +31,8 @@
 #PBS -l select=1:ncpus=1
 #PBS -l debug=true
 #PBS -V
-#PBS -o /lfs/h2/emc/couple/noscrub/$USER/nwps_para/validation_prod/nwps_val_rzdm_6day.o
-#PBS -e /lfs/h2/emc/couple/noscrub/$USER/nwps_para/validation_prod/nwps_val_rzdm_6day.o
+#PBS -o /lfs/h2/emc/couple/noscrub/ali.salimi/nwps_para/validation_prod/nwps_val_rzdm_6day.o
+#PBS -e /lfs/h2/emc/couple/noscrub/ali.salimi/nwps_para/validation_prod/nwps_val_rzdm_6day.o
 
 
 ${workdir}/rzdm_transfer_validation_ts_6day_prod.sh 

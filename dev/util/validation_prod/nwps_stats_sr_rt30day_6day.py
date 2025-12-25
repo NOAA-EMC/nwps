@@ -1,5 +1,5 @@
 import matplotlib
-matplotlib.use('Agg',warn=False)  # Use this to run Matplotlib in the background and avoid issues with the X-Server
+#matplotlib.use('Agg',warn=False)  # Use this to run Matplotlib in the background and avoid issues with the X-Server
 
 import sys
 import os
@@ -257,11 +257,11 @@ tmp2 = os.environ.get('ENDDATE')
 startDate=datetime.datetime(int(tmp1[0:4]),int(tmp1[4:6]),int(tmp1[6:8]))
 stopDate=datetime.datetime(int(tmp2[0:4]),int(tmp2[4:6]),int(tmp2[6:8]))
 
-print '-------- In nwps_stat_sr_rt30day.py ---------'
-print 'Computing NWPS statistics:'
-print 'startDate = '+startDate.strftime("%Y/%m/%d")
-print 'stopDate = '+stopDate.strftime("%Y/%m/%d")
-print ''
+print ('-------- In nwps_stat_sr_rt30day.py ---------')
+print ('Computing NWPS statistics:')
+print ('startDate = '+startDate.strftime("%Y/%m/%d"))
+print ('stopDate = '+stopDate.strftime("%Y/%m/%d"))
+print ('')
 
 vname = 'wave_height'
 ibuoy = 0
@@ -273,14 +273,14 @@ for buoy in wfobuoys:
 
     #  Create the full path to the file
     # Example: 'ndbc_buoy_data_20251116/46025.txt'
-     date_str = stopDateObs.strftime('%Y%m%d')
+     date_str = stopDate.strftime('%Y%m%d')
      extract_dir = f'/lfs/h2/emc/vpppg/noscrub/emc.vpppg/verification/global/archive/obs_data/ndbc_buoy/{date_str}'
      full_file_path = os.path.join(extract_dir, buoy_filename)
 
     # 3. Read the data using the full path and date filters
     # Note: We assume your read_ndbc signature is now: read_ndbc(filename, start_date, end_date)
      print(f"Reading data for Buoy {buoy} from {full_file_path}")
-     times, h = read_ndbc(full_file_path, startDate, stopDateObs)
+     times, h = read_ndbc(full_file_path, startDate, stopDate)
      if (len(h) != 0):
         #Read obs (incl. any NaNs) as a masked array
         obstim_withnans = np.array(times)
@@ -482,26 +482,26 @@ for single_date in daterange(startDate,stopDate):
    modtim = [[0 for x in range(TDEF)] for x in range(len(wfos))]
 
    timestamp = single_date.strftime("%Y%m%d")
-   print ''
-   print 'Analysing '+timestamp+'...'
+   print ('')
+   print ('Analysing '+timestamp+'...')
 
    for iwfo in range(len(wfos)):
-      print ''
+      print ('')
       wfo=wfos[iwfo]
       iwfobuoy=iwfo
       wfobuoy=wfobuoys[iwfobuoy]
       region=regions[iwfobuoy]
       CGextract='CG1'
-      print 'Extracting '+region+'.'+timestamp+'/'+wfo+', buoy '+wfobuoy+', on '+CGextract+':'
+      print ('Extracting '+region+'.'+timestamp+'/'+wfo+', buoy '+wfobuoy+', on '+CGextract+':')
 
       for cycle in cycles:
-         print 'Checking cycle '+cycle
+         print ('Checking cycle '+cycle)
          extdir=COMOUT+region+'.'+timestamp+'/'+wfo+'/'+cycle+'/'+CGextract+'/'
          infile=wfo+'_nwps_'+CGextract+'_'+timestamp+'_'+cycle+'00.grib2'
 
          if os.path.isfile(extdir+infile):
             if (os.stat(extdir+infile).st_size !=0):
-               print 'Data found. Extracting at buoy locations...'
+               print ('Data found. Extracting at buoy locations...')
                command = 'cp '+extdir+infile+' '+workdir
                os.system(command)
 
@@ -518,9 +518,9 @@ for single_date in daterange(startDate,stopDate):
 
    for iwfo in range(len(wfos)):
    #for ibuoy in range(len(allBuoys)):
-      print ''
+      print ('')
       wfo=wfos[iwfo]
-      print 'Reading pnt data from '+region+'.'+timestamp+'/'+wfo+':'
+      print ('Reading pnt data from '+region+'.'+timestamp+'/'+wfo+':')
 
       #for iwfobuoy in range(len(wfobuoys[iwfo][:])):
       iwfobuoy=iwfo
@@ -531,11 +531,11 @@ for single_date in daterange(startDate,stopDate):
       for cycle in cycles:
          if datafound == 'true':
             continue
-         print 'Search for '+wfobuoy+' cycle '+cycle 
+         print ('Search for '+wfobuoy+' cycle '+cycle)
          infile = wfo+'_'+wfobuoy+'_'+varname[0]+'_'+timestamp+'_'+cycle+'00.pnt'
          if (os.path.isfile(infile)):
             if (os.stat(infile).st_size > 0):
-               print 'Reading file '+infile
+               print ('Reading file '+infile)
                datafound = 'true'
                fo = open(workdir+infile, "r")
                for tstep in range(TDEF):
@@ -566,7 +566,7 @@ for single_date in daterange(startDate,stopDate):
          else:
             continue
       if (datafound == 'false'):
-         print ' *** Warning: no model data found'
+         print (' *** Warning: no model data found')
          for tstep in range(TDEF):
             modpar[iwfobuoy][tstep] = np.nan
             modtim[iwfobuoy][tstep] = np.nan
@@ -687,11 +687,11 @@ for ipanel in np.arange(1,7):
    sistr = "SI = %6.3f"% (si)
    nstr = 'N = '+str(len(temp))
 
-   print ''
-   print '--- Final stats for '+figtitle+' ('+startDate.strftime("%Y/%m/%d")+'-'+stopDate.strftime("%Y/%m/%d")+'):'
-   print biasstr
-   print sistr
-   print nstr
+   print ('')
+   print ('--- Final stats for '+figtitle+' ('+startDate.strftime("%Y/%m/%d")+'-'+stopDate.strftime("%Y/%m/%d")+'):')
+   print (biasstr)
+   print (sistr)
+   print (nstr)
 
    bs_array[ipanel] = "%6.3f"% (relbias)
    si_array[ipanel] = "%6.3f"% (si)
@@ -724,6 +724,6 @@ text_file = open(ofilenm, "w")
 text_file.write("%s" % outstring)
 text_file.close()
 
-print '-------- Exiting nwps_stat_sr_rt30day.py ---------'
-print ''
+print ('-------- Exiting nwps_stat_sr_rt30day.py ---------')
+print ('')
 

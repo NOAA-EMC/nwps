@@ -28,7 +28,7 @@ cd $workdir
 pwd
 
 # Cleanup
-rm ${workdir}/nwps_???_?????_ts.png
+#rm ${workdir}/nwps_???_?????_ts.png
 
 #----- Set start and end dates of real-time analysis -----
 export STARTDATE=$(date +%Y%m%d)

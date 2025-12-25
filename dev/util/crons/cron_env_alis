@@ -5,18 +5,15 @@ SHLVL=1
 HOME=/u/ali.salimi
 LOGNAME=ali.salimi
 NWPSdir=/lfs/h2/emc/couple/noscrub/ali.salimi/nwps/nwps.v1.5.0/
-#NWPSdir_alis=/lfs/h2/emc/couple/noscrub/ali.salimi/work/nwps.v1.5.1/
-NWPSdir_alis2=/lfs/h2/emc/couple/noscrub/ali.salimi/work/nwps.v1.5.2/
-NWPSdir_stofs=/lfs/h2/emc/couple/noscrub/ali.salimi/nwps/nwps.v1.4.23/
-#GLWdir=/lfs/h2/emc/couple/noscrub/ali.salimi/glwu/glwu.v2.0.0/
 VALIDATIONdir=/lfs/h2/emc/couple/noscrub/ali.salimi/nwps_para
 _=/usr/bin/env
 
 # 0. Retrospectives --------------------------
 #6 * * * *       ${HOME}/nwps_ret_extract.cron > ${HOME}/cronlog.dev.nwps_ret_extract 2>&1
-#*/10 * * * *     ${HOME}/nwps_ret.cron > ${HOME}/cronlog.dev.nwps_ret 2>&1
-#0 2 * * *        ${HOME}/nwps_rsync_ret.cron > ${HOME}/cronlog.ret.nwps_rsync 2>&1
+*/10 * * * *     ${HOME}/nwps_ret.cron > ${HOME}/cronlog.dev.nwps_ret 2>&1
+0 2 * * *        ${HOME}/nwps_rsync_ret.cron > ${HOME}/cronlog.ret.nwps_rsync 2>&1
 #*/10 * * * *     ${HOME}/nwps_ftp_all_retro.cron > ${HOME}/cronlog.retro_all.nwps_ftp 2>&1
+
 
 # 1. Development crons -----------------------
 
@@ -28,7 +25,7 @@ _=/usr/bin/env
 */5 * * * *      ${HOME}/nwps.cron > ${HOME}/cronlog.dev.nwps 2>&1
 
 # 1.1 Model data
-0 2 * * *        ${HOME}/nwps_rsync_dev.cron > ${HOME}/cronlog.dev.nwps_rsync 2>&1
+0 */2 * * *        ${HOME}/nwps_rsync_dev.cron > ${HOME}/cronlog.dev.nwps_rsync 2>&1
 */10 * * * *     ${HOME}/nwps_ftp_all_dev.cron > ${HOME}/cronlog.para.nwps_ftp 2>&1
 
 # 1.2 Web graphics
@@ -39,11 +36,11 @@ _=/usr/bin/env
 15 */3 * * *        ${HOME}/nwps_trans_rips_dev.cron > ${HOME}/cronlog.trans_rips_dev 2>&1
 
 # 1.3 Validation
-0 6 * * *        ${HOME}/nwps_val_dev.cron > ${HOME}/cronlog.dev.nwps_val 2>&1
-0 6 * * *        ${HOME}/nwps_val_devwr.cron > ${HOME}/cronlog.devwr.nwps_val 2>&1
-0 * * * *        ${HOME}/nwps_val_rt_dev.cron > ${HOME}/cronlog.dev.nwps_val_rt 2>&1
-0 * * * *        ${HOME}/nwps_val_rt_devwr.cron > ${HOME}/cronlog.devwr.nwps_val_rt 2>&1
-0 * * * *        ${HOME}/nwps_val_rt_dev_prar.cron > ${HOME}/cronlog.dev_prar.nwps_val_rt 2>&1
+0 */6 * * *        ${HOME}/nwps_val_dev.cron > ${HOME}/cronlog.dev.nwps_val 2>&1
+0 */6 * * *        ${HOME}/nwps_val_devwr.cron > ${HOME}/cronlog.devwr.nwps_val 2>&1
+30 */3 * * *        ${HOME}/nwps_val_rt_dev.cron > ${HOME}/cronlog.dev.nwps_val_rt 2>&1
+30 */3 * * *        ${HOME}/nwps_val_rt_devwr.cron > ${HOME}/cronlog.devwr.nwps_val_rt 2>&1
+30 */3 * * *        ${HOME}/nwps_val_rt_dev_prar.cron > ${HOME}/cronlog.dev_prar.nwps_val_rt 2>&1
 
 45 7 * * *        ${HOME}/nwps_val_rt_dev_6day.cron > ${HOME}/cronlog.dev.nwps_val_rt_6day 2>&1
 15 8 * * *        ${HOME}/nwps_val_rt_devwr_6day.cron > ${HOME}/cronlog.devwr.nwps_val_rt_6day 2>&1
@@ -54,7 +51,7 @@ _=/usr/bin/env
 # 2. Production crons -----------------------
 
 # 2.1 Model data
-0 2 * * *        ${HOME}/nwps_rsync_prod.cron > ${HOME}/cronlog.prod.nwps_rsync 2>&1
+0 */2 * * *        ${HOME}/nwps_rsync_prod.cron > ${HOME}/cronlog.prod.nwps_rsync 2>&1
 #*/10 * * * *     ${HOME}/nwps_ftp_all_prod.cron > ${HOME}/cronlog.para.nwps_ftp 2>&1
 #*/30 * * * *     ${HOME}/nwps_ftp_protide_prod.cron > ${HOME}/cronlog.prod.nwps_ftp_protide 2>&1
 
@@ -66,11 +63,11 @@ _=/usr/bin/env
 15 */3 * * *        ${HOME}/nwps_trans_rips_prod.cron > ${HOME}/cronlog.trans_rips_prod 2>&1
 
 # 2.3 Validation
-0 6 * * *        ${HOME}/nwps_val_prod.cron > ${HOME}/cronlog.prod.nwps_val 2>&1
-0 6 * * *        ${HOME}/nwps_val_prodwr.cron > ${HOME}/cronlog.prodwr.nwps_val 2>&1
-0 * * * *        ${HOME}/nwps_val_rt_prod.cron > ${HOME}/cronlog.prod.nwps_val_rt 2>&1
-0 * * * *        ${HOME}/nwps_val_rt_prodwr.cron > ${HOME}/cronlog.prodwr.nwps_val_rt 2>&1
-0 * * * *        ${HOME}/nwps_val_rt_prod_prar.cron > ${HOME}/cronlog.prod_prar.nwps_val_rt 2>&1
+0 */6 * * *        ${HOME}/nwps_val_prod.cron > ${HOME}/cronlog.prod.nwps_val 2>&1
+0 */6 * * *        ${HOME}/nwps_val_prodwr.cron > ${HOME}/cronlog.prodwr.nwps_val 2>&1
+30 */3 * * *        ${HOME}/nwps_val_rt_prod.cron > ${HOME}/cronlog.prod.nwps_val_rt 2>&1
+30 */3 * * *        ${HOME}/nwps_val_rt_prodwr.cron > ${HOME}/cronlog.prodwr.nwps_val_rt 2>&1
+30 */3 * * *        ${HOME}/nwps_val_rt_prod_prar.cron > ${HOME}/cronlog.prod_prar.nwps_val_rt 2>&1
 ## 1.4 rzdm transfer
 30 10 * * *        ${HOME}/nwps_val_prod_rzdm.cron > ${HOME}/cronlog.nwps_val_rzdm_transfer_prod.cron 2>&1
 

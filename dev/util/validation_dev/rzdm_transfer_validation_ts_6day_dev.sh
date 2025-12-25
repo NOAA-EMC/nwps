@@ -29,7 +29,7 @@ pwd
 
 #----- Set start and end dates of real-time analysis -----
 export STARTDATE=$(date +%Y%m%d)
-export STARTDATEm2=$(date -d "-5 days" +%Y%m%d)
+export STARTDATEm2=$(date -d "-6 days" +%Y%m%d)
 
 export copydir=${workdir}/${STARTDATEm2}
 
@@ -59,5 +59,5 @@ scp ${workdir}/nwps_stats_????_ts.png waves@emcrzdm:/home/www/polar/nwps/para/im
 scp ${workdir}/nwps_???_?????_scatter.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
 scp ${workdir}/nwps_???_????_scatter.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
 
-rm ${workdir}/nwps_??_scatter.png
-rm ${workdir}/nwps_stats_??_ts.png
+#rm ${workdir}/nwps_??_scatter.png
+#rm ${workdir}/nwps_stats_??_ts.png

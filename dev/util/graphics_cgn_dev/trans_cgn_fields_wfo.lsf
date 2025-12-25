@@ -31,8 +31,8 @@
 #PBS -l select=1:ncpus=1
 #PBS -l debug=true
 #PBS -V
-#PBS -o /lfs/h2/emc/couple/noscrub/$USER/nwps_para/graphics_cgn_dev/nwps_trans_cgn_dev.o
-#PBS -e /lfs/h2/emc/couple/noscrub/$USER/nwps_para/graphics_cgn_dev/nwps_trans_cgn_dev.o
+#PBS -o /lfs/h2/emc/couple/noscrub/ali.salimi/nwps_para/graphics_cgn_dev/nwps_trans_cgn_dev.o
+#PBS -e /lfs/h2/emc/couple/noscrub/ali.salimi/nwps_para/graphics_cgn_dev/nwps_trans_cgn_dev.o
 
 cd $PBS_O_WORKDIR
 
