@@ -45,18 +45,27 @@ export TSTEP="1"
 # nested grids. Change this only if you know what you are doing.
 # You can choose STA or NON for a particular nested grid.
 #  
-export NESTGRIDS="1"
+export NESTGRIDS="2"
 export NESTINCG1="YES"
 #
-# Wind-only domain
-export NEST1INCG1="NO"
-export NELATN1="49.42"
-export NELONN1="-121.91"
-export SWLATN1="46.10"
-export SWLONN1="-127.00"
-export RESN1="5.0"
+# Grays Harbor Bar
+export NELATN1="47.01"
+export NELONN1="-124.10"
+export SWLATN1="46.84"
+export SWLONN1="-124.26"
+export RESN1="0.25"
 export TSTEPN1="1"
 export STATN1="NON"
+#
+# Wind-only domain
+export NEST2INCG1="NO"
+export NELATN2="49.42"
+export NELONN2="-121.91"
+export SWLATN2="46.10"
+export SWLONN2="-127.00"
+export RESN2="5.0"
+export TSTEPN2="1"
+export STATN2="NON"
 #
 #========================================================================
 #                    SPECTRA OUTPUT LOCATIONS                           =
