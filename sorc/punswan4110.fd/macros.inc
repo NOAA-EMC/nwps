@@ -4,8 +4,8 @@
 F90_SER = ifort
 F90_OMP = ifort
 F90_MPI = ftn
-FLAGS_OPT = -c
-FLAGS_MSC = -O1 -g -traceback
+FLAGS_OPT = -check all
+FLAGS_MSC = -O2 -g -traceback
 FLAGS90_MSC = $(FLAGS_MSC)
 FLAGS_DYN = -fPIC
 FLAGS_SER =
