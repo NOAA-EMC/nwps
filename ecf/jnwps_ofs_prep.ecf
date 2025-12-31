@@ -19,6 +19,8 @@ module load cray-pals/${cray_pals_ver}
 module load cfp/${cfp_ver}
 module load wgrib2/${wgrib2_ver}
 module load python/${python_ver}
+module load emapf-c/${emapfc_ver}
+module load degrib/${degrib_ver}
 module list
 
 export FORT_BUFFERED=true
