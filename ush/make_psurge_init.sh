@@ -45,7 +45,8 @@ myPWD=$(pwd)
 
 # Set our purging varaibles
 PSURGEPURGEdays="5"
-export DEGRIB=${EXECnwps}/degrib
+export DEGRIB=${DEGRIB}
+#export DEGRIB=${EXECnwps}/degrib
 #export DEGRIB=/nwprod2/grib_util.v1.0.0/exec/degrib2
 PSURGE2NWPS=${EXECnwps}/exec/psurge2nwps
 

@@ -62,7 +62,8 @@ if [ "${USHnwps}" == "" ]
 fi
 
 echo "------- Running make_psurge_final.sh -------"
-export DEGRIB=${EXECnwps}/degrib
+export DEGRIB=${DEGRIB}
+#export DEGRIB=${EXECnwps}/degrib
 #export DEGRIB=/nwprod2/grib_util.v1.0.0/exec/degrib2
 PSURGE2NWPS=${EXECnwps}/psurge2nwps
 

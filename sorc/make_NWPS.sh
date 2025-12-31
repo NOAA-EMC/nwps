@@ -87,14 +87,14 @@ export NETCDF_LIBRARIES=${NWPSdir}/lib/netcdf/${netcdf_ver}/lib
 export HDF5_LIBRARIES=${NWPSdir}/lib/hdf5/${hdf5_ver}/lib
 
 #FOR DEGRIB
-echo "================== FOR DEGRIB : make_degrib-2.15.sh =================="
-cd ${NWPSdir}/sorc
-./make_degrib-2.15.sh
-rc=$?
-if [[ $rc -ne 0 ]] ; then
-    echo "Fatal error in building degrib-2.15."
-    echo "The log file is in sorc/degrib-2.15.cd/degrib_build.log"
-fi
+#echo "================== FOR DEGRIB : make_degrib-2.15.sh =================="
+#cd ${NWPSdir}/sorc
+#./make_degrib-2.15.sh
+#rc=$?
+#if [[ $rc -ne 0 ]] ; then
+#    echo "Fatal error in building degrib-2.15."
+#    echo "The log file is in sorc/degrib-2.15.cd/degrib_build.log"
+#fi
 
 #FOR SWAN (REGULAR GRID)
 echo "================== FOR SWAN (REGULAR GRID) : make_swan.sh  =================="

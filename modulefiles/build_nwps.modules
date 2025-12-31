@@ -36,5 +36,6 @@ module load g2c/${g2c_ver}
 module load w3nco/${w3nco_ver}
 module load bacio/${bacio_ver}
 module load emapf-c/${emapfc_ver}
+module load degrib/${degrib_ver}
 # used for io buffering
 #module load iobuf/${iobuf_ver}
