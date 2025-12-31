@@ -13,3 +13,5 @@ export w3nco_ver=2.4.1
 export bacio_ver=2.4.1
 export hdf5_ver=1.8.9
 export netcdf_ver=4.2
+export emapfc_ver=1.0.0
+

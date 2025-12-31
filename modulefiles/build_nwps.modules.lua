@@ -35,3 +35,4 @@ load("g2c/"..os.getenv("g2c_ver"))
 -- used for multiwavegrib1 and grib2
 load("w3nco/"..os.getenv("w3nco_ver"))
 load("bacio/"..os.getenv("bacio_ver"))
+load("emapf-c/"..os.getenv("emapfc_ver"))
