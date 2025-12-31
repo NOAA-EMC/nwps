@@ -13,7 +13,8 @@ CC      = $(C_COMP)
 # Various directories
 BINDIR = ../../exec
 LIBDIR = ../../lib
-EMAPF_SRC = $(LIBDIR)/sorc/emapf-c
+#EMAPF_SRC = $(LIBDIR)/sorc/emapf-c
+EMAPF_SRC = $(EMAPF_INC)/sorc/emapf-c
 GD_SRC = /usr/include
 
 # Compiler flags
@@ -33,7 +34,8 @@ INC    += -I$(GD_SRC)
 CFLAGS += -I. $(INC)
 
 # Libraries and linker flags
-EMAPF_LIB = $(LIBDIR)/libemapf.a
+#EMAPF_LIB = $(LIBDIR)/libemapf.a
+EMAPF_LIB = $(EMAPF_INC)/libemapf.a
 GD_LIB = -L /usr/lib64/ -lgd
 LIBS    = $(G2C_LIB) $(GD_LIB) $(PNG_LIB) $(Z_LIB) $(JASPER_LIB) $(EMAPF_LIB)
 LDFLAGS =

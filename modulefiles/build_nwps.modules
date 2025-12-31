@@ -35,5 +35,6 @@ module load g2c/${g2c_ver}
 # used for multiwavegrib1 and grib2
 module load w3nco/${w3nco_ver}
 module load bacio/${bacio_ver}
+module load emapf-c/${emapfc_ver}
 # used for io buffering
 #module load iobuf/${iobuf_ver}

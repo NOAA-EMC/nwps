@@ -28,9 +28,9 @@ cd ${NWPSdir}/sorc/degrib-2.15.cd/
 ./build.sh degrib-2.15 clean | tee -a ${srcDir}/degrib-2.15.cd/degrib_build.log
 
 # Build libemapf.a
-echo "Building libemapf.a..." | tee -a ${srcDir}/degrib-2.15.cd/degrib_build.log
-cd ${NWPSdir}/lib/sorc/emapf-c
-make clean install | tee -a ${srcDir}/degrib-2.15.cd/degrib_build.log
+#echo "Building libemapf.a..." | tee -a ${srcDir}/degrib-2.15.cd/degrib_build.log
+#cd ${NWPSdir}/lib/sorc/emapf-c
+#make clean install | tee -a ${srcDir}/degrib-2.15.cd/degrib_build.log
 
 # Build libgd.a
 #echo "Building libgd.a..." | tee -a ${srcDir}/degrib-2.15.cd/degrib_build.log
