@@ -5,6 +5,3 @@
 sorc/emapf-c/Makefile
 sorc/libaat/Makefile
 
-# SWAN macros rewritten during build
-sorc/punswan4110.fd/macros.inc
-sorc/swan.fd/macros.inc
