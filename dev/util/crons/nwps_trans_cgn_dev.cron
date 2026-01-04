@@ -1,26 +1,13 @@
 #!/bin/bash  
 # --------------------------------------------------------------------------- #
 #                                                                             #
-# nwps_plot_cgn_dev.cron : Cron manages the running of the NWPS script to     #
-#             plot plot_cgn_fields_sr.lsf                                     #
+# nwps_trans_cgn_dev.cron : Cron manages the running of the NWPS script to    #
+#             ${workdir}/trans_cgn_fields_wfo.lsf                             #
 #                                                                             #
-# Remarks   - Can be run interactively, or from LL.                           #
+# Remarks   - Set the WFOs to process in ${NWPSdir}/parm/wfo_dev.tbl          #
 #                                                                             #
-# Last Changed : 01-23-2021                                     January 2021  #
+# Last Changed : 01-03-2026                                     January 2026  #
 # --------------------------------------------------------------------------- #
-
-# Set up the modules
-
-#module use /gpfs/hps/nco/ops/nwpara/modulefiles
-#module load prod_envir
-#module load prod_util
-#module load grib_util/1.0.3
-#module load alps
-
-#module use /gpfs/hps3/emc/marine/noscrub/Todd.Spindler/modulefiles
-#module load anaconda_no_mpi
-
-#module list
 
 # 0.a Set necessary variables
 export workdir=${VALIDATIONdir}'/graphics_cgn_dev'

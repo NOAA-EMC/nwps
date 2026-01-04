@@ -1,14 +1,14 @@
 #!/bin/bash  
 # --------------------------------------------------------------------------- #
 #                                                                             #
-# nwps_val_rt_dev.cron : This script manages the running of the script        #
-#             ${workdir}/nwps_validation_dev.lsf                              #
+# nwps_val_prod_rzdm.cron : Cron manages the running of the NWPS script       #
+#             ${workdir}/nwps_validation_prod_rzdm.lsf                        #
 #                                                                             #
-# Remarks   - Set the WFOs to process in ${NWPSdir}/parm/wfo_dev.tbl          #
+# Remarks   - Set the WFOs to process in ${NWPSdir}/parm/wfo_prod.tbl          #
+#
 #                                                                             #
-# Last Changed : 12-05-2015                                    December 2015  #
+# Last Changed : 01-03-2026                                     January 2026  #
 # --------------------------------------------------------------------------- #
-
 # Set up the modules
 
 #. /usrx/local/Modules/3.2.9/init/bash

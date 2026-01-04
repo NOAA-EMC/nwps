@@ -1,14 +1,13 @@
 #!/bin/bash  
 # --------------------------------------------------------------------------- #
 #                                                                             #
-# nwps_rips_dev.cron : This script manages the running of the parallel script #
-#                      nwps_plot_runup_6day.py                                #
+# nwps_trans_rips_dev.cron : Cron manages the running of the NWPS script      #
+#             ${workdir}/trans_rips_dev_wfo.lsf                               #
 #                                                                             #
 # Remarks   - Set the WFOs to process in ${NWPSdir}/parm/wfo_dev.tbl          #
 #                                                                             #
-# Last Changed : 06-14-2022                                        June 2022  #
+# Last Changed : 01-03-2026                                     January 2026  #
 # --------------------------------------------------------------------------- #
-
 # Set up the modules
 
 #. /usrx/local/Modules/3.2.9/init/bash
