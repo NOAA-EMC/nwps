@@ -17,8 +17,8 @@
 #PBS -l select=1:ncpus=1
 #PBS -l debug=true
 #PBS -V
-#PBS -o /u/$USER/nwps_webwr.o
-#PBS -e /u/$USER/nwps_webwr.o
+#PBS -o /lfs/h2/emc/ptmp/ali.salimi/com/nwps/v1.5.0/nwps_webwr.o
+#PBS -e /lfs/h2/emc/ptmp/ali.salimi/com/nwps/v1.5.0/nwps_webwr.o
 
 #mpirun.lsf cfp /u/$USER/wfo_cmdfile
 /u/$USER/nwps_webgraph_wr_prod.sh > ${HOME}/nwps_web_wr.log 2>&1

@@ -17,7 +17,7 @@
 #PBS -l select=1:ncpus=1
 #PBS -l debug=true
 #PBS -V
-#PBS -o /u/$USER/nwps_ftp_protide.o
-#PBS -e /u/$USER/nwps_ftp_protide.o
+#PBS -o /lfs/h2/emc/ptmp/ali.salimi/com/nwps/v1.5.0/nwps_ftp_protide.o
+#PBS -e /lfs/h2/emc/ptmp/ali.salimi/com/nwps/v1.5.0/nwps_ftp_protide.o
 
 /u/$USER/nwps_ftp_protide_prod.sh > ${HOME}/nwps_ftp_protide_prod.log 2>&1
