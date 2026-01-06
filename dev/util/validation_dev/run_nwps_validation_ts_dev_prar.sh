@@ -28,7 +28,7 @@ cd $workdir
 pwd
 
 # Cleanup
-rm ${workdir}/nwps_???_?????_ts.png
+#rm ${workdir}/nwps_???_?????_ts.png
 
 #----- Set start and end dates of real-time analysis -----
 export STARTDATE=$(date +%Y%m%d)
@@ -37,12 +37,12 @@ export STARTDATEm2=$(date -d "-2 days" +%Y%m%d)
 #export STARTDATE=$(date -d "-2 days" +%Y%m%d)
 export ENDDATE=$(date -d "+6 days" +%Y%m%d)
 
-export COMOUT='/lfs/h2/emc/ptmp/$USER/com/nwps/v1.5.0/'
-export COMOUTm1='/lfs/h2/emc/ptmp/$USER/com/nwps/v1.5.0/'
-export COMOUTm2='/lfs/h2/emc/ptmp/$USER/com/nwps/v1.5.0/'
-export COMOUTww1='/lfs/h1/ops/prod/com/gfs/v16.2/'
-export COMOUTww1_m1='/lfs/h1/ops/prod/com/gfs/v16.2/'
-export COMOUTww1_m2='/lfs/h1/ops/prod/com/gfs/v16.2/'
+export COMOUT='/lfs/h2/emc/ptmp/ali.salimi/com/nwps/v1.5.0/'
+export COMOUTm1='/lfs/h2/emc/ptmp/ali.salimi/com/nwps/v1.5.0/'
+export COMOUTm2='/lfs/h2/emc/ptmp/ali.salimi/com/nwps/v1.5.0/'
+export COMOUTww1='/lfs/h1/ops/prod/com/gfs/v16.3/'
+export COMOUTww1_m1='/lfs/h1/ops/prod/com/gfs/v16.3/'
+export COMOUTww1_m2='/lfs/h1/ops/prod/com/gfs/v16.3/'
 
 echo ''
 echo 'Analysing real-time data for:'
@@ -171,3 +171,11 @@ do
    rm ${STARTDATEm2}.${ww1_infile2}${hhh}'.grib2'
 done
 
+# === Create local output directory for each day ===
+daily_dir="${workdir}/daily_plots/${STARTDATE}"
+mkdir -p "${daily_dir}"
+
+echo "Copying daily figures to ${daily_dir} ..."
+
+# Copy all possible rip probability plots and the .rip file
+run_nwps_validation_ts_devwr.shcp -v ${workdir}/nwps_*_ts.png "${daily_dir}" 2>/dev/null || true

@@ -25,14 +25,14 @@
 #PBS -N lix_po_cgn
 #PBS -j oe
 #PBS -S /bin/bash
-#PBS -q dev_transfer
+#PBS -q dev
 #PBS -A NWPS-DEV
 #PBS -l walltime=02:00:00
 #PBS -l select=1:ncpus=1
 #PBS -l debug=true
 #PBS -V
-#PBS -o /u/$USER/nwps_lix_post_cgn.o
-#PBS -e /u/$USER/nwps_lix_post_cgn.o
+#PBS -o /lfs/h2/emc/couple/noscrub/ali.salimi/nwps_para/graphics_cgn_prod/nwps_lix_post_cgn.o
+#PBS -e /lfs/h2/emc/couple/noscrub/ali.salimi/nwps_para/graphics_cgn_prod/nwps_lix_post_cgn.o
 
 cd $PBS_O_WORKDIR
 

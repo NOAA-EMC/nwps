@@ -34,7 +34,7 @@ export STARTDATEm2=$(date -d "-2 days" +%Y%m%d)
 #export STARTDATE=$(date -d "-1 days" +%Y%m%d)
 export ENDDATE=$(date -d "+7 days" +%Y%m%d)
 
-export COMOUT='/lfs/h2/emc/ptmp/$USER/com/nwps/v1.5.0/'
+export COMOUT='/lfs/h2/emc/ptmp/ali.salimi/com/nwps/v1.5.0/'
 
 echo ''
 echo 'Analysing real-time data for:'
@@ -56,7 +56,17 @@ python ${workdir}/nwps_plot_rips_6day.py ${1} ${2} ${3}
 
 echo "Copying: nwps_"${2}"_ripprob_stat???.png..."
 echo "Copying: "${2^^}"1.rip..."
-scp ${workdir}/nwps_${2}_ripprob_stat?.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
-scp ${workdir}/nwps_${2}_ripprob_stat??.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
-scp ${workdir}/nwps_${2}_ripprob_stat???.png waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
-scp ${workdir}/${2^^}1.rip waves@emcrzdm:/home/www/polar/nwps/para/images/rtimages/validation/
+
+# === Create local output directory for each day ===
+daily_dir="${workdir}/daily_plots/${STARTDATE}"
+mkdir -p "${daily_dir}"
+
+echo "Copying daily figures to ${daily_dir} ..."
+
+# Copy all possible rip probability plots and the .rip file
+cp -v ${workdir}/nwps_${2}_ripprob_stat?.png "${daily_dir}" 2>/dev/null || true
+cp -v ${workdir}/nwps_${2}_ripprob_stat??.png "${daily_dir}" 2>/dev/null || true
+cp -v ${workdir}/nwps_${2}_ripprob_stat???.png "${daily_dir}" 2>/dev/null || true
+cp -v ${workdir}/${2^^}1.rip "${daily_dir}" 2>/dev/null || true
+
+echo "Figures copied successfully for ${STARTDATE}"

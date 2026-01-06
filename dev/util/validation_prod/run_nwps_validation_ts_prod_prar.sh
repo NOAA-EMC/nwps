@@ -28,7 +28,7 @@ cd $workdir
 pwd
 
 # Cleanup
-rm ${workdir}/nwps_???_?????_ts.png
+#rm ${workdir}/nwps_???_?????_ts.png
 
 #----- Set start and end dates of real-time analysis -----
 export STARTDATE=$(date +%Y%m%d)
@@ -40,9 +40,9 @@ export ENDDATE=$(date -d "+6 days" +%Y%m%d)
 export COMOUT='/lfs/h1/ops/prod/com/nwps/v1.4/'
 export COMOUTm1='/lfs/h1/ops/prod/com/nwps/v1.4/'
 export COMOUTm2='/lfs/h1/ops/prod/com/nwps/v1.4/'
-export COMOUTww1='/lfs/h1/ops/prod/com/gfs/v16.2/'
-export COMOUTww1_m1='/lfs/h1/ops/prod/com/gfs/v16.2/'
-export COMOUTww1_m2='/lfs/h1/ops/prod/com/gfs/v16.2/'
+export COMOUTww1='/lfs/h1/ops/prod/com/gfs/v16.3/'
+export COMOUTww1_m1='/lfs/h1/ops/prod/com/gfs/v16.3/'
+export COMOUTww1_m2='/lfs/h1/ops/prod/com/gfs/v16.3/'
 
 echo ''
 echo 'Analysing real-time data for:'
