@@ -1,0 +1,38 @@
+#!/bin/bash 
+# ----------------------------------------------------------- 
+# UNIX Shell Script File
+# Tested Operating System(s): RHEL 5,6
+# Tested Run Level(s): 3, 5
+# Shell Used: BASH shell
+# Original Author(s): Saeideh Banihashemi
+# File Creation Date: 12/05/2025
+# Date Last Modified:
+#
+# Version control:
+#
+# Support Team:
+#
+# Contributors:
+#
+# ----------------------------------------------------------- 
+# ------------- Program Description and Details ------------- 
+# ----------------------------------------------------------- 
+#
+# rsync script for data backup
+#
+# ----------------------------------------------------------- 
+
+#PBS -N nwps_val
+#PBS -j oe
+#PBS -S /bin/bash
+#PBS -q dev_transfer
+#PBS -A NWPS-DEV
+#PBS -l walltime=00:30:00
+#PBS -l select=1:ncpus=1
+#PBS -l debug=true
+#PBS -V
+#PBS -o /lfs/h2/emc/couple/noscrub/ali.salimi/nwps_para/validation_dev/nwps_trans_val_6day.o
+#PBS -e /lfs/h2/emc/couple/noscrub/ali.salimi/nwps_para/validation_dev/nwps_tarns_val_6day.o
+
+
+${workdir}/rzdm_transfer_validation_ts_6day_dev.sh 

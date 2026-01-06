@@ -25,15 +25,15 @@
 #PBS -N rsync_nwps
 #PBS -j oe
 #PBS -S /bin/bash
-#PBS -q dev_transfer
+#PBS -q dev
 #PBS -A NWPS-DEV
 #PBS -l walltime=06:00:00
 #PBS -l select=1:ncpus=1:mem=3g
 #PBS -l debug=true
 #PBS -V
-#PBS -o /lfs/h2/emc/ptmp/$USER/com/nwps/v1.5.0/rsync_nwps_dev.o
-#PBS -e /lfs/h2/emc/ptmp/$USER/com/nwps/v1.5.0/rsync_nwps_dev.o
+#PBS -o /lfs/h2/emc/ptmp/ali.salimi/com/nwps/v1.5.0/rsync_nwps_dev.o
+#PBS -e /lfs/h2/emc/ptmp/ali.salimi/com/nwps/v1.5.0/rsync_nwps_dev.o
 
 mkdir -p ${VALIDATIONdir}/com/nwps/v1.5.0/
 
-rsync -ax --include=*/ --include='Warn*' --include='*.grib2' --include='*spc2d*' --include='*runup*' --include='*rip*' --include='*contour*' --include='*.sys' --exclude='PE*' --exclude='*' /lfs/h2/emc/ptmp/$USER/com/nwps/v1.5.0/ ${VALIDATIONdir}/com/nwps/v1.5.0/
+rsync -ax --include=*/ --include='Warn*' --include='*.grib2' --include='*spc2d*' --include='*runup*' --include='*rip*' --include='*contour*' --include='*.sys' --exclude='PE*' --exclude='*' /lfs/h2/emc/ptmp/ali.salimi/com/nwps/v1.5.0/ ${VALIDATIONdir}/com/nwps/v1.5.0/

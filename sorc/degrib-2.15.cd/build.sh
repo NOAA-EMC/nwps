@@ -29,7 +29,8 @@ function build_dir {
    echo "=============================="
    echo "Check library depends..."
    echo "------------------------------"
-   LIBDIR=$srcDir/../lib
+   #LIBDIR=$srcDir/../lib
+   LIBDIR=$EMAPF_INC
    if [[ $1 == "psurge_envmerge.cd" || $1 == "drawshp.cd" || \
          $1 == "degrib-2.15.cd" ]] ; then
       LIB=$LIBDIR/libemapf.a

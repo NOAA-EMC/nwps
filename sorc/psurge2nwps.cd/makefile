@@ -102,9 +102,10 @@ STD_LIB += -L../libaat -laat
 # Add emapf-c to Build path
 #STD_INC += -I../emapf-c
 #STD_LIB += -L../emapf-c -lemapf
-STD_INC += -I../../lib/sorc/emapf-c
-STD_LIB += -L../../lib -lemapf
-
+#STD_INC += -I../../lib/sorc/emapf-c
+#STD_LIB += -L../../lib -lemapf
+STD_INC += -I$(EMAPF_INC)/sorc/emapf-c
+STD_LIB += -L$(EMAPF_INC) -lemapf
 ifeq ($(BIT),32)
   STD_LIB += -L/usr/lib -lm
 else

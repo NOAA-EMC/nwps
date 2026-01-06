@@ -7,7 +7,6 @@ import os.path
 import re
 import numpy as np
 from scipy.linalg import norm
-#from datetime import datetime
 import time
 import datetime
 from datetime import timedelta, date
@@ -15,6 +14,7 @@ from netCDF4 import Dataset, num2date
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdate
 from scipy.interpolate import interp1d
+import tarfile
 #from sklearn import linear_model
 
 # global vars
@@ -599,45 +599,147 @@ obswnd = [[0 for x in range(30000)] for x in range(len(wfobuoys))]
 varname = []
 bcycle = [0 for x in range(len(wfobuoys))]
 
-def read_ndbc(buoy,vname,startDate,stopDateObs):
+def process_archived_buoy_data(date_to_process, base_path='/lfs/h2/emc/vpppg/noscrub/emc.vpppg/verification/global/archive/obs_data/ndbc_buoy'):
+    """
+    Grabs the daily tar file, creates a dated subdirectory, extracts files there,
+    and cleans up the subdirectory.
 
-     print('processing',buoy)
-     url='http://dods.ndbc.noaa.gov/thredds/dodsC/data/stdmet/'+str(buoy)+'/'+str(buoy)+'h9999.nc'
-     print(url)
-     #url='http://dods.ndbc.noaa.gov/thredds/dodsC/data/stdmet/'+str(buoy)+'/'+str(buoy)+'h2015.nc'  # Monthly QAed values
+    Args:
+        date_to_process (datetime): The date for which to process the data.
+        base_path (str): The base directory for the archive.
 
-     startindx = -999
-     stopindx = -999
-     try:
-          nco = Dataset(url)
+    Returns:
+        bool: True if extraction was successful, False otherwise.
+    """
 
-          print('Data range:')
-          print(time.strftime('%Y/%m/%d %H:%M:%S', time.localtime(nco.variables['time'][0]))+' (index 0) to')
-          print(time.strftime('%Y/%m/%d %H:%M:%S', time.localtime(nco.variables['time'][-1]))+' (index '+str(len(nco.variables['time'][:]))+')')
-          for index, item in enumerate(nco.variables['time'][:]):
-             if int(item) > int(startDate.strftime('%s')):
-                startindx = index
-                break
-          for index, item in enumerate(nco.variables['time'][:]):
-             if int(item) > int(stopDateObs.strftime('%s')):
-                stopindx = index
-                break
-          if (startindx != -999) & (stopindx != -999):
-             print('Found startDate '+startDate.strftime("%Y/%m/%d")+' at index '+str(startindx))
-             print('Found stopDateObs '+stopDateObs.strftime("%Y/%m/%d")+' at index '+str(stopindx))
-             times = nco.variables['time'][startindx:stopindx]
-             h = nco.variables['wave_height'][startindx:stopindx]
-          else:
-             times = []
-             h = []
-             print('*** Warning: no observation data found in analysis range')
-     except:
-          print('*** Warning: no observation data found. Skipping', buoy)
-          times = []
-          h = []
+    # 1. Construct file paths and local directory name
+    date_str = date_to_process.strftime('%Y%m%d')
+    tar_filename = f'buoy_{date_str}.tar'
+    full_tar_path = os.path.join(base_path, tar_filename)
 
-     #jd = num2date(times,times.units)
-     return (times, h)
+    # Create a dated directory for extraction
+    extract_dir = f'ndbc_buoy_data_{date_str}'
+    os.makedirs(extract_dir, exist_ok=True)
+
+    print(f"Attempting to process data for date: {date_str}")
+    print(f"Extraction target directory: {extract_dir}")
+
+    success = False
+
+    # 2. Extract the archive
+    try:
+        if not os.path.exists(full_tar_path):
+             print(f"❌ ERROR: Archive file not found at {full_tar_path}")
+             return False
+
+        # Extract the tar file into the newly created directory
+        with tarfile.open(full_tar_path) as tar:
+            tar.extractall(path=extract_dir)
+            print(f"✅ Successfully extracted {tar_filename} into {extract_dir}")
+
+        success = True # Set success flag if extraction completes without error
+
+    except tarfile.TarError as e:
+        print(f"❌ ERROR: Failed to extract tar file {tar_filename}: {e}")
+    except Exception as e:
+        print(f"❌ An unexpected error occurred: {e}")
+
+    # 3. Cleanup (Remove the entire dated directory)
+    try:
+        # Use shutil.rmtree to recursively remove the directory and its contents
+        shutil.rmtree(extract_dir)
+        print(f"🧹 Cleaned up extracted directory: {extract_dir}")
+    except Exception as e:
+        # Note: If extraction failed, the directory might be empty, but we ensure it's removed.
+        print(f"Warning: Failed to remove directory {extract_dir}: {e}")
+
+    # 4. Return simplified result
+    return success
+
+def read_ndbc(filename, start_date=None, end_date=None):
+    """
+    Reads time and wave height data from a single local NDBC-style file (e.g., buoy.txt),
+    filtering data points to be within the specified date range.
+
+    Args:
+        filename (str): The path to the local data file.
+        start_date (datetime, optional): The beginning of the desired time window (inclusive).
+        end_date (datetime, optional): The end of the desired time window (inclusive).
+
+    Returns:
+        tuple: A tuple (times, wave_heights) containing filtered datetime objects
+               and corresponding NumPy array of wave heights.
+    """
+    print(f'Processing file: {filename}')
+
+    if not os.path.exists(filename):
+        print(f'Skipping - File not found: {filename}')
+        return ([], [])
+
+    filtered_times = []
+    filtered_wave_heights = []
+
+    try:
+        with open(filename, 'r') as f:
+            # Skip the header lines (start with '#')
+            data_lines = [line for line in f if not line.startswith('#')]
+
+            for line in data_lines:
+                parts = line.split()
+                if len(parts) < 9:
+                    continue
+
+                # 1. Parse Date/Time components and create datetime object (dt)
+                try:
+                    year = int(parts[0])
+                    month = int(parts[1])
+                    day = int(parts[2])
+                    hour = int(parts[3])
+                    minute = int(parts[4])
+
+                    #dt = datetime(year, month, day, hour, minute)
+                    dt = datetime.datetime(year, month, day, hour, minute)
+                except ValueError:
+                    # Skip line if date format is invalid
+                    continue
+
+                # 🌟 2. Apply Date Filtering 🌟
+                # Only proceed if dt falls within the specified range (inclusive).
+                # If start_date/end_date are None, the conditions are ignored.
+                date_check = True
+                if start_date and dt < start_date:
+                    date_check = False
+                if end_date and dt > end_date:
+                    date_check = False
+
+                if date_check:
+                    # 3. Parse Wave Height (WVHT)
+                    wvht_str = parts[8]
+                    if wvht_str == 'MM':
+                        wave_val = np.nan
+                    else:
+                        try:
+                            wave_val = float(wvht_str)
+                        except ValueError:
+                            wave_val = np.nan
+
+                    # 4. Add filtered data to results
+                    filtered_times.append(dt)
+                    filtered_wave_heights.append(wave_val)
+
+    except Exception as e:
+        print(f'Error reading data from {filename}: {e}')
+        return ([], [])
+
+    if filtered_times:
+        # Use a list comprehension to call the .timestamp() method on each datetime object
+        # This converts the times to floating-point seconds since 1970-01-01 00:00:00 UTC.
+        unix_times = [dt.timestamp() for dt in filtered_times]
+    else:
+        unix_times = []
+
+    # 5. Return UNIX timestamps and NumPy array of wave heights
+    return (unix_times, np.array(filtered_wave_heights))
 
 def daterange(start_date, end_date):
      for n in range(int((end_date - start_date).days)+1):
@@ -671,27 +773,50 @@ print('')
 vname = 'wave_height'
 ibuoy = 0
 
+#get archive ndbc
+#is_successful = process_archived_buoy_data(stopDateObs)
+
+#if is_successful:
+#    print("Archive processed successfully.")
+#else:
+#    print("Archive processing failed.")
+
 # Fetch and read NDBC buoy observations
 print('Fetching realtime NDBC buoy obs...')
 for buoy in wfobuoys:
-     times, h = read_ndbc(buoy,vname,startDate,stopDateObs)
+     buoy_filename = f'{buoy}.txt'
+
+    #  Create the full path to the file
+    # Example: 'ndbc_buoy_data_20251116/46025.txt'
+     date_str = stopDateObs.strftime('%Y%m%d')
+     extract_dir = f'/lfs/h2/emc/vpppg/noscrub/emc.vpppg/verification/global/archive/obs_data/ndbc_buoy/{date_str}'
+     full_file_path = os.path.join(extract_dir, buoy_filename)
+
+    # 3. Read the data using the full path and date filters
+    # Note: We assume your read_ndbc signature is now: read_ndbc(filename, start_date, end_date)
+     print(f"Reading data for Buoy {buoy} from {full_file_path}")
+     times, h = read_ndbc(full_file_path, startDate, stopDateObs)
      if (len(h) != 0):
         #Read obs (incl. any NaNs) as a masked array
-        obstim_withnans = times[:]
-        obspar_withnans = h[:,0,0]
+        obstim_withnans = np.array(times)
+        #obstim_withnans = times[:]
+        obspar_withnans = h[:]
         #Filter out any small (erroneous) obs and replace with NaNs
-        for tstep in range(len(obspar_withnans)):
-           if obspar_withnans[tstep]<0.05:
-              obspar_withnans[tstep]=np.nan
+        obspar_withnans[obspar_withnans < 0.05] = np.nan
+        valid_mask = ~np.isnan(obspar_withnans)
+
+        obspar_valid = obspar_withnans[valid_mask]
+        obstim_valid = obstim_withnans[valid_mask]
         #Filter out the NaNs (masked values in ma) using the mask in opspar_withnans
-        obspar[ibuoy][:] = obspar_withnans[np.ma.nonzero(obspar_withnans)]
-        obstim[ibuoy][:] = obstim_withnans[np.ma.nonzero(obspar_withnans)]
+
+        obspar[ibuoy] = obspar_valid
+        obstim[ibuoy] = obstim_valid
      else:
-        obspar[ibuoy][:] = []
-        obstim[ibuoy][:] = [] 
-     #print(obspar[ibuoy][:])
-     #print(obstim[ibuoy][:])
-     #print(len(obspar[ibuoy][:]))
+        # Use NumPy arrays for empty data consistency
+        obspar[ibuoy] = np.array([])
+        obstim[ibuoy] = np.array([])
+     #print(obspar[ibuoy]) # Note: Removed [:] slice here
+     #print(obstim[ibuoy]) # Note: Removed [:] slice here
      ibuoy = ibuoy+1
 
 ##plt.figure()
@@ -1483,15 +1608,12 @@ for single_date in daterange(startDate,stopDate):
 # ---------- Read NWPS model data into buoy-centered arrays ----------
 
    for iwfo in range(len(wfos)):
-   #for ibuoy in range(len(allBuoys)):
       print('')
       wfo=wfos[iwfo]
       print('Reading pnt data from '+region+'.'+timestamp+'/'+wfo+':')
 
-      #for iwfobuoy in range(len(wfobuoys[iwfo][:])):
       iwfobuoy=iwfo
       wfobuoy=wfobuoys[iwfobuoy]
-      #wfobuoy=allBuoys[ibuoy]
       datafound = 'false'
 
       for cycle in cycles:
@@ -1512,8 +1634,15 @@ for single_date in daterange(startDate,stopDate):
                # Add the forecast hour to the start of the cycle timestamp
                #date = date + datetime.timedelta(hours=(tstep*3))
                date = date + datetime.timedelta(hours=(tstep))
-               modtim[iwfobuoy][tstep] = (date-datetime.datetime(1970,1,1)).total_seconds()
+               mod_unix_time = (date - datetime.datetime(1970,1,1)).total_seconds()
                bcycle[iwfobuoy] = cycle
+               modtim[iwfobuoy][tstep] = mod_unix_time
+               readable_date = datetime.datetime.fromtimestamp(mod_unix_time).strftime('%Y-%m-%d %H:%M:%S UTC')
+
+               # Print the model time for the current forecast step
+               #print(f"  [Time Check] Fstep {tstep}:")
+               #print(f"    - Datetime: {readable_date}")
+               #print(f"    - Unix (seconds): {mod_unix_time:.0f}") # Print as integer for cleaner look
                # Remove SWAN exception values
                if (modpar[iwfobuoy][tstep]<0.05) or (modpar[iwfobuoy][tstep] == 9.999e+20):
                   modpar[iwfobuoy][tstep]=np.nan
@@ -1528,7 +1657,6 @@ for single_date in daterange(startDate,stopDate):
             modpar[iwfobuoy][tstep] = np.nan
             modtim[iwfobuoy][tstep] = np.nan
          bcycle[iwfobuoy] = '00'   # Reset the cycle if no data is found
-      #modpar(find(modpar==0.)) = NaN;
 
       # ---------- Interpolate obeservational and model time series to daily values, for comparison ----------
       refdate = datetime.datetime(int(timestamp[0:4]),int(timestamp[4:6]),int(timestamp[6:8])).strftime('%s')
@@ -1541,7 +1669,16 @@ for single_date in daterange(startDate,stopDate):
       mod_interp = []
       if (len(obspar[iwfobuoy][:]) != 0):
          obs_int_time = np.arange((int(synpdate)+86400),(int(synpdate)+7*86400),86400)
-         obs_interp = np.interp(obs_int_time, obstim[iwfobuoy][:], obspar[iwfobuoy][:])
+         obstim = np.flip(obstim)
+         obspar = np.flip(obspar)
+         obs_interp = np.interp(
+                 obs_int_time,
+                 obstim[iwfobuoy][:], # x-coordinates (Observed Times)
+                 obspar[iwfobuoy][:], # f(x) values (Observed Wave Heights)
+                 left=np.nan,         # Use NaN for target times before the first observation
+                 right=np.nan         # Use NaN for target times after the last observation
+                 )
+         #obs_interp = np.interp(obs_int_time, obstim[iwfobuoy][:], obspar[iwfobuoy][:])
          obs_fcast_array_24hr.append( obs_interp[0] )
          obs_fcast_array_48hr.append( obs_interp[1] )
          obs_fcast_array_72hr.append( obs_interp[2] )

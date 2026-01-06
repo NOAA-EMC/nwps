@@ -56,11 +56,6 @@ do
                   python cur.py 1 49
                   tar -czvf plots_${wfo}_${cgnum}.tar.gz swan*.png
 
-                  # Push the completed plots to RZDM
-                  scp plots_${wfo}_${cgnum}.tar.gz waves@emcrzdm:/home/www/polar/nwps/images/rtimages/${wfo}/nwps/${cgnum}/
-                  ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; tar -xf plots*.tar.gz'
-                  ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; rm plots*.tar.gz'
-
                   echo 'Completed' ${wfo} ${cgnum}
                   echo "${dset} at $(date -u "+%Y%m%d%H%M")" >> ${logfile}
                fi
