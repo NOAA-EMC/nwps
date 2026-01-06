@@ -17,8 +17,8 @@
 #PBS -l select=1:ncpus=1
 #PBS -l debug=true
 #PBS -V
-#PBS -o /u/$USER/nwps_hpss.o
-#PBS -e /u/$USER/nwps_hpss.o
+#PBS -o /lfs/h2/emc/ptmp/ali.salimi/com/nwps/v1.5.0/nwps_hpss.o
+#PBS -e /lfs/h2/emc/ptmp/ali.salimi/com/nwps/v1.5.0/nwps_hpss.o
 
 export HPSSDATE=$(date -d "-1 days" +%Y%m%d)
 export DATADIR=/lfs/h2/emc/ptmp/$USER/com/nwps/v1.5.0

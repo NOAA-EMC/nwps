@@ -31,9 +31,9 @@
 #PBS -l select=1:ncpus=1
 #PBS -l debug=true
 #PBS -V
-#PBS -o /u/$USER/rsync_nwps_ret.o
-#PBS -e /u/$USER/rsync_nwps_ret.o
+#PBS -o /lfs/h2/emc/ptmp/ali.salimi/com/retro/nwps/v1.5.2/rsync_nwps_ret.o
+#PBS -e /lfs/h2/emc/ptmp/ali.salimi/com/retro/nwps/v1.5.2/rsync_nwps_ret.o
 
-mkdir -p ${VALIDATIONdir}/com/retro/nwps/v1.5.0/
+mkdir -p ${VALIDATIONdir}/com/retro/nwps/v1.5.2/
 
-rsync -ax --include=*/ --include='Warn*' --include='*.grib2' --include='SPC2D*' --include='*runup*' --include='*rip*' --include='*contour*' --include='*.sys' --exclude='PE*' --exclude='*' /lfs/h2/emc/ptmp/$USER/com/retro/nwps/v1.5.0/ ${VALIDATIONdir}/com/retro/nwps/v1.5.0/
+rsync -ax --include=*/ --include='Warn*' --include='*.grib2' --include='SPC2D*' --include='*runup*' --include='*rip*' --include='*contour*' --include='*.sys' --exclude='PE*' --exclude='*' /lfs/h2/emc/ptmp/ali.salimi/com/retro/nwps/v1.5.2/ ${VALIDATIONdir}/com/retro/nwps/v1.5.2/

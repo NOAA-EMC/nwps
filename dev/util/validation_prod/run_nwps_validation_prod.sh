@@ -24,16 +24,16 @@
 
 echo 'Running run_nwps_validation_dev.sh...'
 
-export COMOUT='/lfs/h2/emc/couple/noscrub/$USER/nwps_para/com/nwps/v1.5.0/'
-export COMOUTm1='/lfs/h2/emc/couple/noscrub/$USER/nwps_para/com/nwps/v1.5.0/'
+export COMOUT='/lfs/h2/emc/couple/noscrub/ali.salimi/nwps_para/prod/com/nwps/v1.4/'
+export COMOUTm1='/lfs/h2/emc/couple/noscrub/ali.salimi/nwps_para/prod/com/nwps/v1.4/'
 
 cd $workdir
 pwd
 
 # Cleanup
-rm ${workdir}/nwps_??_scatter.png
-rm ${workdir}/nwps_stats_??_ts.png
-rm ${workdir}/nwps_???_?????_scatter.png
+#rm ${workdir}/nwps_??_scatter.png
+#rm ${workdir}/nwps_stats_??_ts.png
+#rm ${workdir}/nwps_???_?????_scatter.png
 
 #----- Set start and end dates of 30-day analysis -----
 export STARTDATE=$(date -d "-36 days" +%Y%m%d)
@@ -47,8 +47,8 @@ echo 'ENDDATE = '${ENDDATE}
 echo ''
 
 # Run Python validation scripts
-python ${workdir}/nwps_stats_sr_rt30day_6day.py
-python ${workdir}/nwps_stats_er_rt30day_6day.py
+#python ${workdir}/nwps_stats_sr_rt30day_6day.py
+#python ${workdir}/nwps_stats_er_rt30day_6day.py
 #
 #cat nwps_val_stats_sr_${ENDDATE}.dat >> nwps_val_stats_sr.dat
 #cat nwps_val_stats_er_${ENDDATE}.dat >> nwps_val_stats_er.dat
@@ -197,10 +197,10 @@ cp ${workdir}/nwps_${ENDDATE}_gyx_44032_scatter.png ${workdir}/nwps_gyx_44032_sc
 cp ${workdir}/nwps_${ENDDATE}_car_44034_scatter.png ${workdir}/nwps_car_44034_scatter.png
 cp ${workdir}/nwps_${ENDDATE}_car_44027_scatter.png ${workdir}/nwps_car_44027_scatter.png
 
-scp ${workdir}/nwps_??_scatter.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/val_monthly/
-scp ${workdir}/nwps_????_scatter.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/val_monthly/
-scp ${workdir}/nwps_stats_??_ts.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/val_monthly/
-scp ${workdir}/nwps_stats_????_ts.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/val_monthly/
-scp ${workdir}/nwps_???_?????_scatter.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
-scp ${workdir}/nwps_???_????_scatter.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
+#scp ${workdir}/nwps_??_scatter.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/val_monthly/
+#scp ${workdir}/nwps_????_scatter.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/val_monthly/
+#scp ${workdir}/nwps_stats_??_ts.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/val_monthly/
+#scp ${workdir}/nwps_stats_????_ts.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/val_monthly/
+#scp ${workdir}/nwps_???_?????_scatter.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
+#scp ${workdir}/nwps_???_????_scatter.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
 
