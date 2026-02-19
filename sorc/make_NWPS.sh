@@ -35,33 +35,10 @@ export CONFIG_SITE=/tmp/dummy
 source ../versions/build.ver
 
 # moved from build.ver
-#export optFlag="-O3"
-#export COMP=ftn
-#export COMPC=cc
-#export C_COMP=cc
-
-# -----------------------------------------------------------
-# Fortran runtime checking (validation build)
-# -----------------------------------------------------------
-echo "================================================"
-echo "  NWPS build with Fortran runtime checking"
-echo "  Flags: -O0 -g -check all -traceback -fpe0"
-echo "================================================"
-
-# Base compilers
+export optFlag="-O3"
 export COMP=ftn
 export COMPC=cc
 export C_COMP=cc
-
-# Force optimization/debug flags used by Makefiles
-export FLAGS_OPT="-O3 -g -check all -traceback"
-
-# Also export traditional flags for safety
-export optFlag="${FLAGS_OPT}"
-export FFLAGS="${FLAGS_OPT}"
-export FCFLAGS="${FLAGS_OPT}"
-
-
 
 #module purge
 module reset
