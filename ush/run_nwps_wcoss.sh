@@ -240,7 +240,7 @@ if [ "${WINDS,,}" == "forecaster" ]; then
             fi
 	    let minwindhours=${Default_RUNLEN}+1 # NOTE: We need to have the 1 extra hour to nested grids
 	    #AW ${EXECnwps}/check_awips_windfile --max-speed 199. --verbose --debug ${windfile} > ${LOGdir}/gfe_wind_file_check.log
-	    ${EXECnwps}/check_awips_windfile --verbose --debug ${windfile} > ${LOGdir}/gfe_wind_file_check.log
+	    ${EXECnwps}/nwps_utils_check_awips_windfile --verbose --debug ${windfile} > ${LOGdir}/gfe_wind_file_check.log
 	    if [ $? -ne 0 ]; then
 		warnings="YES"
 		echo "WARNING - We received bad GFE wind file, forecaster wind file has bad values. Will fail over to GFS data." | tee -a ${LOGdir}/run_nwps.log

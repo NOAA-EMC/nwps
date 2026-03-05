@@ -250,7 +250,7 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
      gribfile=$(ls ${DATA}/output/grib2/CG${CGNUM}/*CG${CGNUM}_????????_????.grib2 | xargs -n 1 basename | tail -n 1)
      fullname=`echo $gribfile | cut -c14-26`
      GRIB2file=${NWPSDATA}/output/grib2/CG${CGNUM}/${gribfile}
-     WAVE_RUNUP_TO_BIN="${EXECnwps}/wave_runup_to_bin"
+     WAVE_RUNUP_TO_BIN="${EXECnwps}/nwps_utils_wave_runup_to_bin"
      cgnCLON1=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lon | grep to | grep by | awk '{ print $2 }')
      cgnLON1=$(echo "${cgnCLON1} - 360" | bc)
      cgnCLON2=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lon | grep to | grep by | awk '{ print $4 }')
@@ -340,7 +340,7 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
      rip_current_meta_template="${FIXnwps}/templates/RIP.meta"
      rip_current_meta="${RIPDATA}/RIP.meta"
      cat ${rip_current_meta_template} > ${rip_current_meta}
-     RIP_CURRENT_TO_BIN="${EXECnwps}/rip_current_to_bin"
+     RIP_CURRENT_TO_BIN="${EXECnwps}/nwps_utils_rip_current_to_bin"
      gribfile=$(ls ${DATA}/output/grib2/CG${CGNUM}/???_nwps_CG${CGNUM}_????????_????.grib2 | xargs -n 1 basename | tail -n 1)
      fullname=`echo $gribfile | cut -c14-26`
      GRIB2file=${NWPSDATA}/output/grib2/CG${CGNUM}/${gribfile}

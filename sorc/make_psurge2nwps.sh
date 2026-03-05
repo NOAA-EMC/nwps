@@ -26,12 +26,12 @@ make | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
 cd ${NWPSdir}/sorc/psurge2nwps.cd
 #ifort -O2 -g -traceback -v -o -o psoutTOnwps.exe psoutTOnwps_ver04.f
 ftn -o psoutTOnwps.exe psoutTOnwps.f | tee ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
-mv -v psoutTOnwps.exe ${NWPSdir}/exec/psoutTOnwps.exe
+mv -v psoutTOnwps.exe ${NWPSdir}/exec/psurge2nwps_psoutTOnwps.exe
 echo "Build complete" | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psoutTOnwps_build.log
 
 echo "Building psurge_identify"  | tee ${NWPSdir}/sorc/psurge2nwps.cd/psurge_identify_build.log
 ftn -o psurge_identify.exe psurge_identify.f | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psurge_identify_build.log
-mv -v psurge_identify.exe ${NWPSdir}/exec/psurge_identify.exe
+mv -v psurge_identify.exe ${NWPSdir}/exec/psurge2nwps_identify.exe
 echo "Build complete" | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psurge_identify_build.log
 
 echo "Building psurge_combine" | tee ${NWPSdir}/sorc/psurge2nwps.cd/psurge_combine_build.log
@@ -45,7 +45,7 @@ rm -f psurge_combine.o pwl_interp_2d.o | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/p
 ftn -c pwl_interp_2d.f90 | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psurge_combine_build.log
 ftn -c psurge_combine.f90 | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psurge_combine_build.log
 ftn -o psurge_combine.exe psurge_combine.o pwl_interp_2d.o ${NWPSdir}/lib/r8lib.o | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psurge_combine_build.log
-mv -v psurge_combine.exe ${NWPSdir}/exec/psurge_combine.exe
+mv -v psurge_combine.exe ${NWPSdir}/exec/psurge2nwps_combine.exe
 echo "Build complete" | tee -a ${NWPSdir}/sorc/psurge2nwps.cd/psurge_combine_build.log
 
 echo "Building psurge2nwps"  | tee ${NWPSdir}/sorc/psurge2nwps.cd/psurge2nwps_build.log

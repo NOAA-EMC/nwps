@@ -48,7 +48,7 @@ INPUTdir="${INPUTdir}/psurge"
 BINdir="${RUNdir}/bin"
 ETCdir="${RUNdir}/grads/etc"
 GRADSOUTPUTdir="${OUTPUTdir}/grads"
-WRITEDAT="${EXECnwps}/writedat"
+WRITEDAT="${EXECnwps}/nwps_utils_writedat"
 
 if [ ! -e ${VARdir} ]; then mkdir -p ${VARdir}; fi
 if [ ! -e ${LOGdir} ]; then mkdir -p ${LOGdir}; fi

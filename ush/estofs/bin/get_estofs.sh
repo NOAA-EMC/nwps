@@ -232,7 +232,7 @@ function MakeClip() {
 	echo "${WGRIB2} -no_header -match ${PARM} -text ${CLIPdir}/${PARM}.dat ${CLIPdir}/${clip_file}" | tee -a ${LOGfile} 2>&1
 	${WGRIB2} -no_header -match ${PARM} -text ${CLIPdir}/${PARM}.dat ${CLIPdir}/${clip_file}
 	echo "Writing final DAT file" | tee -a ${LOGfile} 2>&1    
-	${EXECnwps}/fix_ascii_point_data ${CLIPdir}/${PARM}.dat 9.999e+20 0.0 ${swan_wl_ofile}
+	${EXECnwps}/nwps_utils_fix_ascii_point_data ${CLIPdir}/${PARM}.dat 9.999e+20 0.0 ${swan_wl_ofile}
 	rm -f ${CLIPdir}/${PARM}.dat
     fi
 
