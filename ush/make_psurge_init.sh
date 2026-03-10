@@ -58,6 +58,26 @@ if [ "$6" != "" ]; then DOWNLOADRETRIES="$6"; fi
 WGETargs="-N -nv --tries=${DOWNLOADRETRIES} --no-remove-listing --append-output=${LOGfile}"
 WGET="/usr/bin/wget"
 
+check_bad_grib2_file() {
+    f="${1}"
+
+    if [ ! -e "${f}" ]; then
+        return 1
+    fi
+
+    if [ ! -s "${f}" ]; then
+        return 1
+    fi
+
+    return 0
+}
+
+warn_and_disable_psurge_grib2() {
+    msg="${1}"
+    echo "WARNING - ${msg}" | tee -a ${LOGfile}
+    touch ${RUNdir}/nopsurge
+}
+
 # The forecast cycle, default to 00
 CYCLE="00"	
 # Check for command line CYCLE
@@ -140,6 +160,19 @@ for part in ${split[@]} ; do echo $part; done
 #cp ${PSurge_latest}/${split[0]}_e??_inc_dat.h102.conus_625m.grib2 ${RUNdir} 
 #cp ${PSurge_latest}/${split[0]}_e[1-5]?_inc_dat.h102.conus_625m.grib2 ${RUNdir} 
 # psurge update v3.0 
+for srcfile in ${PSurge_latest}/psurge.${YYYYMMDD}/*.${NewestPsurge}_e[1-5]?_inc_dat.h102.conus_625m.grib2
+do
+   if [ -f "${srcfile}" ]; then
+      if ! check_bad_grib2_file "${srcfile}"; then
+         warn_and_disable_psurge_grib2 "PSURGE GRIB2 file ${srcfile} is missing or 0-byte. Run will continue without PSURGE water level variation."
+         cd ${workdir}
+         echo "Exiting make_psurge_init.sh" | tee -a ${LOGfile}
+         date
+         echo ""
+         exit 0
+      fi
+   fi
+done
 cp ${PSurge_latest}/psurge.${YYYYMMDD}/*.${NewestPsurge}_e[1-5]?_inc_dat.h102.conus_625m.grib2 ${RUNdir}
 cd $workdir
 #--------------------------------------------------------------
@@ -162,6 +195,14 @@ echo "Find GRIB2 files for data extraction, starting with 10% exceedance..."
 for file in *.grib2
 do
    if [ -f "$file" ];then
+      if ! check_bad_grib2_file "${RUNdir}/${file}"; then
+         warn_and_disable_psurge_grib2 "PSURGE GRIB2 file ${RUNdir}/${file} is missing or 0-byte. Run will continue without PSURGE water level variation."
+         cd ${myPWD}
+         echo "Exiting make_psurge_init.sh" | tee -a ${LOGfile}
+         date
+         echo ""
+         exit 0
+      fi
       echo "FILE FOUND: $file"
       pwd
       #ls -lt 
