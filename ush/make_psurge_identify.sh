@@ -108,7 +108,7 @@ do
    done
 
    echo ""
-   echo "Running psurge_identify.exe to select domains for final extraction..."
+   echo "Running psurge2nwps_identify.exe to select domains for final extraction..."
    #Reading Npx, Npy from filename.
    pickOne=$(basename `ls -t psurge*$wfo*e10.dat | head -1`)
    #psurge_2004091800_wfo_Npx-10118_Npy-2521_135_f078_e10.dat
@@ -121,7 +121,7 @@ do
    Npy=${splity[0]}
    echo " WFO: $wfo,     Npx: $Npx   ,   Npy: $Npy"
 
-   ${EXECnwps}/psurge_identify.exe ${wfo} ${Npx} ${Npy}
+   ${EXECnwps}/psurge2nwps_identify.exe ${wfo} ${Npx} ${Npy}
    rm  -f ${RUNdir}/*${wfo}*.dat
 
 done < ${FIXnwps}/configs_psurge/wfolist_psurge.dat

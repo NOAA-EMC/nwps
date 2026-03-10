@@ -19,5 +19,5 @@ read_slope.o : read_slope.f
 	$(FC) -c -O read_slope.f
 
 runupcalc.o : runupcalc.f
-	$(FC) -c -O -free runupcalc.f
+	$(FC) -c -O runupcalc.f
 

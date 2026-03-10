@@ -21,7 +21,7 @@
 SHELL = /bin/bash
 
 # Define a name for the executable
-PROJECT = readdat
+PROJECT = nwps_utils_readdat
 
 # Release version = 1
 # Debug version = 0

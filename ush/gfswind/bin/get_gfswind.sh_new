@@ -275,7 +275,7 @@ function MakeClip() {
     cat ${CLIPdir}/VGRD.dat >> ${CLIPdir}/UV.dat
     
     echo "Writing DAT file" | tee -a ${LOGfile} 2>&1    
-    ${EXECnwps}/fix_ascii_point_data ${CLIPdir}/UV.dat 9.999e+20 0.0 ${swan_uv_ofile}
+    ${EXECnwps}/nwps_utils_fix_ascii_point_data ${CLIPdir}/UV.dat 9.999e+20 0.0 ${swan_uv_ofile}
     
     echo "Copying SWAN input files ${INGESTdir}" | tee -a ${LOGfile}
     cp -pfv ${swan_uv_ofile} ${INGESTdir}/. | tee -a ${LOGfile}

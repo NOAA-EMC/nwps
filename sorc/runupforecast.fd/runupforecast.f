@@ -107,7 +107,7 @@
       owashexd(:) = 0
       erosnexd(:) = 0
 !       not using past information for this
-      istart=1.
+	  istart=1.
 !
 !
 !        read input file from NWPS. The routine will return the number of

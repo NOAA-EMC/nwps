@@ -484,7 +484,7 @@ if [[ -d "${DATA}/output/spectra/CG${CGNUM}" ]]; then
         cp -fv "$orig_file" "${COMOUTCYC}/${new_spc2d}"
       done
    fi
-
+fi
 #if [ "${WEB}" == "YES" ]
 #then
 #    echo "Sending output plots to Web" | tee -a $logfile

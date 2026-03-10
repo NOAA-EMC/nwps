@@ -6,7 +6,7 @@
 # C/C++ Compiler Used: GNU, Intel, Cray
 # --------------------------------------------------------------- 
 # Define a name for the executable
-PROJECT = fix_ascii_point_data
+PROJECT = nwps_utils_fix_ascii_point_data
 
 # Release version = 1
 # Debug version = 0

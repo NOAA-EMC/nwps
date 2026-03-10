@@ -222,7 +222,7 @@ sub windInputProcessing{
 	}
     
 	# Call to standalone wind-tool that will re-project and interpolate GFE wind grids
-	system("read_awips_windfile --itype=${itype} --missing-value=${missing_value} --timestep=${timestep} ${full_wind_path_fname} ${INPUTdir}/wind >> $windlogfname");
+	system("nwps_utils_read_awips_windfile --itype=${itype} --missing-value=${missing_value} --timestep=${timestep} ${full_wind_path_fname} ${INPUTdir}/wind >> $windlogfname");
 	if($? != 0) {
 	    Logs::err("ERROR - Problem with wind pre-processing, see  $windlogfname\n",2);
 	}

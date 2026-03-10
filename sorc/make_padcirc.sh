@@ -39,7 +39,7 @@ export C_COMP_MP=cc
           if [ -s padcirc ]; then
              for exename in adcprep padcirc; do
                 echo " Copy $exename to estofs_${exename} at exec " >> $outfile
-                cp -f $exename ../../../exec/estofs_${exename}
+                cp -f $exename ../../../exec/estofs_padcirc_${exename}
              done
           fi
           #AW: Dont clean. punswan needs these files: make clean
@@ -62,7 +62,7 @@ export C_COMP_MP=cc
           if [ -s padcirc ]; then
              for exename in adcprep padcirc; do
                 echo " Copy $exename to estofs_${exename} at exec " >> $outfile
-                cp -f $exename ../../../exec/estofs_${exename}
+                cp -f $exename ../../../exec/estofs_padcirc_${exename}
              done
           fi
           #AW: Dont clean. punswan needs these files: clean

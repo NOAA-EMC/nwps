@@ -6,7 +6,7 @@
 # C/C++ Compiler Used: GNU, Intel, Cray
 # --------------------------------------------------------------- 
 # Define a name for the executable
-PROJECT = wave_runup_to_bin
+PROJECT = nwps_utils_wave_runup_to_bin
 
 # Release version = 1
 # Debug version = 0

@@ -552,24 +552,24 @@ sub graphicOutputProcessing (%){
 	# The BIN file is sequence of floating point values readable by GRADS, WGRIB2, CDO, DEGRIB, C and Fortran processing programs
 	if ($num_componets == 1) {
 	    if($set_exception_value == 1) {
-		system("swan_out_to_bin -v --meta-template=${g2DataType}.meta -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} >> ${g2logfname}" );
+		system("nwps_utils_swan_out_to_bin -v --meta-template=${g2DataType}.meta -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} >> ${g2logfname}" );
 	    }
 	    elsif($set_exception_lt_value == 1) {
-		system("swan_out_to_bin -v --meta-template=${g2DataType}.meta -l\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} >> ${g2logfname}" );
+		system("nwps_utils_swan_out_to_bin -v --meta-template=${g2DataType}.meta -l\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} >> ${g2logfname}" );
 	    }
 	    else {
-		system("swan_out_to_bin -v --meta-template=${g2DataType}.meta ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} >> ${g2logfname}" );
+		system("nwps_utils_swan_out_to_bin -v --meta-template=${g2DataType}.meta ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} >> ${g2logfname}" );
 	    }
 	}
 	else { # WIND and VEL
 	    if($set_exception_value == 1) {
-		system("swan_out_to_bin -v --meta-template1=${g2DataType}_dir.meta --meta-template2=${g2DataType}_mag.meta -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir >> ${g2logfname}" );
+		system("nwps_utils_swan_out_to_bin -v --meta-template1=${g2DataType}_dir.meta --meta-template2=${g2DataType}_mag.meta -n\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir >> ${g2logfname}" );
 	    }
 	    elsif($set_exception_lt_value == 1) {
-		system("swan_out_to_bin -v --meta-template1=${g2DataType}_dir.meta --meta-template2=${g2DataType}_mag.meta -l\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir >> ${g2logfname}" );
+		system("nwps_utils_swan_out_to_bin -v --meta-template1=${g2DataType}_dir.meta --meta-template2=${g2DataType}_mag.meta -l\"${swan_nan_value}\" -e\"${g2_nan_value}\" ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir >> ${g2logfname}" );
 	    }
 	    else {
-		system("swan_out_to_bin -v --meta-template1=${g2DataType}_dir.meta --meta-template2=${g2DataType}_mag.meta ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir >> ${g2logfname}" );
+		system("nwps_utils_swan_out_to_bin -v --meta-template1=${g2DataType}_dir.meta --meta-template2=${g2DataType}_mag.meta ${SWANCGIDFILE} ${g2_num_data_points} ${g2_time_step} ${num_componets} ${g2_run_len} dir mag speeddir >> ${g2logfname}" );
 	    }
 	}
 

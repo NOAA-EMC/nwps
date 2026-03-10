@@ -6,7 +6,7 @@
 # C/C++ Compiler Used: GNU, Intel, Cray
 # --------------------------------------------------------------- 
 # Define a name for the executable
-PROJECT = check_awips_windfile
+PROJECT = nwps_utils_check_awips_windfile
 
 # Release version = 1
 # Debug version = 0
