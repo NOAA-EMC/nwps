@@ -131,6 +131,7 @@ export GESINm2=${COMROOT}/${NET}/$ver/${NET}.${PDYm2}/nwges
 #export COMINgfs=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/gfs/prod/gfs.${PDY}
 #export COMINwave=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/gfs/prod/
 export COMINgfs=/lfs/h1/ops/prod/com/gfs/${gfs_ver}/gfs.${PDY}
+export COMINgfsm1=/lfs/h1/ops/prod/com/gfs/${gfs_ver}/gfs.${PDYm1}
 export COMINwave=/lfs/h1/ops/prod/com/gfs/${gfs_ver}
 export COMINestofs=${COMROOT}/${NET}/${ver}/ofs.${PDY}/estofs/${WFO}_output
 export COMINestofsm1=${COMROOT}/${NET}/${ver}/ofs.${PDYm1}/estofs/${WFO}_output

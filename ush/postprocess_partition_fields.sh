@@ -202,7 +202,7 @@ echo "time_stamp = ${time_stamp}"
 
 cp -fv ${NWPSDATA}/parm/templates/${siteid}/partition.meta ${WTVARdir}/.
 
-# NOTE: The following are set by the swan_wavetrack_to_bin program
+# NOTE: The following are set by the nwps_utils_swan_wavetrack_to_bin program
 # NOTE: The values below do not need to be set to real values here	
 sed -i "s/<< SET START YEAR >>/0000/g" ${WTVARdir}/partition.meta
 sed -i "s/<< SET START MONTH >>/00/g" ${WTVARdir}/partition.meta
@@ -232,11 +232,11 @@ do
     # so that the pattern reflects IDLA=3 (SW to NE)
     # The next version of systrak will be changing to IDLA=3.
     # Set IDLA with -i1 or -i3 option
-    ${EXECnwps}/swan_wavetrack_to_bin -c"SYS_COORD.OUT" -r${runlen} -n"9999" -t${step} -i1 SYS_${TYPE}.OUT ${TYPE}_points.bin partition.meta ${TYPE}_templates.grib2 ${TYPE}
+    ${EXECnwps}/nwps_utils_swan_wavetrack_to_bin -c"SYS_COORD.OUT" -r${runlen} -n"9999" -t${step} -i1 SYS_${TYPE}.OUT ${TYPE}_points.bin partition.meta ${TYPE}_templates.grib2 ${TYPE}
     if [ $? -ne 0 ]
     then
-	echo "ERROR - swan_wavetrack_to_bin program reported errors, exiting"
-	msg="ERROR - swan_wavetrack_to_bin program reported errors, exiting"
+	echo "ERROR - nwps_utils_swan_wavetrack_to_bin program reported errors, exiting"
+	msg="ERROR - nwps_utils_swan_wavetrack_to_bin program reported errors, exiting"
 	postmsg "$jlogfile" "$msg"
 	export err=1; err_chk
 	exit 1

@@ -68,6 +68,8 @@ module load geos/${geos_ver}
 module load libjpeg/${libjpeg_ver}
 module load python/${python_ver}
 module load iobuf/${iobuf_ver}
+module load emapf-c/${emapfc_ver}
+module load degrib/${degrib_ver}
 module list
 
 export IOBUF_PARAMS="*:count=24:size=32M:prefetch=1:preflush=1:verbose"

@@ -6,7 +6,7 @@
 # C/C++ Compiler Used: GNU, Intel, Cray
 # --------------------------------------------------------------- 
 # Define a name for the executable
-PROJECT = g2_write_template
+PROJECT = nwps_utils_g2_write_template
 
 # Release version = 1
 # Debug version = 0

@@ -115,9 +115,9 @@ CYCLE="00"
 echo ""
 
 # Set paths to RTOFS utils need to create NWPS output files
-WRITEDAT="${EXECnwps}/writedat"
-READDAT="${EXECnwps}/readdat"
-FIX_ASCII_POINT_DATA="${EXECnwps}/fix_ascii_point_data"
+WRITEDAT="${EXECnwps}/nwps_utils_writedat"
+READDAT="${EXECnwps}/nwps_utils_readdat"
+FIX_ASCII_POINT_DATA="${EXECnwps}/nwps_utils_fix_ascii_point_data"
 #NCDUMP="${NWPSdir}/lib${ARCHBITS}/netcdf/bin/ncdump"
 #GRADS="${NWPSdir}/lib${ARCHBITS}/grads/bin/grads"
 
@@ -172,11 +172,11 @@ function MakeClip() {
     swan_cur_ofile_fname="wave_rtofs_uv_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
     swan_cur_ofile="${OUTPUTdir}/${swan_cur_ofile_fname}"
     ${WGRIB2} -no_header -match "UOGRD:0 m below sea level:${end} hour fcst" -text ${CLIPdir}/UOGRD.dat ${G2CLIPPED}
-    ${HOMEnwps}/exec/fix_ascii_point_data ${CLIPdir}/UOGRD.dat 9.999e+20 0.0 ${swan_cur_ofile}
+    ${HOMEnwps}/exec/nwps_utils_fix_ascii_point_data ${CLIPdir}/UOGRD.dat 9.999e+20 0.0 ${swan_cur_ofile}
     ${WGRIB2} -no_header -match "VOGRD:0 m below sea level:${end} hour fcst" -text ${CLIPdir}/VOGRD.dat ${G2CLIPPED}
     cat ${CLIPdir}/UOGRD.dat > ${CLIPdir}/cur.dat
     cat ${CLIPdir}/VOGRD.dat >> ${CLIPdir}/cur.dat
-    ${HOMEnwps}/exec/fix_ascii_point_data ${CLIPdir}/cur.dat 9.999e+20 0.0 ${swan_cur_ofile}
+    ${HOMEnwps}/exec/nwps_utils_fix_ascii_point_data ${CLIPdir}/cur.dat 9.999e+20 0.0 ${swan_cur_ofile}
     
     #if [ "${IS_LDMSERVER}" == "TRUE" ]
     #then

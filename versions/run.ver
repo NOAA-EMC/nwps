@@ -24,6 +24,8 @@ export python_ver=3.8.6
 export w3nco_ver=2.4.1
 export util_shared_ver=1.4.0
 export perl_ver=5.32.0 # new
+export emapfc_ver=1.0.0
+export degrib_ver=2.28.0
 
 # for testing canned data
 #export PDY=20210824 #or 20210823

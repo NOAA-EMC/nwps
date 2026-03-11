@@ -21,7 +21,7 @@
 SHELL = /bin/bash
 
 # Define a name for the executable
-PROJECT = seaice_mask
+PROJECT = nwps_utils_seaice_mask
 
 # Release version = 1
 # Debug version = 0

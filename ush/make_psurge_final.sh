@@ -62,7 +62,8 @@ if [ "${USHnwps}" == "" ]
 fi
 
 echo "------- Running make_psurge_final.sh -------"
-export DEGRIB=${EXECnwps}/degrib
+export DEGRIB=${DEGRIB}
+#export DEGRIB=${EXECnwps}/degrib
 #export DEGRIB=/nwprod2/grib_util.v1.0.0/exec/degrib2
 PSURGE2NWPS=${EXECnwps}/psurge2nwps
 
@@ -214,8 +215,8 @@ do
         echo "PSURGEDOMAIN:${PSURGEDOMAIN}" > psurge_waterlevel_domain_${wfo}.txt
         xx=$(( $xx + 1 ))
      fi
-     echo "psoutTOnwps.exe ${wfo} ${Npx} ${Npy} ${dateinname_ini} ${EXCEED} ${HH_ini} ${epoc_time_ini}"
-     ${EXECnwps}/psoutTOnwps.exe ${wfo} ${Npx} ${Npy} ${dateinname_ini} ${EXCEED} ${HH_ini} ${epoc_time_ini} ${Vcorrection}
+     echo "psurge2nwps_psoutTOnwps.exe ${wfo} ${Npx} ${Npy} ${dateinname_ini} ${EXCEED} ${HH_ini} ${epoc_time_ini}"
+     ${EXECnwps}/psurge2nwps_psoutTOnwps.exe ${wfo} ${Npx} ${Npy} ${dateinname_ini} ${EXCEED} ${HH_ini} ${epoc_time_ini} ${Vcorrection}
      #mv psurge*${wfo}*e${EXCEED}.dat ${COMOUT}/${OFSTYPE}
      rm psurge*${wfo}*e${EXCEED}.dat
    done
@@ -252,7 +253,7 @@ then
       do
          fhour=$(printf "%03d" $f)
          fhour2=${fhour}        
-         ${EXECnwps}/psurge_combine.exe ${estofs_dir} ${wfo} ${EXCEED} \
+         ${EXECnwps}/psurge2nwps_combine.exe ${estofs_dir} ${wfo} ${EXCEED} \
                                         ${epoc_time_ini} ${yyyymmdd_ini} ${HH_ini} ${fhour} \
                                         ${epoc_time_ini2} ${yyyymmdd_ini2} ${HH_ini2} ${fhour2}
       done
@@ -277,7 +278,7 @@ else
          do
             fhour=$(printf "%03d" $f)
             fhour2=$(printf "%03d" $((f+6)) )      
-            ${EXECnwps}/psurge_combine.exe ${estofs_dir} ${wfo} ${EXCEED} \
+            ${EXECnwps}/psurge2nwps_combine.exe ${estofs_dir} ${wfo} ${EXCEED} \
                                            ${epoc_time_ini} ${yyyymmdd_ini} ${HH_ini} ${fhour} \
                                            ${epoc_time_ini2} ${yyyymmdd_ini2} ${HH_ini2} ${fhour2}
          done

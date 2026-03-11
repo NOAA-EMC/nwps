@@ -67,8 +67,8 @@ then
     exit 1
 fi
 
-FIXPOINTS="${EXECnwps}/fix_ascii_point_data"
-WRITEDAT="${EXECnwps}/writedat"
+FIXPOINTS="${EXECnwps}/nwps_utils_fix_ascii_point_data"
+WRITEDAT="${EXECnwps}/nwps_utils_writedat"
 if [ -z "${PYTHON}" ]; then export PYTHON=python; fi
 
 PROCdir="${VARdir}/shiproutes"
@@ -328,7 +328,7 @@ do
            echo "Deleting rows for forecast hour .${hp2}0000"
            sed -i "/.${hp2}0000/d" ${PROCdirparll}/${swan_table_name}
         done
-	${EXECnwps}/shiproute_to_bin -v ${PROCdirparll}/${swan_table_name} ${PROCdirparll}/shiproute.bin | tee -a ${LOGFILE}
+	${EXECnwps}/nwps_utils_shiproute_to_bin -v ${PROCdirparll}/${swan_table_name} ${PROCdirparll}/shiproute.bin | tee -a ${LOGFILE}
 	
 	echo "Generating templates for plotting" | tee -a ${LOGFILE}
 	time_stamp="${yyyy}${mon}${dd}_${hh}${mm}"
