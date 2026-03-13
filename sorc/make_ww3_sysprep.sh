@@ -17,9 +17,12 @@ fi
 #module list
 
 cd ${NWPSdir}/sorc/ww3_sysprep.fd
-make ww3_sysprep | tee ./sysprep_build.log
-rm *.o
-mv -v ww3_sysprep.exe ${NWPSdir}/exec/ww3_sysprep.exe
+make \
+  FFLAGS="${FFLAGS:-}" \
+  FCFLAGS="${FCFLAGS:-}" \
+  ww3_sysprep | tee ./sysprep_build.log
 
+rm -f *.o
+mv -v ww3_sysprep.exe ${NWPSdir}/exec/ww3_sysprep.exe
 echo "Build complete"
 exit 0

@@ -43,6 +43,8 @@ cd ${NWPSdir}/sorc/swan.fd
 
 echo "Building OpenMPI SWAN binary" | tee ./swan_build.log
 make clobber | tee -a ./swan_build.log
+rm -f macros.inc
+: > macros.inc
 make config | tee -a ./swan_build.log
 make mpi FLAGS_OPT="${OPTFLAGS}" | tee -a ./swan_build.log
 cp -pfv swan.exe ${NWPSdir}/exec/swan.exe

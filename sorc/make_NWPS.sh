@@ -40,27 +40,50 @@ source ../versions/build.ver
 #export COMPC=cc
 #export C_COMP=cc
 
-# -----------------------------------------------------------
-# Fortran runtime checking (validation build)
-# -----------------------------------------------------------
-echo "================================================"
-echo "  NWPS build with Fortran runtime checking"
-echo "  Flags: -O0 -g -check all -traceback -fpe0"
-echo "================================================"
-
-# Base compilers
 export COMP=ftn
 export COMPC=cc
 export C_COMP=cc
 
-# Force optimization/debug flags used by Makefiles
-export FLAGS_OPT="-O3 -g -check all -traceback"
+# -----------------------------------------------------------
+# Optional Fortran runtime checking
+# Usage:
+#   ./make_NWPS.sh        -> normal build
+#   ./make_NWPS.sh check  -> build with runtime checks
+# -----------------------------------------------------------
+CHECK_ALL=NO
+if [[ "${1:-}" == "check" ]]; then
+  CHECK_ALL=YES
+fi
 
-# Also export traditional flags for safety
-export optFlag="${FLAGS_OPT}"
-export FFLAGS="${FLAGS_OPT}"
-export FCFLAGS="${FLAGS_OPT}"
+if [[ "${CHECK_ALL}" == "YES" ]]; then
+  echo "================================================"
+  echo "  NWPS build with optional Fortran runtime checking"
+  echo "================================================"
 
+  export NWPS_CHECK_ALL=YES
+  # General components
+  export optFlag="-O0 -g -check all -traceback -fpe0"
+  export FFLAGS="-O0 -g -check all -traceback -fpe0"
+  export FCFLAGS="-O0 -g -check all -traceback -fpe0"
+
+  # SWAN / PUNSWAN controls
+  export FLAGS_OPT="-O0 -check all -fpe0"
+  export FLAGS_MSC="-g -traceback"
+else
+  echo "================================================"
+  echo "  NWPS normal build"
+  echo "================================================"
+
+  export NWPS_CHECK_ALL=NO
+  # General components
+  export optFlag="-O3"
+  export FFLAGS=""
+  export FCFLAGS=""
+
+  # SWAN / PUNSWAN controls
+  export FLAGS_OPT="-O2"
+  export FLAGS_MSC="-g -traceback"
+fi
 
 
 #module purge

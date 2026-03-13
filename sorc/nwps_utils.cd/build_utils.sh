@@ -43,12 +43,20 @@ export F90="ftn"
 export F77="ftn"
 export FC="ftn"
 # removed "-axCore-AVX2" from following:
-export CFLAGS="-v -Wall -O2"
-export CXXFLAGS="-v -Wall -O2"
-export FFLAGS="-v -warn all -O2 -mp1 -assume buffered_io"
-export FCFLAGS="-v -warn all -O2 -mp1 -assume buffered_io"
-export FFLAGS90="-v -warn all -O2 -mp1 -assume buffered_io"
-
+if [ "${NWPS_CHECK_ALL:-NO}" == "YES" ]; then
+    echo "NWPS utils build in CHECK mode"
+    export CFLAGS="-v -Wall -O0 -g"
+    export CXXFLAGS="-v -Wall -O0 -g"
+    export FFLAGS="-v -warn all -O0 -g -check all -traceback -fpe0 -mp1 -assume buffered_io"
+    export FCFLAGS="-v -warn all -O0 -g -check all -traceback -fpe0 -mp1 -assume buffered_io"
+    export FFLAGS90="-v -warn all -O0 -g -check all -traceback -fpe0 -mp1 -assume buffered_io"
+else
+    export CFLAGS="-v -Wall -O2"
+    export CXXFLAGS="-v -Wall -O2"
+    export FFLAGS="-v -warn all -O2 -mp1 -assume buffered_io"
+    export FCFLAGS="-v -warn all -O2 -mp1 -assume buffered_io"
+    export FFLAGS90="-v -warn all -O2 -mp1 -assume buffered_io"
+fi
 # Set addtional variables for builds
 export NUMCPUS=$(cat /proc/cpuinfo | grep processor | wc -l | tr -d " ")
 export OMP_NUM_THREADS=${NUMCPUS}

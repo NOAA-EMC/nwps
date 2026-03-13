@@ -10,6 +10,18 @@ export CXX=CC
 
 cd ${NWPSdir}/lib/sorc
 
+if [[ "${NWPS_CHECK_ALL:-NO}" == "YES" ]]; then
+  export CFLAGS="-O0 -g"
+  export CXXFLAGS="-O0 -g"
+  export FFLAGS="-O0 -g -check all -traceback -fpe0"
+  export FCFLAGS="-O0 -g -check all -traceback -fpe0"
+else
+  export CFLAGS="-O3"
+  export CXXFLAGS="-O3"
+  export FFLAGS="-O3"
+  export FCFLAGS="-O3"
+fi
+
 rm -rf hdf5-1_8_9 netcdf-4.2 netcdf-fortran-4.2
 
 git clone -b hdf5-1_8_9 https://github.com/HDFGroup/hdf5.git hdf5-1_8_9
@@ -23,6 +35,16 @@ cd hdf5-1_8_9
 --enable-fortran2003 \
 --enable-cxx \
 --with-zlib=${ZLIB_LIBDIR}
+
+if [[ "${NWPS_CHECK_ALL:-NO}" == "YES" ]]; then
+  find . -name Makefile -type f | while read -r mk; do
+    sed -i \
+      -e 's/^\([[:space:]]*H5_FCFLAGS[[:space:]]*=[[:space:]]*\)-O3[[:space:]]*$/\1/' \
+      -e 's/^\([[:space:]]*AM_FCFLAGS[[:space:]]*=[[:space:]]*.*\)[[:space:]]-O3\([[:space:]]*\)$/\1\2/' \
+      "$mk"
+  done
+fi
+
 make -j6
 make install
 

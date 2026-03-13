@@ -43,6 +43,8 @@ cd ${NWPSdir}/sorc/punswan4110.fd
 
 echo "Building OpenMPI SWAN binary" | tee ./punswan_build.log
 make clobber | tee -a ./punswan_build.log
+rm -f macros.inc
+: > macros.inc
 make config | tee -a ./punswan_build.log
 
 #Build parallel unstructured version
