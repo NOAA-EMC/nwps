@@ -145,7 +145,7 @@ then
          if [ -n "$zfiles" ]; then
             warn_and_disable_forcing \
               "RTOFS" \
-              "There are invalid RTOFS data in ${COMINrtofsm1} (0-byte *.dat files). Run will continue without surface current fields." \
+              "There are invalid RTOFS data in ${COMINrtofsm1} (0-byte *.dat files). Run will try Today's data." \
               "${RUNdir}/nortofs" \
               "$zfiles"
          else
