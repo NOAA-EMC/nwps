@@ -54,6 +54,25 @@ TIMESTEP="${ESTOFSTIMESTEP}"
 
 if [ "${ESTOFSCUR_REGION}" == "" ]; then ESTOFSCUR_REGION="conus.east"; fi
 
+check_bad_nc_file() {
+    f="${1}"
+
+    if [ ! -e "${f}" ]; then
+        return 1
+    fi
+
+    if [ ! -s "${f}" ]; then
+        return 1
+    fi
+
+    return 0
+}
+
+warn_and_disable_estofscur_nc() {
+    msg="${1}"
+    echo "WARNING: ${msg}" | tee -a ${LOGfile}
+}
+
 function process_wfolist() {
     WFO=$(echo ${site} | tr [:lower:] [:upper:])
     wfo=$(echo ${site} | tr [:upper:] [:lower:])
@@ -140,6 +159,11 @@ function process_wfolist() {
         # Copy ESTOFS nowcast output
         echo "Downloading ${SPOOLdir}/$file1 to $outfile1" 
         echo "cp -p ${COMINestofscur}/${file1} ."
+        if ! check_bad_nc_file "${COMINestofscur}/${file1}"; then
+           warn_and_disable_estofscur_nc "ESTOFS current file ${COMINestofscur}/${file1} is missing or 0-byte. Run will continue without ESTOFS current fields for ${WFO}."
+           rm -f ${OUTPUTdir}/LOCKFILE
+           return
+        fi
         cp -rp ${COMINestofscur}/${file1} .
         sleep 10
         if [ "$?" != "0" ] && [ ! -e ${file1} ];then
@@ -156,6 +180,11 @@ function process_wfolist() {
         # Copy ESTOFS forecast output
         echo "Downloading ${SPOOLdir}/$file2 to $outfile2" 
         echo "cp -p ${COMINestofscur}/${file2} ."
+        if ! check_bad_nc_file "${COMINestofscur}/${file2}"; then
+           warn_and_disable_estofscur_nc "ESTOFS current file ${COMINestofscur}/${file2} is missing or 0-byte. Run will continue without ESTOFS current fields for ${WFO}."
+           rm -f ${OUTPUTdir}/LOCKFILE
+           return
+        fi
         cp -rp ${COMINestofscur}/${file2} .
         sleep 10
         if [ "$?" != "0" ] && [ ! -e ${file2} ];then

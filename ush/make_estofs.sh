@@ -45,6 +45,26 @@ TIMESTEP="${ESTOFSTIMESTEP}"
 
 if [ "${ESTOFS_REGION}" == "" ]; then ESTOFS_REGION="conus.east"; fi
 
+check_bad_grib2_file() {
+    f="${1}"
+
+    if [ ! -e "${f}" ]; then
+        return 1
+    fi
+
+    if [ ! -s "${f}" ]; then
+        return 1
+    fi
+
+    return 0
+}
+
+warn_and_disable_estofs_grib2() {
+    msg="${1}"
+    echo "WARNING: ${msg}" | tee -a ${LOGfile}
+    touch ${RUNdir}/noestofs
+}
+
 function MakeClip() {
     DIR=${1}
     FILE=${2}
@@ -175,6 +195,12 @@ function process_wfolist() {
         fi
 
         echo "Downloading ${SPOOLdir}/$file to $outfile" 
+        echo "Checking source GRIB2 file ${COMINestofs}/${file}"
+        if ! check_bad_grib2_file "${COMINestofs}/${file}"; then
+           warn_and_disable_estofs_grib2 "ESTOFS GRIB2 file ${COMINestofs}/${file} is missing or 0-byte. Run will continue without ESTOFS water level variation and ice blocking for ${WFO}."
+           rm -f ${OUTPUTdir}/LOCKFILE
+           return
+        fi
         echo "cp -rp ${COMINestofs}/${file} ."
         cp -rp ${COMINestofs}/${file} .
         if [ "$?" != "0" ] && [ ! -e ${file} ];then
@@ -193,6 +219,11 @@ function process_wfolist() {
 
             echo "Downloading ${SPOOLdir}/$icefile"
             if [ -e ${COMINsice}/${icefile} ];then
+               if ! check_bad_grib2_file "${COMINsice}/${icefile}"; then
+                   warn_and_disable_estofs_grib2 "Sea ice GRIB2 file ${COMINsice}/${icefile} is missing or 0-byte. Run will continue without ESTOFS water level variation and ice blocking for ${WFO}."
+                   rm -f ${OUTPUTdir}/LOCKFILE
+                   return
+               fi
                echo "cp -rp ${COMINsice}/${icefile} ."
                cp -rp ${COMINsice}/${icefile} .
 
@@ -208,6 +239,11 @@ function process_wfolist() {
 
             elif [ -e ${COMINsicem1}/${icefile} ];then
                echo "Today's ice concentration file not yet available. Downloading yesterday's file."
+               if ! check_bad_grib2_file "${COMINsicem1}/${icefile}"; then
+                   warn_and_disable_estofs_grib2 "Sea ice GRIB2 file ${COMINsicem1}/${icefile} is missing or 0-byte. Run will continue without ESTOFS water level variation and ice blocking for ${WFO}."
+                   rm -f ${OUTPUTdir}/LOCKFILE
+                   return
+               fi
                echo "cp -rp ${COMINsicem1}/${icefile} ."
                cp -rp ${COMINsicem1}/${icefile} .
 
@@ -330,6 +366,12 @@ function process_wfolist() {
     	outfile="${file}"
     	cd ${PRODUCTdir}
     	if [ ! -e ${VARdir}/hasestofsdownload_${CYCLE}z.${ESTOFS_BASIN}.${ESTOFS_REGION}.f${FF} ];then
+            echo "Checking source GRIB2 file ${COMINestofs}/${file}"
+            if ! check_bad_grib2_file "${COMINestofs}/${file}"; then
+                warn_and_disable_estofs_grib2 "ESTOFS GRIB2 file ${COMINestofs}/${file} is missing or 0-byte. Run will continue without ESTOFS water level variation and ice blocking for ${WFO}."
+                rm -f ${OUTPUTdir}/LOCKFILE
+                return
+            fi
 	        echo "Copying ${COMINestofs}/${file} ${PRODUCTdir}/${file}"
 	        echo "cp -rp ${COMINestofs}/${file} ."
 	        cp -rp ${COMINestofs}/${file} .

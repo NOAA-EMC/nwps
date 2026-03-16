@@ -68,6 +68,25 @@ if [ "$5" != "" ]; then DOWNLOADRETRIES="$5"; fi
 WGETargs="-N -nv --tries=${DOWNLOADRETRIES} --no-remove-listing --append-output=${LOGfile}"
 WGET="/usr/bin/wget"
 
+check_bad_grib2_file() {
+    f="${1}"
+
+    if [ ! -e "${f}" ]; then
+        return 1
+    fi
+
+    if [ ! -s "${f}" ]; then
+        return 1
+    fi
+
+    return 0
+}
+
+warn_and_disable_rtofs_grib2() {
+    msg="${1}"
+    echo "WARNING - ${msg}" | tee -a ${LOGfile}
+}
+
 # The forecast cycle, default to 00
 CYCLE="00"	
 # Check for command line CYCLE
@@ -234,6 +253,12 @@ do
     outfile="${file}"
     cd ${SPOOLdir}
     echo "Downloading ${COMINrtofs}/$file to $outfile" | tee -a ${LOGfile}
+    if ! check_bad_grib2_file "${COMINrtofs}/${file}"; then
+        warn_and_disable_rtofs_grib2 "RTOFS GRIB2 file ${COMINrtofs}/${file} is missing or 0-byte. Run will continue without surface current fields."
+        cd ${myPWD}
+        echo "Exiting..." | tee -a ${LOGfile}
+        exit 0
+    fi
     #echo "$WGET ${WGETargs} ${url}/${file}" | tee -a ${LOGfile} 2>&1
     #$WGET ${WGETargs} ${url}/${file} | tee -a ${LOGfile} 2>&1
     cp -rp ${COMINrtofs}/${file} .
@@ -367,6 +392,12 @@ do
 	outfile="${file}"
 	cd ${SPOOLdir}
 	echo "Downloading $url/$file to $outfile" | tee -a ${LOGfile}
+        if ! check_bad_grib2_file "${COMINrtofs}/${file}"; then
+            warn_and_disable_rtofs_grib2 "RTOFS GRIB2 file ${COMINrtofs}/${file} is missing or 0-byte. Run will continue without surface current fields."
+            cd ${myPWD}
+            echo "Exiting..." | tee -a ${LOGfile}
+            exit 0
+        fi
 	#echo "$WGET ${WGETargs} ${url}/${file}" | tee -a ${LOGfile} 2>&1
 	#$WGET ${WGETargs} ${url}/${file} | tee -a ${LOGfile} 2>&1
 	cp -rp ${COMINrtofs}/${file} .
