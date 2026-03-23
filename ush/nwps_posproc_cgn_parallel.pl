@@ -236,9 +236,31 @@ my $i=${CGNUMPLOT}-$less;
     %CG = %{$CG};
 # scratch next three lines for WCOSS_main
     if (defined($CG{GRAPHICOUTPUTDIRECTORY})) {
-	Logs::run("Graphic post-processing for CG".$CG{CGNUM});
-	&graphicOutputProcessing(%CG);
-    }  #delete for wcoss
+        Logs::run("Graphic post-processing for CG".$CG{CGNUM});
+        &graphicOutputProcessing(%CG);
+# 2. Verify the output was actually created
+        my $grib2_path = "${OUTPUTdir}/grib2/CG$CG{CGNUM}";
+
+        if (opendir(my $dh, $grib2_path)) {
+            # Filter for files ending in .grib2 and ensure they aren't 0 bytes (-s)
+            my @grib_files = grep { /\.grib2$/ && -s "$grib2_path/$_" } readdir($dh);
+            closedir($dh);
+
+            if (@grib_files) {
+                Logs::run("SUCCESS: " . scalar(@grib_files) . " GRIB2 files verified in $grib2_path");
+            } else {
+                # This triggers a FATAL error for the system
+                my $errMsg = "FATAL ERROR: graphicOutputProcessing finished but no GRIB2 files found in $grib2_path";
+                Logs::run($errMsg);
+                die "$errMsg\n";
+            }
+        } else {
+            my $errMsg = "FATAL ERROR: Could not open GRIB2 directory $grib2_path: $!";
+            Logs::run($errMsg);
+            die "$errMsg\n";
+        }
+}
+
 ###} 
 #Break here for WCOSS_main_03
 #Logs::run("Archive input and output data files.");
