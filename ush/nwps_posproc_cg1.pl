@@ -238,7 +238,7 @@ for $i (0..0){
 	Logs::run("Graphic post-processing for CG".$CG{CGNUM});
 	&graphicOutputProcessing(%CG);
 # 2. Verify the output was actually created
-        my $grib2_path = "${OUTPUTdir}/grib22/CG$CG{CGNUM}";
+        my $grib2_path = "${OUTPUTdir}/grib2/CG$CG{CGNUM}";
 
         if (opendir(my $dh, $grib2_path)) {
             # Filter for files ending in .grib2 and ensure they aren't 0 bytes (-s)
