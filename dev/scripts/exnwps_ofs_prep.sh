@@ -49,13 +49,13 @@ case ${OFSTYPE} in
         export CYCLE="${CYC}"
         ${USHnwps}/make_estofs.sh
         export err=$?; err_chk
-        rm -rf ${RUNdir}/{*hourly,*hourly.spool}
+        #rm -rf ${RUNdir}/{*hourly,*hourly.spool}
     ;;
     estofs_cur)
         export CYCLE="${CYC}"
         ${USHnwps}/make_estofs_cur.sh
         export err=$?; err_chk
-        rm -rf ${RUNdir}/{*hourly,*hourly.spool}
+        #rm -rf ${RUNdir}/{*hourly,*hourly.spool}
     ;;
     rtofs)
         export CYCLE="00"

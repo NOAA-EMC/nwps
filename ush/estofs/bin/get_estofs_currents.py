@@ -109,7 +109,7 @@ def plot_cur(storm, datafile, lonmin, lonmax, latmin, latmax):
    tri.set_mask(mask)
 
    # Loop through each time step and plot results
-   for hour in range(5, estofshours):
+   for hour in range(0, estofshours):
       ucur=nco.variables['u-vel'][hour,:]
       vcur=nco.variables['v-vel'][hour,:]
       ucur[ucur<-9.] = 0.
