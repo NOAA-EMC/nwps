@@ -576,9 +576,9 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
                par2[ilat,ilon] = tp_agg(partfield2[llind,3],partfield2[llind,4])
                par3[ilat,ilon] = partfield2[min(llind),5]
             elif llind.size:
-               par[ilat,ilon] = partfield2[llind,3]
-               par2[ilat,ilon] = partfield2[llind,4]
-               par3[ilat,ilon] = partfield2[llind,5]
+               par[ilat,ilon] = partfield2[llind[0],3]
+               par2[ilat,ilon] = partfield2[llind[0],4]
+               par3[ilat,ilon] = partfield2[llind[0],5]
       print('Sys, Hs, Tp, Dir:',(ipart+1),("%5.2f" % np.nanmean(par)),("%5.2f" % np.nanmean(par2)),("%6.2f" % np.nanmean(par3)))
       #toc = time.time()
       #print('Time to interpolate parameter field (5):')
