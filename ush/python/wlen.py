@@ -160,7 +160,7 @@ for tstep in range(1, (int(TDEF)+1)):
    # Set up parameter field
    for lat in range(0, nlat):
       for lon in range(0, nlon):
-         par[lat,lon] = data[nlon*lat+lon,2:3]
+         par[lat,lon] = data[nlon*lat+lon,2]
 
    # Remove exception values
    par[np.where(par==-9999)] = np.nan
@@ -172,7 +172,7 @@ for tstep in range(1, (int(TDEF)+1)):
    # Set up parameter field
    for lat in range(0, nlat):
       for lon in range(0, nlon):
-         par2[lat,lon] = data[nlon*lat+lon,2:3]
+         par2[lat,lon] = data[nlon*lat+lon,2]
 
    par2ma = ma.masked_where(par2==-9999, par2)
    u=np.cos(3.1416/180*(270-par2ma))

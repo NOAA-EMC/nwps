@@ -21,7 +21,7 @@ module load cpe/${cpe_ver}
 module load proj/${proj_ver}
 module load geos/${geos_ver}
 module load libjpeg/${libjpeg_ver}
-module load python/${python_ver}
+module load ve/nwps/${ve_ver}
 module load perl/${perl_ver}
 module list
 

@@ -235,10 +235,10 @@ print("Start time = " + time.asctime(struct_time))
 print("Epoch start time = " + str(starttime))
 
 # Read our ship route data in this order
-htsgw_arr = np.fromfile(sr_fp, dtype=np.float32, count=NUMSRPOINTS*TDEF)
-dirpw_arr = np.fromfile(sr_fp, dtype=np.float32, count=NUMSRPOINTS*TDEF)
-wind_arr = np.fromfile(sr_fp, dtype=np.float32, count=NUMSRPOINTS*TDEF)
-perpw_arr = np.fromfile(sr_fp, dtype=np.float32, count=NUMSRPOINTS*TDEF)
+htsgw_arr = np.fromfile(sr_fp, dtype=float32, count=NUMSRPOINTS*TDEF)
+dirpw_arr = np.fromfile(sr_fp, dtype=float32, count=NUMSRPOINTS*TDEF)
+wind_arr = np.fromfile(sr_fp, dtype=float32, count=NUMSRPOINTS*TDEF)
+perpw_arr = np.fromfile(sr_fp, dtype=float32, count=NUMSRPOINTS*TDEF)
 
 cnt = 0
 for tstep in range(1, (TDEF+1)):

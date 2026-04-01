@@ -132,7 +132,7 @@ for tstep in range(TSTART, (int(TEND)+1)):
     data = np.loadtxt(grib2dump, delimiter=',', comments='l')
     for lat in range(0, nlat):
         for lon in range(0, nlon):
-            par[lat, lon] = data[nlon*lat+lon, 2:3]
+            par[lat, lon] = data[nlon*lat+lon, 2]
     par[np.where(par == -9999)] = np.nan
     par = unitconvert * par
 
