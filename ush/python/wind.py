@@ -141,7 +141,7 @@ for tstep in range(TSTART, (int(TEND)+1)):
     data = np.loadtxt(grib2dump, delimiter=',', comments='l')
     for lat in range(0, nlat):
         for lon in range(0, nlon):
-            par[lat, lon] = data[nlon*lat+lon, 2:3]
+            par[lat, lon] = data[nlon*lat+lon, 2]
     par[np.where(par == excpt)] = np.nan
     par = unitconvert * par
 
@@ -150,7 +150,7 @@ for tstep in range(TSTART, (int(TEND)+1)):
     data = np.loadtxt(grib2dump, delimiter=',', comments='l')
     for lat in range(0, nlat):
         for lon in range(0, nlon):
-            par2[lat, lon] = data[nlon*lat+lon, 2:3]
+            par2[lat, lon] = data[nlon*lat+lon, 2]
 
     par2ma = ma.masked_where(par2 == -9999, par2)
     u = np.cos(3.1416/180*(270-par2ma))

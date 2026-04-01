@@ -89,7 +89,7 @@ waveXticks = []
 for d in waveXdates:
     waveXticks.append(d.strftime("%m/%d\n%HZ"))
     
-data = np.fromfile(bWave, dtype=np.float32) # read the binary data
+data = np.fromfile(bWave, dtype=float32) # read the binary data
 #print(data.shape)
 data = data.reshape((wavePrts*2,waveCols,waveRows)) # reshape the data file (2*components u,v)
 #print(data.shape)
@@ -106,7 +106,7 @@ bWave.close()
 fwind,windXcol,windRows,windYval,windPrts,windCols,windRun,windFhr,windStep,missing_val,YYYY,MM,DD,HH = read_controlFile(cWind)
 bWind = open(fwind,'r')         # Binary 1D Spectrum file
 
-windData = np.fromfile(bWind, dtype=np.float32) # read the binary data
+windData = np.fromfile(bWind, dtype=float32) # read the binary data
 windData = windData.reshape((windPrts*2,windCols,windRows)) # reshape the data file (2*components u,v)
 
 windXvals = arange(0,windCols,1)

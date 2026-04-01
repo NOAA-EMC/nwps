@@ -317,7 +317,7 @@ print('silhouette_best = ',silhouette_best)
 
 k_means = cluster.KMeans(n_clusters=nclust_best, random_state=1)
 k_means.fit(wavedat)
-label_best=k_means.labels_.astype(np.float)
+label_best=k_means.labels_.astype(float)
 #--------------------------------
 
 lons=np.linspace(x0,x0+float(nlon-1)*dx,num=nlon)
@@ -366,10 +366,10 @@ else:
 convfac = 1/0.3048   #meters to feet
 
 # Find indices of output points for PNT file
-pntlat_ind1 = np.zeros(nloc, dtype=np.int)
-pntlat_ind2 = np.zeros(nloc, dtype=np.int)
-pntlon_ind1 = np.zeros(nloc, dtype=np.int)
-pntlon_ind2 = np.zeros(nloc, dtype=np.int)
+pntlat_ind1 = np.zeros(nloc, dtype=int)
+pntlat_ind2 = np.zeros(nloc, dtype=int)
+pntlon_ind1 = np.zeros(nloc, dtype=int)
+pntlon_ind2 = np.zeros(nloc, dtype=int)
 print('\nFinding indices of output points...')
 for iloc in range(0, nloc):
    for ilat in range(0, nlat-1):
@@ -576,9 +576,9 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
                par2[ilat,ilon] = tp_agg(partfield2[llind,3],partfield2[llind,4])
                par3[ilat,ilon] = partfield2[min(llind),5]
             elif llind.size:
-               par[ilat,ilon] = partfield2[llind,3]
-               par2[ilat,ilon] = partfield2[llind,4]
-               par3[ilat,ilon] = partfield2[llind,5]
+               par[ilat,ilon] = partfield2[llind[0],3]
+               par2[ilat,ilon] = partfield2[llind[0],4]
+               par3[ilat,ilon] = partfield2[llind[0],5]
       print('Sys, Hs, Tp, Dir:',(ipart+1),("%5.2f" % np.nanmean(par)),("%5.2f" % np.nanmean(par2)),("%6.2f" % np.nanmean(par3)))
       #toc = time.time()
       #print('Time to interpolate parameter field (5):')
@@ -665,7 +665,7 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
          vardens_plt = vardens[fhour,:,:]  
          vardens_plt = np.transpose(vardens_plt)
          vardens_plt = np.log10(np.maximum(vardens_plt,1e-09))
-         vardens_plt[vardens_plt==np.log10(1e-09)] = np.NaN
+         vardens_plt[vardens_plt==np.log10(1e-09)] = np.nan
          cmap=plt.cm.jet
          cmap.set_bad("white")
          ax2 = fig.add_subplot(4, 3, 9, projection='polar')
@@ -753,11 +753,11 @@ for itime in range(startdate, (enddate+1*dt), 1*dt):
    if (plot_output) & (fhour % 3 == 0): 
       for plotloc in range(nclust_best, 6):
          if plotloc < 3: 
-            axlist[plotloc].outline_patch.set_visible(False)
-            axlist[plotloc+3].outline_patch.set_visible(False)
+            axlist[plotloc].spines['geo'].set_visible(False)
+            axlist[plotloc+3].spines['geo'].set_visible(False)
          else:
-            axlist[plotloc+3].outline_patch.set_visible(False)
-            axlist[plotloc+6].outline_patch.set_visible(False)
+            axlist[plotloc+3].spines['geo'].set_visible(False)
+            axlist[plotloc+6].spines['geo'].set_visible(False)
 
    if (plot_output) & (fhour % 3 == 0):   
       date = datetime.datetime.fromtimestamp(itime) 

@@ -65,7 +65,7 @@ xvals = np.linspace(0, 0.5, num=cols)
 #for x in range(len(xval)):
 #    xvals.append(float(xval[x]))
     
-data = np.fromfile(bfile, dtype=np.float32) # read the binary data
+data = np.fromfile(bfile, dtype=float32) # read the binary data
 data = data.reshape((rows,cols)) # reshape the data file
 
 cfile.close()
