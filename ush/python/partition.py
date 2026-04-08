@@ -12,6 +12,7 @@ import numpy as np
 from pylab import *
 from time import gmtime, strftime
 from datetime import date, timedelta
+import sys
 
 #===========================================
 # Methods/Functions to optimize the script
@@ -199,15 +200,15 @@ for i in range(0,wavePrts,1):
     
     ax=gca()
     ax.xaxis.set_major_locator(MultipleLocator(XtickSpacing))
-    ax.xaxis.grid(b=True, which='major', color='#C0C0C0', linestyle=':')
+    ax.xaxis.grid(True, which='major', color='#C0C0C0', linestyle=':')
     ax.yaxis.set_major_locator(MultipleLocator(2))
-    ax.yaxis.grid(b=True, which='major', color='#C0C0C0', linestyle=':')
+    ax.yaxis.grid(True, which='major', color='#C0C0C0', linestyle=':')
     ax.tick_params( labelsize='x-small')
     ax.set_ylabel('Peak Wave Period [s]',labelpad = 12)
 
     xticks(waveXvals[0::12],waveXticks[0::12])
     xlim(0,waveXvals[-1])
-    title('Gerling-Hanson Plot for '+LocName+' ('+lon+'$^\circ$,'+lat+'$^\circ$) '+'\nNWPS RUN: '+waveRun)
+    title('Gerling-Hanson Plot for '+LocName+' ('+lon+r'$^\circ$,'+lat+r'$^\circ$) '+'\nNWPS RUN: '+waveRun)
     #xlabel('Time [UTC]',labelpad=2)
     
     if i == (wavePrts-1):
@@ -223,9 +224,9 @@ for i in range(0,wavePrts,1):
 
     ax1=gca()
     ax1.xaxis.set_major_locator(MultipleLocator(XtickSpacing))
-    ax1.xaxis.grid(b=True, which='major', color='#C0C0C0', linestyle=':')
+    ax1.xaxis.grid(True, which='major', color='#C0C0C0', linestyle=':')
     ax1.yaxis.set_major_locator(MultipleLocator(2))
-    ax1.yaxis.grid(b=True, which='major', color='#C0C0C0', linestyle=':')
+    ax1.yaxis.grid(True, which='major', color='#C0C0C0', linestyle=':')
     ax1.tick_params( labelsize='x-small')
     ax1.set_ylabel('Hs [ft]',labelpad = 18)
     #pos1 = ax1.get_position() # get the original position 
@@ -245,9 +246,9 @@ Qwind = quiver(Xwnd,Ywnd,UWind,VWind,scale=np.round(mxUVwind,1)*14.5,width=0.002
 
 ax2=gca()
 ax2.xaxis.set_major_locator(MultipleLocator(XtickSpacing))
-ax2.xaxis.grid(b=True, which='major', color='#C0C0C0', linestyle=':')
+ax2.xaxis.grid(True, which='major', color='#C0C0C0', linestyle=':')
 ax2.yaxis.set_major_locator(MultipleLocator(int(np.round(mxUVwind*1.94,0))/2))
-ax2.yaxis.grid(b=True, which='major', color='#C0C0C0', linestyle=':')
+ax2.yaxis.grid(True, which='major', color='#C0C0C0', linestyle=':')
 ax2.tick_params( labelsize='x-small')
 
 xticks(waveXvals[0::12],waveXticks[0::12])

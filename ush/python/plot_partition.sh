@@ -232,7 +232,7 @@ do
 
       #------------------------------------- RUN PYTHON SCRIPT --------------------------------------------------
       echo "Plotting partition images"
-      ./partition.py ${LOCATION} ${LONGITUDE} ${LATITUDE} ${windsource} ${REGION} # Added by E. Rodriguez on 5/18/2015
+      ./partition.py ${LOCATION} ${LONGITUDE} ${LATITUDE} ${windsource} ${REGION} >> partition_run.log 2>&1 # Added by E. Rodriguez on 5/18/2015
       #----------------------------------------------------------------------------------------------------------
 
 	# NOTE: We must clean up the PNG files before they are copied to ${GRAPHICSdir} 
