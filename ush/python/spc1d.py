@@ -120,9 +120,9 @@ for i in range(timeSteps):
     # Customize the axis of the plot
     ax=gca()
     ax.xaxis.set_major_locator(MultipleLocator(0.05))
-    ax.xaxis.grid(b=True, which='major', color='#C0C0C0', linestyle=':')
+    ax.xaxis.grid(True, which='major', color='#C0C0C0', linestyle=':')
     ax.yaxis.set_major_locator(MultipleLocator(ySpace))
-    ax.yaxis.grid(b=True, which='major', color='#C0C0C0', linestyle=':')
+    ax.yaxis.grid(True, which='major', color='#C0C0C0', linestyle=':')
     ax.tick_params( labelsize='x-small')
     ax.set_xlabel('Frequency [Hz]')
     ax.set_ylabel('Energy [m2/Hz]')
