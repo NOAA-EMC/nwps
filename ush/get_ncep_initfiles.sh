@@ -138,18 +138,18 @@ then
    if [ $# -eq 1 ]
    then
       echo "Downloading RTOFS Data. Checking Yesterday First."
-      if [ -e ${COMINrtofsm1}/LOCKFILE ]; then sleep 600; fi
-      if [ -e ${COMINrtofsm1}/rtofs_current_start_time.txt ]
+      if [ -e ${COMIN_OFS_rtofsm1}/LOCKFILE ]; then sleep 600; fi
+      if [ -e ${COMIN_OFS_rtofsm1}/rtofs_current_start_time.txt ]
       then
-         zfiles=$(list_zerobyte_files_in_dir "${COMINrtofsm1}" "wave_rtofs_uv_*.dat")
+         zfiles=$(list_zerobyte_files_in_dir "${COMIN_OFS_rtofsm1}" "wave_rtofs_uv_*.dat")
          if [ -n "$zfiles" ]; then
             warn_and_disable_forcing \
               "RTOFS" \
-              "There are invalid RTOFS data in ${COMINrtofsm1} (0-byte *.dat files). Run will try Today's data." \
+              "There are invalid RTOFS data in ${COMIN_OFS_rtofsm1} (0-byte *.dat files). Run will try Today's data." \
               "${RUNdir}/nortofs" \
               "$zfiles"
          else
-            cp -pfv ${COMINrtofsm1}/* .
+            cp -pfv ${COMIN_OFS_rtofsm1}/* .
             rm -fr index.* robots.*
          fi
       else
@@ -186,18 +186,18 @@ then
    then
       echo "Downloading RTOFS Data. Checking Today."
       #${WGET} ${WGETargs} http://${SITE}/${RTOFSPATH}
-      if [ -e ${COMINrtofs}/LOCKFILE ]; then sleep 600; fi
-      if [ -e ${COMINrtofs}/rtofs_current_start_time.txt ]
+      if [ -e ${COMIN_OFS_rtofs}/LOCKFILE ]; then sleep 600; fi
+      if [ -e ${COMIN_OFS_rtofs}/rtofs_current_start_time.txt ]
       then
-         zfiles=$(list_zerobyte_files_in_dir "${COMINrtofs}" "wave_rtofs_uv_*.dat")
+         zfiles=$(list_zerobyte_files_in_dir "${COMIN_OFS_rtofs}" "wave_rtofs_uv_*.dat")
 	 if [ -n "$zfiles" ]; then
             warn_and_disable_forcing \
               "RTOFS" \
-              "There are invalid RTOFS data in ${COMINrtofs} (0-byte *.dat files). Run will continue without surface current fields." \
+              "There are invalid RTOFS data in ${COMIN_OFS_rtofs} (0-byte *.dat files). Run will continue without surface current fields." \
               "${RUNdir}/nortofs" \
               "$zfiles"
          else
-            cp -pfv ${COMINrtofs}/* .
+            cp -pfv ${COMIN_OFS_rtofs}/* .
 	    rm -fr index.* robots.*
 	 fi
       else
@@ -242,20 +242,20 @@ then
    then
       echo "Downloading ESTOFS current Data. Checking Yesterday First."
       #${WGET} ${WGETargs} http://${SITE}/${ESTOFSPATHY}
-      if [ -e ${COMINestofsm1}/LOCKFILE ]; then sleep 600; fi 
-      if [ -e ${COMINestofsm1}/estofs_current_start_time.txt ]
+      if [ -e ${COMIN_OFS_stofsm1}/LOCKFILE ]; then sleep 600; fi 
+      if [ -e ${COMIN_OFS_stofsm1}/estofs_current_start_time.txt ]
       then
-         zfiles=$(list_zerobyte_files_in_dir "${COMINestofsm1}" "wave_estofs_uv*.dat")
+         zfiles=$(list_zerobyte_files_in_dir "${COMIN_OFS_stofsm1}" "wave_estofs_uv*.dat")
 	 if [ -n "$zfiles" ]; then
 	    warn_and_disable_forcing \
               "ESTOFS" \
-              "There are invalid ESTOFS current data in ${COMINestofsm1} (0-byte *.dat files). Run will continue without current." \
+              "There are invalid ESTOFS current data in ${COMIN_OFS_stofsm1} (0-byte *.dat files). Run will continue without current." \
               "${RUNdir}/noestofs_cur" \
               "$zfiles"
          else   	      
-	    cp -pfv ${COMINestofsm1}/wave_estofs_uv* .
-            cp -pfv ${COMINestofsm1}/estofs_current_domain.txt .
-            cp -pfv ${COMINestofsm1}/estofs_current_start_time.txt .
+	    cp -pfv ${COMIN_OFS_stofsm1}/wave_estofs_uv* .
+            cp -pfv ${COMIN_OFS_stofsm1}/estofs_current_domain.txt .
+            cp -pfv ${COMIN_OFS_stofsm1}/estofs_current_start_time.txt .
             rm -fr index.* robots.*
 	 fi
       else
@@ -264,20 +264,20 @@ then
    fi
    echo "Downloading ESTOFS current data for Today"
    ##${WGET} ${WGETargs} http://${SITE}/${ESTOFSPATH}
-   if [ -e ${COMINestofs}/LOCKFILE ]; then sleep 600; fi
-   if [ -e ${COMINestofs}/estofs_current_start_time.txt ]
+   if [ -e ${COMIN_OFS_stofs}/LOCKFILE ]; then sleep 600; fi
+   if [ -e ${COMIN_OFS_stofs}/estofs_current_start_time.txt ]
    then
-      zfiles=$(list_zerobyte_files_in_dir "${COMINestofs}" "wave_estofs_uv*.dat")
+      zfiles=$(list_zerobyte_files_in_dir "${COMIN_OFS_stofs}" "wave_estofs_uv*.dat")
       if [ -n "$zfiles" ]; then
 	 warn_and_disable_forcing \
            "ESTOFS" \
-           "There are invalid ESTOFS current data in ${COMINestofs} (0-byte *.dat files). Run will continue without current." \
+           "There are invalid ESTOFS current data in ${COMIN_OFS_stofs} (0-byte *.dat files). Run will continue without current." \
            "${RUNdir}/noestofs_cur" \
 	   "$zfiles"
       else
-         cp -pfv ${COMINestofs}/wave_estofs_uv* .
-         cp -pfv ${COMINestofs}/estofs_current_domain.txt .
-         cp -pfv ${COMINestofs}/estofs_current_start_time.txt .
+         cp -pfv ${COMIN_OFS_stofs}/wave_estofs_uv* .
+         cp -pfv ${COMIN_OFS_stofs}/estofs_current_domain.txt .
+         cp -pfv ${COMIN_OFS_stofs}/estofs_current_start_time.txt .
          rm -fr index.* robots.*
       fi
    else
@@ -319,20 +319,20 @@ then
    then
       echo "Downloading ESTOFS Data. Checking Yesterday First."
       #${WGET} ${WGETargs} http://${SITE}/${ESTOFSPATHY}
-      if [ -e ${COMINestofsm1}/LOCKFILE ]; then sleep 600; fi 
-      if [ -e ${COMINestofsm1}/estofs_waterlevel_start_time.txt ]
+      if [ -e ${COMIN_OFS_stofsm1}/LOCKFILE ]; then sleep 600; fi 
+      if [ -e ${COMIN_OFS_stofsm1}/estofs_waterlevel_start_time.txt ]
       then
-         zfiles=$(list_zerobyte_files_in_dir "${COMINestofsm1}" "wave_estofs_waterlevel*.dat")
+         zfiles=$(list_zerobyte_files_in_dir "${COMIN_OFS_stofsm1}" "wave_estofs_waterlevel*.dat")
 	 if [ -n "$zfiles" ]; then
             warn_and_disable_forcing \
               "ESTOFS" \
-              "There are invalid ESTOFS/Sea Ice data in ${COMINestofsm1} (0-byte *.dat files). Run will continue without water level variation and ice blocking." \
+              "There are invalid ESTOFS/Sea Ice data in ${COMIN_OFS_stofsm1} (0-byte *.dat files). Run will continue without water level variation and ice blocking." \
               "${RUNdir}/noestofs" \
               "$zfiles"
          else
-            cp -pfv ${COMINestofsm1}/wave_estofs_waterlevel* .
-            cp -pfv ${COMINestofsm1}/estofs_waterlevel_domain.txt .
-            cp -pfv ${COMINestofsm1}/estofs_waterlevel_start_time.txt .
+            cp -pfv ${COMIN_OFS_stofsm1}/wave_estofs_waterlevel* .
+            cp -pfv ${COMIN_OFS_stofsm1}/estofs_waterlevel_domain.txt .
+            cp -pfv ${COMIN_OFS_stofsm1}/estofs_waterlevel_start_time.txt .
             rm -fr index.* robots.*
 	 fi
       else
@@ -341,20 +341,20 @@ then
    fi
    echo "Downloading ESTOFS data for Today"
    ##${WGET} ${WGETargs} http://${SITE}/${ESTOFSPATH}
-   if [ -e ${COMINestofs}/LOCKFILE ]; then sleep 600; fi
-   if [ -e ${COMINestofs}/estofs_waterlevel_start_time.txt ]
+   if [ -e ${COMIN_OFS_stofs}/LOCKFILE ]; then sleep 600; fi
+   if [ -e ${COMIN_OFS_stofs}/estofs_waterlevel_start_time.txt ]
    then
-      zfiles=$(list_zerobyte_files_in_dir "${COMINestofs}" "wave_estofs_waterlevel*.dat")
+      zfiles=$(list_zerobyte_files_in_dir "${COMIN_OFS_stofs}" "wave_estofs_waterlevel*.dat")
       if [ -n "$zfiles" ]; then
          warn_and_disable_forcing \
            "ESTOFS" \
-           "There are invalid ESTOFS/Sea Ice data in ${COMINestofs} (0-byte *.dat files). Run will continue without water level variation and ice blocking." \
+           "There are invalid ESTOFS/Sea Ice data in ${COMIN_OFS_stofs} (0-byte *.dat files). Run will continue without water level variation and ice blocking." \
            "${RUNdir}/noestofs" \
            "$zfiles"
       else
-         cp -pfv ${COMINestofs}/wave_estofs_waterlevel* .
-         cp -pfv ${COMINestofs}/estofs_waterlevel_domain.txt .
-         cp -pfv ${COMINestofs}/estofs_waterlevel_start_time.txt .
+         cp -pfv ${COMIN_OFS_stofs}/wave_estofs_waterlevel* .
+         cp -pfv ${COMIN_OFS_stofs}/estofs_waterlevel_domain.txt .
+         cp -pfv ${COMIN_OFS_stofs}/estofs_waterlevel_start_time.txt .
          rm -fr index.* robots.*
       fi
    else
@@ -398,20 +398,20 @@ then
       echo "Downloading PSURGE Data. Checking Yesterday First."
       #${WGET} ${WGETargs} http://${SITE}/${PSURGEPATHY}
       #cp -pfv ${ES_RTOFS_PSurgedir}/${PSURGEPATHY}/wave_psurge_*_${siteid}_e${EXCD}.dat.tar.gz .
-      if [ -e ${COMINpsurgem1}/psurge_waterlevel_start_time.txt ]
+      if [ -e ${COMIN_OFS_psurgem1}/psurge_waterlevel_start_time.txt ]
       then
-         zfiles=$(list_zerobyte_files_in_dir "${COMINpsurgem1}" "wave_combnd_*_${siteid}_e${EXCD}_f*.dat")
+         zfiles=$(list_zerobyte_files_in_dir "${COMIN_OFS_psurgem1}" "wave_combnd_*_${siteid}_e${EXCD}_f*.dat")
 	 if [ -n "$zfiles" ]; then
             warn_and_disable_forcing \
               "PSURGE" \
-              "There are invalid PSURGE fields in ${COMINpsurgem1} (0-byte *.dat files). PSURGE will not be used; fallback will follow original logic." \
+              "There are invalid PSURGE fields in ${COMIN_OFS_psurgem1} (0-byte *.dat files). PSURGE will not be used; fallback will follow original logic." \
               "${RUNdir}/nopsurge" \
               "$zfiles"
          else
-            #cp -pfv ${COMINpsurgem1}/wave_psurge_*_${siteid}_e${EXCD}_f*.dat .
-            cp -pfv ${COMINpsurgem1}/wave_combnd_*_${siteid}_e${EXCD}_f*.dat .
-            cp -pfv ${COMINpsurgem1}/psurge_waterlevel_domain_${siteid}.txt .
-            cp -pfv ${COMINpsurgem1}/psurge_waterlevel_start_time.txt .
+            #cp -pfv ${COMIN_OFS_psurgem1}/wave_psurge_*_${siteid}_e${EXCD}_f*.dat .
+            cp -pfv ${COMIN_OFS_psurgem1}/wave_combnd_*_${siteid}_e${EXCD}_f*.dat .
+            cp -pfv ${COMIN_OFS_psurgem1}/psurge_waterlevel_domain_${siteid}.txt .
+            cp -pfv ${COMIN_OFS_psurgem1}/psurge_waterlevel_start_time.txt .
             rm -fr index.* robots.*
             PSfiles_exist="TRUE"
             chmod 664 *.dat
@@ -426,20 +426,20 @@ then
    # SET THIS PROPERLY XXX
    #PSurgeFiles="/ptmpp1/Roberto.Padilla/data/Psurge2NWPS/output"
    #cp -pfv ${ES_RTOFS_PSurgedir}/${PSURGEPATH}/wave_psurge_*_${siteid}_e${EXCD}.dat.tar.gz .
-   if [ -e ${COMINpsurge}/psurge_waterlevel_start_time.txt ]
+   if [ -e ${COMIN_OFS_psurge}/psurge_waterlevel_start_time.txt ]
    then
-      zfiles=$(list_zerobyte_files_in_dir "${COMINpsurge}" "wave_combnd_*_${siteid}_e${EXCD}_f*.dat")
+      zfiles=$(list_zerobyte_files_in_dir "${COMIN_OFS_psurge}" "wave_combnd_*_${siteid}_e${EXCD}_f*.dat")
       if [ -n "$zfiles" ]; then
          warn_and_disable_forcing \
            "PSURGE" \
-           "There are invalid PSURGE fields in ${COMINpsurge} (0-byte *.dat files). PSURGE will not be used; fallback will follow original logic." \
+           "There are invalid PSURGE fields in ${COMIN_OFS_psurge} (0-byte *.dat files). PSURGE will not be used; fallback will follow original logic." \
            "${RUNdir}/nopsurge" \
            "$zfiles"
       else
-         #cp -pfv ${COMINpsurge}/wave_psurge_*_${siteid}_e${EXCD}_f*.dat .
-         cp -pfv ${COMINpsurge}/wave_combnd_*_${siteid}_e${EXCD}_f*.dat .
-         cp -pfv ${COMINpsurge}/psurge_waterlevel_domain_${siteid}.txt .
-         cp -pfv ${COMINpsurge}/psurge_waterlevel_start_time.txt .
+         #cp -pfv ${COMIN_OFS_psurge}/wave_psurge_*_${siteid}_e${EXCD}_f*.dat .
+         cp -pfv ${COMIN_OFS_psurge}/wave_combnd_*_${siteid}_e${EXCD}_f*.dat .
+         cp -pfv ${COMIN_OFS_psurge}/psurge_waterlevel_domain_${siteid}.txt .
+         cp -pfv ${COMIN_OFS_psurge}/psurge_waterlevel_start_time.txt .
          rm -fr index.* robots.*
          #PSfiles_exist="TRUE"
          chmod 664 *.dat
