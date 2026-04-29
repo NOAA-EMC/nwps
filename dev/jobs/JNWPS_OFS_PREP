@@ -119,46 +119,9 @@ export COMINrtofs=/lfs/h1/ops/prod/com/rtofs/${rtofs_ver}/rtofs.${PDY}
 export COMINsice=/lfs/h1/ops/prod/com/seaice_analysis/${seaice_analysis_ver}/seaice_analysis.${PDY}
 export COMINsicem1=/lfs/h1/ops/prod/com/seaice_analysis/${seaice_analysis_ver}/seaice_analysis.${PDYm1}
 export COMINpsurge=/lfs/h1/ops/prod/com/psurge/${psurge_ver}/psurge.${PDY}
-#export COMINwave=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/gfs/prod/
-#export COMINestofs=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/estofs/prod/estofs.${PDY}
-#export COMINrtofs=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/rtofs/prod/rtofs.${PDY}
-#export COMINsice=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/omb/prod/sice.${PDY}
-#export COMINsicem1=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/omb/prod/sice.${PDYm1}
-#export COMINpsurge=/gpfs/hps/nco/ops/com/psurge/prod/psurge.${PDY}
 
 export COMROOTp2=/gpfs/hps/nco/ops/com
 
-# TEST 1  (See ush/make_psurge_para.sh) 
-#export COMINpsurge=${NWROOT}/com2/nhc/para
-#----------------------------------------------------
-# Test 2
-#export COMINpsurge=$COMROOTp2/nhc/test/
-#export DirIN=${COMINpsurge}/psurge.20150527/al082014
-#----------------------------------------------------
-#  TEST 3
-#export COMINpsurge=$COMROOTp2/nhc/test/psurge.20150507/
-#--------------------------------------------------
-# TEST 4
-#export COMINpsurge=${COMROOTp2}/nhc/para/psurge.20160406
-#--------------------------------------------------
-# PRODUCTION
-# To work with the latest Psurge fields
-#export COMINpsurge=$COMROOTp2/nhc/test/psurge.PDY
-#export COMINpsurge=${COMROOTp2}/nhc/prod/psurge.${PDY}
-#export COMINpsurge=/gpfs/hps/nco/ops/com/psurge/${envir}/psurge.${PDY}
-#------------------------
-# TEST 5
-#export COMINpsurge=/gpfs/hps/nco/ops/com/psurge/para/psurge.20170403
-#export COMINpsurge=/gpfs/hps/nco/ops/com/psurge/para/psurge.20170404
-#export COMINpsurge=/gpfs/hps3/emc/marine/noscrub/Andre.VanderWesthuysen/nwps_para_20160501/psurge.20180501
-#export COMINpsurge=/gpfs/hps/nco/ops/com/psurge/para/psurge.20200726
-#export COMINpsurge=/gpfs/hps3/ptmp/Andre.VanderWesthuysen/data/psurge_tmp/
-#------------------------
-# TEST WCOSS2
-#export COMINpsurge=/lfs/h1/mdl/marine/noscrub/Keep/psurge.v2.10/2018-Florence-Adv54-2.10.1/com/psurge/v2.10/psurge.20180912
-#export COMINpsurge=/lfs/h1/mdl/marine/noscrub/Keep/psurge.v2.10/2017-Harvey-Adv12-2.10.1/com/psurge/v2.10/psurge.20170823/
-#export COMINpsurge=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/psurge.v2.10/2017-Harvey-Adv12-2.10.1/com/psurge/v2.10/psurge.20170823/
-#export COMINpsurge=/lfs/h2/emc/couple/noscrub/Andre.VanderWesthuysen/nwps/com/psurge.v2.10/2018-Florence-Adv54-2.10.1/com/psurge/v2.10/psurge.20180912/
 #------------------------
 
 export dcom=${dcom:-/dcom/us007003}
