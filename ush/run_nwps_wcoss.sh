@@ -703,42 +703,6 @@ then
     EXCD="10"
 fi
 
-#AW # 05/25/2017: If using RTOFS or water levels, check to see if we have init files
-#AW if [ "${RTOFS^^}" == "YES" ]; then
-#AW     export RTOFS="YES" # Signal pre-processing script to get NCEP init files
-#AW     if [ ! -d ${COMINrtofs} ]; then
-#AW 	if [ ! -d ${COMINrtofsm1} ]; then
-#AW 	    export RTOFS="NO" # Signal pre-processing skip this init
-#AW 	    echo "WARNING: RTOFS input selected but we have no input files, disabling RTOFS" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-#AW 	fi
-#AW     fi
-#AW fi
-#AW 
-#AW 
-#AW if [ "${WATERLEVELS^^}" == "YES" ] || [ "${WATERLEVELS^^}" == "ESTOFS" ]; then
-#AW     export WATERLEVELS="ESTOFS"
-#AW     export ESTOFS="YES" # Signal pre-processing script to get NCEP init files
-#AW     if [ ! -d ${COMINestofs} ]; then
-#AW 	if [ ! -d ${COMINestofsm1} ]; then
-#AW 	    export WATERLEVELS="NO"
-#AW 	    export ESTOFS="NO" # Signal pre-processing skip this init
-#AW 	    echo "WARNING: ESTOFS input selected but we have no input files, disabling ESTOFS" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-#AW 	fi
-#AW     fi
-#AW fi
-#AW 
-#AW if [ "${WATERLEVELS^^}" == "PSURGE" ]; then
-#AW     export WATERLEVELS="PSURGE"
-#AW     export PSURGE="YES" # Signal pre-processing script to get NCEP init files
-#AW     if [ ! -d ${COMINpsurge} ]; then
-#AW 	if [ ! -d ${COMINpsurgem1} ]; then
-#AW 	    export WATERLEVELS="NO"
-#AW 	    export PSURGE="NO" # Signal pre-processing skip this init
-#AW 	    echo "WARNING: PSURGE input selected but we have no input files, disabling PSURGE" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-#AW 	fi
-#AW     fi
-#AW fi
-
 #Cleanup
 if [ -e ${RUNdir}/Psurge_End_Time ]; then rm ${RUNdir}/Psurge_End_Time; fi
 if [ -e ${RUNdir}/nortofs ]; then rm ${RUNdir}/nortofs; fi
