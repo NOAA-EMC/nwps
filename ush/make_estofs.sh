@@ -195,19 +195,19 @@ function process_wfolist() {
         fi
 
         echo "Downloading ${SPOOLdir}/$file to $outfile" 
-        echo "Checking source GRIB2 file ${COMINestofs}/${file}"
-        if ! check_bad_grib2_file "${COMINestofs}/${file}"; then
-           warn_and_disable_estofs_grib2 "ESTOFS GRIB2 file ${COMINestofs}/${file} is missing or 0-byte. Run will continue without ESTOFS water level variation and ice blocking for ${WFO}."
+        echo "Checking source GRIB2 file ${COMINstofs}/${file}"
+        if ! check_bad_grib2_file "${COMINstofs}/${file}"; then
+           warn_and_disable_estofs_grib2 "ESTOFS GRIB2 file ${COMINstofs}/${file} is missing or 0-byte. Run will continue without ESTOFS water level variation and ice blocking for ${WFO}."
            rm -f ${OUTPUTdir}/LOCKFILE
            return
         fi
-        echo "cp -rp ${COMINestofs}/${file} ."
-        cp -rp ${COMINestofs}/${file} .
+        echo "cp -rp ${COMINstofs}/${file} ."
+        cp -rp ${COMINstofs}/${file} .
         if [ "$?" != "0" ] && [ ! -e ${file} ];then
            sleep 2
            echo "ERROR - downling file ${PRODUCTdir}/${file}" 
         fi
-        cp -rp ${COMINestofs}/${file} .
+        cp -rp ${COMINstofs}/${file} .
         if [ "$?" != "0" ] && [ ! -e ${file} ];then
            echo "ERROR - downling file ${PRODUCTdir}/${file}" 
            export err=1; err_chk
@@ -366,20 +366,20 @@ function process_wfolist() {
     	outfile="${file}"
     	cd ${PRODUCTdir}
     	if [ ! -e ${VARdir}/hasestofsdownload_${CYCLE}z.${ESTOFS_BASIN}.${ESTOFS_REGION}.f${FF} ];then
-            echo "Checking source GRIB2 file ${COMINestofs}/${file}"
-            if ! check_bad_grib2_file "${COMINestofs}/${file}"; then
-                warn_and_disable_estofs_grib2 "ESTOFS GRIB2 file ${COMINestofs}/${file} is missing or 0-byte. Run will continue without ESTOFS water level variation and ice blocking for ${WFO}."
+            echo "Checking source GRIB2 file ${COMINstofs}/${file}"
+            if ! check_bad_grib2_file "${COMINstofs}/${file}"; then
+                warn_and_disable_estofs_grib2 "ESTOFS GRIB2 file ${COMINstofs}/${file} is missing or 0-byte. Run will continue without ESTOFS water level variation and ice blocking for ${WFO}."
                 rm -f ${OUTPUTdir}/LOCKFILE
                 return
             fi
-	        echo "Copying ${COMINestofs}/${file} ${PRODUCTdir}/${file}"
-	        echo "cp -rp ${COMINestofs}/${file} ."
-	        cp -rp ${COMINestofs}/${file} .
+	        echo "Copying ${COMINstofs}/${file} ${PRODUCTdir}/${file}"
+	        echo "cp -rp ${COMINstofs}/${file} ."
+	        cp -rp ${COMINstofs}/${file} .
 	        if [ "$?" != "0" ] && [ ! -e ${file} ];then
                 sleep 2
 	            echo "ERROR - downling file ${PRODUCTdir}/${file}" 
 	        fi
- 	        cp -rp ${COMINestofs}/${file} .
+ 	        cp -rp ${COMINstofs}/${file} .
 	        if [ "$?" != "0" ] && [ ! -e ${file} ];then
 	            echo "ERROR - downling file ${PRODUCTdir}/${file}" 
                 export err=1; err_chk

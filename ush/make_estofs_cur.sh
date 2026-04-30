@@ -158,19 +158,19 @@ function process_wfolist() {
 
         # Copy ESTOFS nowcast output
         echo "Downloading ${SPOOLdir}/$file1 to $outfile1" 
-        echo "cp -p ${COMINestofscur}/${file1} ."
-        if ! check_bad_nc_file "${COMINestofscur}/${file1}"; then
-           warn_and_disable_estofscur_nc "ESTOFS current file ${COMINestofscur}/${file1} is missing or 0-byte. Run will continue without ESTOFS current fields for ${WFO}."
+        echo "cp -p ${COMINstofs}/${file1} ."
+        if ! check_bad_nc_file "${COMINstofs}/${file1}"; then
+           warn_and_disable_estofscur_nc "ESTOFS current file ${COMINstofs}/${file1} is missing or 0-byte. Run will continue without ESTOFS current fields for ${WFO}."
            rm -f ${OUTPUTdir}/LOCKFILE
            return
         fi
-        cp -rp ${COMINestofscur}/${file1} .
+        cp -rp ${COMINstofs}/${file1} .
         sleep 10
         if [ "$?" != "0" ] && [ ! -e ${file1} ];then
            sleep 2
            echo "ERROR - downling file ${PRODUCTdir}/${file1}" 
         fi
-        cp -rp ${COMINestofscur}/${file1} .
+        cp -rp ${COMINstofs}/${file1} .
         sleep 10
         if [ "$?" != "0" ] && [ ! -e ${file1} ];then
            echo "ERROR - downling file ${PRODUCTdir}/${file1}" 
@@ -179,19 +179,19 @@ function process_wfolist() {
 
         # Copy ESTOFS forecast output
         echo "Downloading ${SPOOLdir}/$file2 to $outfile2" 
-        echo "cp -p ${COMINestofscur}/${file2} ."
-        if ! check_bad_nc_file "${COMINestofscur}/${file2}"; then
-           warn_and_disable_estofscur_nc "ESTOFS current file ${COMINestofscur}/${file2} is missing or 0-byte. Run will continue without ESTOFS current fields for ${WFO}."
+        echo "cp -p ${COMINstofs}/${file2} ."
+        if ! check_bad_nc_file "${COMINstofs}/${file2}"; then
+           warn_and_disable_estofscur_nc "ESTOFS current file ${COMINstofs}/${file2} is missing or 0-byte. Run will continue without ESTOFS current fields for ${WFO}."
            rm -f ${OUTPUTdir}/LOCKFILE
            return
         fi
-        cp -rp ${COMINestofscur}/${file2} .
+        cp -rp ${COMINstofs}/${file2} .
         sleep 10
         if [ "$?" != "0" ] && [ ! -e ${file2} ];then
            sleep 2
            echo "ERROR - downling file ${PRODUCTdir}/${file2}" 
         fi
-        cp -rp ${COMINestofscur}/${file2} .
+        cp -rp ${COMINstofs}/${file2} .
         sleep 10
         if [ "$?" != "0" ] && [ ! -e ${file2} ];then
            echo "ERROR - downling file ${PRODUCTdir}/${file2}" 
