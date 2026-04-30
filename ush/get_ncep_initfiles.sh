@@ -252,11 +252,11 @@ then
               "There are invalid ESTOFS current data in ${COMIN_OFS_stofsm1} (0-byte *.dat files). Run will continue without current." \
               "${RUNdir}/noestofs_cur" \
               "$zfiles"
-         else   	      
+         else
 	    cp -pfv ${COMIN_OFS_stofsm1}/wave_estofs_uv* .
-            cp -pfv ${COMIN_OFS_stofsm1}/estofs_current_domain.txt .
-            cp -pfv ${COMIN_OFS_stofsm1}/estofs_current_start_time.txt .
-            rm -fr index.* robots.*
+	    cp -pfv ${COMIN_OFS_stofsm1}/estofs_current_domain.txt .
+	    cp -pfv ${COMIN_OFS_stofsm1}/estofs_current_start_time.txt .
+	    rm -fr index.* robots.*
 	 fi
       else
          echo "WARNING: Optional ESTOFS current data not available for Yesterday."
