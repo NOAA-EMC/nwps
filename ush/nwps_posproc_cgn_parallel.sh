@@ -486,9 +486,9 @@ if [[ -d "${DATA}/output/spectra/CG${CGNUM}" ]]; then
    if [ "${SENDCOM}" == "YES" ]; then
       mkdir -p $COMOUTCYC
       for orig_file in ${spec2dFile}; do
-	suffix=$(echo "$orig_file" | cut -d '.' -f2)
-	new_spc2d="nwps.t${cycle}z.spc2d_${suffix}_CG${CGNUM}.${WFO}.txt"
-	cp -fv "$orig_file" "${COMOUTCYC}/${new_spc2d}"
+	    suffix=$(echo "$orig_file" | cut -d '.' -f2)
+	    new_spc2d="nwps.t${cycle}z.spc2d_${suffix}_CG${CGNUM}.${WFO}.txt"
+	    cp -fv "$orig_file" "${COMOUTCYC}/${new_spc2d}"
       done
    fi
   # ----------------------------------------
