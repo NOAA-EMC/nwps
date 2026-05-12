@@ -37,15 +37,15 @@ if [ "${hastracking}" == "TRUE" ]
    inputparm="${RUNdir}/inputCG1"
    if [ ! -e ${inputparm} ]
    then
-      msg="FATAL ERROR: Runup program: Missing inputCG1 file. Cannot open ${inputparm}"
+      msg="FATAL ERROR: Missing inputCG1 file. Cannot open ${inputparm}"
       postmsg $jlogfile "$msg"
       export err=1; err_chk
    fi
 
 
-   # 1) Parse YYYY MM DD HH MM from the INPGRID WIND line
+   # 1) Parse YYYY MM DD HH MM from the INPGRID WIND line (11th field)
    init="$(awk '/^INPGRID[[:space:]]+WIND/{print $11; exit}' "$inputparm")"  # e.g., 20250911.1800
-   ts="${init//[^0-9]/}"
+   ts="${init//[^0-9]/}"                          # strip any dot/underscore -> 202509111800
    yyyy="${ts:0:4}"; mon="${ts:4:2}"; dd="${ts:6:2}"; hh="${ts:8:2}"; mm="${ts:10:2}"
 
    # Sanity check
@@ -58,12 +58,13 @@ if [ "${hastracking}" == "TRUE" ]
    export PDY_INPUT="${yyyy}${mon}${dd}"
 
    # Prefer workflow cycle file; fallback to parsed hour
-   cycle="$(awk 'NR==1{print $1}' "${RUNdir}/CYCLE" 2>/dev/null || true)"
-   [ -z "${cycle}" ] && cycle="${hh}"
-   cycle="$(printf '%02d' "${cycle#0}")"
-   export cycle
+   cycleout="$(awk 'NR==1{print $1}' "${RUNdir}/CYCLE" 2>/dev/null || true)"
+   [ -z "${cycleout}" ] && cycleout="${hh}"
+   cycleout="$(printf '%02d' "${cycleout#0}")"
+   export cycleout
 
    # 3) Rebuild COMOUT for the correct day from the existing COMOUT path
+   #     COMOUT shape: .../<REGION>.<PDY>/<WFO>   (e.g., .../er.20250911/box)
    COMOUT_WFO="$(basename -- "$COMOUT")"            # -> <WFO> (site folder, e.g., box)
    COMOUT_PARENT="$(dirname -- "$COMOUT")"          # -> .../<REGION>.<PDY>
    REGION_DOT_PDY="$(basename -- "$COMOUT_PARENT")" # -> <REGION>.<PDY> (e.g., er.20250911)

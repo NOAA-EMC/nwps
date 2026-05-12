@@ -148,10 +148,10 @@ fi
 export PDY_INPUT="${yyyy}${mon}${dd}"
 
 # Prefer workflow cycle file; fallback to parsed hour
-cycle="$(awk 'NR==1{print $1}' "${RUNdir}/CYCLE" 2>/dev/null || true)"
-[ -z "${cycle}" ] && cycle="${hh}"
-cycle="$(printf '%02d' "${cycle#0}")"
-export cycle
+cycleout="$(awk 'NR==1{print $1}' "${RUNdir}/CYCLE" 2>/dev/null || true)"
+[ -z "${cycleout}" ] && cycleout="${hh}"
+cycleout="$(printf '%02d' "${cycleout#0}")"
+export cycleout
 
 # 3) Rebuild COMOUT for the correct day from the existing COMOUT path
 COMOUT_WFO="$(basename -- "$COMOUT")"            # -> <WFO> (site folder, e.g., box)
@@ -242,8 +242,10 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
         mkdir -p $COMOUTCYC
         cp -fv  ${OUTDIRrunup}/${filein} ${COMOUTCYC}/${filein}
         cp -fv  ${OUTDIRrunup}/${FORT22} ${COMOUTCYC}/${FORT22}
-        if [ "${SENDDBN}" == "YES" ]; then
-            ${DBNROOT}
+	if [ "${SENDDBN}" == "YES" ]
+	then
+          echo "Sending ${FORT22} to DBNET."
+          $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_RUNUP ${job} ${COMOUTCYC}/${FORT22}
         fi
      fi
 
@@ -332,6 +334,13 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
      mkdir -p $COMOUTCYC
      cp -fv  ${RIPDATA}/${CGCONT} ${COMOUTCYC}/${CGCONT}
      cp -fv  ${RIPDATA}/${FORT23} ${COMOUTCYC}/${FORT23}
+
+
+     if [ "$SENDDBN" = 'YES' ]
+     then
+         echo "Sending ${FORT23} to DBNET."
+	 $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_RIPPROB ${job} ${COMOUTCYC}/${FORT23}
+     fi
 
      mkdir -p $GESOUT/riphist/${SITEID}
      cp -fv  ${RIPDATA}/${CGCONT} ${GESOUT}/riphist/${SITEID}/${CGCONT}
@@ -538,7 +547,7 @@ cd ${DATA}/output/grib2/CG${CGNUM}
 	   
 	   if [ "${SITEID}" == "SEW" ] 
            then
-              for i in {10..59}; do
+              for i in {10..35}; do
                  mkdir -p ${COMOUTCYC}/PE00${i}/
                  cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
               done
@@ -648,6 +657,20 @@ cd ${DATA}/output/spectra/CG${CGNUM}
        done
      fi
 
+# ----------------------------------------
+# Send alerts to DBNet
+# ----------------------------------------
+if [ "${SENDDBN}" == "YES" ]; then
+  for file in ${spec2dFile}; do
+    suffix=$(echo "$file" | cut -d '.' -f2)
+    new_spc2d="nwps.t${cycle}z.spc2d_${suffix}_CG${CGNUM}.${WFO}.txt"
+    if [ -f "${COMOUTCYC}/${new_spc2d}" ]; then
+      echo "Sending ${new_spc2d} to DBNet"
+      $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_SPECTRA ${job} ${COMOUTCYC}/${new_spc2d}
+    fi
+  done
+fi
+
 export WEB="NO"
 echo " "  | tee -a $logfile
 
@@ -738,7 +761,7 @@ elif [ "${MODELCORE}" == "UNSWAN" ]
    
    if [ "${SITEID}" == "SEW" ] 
    then
-      for i in {10..59}; do
+      for i in {10..35}; do
          mkdir -p ${HOTdir}/PE00${i}
          for hour in {0..48..3}; do 
            mv -vf ${RUNdir}/PE00${i}/$(date -d "${hh}:${mm} ${yyyy}-${mon}-${dd} +${hour} hours" +"%Y%m%d.%H%M") \

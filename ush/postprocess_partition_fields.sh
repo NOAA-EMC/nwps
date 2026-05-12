@@ -84,10 +84,10 @@ fi
 export PDY_INPUT="${yyyy}${mon}${dd}"
 
 # Prefer workflow cycle file; fallback to parsed hour
-cycle="$(awk 'NR==1{print $1}' "${RUNdir}/CYCLE" 2>/dev/null || true)"
-[ -z "${cycle}" ] && cycle="${hh}"
-cycle="$(printf '%02d' "${cycle#0}")"
-export cycle
+cycleout="$(awk 'NR==1{print $1}' "${RUNdir}/CYCLE" 2>/dev/null || true)"
+[ -z "${cycleout}" ] && cycleout="${hh}"
+cycleout="$(printf '%02d' "${cycleout#0}")"
+export cycleout
 
 # 3) Rebuild COMOUT for the correct day from the existing COMOUT path
 COMOUT_WFO="$(basename -- "$COMOUT")"            # -> <WFO> (site folder, e.g., box)
