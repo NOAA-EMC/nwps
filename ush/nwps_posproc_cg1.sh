@@ -242,8 +242,8 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
         mkdir -p $COMOUTCYC
         cp -fv  ${OUTDIRrunup}/${filein} ${COMOUTCYC}/${filein}
         cp -fv  ${OUTDIRrunup}/${FORT22} ${COMOUTCYC}/${FORT22}
-	if [ "${SENDDBN}" == "YES" ]
-	then
+	    if [ "${SENDDBN}" == "YES" ]
+	    then
           echo "Sending ${FORT22} to DBNET."
           $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_RUNUP ${job} ${COMOUTCYC}/${FORT22}
         fi
