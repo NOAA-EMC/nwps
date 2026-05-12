@@ -339,7 +339,7 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
      if [ "$SENDDBN" = 'YES' ]
      then
          echo "Sending ${FORT23} to DBNET."
-	 $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_RIPPROB ${job} ${COMOUTCYC}/${FORT23}
+	     $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_RIPPROB ${job} ${COMOUTCYC}/${FORT23}
      fi
 
      mkdir -p $GESOUT/riphist/${SITEID}
