@@ -249,7 +249,7 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
         fi
      fi
 
-     gribfile=$(ls ${DATA}/output/grib2/CG${CGNUM}/*CG${CGNUM}_????????_????.grib2 | xargs -n 1 basename | tail -n 1)
+     gribfile=$(ls ${DATA}/output/grib2/CG${CGNUM}/nwps.t*.CG${CGNUM}.???.grib2 | xargs -n 1 basename | tail -n 1)
      fullname=`echo $gribfile | cut -c14-26`
      GRIB2file=${NWPSDATA}/output/grib2/CG${CGNUM}/${gribfile}
      WAVE_RUNUP_TO_BIN="${EXECnwps}/nwps_utils_wave_runup_to_bin"
@@ -293,8 +293,6 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
              echo "cat ${parm}_final_runup.grib2 >> final_runup.grib2"
 	     cat ${parm}_final_runup.grib2 >> final_runup.grib2
 	 done
-	 #cp -f final_runup.grib2 ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
-	 #cp -f final_runup.grib2 ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
          echo "Copying final_runup.grib2 to ${GRIB2file}"
          ${WGRIB2} -count final_runup.grib2
          echo "cat final_runup.grib2 >> ${GRIB2file}"
@@ -350,7 +348,7 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
      rip_current_meta="${RIPDATA}/RIP.meta"
      cat ${rip_current_meta_template} > ${rip_current_meta}
      RIP_CURRENT_TO_BIN="${EXECnwps}/nwps_utils_rip_current_to_bin"
-     gribfile=$(ls ${DATA}/output/grib2/CG${CGNUM}/???_nwps_CG${CGNUM}_????????_????.grib2 | xargs -n 1 basename | tail -n 1)
+     gribfile=$(ls ${DATA}/output/grib2/CG${CGNUM}/nwps.t*.CG${CGNUM}.???.grib2 | xargs -n 1 basename | tail -n 1)
      fullname=`echo $gribfile | cut -c14-26`
      GRIB2file=${NWPSDATA}/output/grib2/CG${CGNUM}/${gribfile}
      cgnCLON1=$(${WGRIB2} ${GRIB2file} -V -d 1 | grep lon | grep to | grep by | awk '{ print $2 }')
@@ -499,7 +497,7 @@ cd ${DATA}/output/grib2/CG${CGNUM}
      mm=$(cat mm)
 
      date_stamp="${yyyy}${mon}${dd}"
-     grib2File="${siteid}_nwps_CG${CGNUM}_${date_stamp}_${hh}${mm}.grib2"
+     grib2File="nwps.t${hh}z.CG${CGNUM}.${siteid}.grib2"
      cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
      COMOUTCYC="${COMOUT_CORRECT}/${cycle}/CG${CGNUM}"
      if [ "${SENDCOM}" == "YES" ]; then

@@ -158,11 +158,11 @@ for parm in ${SWANPARMS}
 
   SITEID=$(echo ${SITEID} | tr [:upper:] [:lower:])
 
-  files=$(ls -1t ${GRAPHICOUTPUTDIRECTORY}/???_nwps_CG?_????????_????.grib2)
+  files=$(ls -1t ${GRAPHICOUTPUTDIRECTORY}/nwps.t??z.CG?.???.grib2)
   file=$(echo ${files} | awk '{ print $1 }')
   if [ CG"${CGNUMPLOT}" == "${RIPDOMAIN}" ] || [ CG"${CGNUMPLOT}" == "${RUNUPDOMAIN}" ]
   then
-     files_riprunup=$(ls -1t ${GRAPHICOUTPUTDIRECTORY}/???_nwps_CG?_????????_????.grib2)
+     files_riprunup=$(ls -1t ${GRAPHICOUTPUTDIRECTORY}/nwps,t??z.CG?.???.grib2)
      file_riprunup=$(echo ${files_riprunup} | awk '{ print $1 }')
   fi
   TEMPDIR=${VARdir}/${SITEID}.tmp/CG${CGNUM}

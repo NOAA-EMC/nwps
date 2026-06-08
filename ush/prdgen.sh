@@ -159,7 +159,7 @@ YMDH=${PDY}
            yyyy=$(cat year)
            mon=$(cat mon)
            dd=$(cat day)
-           file="${WFO}_${NET}_${grdID}_Trkng_${yyyy}${mon}${dd}_${cycle}00.grib2"
+           file="${NET}.t${cycle}z.CG0_Trkng.${WFO}.grib2"
         else 
            #cycle=${file:22:2}
            grep "^INPGRID WIND" ${RUNdir}/input${grdID} > blah1
@@ -171,7 +171,7 @@ YMDH=${PDY}
            yyyy=$(cat year)
            mon=$(cat mon)
            dd=$(cat day)
-           file="${WFO}_${NET}_${grdID}_${yyyy}${mon}${dd}_${cycle}00.grib2"
+           file="${NET}.t${cycle}z.${grdID}.${WFO}.grib2"
         fi
         cp ${GRIB2dir}/${grdID}/$file ${RUNdir}/gribfile.$grdID
         export err=$?; err_chk

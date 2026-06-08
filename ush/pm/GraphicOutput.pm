@@ -577,7 +577,7 @@ sub graphicOutputProcessing (%){
 	system("cat ${SWANCGIDFILE}_template.grib2 >> templates.grib2");
     }
 
-    my $g2out = "${siteid}_nwps_CG${cgnum}_${g2YEAR}${g2MONTH}${g2DAY}_${g2HOUR}${g2MINUTE}.grib2";
+    my $g2out = "nwps.t${g2HOUR}z.CG${cgnum}.${siteid}.grib2";
     print G2LOG "Creating GRIB2 output file: ${OUTPUTdir}/grib2/CG${cgnum}/${g2out}\n";
     system("${WGRIB2} templates.grib2 -no_header -import_bin output.bin -grib_out ${OUTPUTdir}/grib2/CG${cgnum}/${g2out} >> ${g2logfname}");
     

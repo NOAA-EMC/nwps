@@ -515,8 +515,11 @@ s = '%\n'
 with open(fname_pnt,'a') as f:                  # append to file
     f.write(s)
 
-bulfilenm = wfo+'_nwps_CG0_Trkng_'+datetime.datetime.fromtimestamp(startdate).strftime('%Y%m%d')+'_'\
-            +datetime.datetime.fromtimestamp(startdate).strftime('%H%M')+'.bull'
+# Extract the hour for the 't{hh}z' part
+hh = datetime.datetime.fromtimestamp(startdate).strftime('%H')
+
+# Construct the new filename
+bulfilenm = f"nwps.t{hh}z.CG0_Trkng.{wfo}.bull"
 bul_file = open(bulfilenm, "w")
 bul_file.write("%s" % '  Location : '+wfo.upper()+' domain spatial average\n')
 bul_file.write("%s" % '  Model    : Cluster-based wave system tracking\n')

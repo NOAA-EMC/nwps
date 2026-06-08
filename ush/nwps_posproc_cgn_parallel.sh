@@ -286,8 +286,8 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
 	 for parm in ${RUNUPparms}
 	 do
 	     cat ${parm}_final_runup.grib2 >> final_runup.grib2
-	     cp -f final_runup.grib2 ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
-	     cp -f final_runup.grib2 ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+	     cp -f final_runup.grib2 ${COMOUTCYC}/nwps.CG${CGNUM}_RipRunup.${siteid}.grib2
+	     cp -f final_runup.grib2 ${NWPSDATA}/output/grib2/CG${CGNUM}/nwps.CG${CGNUM}_RipRunup.${siteid}.grib2
 	 done
          #AW052917 Do not include runup output in general GRIB2 output, because it won't go over SBN yet.
          #cat final_runup.grib2 >> ${GRIB2file}
@@ -359,9 +359,8 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
 	 ${WGRIB2} ${RIPDATA}/templates.grib2 -no_header -import_bin ${RIPDATA}/points.bin -grib_out ${RIPDATA}/final_rip.grib2
          #AW052917 Do not include runup output in general GRIB2 output, because it won't go over SBN yet.
          #cat ${RIPDATA}/final_rip.grib2 >> ${GRIB2file}
-	 #cp -f ${RIPDATA}/final_rip.grib2 ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
-         cat ${RIPDATA}/final_rip.grib2 >> ${COMOUTCYC}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
-         cat ${RIPDATA}/final_rip.grib2 >> ${NWPSDATA}/output/grib2/CG${CGNUM}/${siteid}_nwps_CG${CGNUM}_${fullname}_RipRunup.grib2
+         cat ${RIPDATA}/final_rip.grib2 >> ${COMOUTCYC}/nwps.CG${CGNUM}_RipRunup.${siteid}.grib2
+         cat ${RIPDATA}/final_rip.grib2 >> ${NWPSDATA}/output/grib2/CG${CGNUM}/nwps.CG${CGNUM}_RipRunup.${siteid}.grib2
      fi
      # TODO: 11/29/2016 - Tesing RIP GRIB2 encoding above
   else
@@ -455,7 +454,7 @@ cd ${DATA}/output/grib2/CG${CGNUM}
      mm=$(cat mm)
 
      date_stamp="${yyyy}${mon}${dd}"
-     grib2File="${siteid}_nwps_CG${CGNUM}_${date_stamp}_${hh}${mm}.grib2"
+     grib2File="nwps.t${hh}z.CG${CGNUM}.${siteid}.grib2"
      cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
      COMOUTCYC="${COMOUT_CORRECT}/${cycle}/CG${CGNUM}"
      if [ "${SENDCOM}" == "YES" ]; then
