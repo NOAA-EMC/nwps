@@ -184,11 +184,19 @@ cat /dev/null > ${NWPSDATA}/logs/runrip.log
 # Find newest GRIB2 output file to process
 ls -lt ${NWPSDATA}/output/grib2/${CGnumber}
 gribfile=$(ls ${NWPSDATA}/output/grib2/${CGnumber}/*${CGnumber}*grib2 | xargs -n 1 basename | tail -n 1)
-cycle=`echo $gribfile | cut -c23-26`
-CYCLE=`echo $gribfile | cut -c23-24`
-DATE=`echo $gribfile | cut -c14-21`
-fullname=`echo $gribfile | cut -c14-26`
+# Get the full path to the file
+gribpath=$(ls ${NWPSDATA}/output/grib2/${CGnumber}/*${CGnumber}*grib2 | tail -n 1)
 
+# 1. Extract the reference date/time using wgrib2
+# This outputs a string like "d=2026060912" (YYYYMMDDHH)
+grib_vt=$(wgrib2 -vt $gribpath | head -n 1 | cut -d'=' -f2)
+
+# 2. Parse out the pieces
+DATE=$(echo $grib_vt | cut -c1-8)     # Result: 20260609
+CYCLE=$(echo $grib_vt | cut -c9-10)   # Result: 12
+cycle="${CYCLE}00"
+
+fullname="${DATE}_${CYCLE}00"
 #CG=${contour}m_${CGnumber}_"$CYCLE"_"$DATE"_prob.txt_${SITEID}
 CGCONT=${contour}m_contour_${CGnumber}."$fullname"_${SITEID}
 
