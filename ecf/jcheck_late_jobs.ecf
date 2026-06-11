@@ -1,4 +1,4 @@
-set -x
+#set -x
 
 export ECF_PORT=%ECF_PORT%    # The server port number
 export ECF_NODE=%ECF_NODE%    # The name of ecf host that issued this task
