@@ -22,6 +22,7 @@
 #
 # WCOSS version
 # -----------------------------------------------------------
+set -xa
 
 # Check to see if our SITEID is set
 if [ "${SITEID}" == "" ]

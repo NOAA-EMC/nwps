@@ -19,6 +19,8 @@
 #
 #
 # ----------------------------------------------------------- 
+set -xa
+
 export CGNUMPLOT=${1}
 CGNUM="${1}"
 export CGNUMPLOT

@@ -1,4 +1,5 @@
 #!/bin/bash
+set -xa
 # NWPS NCEP configuration
 # Last Modified: 03/05/2013
 

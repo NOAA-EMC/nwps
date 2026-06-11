@@ -1,4 +1,5 @@
 #!/bin/bash
+set -xa
 # --------------------------------------------------------------------------- #
 #                                                                             #
 # nwps_val.cron : Script manages the running of the NWPS validation script    #

@@ -25,8 +25,8 @@
 ###############################################################################
 # --------------------------------------------------------------------------- #
 
-  # Use LOUD variable to turn on/off trace.  Defaults to YES (on).
-  #export LOUD=${LOUD:-YES}; [[ $LOUD = yes ]] && export LOUD=YES
+# Use LOUD variable to turn on/off trace.  Defaults to YES (on).
+export LOUD=${LOUD:-YES}; [[ $LOUD = yes ]] && export LOUD=YES
 
   echo ' '
   echo '                      ******************************'
@@ -34,7 +34,7 @@
   echo '                      ******************************'
   echo ' '
   echo "Starting at : `date`"
-  #[[ "$LOUD" = YES ]] && set -x
+[[ "$LOUD" = YES ]] && set -x
 
 source ${USHnwps}/nwps_config.sh
 export err=$?; err_chk

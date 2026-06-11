@@ -23,6 +23,7 @@
 # NOTE: This script is modified for use with WCOSS versions 
 #
 # -----------------------------------------------------------
+set -xa
 
 # Check to see if our SITEID is set
 if [ "${SITEID}" == "" ]

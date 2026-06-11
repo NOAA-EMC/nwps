@@ -31,7 +31,7 @@
 # 1. Grid that you are extracting data along contours from. (ie CG2)
 # 2. contour: 5 (for 5m contour)
 # -----------------------------------------------------------
-
+set -xa
 
 if [ "${SITEID}" == "" ]
     then

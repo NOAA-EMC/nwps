@@ -1,3 +1,5 @@
+#!/bin/sh
+set -xa
 
 # RTOFS Domain for ocean currents
 export RTOFSSECTOR="west_atl"

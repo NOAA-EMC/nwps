@@ -22,6 +22,7 @@
 # (heights,directions & periods) into one final grib2 file.
 #
 # -----------------------------------------------------------
+set -xa
 
 # Setup our NWPS environment
 if [ "${USHnwps}" == "" ]

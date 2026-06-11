@@ -1,3 +1,5 @@
+#!/bin/sh
+set -xa
 
 # RTOFS Domain for ocean currents
 export RTOFSLON="270.80 278.70 "

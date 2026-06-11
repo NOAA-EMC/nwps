@@ -1,5 +1,6 @@
 #!/bin/bash
 # Script used to fill missing ESTOFS hours
+set -xa
 
 # Setup our NWPS environment                                                    
 if [ "${HOMEnwps}" == "" ]

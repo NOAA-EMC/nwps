@@ -2,6 +2,8 @@
 
 # Copy all required data from run archive
 
+set -xa
+
 cd ${RUNdir}
 for CG in CG1 CG0 CG2 CG3 CG4 CG5
 do

@@ -1,4 +1,5 @@
 #!/bin/bash
+set -xa
 # ----------------------------------------------------------- 
 # UNIX Shell Script File
 # Tested Operating System(s): RHEL 5,6

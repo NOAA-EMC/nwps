@@ -23,6 +23,7 @@
 # for the model run. 
 #
 # ----------------------------------------------------------- 
+set -xa
 
 # Variable used to setup the root directory for NWPS package
 # Default is ${HOME}/nwps

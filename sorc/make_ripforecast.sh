@@ -1,4 +1,6 @@
 #!/bin/bash
+set -xa
+
 export pwd=`pwd`
 export NWPSdir=${pwd%/*}
 

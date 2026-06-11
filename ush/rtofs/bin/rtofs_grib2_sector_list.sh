@@ -1,4 +1,5 @@
 #!/bin/bash
+set -xa
 
 # 07/17/2015: RTOFS sectors:
 # alaska

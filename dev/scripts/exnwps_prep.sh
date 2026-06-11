@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# Use LOUD variable to turn on/off trace.  Defaults to YES (on).
+export LOUD=${LOUD:-YES}; [[ $LOUD = yes ]] && export LOUD=YES
+
 echo "============================================================="
 echo "=                                                           ="
 echo "=         RUNNING NWPS-WCOSS FOR SITE: ${SITEID}                  ="
@@ -8,6 +12,8 @@ echo "============================================================="
 ###############################################################################
 # THE VALUE OF THE FOLLOWING PARAMETERS ARE FIXED IN ~/ush/run_nwps_wcoss.sh  #
 ###############################################################################
+[[ "$LOUD" = YES ]] && set -x
+
 export DELTAC=${DELTAC:-600}
 export RUNLEN=${RUNLEN:-144}
 export WAVEMODEL=${WAVEMODEL:-swan}

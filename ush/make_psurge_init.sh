@@ -23,6 +23,8 @@
 #
 # -----------------------------------------------------------
 
+set -xa
+
 if [ "${HOMEnwps}" == "" ]
     then 
     echo "ERROR - Your HOMEnwps variable is not set"

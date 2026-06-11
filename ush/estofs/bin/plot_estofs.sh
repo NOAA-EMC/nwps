@@ -20,6 +20,7 @@
 # Script used to plot ESTOFS input ASCII point files
 #
 # -----------------------------------------------------------
+set -xa
 
 # Check to see if our SITEID is set
 if [ "${SITEID}" == "" ]

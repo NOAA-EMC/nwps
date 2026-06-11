@@ -1,4 +1,5 @@
 #!/bin/bash
+set -xa
 # --------------------------------------------------------------------------- #
 #                                                                             #
 # Copy external fix files and binaries needed for build process and running   #

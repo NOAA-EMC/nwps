@@ -13,6 +13,8 @@ export model=nwps
 %include <head.h>
 %include <envir-p1.h>
 
+set -x
+
 module load craype/${craype_ver}
 module load intel/${intel_ver}
 module load cray-pals/${cray_pals_ver}

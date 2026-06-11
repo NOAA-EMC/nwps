@@ -1,5 +1,6 @@
 #!/bin/bash
 # Script used to fill missing RTOFS hours
+set -xa
 
 # Setup our NWPS environment                                                    
 if [ "${USHnwps}" == "" ]

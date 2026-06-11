@@ -1,4 +1,5 @@
 #!/bin/bash
+set -xa
 
 if [ "${NWPSdir}" == "" ]
     then

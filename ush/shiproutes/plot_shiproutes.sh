@@ -27,6 +27,8 @@
 # NOTE: 03/22/2016 GRADS migrated Python plotting.
 #
 # -----------------------------------------------------------
+set -xa
+
 export TZ="UTC"
 
 # Check to see if our NWPS env is set

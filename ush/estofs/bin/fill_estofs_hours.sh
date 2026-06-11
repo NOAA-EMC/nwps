@@ -2,6 +2,8 @@
 # Script used to fill missing ESTOFS hours
 
 # Setup our NWPS environment                                                    
+set -xa
+
 if [ "${USHnwps}" == "" ]
     then 
     echo "ERROR - Your NWPSdir variable is not set"

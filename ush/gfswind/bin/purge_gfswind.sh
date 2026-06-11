@@ -25,6 +25,7 @@
 # if GFS data is not available for their model run times.
 #
 # -----------------------------------------------------------
+set -xa
 
 if [ "${USHnwps}" == "" ]
     then 

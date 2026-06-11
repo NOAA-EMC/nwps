@@ -1,4 +1,5 @@
 #!/bin/bash
+set -xa
 # ----------------------------------------------------------- 
 # UNIX Shell Script File
 # Original Author(s): Andre.VanderWesthuysen@noaa.gov

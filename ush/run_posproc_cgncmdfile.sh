@@ -1,4 +1,5 @@
 #!/bin/bash
+set -xa
 
 export ARCHBITS="64"
 export MPIEXEC="mpiexec"

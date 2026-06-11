@@ -25,6 +25,7 @@
 # if RTOFS data is not available for their model run times.
 #
 # -----------------------------------------------------------
+set -xa
 
 # Check to see if our SITEID is set
 if [ "${SITEID}" == "" ]

@@ -20,6 +20,8 @@
 # Gen INPUTcg1 entries for ship routes.
 #
 # -----------------------------------------------------------
+set -xa
+
 export TZ="UTC"
 
 # Check to see if our SITEID is set

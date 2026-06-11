@@ -1,3 +1,5 @@
+#!/bin/sh
+set -xa
 # NCEP Config file for global RTOFS and ESTOF init files
 
 # RTOFS Domain for ocean currents

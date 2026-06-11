@@ -65,6 +65,8 @@ echo "=                  RUNNING MAKE_PSURGE                      ="
 echo "=                                                           ="
 echo "============================================================="
 
+set -xa
+
 # 1) Prepare the list of WFO domains to process, based on a quick
 #    scan of their P-Surge coverage for a given storm.
 ${USHnwps}/make_psurge_init.sh
@@ -145,5 +147,6 @@ rm ${RUNdir}/*.txt
 rm ${RUNdir}/*.dat
 rm ${RUNdir}/*.datum
 rm ${RUNdir}/*.grib2 
+
 echo "mpiexec complete"
 exit 0

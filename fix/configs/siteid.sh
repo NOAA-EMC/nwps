@@ -1,4 +1,5 @@
 #!/bin/bash
+set -xa
 # Set our 3 letter SITE ID
 # NOTE: Do NOT manually edit this script
 # NOTE: This script will be created during your domain setup

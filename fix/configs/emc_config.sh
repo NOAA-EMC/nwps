@@ -1,3 +1,6 @@
+#!/bin/sh
+set -xa
+
 # Set EMC site specific overrided in this file
 # EMC is NCEP site ID
 

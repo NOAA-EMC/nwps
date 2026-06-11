@@ -1,4 +1,5 @@
 #!/bin/bash
+set -xa
 # NWPS DEV configuration
 # Last Modified: 08/25/2011
 

@@ -1,4 +1,5 @@
 #!/bin/bash
+set -xa
 
 # Copy required wave boundary data from run archive
 

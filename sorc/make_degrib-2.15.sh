@@ -1,4 +1,5 @@
 #!/bin/bash
+set -xa
 #
 # ----------------------------------------------------------- 
 # Original Author(s): Andre.VanderWesthuysen@noaa.gov

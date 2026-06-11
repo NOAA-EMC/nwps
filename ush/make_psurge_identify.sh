@@ -35,6 +35,8 @@
 #    wfolist_psurge_final.dat
 #
 # -----------------------------------------------------------
+set -xa
+
 if [ "${USHnwps}" == "" ]
     then 
     echo "ERROR - Your USHnwps variable is not set"

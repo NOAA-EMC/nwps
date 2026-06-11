@@ -27,6 +27,8 @@
 
 # Variable used to setup the root directory for NWPS package
 # Default is ${HOME}/nwps
+set -xa
+
 if [ "${USHnwps}" == "" ]
     then
     echo "ERROR - Your USHnwps variable is not set"

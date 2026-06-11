@@ -23,6 +23,7 @@
 #
 # -----------------------------------------------------------
 
+set -xa
 
 # NOTE: Data is processed on the server in UTC
 export TZ=UTC
