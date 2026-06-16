@@ -71,7 +71,7 @@ void RefineKWay(CtrlType *ctrl, GraphType *orggraph, GraphType *graph, int npart
     if (graph == orggraph)
       break;
 
-    GKfree(&graph->gdata, LTERM);  /* Deallocate the graph related arrays */
+    GKfree((void **)&graph->gdata, LTERM);  /* Deallocate the graph related arrays */
 
     graph = graph->finer;
 
@@ -103,7 +103,7 @@ void RefineKWay(CtrlType *ctrl, GraphType *orggraph, GraphType *graph, int npart
   IFSET(ctrl->dbglvl, DBG_TIME, stoptimer(ctrl->AuxTmr2));
 
   if (mustfree) 
-    GKfree(&graph->vwgt, &graph->adjwgt, LTERM);
+    GKfree((void **)&graph->vwgt, (void **)&graph->adjwgt, LTERM);
 
   IFSET(ctrl->dbglvl, DBG_TIME, stoptimer(ctrl->UncoarsenTmr));
 }

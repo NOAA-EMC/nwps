@@ -148,7 +148,7 @@ void Random_KWayVolRefine(CtrlType *ctrl, GraphType *graph, int nparts, float *t
       break;
   }
 
-  GKfree(&marker, &updind, &phtable, LTERM);
+  GKfree((void **)&marker, (void **)&updind, (void **)&phtable, LTERM);
 
   idxwspacefree(ctrl, nparts);
   idxwspacefree(ctrl, nparts);
@@ -384,7 +384,7 @@ void Random_KWayVolRefineMConn(CtrlType *ctrl, GraphType *graph, int nparts, flo
       break;
   }
 
-  GKfree(&marker, &updind, &phtable, LTERM);
+  GKfree((void **)&marker, (void **)&updind, (void **)&phtable, LTERM);
 
   idxwspacefree(ctrl, nparts);
   idxwspacefree(ctrl, nparts);
@@ -537,7 +537,7 @@ void Greedy_KWayVolBalance(CtrlType *ctrl, GraphType *graph, int nparts, float *
 
   }
 
-  GKfree(&marker, &updind, &phtable, LTERM);
+  GKfree((void **)&marker, (void **)&updind, (void **)&phtable, LTERM);
 
   PQueueFree(ctrl, &queue);
 
@@ -781,7 +781,7 @@ void Greedy_KWayVolBalanceMConn(CtrlType *ctrl, GraphType *graph, int nparts, fl
 
   }
 
-  GKfree(&marker, &updind, &phtable, LTERM);
+  GKfree((void **)&marker, (void **)&updind, (void **)&phtable, LTERM);
 
   PQueueFree(ctrl, &queue);
 
@@ -1601,7 +1601,7 @@ void EliminateVolSubDomainEdges(CtrlType *ctrl, GraphType *graph, int nparts, fl
   idxwspacefree(ctrl, nparts);
   idxwspacefree(ctrl, nvtxs);
 
-  GKfree(&cand, &cand2, LTERM);
+  GKfree((void **)&cand, (void **)&cand2, LTERM);
 }
 
 

@@ -122,7 +122,7 @@ void METIS_mCHPartGraphRecursive(int *nvtxs, int *ncon, idxtype *xadj, idxtype *
   IFSET(ctrl.dbglvl, DBG_TIME, PrintTimers(&ctrl));
 
   FreeWorkSpace(&ctrl, &graph);
-  GKfree(&myubvec, LTERM);
+  GKfree((void **)&myubvec, LTERM);
 
   if (*numflag == 1)
     Change2FNumbering(*nvtxs, xadj, adjncy, part);
@@ -225,7 +225,7 @@ void METIS_mCHPartGraphRecursiveInternal(int *nvtxs, int *ncon, idxtype *xadj, i
   IFSET(ctrl.dbglvl, DBG_TIME, PrintTimers(&ctrl));
 
   FreeWorkSpace(&ctrl, &graph);
-  GKfree(&myubvec, LTERM);
+  GKfree((void **)&myubvec, LTERM);
 
 }
 
@@ -265,7 +265,7 @@ int MCMlevelRecursiveBisection(CtrlType *ctrl, GraphType *graph, int nparts, idx
     SplitGraphPart(ctrl, graph, &lgraph, &rgraph);
 
   /* Free the memory of the top level graph */
-  GKfree(&graph->gdata, &graph->nvwgt, &graph->rdata, &graph->npwgts, &graph->label, LTERM);
+  GKfree((void **)&graph->gdata, (void **)&graph->nvwgt, (void **)&graph->rdata, (void **)&graph->npwgts, (void **)&graph->label, LTERM);
 
 
   /* Do the recursive call */
@@ -275,7 +275,7 @@ int MCMlevelRecursiveBisection(CtrlType *ctrl, GraphType *graph, int nparts, idx
   }
   else if (nparts == 3) {
     cut += MCMlevelRecursiveBisection(ctrl, &rgraph, nparts-nparts/2, part, ubfactor, fpart+nparts/2);
-    GKfree(&lgraph.gdata, &lgraph.nvwgt, &lgraph.label, LTERM);
+    GKfree((void **)&lgraph.gdata, (void **)&lgraph.nvwgt, (void **)&lgraph.label, LTERM);
   }
 
   return cut;
@@ -338,7 +338,7 @@ int MCHMlevelRecursiveBisection(CtrlType *ctrl, GraphType *graph, int nparts, id
   }
 
   /* Free the memory of the top level graph */
-  GKfree(&graph->gdata, &graph->nvwgt, &graph->rdata, &graph->npwgts, &graph->label, LTERM);
+  GKfree((void **)&graph->gdata, (void **)&graph->nvwgt, (void **)&graph->rdata, (void **)&graph->npwgts, (void **)&graph->label, LTERM);
 
 
   /* Do the recursive call */
@@ -348,10 +348,10 @@ int MCHMlevelRecursiveBisection(CtrlType *ctrl, GraphType *graph, int nparts, id
   }
   else if (nparts == 3) {
     cut += MCHMlevelRecursiveBisection(ctrl, &rgraph, nparts-nparts/2, part, rubvec, fpart+nparts/2);
-    GKfree(&lgraph.gdata, &lgraph.nvwgt, &lgraph.label, LTERM);
+    GKfree((void **)&lgraph.gdata, (void **)&lgraph.nvwgt, (void **)&lgraph.label, LTERM);
   }
 
-  GKfree(&lubvec, &rubvec, LTERM);
+  GKfree((void **)&lubvec, (void **)&rubvec, LTERM);
 
   return cut;
 

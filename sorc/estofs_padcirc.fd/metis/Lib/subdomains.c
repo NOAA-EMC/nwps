@@ -882,7 +882,7 @@ void EliminateSubDomainEdges(CtrlType *ctrl, GraphType *graph, int nparts, float
   idxwspacefree(ctrl, nparts);
   idxwspacefree(ctrl, nvtxs);
 
-  GKfree(&cand, &cand2, LTERM);
+  GKfree((void **)&cand, (void **)&cand2, LTERM);
 }
 
 

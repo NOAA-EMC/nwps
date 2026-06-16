@@ -107,7 +107,7 @@ void PQueueFree(CtrlType *ctrl, PQueueType *queue)
   if (queue->type == 1) {
     if (queue->mustfree) {
       queue->buckets -= queue->ngainspan;  
-      GKfree(&queue->nodes, &queue->buckets, LTERM);
+      GKfree((void **)&queue->nodes, (void **)&queue->buckets, LTERM);
     } 
     else {
       idxwspacefree(ctrl, sizeof(ListNodeType *)*(queue->ngainspan+queue->pgainspan+1)/sizeof(idxtype));

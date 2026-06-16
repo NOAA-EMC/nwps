@@ -86,7 +86,7 @@ void AllocateWorkSpace(CtrlType *ctrl, GraphType *graph, int nparts)
 **************************************************************************/
 void FreeWorkSpace(CtrlType *ctrl, GraphType *graph)
 {
-  GKfree(&ctrl->wspace.edegrees, &ctrl->wspace.vedegrees, &ctrl->wspace.core, &ctrl->wspace.pmat, LTERM);
+  GKfree((void **)&ctrl->wspace.edegrees, (void **)&ctrl->wspace.vedegrees, (void **)&ctrl->wspace.core, (void **)&ctrl->wspace.pmat, LTERM);
 }
 
 /*************************************************************************
@@ -202,7 +202,7 @@ void InitGraph(GraphType *graph)
 void FreeGraph(GraphType *graph) 
 {
 
-  GKfree(&graph->gdata, &graph->nvwgt, &graph->rdata, &graph->npwgts, LTERM);
+  GKfree((void **)&graph->gdata, (void **)&graph->nvwgt, (void **)&graph->rdata, (void **)&graph->npwgts, LTERM);
   free(graph);
 }
 

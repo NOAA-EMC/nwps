@@ -92,7 +92,7 @@ void MocGrowBisection2(CtrlType *ctrl, GraphType *graph, float *tpwgts, float *u
   graph->mincut = bestcut;
   idxcopy(nvtxs, bestwhere, where);
 
-  GKfree(&bestwhere, LTERM);
+  GKfree((void **)&bestwhere, LTERM);
 }
 
 
@@ -140,7 +140,7 @@ void MocGrowBisectionNew2(CtrlType *ctrl, GraphType *graph, float *tpwgts, float
   graph->mincut = bestcut;
   idxcopy(nvtxs, bestwhere, where);
 
-  GKfree(&bestwhere, LTERM);
+  GKfree((void **)&bestwhere, LTERM);
 }
 
 

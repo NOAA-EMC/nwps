@@ -148,7 +148,7 @@ void CompressGraph(CtrlType *ctrl, GraphType *graph, int nvtxs, idxtype *xadj, i
 
   }
 
-  GKfree(&keys, &map, &mark, LTERM);
+  GKfree((void **)&keys, (void **)&map, (void **)&mark, LTERM);
 }
 
 

@@ -196,7 +196,7 @@ void GrowBisection(CtrlType *ctrl, GraphType *graph, int *tpwgts, float ubfactor
   graph->mincut = bestcut;
   idxcopy(nvtxs, bestwhere, where);
 
-  GKfree(&bestwhere, &queue, &touched, LTERM);
+  GKfree((void **)&bestwhere, (void **)&queue, (void **)&touched, LTERM);
 }
 
 
@@ -334,7 +334,7 @@ void GrowBisectionNode(CtrlType *ctrl, GraphType *graph, float ubfactor)
 
   Compute2WayNodePartitionParams(ctrl, graph); 
 
-  GKfree(&bestwhere, &queue, &touched, LTERM);
+  GKfree((void **)&bestwhere, (void **)&queue, (void **)&touched, LTERM);
 }
 
 
@@ -414,7 +414,7 @@ void RandomBisection(CtrlType *ctrl, GraphType *graph, int *tpwgts, float ubfact
   graph->mincut = bestcut;
   idxcopy(nvtxs, bestwhere, where);
 
-  GKfree(&bestwhere, &perm, LTERM);
+  GKfree((void **)&bestwhere, (void **)&perm, LTERM);
 }
 
 

@@ -122,7 +122,7 @@ int MlevelVolKWayPartitioning(CtrlType *ctrl, GraphType *graph, int nparts, idxt
 
   idxcopy(graph->nvtxs, graph->where, part);
 
-  GKfree(&graph->gdata, &graph->rdata, LTERM);
+  GKfree((void **)&graph->gdata, (void **)&graph->rdata, LTERM);
 
   return graph->minvol;
 

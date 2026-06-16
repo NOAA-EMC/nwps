@@ -442,7 +442,7 @@ int IsConnectedSubdomain(CtrlType *ctrl, GraphType *graph, int pid, int report)
     printf("\n");
   }
 
-  GKfree(&touched, &queue, &cptr, LTERM);
+  GKfree((void **)&touched, (void **)&queue, (void **)&cptr, LTERM);
 
   return (ncmps == 1 ? 1 : 0);
 }
@@ -541,7 +541,7 @@ int IsConnected2(GraphType *graph, int report)
     printf("\n");
   }
 
-  GKfree(&touched, &queue, &cptr, LTERM);
+  GKfree((void **)&touched, (void **)&queue, (void **)&cptr, LTERM);
 
   return (ncmps == 1 ? 1 : 0);
 }

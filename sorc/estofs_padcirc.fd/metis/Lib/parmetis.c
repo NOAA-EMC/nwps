@@ -140,7 +140,7 @@ void METIS_NodeNDP(int nvtxs, idxtype *xadj, idxtype *adjncy, int npes,
 
     if (graph.nvtxs >= COMPRESSION_FRACTION*(nvtxs)) {
       ctrl.oflags--; /* We actually performed no compression */
-      GKfree(&cptr, &cind, LTERM);
+      GKfree((void **)&cptr, (void **)&cind, LTERM);
     }
     else if (2*graph.nvtxs < nvtxs && ctrl.nseps == 1)
       ctrl.nseps = 2;
@@ -173,7 +173,7 @@ void METIS_NodeNDP(int nvtxs, idxtype *xadj, idxtype *adjncy, int npes,
       }
     }
 
-    GKfree(&cptr, &cind, LTERM);
+    GKfree((void **)&cptr, (void **)&cind, LTERM);
   }
 
 
@@ -201,7 +201,7 @@ void MlevelNestedDissectionP(CtrlType *ctrl, GraphType *graph, idxtype *order, i
   nvtxs = graph->nvtxs;
 
   if (nvtxs == 0) {
-    GKfree(&graph->gdata, &graph->rdata, &graph->label, LTERM);
+    GKfree((void **)&graph->gdata, (void **)&graph->rdata, (void **)&graph->label, LTERM);
     return;
   }
 
@@ -236,19 +236,19 @@ void MlevelNestedDissectionP(CtrlType *ctrl, GraphType *graph, idxtype *order, i
   SplitGraphOrder(ctrl, graph, &lgraph, &rgraph);
 
   /* Free the memory of the top level graph */
-  GKfree(&graph->gdata, &graph->rdata, &graph->label, LTERM);
+  GKfree((void **)&graph->gdata, (void **)&graph->rdata, (void **)&graph->label, LTERM);
 
   if (rgraph.nvtxs > MMDSWITCH || 2*cpos+1 < npes-1) 
     MlevelNestedDissectionP(ctrl, &rgraph, order, lastvtx, npes, 2*cpos+1, sizes);
   else {
     MMDOrder(ctrl, &rgraph, order, lastvtx); 
-    GKfree(&rgraph.gdata, &rgraph.rdata, &rgraph.label, LTERM);
+    GKfree((void **)&rgraph.gdata, (void **)&rgraph.rdata, (void **)&rgraph.label, LTERM);
   }
   if (lgraph.nvtxs > MMDSWITCH || 2*cpos+2 < npes-1) 
     MlevelNestedDissectionP(ctrl, &lgraph, order, lastvtx-rgraph.nvtxs, npes, 2*cpos+2, sizes);
   else {
     MMDOrder(ctrl, &lgraph, order, lastvtx-rgraph.nvtxs); 
-    GKfree(&lgraph.gdata, &lgraph.rdata, &lgraph.label, LTERM);
+    GKfree((void **)&lgraph.gdata, (void **)&lgraph.rdata, (void **)&lgraph.label, LTERM);
   }
 }
 
@@ -304,7 +304,7 @@ void METIS_NodeComputeSeparator(int *nvtxs, idxtype *xadj, idxtype *adjncy, idxt
   *sepsize = graph.pwgts[2];
   idxcopy(*nvtxs, graph.where, part);
 
-  GKfree(&graph.gdata, &graph.rdata, &graph.label, LTERM);
+  GKfree((void **)&graph.gdata, (void **)&graph.rdata, (void **)&graph.label, LTERM);
 
 
   FreeWorkSpace(&ctrl, &graph);
@@ -363,7 +363,7 @@ void METIS_EdgeComputeSeparator(int *nvtxs, idxtype *xadj, idxtype *adjncy, idxt
   *sepsize = graph.pwgts[2];
   idxcopy(*nvtxs, graph.where, part);
 
-  GKfree(&graph.gdata, &graph.rdata, &graph.label, LTERM);
+  GKfree((void **)&graph.gdata, (void **)&graph.rdata, (void **)&graph.label, LTERM);
 
 
   FreeWorkSpace(&ctrl, &graph);

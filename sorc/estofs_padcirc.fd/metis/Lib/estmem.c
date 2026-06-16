@@ -99,7 +99,7 @@ void EstimateCFraction(int nvtxs, idxtype *xadj, idxtype *adjncy, float *vfracti
   *vfraction = (1.0*cnvtxs)/(1.0*nvtxs);
   *efraction = (1.0*cnedges)/(1.0*xadj[nvtxs]);
 
-  GKfree(&cmap, &match, &perm, LTERM);
+  GKfree((void **)&cmap, (void **)&match, (void **)&perm, LTERM);
 }
 
 
@@ -149,7 +149,7 @@ int ComputeCoarseGraphSize(int nvtxs, idxtype *xadj, idxtype *adjncy, int cnvtxs
     cnvtxs++;
   }
 
-  GKfree(&htable, LTERM);
+  GKfree((void **)&htable, LTERM);
 
   return cnedges;
 }

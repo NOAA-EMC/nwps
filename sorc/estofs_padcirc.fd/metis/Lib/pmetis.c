@@ -135,7 +135,7 @@ int MlevelRecursiveBisection(CtrlType *ctrl, GraphType *graph, int nparts, idxty
 
 
   /* Free the memory of the top level graph */
-  GKfree(&graph->gdata, &graph->rdata, &graph->label, LTERM);
+  GKfree((void **)&graph->gdata, (void **)&graph->rdata, (void **)&graph->label, LTERM);
 
   /* Scale the fractions in the tpwgts according to the true weight */
   wsum = ssum(nparts/2, tpwgts);
@@ -154,7 +154,7 @@ int MlevelRecursiveBisection(CtrlType *ctrl, GraphType *graph, int nparts, idxty
   }
   else if (nparts == 3) {
     cut += MlevelRecursiveBisection(ctrl, &rgraph, nparts-nparts/2, part, tpwgts+nparts/2, ubfactor, fpart+nparts/2);
-    GKfree(&lgraph.gdata, &lgraph.label, LTERM);
+    GKfree((void **)&lgraph.gdata, (void **)&lgraph.label, LTERM);
   }
 
   return cut;

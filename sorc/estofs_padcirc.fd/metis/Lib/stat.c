@@ -120,7 +120,7 @@ void ComputePartitionInfo(GraphType *graph, int nparts, idxtype *where)
     graph->adjwgt = NULL;
   }
 
-  GKfree(&kpwgts, &padjncy, &padjwgt, &padjcut, LTERM);
+  GKfree((void **)&kpwgts, (void **)&padjncy, (void **)&padjwgt, (void **)&padjcut, LTERM);
 }
 
 
@@ -224,7 +224,7 @@ void ComputePartitionInfoBipartite(GraphType *graph, int nparts, idxtype *where)
     graph->adjwgt = NULL;
   }
 
-  GKfree(&kpwgts, &padjncy, &padjwgt, &padjcut, LTERM);
+  GKfree((void **)&kpwgts, (void **)&padjncy, (void **)&padjwgt, (void **)&padjcut, LTERM);
 }
 
 

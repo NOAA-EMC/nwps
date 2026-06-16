@@ -73,7 +73,7 @@ void RefineVolKWay(CtrlType *ctrl, GraphType *orggraph, GraphType *graph, int np
     if (graph == orggraph)
       break;
 
-    GKfree(&graph->gdata, LTERM);  /* Deallocate the graph related arrays */
+    GKfree((void **)&graph->gdata, LTERM);  /* Deallocate the graph related arrays */
 
     graph = graph->finer;
 
