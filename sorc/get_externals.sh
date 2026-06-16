@@ -14,11 +14,11 @@ if [ "${NWPSdir}" == "" ]
 fi
 
 echo 'Fetching externals...'
-scp /lfs/h2/emc/couple/noscrub/saeideh.banihashemi/git/fv3gfs/fix/fix_nwps/v_1-5/fix/bathy_db_v1-5-0.tar ${NWPSdir}/fix/
+scp /lfs/h2/emc/couple/noscrub/saeideh.banihashemi/git/fv3gfs/fix/fix_nwps/v_1-5/fix/bathy_db_v1-5.tar ${NWPSdir}/fix/
 if [ -d "${NWPSdir}/fix/bathy_db" ]; then rm -Rf "${NWPSdir}/fix/bathy_db"; fi
 mkdir -p ${NWPSdir}/fix/bathy_db/
-tar -C ${NWPSdir}/fix/bathy_db/ -xvf ${NWPSdir}/fix/bathy_db_v1-5-0.tar
-rm ${NWPSdir}/fix/bathy_db_v1-5-0.tar
+tar -C ${NWPSdir}/fix/bathy_db/ -xvf ${NWPSdir}/fix/bathy_db_v1-5.tar
+rm ${NWPSdir}/fix/bathy_db_v1-5.tar
 
 rm -rf ${NWPSdir}/fix/bathy_db/sew
 rm -rf ${NWPSdir}/fix/bathy_db/crp
