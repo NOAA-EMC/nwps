@@ -205,7 +205,7 @@
 #define MocGrowBisection		__MocGrowBisection
 #define MocRandomBisection		__MocRandomBisection
 #define MocInit2WayBalance		__MocInit2WayBalance
-#define SelectQueueoneWay		__SelectQueueoneWay
+#define SelectQueueOneWay		__SelectQueueOneWay
 
 
 /* minitpart2.c */

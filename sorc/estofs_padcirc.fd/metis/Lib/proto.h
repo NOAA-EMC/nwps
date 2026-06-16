@@ -257,7 +257,7 @@ void MocInit2WayPartition(CtrlType *, GraphType *, float *, float);
 void MocGrowBisection(CtrlType *, GraphType *, float *, float);
 void MocRandomBisection(CtrlType *, GraphType *, float *, float);
 void MocInit2WayBalance(CtrlType *, GraphType *, float *);
-int SelectQueueoneWay(int, float *, float *, int, PQueueType [MAXNCON][2]);
+int SelectQueueOneWay(int, float *, float *, int, PQueueType [MAXNCON][2]);
 
 /* minitpart2.c */
 void MocInit2WayPartition2(CtrlType *, GraphType *, float *, float *);
