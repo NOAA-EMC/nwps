@@ -154,8 +154,8 @@ then
          PROCPERNODE=72
       elif [ "${siteid}" == "lox" ]
       then
-         NTASKS=36
-         PROCPERNODE=36
+         NTASKS=48
+         PROCPERNODE=48
       elif [ "${siteid}" == "alu" ]
       then
          NTASKS=84
