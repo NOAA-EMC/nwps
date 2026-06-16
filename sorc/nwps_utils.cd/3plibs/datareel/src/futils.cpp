@@ -1540,28 +1540,16 @@ GXDLCODE_API struct dirent *futils_readdir(DIR *dirp, dirent *entry)
   // compiler (default /opt/SUNWspro/bin/cc, which may not be in your 
   // PATH), and not /usr/ucb/cc. See the following URL for more details: 
   // http://sunse.jinr.ru/local/solaris/solaris2.html#q6.17
-
-  if(!entry) { 
-    // Using non-reentrant readdir function for UNIX builds that 
-    // do require the use of the reentrant readdir call. 
-    return readdir(dirp);
+  // 06/16/2026: Standard readdir is completely thread-safe on modern POSIX compliant
+  // operating systems as long as different threads use different DIR* streams.
+  // If the caller provided a pre-allocated structure via 'entry', copy the
+  // result into it for backward compatibility.
+  struct dirent *result = readdir(dirp);
+  if (result && entry) {
+      *entry = *result;
+      return entry;
   }
-  else { // Using reentrant readdir function
-#if defined (__REENTRANT__)
-#if defined (__SOLARIS__) && !defined(_POSIX_PTHREAD_SEMANTICS)
-    return readdir_r(dirp, entry); 
-#elif defined (__HPUX10__)
-    if(readdir_r(dirp, entry) != 0) return 0;
-    return entry;
-#else
-    if(readdir_r(dirp, entry, &entry) != 0) return 0; 
-    return entry;
-#endif 
-#else // Using non-reentrant readdir() function for UNIX platforms that
-      // do not define the readdir_r() function.
-    return readdir(dirp);
-#endif // __REENTRANT__
-  }
+  return result;
 #else
 #error You must define a file system: __WIN32__ or __UNIX__
 #endif
