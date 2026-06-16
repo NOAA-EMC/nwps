@@ -158,8 +158,8 @@ elsif ($os =~ /Linux/i) {
     print OUTFILE "##############################################################################\n";
     my $flags_opt = exists $ENV{FLAGS_OPT} ? $ENV{FLAGS_OPT} : "-O2";
     my $flags_msc = exists $ENV{FLAGS_MSC} ? $ENV{FLAGS_MSC} : "-g -traceback";
-    print OUTFILE "F90_SER = ifort\n";
-    print OUTFILE "F90_OMP = ifort\n";
+    print OUTFILE "F90_SER = ftn\n";
+    print OUTFILE "F90_OMP = ftn\n";
     print OUTFILE "F90_MPI = ftn\n";
     print OUTFILE "FLAGS_OPT = $flags_opt\n";
     print OUTFILE "FLAGS_MSC = $flags_msc\n";
