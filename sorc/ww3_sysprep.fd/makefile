@@ -8,7 +8,7 @@ clean :
 	rm ww3_sysprep.exe ww3_sysprep.o
 
 ww3_sysprep : ww3_sysprep.o
-	$(FC) -o ww3_sysprep.exe ww3_sysprep.o
+	$(FC) $(FCFLAGS) -o ww3_sysprep.exe ww3_sysprep.o
 
 ww3_sysprep.o : ww3_sysprep.f
-	$(FC) -c -O ww3_sysprep.f
+	$(FC) $(FCFLAGS) -c -O ww3_sysprep.f

@@ -77,8 +77,8 @@ else
   export NWPS_CHECK_ALL=NO
   # General components
   export optFlag="-O3"
-  export FFLAGS=""
-  export FCFLAGS=""
+  export FFLAGS="-g -traceback"
+  export FCFLAGS="-g -traceback"
 
   # SWAN / PUNSWAN controls
   export FLAGS_OPT="-O2"
