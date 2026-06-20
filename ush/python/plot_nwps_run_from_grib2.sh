@@ -100,8 +100,10 @@ echo $$ > ${TMPdir}/${USERNAME}/nwps/7790_plot_nwps_run_from_grib2_sh.pid
 
 # Read our SWAN configuration for this run
 export NESTS="NO"
-hasnest=$(cat ${RUNdir}/nests.flag)
-if [ "${hasnest}" == "TRUE" ]; then export NESTS="YES"; fi
+if [ -f "${RUNdir}/nests.flag" ]; then
+  hasnest=$(cat ${RUNdir}/nests.flag)
+  if [ "${hasnest}" == "TRUE" ]; then export NESTS="YES"; fi
+fi 
 #SWANPARMS=`perl -I${NWPSdir}/ush/bin -I${RUNdir} ${PYPdir}/get_swan_config_parms.pl`
 SWANPARMS=`${PYPdir}/get_swan_config_parms.pl`
 

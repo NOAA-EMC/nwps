@@ -318,7 +318,7 @@ do
         echo "Filter table file to 3-hourly..."
         # Accounting for init hours that differ from the 3-hourly cadence (00z, 03z, 06z, 09z, ...)
 	cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
-	hourshift=expr $cycle % 3
+	hourshift=$(( expr $cycle % 3 ))
 	starthour=$(( expr $hourshift % 3 - 3 ))
 	endhour=$(( 21 + expr $hourshift % 3 ))
 

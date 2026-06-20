@@ -79,8 +79,10 @@ echo $$ > ${TMPdir}/${USERNAME}/nwps/7785_plot_partition_sh.pid
 
 # Read our SWAN configuration for this run
 export NESTS="NO"
-hasnest=$(cat ${RUNdir}/nests.flag)
-if [ "${hasnest}" == "TRUE" ]; then export NESTS="YES"; fi
+if [ -f "${RUNdir}/nests.flag" ]; then
+  hasnest=$(cat ${RUNdir}/nests.flag)
+  if [ "${hasnest}" == "TRUE" ]; then export NESTS="YES"; fi
+fi
 #SWANPARMS=`perl -I${USHnwps} -I${RUNdir} ${PYTHdir}/get_partition_parms.pl`
 SWANPARMS=`${PYTHdir}/get_partition_parms.pl`
 echo ${SWANPARMS}

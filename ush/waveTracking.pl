@@ -302,16 +302,29 @@ for $i (0..0){
       print WVTLOG "Starting partition processing for raw SWAN output\n";
 #      system("mkdir -pv ${OUTPUTdir}/partition/CG${cgnum}");
       chdir("${OUTPUTdir}/partition/CG${cgnum}");
-      system("mv -fv ${RUNdir}/SYS_* ${OUTPUTdir}/partition/CG${cgnum}/ ");
+# 1. Check if ANY SYS_* files exist before moving them
+      # We use a glob check here because 'SYS_*' contains a wildcard (*)
+      if ( prototype('CORE::glob') ? glob("${RUNdir}/SYS_*") : <"${RUNdir}/SYS_*"> ) {
+         system("mv -fv ${RUNdir}/SYS_* ${OUTPUTdir}/partition/CG${cgnum}/ ");
+      }
+
       foreach $partitionName (@partitionFileNames) {
          my $findCG = index($partitionName, "CG${cgnum}");
          if ($findCG > 0) {
-   	    system("mv -fv ${RUNdir}/${partitionName}.${prtdateSuffix} ${OUTPUTdir}/partition/CG${cgnum}/${partitionName}.${prtdateSuffix}");
-	    print WVTLOG "Create partition data file for ${partitionName}\n";
-	    &createDataPartition('partition', ${partitionName}, "CG${cgnum}");
+
+            # 2. Construct the exact file path we want to move
+            my $sourceFile = "${RUNdir}/${partitionName}.${prtdateSuffix}";
+
+            # 3. ONLY attempt to move if the file actually exists
+            if (-e $sourceFile) {
+               system("mv -fv $sourceFile ${OUTPUTdir}/partition/CG${cgnum}/${partitionName}.${prtdateSuffix}");
+               print WVTLOG "Create partition data file for ${partitionName}\n";
+               &createDataPartition('partition', ${partitionName}, "CG${cgnum}");
+            } else {
+               print WVTLOG " Expected file $sourceFile not found. Skipping.\n";
+            }
          }
       }
-
 
 if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     my $infoFile02 = "${RUNdir}/info_to_nwps_coremodel.txt";
@@ -642,6 +655,7 @@ sub getPrtNamesLonLat {
     my $SHIPRTstring2="SHIPRT2";
     my $SHIPRTstring3="SHIPRT3";
     my $SHIPRTstring4="SHIPRT4";
+    my $SHIPRTstring5="SHIPRT5";
     $sought1="POINTS";
     $numOfPartLoc=0;
     open (DATA,"input$_[0]");
@@ -679,7 +693,9 @@ sub getPrtNamesLonLat {
 	    if($name =~/^$SHIPRTstring4/) {
 		next;
 	    }
-
+            if($name =~/^$SHIPRTstring5/) {
+                next;
+            }
             undef @char;
             push @prtShortName, $name;
             push @prtLon, $temp[2];

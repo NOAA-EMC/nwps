@@ -120,14 +120,14 @@ export COMIN=${COMROOT}/${NET}/$ver/${REGION}.${PDY}/${WFO}
 export COMINm1=${COMROOT}/${NET}/$ver/${REGION}.${PDYm1}/${WFO}
 export COMINm2=${COMROOT}/${NET}/$ver/${REGION}.${PDYm2}/${WFO}
 export COMINm3=${COMROOT}/${NET}/$ver/${REGION}.${PDYm3}/${WFO}
+export COMINm4=${COMROOT}/${NET}/$ver/${REGION}.${PDYm4}/${WFO}
+export COMINm5=${COMROOT}/${NET}/$ver/${REGION}.${PDYm5}/${WFO}
 export COMOUT=${COMROOT}/${NET}/$ver/${REGION}.${PDY}/${WFO}
 export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}/nwges
 export GESIN=${COMROOT}/${NET}/$ver/${NET}.${PDY}/nwges
 export GESINm1=${COMROOT}/${NET}/$ver/${NET}.${PDYm1}/nwges
 export GESINm2=${COMROOT}/${NET}/$ver/${NET}.${PDYm2}/nwges
 export GESINm3=${COMROOT}/${NET}/$ver/${NET}.${PDYm3}/nwges
-export GESINm4=${COMROOT}/${NET}/$ver/${NET}.${PDYm4}/nwges
-export GESINm5=${COMROOT}/${NET}/$ver/${NET}.${PDYm5}/nwges
 
 export dcom=/lfs/h1/ops/prod/dcom
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"

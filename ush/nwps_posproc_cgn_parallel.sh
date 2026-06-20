@@ -216,6 +216,7 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
      # nomenclature input file for run_runup.sh e.g 20m_contour_CG2.20150202_0000_MHX
      fileor="${dpt_runup_contour}_contour_CG${CGNUM}"
      filein="${dpt_runup_contour}_contour_CG${CGNUM}.${yyyy}${mon}${dd}_${CYCLErunup}_${SITEID}"
+     filecomout="${NET}.t${hh}z.${dpt_runup_contour}_contour_CG${CGNUM}.${SITEID}.txt"
      #fileout="${dpt_runup_contour}_CG${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}_${SITEID}.txt"
      #fileout="${WFO}_${NET}_${dpt_runup_contour}_CG${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}"
      echo "filein: ${filein}"  | tee -a $logrunup
@@ -238,7 +239,7 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
      COMOUTCYC="${COMOUT_CORRECT}/${cycle}/CG${CGNUM}"
      if [ "${SENDCOM}" == "YES" ]; then
         mkdir -p $COMOUTCYC
-        cp -fv  ${OUTDIRrunup}/${filein} ${COMOUTCYC}/${filein}
+        cp -fv  ${OUTDIRrunup}/${filein} ${COMOUTCYC}/${filecomout}
         cp -fv  ${OUTDIRrunup}/${FORT22} ${COMOUTCYC}/${FORT22}
         if [ "${SENDDBN}" == "YES" ]
         then
@@ -326,9 +327,6 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
          echo "Sending ${FORT23} to DBNET."
          $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_RIPPROB ${job} ${COMOUTCYC}/${FORT23}
      fi
-
-     mkdir -p $GESOUT/riphist/${SITEID}
-     cp -fv  ${RIPDATA}/${CGCONT} ${GESOUT}/riphist/${SITEID}/${CGCONT}
 
      # TODO: 11/29/2016 - Tesing RIP GRIB2 encoding below
      SWAN_RIP_OUTPUT_FILE="${RIPDATA}/${FORT23}"

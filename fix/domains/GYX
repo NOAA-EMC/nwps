@@ -79,7 +79,7 @@ export RESN1=".1"
 export TSTEPN1="1"
 export STATN1="NON"
 #
-NEST 2 - Lake Winnipesaukee grid
+# NEST 2 - Lake Winnipesaukee grid
 export NELATN2="43.73"
 export NELONN2="-71.19"
 export SWLATN2="43.47"

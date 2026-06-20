@@ -4,3 +4,11 @@
 # Makefiles rewritten during build
 sorc/emapf-c/Makefile
 sorc/libaat/Makefile
+exec
+fix/bathy_db
+fix/pdef_ncep_global
+lib/cartopy
+sorc/estofs_padcirc.fd/work
+sorc/libaat/config.status
+sorc/libaat/libaat.a
+ush/rtofs/datfiles/pdef_ncep_*.gz
