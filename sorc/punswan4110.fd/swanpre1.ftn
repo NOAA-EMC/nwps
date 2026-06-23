@@ -1729,6 +1729,34 @@
 !        endif
 !        write(6,'("SWREAD: Array sizes ",4I8)'),MXCGL,MYCGL,MXC,MYC
 !        flush(6)
+
+        IF (OPTG .EQ. 5) THEN
+          IF (.NOT.ALLOCATED(XGRDGL)) THEN
+            ALLOCATE(XGRDGL(MXC,MYC))
+            XGRDGL = 0.
+          ENDIF
+
+          IF (.NOT.ALLOCATED(YGRDGL)) THEN
+            ALLOCATE(YGRDGL(MXC,MYC))
+            YGRDGL = 0.
+          ENDIF
+
+          IF (.NOT.ALLOCATED(KGRPGL)) THEN
+            ALLOCATE(KGRPGL(MXC,MYC))
+            KGRPGL = 0
+          ENDIF
+
+          IF (.NOT.ALLOCATED(KGRBGL)) THEN
+            ALLOCATE(KGRBGL(MAX(1,NGRBND)))
+            KGRBGL = 0
+          ENDIF
+
+          IF (.NOT.ALLOCATED(XYTST)) THEN
+            ALLOCATE(XYTST(MAX(1,MCGRD)))
+            XYTST = 0
+          ENDIF
+        ENDIF
+
         CALL SWBOUN ( XGRDGL, YGRDGL, KGRPGL, XYTST, KGRBGL )             40.31
         IF (STPNOW()) RETURN                                              34.01
         MXC    = ITMP1                                                    40.31
