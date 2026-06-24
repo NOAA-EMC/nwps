@@ -741,10 +741,17 @@
       IF ( PARLL ) THEN                                                   40.30
          ALLOCATE (BLKND(MXC*MYC))                                        40.51 40.41
          BLKND = REAL(INODE)                                              40.41
+
+         IF (.NOT.ALLOCATED(BLKNDC)) THEN
+           ALLOCATE(BLKNDC(MXCGL*MYCGL))
+           BLKNDC = 0.
+         END IF
+
          IF ( IAMMASTER ) THEN                                            40.95
             ALLOCATE(BLKNDC(MXCGL*MYCGL))                                 40.51 40.41
             BLKNDC = 0.                                                   40.96
          END IF
+
          CALL SWCOLLECT ( BLKNDC, BLKND, .TRUE. )                         40.51 40.41
          IF (STPNOW()) RETURN                                             40.41
          IF ( IAMMASTER ) THEN                                            40.95 40.30
