@@ -742,12 +742,7 @@
          ALLOCATE (BLKND(MXC*MYC))                                        40.51 40.41
          BLKND = REAL(INODE)                                              40.41
 
-         IF (.NOT.ALLOCATED(BLKNDC)) THEN
-           ALLOCATE(BLKNDC(MXCGL*MYCGL))
-           BLKNDC = 0.
-         END IF
-
-         IF ( IAMMASTER ) THEN                                            40.95
+         IF (.NOT.ALLOCATED(BLKNDC)) THEN                                            40.95
             ALLOCATE(BLKNDC(MXCGL*MYCGL))                                 40.51 40.41
             BLKNDC = 0.                                                   40.96
          END IF
@@ -761,7 +756,7 @@
       END IF                                                              40.30
 !PUN      !
 !PUN      IF ( MNPROC>1 ) THEN                                                41.36
-!PUN         IF ( IAMMASTER ) THEN                                            41.36
+!PUN         IF (.NOT.ALLOCATED(BLKNDC)) THEN                              41.36
 !PUN            ALLOCATE(BLKNDC(nvertsg))                                     41.36
 !PUN            BLKNDC = 0.                                                   41.36
 !PUN         ENDIF                                                            41.36
