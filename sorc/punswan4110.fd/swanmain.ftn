@@ -756,7 +756,7 @@
       END IF                                                              40.30
 !PUN      !
 !PUN      IF ( MNPROC>1 ) THEN                                                41.36
-!PUN         IF (.NOT.ALLOCATED(BLKNDC)) THEN                              41.36
+!PUN         IF (.NOT.ALLOCATED(BLKNDC)) THEN                                 41.36
 !PUN            ALLOCATE(BLKNDC(nvertsg))                                     41.36
 !PUN            BLKNDC = 0.                                                   41.36
 !PUN         ENDIF                                                            41.36
