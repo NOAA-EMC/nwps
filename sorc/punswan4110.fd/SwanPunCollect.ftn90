@@ -112,10 +112,10 @@ subroutine SwanPunCollect ( blkndc )
 !PUN       endif
 !PUN    enddo
 !PUN    !
-!PUN    if ( IAMMASTER ) then
-!PUN       allocate(icount(0:MNPROC-1))
-!PUN       allocate(idsplc(0:MNPROC-1))
-!PUN    endif
+!PUN    allocate(icount(0:MNPROC-1))
+!PUN    allocate(idsplc(0:MNPROC-1))
+!PUN    icount = 0
+!PUN    idsplc = 0
 !PUN    !
 !PUN    ! gather the array sizes to the master
 !PUN    !
@@ -145,11 +145,13 @@ subroutine SwanPunCollect ( blkndc )
 !PUN    endif
 !PUN    !
 !PUN    if ( IAMMASTER ) then
-!PUN       allocate(    iarr(nvertsg))
-!PUN       allocate(     arr(nvertsg))
 !PUN       allocate(xcugrdgl(nvertsg))
 !PUN       allocate(ycugrdgl(nvertsg))
 !PUN    endif
+!PUN    allocate(iarr(nvertsg))
+!PUN    allocate(arr(nvertsg))
+!PUN    iarr = 0
+!PUN    arr  = 0
 !PUN    !
 !PUN    ! gather different amounts of data from each processor to the master
 !PUN    !
@@ -195,6 +197,6 @@ subroutine SwanPunCollect ( blkndc )
 !PUN    !
 !PUN    deallocate(ivertp,blknd)
 !PUN    deallocate(xpl,ypl)
-!PUN    if ( IAMMASTER ) deallocate(icount,idsplc,iarr,arr)
+!PUN    deallocate(icount,idsplc,iarr,arr)
 !PUN    !
 end subroutine SwanPunCollect

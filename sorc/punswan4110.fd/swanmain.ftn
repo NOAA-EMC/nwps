@@ -742,7 +742,7 @@
          ALLOCATE (BLKND(MXC*MYC))                                        40.51 40.41
          BLKND = REAL(INODE)                                              40.41
 
-         IF (.NOT.ALLOCATED(BLKNDC)) THEN                                            40.95
+         IF (.NOT.ALLOCATED(BLKNDC)) THEN                                 40.95
             ALLOCATE(BLKNDC(MXCGL*MYCGL))                                 40.51 40.41
             BLKNDC = 0.                                                   40.96
          END IF
