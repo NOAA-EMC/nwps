@@ -50,7 +50,7 @@ else
 fi
 
 # Check to see if this an LDM server
-source ${NWPSdir}/utils/ldm/ldm_server/set_ldm_server.sh
+source ${HOMEnwps}/utils/ldm/ldm_server/set_ldm_server.sh
 
 if [ "${IS_LDMSERVER}" == "TRUE" ]
 then
@@ -78,8 +78,8 @@ region=$(echo "${regionid}" | tr [:upper:] [:lower:])
 if [ "${IS_LDMSERVER}" == "TRUE" ]
 then
     # Set our LDM server scripts and utils
-    ldm_server_script="${NWPSdir}/utils/ldm/ldm_server/${region}_ldm_server_inc.sh"
-    ldm_cluster_script="${NWPSdir}/utils/ldm/ldm_server/${region}_ldm_cluster_inc.sh"
+    ldm_server_script="${HOMEnwps}/utils/ldm/ldm_server/${region}_ldm_server_inc.sh"
+    ldm_cluster_script="${HOMEnwps}/utils/ldm/ldm_server/${region}_ldm_cluster_inc.sh"
     LDMSEND="${LDMHOME}/bin/ldmsend"
 fi
 

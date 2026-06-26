@@ -33,7 +33,7 @@ use ConfigSwan;
 our $path=PATH;
 
 # Setup our NWPS env
-my $NWPSdir = $ENV{'HOMEnwps'};
+my $HOMEnwps = $ENV{'HOMEnwps'};
 my $DATA = $ENV{'DATA'};
 my $ISPRODUCTION = $ENV{'ISPRODUCTION'};
 my $DEBUGGING = $ENV{'DEBUGGING'};
@@ -59,7 +59,7 @@ my $NWPSplatform = $ENV{'NWPSplatform'};
 ################################################################################
 sub cleanUp {
     # check if any other swan process is currently running
-    my $NWPSdir = $ENV{'HOMEnwps'};
+    my $HOMEnwps = $ENV{'HOMEnwps'};
     my $INPUTdir = $ENV{'INPUTdir'};
     my $OUTPUTdir = $ENV{'OUTPUTdir'};
     my $inp_windfiles = "${INPUTdir}";

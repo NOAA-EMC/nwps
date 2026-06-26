@@ -60,7 +60,7 @@ our $path=PATH;
 #               Environment Variables                #
 ######################################################
 # Setup our NWPS env
-my $NWPSdir = $ENV{'HOMEnwps'};
+my $HOMEnwps = $ENV{'HOMEnwps'};
 my $ISPRODUCTION = $ENV{'ISPRODUCTION'};
 my $DEBUGGING = $ENV{'DEBUGGING'};
 my $DEBUG_LEVEL = $ENV{'DEBUG_LEVEL'};
@@ -99,7 +99,7 @@ print " RUNdir: ${RUNdir}\n";
 print " CGNUMPLOT: ${CGNUMPLOT} \n";
 my $infoFile02 = "${RUNdir}/info_to_nwps_coremodel.txt";
 open IN, "<$infoFile02"  or die "Cannot open: $!";
-  our ($NWPSdir, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir);
+  our ($HOMEnwps, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir);
   our ($DATAdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN);
   our ($NESTS, $RTOFS, $ESTOFS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID);
   our ($WNA, $WINDS, $INPUTdir, $ISPRODUCTIO, $DATAdir, $siteid, $GEN_NETCDF);
@@ -110,7 +110,7 @@ while (<IN>) {
    $ndata+=1;
    chomp($_);
    if ($ndata ==1) {
-    $NWPSdir=$_;
+    $HOMEnwps=$_;
    }
    if ($ndata ==2) {
      $ISPRODUCTIO=$_;
@@ -191,7 +191,7 @@ while (<IN>) {
 }
 close IN;
 
-#print "$NWPSdir, $ISPRODUCTIO, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir\n";
+#print "$HOMEnwps, $ISPRODUCTIO, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir\n";
 #print "$DATAdir, $INPUTdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN, $WNA\n";
 #print "$NEST, $RTOFS, $ESTOFS, $WINDS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID, $DATAdir\n";
 #print "$GEN_NETCDF\n";
@@ -200,7 +200,7 @@ Logs::initialize();
 Logs::run("BEGIN RUN");
 
 if ($DEBUGGING eq "TRUE") {
-    Logs::run("NWPSdir: $NWPSdir");
+    Logs::run("HOMEnwps: $HOMEnwps");
     Logs::run("DEBUGGING: $DEBUGGING");
     Logs::run("DEBUG_LEVEL: $DEBUG_LEVEL");
     Logs::run("ISPRODUCTION: $ISPRODUCTION");

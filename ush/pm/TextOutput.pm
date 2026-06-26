@@ -68,7 +68,7 @@ use ConfigSwan;
 use Math::Trig;
 
 # Setup our NWPS env
-my $NWPSdir = $ENV{'HOMEnwps'};
+my $HOMEnwps = $ENV{'HOMEnwps'};
 my $DATA = $ENV{'DATA'};
 my $ISPRODUCTION = $ENV{'ISPRODUCTION'};
 my $DEBUGGING = $ENV{'DEBUGGING'};
@@ -129,11 +129,11 @@ sub textOutputProcessing {
 	foreach (@loc) {
 	       	&createFileFor($_);
       		&mvFiles("${OUTPUTdir}/validation/","WW3");
-		system("${NWPSdir}/lib${ARCHBITS}/validation/NWSWavedat ${OUTPUTdir}/validation/ $_.WW3 ${OUTPUTdir}/validation/ $_");
+		system("${HOMEnwps}/lib${ARCHBITS}/validation/NWSWavedat ${OUTPUTdir}/validation/ $_.WW3 ${OUTPUTdir}/validation/ $_");
 		my $obsFile="NDBC_".$_.".mat";
 		#my $modFile=$_."_SWANfcst_00.mat";
 		my $modFile=$_."_SWANtotal_fcst.mat";
-		system("${NWPSdir}/lib${ARCHBITS}/validation/validationGraph $ndbcDir/$obsFile ${OUTPUTdir}/validation/$_/$modFile $_ ${OUTPUTdir}/validation/$_/");
+		system("${HOMEnwps}/lib${ARCHBITS}/validation/validationGraph $ndbcDir/$obsFile ${OUTPUTdir}/validation/$_/$modFile $_ ${OUTPUTdir}/validation/$_/");
 	}
 	&removeFiles("WW3","${OUTPUTdir}/spectra/");#we don't need them anymore after and fast to produce
 	&removeOldFiles(NDAYSARCHIVE,"bull");

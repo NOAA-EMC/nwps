@@ -405,10 +405,10 @@ do
 	#cat ${TEMPLATEDIR}/NWS_Logo.png > ${PROCdirparll}/NWS_Logo.png
 	cp ${TEMPLATEDIR}/NOAA-Transparent-Logo.png ${PROCdirparll}/NOAA-Transparent-Logo.png
 	cp ${TEMPLATEDIR}/NWS_Logo.png ${PROCdirparll}/NWS_Logo.png
-	#cat ${NWPSdir}/ush/python/shiproute_cur.py > ${PROCdirparll}/shiproute_cur.py
-	#cat ${NWPSdir}/ush/python/shiproute.py > ${PROCdirparll}/shiproute.py
-	cp -p ${NWPSdir}/ush/python/shiproute_cur.py ${PROCdirparll}/shiproute_cur.py
-	cp -p ${NWPSdir}/ush/python/shiproute.py ${PROCdirparll}/shiproute.py
+	#cat ${HOMEnwps}/ush/python/shiproute_cur.py > ${PROCdirparll}/shiproute_cur.py
+	#cat ${HOMEnwps}/ush/python/shiproute.py > ${PROCdirparll}/shiproute.py
+	cp -p ${HOMEnwps}/ush/python/shiproute_cur.py ${PROCdirparll}/shiproute_cur.py
+	cp -p ${HOMEnwps}/ush/python/shiproute.py ${PROCdirparll}/shiproute.py
 	cd ${PROCdir}
 	#${PYTHON} ${PROCdirparll}/shiproute_cur.py ${PROCdirparll}/pyplot_shiproutes.cfg | tee -a ${DEBUGLOGfile}
 	#${PYTHON} ${PROCdirparll}/shiproute.py ${PROCdirparll}/pyplot_shiproutes.cfg | tee -a ${DEBUGLOGfile}

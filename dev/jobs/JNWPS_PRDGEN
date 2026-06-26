@@ -89,6 +89,7 @@ export INPUTdir=${INPUTdir:-${DATA}/input}
 export VARdir=${VARdir:-${DATA}/var}
 export OUTPUTdir=${OUTPUTdir:-${DATA}/output}
 export GRIB2dir=${GRIB2dir:-${DATA}/output/grib2}
+export PARMwmo="${PARMnwps}/wmo"
 export RUNdir=${RUNdir:-${DATA}/run}
 export TMPdir=${TMPdir:-${DATA}/tmp}
 export LOGdir=${LOGdir:-${DATA}/logs}
@@ -115,7 +116,7 @@ export COMINm1=${COMROOT}/${NET}/$ver/${REGION}.${PDYm1}/${WFO}
 export COMINm2=${COMROOT}/${NET}/$ver/${REGION}.${PDYm2}/${WFO}
 export COMINm3=${COMROOT}/${NET}/$ver/${REGION}.${PDYm3}/${WFO}
 export COMOUT=${COMROOT}/${NET}/$ver/${REGION}.${PDY}/${WFO}
-export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}/nwges
+export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}
 
 export dcom=/lfs/h1/ops/prod/dcom
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
@@ -137,9 +138,9 @@ ${HOMEnwps}/dev/scripts/exnwps_prdgen.sh
 #if [ "$?" -eq 0 ] && [ "${N,,}" == "n" ]; then
 if [ "${N,,}" == "n" ]; then
     #dfile=$(ecflow_client --group="get ${ECF_NAME%/*}/jnwps_prep ; show state"|grep label|awk '{print $NF}'|sed 's/\"//g')
-    dfile=$(head -1 ${NWPSdir}/dev/ecf/jobids_${WFO}.log )
+    dfile=$(head -1 ${HOMEnwps}/dev/ecf/jobids_${WFO}.log )
     if [ -z ${dcom_hist} ]; then
-       echo "*** Run history file dcom_hist not set! See ${NWPSdir}/dev/ecf/jnwps_datachk.ecf" }
+       echo "*** Run history file dcom_hist not set! See ${HOMEnwps}/dev/ecf/jnwps_datachk.ecf" }
     else
        echo "FINISHED $dfile AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
     fi

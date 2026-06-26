@@ -7,7 +7,7 @@ package CGinclude;
 require Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw($CG1 $CG2 $CG3 $CG4 $CG5);
-my $NWPSdir = $ENV{'NWPSdir'};
+my $HOMEnwps = $ENV{'HOMEnwps'};
 my $OUTPUTdir = $ENV{'OUTPUTdir'};
 my $NESTS = $ENV{'NESTS'};
 ##################################################################################

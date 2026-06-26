@@ -27,7 +27,7 @@ set -xa
 
 # Variable used to setup the root directory for NWPS package
 # Default is ${HOME}/nwps
-if [ "${NWPSdir}" == "" ]; then export NWPSdir="${HOMEnwps}"; fi
+if [ "${HOMEnwps}" == "" ]; then export HOMEnwps="${HOMEnwps}"; fi
 
 # Variable to signal our NWPS env is set
 if [ "${NWPSenvset}" == "" ]; then export NWPSenvset="TRUE"; fi
@@ -87,13 +87,13 @@ if [ "${LDMdir}" == "" ]; then export LDMdir=${DATAdir}/lmd; fi
 echo "Setting up our NWPS environment"
 
 # Include files required to complete model setup 
-if [ ! -e ${NWPSdir}/fix/configs/siteid.sh ]
+if [ ! -e ${HOMEnwps}/fix/configs/siteid.sh ]
     then
-    echo "ERROR - Missing ${NWPSdir}/fix/configs/siteid.sh"
+    echo "ERROR - Missing ${HOMEnwps}/fix/configs/siteid.sh"
     echo "ERROR - You must setup a domain for this site"
     exit 1
 fi
-source ${NWPSdir}/fix/configs/siteid.sh
+source ${HOMEnwps}/fix/configs/siteid.sh
 
 echo ""
 echo "BATHYdb = ${BATHYdb}"

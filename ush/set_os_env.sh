@@ -29,7 +29,7 @@ set -xa
 # Setup our NWPS environment                                                    
 if [ "${HOMEnwps}" == "" ]
     then 
-    echo "ERROR - Your NWPSdir variable is not set"
+    echo "ERROR - Your HOMEnwps variable is not set"
     export err=1; err_chk
 fi
 
@@ -65,7 +65,7 @@ export OPAL_PREFIX="${LSF_BINDIR}/.."
 export PATH=$PATH:${EXECnwps}
 export NCDUMP=ncdump
 export NCGEN=ncgen
-export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${NWPSdir}/lib"
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${HOMEnwps}/lib"
 
 echo "Detecting CPU info and number of processors"
 export CPU=$(cat /proc/cpuinfo | grep -m 1 "model name" | awk -F: '{ print $2 }' | tr -s " ")

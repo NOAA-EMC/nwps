@@ -38,7 +38,6 @@
 cd $PBS_O_WORKDIR
 
 # Setup and load modules
-export HOMEnwps=${NWPSdir}
 VERSION_FILE=${HOMEnwps}/versions/run.ver
 if [ -f $VERSION_FILE ]; then
   . $VERSION_FILE
@@ -98,9 +97,9 @@ do
    if [ ! -z $(grep 'FAILED' /lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver/logs/jlogfiles/jlogfile.pnwps_%WFO%_po_cgn | awk '{print $1}') ]
    then
        #Send message to dcom_hist file
-       dfile=$(head -1 ${NWPSdir}/dev/ecf/jobids_${WFO}.log )
+       dfile=$(head -1 ${HOMEnwps}/dev/ecf/jobids_${WFO}.log )
        if [ -z ${dcom_hist} ]; then
-          echo "*** Run history file dcom_hist not set! See ${NWPSdir}/dev/ecf/jnwps_datachk.ecf" }
+          echo "*** Run history file dcom_hist not set! See ${HOMEnwps}/dev/ecf/jnwps_datachk.ecf" }
        else
           echo "FAILED $dfile AT $(date -u "+%Y%m%d%H%M")" >> ${dcom_hist}
        fi

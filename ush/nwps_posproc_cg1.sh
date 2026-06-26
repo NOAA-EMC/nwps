@@ -28,7 +28,7 @@ ndata=1
 while read p; do
   echo ${ndata} $p
    if [ ${ndata} -eq 1 ]; then
-    NWPSdir=$p;
+    HOMEnwps=$p;
    fi
    if [ ${ndata} -eq 2 ]; then
      ISPRODUCTIO=$p;
@@ -102,11 +102,11 @@ while read p; do
   ndata=$(( $ndata + 1 ))
 done < ${RUNdir}/info_to_nwps_coremodel.txt
 
-#export NWPSdir DEBUGGING DEBUG_LEVEL BATHYdb SHAPEFILEdb ARCHdir
+#export HOMEnwps DEBUGGING DEBUG_LEVEL BATHYdb SHAPEFILEdb ARCHdir
 #export DATAdir LOGdir VARdir OUTPUTdir RUNdir TMPdir RUNLEN
 #export NEST RTOFS ESTOFS WEB PLOT MODELCORE LOGdir SITEID WNA 
 #export WINDS INPUTdir  ISPRODUCTIO DATAdir
-#source ${NWPSdir}/parm/platform/set_platform.sh
+#source ${HOMEnwps}/parm/platform/set_platform.sh
 logrunup=${LOGdir}/runup.log
 echo "NWPS posproc_CG${CGNUM} " | tee -a $logfile
 

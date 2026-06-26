@@ -30,7 +30,7 @@ ndata=1
 while read p; do
   echo ${ndata} $p
    if [ ${ndata} -eq 1 ]; then
-    NWPSdir=$p;
+    HOMEnwps=$p;
    fi
    if [ ${ndata} -eq 2 ]; then
      ISPRODUCTIO=$p;
@@ -104,11 +104,11 @@ while read p; do
   ndata=$(( $ndata + 1 ))
 done < ${RUNdir}/info_to_nwps_coremodel.txt
 
-#export NWPSdir DEBUGGING DEBUG_LEVEL BATHYdb SHAPEFILEdb ARCHdir
+#export HOMEnwps DEBUGGING DEBUG_LEVEL BATHYdb SHAPEFILEdb ARCHdir
 #export DATAdir LOGdir VARdir OUTPUTdir RUNdir TMPdir RUNLEN
 #export NEST RTOFS ESTOFS WEB PLOT MODELCORE LOGdir SITEID WNA 
 #export WINDS INPUTdir  ISPRODUCTIO DATAdir
-#source ${NWPSdir}/parm/platform/set_platform.sh
+#source ${HOMEnwps}/parm/platform/set_platform.sh
 logrunup=${LOGdir}/runup.log
 echo " " | tee -a $logrunup
 echo "NWPS Processing CG${CGNUM} " | tee -a $logrunup
@@ -385,7 +385,7 @@ then
   mkdir -p ${GRAPHICSdir}
 
   echo "Creating output plots"
-  ${NWPSdir}/ush/python/plot_nwps_run.sh ${SITEID}
+  ${HOMEnwps}/ush/python/plot_nwps_run.sh ${SITEID}
   export err=$?; err_chk 
 
   cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
@@ -512,7 +512,7 @@ fi
 #if [ "${WEB}" == "YES" ]
 #then
 #    echo "Sending output plots to Web" | tee -a $logfile
-#    ${NWPSdir}/src/grads/bin/send_to_web.sh ${SITEID} | tee -a $logfile
+#    ${HOMEnwps}/src/grads/bin/send_to_web.sh ${SITEID} | tee -a $logfile
 #    export WEB="YES"
 #else
 #    echo "Not sending images Web"  | tee -a $logfile
@@ -664,6 +664,6 @@ export err=$?; err_chk
 
 echo " " | tee -a $logfile
 
-cd ${NWPSdir}/
+cd ${HOMEnwps}/
 #RemoveLockFile
 exit 0

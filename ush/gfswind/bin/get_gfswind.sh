@@ -375,7 +375,12 @@ then
     exit 1
 fi
 
-epoc_time=$(${WGRIB2} -d 1 -unix_time ${SPOOLdir}/${file} | grep "1:0:unix" | awk -F= '{ print $3 }')
+epoc_time=""
+
+while [ "${epoc_time}" == "" ] || [ "${epoc_time}" == "-1" ]; do
+   epoc_time=$(${WGRIB2} -d 1 -unix_time ${SPOOLdir}/${file} | grep "1:0:unix" | awk -F= '{ print $3 }')
+done
+
 date_str=$(echo ${epoc_time} | awk '{ print strftime("%Y%m%d", $1) }')
 swan_uv_ofile_fname="gfswind_${epoc_time}_${date_str}_${CYCLE}_f000.dat"
 swan_uv_ofile="${OUTPUTdir}/${swan_uv_ofile_fname}"

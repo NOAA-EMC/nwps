@@ -95,7 +95,7 @@
 package WindInput;
 
 # Setup our NWPS env
-my $NWPSdir = $ENV{'HOMEnwps'};
+my $HOMEnwps = $ENV{'HOMEnwps'};
 my $USHnwps = $ENV{'USHnwps'};
 my $DATA = $ENV{'DATA'};
 my $ISPRODUCTION = $ENV{'ISPRODUCTION'};
@@ -157,7 +157,7 @@ use Archive qw(isRunFromArchive archiveFiles copyWindFromArchive);
 
 sub windInputProcessing{
     local $path=PATH;
-    my $NWPSdir = $ENV{'HOMEnwps'};
+    my $HOMEnwps = $ENV{'HOMEnwps'};
     my $USHnwps = $ENV{'USHnwps'};
     my $full_wind_path_fname="";
     Logs::bug("begin windInputProcessing",1);
@@ -184,7 +184,7 @@ sub windInputProcessing{
     }
     elsif ( $windflag eq "CUSTOM" ) {
 	print WINDLOG "Detected custom input flag, changing our source to user define input\n";
-	system("$NWPSdir/templates/${siteid}/gen_winds.sh >> $windlogfname");
+	system("$HOMEnwps/templates/${siteid}/gen_winds.sh >> $windlogfname");
 	if($? != 0) {
 	    Logs::err("ERROR - Problem with user defined wind pre-processing, see  $windlogfname\n",2);
 	}
@@ -279,7 +279,7 @@ sub windInputProcessing{
 ################################################################################
 
 sub takeNetCdfFile {
-    my $NWPSdir = $ENV{'HOMEnwps'};
+    my $HOMEnwps = $ENV{'HOMEnwps'};
     my $fileToUnzip;
     Logs::bug("begin takeNetCdfFile",1);
     chdir ("${INPUTdir}/wind") or Logs::err("Directory can't be changed\nCould not change directoiry to ${INPUTdir}/wind\nError:$!\n",2);

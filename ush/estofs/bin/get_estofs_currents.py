@@ -42,9 +42,9 @@ import cartopy.feature as cfeature
 from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 """
 
-NWPSdir = os.environ['NWPSdir']
+HOMEnwps = os.environ['HOMEnwps']
 """
-cartopy.config['pre_existing_data_dir'] = NWPSdir+'/lib/cartopy'
+cartopy.config['pre_existing_data_dir'] = HOMEnwps+'/lib/cartopy'
 print('Reading cartopy shapefiles from:')
 print(cartopy.config['pre_existing_data_dir'])
 """

@@ -27,7 +27,7 @@ set -xa
 
 # Variable used to setup the root directory for NWPS package
 # Default is ${HOME}/nwps
-if [ "${NWPSdir}" == "" ]; then export NWPSdir="${HOME}/nwps"; fi
+if [ "${HOMEnwps}" == "" ]; then export HOMEnwps="${HOME}/nwps"; fi
 
 # Variable to signal our NWPS env is set
 if [ "${NWPSenvset}" == "" ]; then export NWPSenvset="TRUE"; fi
@@ -72,18 +72,18 @@ if [ "${GEN_HDF5}" == "" ]; then export GEN_HDF5="TRUE"; fi
 if [ "${GEN_HDF5}" == "TRUE" ] && [ "${GEN_NETCDF}" == "FALSE" ]; then export GEN_NETCDF="TRUE"; fi
 
 # Set our default database DIRs here
-if [ "${BATHYdb}" == "" ]; then export BATHYdb=${NWPSdir}/bathy_db; fi
-if [ "${SHAPEFILEdb}" == "" ]; then export SHAPEFILEdb=${NWPSdir}/shapefile_db; fi
+if [ "${BATHYdb}" == "" ]; then export BATHYdb=${HOMEnwps}/bathy_db; fi
+if [ "${SHAPEFILEdb}" == "" ]; then export SHAPEFILEdb=${HOMEnwps}/shapefile_db; fi
 
 # Set our default processing DIRs here
-if [ "${ARCHdir}" == "" ]; then export ARCHdir=${NWPSdir}/archive; fi
-if [ "${DATAdir}" == "" ]; then export DATAdir=${NWPSdir}/data; fi
-if [ "${INPUTdir}" == "" ]; then export INPUTdir=${NWPSdir}/input; fi
-if [ "${LOGdir}" == "" ]; then export LOGdir=${NWPSdir}/logs; fi
-if [ "${VARdir}" == "" ]; then export VARdir=${NWPSdir}/var; fi
-if [ "${OUTPUTdir}" == "" ]; then export OUTPUTdir=${NWPSdir}/output; fi
-if [ "${RUNdir}" == "" ]; then export RUNdir=${NWPSdir}/run; fi
-if [ "${TMPdir}" == "" ]; then export TMPdir=${NWPSdir}/tmp; fi
+if [ "${ARCHdir}" == "" ]; then export ARCHdir=${HOMEnwps}/archive; fi
+if [ "${DATAdir}" == "" ]; then export DATAdir=${HOMEnwps}/data; fi
+if [ "${INPUTdir}" == "" ]; then export INPUTdir=${HOMEnwps}/input; fi
+if [ "${LOGdir}" == "" ]; then export LOGdir=${HOMEnwps}/logs; fi
+if [ "${VARdir}" == "" ]; then export VARdir=${HOMEnwps}/var; fi
+if [ "${OUTPUTdir}" == "" ]; then export OUTPUTdir=${HOMEnwps}/output; fi
+if [ "${RUNdir}" == "" ]; then export RUNdir=${HOMEnwps}/run; fi
+if [ "${TMPdir}" == "" ]; then export TMPdir=${HOMEnwps}/tmp; fi
 if [ "${LDMdir}" == "" ]; then export LDMdir=${LDMdir}/tmp; fi
 
 # Setup our default wind profile
@@ -100,103 +100,103 @@ if [ "${SENDLDADALERTS}" == "" ]; then export SENDLDADALERTS="FALSE"; fi
 echo "Setting up our NWPS environment"
 
 # Include files required to complete model setup 
-if [ ! -e ${NWPSdir}/etc/siteid.sh ]
+if [ ! -e ${HOMEnwps}/etc/siteid.sh ]
     then
-    echo "ERROR - Missing ${NWPSdir}/etc/siteid.sh"
+    echo "ERROR - Missing ${HOMEnwps}/etc/siteid.sh"
     echo "ERROR - You must setup a domain for this site"
     exit 1
 fi
-source ${NWPSdir}/etc/siteid.sh
+source ${HOMEnwps}/etc/siteid.sh
 
-if [ ! -e ${NWPSdir}/etc/set_os_env.sh ]
+if [ ! -e ${HOMEnwps}/etc/set_os_env.sh ]
 then
-    echo "ERROR - Missing ${NWPSdir}/etc/set_os_env.sh"
-    echo "ERROR - Check your NWPSdir setting"
+    echo "ERROR - Missing ${HOMEnwps}/etc/set_os_env.sh"
+    echo "ERROR - Check your HOMEnwps setting"
     exit 1
 fi
-source ${NWPSdir}/etc/set_os_env.sh
+source ${HOMEnwps}/etc/set_os_env.sh
 
 # Check our platform type for processing overrides
-source ${NWPSdir}/etc/set_platform.sh
+source ${HOMEnwps}/etc/set_platform.sh
 
 if [ "${NWPSplatform}" == "DEV" ]
 then
     echo "NWPS is installed on development platform, using DEV config"
-    if [ ! -e ${NWPSdir}/etc/dev_config.sh ]
+    if [ ! -e ${HOMEnwps}/etc/dev_config.sh ]
     then
-	echo "INFO - Missing DEV config file ${NWPSdir}/etc/dev_config.sh"
+	echo "INFO - Missing DEV config file ${HOMEnwps}/etc/dev_config.sh"
 	echo "INFO - Using NWPS default for DEV workstation"
     else
-	source ${NWPSdir}/etc/dev_config.sh
+	source ${HOMEnwps}/etc/dev_config.sh
     fi
 fi
 
 if [ "${NWPSplatform}" == "AWIPS2" ]
 then
     echo "NWPS is installed on AWIPS2 platform, loading AWIPS2 config"
-    if [ ! -e ${NWPSdir}/etc/awips2_config.sh ]
+    if [ ! -e ${HOMEnwps}/etc/awips2_config.sh ]
     then
-	echo "ERROR - Missing AWIPS2 config file ${NWPSdir}/etc/awips2_config.sh"
+	echo "ERROR - Missing AWIPS2 config file ${HOMEnwps}/etc/awips2_config.sh"
 	echo "ERROR - Check your NWPS platform type"
 	exit 1
     else
-	source ${NWPSdir}/etc/awips2_config.sh
+	source ${HOMEnwps}/etc/awips2_config.sh
     fi
 fi
 
 if [ "${NWPSplatform}" == "NCEP" ]
 then
     echo "NWPS is installed on NCEP platform, loading NCEP config"
-    if [ ! -e ${NWPSdir}/etc/ncep_config.sh ]
+    if [ ! -e ${HOMEnwps}/etc/ncep_config.sh ]
     then
-	echo "ERROR - Missing NCEP config file ${NWPSdir}/etc/ncep_config.sh"
+	echo "ERROR - Missing NCEP config file ${HOMEnwps}/etc/ncep_config.sh"
 	echo "ERROR - Check your NWPS platform type"
 	exit 1
     else
-	source ${NWPSdir}/etc/ncep_config.sh
+	source ${HOMEnwps}/etc/ncep_config.sh
     fi
 fi
 
 if [ "${NWPSplatform}" == "SRSWAN" ]
 then
     echo "NWPS is installed on SRSWAN platform, loading SRSWAN config"
-    if [ ! -e ${NWPSdir}/etc/srswan_config.sh ]
+    if [ ! -e ${HOMEnwps}/etc/srswan_config.sh ]
     then
-	echo "ERROR - Missing SRSWAN config file ${NWPSdir}/etc/srswan_config.sh"
+	echo "ERROR - Missing SRSWAN config file ${HOMEnwps}/etc/srswan_config.sh"
 	echo "ERROR - Check your NWPS platform type"
 	exit 1
     else
-	source ${NWPSdir}/etc/srswan_config.sh
+	source ${HOMEnwps}/etc/srswan_config.sh
     fi
 fi
 
 if [ "${NWPSplatform}" == "IFPSWAN" ]
 then
     echo "NWPS is installed on IFPSWAN platform, loading IFPSWAN config"
-    if [ ! -e ${NWPSdir}/etc/ifpswan_config.sh ]
+    if [ ! -e ${HOMEnwps}/etc/ifpswan_config.sh ]
     then
-	echo "ERROR - Missing IFPSWAN config file ${NWPSdir}/etc/ifpswan_config.sh"
+	echo "ERROR - Missing IFPSWAN config file ${HOMEnwps}/etc/ifpswan_config.sh"
 	echo "ERROR - Check your NWPS platform type"
 	exit 1
     else
-	source ${NWPSdir}/etc/ifpswan_config.sh
+	source ${HOMEnwps}/etc/ifpswan_config.sh
     fi
 fi
 
 # Look for region specific overrides
-if [ -e ${NWPSdir}/etc/${region}_config.sh ]
+if [ -e ${HOMEnwps}/etc/${region}_config.sh ]
 then
-    echo "INFO - Found ${NWPSdir}/etc/${region}_config.sh"
+    echo "INFO - Found ${HOMEnwps}/etc/${region}_config.sh"
     echo "INFO - Applying region specific settings for ${SITEID}"
-    source ${NWPSdir}/etc/${region}_config.sh 
+    source ${HOMEnwps}/etc/${region}_config.sh 
 fi
 
 # Look for site specific overrides
-if [ -e ${NWPSdir}/etc/${siteid}_config.sh ]
+if [ -e ${HOMEnwps}/etc/${siteid}_config.sh ]
 then
-    echo "INFO - Found ${NWPSdir}/etc/${siteid}_config.sh"
+    echo "INFO - Found ${HOMEnwps}/etc/${siteid}_config.sh"
     echo "INFO - Applying site specific settings for ${SITEID}"
-    source ${NWPSdir}/etc/${siteid}_config.sh 
+    source ${HOMEnwps}/etc/${siteid}_config.sh 
 fi
 
 # Set the default RTOFS source
@@ -290,7 +290,7 @@ if [ "${GFSTIMESTEP}" == "" ]; then export GFSTIMESTEP=${DEFAULT_GFSTIMESTEP}; f
 # Echo our NWPS setup below.
 echo "NWPS site ID is ${SITEID}"
 echo "NWPS site type is ${SITETYPE}"
-echo "NWPS home DIR is ${NWPSdir}"
+echo "NWPS home DIR is ${HOMEnwps}"
 echo "NWPS run started by user ${USERNAME}"
 
 if [ "${DEBUGGING}" == "TRUE" ]

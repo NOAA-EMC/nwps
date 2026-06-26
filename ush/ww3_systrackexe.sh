@@ -56,7 +56,7 @@ echo " In ww3_systrackexe.sh, calling mpiexec"
 # Step 1: Search for optimum number of clusters in parallel using silhouette coefficient
 cat /dev/null > ${RUNdir}/ww3_systrk_elements.sh
 for i in {2..5}; do
-   echo "${PYTHON} ${NWPSdir}/ush/python/ww3_systrk_cluster_silhouette.py ${SITEID,,} ${i}" >> ${RUNdir}/ww3_systrk_elements.sh
+   echo "${PYTHON} ${HOMEnwps}/ush/python/ww3_systrk_cluster_silhouette.py ${SITEID,,} ${i}" >> ${RUNdir}/ww3_systrk_elements.sh
 done
 mpiexec -np 4 --cpu-bind verbose,core cfp ${RUNdir}/ww3_systrk_elements.sh
 export err=$?
@@ -76,7 +76,7 @@ fi
 # Step 2: Calculate wave systems using optimum number of clusters (in parallel)
 cat /dev/null > ${RUNdir}/ww3_systrk_jobs.sh
 for i in {0..5}; do
-   echo "${PYTHON} ${NWPSdir}/ush/python/ww3_systrk_cluster_parallel.py ${SITEID,,} ${i}" >> ${RUNdir}/ww3_systrk_jobs.sh
+   echo "${PYTHON} ${HOMEnwps}/ush/python/ww3_systrk_cluster_parallel.py ${SITEID,,} ${i}" >> ${RUNdir}/ww3_systrk_jobs.sh
 done
 mpiexec -np 6 --cpu-bind verbose,core cfp ${RUNdir}/ww3_systrk_jobs.sh
 export err=$?

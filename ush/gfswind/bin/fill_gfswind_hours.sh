@@ -5,7 +5,7 @@ set -xa
 # Setup our NWPS environment                                                    
 if [ "${HOMEnwps}" == "" ]
     then 
-    echo "ERROR - Your NWPSdir variable is not set"
+    echo "ERROR - Your HOMEnwps variable is not set"
     export err=1; err_chk
 fi
 if [ ! -e ${USHnwps}/nwps_config.sh ]

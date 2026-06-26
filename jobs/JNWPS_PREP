@@ -1,6 +1,6 @@
 #!/bin/sh
 date
-export PS4='$SECONDS ${0/\/nw.*\/nwps.*\/} + '
+export PS4='+ $SECONDS ${0/\/nw.*\/nwps.*\/} + '
 set -xa
 
 # #############################################
@@ -87,12 +87,12 @@ export COMINm2=$(compath.py ${NET}/${nwps_ver}/${REGION}.${PDYm2}/${WFO})
 export COMINm3=$(compath.py ${NET}/${nwps_ver}/${REGION}.${PDYm3}/${WFO})
 export COMOUT=$(compath.py -o ${NET}/${nwps_ver}/${REGION}.${PDY}/${WFO})
 
-export GESIN=$(compath.py ${NET}/${nwps_ver}/${NET}.${PDY}/nwges)
-export GESINm1=$(compath.py ${NET}/${nwps_ver}/${NET}.${PDYm1}/nwges)
-export GESINm2=$(compath.py ${NET}/${nwps_ver}/${NET}.${PDYm2}/nwges)
-export GESOUT=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDY}/nwges
-export GESOUTm1=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDYm1}/nwges
-export GESOUTm2=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDYm2}/nwges
+export GESIN=$(compath.py ${NET}/${nwps_ver}/${NET}.${PDY})
+export GESINm1=$(compath.py ${NET}/${nwps_ver}/${NET}.${PDYm1})
+export GESINm2=$(compath.py ${NET}/${nwps_ver}/${NET}.${PDYm2})
+export GESOUT=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDY}
+export GESOUTm1=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDYm1}
+export GESOUTm2=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDYm2}
 
 export COMINgfs=${COMINgfs:-$(compath.py gfs/${gfs_ver}/gfs.${PDY})}
 export COMINgfsm1=${COMINgfsm1:-$(compath.py gfs/${gfs_ver}/gfs.${PDYm1})}

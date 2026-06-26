@@ -1,6 +1,6 @@
 #!/bin/sh
 date
-export PS4='$SECONDS ${0/\/nw.*\/nwps.*\/} + '
+export PS4='+ $SECONDS ${0/\/nw.*\/nwps.*\/} + '
 set -xa
 
 # #### 04/01/15 ###############################
@@ -79,7 +79,7 @@ export COMINm1=$(compath.py ${NET}/${nwps_ver}/${REGION}.${PDYm1}/${WFO})
 export COMINm2=$(compath.py ${NET}/${nwps_ver}/${REGION}.${PDYm2}/${WFO})
 export COMINm3=$(compath.py ${NET}/${nwps_ver}/${REGION}.${PDYm3}/${WFO})
 export COMOUT=$(compath.py -o ${NET}/${nwps_ver})/${REGION}.${PDY}/${WFO}
-export GESOUT=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDY}/nwges
+export GESOUT=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDY}
 export COMOUTwmo=$(compath.py -o ${NET}/${nwps_ver})/${REGION}.${PDY}/wmo
 #--------------------------------------------------------------------------
 # make sure NWPS COM directory exists

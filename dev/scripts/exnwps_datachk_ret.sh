@@ -89,7 +89,7 @@ function process_nwps_dcom {
                 echo -ne "$dfile\t\tFINISHED\n"
                 #update_web
             #elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && (ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:aborted); then
-            elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && [ -z $(bjobs -u $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log | awk -F"<" '{print $2}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
+            elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && [ -z $(bjobs -u $USER | grep $(tail -1 ${HOMEnwps}/dev/ecf/jobids_${wfo}_ret.log | awk -F"<" '{print $2}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
                 #--- Run has been aborted. Remove wind file from execution list. ---
                 echo -ne "$dfile\t\t${wfo}\t\t\ta ${ecf_wfo^^} aborted\n"
                 export status="ABORTED"
@@ -101,7 +101,7 @@ function process_nwps_dcom {
                 ((nignored++))
                 #update_web
             #elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && ! (ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:aborted); then
-            elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && [ ! -z $(bjobs -u $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log | awk -F"<" '{print $2}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
+            elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && [ ! -z $(bjobs -u $USER | grep $(tail -1 ${HOMEnwps}/dev/ecf/jobids_${wfo}_ret.log | awk -F"<" '{print $2}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
                 #--- Run is still being executed. Remove wind file from execution list. ---
                 DCOM_FILES=( "${DCOM_FILES[@]/${dfile}}" )
                 export status="RUNNING"
@@ -124,7 +124,7 @@ function process_nwps_dcom {
                 #update_web
                 err=254; err_chk
             #elif ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:active; then
-            elif [ ! -z $(bjobs -u $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log | awk -F"<" '{print $2}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
+            elif [ ! -z $(bjobs -u $USER | grep $(tail -1 ${HOMEnwps}/dev/ecf/jobids_${wfo}_ret.log | awk -F"<" '{print $2}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
                 #--- WFO for this run cannot be traced. Remove wind file from execution list. ---
                 echo -ne "$dfile\t\t${wfo}\t\t\ta ${ecf_wfo^^} running\n"
                 export status="UNKN_RUN"
@@ -244,8 +244,8 @@ do                             #read line
    yy=`echo ${PDY} | cut -c1-4`
    yymm=`echo ${PDY} | cut -c1-6`
 
-   export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}/nwges
-   export GESOUTm1=${COMROOT}/${NET}/$ver/${NET}.${PDYm1}/nwges
+   export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}
+   export GESOUTm1=${COMROOT}/${NET}/$ver/${NET}.${PDYm1}
 
    #mkdir $HPSSARCHdir
    #cd $HPSSARCHdir
@@ -313,7 +313,7 @@ do                             #read line
             ecf_wfo=$(grep ${wfo} ${PARMnwps}/wfo.tbl)
             #region=$(echo ${ecf_wfo} |awk -F"/" '{print $1}')
             #if ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:active; then
-	    if [ ! -z $( qstat -u $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log) | awk '{print $1}' ) ]; then
+	    if [ ! -z $( qstat -u $USER | grep $(tail -1 ${HOMEnwps}/dev/ecf/jobids_${wfo}_ret.log) | awk '{print $1}' ) ]; then
                 echo "Not starting ${ecf_wfo} with ${runit}, ${ecf_wfo^^} is active."
 		#DCOM_FILES=( "${DCOM_FILES[@]/${runit}}" )
             else
@@ -350,26 +350,26 @@ do                             #read line
                 echo "$CYCLE" > ${DATA}/CYC.${wfo^^}
 
                 echo "Populating jobcards for "${wfo}"..."
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_prep_ret.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_prep_ret.ecf.${wfo}
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cg1_ret.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_forecast_cg1_ret.ecf.${wfo}
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_post_cg1_ret.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_post_cg1_ret.ecf.${wfo}
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_prdgen_cg1_ret.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_prdgen_cg1_ret.ecf.${wfo}
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_wavetrack_cg1_ret.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_wavetrack_cg1_ret.ecf.${wfo}
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_prdgen_cg0_ret.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_prdgen_cg0_ret.ecf.${wfo}
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cgn_ret.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_forecast_cgn_ret.ecf.${wfo}
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_post_cgn_ret.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_post_cgn_ret.ecf.${wfo}
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn_ret.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn_ret.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_prep_ret.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_prep_ret.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_forecast_cg1_ret.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_forecast_cg1_ret.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_post_cg1_ret.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_post_cg1_ret.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_prdgen_cg1_ret.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_prdgen_cg1_ret.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_wavetrack_cg1_ret.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_wavetrack_cg1_ret.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_prdgen_cg0_ret.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_prdgen_cg0_ret.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_forecast_cgn_ret.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_forecast_cgn_ret.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_post_cgn_ret.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_post_cgn_ret.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_prdgen_cgn_ret.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_prdgen_cgn_ret.ecf.${wfo}
 
-                echo $runit                                                  > ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                qsub ${NWPSdir}/dev/ecf/jnwps_prep_ret.ecf.${wfo}          >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                qsub ${NWPSdir}/dev/ecf/jnwps_forecast_cg1_ret.ecf.${wfo}  >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                qsub ${NWPSdir}/dev/ecf/jnwps_post_cg1_ret.ecf.${wfo}      >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                qsub ${NWPSdir}/dev/ecf/jnwps_prdgen_cg1_ret.ecf.${wfo}    >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                qsub ${NWPSdir}/dev/ecf/jnwps_wavetrack_cg1_ret.ecf.${wfo} >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                qsub ${NWPSdir}/dev/ecf/jnwps_prdgen_cg0_ret.ecf.${wfo}    >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                qsub ${NWPSdir}/dev/ecf/jnwps_forecast_cgn_ret.ecf.${wfo}  >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                qsub ${NWPSdir}/dev/ecf/jnwps_post_cgn_ret.ecf.${wfo}      >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log; 
-                qsub ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn_ret.ecf.${wfo}    >> ${NWPSdir}/dev/ecf/jobids_${wfo}_ret.log
+                echo $runit                                                  > ${HOMEnwps}/dev/ecf/jobids_${wfo}_ret.log; 
+                qsub ${HOMEnwps}/dev/ecf/jnwps_prep_ret.ecf.${wfo}          >> ${HOMEnwps}/dev/ecf/jobids_${wfo}_ret.log; 
+                qsub ${HOMEnwps}/dev/ecf/jnwps_forecast_cg1_ret.ecf.${wfo}  >> ${HOMEnwps}/dev/ecf/jobids_${wfo}_ret.log; 
+                qsub ${HOMEnwps}/dev/ecf/jnwps_post_cg1_ret.ecf.${wfo}      >> ${HOMEnwps}/dev/ecf/jobids_${wfo}_ret.log; 
+                qsub ${HOMEnwps}/dev/ecf/jnwps_prdgen_cg1_ret.ecf.${wfo}    >> ${HOMEnwps}/dev/ecf/jobids_${wfo}_ret.log; 
+                qsub ${HOMEnwps}/dev/ecf/jnwps_wavetrack_cg1_ret.ecf.${wfo} >> ${HOMEnwps}/dev/ecf/jobids_${wfo}_ret.log; 
+                qsub ${HOMEnwps}/dev/ecf/jnwps_prdgen_cg0_ret.ecf.${wfo}    >> ${HOMEnwps}/dev/ecf/jobids_${wfo}_ret.log; 
+                qsub ${HOMEnwps}/dev/ecf/jnwps_forecast_cgn_ret.ecf.${wfo}  >> ${HOMEnwps}/dev/ecf/jobids_${wfo}_ret.log; 
+                qsub ${HOMEnwps}/dev/ecf/jnwps_post_cgn_ret.ecf.${wfo}      >> ${HOMEnwps}/dev/ecf/jobids_${wfo}_ret.log; 
+                qsub ${HOMEnwps}/dev/ecf/jnwps_prdgen_cgn_ret.ecf.${wfo}    >> ${HOMEnwps}/dev/ecf/jobids_${wfo}_ret.log
 
                 echo 'Submitted run for '${wfo}': '${runit}
 
@@ -419,7 +419,7 @@ echo "\"STATUS WHEN DATACHK ENDS\":"
     done     #CYCLE
    done     #wfo
   done     #region
-done < ${NWPSdir}/dev/scripts/retro_list.dat
+done < ${HOMEnwps}/dev/scripts/retro_list.dat
 
 #sort -t">" -k10 -o ${web_status_file} ${web_status_file}
 #sed -i '1s/^/[\n/g' ${web_status_file}

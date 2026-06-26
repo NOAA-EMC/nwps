@@ -107,7 +107,7 @@ export SITETYPE=${SITETYPE:-EMC}
 export COMIN=${COMROOT}/${NET}/${ver}/${OFS}.${PDY}
 export COMOUT=${COMROOT}/${NET}/${ver}/${OFS}.${PDY}
 export COMOUTm1=${COMROOT}/${NET}/${ver}/${OFS}.${PDYm1}
-export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}/nwges
+export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}
 export COMINstofs=/lfs/h1/ops/prod/com/stofs/${stofs_ver}/stofs_2d_glo.${PDY}
 #####################################################################
 export COMINrtofs=/lfs/h1/ops/prod/com/rtofs/${rtofs_ver}/rtofs.${PDY}

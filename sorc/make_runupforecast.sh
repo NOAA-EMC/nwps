@@ -12,9 +12,9 @@ set -xa
 #
 # Contributors:
 
-if [ "${NWPSdir}" == "" ]
+if [ "${HOMEnwps}" == "" ]
     then 
-    echo "ERROR - Your NWPSdir variable is not set"
+    echo "ERROR - Your HOMEnwps variable is not set"
     exit 1
 fi
 
@@ -24,16 +24,16 @@ fi
 #module list
 
 # Original Stockdon et al. formulation for SR and ER
-cd ${NWPSdir}/sorc/runupforecast.fd/
+cd ${HOMEnwps}/sorc/runupforecast.fd/
 make runupforecast | tee ./runup_build.log
 rm *.o
-mv -v runupforecast.exe ${NWPSdir}/exec/runupforecast.exe
+mv -v runupforecast.exe ${HOMEnwps}/exec/runupforecast.exe
 
 # Multi-formula version for WR
-cd ${NWPSdir}/sorc/runupforecast.fd/wr/
+cd ${HOMEnwps}/sorc/runupforecast.fd/wr/
 make runupforecast_wr | tee ./runup_build.log
 rm *.o
-mv -v runupforecast_wr.exe ${NWPSdir}/exec/runupforecast_wr.exe
+mv -v runupforecast_wr.exe ${HOMEnwps}/exec/runupforecast_wr.exe
 
 echo "Build complete"
 exit 0

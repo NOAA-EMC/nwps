@@ -89,7 +89,7 @@ function process_nwps_dcom {
                 echo -ne "$dfile\t\tFINISHED\n"
                 #update_web
             #elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && (ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:aborted); then
-            elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && [ -z $( qselect -u $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}.log | awk -F"<" '{print $1}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
+            elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && [ -z $( qselect -u $USER | grep $(tail -1 ${HOMEnwps}/dev/ecf/jobids_${wfo}.log | awk -F"<" '{print $1}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
                 #--- Run has been aborted. Remove wind file from execution list. ---
                 echo -ne "$dfile\t\t${wfo}\t\t\ta ${ecf_wfo^^} aborted\n"
                 export status="ABORTED"
@@ -101,7 +101,7 @@ function process_nwps_dcom {
                 ((nignored++))
                 #update_web
             #elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && ! (ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:aborted); then
-            elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && [ ! -z $(qselect -u $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}.log | awk -F"<" '{print $1}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
+            elif (grep -q "STARTED .*$dfile" $dcom_histm1 || grep -q "STARTED .*$dfile" $dcom_hist) && ! grep -q "FINISHED.*${dfile}" $dcom_hist && [ ! -z $(qselect -u $USER | grep $(tail -1 ${HOMEnwps}/dev/ecf/jobids_${wfo}.log | awk -F"<" '{print $1}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
                 #--- Run is still being executed. Remove wind file from execution list. ---
                 DCOM_FILES=( "${DCOM_FILES[@]/${dfile}}" )
                 export status="RUNNING"
@@ -124,7 +124,7 @@ function process_nwps_dcom {
                 #update_web
                 err=254; err_chk
             #elif ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:active; then
-            elif [ ! -z $(qselect -u $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}.log | awk -F"<" '{print $1}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
+            elif [ ! -z $(qselect -u $USER | grep $(tail -1 ${HOMEnwps}/dev/ecf/jobids_${wfo}.log | awk -F"<" '{print $1}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
                 #--- WFO for this run cannot be traced. Remove wind file from execution list. ---
                 echo -ne "$dfile\t\t${wfo}\t\t\ta ${ecf_wfo^^} running\n"
                 export status="UNKN_RUN"
@@ -216,7 +216,7 @@ else
             ecf_wfo=$(grep ${wfo} ${PARMnwps}/wfo.tbl)
             region=$(echo ${ecf_wfo} |awk -F"/" '{print $1}')
             #if ecflow_client --group="get ${ECF_NAME%/*}/${ecf_wfo}; show state" 2> /dev/null|grep --quiet state:active; then
-            if [ ! -z $(qselect -u $USER | grep $(tail -1 ${NWPSdir}/dev/ecf/jobids_${wfo}.log | awk -F"<" '{print $1}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
+            if [ ! -z $(qselect -u $USER | grep $(tail -1 ${HOMEnwps}/dev/ecf/jobids_${wfo}.log | awk -F"<" '{print $1}' | awk -F">" '{print $1}') | awk '{print $1}') ]; then
                 echo "Not starting ${ecf_wfo} with ${runint}, ${ecf_wfo^^} is active."
                 DCOM_FILES=( "${DCOM_FILES[@]/${runit}}" )
             else
@@ -243,31 +243,31 @@ else
                 rm ${DATA}/logs/jlogfiles/jlogfile.pnwps_${wfo}_pd_cgn
 
                 echo "Populating jobcards for "${wfo}"..."
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_prep.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_prep.ecf.${wfo}
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cg1.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_forecast_cg1.ecf.${wfo}
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_post_cg1.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_post_cg1.ecf.${wfo}
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_prdgen_cg1.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_prdgen_cg1.ecf.${wfo}
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_wavetrack_cg1.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_wavetrack_cg1.ecf.${wfo}
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_prdgen_cg0.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_prdgen_cg0.ecf.${wfo}
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cgn.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_forecast_cgn.ecf.${wfo}
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_post_cgn.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_post_cgn.ecf.${wfo}
-                sed "s/%WFO%/$wfo/g" ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn.ecf.tmpl > ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_prep.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_prep.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_forecast_cg1.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_forecast_cg1.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_post_cg1.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_post_cg1.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_prdgen_cg1.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_prdgen_cg1.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_wavetrack_cg1.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_wavetrack_cg1.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_prdgen_cg0.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_prdgen_cg0.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_forecast_cgn.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_forecast_cgn.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_post_cgn.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_post_cgn.ecf.${wfo}
+                sed "s/%WFO%/$wfo/g" ${HOMEnwps}/dev/ecf/jnwps_prdgen_cgn.ecf.tmpl > ${HOMEnwps}/dev/ecf/jnwps_prdgen_cgn.ecf.${wfo}
 
                 ## Adjust node use for CG1
                 #if [ "$wfo" == "mob" ]; then
-                #   sed -i "s/select=1:ncpus=120/select=2:ncpus=72/g" ${NWPSdir}/dev/ecf/jnwps_forecast_cg1.ecf.${wfo}
+                #   sed -i "s/select=1:ncpus=120/select=2:ncpus=72/g" ${HOMEnwps}/dev/ecf/jnwps_forecast_cg1.ecf.${wfo}
                 #fi
 
-                echo $runit                                               > ${NWPSdir}/dev/ecf/jobids_${wfo}.log; 
-                qsub ${NWPSdir}/dev/ecf/jnwps_prep.ecf.${wfo}          >> ${NWPSdir}/dev/ecf/jobids_${wfo}.log; 
-                qsub ${NWPSdir}/dev/ecf/jnwps_forecast_cg1.ecf.${wfo}  >> ${NWPSdir}/dev/ecf/jobids_${wfo}.log; 
-                qsub ${NWPSdir}/dev/ecf/jnwps_post_cg1.ecf.${wfo}      >> ${NWPSdir}/dev/ecf/jobids_${wfo}.log; 
-                qsub ${NWPSdir}/dev/ecf/jnwps_prdgen_cg1.ecf.${wfo}    >> ${NWPSdir}/dev/ecf/jobids_${wfo}.log; 
-                qsub ${NWPSdir}/dev/ecf/jnwps_wavetrack_cg1.ecf.${wfo} >> ${NWPSdir}/dev/ecf/jobids_${wfo}.log; 
-                qsub ${NWPSdir}/dev/ecf/jnwps_prdgen_cg0.ecf.${wfo}    >> ${NWPSdir}/dev/ecf/jobids_${wfo}.log; 
-		qsub ${NWPSdir}/dev/ecf/jnwps_forecast_cgn.ecf.${wfo}  >> ${NWPSdir}/dev/ecf/jobids_${wfo}.log; 
-                qsub ${NWPSdir}/dev/ecf/jnwps_post_cgn.ecf.${wfo}      >> ${NWPSdir}/dev/ecf/jobids_${wfo}.log; 
-                qsub ${NWPSdir}/dev/ecf/jnwps_prdgen_cgn.ecf.${wfo}    >> ${NWPSdir}/dev/ecf/jobids_${wfo}.log
+                echo $runit                                               > ${HOMEnwps}/dev/ecf/jobids_${wfo}.log; 
+                qsub ${HOMEnwps}/dev/ecf/jnwps_prep.ecf.${wfo}          >> ${HOMEnwps}/dev/ecf/jobids_${wfo}.log; 
+                qsub ${HOMEnwps}/dev/ecf/jnwps_forecast_cg1.ecf.${wfo}  >> ${HOMEnwps}/dev/ecf/jobids_${wfo}.log; 
+                qsub ${HOMEnwps}/dev/ecf/jnwps_post_cg1.ecf.${wfo}      >> ${HOMEnwps}/dev/ecf/jobids_${wfo}.log; 
+                qsub ${HOMEnwps}/dev/ecf/jnwps_prdgen_cg1.ecf.${wfo}    >> ${HOMEnwps}/dev/ecf/jobids_${wfo}.log; 
+                qsub ${HOMEnwps}/dev/ecf/jnwps_wavetrack_cg1.ecf.${wfo} >> ${HOMEnwps}/dev/ecf/jobids_${wfo}.log; 
+                qsub ${HOMEnwps}/dev/ecf/jnwps_prdgen_cg0.ecf.${wfo}    >> ${HOMEnwps}/dev/ecf/jobids_${wfo}.log; 
+		qsub ${HOMEnwps}/dev/ecf/jnwps_forecast_cgn.ecf.${wfo}  >> ${HOMEnwps}/dev/ecf/jobids_${wfo}.log; 
+                qsub ${HOMEnwps}/dev/ecf/jnwps_post_cgn.ecf.${wfo}      >> ${HOMEnwps}/dev/ecf/jobids_${wfo}.log; 
+                qsub ${HOMEnwps}/dev/ecf/jnwps_prdgen_cgn.ecf.${wfo}    >> ${HOMEnwps}/dev/ecf/jobids_${wfo}.log
 
                 echo 'Submitted run for '${wfo}': '${runit}
 

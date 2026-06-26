@@ -36,7 +36,7 @@ export RUN=$(echo ${job}|awk -F"_" '{print $2}')
 # #############################################
 #export DATA=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/data/                # Add the ${siteid} ???
 #export COMROOT=${DATA}/com
-#export GESROOT=${DATA}/nwges
+#export GESROOT=${DATA}
 export ver=${nwps_ver}
 export DATA=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/$NET/$ver/
 export COMROOT=/lfs/h2/emc/ptmp/${DEVWCOSS_USER}/com
@@ -110,8 +110,8 @@ sh $utilscript/setpdy.sh
 ##############################################
 # Define COM directory
 ##############################################
-export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}/nwges
-export GESOUTm1=${COMROOT}/${NET}/$ver/${NET}.${PDYm1}/nwges
+export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}
+export GESOUTm1=${COMROOT}/${NET}/$ver/${NET}.${PDYm1}
 export dcom_hist="$GESOUT/dcom_hist.txt"
 export dcom_histm1="$GESOUTm1/dcom_hist.txt"
 export web_status_file="$GESOUT/status_file.txt"

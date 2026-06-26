@@ -23,7 +23,7 @@
 # ----------------------------------------------------------- 
 
 date
-export PS4='$SECONDS ${0/\/nw.*\/nwps.*\/} + '
+export PS4='+ $SECONDS ${0/\/nw.*\/nwps.*\/} + '
 set -xa
 
 # #############################################
@@ -76,7 +76,7 @@ export GEN_NETCDF=${GEN_NETCDF:-FALSE}
 export GEN_HDF5=${GEN_HDF5:-FALSE}
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 export GRIB2dir=${GRIB2dir:-${DATA}/output/grib2}
-export PARMwmo="${PARMnwps}/wmo_headers"
+export PARMwmo="${PARMnwps}/wmo"
 # Set NWPS run conditions
 export DEBUGGING=${DEBUGGING:-TRUE}
 export DEBUG_LEVEL=${DEBUG_LEVEL:-1}
@@ -101,7 +101,7 @@ export COMINm1=$(compath.py ${NET}/${nwps_ver}/${REGION}.${PDYm1}/${WFO})
 export COMINm2=$(compath.py ${NET}/${nwps_ver}/${REGION}.${PDYm2}/${WFO})
 export COMINm3=$(compath.py ${NET}/${nwps_ver}/${REGION}.${PDYm3}/${WFO})
 export COMOUT=$(compath.py -o ${NET}/${nwps_ver})/${REGION}.${PDY}/${WFO}
-export GESOUT=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDY}/nwges
+export GESOUT=$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDY}
 export COMOUTwmo=$(compath.py -o ${NET}/${nwps_ver})/${REGION}.${PDY}/wmo
 #--------------------------------------------------------------------------
 export dcom_hist="$GESOUT/dcom_hist.txt"
