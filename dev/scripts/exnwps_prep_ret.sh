@@ -16,7 +16,7 @@ export WINDS=${WINDS:-FORECASTER}
 export DOMAINSET=${DOMAINSET:-${FIXnwps}/domains/${SITEID}}
 
 # Copy all required data from run archive
-mkdir ${INPUTdir}/estofs/ ${INPUTdir}/psurge/ ${INPUTdir}/rtofs/
+mkdir ${INPUTdir}/stofs/ ${INPUTdir}/psurge/ ${INPUTdir}/rtofs/
 cd ${RUNdir}
 for CG in CG1 CG0 CG2 CG3 CG4 CG5
 do
@@ -28,10 +28,10 @@ do
       if [ $CG == CG1 ]; then
          #tar -xf ${RUNdir}/*.spec.swan.tar
          mv NWPSWINDGRID_${siteid}* ${INPUTdir}/
-         if [ -e wave_estofs_waterlevel_*.tar ]; then
-            mv wave_estofs_waterlevel_*.tar ${INPUTdir}/estofs/
-            cd ${INPUTdir}/estofs/
-            tar -xf ${INPUTdir}/estofs/*.tar
+         if [ -e wave_stofs_waterlevel_*.tar ]; then
+            mv wave_stofs_waterlevel_*.tar ${INPUTdir}/stofs/
+            cd ${INPUTdir}/stofs/
+            tar -xf ${INPUTdir}/stofs/*.tar
             cd ${RUNdir}
          fi
          if [ -e wave_psurge_waterlevel_*.tar ]; then
@@ -58,7 +58,7 @@ do
    mv input${CG} input${CG}.org
 done
 
-${USHnwps}/run_nwps_wcoss.sh --sitename ${SITEID} --runlen ${RUNLEN}  --wna --nest --waterlevels ESTOFS --rtofs --winds ${WINDS} --domainsetup ${DOMAINSET} --deltac ${DELTAC} --plot --wavemodel ${WAVEMODEL}
+${USHnwps}/run_nwps_wcoss.sh --sitename ${SITEID} --runlen ${RUNLEN}  --wna --nest --waterlevels STOFS --rtofs --winds ${WINDS} --domainsetup ${DOMAINSET} --deltac ${DELTAC} --plot --wavemodel ${WAVEMODEL}
 export err=$?; err_chk
 
 echo "Pre-process completed"

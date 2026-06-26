@@ -82,7 +82,7 @@ my $RUNLEN = $ENV{'RUNLEN'};
 my $WNA = $ENV{'WNA'};
 my $NESTS = $ENV{'NESTS'};
 my $RTOFS = $ENV{'RTOFS'};
-my $ESTOFS = $ENV{'ESTOFS'};
+my $STOFS = $ENV{'STOFS'};
 my $WINDS = $ENV{'WINDS'};
 my $WEB = $ENV{'WEB'};
 my $PLOT = $ENV{'PLOT'};
@@ -101,7 +101,7 @@ my $infoFile02 = "${RUNdir}/info_to_nwps_coremodel.txt";
 open IN, "<$infoFile02"  or die "Cannot open: $!";
   our ($HOMEnwps, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir);
   our ($DATAdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN);
-  our ($NESTS, $RTOFS, $ESTOFS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID);
+  our ($NESTS, $RTOFS, $STOFS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID);
   our ($WNA, $WINDS, $INPUTdir, $ISPRODUCTIO, $DATAdir, $siteid, $GEN_NETCDF);
   our ($USERDELTAC);
 
@@ -164,7 +164,7 @@ while (<IN>) {
      $RTOFS=$_;
    }
    if ($ndata ==19) {
-     $ESTOFS=$_;
+     $STOFS=$_;
    }
    if ($ndata ==20) {
      $WINDS=$_;
@@ -193,7 +193,7 @@ close IN;
 
 #print "$HOMEnwps, $ISPRODUCTIO, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir\n";
 #print "$DATAdir, $INPUTdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN, $WNA\n";
-#print "$NEST, $RTOFS, $ESTOFS, $WINDS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID, $DATAdir\n";
+#print "$NEST, $RTOFS, $STOFS, $WINDS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID, $DATAdir\n";
 #print "$GEN_NETCDF\n";
 #
 Logs::initialize(); 
@@ -208,7 +208,7 @@ if ($DEBUGGING eq "TRUE") {
     Logs::run("WNA: $WNA");
     Logs::run("NESTS: $NESTS");
     Logs::run("RTOFS: $RTOFS");
-    Logs::run("ESTOFS: $ESTOFS");
+    Logs::run("STOFS: $STOFS");
     Logs::run("WINDS: $WINDS");
     Logs::run("WEB: $WEB");
 }

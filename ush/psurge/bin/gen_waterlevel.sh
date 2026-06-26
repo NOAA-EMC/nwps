@@ -184,7 +184,7 @@ ${BINdir}/purge_psurge.sh ${INPUTdir} ${last_hour}
 # This allows the same water level file to be used in case of a model rerun.
 # NOTE: The availability and age of wave_combnd_waterlevel* is checked in ush/get_ncep_initfiles.sh
 # NOTE: so that $psurge_waterlevel_start_time will always be defined, and <= $model_start_time.
-# NOTE: Otherwise, ush/get_ncep_initfiles.sh will fail over to using ESTOFS water levels.
+# NOTE: Otherwise, ush/get_ncep_initfiles.sh will fail over to using STOFS water levels.
 psurge_waterlevel_start_time=`ls ${INPUTdir}/wave_combnd_waterlevel* | xargs -n1 basename | cut -b24-33 | sort | uniq | awk -v thresh=$model_start_time '$1 <= thresh' | tail -1`
 psurge_date_str=`echo ${psurge_waterlevel_start_time} | awk '{ print strftime("%Y%m%d", $1) }'`
 psurge_model_cycle=`echo ${psurge_waterlevel_start_time} | awk '{ print strftime("%H", $1) }'`
@@ -297,11 +297,11 @@ if [ $lencheck -gt $maxhours ]
     then 
     lencheck=$maxhours
     let lencheckhours=$lencheck/3600
-    echo "WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available PSURGE water level data. ESTOFS will be applied after $lencheckhours h." | tee -a ${LOGfile}
-    echo "WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available PSURGE water level data. ESTOFS will be applied after $lencheckhours h."| tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+    echo "WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available PSURGE water level data. STOFS will be applied after $lencheckhours h." | tee -a ${LOGfile}
+    echo "WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available PSURGE water level data. STOFS will be applied after $lencheckhours h."| tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
     #AW: This warning message to the jlogfile/SDM is perhaps too verbose, since 
     #    it will occur regularly and doesn't require any action.
-    #msg="WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available PSURGE water level data. ESTOFS will be applied after $lencheck h."
+    #msg="WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available PSURGE water level data. STOFS will be applied after $lencheck h."
     #postmsg "$jlogfile" "$msg"
     #let lencheck*=3600
 

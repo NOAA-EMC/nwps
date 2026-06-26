@@ -21,12 +21,12 @@ do
          mv ${windfile} ${INPUTdir}/
          rm ${RUNdir}/NWPSWINDGRID*
          rm ${RUNdir}/*.wnd
-         mkdir ${INPUTdir}/estofs/ ${INPUTdir}/psurge/ ${INPUTdir}/rtofs/
-         wlevfile=`ls ${RUNdir}/wave_estofs_waterlevel_*.tar | tail -1`
+         mkdir ${INPUTdir}/stofs/ ${INPUTdir}/psurge/ ${INPUTdir}/rtofs/
+         wlevfile=`ls ${RUNdir}/wave_stofs_waterlevel_*.tar | tail -1`
          if [ ${wlevfile} != "" ]; then
-            mv wave_estofs_waterlevel_*.tar ${INPUTdir}/estofs/
-            cd ${INPUTdir}/estofs/
-            wlevfile=`ls ${INPUTdir}/estofs/*.tar | tail -1`
+            mv wave_stofs_waterlevel_*.tar ${INPUTdir}/stofs/
+            cd ${INPUTdir}/stofs/
+            wlevfile=`ls ${INPUTdir}/stofs/*.tar | tail -1`
             tar -xf ${wlevfile}
             cd ${RUNdir}
          fi

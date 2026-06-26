@@ -74,7 +74,7 @@ if [ "${tst1}" != "" ]
    source ${RUNdir}/PEXCD
 elif [ "${tst2}" != "" ]
    then
-   export WATERLEVELS='ESTOFS'
+   export WATERLEVELS='STOFS'
 else
    export WATERLEVELS='NO'
 fi

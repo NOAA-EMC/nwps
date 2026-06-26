@@ -106,7 +106,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     open IN, "<$infoFile02"  or die "Cannot open: $!";
     our ($HOMEnwps, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir);
     our ($DATAdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN);
-    our ($NESTS, $RTOFS, $ESTOFS, $WEB, $PLOT, $MODELCORE, $SITEID);
+    our ($NESTS, $RTOFS, $STOFS, $WEB, $PLOT, $MODELCORE, $SITEID);
     our ($WNA, $WINDS, $INPUTdir, $ISPRODUCTIO, $siteid, $GEN_NETCDF);
     our ($USERDELTAC);
 #
@@ -169,7 +169,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
 	    $RTOFS=$_;
 	}
 	if ($ndata ==19) {
-	    $ESTOFS=$_;
+	    $STOFS=$_;
 	}
 	if ($ndata ==20) {
 	    $WINDS=$_;
@@ -198,7 +198,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
 
    print "$HOMEnwps, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir \n";
    print "$DATAdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN \n";
-   print "$NESTS, $RTOFS, $ESTOFS, $WEB, $PLOT, $MODELCORE, $SITEID\ n";
+   print "$NESTS, $RTOFS, $STOFS, $WEB, $PLOT, $MODELCORE, $SITEID\ n";
    print "$WNA, $WINDS, $INPUTdir, $ISPRODUCTIO, $DATAdir, $siteid, $GEN_NETCDF \n";
    print "$USERDELTAC\n";
 }
@@ -331,7 +331,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     open IN, "<$infoFile02"  or die "Cannot open: $!";
     our ($HOMEnwps, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir);
     our ($DATAdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN);
-    our ($NESTS, $RTOFS, $ESTOFS, $WEB, $PLOT, $MODELCORE,  $SITEID);
+    our ($NESTS, $RTOFS, $STOFS, $WEB, $PLOT, $MODELCORE,  $SITEID);
     our ($WNA, $WINDS, $INPUTdir, $ISPRODUCTIO, $siteid, $GEN_NETCDF);
     our ($USERDELTAC);
 #
@@ -394,7 +394,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
 	    $RTOFS=$_;
 	}
 	if ($ndata ==19) {
-	    $ESTOFS=$_;
+	    $STOFS=$_;
 	}
 	if ($ndata ==20) {
 	    $WINDS=$_;
@@ -423,7 +423,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
 
    print "$HOMEnwps, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir \n";
    print "$DATAdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN \n";
-   print "$NESTS, $RTOFS, $ESTOFS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID\ n";
+   print "$NESTS, $RTOFS, $STOFS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID\ n";
    print "$WNA, $WINDS, $INPUTdir, $ISPRODUCTIO, $DATAdir, $siteid, $GEN_NETCDF \n";
    print "$USERDELTAC\n";
 }

@@ -61,17 +61,17 @@ do
 	else
 	    source $FIXnwps/configs/${wfo}_ncep_config.sh
 	    HASERROR="false"
-	    if [ "${ESTOFSDOMAIN}" == "" ] || [ "${ESTOFSNX}" == "" ] || [ "${ESTOFSNY}" == "" ]  || [ "${ESTOFS_REGION}" == "" ]
+	    if [ "${STOFSDOMAIN}" == "" ] || [ "${STOFSNX}" == "" ] || [ "${STOFSNY}" == "" ]  || [ "${STOFS_REGION}" == "" ]
 	    then
-		echo "ERROR - ESTOFS domain is not set for ${WFO}"
-		echo "ERROR - Need to set ESTOFSDOMAIN, ESTOFSNX, ESTOFSNY, and ESTOFS_REGION vars for ${WFO}"
+		echo "ERROR - STOFS domain is not set for ${WFO}"
+		echo "ERROR - Need to set STOFSDOMAIN, STOFSNX, STOFSNY, and STOFS_REGION vars for ${WFO}"
 		echo "ERROR - Check the $FIXnwps/configs/${wfo}_ncep_config.sh config"
 		HASERROR="true"
 	    fi
-	    ESTOFSDOMAIN=""
-	    ESTOFSNX=""
-	    ESTOFSNY=""
-	    ESTOFS_REGION=""
+	    STOFSDOMAIN=""
+	    STOFSNX=""
+	    STOFSNY=""
+	    STOFS_REGION=""
 
 	    if [ RTOFSSOURCE == "global" ]
 	    then
@@ -101,7 +101,7 @@ do
 
 	    if [ "${HASERROR}" == "false" ]
 	    then 
-		echo "Adding ${WFO} to RTOFS/ESTOFS init list"
+		echo "Adding ${WFO} to RTOFS/STOFS init list"
 		echo -n "${WFO} " >> ${VARdir}/wfolist_${PROCESS}.sh
 	    else
 		echo "ERROR - cannot include WFO: ${WFO}"

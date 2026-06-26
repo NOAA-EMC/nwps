@@ -5,7 +5,7 @@
 # Tested Run Level(s): 3, 5
 # Shell Used: BASH shell
 # Original Author(s): Roberto.Padilla@noaa.gov
-# Base on make_estofs from Douglas Gaer
+# Base on make_stofs from Douglas Gaer
 # File Creation Date: 12/15/2013
 # Date Last Modified: 
 #
@@ -99,7 +99,7 @@ WFOLIST=()
 #   cd ${RUNdir}/${DOMAIN}_hourly/
 
    source ${FIXnwps}/configs_psurge/${wfo}_ncep_config.sh
-   ESTO=${ESTOFSDOMAIN}
+   ESTO=${STOFSDOMAIN}
    OIFS=$IFS                   # store old IFS in buffer
    #IFS='-'                     # set IFS to '-'
    i=0
@@ -236,12 +236,12 @@ do
    cp ${file} ${xfile}
 done < ${RUNdir}/exceedances
 
-# Combine P-Surge fields with ESTOFS background, in order to fill zero values
-# Check availability of ESTOFS for current P-Surge cycle
-estofs_dir="${COMOUT}/estofs/${wfo}_output/"
-if [ -e "${estofs_dir}/wave_estofs_waterlevel_${epoc_time_ini}_${yyyymmdd_ini}_${HH_ini}_f180.dat" ]
+# Combine P-Surge fields with STOFS background, in order to fill zero values
+# Check availability of STOFS for current P-Surge cycle
+stofs_dir="${COMOUT}/stofs/${wfo}_output/"
+if [ -e "${stofs_dir}/wave_stofs_waterlevel_${epoc_time_ini}_${yyyymmdd_ini}_${HH_ini}_f180.dat" ]
 then
-   # The following are the timestamps for the ESTOFS data
+   # The following are the timestamps for the STOFS data
    epoc_time_ini2=${epoc_time_ini}
    yyyymmdd_ini2=${yyyymmdd_ini}
    HH_ini2=${HH_ini}
@@ -253,22 +253,22 @@ then
       do
          fhour=$(printf "%03d" $f)
          fhour2=${fhour}        
-         ${EXECnwps}/psurge2nwps_combine.exe ${estofs_dir} ${wfo} ${EXCEED} \
+         ${EXECnwps}/psurge2nwps_combine.exe ${stofs_dir} ${wfo} ${EXCEED} \
                                         ${epoc_time_ini} ${yyyymmdd_ini} ${HH_ini} ${fhour} \
                                         ${epoc_time_ini2} ${yyyymmdd_ini2} ${HH_ini2} ${fhour2}
       done
    done < ${RUNdir}/exceedances
 else
-   # Look for ESTOFS files of one cycle (6h) ago
+   # Look for STOFS files of one cycle (6h) ago
    epoc_time_ini2=$(( $epoc_time_ini-21600 ))
    temp=$(date -d @$epoc_time_ini2 +%Y%m%d%H)
    yyyymmdd_ini2=`echo ${temp} | cut -c1-8`
    HH_ini2=`echo ${temp} | cut -c9-10`
    if [ ${HH_ini2} == 18 ]
    then
-      estofs_dir="${COMOUTm1}/estofs/${wfo}_output/"
+      stofs_dir="${COMOUTm1}/stofs/${wfo}_output/"
    fi
-   if [ -e "${estofs_dir}/wave_estofs_waterlevel_${epoc_time_ini2}_${yyyymmdd_ini2}_${HH_ini2}_f180.dat" ]
+   if [ -e "${stofs_dir}/wave_stofs_waterlevel_${epoc_time_ini2}_${yyyymmdd_ini2}_${HH_ini2}_f180.dat" ]
    then
       while read line
       do
@@ -278,7 +278,7 @@ else
          do
             fhour=$(printf "%03d" $f)
             fhour2=$(printf "%03d" $((f+6)) )      
-            ${EXECnwps}/psurge2nwps_combine.exe ${estofs_dir} ${wfo} ${EXCEED} \
+            ${EXECnwps}/psurge2nwps_combine.exe ${stofs_dir} ${wfo} ${EXCEED} \
                                            ${epoc_time_ini} ${yyyymmdd_ini} ${HH_ini} ${fhour} \
                                            ${epoc_time_ini2} ${yyyymmdd_ini2} ${HH_ini2} ${fhour2}
          done

@@ -84,7 +84,7 @@ my $WNA = $ENV{'WNA'};
 my $NESTS = $ENV{'NESTS'};
 my $RTOFS = $ENV{'RTOFS'};
 my $WATERLEVELS = $ENV{'WATERLEVELS'};
-my $ESTOFS = $ENV{'ESTOFS'};
+my $STOFS = $ENV{'STOFS'};
 my $PSURGE = $ENV{'PSURGE'};
 my $EXCD = $ENV{'EXCD'};
 my $WINDS = $ENV{'WINDS'};
@@ -105,8 +105,8 @@ system("echo $$ > ${TMPdir}/${USERNAME}/nwps/8991_swan_pl.pid");
 Logs::initialize(); 
 Logs::run("BEGIN RUN");
 
-if ($WATERLEVELS eq "ESTOFS") {
-    $ESTOFS = "YES";
+if ($WATERLEVELS eq "STOFS") {
+    $STOFS = "YES";
 }
 
 if ($WATERLEVELS eq "PSURGE") {
@@ -123,7 +123,7 @@ if ($DEBUGGING eq "TRUE") {
     Logs::run("NESTS: $NESTS");
     Logs::run("RTOFS: $RTOFS");
     Logs::run("WATERLEVELS: $WATERLEVELS");
-    Logs::run("ESTOFS: $ESTOFS");
+    Logs::run("STOFS: $STOFS");
     Logs::run("PSURGE: $PSURGE");
     Logs::run("EXCD: $EXCD");
     Logs::run("WINDS: $WINDS");
@@ -158,12 +158,12 @@ if ($RTOFS eq "YES") {
   }
 }
 
-if ($ESTOFS eq "YES") {
-  if (-e "${USHnwps}/estofs/bin/gen_waterlevel.sh" ) {
-    system("${USHnwps}/estofs/bin/gen_waterlevel.sh ${date}");
+if ($STOFS eq "YES") {
+  if (-e "${USHnwps}/stofs/bin/gen_waterlevel.sh" ) {
+    system("${USHnwps}/stofs/bin/gen_waterlevel.sh ${date}");
   }
   else {
-    Logs::run("You do not have the ESTOFS water level processing scripts installed.");
+    Logs::run("You do not have the STOFS water level processing scripts installed.");
     Logs::run("Proceeding without water level interactions.");
   }
 }

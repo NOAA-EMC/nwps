@@ -123,18 +123,18 @@ then
     WATERLEVELS=${10}
     WATERLEVELS=$(echo ${WATERLEVELS} | tr [:lower:] [:upper:])
     export WATERLEVELS
-    export ESTOFS="NO"
+    export STOFS="NO"
     export PSURGE="NO"
-    if [ "${WATERLEVELS}" == "ESTOFS" ]; then export ESTOFS="YES"; fi
+    if [ "${WATERLEVELS}" == "STOFS" ]; then export STOFS="YES"; fi
     if [ "${WATERLEVELS}" == "PSURGE" ]; then export PSURGE="YES"; fi
 fi
 
-## Added to support ESTOFS input
+## Added to support STOFS input
 #if [ "${10}" != "" ]
 #then
-#    ESTOFS=${10}
-#    ESTOFS=$(echo ${ESTOFS} | tr [:lower:] [:upper:])
-#    export ESTOFS
+#    STOFS=${10}
+#    STOFS=$(echo ${STOFS} | tr [:lower:] [:upper:])
+#    export STOFS
 #fi
 
 # Added to support model CORE specification
@@ -224,11 +224,11 @@ if [ ! -e ${INPUTdir}/ndbc ]; then mkdir -vp ${INPUTdir}/ndbc | tee -a $logfile;
 if [ ! -e ${INPUTdir}/wave ]; then mkdir -vp ${INPUTdir}/wave | tee -a $logfile; fi
 if [ ! -e ${INPUTdir}/wind ]; then mkdir -vp ${INPUTdir}/wind | tee -a $logfile; fi
 if [ ! -e ${INPUTdir}/rtofs ]; then mkdir -vp ${INPUTdir}/rtofs | tee -a $logfile; fi
-if [ ! -e ${INPUTdir}/estofs ]; then mkdir -vp ${INPUTdir}/estofs | tee -a $logfile; fi
+if [ ! -e ${INPUTdir}/stofs ]; then mkdir -vp ${INPUTdir}/stofs | tee -a $logfile; fi
 if [ ! -e ${INPUTdir}/gfswind ]; then mkdir -vp ${INPUTdir}/gfswind | tee -a $logfile; fi
 if [ ! -e ${INPUTdir}/hotstart ]; then mkdir -vp ${INPUTdir}/hotstart | tee -a $logfile; fi
 if [ ! -e ${LDMdir}/rtofs ]; then mkdir -vp ${LDMdir}/rtofs | tee -a $logfile; fi
-if [ ! -e ${LDMdir}/estofs ]; then mkdir -vp ${LDMdir}/estofs | tee -a $logfile; fi
+if [ ! -e ${LDMdir}/stofs ]; then mkdir -vp ${LDMdir}/stofs | tee -a $logfile; fi
 if [ ! -e ${LDMdir}/gfswind ]; then mkdir -vp ${LDMdir}/gfswind | tee -a $logfile; fi
 if [ ! -e ${OUTPUTdir}/grib2 ]; then mkdir -vp ${OUTPUTdir}/grib2 | tee -a $logfile; fi
 if [ ! -e ${OUTPUTdir}/grid ]; then mkdir -vp ${OUTPUTdir}/grid | tee -a $logfile; fi
@@ -369,17 +369,17 @@ fi
 if [ "${RETROSPECTIVE}" == "FALSE" ]; then     #RETROSPECTIVE
 
 #====================================================================================
-# Initialize ESTOFS:
+# Initialize STOFS:
 echo " Initializing WATERLEVELS "
-echo "WATERLEVELS: ${WATERLEVELS},  ESTOFS: ${ESTOFS}" 
-if [ "${ESTOFS}" == "YES" ] 
+echo "WATERLEVELS: ${WATERLEVELS},  STOFS: ${STOFS}" 
+if [ "${STOFS}" == "YES" ] 
 then
-   echo "Setting up water levels from ESTOFS" | tee -a $logfile 
-   source ${USHnwps}/get_ncep_initfiles.sh ESTOFS
+   echo "Setting up water levels from STOFS" | tee -a $logfile 
+   source ${USHnwps}/get_ncep_initfiles.sh STOFS
    export err=$?; err_chk
 else
-   export ESTOFS="NO"
-   echo "ESTOFS Water Levels will NOT be used" | tee -a $logfile
+   export STOFS="NO"
+   echo "STOFS Water Levels will NOT be used" | tee -a $logfile
 fi
 #====================================================================================
 # Initialize RTOFS:
@@ -391,10 +391,10 @@ then
    echo "Setting up Currents from RTOFS" | tee -a $logfile
    source ${USHnwps}/get_ncep_initfiles.sh RTOFS
    export err=$?; err_chk
-elif [ "${RTOFS}" == "ESTOFSCUR" ] 
+elif [ "${RTOFS}" == "STOFSCUR" ] 
 then
-   echo "Setting up Currents from ESTOFS" | tee -a $logfile
-   source ${USHnwps}/get_ncep_initfiles.sh ESTOFSCUR
+   echo "Setting up Currents from STOFS" | tee -a $logfile
+   source ${USHnwps}/get_ncep_initfiles.sh STOFSCUR
    export err=$?; err_chk
 else
    export RTOFS="NO"
@@ -411,24 +411,24 @@ then
    source ${USHnwps}/get_ncep_initfiles.sh PSURGE
    export err=$?; err_chk
     
-   #if [ -e ${RUNdir}/nopsurge ] && [ ! -e ${RUNdir}/noestofs ]
+   #if [ -e ${RUNdir}/nopsurge ] && [ ! -e ${RUNdir}/nostofs ]
    #then
-   #   export WATERLEVELS="ESTOFS"
-   #   export ESTOFS="YES"
+   #   export WATERLEVELS="STOFS"
+   #   export STOFS="YES"
    #   export PSURGE="NO"
-   #   echo " Initializing WATERLEVELS from ESTOFS"
-   #   echo "WATERLEVELS: ${WATERLEVELS},  ESTOFS: ${ESTOFS}" 
-      echo "Setting up Waterlevels from ESTOFS to be added after Psurge" | tee -a $logfile 
-      ${USHnwps}/get_ncep_initfiles.sh ESTOFS 
+   #   echo " Initializing WATERLEVELS from STOFS"
+   #   echo "WATERLEVELS: ${WATERLEVELS},  STOFS: ${STOFS}" 
+      echo "Setting up Waterlevels from STOFS to be added after Psurge" | tee -a $logfile 
+      ${USHnwps}/get_ncep_initfiles.sh STOFS 
    #fi
    # To complete the 102 hrs run including water levels it is necessary to add
-   #estofswater levels, for Psurge covers only 78 hrs.
+   #stofswater levels, for Psurge covers only 78 hrs.
 
-   if [ "${ESTOFS}" == "YES" ] && [ ! -e ${RUNdir}/noestofs ]
+   if [ "${STOFS}" == "YES" ] && [ ! -e ${RUNdir}/nostofs ]
       then
-      echo "PSURGE data not found. Initializing WATERLEVELS from ESTOFS instead"
-      echo "WATERLEVELS: ${WATERLEVELS},  ESTOFS: ${ESTOFS}"
-      source ${USHnwps}/get_ncep_initfiles.sh ESTOFS
+      echo "PSURGE data not found. Initializing WATERLEVELS from STOFS instead"
+      echo "WATERLEVELS: ${WATERLEVELS},  STOFS: ${STOFS}"
+      source ${USHnwps}/get_ncep_initfiles.sh STOFS
       export err=$?; err_chk
    fi
 else
@@ -574,7 +574,7 @@ echo "$RUNLEN" >> ${RUNdir}/info_to_nwps_coremodel.txt
 echo "$WNA" >> ${RUNdir}/info_to_nwps_coremodel.txt
 echo "$NESTS" >> ${RUNdir}/info_to_nwps_coremodel.txt
 echo "$RTOFS" >> ${RUNdir}/info_to_nwps_coremodel.txt
-echo "$ESTOFS" >> ${RUNdir}/info_to_nwps_coremodel.txt
+echo "$STOFS" >> ${RUNdir}/info_to_nwps_coremodel.txt
 echo "$WINDS" >> ${RUNdir}/info_to_nwps_coremodel.txt
 echo "$WEB" >> ${RUNdir}/info_to_nwps_coremodel.txt
 echo "$PLOT" >> ${RUNdir}/info_to_nwps_coremodel.txt

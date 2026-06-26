@@ -5,7 +5,7 @@
 # Tested Run Level(s): 3, 5
 # Shell Used: BASH shell
 # Original Author(s): Roberto.Padilla@noaa.gov
-# Base on make_estofs from Douglas Gaer
+# Base on make_stofs from Douglas Gaer
 # File Creation Date: 12/15/2013
 # Date Last Modified: 
 #
