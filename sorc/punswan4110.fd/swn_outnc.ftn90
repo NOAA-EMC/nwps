@@ -1150,7 +1150,7 @@ contains
                 READ (chtime, '(I8,1X,I6)') (xpctmp(i), i=1,2)
                 ! should be seconds since epoch.
                 recordaxe(irq)%content(1) = seconds_since_epoch(xpctmp(1), xpctmp(2))
-                recordaxe(irq)%delta      = maxval((/oqr(2), DT/))
+                recordaxe(irq)%delta      = nint(maxval((/oqr(2), DT/)), kind=8)
                 recordaxe(irq)%nstatm     = .true.
             else
                 ! stationary, record axe is "run"
@@ -1315,7 +1315,7 @@ contains
         ! if only only record found, set delta to delta specified in command file (or 1 on stationary)
         if ( recordaxe(irq)%ncontent == 1 ) then
             if ( NSTATM > 0 ) then
-                recordaxe(irq)%delta = maxval((/oqr(2), DT/))
+                recordaxe(irq)%delta = nint(maxval((/oqr(2), DT/)), kind=8)
             else
                 recordaxe(irq)%delta = 1
             end if
@@ -1515,7 +1515,7 @@ contains
                 READ (chtime, '(I8,1X,I6)') (xpctmp(i), i=1,2)
                 ! should be seconds since epoch. This is probably not it.
                 recordaxe(irq)%content(1) = seconds_since_epoch(xpctmp(1), xpctmp(2))
-                recordaxe(irq)%delta      = maxval((/oqr(2), DT/))
+                recordaxe(irq)%delta      = nint(maxval((/oqr(2), DT/)), kind=8)
                 recordaxe(irq)%nstatm     = .true.
             else
                 ! stationary, record axe is "run"
@@ -1613,7 +1613,7 @@ contains
         ! if only only record found, set delta to delta specified in command file (or 1 on stationary)
         if ( recordaxe(irq)%ncontent == 1 ) then
             if ( NSTATM > 0 ) then
-                recordaxe(irq)%delta = maxval((/oqr(2), DT/))
+                recordaxe(irq)%delta = nint(maxval((/oqr(2), DT/)), kind=8)
             else
                 recordaxe(irq)%delta = 1
             end if
