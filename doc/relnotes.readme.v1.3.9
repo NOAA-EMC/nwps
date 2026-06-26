@@ -320,15 +320,15 @@ Clone the NWPS code from the following VLab repo, and checkout the tag v1.3.0:
 
 II) Building the executables
 
-First define the path variable ${NWPSdir} in your profile file, which points to the base of the code checked out under (I) above.
-> export NWPSdir=$(pwd)
+First define the path variable ${HOMEnwps} in your profile file, which points to the base of the code checked out under (I) above.
+> export HOMEnwps=$(pwd)
 
-Next, change directory to ${NWPSdir}/sorc/, and execute the general NWPS install script. This single step will install the total package, including all binary compilations:
+Next, change directory to ${HOMEnwps}/sorc/, and execute the general NWPS install script. This single step will install the total package, including all binary compilations:
 
-> cd ${NWPSdir}/sorc
+> cd ${HOMEnwps}/sorc
 > ./make_NWPS.sh
 
-Once the compilations are done, all executables are moved to ${NWPSdir}/exec, and the system will be ready.
+Once the compilations are done, all executables are moved to ${HOMEnwps}/exec, and the system will be ready.
 
 The table below lists the executables, their respective source code directories, and build logs:
 
@@ -476,7 +476,7 @@ IMPLEMENTATION INSTRUCTIONS (v1.3.5):
 
 In order to implement these changes, check out this tag, and rebuild the system with:
 
-> cd ${NWPSdir}/sorc
+> cd ${HOMEnwps}/sorc
 > ./make_NWPS.sh
 
 New delivery time of v1.3 products (min):    Delivery times of v1.2 products (min):
@@ -618,7 +618,7 @@ IMPLEMENTATION INSTRUCTIONS (for v1.3.6):
 In order to additionally implement the changes for code optimization in v1.3.6, check out this tag, 
 and rebuild the system with:
 
-> cd ${NWPSdir}/sorc
+> cd ${HOMEnwps}/sorc
 > ./make_NWPS.sh
 
 New delivery times of v1.3 products (min):
@@ -685,7 +685,7 @@ In order to implement this update, check out this tag, specifically the followin
 
 To incorporate the updated 48-core mesh decomposition for GYX, rebuild the system with:
 
-> cd ${NWPSdir}/sorc
+> cd ${HOMEnwps}/sorc
 > ./make_NWPS.sh
 
 The reduction of the parallelization of the GYX domain has the following impact on 
@@ -725,7 +725,7 @@ In order to implement this update, check out this tag, ONLY updating the followi
 
 Rebuild the system by issuing the following commands:
 
-> cd ${NWPSdir}/sorc
+> cd ${HOMEnwps}/sorc
 > ./make_NWPS.sh
 
 TEST INSTRUCTIONS:

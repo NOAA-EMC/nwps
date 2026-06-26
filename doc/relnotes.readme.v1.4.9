@@ -193,24 +193,24 @@ Clone the NWPS code from the following Github repo, and checkout the release tag
 
 II) Building the executables
 
-First define the path variable ${NWPSdir} in your profile file, which points to the base of the code checked out under (I) above.
-> export NWPSdir=$(pwd)
+First define the path variable ${HOMEnwps} in your profile file, which points to the base of the code checked out under (I) above.
+> export HOMEnwps=$(pwd)
 
-Next, change directory to ${NWPSdir}/sorc/, and execute the general NWPS install script. This single step will install the total 
+Next, change directory to ${HOMEnwps}/sorc/, and execute the general NWPS install script. This single step will install the total 
 package, including all libraries and binary compilations:
 
-> cd ${NWPSdir}/sorc
+> cd ${HOMEnwps}/sorc
 > ./make_NWPS.sh
 
-Once the compilations are done, all executables are moved to ${NWPSdir}/exec, and the system will be ready.
+Once the compilations are done, all executables are moved to ${HOMEnwps}/exec, and the system will be ready.
 
 TEST INSTRUCTIONS:
 
 1. Test the NWPS on-demand runs
 
-after building your code, go to ${NWPSdir}/ush/make_psurge_init.sh and uncomment lines 117-119  for Laura_Marco storm, or lines 122-124  for Irma storm
+after building your code, go to ${HOMEnwps}/ush/make_psurge_init.sh and uncomment lines 117-119  for Laura_Marco storm, or lines 122-124  for Irma storm
 
->> qsub ${NWPSdir_PSURGE}/dev/ecf/jnwps_ofs_prep.ecf with OFSTYPE=psurge (see here for sample cron job (Dogwood):  /u/saeideh.banihashemi/nwps_ofs_psurge2.cron )
+>> qsub ${HOMEnwps_PSURGE}/dev/ecf/jnwps_ofs_prep.ecf with OFSTYPE=psurge (see here for sample cron job (Dogwood):  /u/saeideh.banihashemi/nwps_ofs_psurge2.cron )
 
 check outputs from the job  with the ofs_prep outputs located here:
 

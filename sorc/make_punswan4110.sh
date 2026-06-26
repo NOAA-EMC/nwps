@@ -25,22 +25,22 @@ set -xa
 echo "Building SWAN"
 # Setup our NWPS environment                                                    
 export pwd=`pwd`
-export NWPSdir=${pwd%/*}
-if [ "${NWPSdir}" == "" ]
+export HOMEnwps=${pwd%/*}
+if [ "${HOMEnwps}" == "" ]
     then 
-    echo "ERROR - Your NWPSdir variable is not set"
+    echo "ERROR - Your HOMEnwps variable is not set"
     exit 1
 fi
 
 PWD=$(pwd)
-mkdir -p ${NWPSdir}/exec
+mkdir -p ${HOMEnwps}/exec
 
 #module purge
 #module load ncep
 #module load ../modulefiles/NWPS/v1.3.0
 module list
 
-cd ${NWPSdir}/sorc/punswan4110.fd
+cd ${HOMEnwps}/sorc/punswan4110.fd
 
 echo "Building OpenMPI SWAN binary" | tee ./punswan_build.log
 make clobber | tee -a ./punswan_build.log
@@ -50,7 +50,7 @@ make config | tee -a ./punswan_build.log
 
 #Build parallel unstructured version
 make punswan FLAGS_OPT="${OPTFLAGS}" | tee -a ./punswan_build.log
-cp -pfv swan.exe ${NWPSdir}/exec/punswan4110.exe
+cp -pfv swan.exe ${HOMEnwps}/exec/punswan4110.exe
 
 make clobber | tee -a ./punswan_build.log
 cd ${PWD}

@@ -92,10 +92,10 @@ while read line; do
         || [ "${SITEID}" == "EKA" ] || [ "${SITEID}" == "MFR" ] || [ "${SITEID}" == "PQR" ] \
         || [ "${SITEID}" == "SEW" ]
         then
-           ${NWPSdir}/exec/runupforecast_wr.exe
+           ${HOMEnwps}/exec/runupforecast_wr.exe
            export err=$?;
         else
-           ${NWPSdir}/exec/runupforecast.exe
+           ${HOMEnwps}/exec/runupforecast.exe
            export err=$?;
         fi
         echo "Exit Code: ${err}" | tee -a ${LOGdir}/runup.log

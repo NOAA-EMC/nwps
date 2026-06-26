@@ -48,7 +48,7 @@ package SetupCG;
 use Math::Trig;
 #use File::Slurp;
 # Setup our NWPS env for this Perl script
-my $NWPSdir = $ENV{'HOMEnwps'};
+my $HOMEnwps = $ENV{'HOMEnwps'};
 my $USHnwps = $ENV{'USHnwps'};
 my $DATA = $ENV{'DATA'};
 my $USERNAME = $ENV{'USERNAME'};
@@ -94,7 +94,7 @@ my $hotStepLength = 3;
 if ( "${HOTSTARTTIMESTEP}" ne "") {
     $hotStepLength = ${HOTSTARTTIMESTEP}; 
 }
-#use lib ("$ENV{'NWPSdir'}/ush/bin");
+#use lib ("$ENV{'HOMEnwps'}/ush/bin");
 use POSIX;
 use Cwd 'chdir';
 use Tie::File;
@@ -117,7 +117,7 @@ our $gtop;
 if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     my $infoFile02 = "${RUNdir}/info_to_nwps_coremodel.txt";
     open IN, "<$infoFile02"  or die "Cannot open: $!";
-    our ($NWPSdir, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir);
+    our ($HOMEnwps, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir);
     our ($DATAdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN);
     our ($NESTS, $RTOFS, $ESTOFS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID);
     our ($WNA, $WINDS, $INPUTdir, $ISPRODUCTIO, $DATAdir, $siteid, $GEN_NETCDF);
@@ -128,7 +128,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
 	$ndata+=1;
 	chomp($_);
 	if ($ndata ==1) {
-	    $NWPSdir=$_;
+	    $HOMEnwps=$_;
 	}
 	if ($ndata ==2) {
 	    $ISPRODUCTIO=$_;
@@ -209,7 +209,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     }
     close IN;
 #print "-----------------------Values in SetupCG.pm --------------------\n";
-#print "$NWPSdir, $ISPRODUCTIO, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir\n";
+#print "$HOMEnwps, $ISPRODUCTIO, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir\n";
 #print "$DATAdir, $INPUTdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN, $WNA\n";
 #print "$NEST, $RTOFS, $ESTOFS, $WINDS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID, $DATAdir\n";
 #print "$GEN_NETCDF, $USERDELTAC\n";

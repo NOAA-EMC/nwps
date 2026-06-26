@@ -4,7 +4,7 @@ LANG=en_US.UTF-8
 SHLVL=1
 HOME=/u/ali.salimi
 LOGNAME=ali.salimi
-NWPSdir=/lfs/h2/emc/couple/noscrub/ali.salimi/nwps/nwps.v1.5.0/
+HOMEnwps=/lfs/h2/emc/couple/noscrub/ali.salimi/nwps/nwps.v1.5.0/
 VALIDATIONdir=/lfs/h2/emc/couple/noscrub/ali.salimi/nwps_para
 _=/usr/bin/env
 

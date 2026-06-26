@@ -137,10 +137,10 @@ echo ""
 WRITEDAT="${EXECnwps}/nwps_utils_writedat"
 READDAT="${EXECnwps}/nwps_utils_readdat"
 FIX_ASCII_POINT_DATA="${EXECnwps}/nwps_utils_fix_ascii_point_data"
-#NCDUMP="${NWPSdir}/lib${ARCHBITS}/netcdf/bin/ncdump"
-#GRADS="${NWPSdir}/lib${ARCHBITS}/grads/bin/grads"
+#NCDUMP="${HOMEnwps}/lib${ARCHBITS}/netcdf/bin/ncdump"
+#GRADS="${HOMEnwps}/lib${ARCHBITS}/grads/bin/grads"
 
-#source $NWPSdir/bin/process_lock.sh
+#source $HOMEnwps/bin/process_lock.sh
 
 echo "Starting RTOFS data processing"
 #echo "Checking for lock files"

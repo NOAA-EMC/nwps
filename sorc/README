@@ -1,0 +1,20 @@
+
+Building the executables
+
+First define the path variable ${HOMEnwps} in your profile file, which points to the base of the code checked out
+
+> export HOMEnwps=$(pwd)
+
+Next, change directory to ${HOMEnwps}/sorc/, and execute the general NWPS install script. This single step will install the total
+package, including all libraries and binary compilations:
+
+> cd ${HOMEnwps}/sorc
+> ./make_NWPS.sh > build_log.txt 2>&1
+
+to make the code with debug flags:
+./make_NWPS.sh check > build_log.txt 2>&1
+
+Once the compilations are done, all executables are moved to ${HOMEnwps}/exec, and the system will be ready.
+
+To clean your build simply run:
+clean_NWPS.sh

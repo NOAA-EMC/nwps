@@ -31,7 +31,7 @@ fi
 # Check to see if our NWPS directory is set
 if [ "${HOMEnwps}" == "" ]
     then 
-    echo "ERROR - Your NWPSdir variable is not set"
+    echo "ERROR - Your HOMEnwps variable is not set"
     export err=1; err_chk
 fi
 

@@ -23,9 +23,9 @@ TEND = int(sys.argv[2])
 print('TSTART = ' + str(TSTART))
 print('TEND = ' + str(TEND))
 
-#NWPSdir ='/scratch4/NCEPDEV/marine/Ali.Salimi/Hera_Data/NWPS/featureV_1.5'
-NWPSdir = os.environ['NWPSdir']
-cartopy.config['pre_existing_data_dir'] = NWPSdir + '/lib/cartopy'
+#HOMEnwps ='/scratch4/NCEPDEV/marine/Ali.Salimi/Hera_Data/NWPS/featureV_1.5'
+HOMEnwps = os.environ['HOMEnwps']
+cartopy.config['pre_existing_data_dir'] = HOMEnwps + '/lib/cartopy'
 print('Reading cartopy shapefiles from:')
 print(cartopy.config['pre_existing_data_dir'])
 

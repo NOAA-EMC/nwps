@@ -375,20 +375,13 @@ then
     exit 1
 fi
 
-# ==============================================================================
-# NEW STABLE TIMESTAMP EXTRACTION (Bypasses wgrib2 glibc bug)
-# ==============================================================================
-# 1. Grab raw reference time string (e.g., 2026060212)
-raw_time=$(${WGRIB2} -d 1 -t ${SPOOLdir}/${file} | awk -F'd=' '{print $2}' | cut -c1-10)
+epoc_time=""
 
-# 2. Extract YYYYMMDD directly for date_str (First 8 characters of raw_time)
-date_str="${raw_time:0:8}"
+while [ "${epoc_time}" == "" ] || [ "${epoc_time}" == "-1" ]; do
+   epoc_time=$(${WGRIB2} -d 1 -unix_time ${SPOOLdir}/${file} | grep "1:0:unix" | awk -F= '{ print $3 }')
+done
 
-# 3. Reformat to standard format (YYYY-MM-DD HH:00:00) for the Epoch calculation
-formatted_time="${raw_time:0:4}-${raw_time:4:2}-${raw_time:6:2} ${raw_time:8:2}:00:00"
-
-# 4. Safely generate the 10-digit Epoch time integer via OS system date
-epoc_time=$(date -d "$formatted_time" +%s)
+date_str=$(echo ${epoc_time} | awk '{ print strftime("%Y%m%d", $1) }')
 
 swan_uv_ofile_fname="gfswind_${epoc_time}_${date_str}_${CYCLE}_f000.dat"
 swan_uv_ofile="${OUTPUTdir}/${swan_uv_ofile_fname}"

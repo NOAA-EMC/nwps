@@ -100,7 +100,7 @@ export COMINm1=${COMROOT}/${NET}/$ver/${REGION}.${PDYm1}/${WFO}
 export COMINm2=${COMROOT}/${NET}/$ver/${REGION}.${PDYm2}/${WFO}
 export COMINm3=${COMROOT}/${NET}/$ver/${REGION}.${PDYm3}/${WFO}
 export COMOUT=${COMROOT}/${NET}/$ver/${REGION}.${PDY}/${WFO}
-export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}/nwges
+export GESOUT=${COMROOT}/${NET}/$ver/${NET}.${PDY}
 
 export FORECASTWINDdir="${dcom}/${PDY}/wgrbbul/${NET}"
 export COM_nwps_R_ES_TOFS="/com"

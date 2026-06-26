@@ -36,8 +36,8 @@ then
 fi
 
 # Set database DIRs here
-export BATHYdb=${NWPSdir}/fix/bathy_db
-export SHAPEFILEdb=${NWPSdir}/fix/shapefile_db
+export BATHYdb=${HOMEnwps}/fix/bathy_db
+export SHAPEFILEdb=${HOMEnwps}/fix/shapefile_db
 
 # Set processing DIRs here
 export ARCHdir=${NWPSDEVDATA}/archive

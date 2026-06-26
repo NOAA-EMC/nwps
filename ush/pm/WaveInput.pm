@@ -51,7 +51,7 @@
 package WaveInput;
 
 # Setup our NWPS env
-my $NWPSdir = $ENV{'HOMEnwps'};
+my $HOMEnwps = $ENV{'HOMEnwps'};
 my $DATA = $ENV{'DATA'};
 my $siteid = $ENV{'siteid'};
 my $SITEID = $ENV{'SITEID'};
@@ -185,12 +185,12 @@ if (($WNA eq "WNAWave") || ($WNA eq "HURWave")) {
 #       one by one and finally moving the resulting files to the right place.
 ################################################################################
 sub waveInputProcessing {
-    my $NWPSdir = $ENV{'HOMEnwps'};
+    my $HOMEnwps = $ENV{'HOMEnwps'};
     Logs::bug("begin waveInputProcessing",1);
     my $nftpAttempts = $NFTPATTEMPTS;
 
 print "+++++++++++++++++++ waveInputProcessing  +++++++++++++++\n";
-print "NWPSdir : $NWPSdir\n";
+print "HOMEnwps : $HOMEnwps\n";
 print "INPUTdir : ${INPUTdir}\n";
 print "LDMdir & INPUTdir:  $LDMdir & $INPUTdir\n";
 

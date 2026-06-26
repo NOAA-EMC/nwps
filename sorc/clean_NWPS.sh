@@ -15,19 +15,19 @@ set -euo pipefail
 set -x
 
 PWD=$(pwd)
-NWPSdir=${PWD%/*}
+HOMEnwps=${PWD%/*}
 
-if [[ -z "${NWPSdir}" || ! -d "${NWPSdir}/sorc" ]]; then
-  echo "ERROR: Unable to determine NWPSdir"
+if [[ -z "${HOMEnwps}" || ! -d "${HOMEnwps}/sorc" ]]; then
+  echo "ERROR: Unable to determine HOMEnwps"
   exit 1
 fi
 
 echo "============================================"
 echo " NWPS FULL CLEAN"
-echo " NWPSdir = ${NWPSdir}"
+echo " HOMEnwps = ${HOMEnwps}"
 echo "============================================"
 
-cd "${NWPSdir}/sorc"
+cd "${HOMEnwps}/sorc"
 
 # -----------------------------------------------------------
 # 1. Run make clean in known components (best effort)
@@ -69,37 +69,37 @@ find . -name "config.status" -type f -delete
 echo "== Removing approved external and runtime directories =="
 
 # exec
-rm -rf "${NWPSdir}/exec"
+rm -rf "${HOMEnwps}/exec"
 
 # FIX (approved)
-rm -rf "${NWPSdir}/fix/bathy_db"
-rm -f  "${NWPSdir}/fix/pdef_ncep_global"
+rm -rf "${HOMEnwps}/fix/bathy_db"
+rm -f  "${HOMEnwps}/fix/pdef_ncep_global"
 
 # lib (approved)
-rm -rf "${NWPSdir}/lib/cartopy"
-rm -rf "${NWPSdir}/lib/hdf5"
-rm -rf "${NWPSdir}/lib/netcdf"
-rm -rf "${NWPSdir}/lib/sorc/hdf5-1_8_9"
-rm -rf "${NWPSdir}/lib/sorc/netcdf-4.2"
-rm -rf "${NWPSdir}/lib/sorc/netcdf-fortran-4.2"
-rm -f  "${NWPSdir}/lib/libemapf.a"
+rm -rf "${HOMEnwps}/lib/cartopy"
+rm -rf "${HOMEnwps}/lib/hdf5"
+rm -rf "${HOMEnwps}/lib/netcdf"
+rm -rf "${HOMEnwps}/lib/sorc/hdf5-1_8_9"
+rm -rf "${HOMEnwps}/lib/sorc/netcdf-4.2"
+rm -rf "${HOMEnwps}/lib/sorc/netcdf-fortran-4.2"
+rm -f  "${HOMEnwps}/lib/libemapf.a"
 
 # sorc-specific libs
-rm -f  "${NWPSdir}/sorc/emapf-c/libemapf.a"
+rm -f  "${HOMEnwps}/sorc/emapf-c/libemapf.a"
 
 # padcirc / estofs work dirs
-rm -rf "${NWPSdir}/sorc/estofs_padcirc.fd/work/adcprep"
-rm -rf "${NWPSdir}/sorc/estofs_padcirc.fd/work/odir1"
-rm -rf "${NWPSdir}/sorc/estofs_padcirc.fd/work/odir4"
-rm -rf "${NWPSdir}/sorc/estofs_padcirc.fd/work/odir_metis"
-rm -rf "${NWPSdir}/sorc/estofs_padcirc.fd/work/padcirc"
-rm -f  "${NWPSdir}/sorc/estofs_padcirc.fd/work/actualflags.txt"
+rm -rf "${HOMEnwps}/sorc/estofs_padcirc.fd/work/adcprep"
+rm -rf "${HOMEnwps}/sorc/estofs_padcirc.fd/work/odir1"
+rm -rf "${HOMEnwps}/sorc/estofs_padcirc.fd/work/odir4"
+rm -rf "${HOMEnwps}/sorc/estofs_padcirc.fd/work/odir_metis"
+rm -rf "${HOMEnwps}/sorc/estofs_padcirc.fd/work/padcirc"
+rm -f  "${HOMEnwps}/sorc/estofs_padcirc.fd/work/actualflags.txt"
 
 # ush runtime artifacts (approved)
-rm -f "${NWPSdir}/ush/rtofs/datfiles/pdef_ncep_global.gz"
-rm -f "${NWPSdir}/ush/rtofs/datfiles/pdef_ncep_reg1.gz"
-rm -f "${NWPSdir}/ush/rtofs/datfiles/pdef_ncep_reg2.gz"
-rm -f "${NWPSdir}/ush/rtofs/datfiles/pdef_ncep_reg3.gz"
+rm -f "${HOMEnwps}/ush/rtofs/datfiles/pdef_ncep_global.gz"
+rm -f "${HOMEnwps}/ush/rtofs/datfiles/pdef_ncep_reg1.gz"
+rm -f "${HOMEnwps}/ush/rtofs/datfiles/pdef_ncep_reg2.gz"
+rm -f "${HOMEnwps}/ush/rtofs/datfiles/pdef_ncep_reg3.gz"
 
 echo "============================================"
 echo " NWPS FULL CLEAN COMPLETED SUCCESSFULLY"

@@ -18,16 +18,16 @@
 # ----------------------------------------------------------- 
 set -xa
 export pwd=`pwd`
-export NWPSdir=${pwd%/*}
+export HOMEnwps=${pwd%/*}
 
-if [ "${NWPSdir}" == "" ]
+if [ "${HOMEnwps}" == "" ]
     then 
-    echo "ERROR - Your NWPSdir variable is not set"
+    echo "ERROR - Your HOMEnwps variable is not set"
     exit 1
 fi
 
 #Fetching external fix and binary files from rzdm
-cd ${NWPSdir}/sorc
+cd ${HOMEnwps}/sorc
 ./get_externals.sh
 
 export CONFIG_SITE=/tmp/dummy
@@ -93,11 +93,11 @@ module use ../modulefiles
 module load build_nwps.modules.lua
 module list
 
-mkdir -p ${NWPSdir}/exec
+mkdir -p ${HOMEnwps}/exec
 
 #FOR SWAN (REGULAR GRID)
 echo "================== FOR SWAN (REGULAR GRID) : make_swan.sh  =================="
-cd ${NWPSdir}/sorc
+cd ${HOMEnwps}/sorc
 ./make_swan.sh
 rc=$?
 if [[ $rc -ne 0 ]] ; then
@@ -108,7 +108,7 @@ fi
 #FOR WAVE TRACKING
 #The executable is ww3_sysprep.exe
 echo "================== FOR WAVE TRACKING : make_sysprep.sh =================="
-cd ${NWPSdir}/sorc
+cd ${HOMEnwps}/sorc
 ./make_ww3_sysprep.sh
 rc=$?
 if [[ $rc -ne 0 ]] ; then
@@ -118,7 +118,7 @@ fi
 
 #FOR SWAN (UNSTRUCTURED MESH, incl. parallel libraries in estofs_padcirc.fd/work/odir4/)
 echo "================== FOR SWAN (UNSTRUCTURED MESH,..) : make_padcirc.sh make_swan4110.sh =================="
-cd ${NWPSdir}/sorc
+cd ${HOMEnwps}/sorc
 ./make_padcirc.sh
 rc=$?
 if [[ $rc -ne 0 ]] ; then

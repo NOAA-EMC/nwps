@@ -1,6 +1,6 @@
 #!/bin/sh
 date
-export PS4='$SECONDS ${0/\/nw.*\/nwps.*\/} + '
+export PS4='+ $SECONDS ${0/\/nw.*\/nwps.*\/} + '
 set -xa
 
 # #### 04/01/15 ###############################
@@ -65,8 +65,8 @@ setpdy.sh
 ##############################################
 # Define COM directory
 ##############################################
-export GESOUT=${GESOUT:-$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDY}/nwges}
-export GESOUTm1=${GESOUTm1:-$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDYm1}/nwges}
+export GESOUT=${GESOUT:-$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDY}}
+export GESOUTm1=${GESOUTm1:-$(compath.py -o ${NET}/${nwps_ver})/${NET}.${PDYm1}}
 export dcom_hist="$GESOUT/dcom_hist.txt"
 export dcom_histm1="$GESOUTm1/dcom_hist.txt"
 export web_status_file="$GESOUT/status_file.txt"
@@ -137,12 +137,12 @@ function rsync_sh {
 
 #if [ "${envir}" = "prod" -a "$(cat /etc/prod)" = "${machine}" ]; then
 if [ "${envir}" = prod -a "${PARATEST}" != "YES" ]; then
-    export remote_stat="ncorzdm.ncep.noaa.gov:~/pmb/spa/nwps/status_file.txt"
-    export remote_warn="ncorzdm.ncep.noaa.gov:~/pmb/spa/nwps/warnings/"
+    export remote_stat="nwprod@ncorzdm.ncep.noaa.gov:~/pmb/spa/nwps/status_file.txt"
+    export remote_warn="nwprod@ncorzdm.ncep.noaa.gov:~/pmb/spa/nwps/warnings/"
     export options=(-aWzv --timeout=${RSYNC_MAX_SECONDS} --delete)
 else
-    export remote_stat="intra.ncep.noaa.gov:~/pmb/spatools/nwps_status/status_file.txt"
-    export remote_warn="intra.ncep.noaa.gov:~/pmb/spatools/nwps_status/warnings/"
+    export remote_stat="nwprod@intra.ncep.noaa.gov:~/pmb/spatools/nwps_status/status_file.txt"
+    export remote_warn="nwprod@intra.ncep.noaa.gov:~/pmb/spatools/nwps_status/warnings/"
     export options=(-aWzv --timeout=${RSYNC_MAX_SECONDS} --delete)
 fi
 

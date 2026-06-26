@@ -9,7 +9,7 @@ Bugfix for a run failure for wave system tracking for nclust=2. In rare occasion
 
 When WFOs submit runs at 23Z, it causes a failure in the post_cg1 job due to an incorrect calculation of the time_step parameter for runup and rip current grib2 encoding. This incorrect calculation leads to the failure of Python scripts responsible for plotting runup, overwash, and rip current data.
 
-The $NWPSdir/dev/ecf and /job scripts are changed to be able to run retro runs on WCOSS2 machine.
+The $HOMEnwps/dev/ecf and /job scripts are changed to be able to run retro runs on WCOSS2 machine.
 
 JOB DEPENDENCIES:
 (Same as NWPSv1.4.9)
@@ -97,16 +97,16 @@ Clone the NWPS code from the following Github repo, and check out the release ta
 
 II) Building the executables
 
-First define the path variable ${NWPSdir} in your profile file, which points to the base of the code checked out under (I) above.
-> export NWPSdir=$(pwd)
+First define the path variable ${HOMEnwps} in your profile file, which points to the base of the code checked out under (I) above.
+> export HOMEnwps=$(pwd)
 
-Next, change directory to ${NWPSdir}/sorc/, and execute the general NWPS install script. This single step will install the total
+Next, change directory to ${HOMEnwps}/sorc/, and execute the general NWPS install script. This single step will install the total
 package, including all libraries and binary compilations:
 
-> cd ${NWPSdir}/sorc
+> cd ${HOMEnwps}/sorc
 > ./make_NWPS.sh
 
-Once the compilations are done, all executables are moved to ${NWPSdir}/exec, and the system will be ready.
+Once the compilations are done, all executables are moved to ${HOMEnwps}/exec, and the system will be ready.
 
 TEST INSTRUCTIONS
 For wave system tracking:

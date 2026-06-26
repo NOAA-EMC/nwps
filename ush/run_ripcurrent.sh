@@ -18,13 +18,13 @@
 # -----------------------------------------------------------
 #
 # This program assumes the contour fields within NWPS 
-# have been installed in the $NWPSdir/bin/RunSwan.pm. If not, view 
+# have been installed in the $HOMEnwps/bin/RunSwan.pm. If not, view 
 # the online documentation for further instructions at:
 # 
 # innovation.srh.noaa.gov/nwps/nwpsmanual.php/rip_current_program
 #
 # To execute:                                ARG1 ARG2
-# $NWPSdir/ush/run_ripcurrent.sh CG2 5
+# $HOMEnwps/ush/run_ripcurrent.sh CG2 5
 #
 # Arguments=2:
 #
@@ -39,9 +39,9 @@ if [ "${SITEID}" == "" ]
     export err=1; err_chk
 fi
 
-if [ "${NWPSdir}" == "" ]
+if [ "${HOMEnwps}" == "" ]
     then 
-    echo "ERROR - Your NWPSdir variable is not set"
+    echo "ERROR - Your HOMEnwps variable is not set"
     export err=1; err_chk
 fi
 
@@ -57,7 +57,7 @@ ndata=1
 while read p; do
   echo ${ndata} $p
    if [ ${ndata} -eq 1 ]; then
-    NWPSdir=$p;
+    HOMEnwps=$p;
    fi
    if [ ${ndata} -eq 2 ]; then
      ISPRODUCTIO=$p;
@@ -405,7 +405,7 @@ while read line; do
    # Execute the program
    # ======================================================================
    if [[ -s fort.20 && -s fort.22 ]]; then
-       ${NWPSdir}/exec/ripforecast.exe
+       ${HOMEnwps}/exec/ripforecast.exe
        export err=$?;
        echo "Exit Code: ${err}" | tee -a ${LOGdir}/runrip.log
        if [ "${err}" != "0" ];then
@@ -416,7 +416,7 @@ while read line; do
    elif [[ -s fort.20 && ! -s fort.22 ]]; then
        echo "WARNING: Only the current model data was found."
        echo "WARNING: Not possible to compute event from the previous 72 hours."
-       ${NWPSdir}/exec/ripforecast.exe
+       ${HOMEnwps}/exec/ripforecast.exe
        export err=$?;
        echo "Exit Code: ${err}" | tee -a ${LOGdir}/runrip.log
        if [ "${err}" != "0" ];then

@@ -53,7 +53,7 @@ use Logs;
 #               Environment Variables                #
 ######################################################
 # Setup our NWPS env
-my $NWPSdir = $ENV{'HOMEnwps'};
+my $HOMEnwps = $ENV{'HOMEnwps'};
 my $PMnwps = $ENV{'PMnwps'};
 my $DATA = $ENV{'DATA'};
 my $ISPRODUCTION = $ENV{'ISPRODUCTION'};
@@ -83,7 +83,7 @@ our $path=PATH;
 if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     my $infoFile02 = "${RUNdir}/info_to_nwps_coremodel.txt";
     open IN, "<$infoFile02"  or die "Cannot open: $!";
-    our ($NWPSdir, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir);
+    our ($HOMEnwps, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir);
     our ($DATAdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN);
     our ($NESTS, $RTOFS, $ESTOFS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID);
     our ($WNA, $WINDS, $INPUTdir, $ISPRODUCTIO, $DATAdir, $siteid, $GEN_NETCDF);
@@ -94,7 +94,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
 	$ndata+=1;
 	chomp($_);
 	if ($ndata ==1) {
-	    $NWPSdir=$_;
+	    $HOMEnwps=$_;
 	}
 	if ($ndata ==2) {
 	    $ISPRODUCTIO=$_;
@@ -175,7 +175,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     }
     close IN;
 
-#print "$NWPSdir, $ISPRODUCTIO, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir\n";
+#print "$HOMEnwps, $ISPRODUCTIO, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir\n";
 #print "$DATAdir, $INPUTdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN, $WNA\n";
 #print "$NEST, $RTOFS, $ESTOFS, $WINDS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID, $DATAdir\n";
 #print "$GEN_NETCDF\n";
@@ -259,9 +259,9 @@ sub completeArchiveAndCleanup {
 	chdir("${LOGdir}");
 	system "mkdir -p ${ARCHdir}/pen/logs";
         system "mkdir -p ${ARCHdir}/pen/templates";
-        system "cp -fp ${NWPSdir}/fix/templates/* ${ARCHdir}/pen/templates";
+        system "cp -fp ${HOMEnwps}/fix/templates/* ${ARCHdir}/pen/templates";
         system "cp -fp ${PMnwps}/RunSwan.pm ${ARCHdir}/pen/templates";
-        # system "cp -fp ${NWPSdir}/fix/bathy_db/${siteid}.tar.gz ${ARCHdir}/pen/templates";
+        # system "cp -fp ${HOMEnwps}/fix/bathy_db/${siteid}.tar.gz ${ARCHdir}/pen/templates";
 	system "cp -fp *.log ${ARCHdir}/pen/logs";
 	# Updated by AG for all raw input files: GFE wind/wlev..cur *.dat files/multi* before processed/grib2 
 	# Updated for NWPS by Douglas.Gaer@noaa.gov
@@ -274,7 +274,7 @@ sub completeArchiveAndCleanup {
         chdir("${INPUTdir}");
         system "cp -fp *.gz ${ARCHdir}/pen/";
         #archive domain file
-        system "cp ${NWPSdir}/fix/domains/${SITEID} ${ARCHdir}/pen/";
+        system "cp ${HOMEnwps}/fix/domains/${SITEID} ${ARCHdir}/pen/";
         # get raw .dat estofs & rtofs files
         system "cp ${RUNdir}/*.cur ${ARCHdir}/pen/";
         system "cp ${RUNdir}/*.wlev ${ARCHdir}/pen/"; 

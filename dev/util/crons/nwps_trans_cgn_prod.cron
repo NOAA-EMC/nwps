@@ -4,7 +4,7 @@
 # nwps_trans_cgn_prod.cron : Cron manages the running of the NWPS script to    #
 #             ${workdir}/trans_cgn_fields_wfo.lsf                             #
 #                                                                             #
-# Remarks   - Set the WFOs to process in ${NWPSdir}/parm/wfo_prod.tbl          #
+# Remarks   - Set the WFOs to process in ${HOMEnwps}/parm/wfo_prod.tbl          #
 #                                                                             #
 # Last Changed : 01-03-2026                                     January 2026  #
 # --------------------------------------------------------------------------- #

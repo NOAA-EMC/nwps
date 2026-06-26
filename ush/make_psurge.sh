@@ -26,7 +26,7 @@
 # 2) Call make_psurge_final.sh to perform the final 
 #    high-res water level field extraction for those WFOs  
 #    selected to wfo_cmdfile in Step (1) above, e.g.
-#    ${NWPSdir}/ush/make_psurge_final.sh  mfl 3600
+#    ${HOMEnwps}/ush/make_psurge_final.sh  mfl 3600
 #
 # These steps use the program psurge2nwps, which has the 
 # following functionality:
@@ -75,7 +75,7 @@ export err=$?; err_chk
 # 2) Call make_psurge_final.sh to perform the final high-res 
 #    water level field extraction for those WFOs selected to wfo_cmdfile 
 #    in Step (1) above, e.g.
-#    ${NWPSdir}/ush/make_psurge_final.sh  mfl 3600
+#    ${HOMEnwps}/ush/make_psurge_final.sh  mfl 3600
 cd ${RUNdir}
 ##Running 24 tasks, 6 per node (on a total of 4 nodes)
 # aprun -n24 -N6 -j1 -d1 cfp ${RUNdir}/wfo_cmdfile

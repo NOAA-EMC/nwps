@@ -24,11 +24,11 @@ set -xa
 
 # Setup our NWPS environment                                                    
 export pwd=`pwd`
-export NWPSdir=${pwd%/*}
+export HOMEnwps=${pwd%/*}
 
-if [ "${NWPSdir}" == "" ]
+if [ "${HOMEnwps}" == "" ]
     then 
-    echo "ERROR - Your NWPSdir variable is not set"
+    echo "ERROR - Your HOMEnwps variable is not set"
     exit 1
 fi
 

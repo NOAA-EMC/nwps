@@ -45,7 +45,7 @@ package RunSwan;
 use Math::Trig;
 #use File::Slurp;
 # Setup our NWPS env for this Perl script
-my $NWPSdir = $ENV{'HOMEnwps'};
+my $HOMEnwps = $ENV{'HOMEnwps'};
 my $USHnwps = $ENV{'USHnwps'};
 my $DATA = $ENV{'DATA'};
 my $USERNAME = $ENV{'USERNAME'};
@@ -87,7 +87,7 @@ my $hotStepLength = 3;
 if ( "${HOTSTARTTIMESTEP}" ne "") {
     $hotStepLength = ${HOTSTARTTIMESTEP}; 
 }
-#use lib ("$ENV{'NWPSdir'}/ush/bin");
+#use lib ("$ENV{'HOMEnwps'}/ush/bin");
 use POSIX;
 use Cwd 'chdir';
 use Tie::File;
@@ -110,7 +110,7 @@ our $gtop;
 if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     my $infoFile02 = "${RUNdir}/info_to_nwps_coremodel.txt";
     open IN, "<$infoFile02"  or die "Cannot open: $!";
-    our ($NWPSdir, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir);
+    our ($HOMEnwps, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir);
     our ($DATAdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN);
     our ($NESTS, $RTOFS, $ESTOFS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID);
     our ($WNA, $WINDS, $INPUTdir, $ISPRODUCTIO, $DATAdir, $siteid, $GEN_NETCDF);
@@ -121,7 +121,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
 	$ndata+=1;
 	chomp($_);
 	if ($ndata ==1) {
-	    $NWPSdir=$_;
+	    $HOMEnwps=$_;
 	}
 	if ($ndata ==2) {
 	    $ISPRODUCTIO=$_;
@@ -202,7 +202,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     }
     close IN;
 #print "-----------------------Values in RunSwan.pm --------------------\n";
-#print "$NWPSdir, $ISPRODUCTIO, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir\n";
+#print "$HOMEnwps, $ISPRODUCTIO, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir\n";
 #print "$DATAdir, $INPUTdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN, $WNA\n";
 #print "$NEST, $RTOFS, $ESTOFS, $WINDS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID, $DATAdir\n";
 #print "$GEN_NETCDF, $USERDELTAC\n";
@@ -326,7 +326,7 @@ sub runWaveModel (%){
 	    Logs::run("Begin WWIII model run for CG".$CG{CGNUM}.".");
 	    system("date +%s > ${VARdir}/modelrun_start_secs.txt");
 	    system ("${RUNdir}/run_ww3_multi_updated.sh > ww3.log 2> ${LOGdir}/ww3_exe_error.log");
-	    #system ("${NWPSdir}/ush/bin/run_ww3_multi_updated.sh > ww3.log 2> ${LOGdir}/ww3_exe_error.log");
+	    #system ("${HOMEnwps}/ush/bin/run_ww3_multi_updated.sh > ww3.log 2> ${LOGdir}/ww3_exe_error.log");
 	    system("date +%s > ${VARdir}/modelrun_end_secs.txt");
 	    Logs::run("END WWIII model run for CG".$CG{CGNUM}.".");
 	    print "Formatting all output files from WW3\n\n";
@@ -838,7 +838,7 @@ sub ReadMetadataFile($%) {
 
 #   copy the bathymetry file
 #    my $bot_ori=${SITEID}.".bot";
-#    system ("cp -vpf ${NWPSdir}/bathy_db/$bot_ori ${RUNdir}/$bot_filename");
+#    system ("cp -vpf ${HOMEnwps}/bathy_db/$bot_ori ${RUNdir}/$bot_filename");
 
 #Print all values in the hash
    my $paranum=0;
@@ -868,7 +868,7 @@ sub getWW3Files($%) {
     ###print "Swan Input File: $swanInputFile \n";
     ###system("pwd");
     ###print "Rundir: ${RUNdir}\n";
-    chdir ("${NWPSdir}/fix/templates/ww3_templates/");
+    chdir ("${HOMEnwps}/fix/templates/ww3_templates/");
 #   Copied all input files for WWIII to ${HOME}/data/nwps/run
     @ww3Files = <*>; 
     foreach $file (@ww3Files) {
@@ -879,7 +879,7 @@ sub getWW3Files($%) {
     undef @ww3Files;
 
 #   Copied all WWIII executables to ${HOME}/data/nwps/run
-    chdir ("${NWPSdir}/lib64/ww3/");
+    chdir ("${HOMEnwps}/lib64/ww3/");
     @ww3Files = <*>; 
     foreach $file (@ww3Files) {
          print "$file \n"; 
@@ -887,7 +887,7 @@ sub getWW3Files($%) {
          or Logs::err("Couldn't copy $file  to ${RUNdir}/$file : $!",2);
     }
 
-    #system ("cp -vpf ${NWPSdir}/ush/bin/run_ww3_multi.sh ${RUNdir}/run_ww3_multi.sh");
+    #system ("cp -vpf ${HOMEnwps}/ush/bin/run_ww3_multi.sh ${RUNdir}/run_ww3_multi.sh");
 #XXXXXXXXXXXXXXXXXXXXXX
 #    system ("cp -vpf ~/WWIII/exe/ww3_multi ${RUNdir}/.");
 
@@ -979,7 +979,7 @@ sub makeWW3InputFiles  {
         }
 
         if ($file eq "ww3_grid.inp.grd1") {
-           #my $fileboundin="$NWPSdir/parm/templates/$SITEID/BounCommandLines.txt";
+           #my $fileboundin="$HOMEnwps/parm/templates/$SITEID/BounCommandLines.txt";
            #system("sed -i '/\$HERE BOUN SEG/r $fileboundin' $file");
            my $siteid=$SITEID;
            $siteid=~tr/[A-Z]/[a-z]/;
@@ -1038,7 +1038,7 @@ sub makeWW3InputFiles  {
         }
     }
 
-    system("cp -pfv ${NWPSdir}/bin/run_ww3_multi.sh ${RUNdir}/run_ww3_multi_updated.sh");
+    system("cp -pfv ${HOMEnwps}/bin/run_ww3_multi.sh ${RUNdir}/run_ww3_multi_updated.sh");
     system("chmod +x ${RUNdir}/run_ww3_multi_updated.sh");
 
 # To introduce the current fields and Bound Conditions , if present

@@ -23,7 +23,7 @@ set -xa
 #  "
 # ----------------------------------------------------------- 
 
-cd $NWPSdir/sorc/swan.fd
+cd $HOMEnwps/sorc/swan.fd
 echo 'Script to update the floating point formatting in the print file PRINTF'  
 
 echo 'Backing up original source code files...'

@@ -26,4 +26,4 @@ export HPSSOUT=/NCEPDEV/emc-marine
 export TSM_FLAG="NO"
 export CHECK_HPSS_IDX="YES"
 
-${NWPSdir}/dev/scripts/rhist_savenwps.dev.sh ${DATADIR} ${HPSSDATE}
+${HOMEnwps}/dev/scripts/rhist_savenwps.dev.sh ${DATADIR} ${HPSSDATE}

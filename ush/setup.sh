@@ -33,7 +33,7 @@ fi
 # Setup our NWPS environment                                                    
 if [ "${HOMEnwps}" == "" ]
     then 
-    echo "ERROR - Your NWPSdir variable is not set"
+    echo "ERROR - Your HOMEnwps variable is not set"
     export err=1; err_chk
 fi
 
@@ -1165,7 +1165,7 @@ echo "Checking ..." >> ${LOGFILE}
 
 echo "Need to check if NWPS workstation package is installed..." >> ${LOGFILE}
 USER=$(whoami)
-#if [ ! -e ${NWPSdir}/parm/templates ] 
+#if [ ! -e ${HOMEnwps}/parm/templates ] 
 #    then
 #    logit "ERROR - You do not have the NWPS workstation package installed."
 #    logit "You must install the workstation package"
@@ -1206,7 +1206,7 @@ else
     logit ""
     logit "NOTE: Interactive mode is used for testing and development"
     logit "NOTE: For production systems create domain setup file"
-    logit "NOTE: Examples can be found in ${NWPSdir}/fix/domains"
+    logit "NOTE: Examples can be found in ${HOMEnwps}/fix/domains"
     logit "NOTE: After creating a domain setup file run command below"
     logit "NOTE: ${0} domains/XXX"
     logit "NOTE: replace XXX with the 3 letter site ID of your domain"
@@ -1490,7 +1490,7 @@ do
     chmod 664 $i
 done
 #NOTE: Eventhough the user can choose to include boundary conditions from the
-#      domain file ({$NWPSdir}/fixp/domains/FILE,  this can be overridden
+#      domain file ({$HOMEnwps}/fixp/domains/FILE,  this can be overridden
 #      by the input information from the GUI.
 #Following lines will introduce the BOUN SEG command lines into inputCG1
 #     echo " ********************************************"
@@ -1501,7 +1501,7 @@ done
 if [[ $BOUNCOND == "1" ]]
    then
 
-   #rm ${NWPSdir}/parm/templates/${LSID}/BounCommandLines.txt
+   #rm ${HOMEnwps}/parm/templates/${LSID}/BounCommandLines.txt
 
    if [ ${MODELCORE} == "SWAN" ] || [ ${MODELCORE} == "swan" ] || [ ${MODELCORE} == "UNSWAN" ]
    then
@@ -1541,7 +1541,7 @@ echo "RIPPROG: $RIPPROG"
 if [[ $RIPPROG == "1" ]]
    then
 
-   #rm ${NWPSdir}/parm/templates/${LSID}/RipCommandLines.txt
+   #rm ${HOMEnwps}/parm/templates/${LSID}/RipCommandLines.txt
 
    echo " **********************************************"
    echo " Rip Contours being added to input${RIPDOMAIN}  *"
@@ -1655,8 +1655,8 @@ sed -r -i "s/^(use constant JETLAG => ')([0-9]+)(';)/\1${JETLAG}\3/g" ${RUNdir}/
 
 # Copy the templates
 
-#RPcp -pf * ${NWPSdir}/parm/templates/${LSID}/.
-#RPcp -pf ${NWPSdir}/fix/domains/${SITEID} ${NWPSdir}/parm/templates/${LSID}/.
+#RPcp -pf * ${HOMEnwps}/parm/templates/${LSID}/.
+#RPcp -pf ${HOMEnwps}/fix/domains/${SITEID} ${HOMEnwps}/parm/templates/${LSID}/.
 mkdir -p ${DATA}/parm/templates/${LSID}/
 cp -pf * ${DATA}/parm/templates/${LSID}/.
 cp -pf   ${FIXnwps}/domains/${SITEID}  ${DATA}/parm/templates/${LSID}/.
@@ -1667,8 +1667,8 @@ then
     parms="FREQUENCYARRAY NUMOFOUTPUTSPC1D SPECTRANAMES1D SPC1DLONGITUDES SPC1DLATITUDES"
     for parm in ${parms}
     do
-	#RPcat ${NWPSdir}/parm/templates/${LSID}/CGinclude.pm > ${VARdir}/CGinclude_spectra.pm
-	#RPcat ${VARdir}/CGinclude_spectra.pm | grep -v ${parm} > ${NWPSdir}/parm/templates/${LSID}/CGinclude.pm 
+	#RPcat ${HOMEnwps}/parm/templates/${LSID}/CGinclude.pm > ${VARdir}/CGinclude_spectra.pm
+	#RPcat ${VARdir}/CGinclude_spectra.pm | grep -v ${parm} > ${HOMEnwps}/parm/templates/${LSID}/CGinclude.pm 
 	cat ${DATA}/parm/templates/${LSID}/CGinclude.pm > ${VARdir}/CGinclude_spectra.pm
 	cat ${DATA}/CGinclude_spectra.pm | grep -v ${parm} > ${DATA}/parm/templates/${LSID}/CGinclude.pm 
     done
@@ -1680,8 +1680,8 @@ fi
 #    parms="NUMOFOUTPUTPART PARTITIONNAMES PARTLONGITUDES PARTLATITUDES"
 #    for parm in ${parms}
 #    do
-#	cat ${NWPSdir}/parm/templates/${LSID}/CGinclude.pm > ${VARdir}/CGinclude_spectra.pm
-#	cat ${VARdir}/CGinclude_spectra.pm | grep -v ${parm} > ${NWPSdir}/parm/templates/${LSID}/CGinclude.pm 
+#	cat ${HOMEnwps}/parm/templates/${LSID}/CGinclude.pm > ${VARdir}/CGinclude_spectra.pm
+#	cat ${VARdir}/CGinclude_spectra.pm | grep -v ${parm} > ${HOMEnwps}/parm/templates/${LSID}/CGinclude.pm 
 #    done
 #fi
 
@@ -1717,7 +1717,7 @@ echo "# Set our core Wave Model"  >> ${DATA}/parm/templates/${LSID}/modeltype.sh
 echo "#"  >> ${DATA}/parm/templates/${LSID}/modeltype.sh
 echo "export MODELTYPE=$URMODEL" >> ${DATA}/parm/templates/${LSID}/modeltype.sh
 echo "export modeltype=$LRMODEL" >> ${DATA}/parm/templates/${LSID}/modeltype.sh
-#chmod 775 ${NWPSdir}/parm/templates/${LSID}/modeltype.sh
+#chmod 775 ${HOMEnwps}/parm/templates/${LSID}/modeltype.sh
 
 #cd ${WD}
 

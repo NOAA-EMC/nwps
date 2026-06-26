@@ -60,7 +60,7 @@ our $path=PATH;
 #               Environment Variables                #
 ######################################################
 # Setup our NWPS env
-my $NWPSdir = $ENV{'HOMEnwps'};
+my $HOMEnwps = $ENV{'HOMEnwps'};
 my $USHnwps= $ENV{'nwps'};
 my $ISPRODUCTION = $ENV{'ISPRODUCTION'};
 my $DEBUGGING = $ENV{'DEBUGGING'};
@@ -114,7 +114,7 @@ if ($WATERLEVELS eq "PSURGE") {
 }
 
 if ($DEBUGGING eq "TRUE") {
-    Logs::run("NWPSdir: $NWPSdir");
+    Logs::run("HOMEnwps: $HOMEnwps");
     Logs::run("DEBUGGING: $DEBUGGING");
     Logs::run("DEBUG_LEVEL: $DEBUG_LEVEL");
     Logs::run("ISPRODUCTION: $ISPRODUCTION");

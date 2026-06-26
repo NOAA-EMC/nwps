@@ -41,7 +41,7 @@ use Tie::File;
 use ConfigSwan;
 
 # Setup our NWPS env
-my $NWPSdir = $ENV{'HOMEnwps'};
+my $HOMEnwps = $ENV{'HOMEnwps'};
 my $DATA = $ENV{'DATA'};
 my $ISPRODUCTION = $ENV{'ISPRODUCTION'};
 my $DEBUGGING = $ENV{'DEBUGGING'};
@@ -77,7 +77,7 @@ sub runWaveHazards ($%){
 	local $path=PATH;
 	Logs::bug("begin runWaveHazards",1);
 
-	chdir("${NWPSdir}/wavehazards");
+	chdir("${HOMEnwps}/wavehazards");
 	tie @wavehaz_par, 'Tie::File', "wavehazards_v3.par" or Logs::err("can't tie to file wavehazards_v3.par",2);
 	$wavehaz_par[8] =  (SWANFCSTLENGTH+1)."                             ! SWAN data: number of time steps   (i8)";
 	$wavehaz_par[9] =  ".$dateSuffix          ! Date suffix ending each file name (a30)";

@@ -1,6 +1,5 @@
 #!/bin/sh
 set -xa
-if [ "${envir}" != para ]; then
    ncyc="_$($NDATE)"
    dncyc=".$($NDATE)"
    ncycm1="_$($NDATE -1)"
@@ -8,17 +7,6 @@ if [ "${envir}" != para ]; then
    ncycm3="_$($NDATE -3)"
    ncycm4="_$($NDATE -4)"
    ncycm5="_$($NDATE -5)"
-else
-   # for testing in para, set hour
-   nhour=23
-   ncyc="_$($NDATE 0 ${PDY}${nhour})"
-   dncyc=".$($NDATE 0 ${PDY}${nhour})"
-   ncycm1="_$($NDATE -1 ${PDY}${nhour})"
-   ncycm2="_$($NDATE -2 ${PDY}${nhour})"
-   ncycm3="_$($NDATE -3 ${PDY}${nhour})"
-   ncycm4="_$($NDATE -4 ${PDY}${nhour})"
-   ncycm5="_$($NDATE -5 ${PDY}${nhour})"
-fi
 
 export ECF_NAME_ORIG=${ECF_NAME}
 export ECF_PASS_ORIG=${ECF_PASS}
@@ -44,10 +32,19 @@ elif [ "${status}" == "ERROR" ];then
 else
     export color=magenta
 fi
-if [ "a${step}" == "a" ]; then
-    echo "{\"wfo\":\"${wfo^^}\",\"tstart\":\"<b><font color='darkslategray'>$tstart</font></b>\",\"tstop\":\"<b><font color='darkslategray'>$tstop</font></b>\",\"region\":\"$region\",\"stat\":\"<font color='$color'>$status</font>\",\"job\":\"<b><font color='$color'>${step^^}</font></b>\",\"options\":\"<a href='warnings/Warn_Forecaster_${wfo^^}${dncyc:0:9}.txt'>click</a>\"}," >> ${web_status_file}
+
+## RFC NWPS website refresh, new site on 2/11/25
+## https://www.nco.ncep.noaa.gov/status/nwps/
+if [ "${envir}" = prod ]; then
+    htdir='/pmb/spa/nwps/warnings'
 else
-    echo "{\"wfo\":\"${wfo^^}\",\"tstart\":\"<b><font color='darkslategray'>$tstart</font></b>\",\"tstop\":\"<b><font color='darkslategray'>$tstop</font></b>\",\"region\":\"$region\",\"stat\":\"<font color='$color'>${status}</font>\",\"job\":\"<b><font color='$color'>${step^^}</font></b>\",\"options\":\"<a href='warnings/Warn_Forecaster_${wfo^^}${dncyc:0:9}.txt'>click</a>\"}," >> ${web_status_file}
+    htdir='/pmb/spatools/nwps_status/warnings'
+fi
+
+if [ "a${step}" == "a" ]; then
+    echo "{\"wfo\":\"${wfo^^}\",\"tstart\":\"<b><font color='darkslategray'>$tstart</font></b>\",\"tstop\":\"<b><font color='darkslategray'>$tstop</font></b>\",\"region\":\"$region\",\"stat\":\"<font color='$color'>$status</font>\",\"job\":\"<b><font color='$color'>${step^^}</font></b>\",\"options\":\"<a href='${htdir}/Warn_Forecaster_${wfo^^}${dncyc:0:9}.txt'>click</a>\"}," >> ${web_status_file}
+else
+    echo "{\"wfo\":\"${wfo^^}\",\"tstart\":\"<b><font color='darkslategray'>$tstart</font></b>\",\"tstop\":\"<b><font color='darkslategray'>$tstop</font></b>\",\"region\":\"$region\",\"stat\":\"<font color='$color'>${status}</font>\",\"job\":\"<b><font color='$color'>${step^^}</font></b>\",\"options\":\"<a href='${htdir}/Warn_Forecaster_${wfo^^}${dncyc:0:9}.txt'>click</a>\"}," >> ${web_status_file}
 fi
 }
 
@@ -57,7 +54,6 @@ function process_nwps_dcom {
     nrunning=0
     nfinished=0
     nignored=0
-#    DCOM_FILES=($( for i in $(cat ${FIXnwps}/wfolist.dat |grep -v -E "^$|#"|tr '[A-Z]' '[a-z]'); do
     DCOM_FILES=($( for i in $(cat ${PARMnwps}/wfo.tbl|grep -v "#"|awk -F"/" '{print $2}'); do
                         if ls -1rt ${FORECASTWINDdir}/*_${i}* &> /dev/null; then
                             ls -1rt ${FORECASTWINDdir}/*_${i}*|tail -n 1

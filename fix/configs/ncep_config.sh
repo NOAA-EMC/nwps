@@ -16,8 +16,8 @@ then
 fi
 
 # Set database DIRs here
-export BATHYdb=${NWPSdir}/bathy_db
-export SHAPEFILEdb=${NWPSdir}/shapefile_db
+export BATHYdb=${HOMEnwps}/bathy_db
+export SHAPEFILEdb=${HOMEnwps}/shapefile_db
 
 # Set processing DIRs here
 export ARCHdir=${NWPSNCEPDATA}/archive
@@ -39,5 +39,5 @@ export SITETYPE="EMC"
 
 # NOTE: This should only be set once your verify your IFPS account
 # NOTE: can SSH to LDAD using keyed authentication. Move this export
-# NOTE: to your site config: ${NWPSdir}/etc/${siteid}_config.sh
+# NOTE: to your site config: ${HOMEnwps}/etc/${siteid}_config.sh
 export SENDLDADALERTS="FALSE"

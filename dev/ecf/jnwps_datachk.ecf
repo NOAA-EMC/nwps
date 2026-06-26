@@ -22,7 +22,7 @@
 # ----------------------------------------------------------- 
 
 # Setup and load modules
-VERSION_FILE=${NWPSdir}/versions/run.ver
+VERSION_FILE=${HOMEnwps}/versions/run.ver
 if [ -f $VERSION_FILE ]; then
   . $VERSION_FILE
 else
@@ -31,7 +31,6 @@ else
   exit
 fi
 
-export HOMEnwps=${NWPSdir}
 
 module purge
 module load envvar/${envvar_ver}

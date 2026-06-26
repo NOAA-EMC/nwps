@@ -24,17 +24,17 @@ set -xa
 # ----------------------------------------------------------- 
 
 # Setup our NWPS environment                                                    
-if [ "${NWPSdir}" == "" ]
+if [ "${HOMEnwps}" == "" ]
     then 
-    echo "ERROR - Your NWPSdir variable is not set"
+    echo "ERROR - Your HOMEnwps variable is not set"
     exit 1
 fi
     
-if [ -e ${NWPSdir}/etc/nwps_config.sh ]
+if [ -e ${HOMEnwps}/etc/nwps_config.sh ]
 then
-    source ${NWPSdir}/etc/nwps_config.sh &> /dev/null
+    source ${HOMEnwps}/etc/nwps_config.sh &> /dev/null
 else
-    "ERROR - Cannot find ${NWPSdir}/etc/nwps_config.sh"
+    "ERROR - Cannot find ${HOMEnwps}/etc/nwps_config.sh"
     exit 1
 fi
 
@@ -81,7 +81,7 @@ function check_pwd () {
 	logit "Please execute $PROGRAMNAME from the directory in which it resides"
 	logit " "
 	logit "Example: "
-	logit "         cd /${NWPSdir}/domain_setup/"
+	logit "         cd /${HOMEnwps}/domain_setup/"
 	logit "         ./setup.sh"
 	logit " "
 	logit "Exiting ... "
@@ -1105,7 +1105,7 @@ check_pwd
 
 echo "Need to check if NWPS workstation package is installed..." >> ${LOGFILE}
 USER=$(whoami)
-if [ ! -e ${NWPSdir}/templates ] 
+if [ ! -e ${HOMEnwps}/templates ] 
     then
     logit "ERROR - You do not have the NWPS workstation package installed."
     logit "You must install the workstation package"
@@ -1146,7 +1146,7 @@ else
     logit ""
     logit "NOTE: Interactive mode is used for testing and development"
     logit "NOTE: For production systems create domain setup file"
-    logit "NOTE: Examples can be found in ${NWPSdir}/domain_setup/domains"
+    logit "NOTE: Examples can be found in ${HOMEnwps}/domain_setup/domains"
     logit "NOTE: After creating a domain setup file run command below"
     logit "NOTE: ${0} domains/XXX"
     logit "NOTE: replace XXX with the 3 letter site ID of your domain"
@@ -1213,13 +1213,13 @@ logit " "
 
 cd $WD
 
-if [ ! -e ${NWPSdir}/templates/${LSID} ]
+if [ ! -e ${HOMEnwps}/templates/${LSID} ]
 then
     logit ": Creating new templates ... "
-    mkdir -p ${NWPSdir}/templates/${LSID}
+    mkdir -p ${HOMEnwps}/templates/${LSID}
 else
     logit ": Backing up the current templates ... "
-    cd ${NWPSdir}/templates/${LSID}
+    cd ${HOMEnwps}/templates/${LSID}
     BACKUPEXT=$(date +%Y%m%d_%H%M%S)
     #tar cfz templates_${BACKUPEXT}.tar.gz *
     tar cfz templates.tar.gz *
@@ -1227,7 +1227,7 @@ else
     cd $WD
 fi
 
-logit ": Customize ${NWPSdir}/templates/${LSID} ... "
+logit ": Customize ${HOMEnwps}/templates/${LSID} ... "
 cd ${WD}/templates/
 mkdir -p install
 cp -fp * install &> /dev/null
@@ -1421,7 +1421,7 @@ do
     chmod 664 $i
 done
 #NOTE: Eventhough the user can choose to include boundary conditions from the
-#      domain file ({$NWPSdir}/domain_setup/domains/FILE,  this can be overridden
+#      domain file ({$HOMEnwps}/domain_setup/domains/FILE,  this can be overridden
 #      by the input information from the GUI.
 #Following lines will introduce the BOUN SEG command lines into inputCG1
 #     echo " ********************************************"
@@ -1432,7 +1432,7 @@ done
 if [[ $BOUNCOND == "1" ]]
    then
 
-   rm ${NWPSdir}/templates/${LSID}/BounCommandLines.txt
+   rm ${HOMEnwps}/templates/${LSID}/BounCommandLines.txt
 
    if [ ${MODELCORE} == "SWAN" ] || [ ${MODELCORE} == "swan" ]
    then
@@ -1469,14 +1469,14 @@ fi
 #Following lines will introduce the Nested Grids info into the CGinclude.pm file
 
 # NOTE: This step will modify ConfigSwan.pm
-cat ${NWPSdir}/bin/ConfigSwan.pm > ${NWPSdir}/bin/ConfigSwan.pm.bak
-sed -r -i "s/^(use constant NUMCPUS => ')([0-9]+)(';)/\1${NUMCPUS}\3/g" ${NWPSdir}/bin/ConfigSwan.pm
-sed -r -i "s/^(use constant JETLAG => ')([0-9]+)(';)/\1${JETLAG}\3/g" ${NWPSdir}/bin/ConfigSwan.pm
+cat ${HOMEnwps}/bin/ConfigSwan.pm > ${HOMEnwps}/bin/ConfigSwan.pm.bak
+sed -r -i "s/^(use constant NUMCPUS => ')([0-9]+)(';)/\1${NUMCPUS}\3/g" ${HOMEnwps}/bin/ConfigSwan.pm
+sed -r -i "s/^(use constant JETLAG => ')([0-9]+)(';)/\1${JETLAG}\3/g" ${HOMEnwps}/bin/ConfigSwan.pm
 
 # Copy the templates
 
-cp -pf * ${NWPSdir}/templates/${LSID}/.
-cp -pf ${NWPSdir}/domain_setup/domains/${SITEID} ${NWPSdir}/templates/${LSID}/.
+cp -pf * ${HOMEnwps}/templates/${LSID}/.
+cp -pf ${HOMEnwps}/domain_setup/domains/${SITEID} ${HOMEnwps}/templates/${LSID}/.
 
 
 # If no spectra locations, remove the specra lines from our CGS include file
@@ -1485,8 +1485,8 @@ then
     parms="FREQUENCYARRAY NUMOFOUTPUTSPC1D SPECTRANAMES1D SPC1DLONGITUDES SPC1DLATITUDES"
     for parm in ${parms}
     do
-	cat ${NWPSdir}/templates/${LSID}/CGinclude.pm > ${VARdir}/CGinclude_spectra.pm
-	cat ${VARdir}/CGinclude_spectra.pm | grep -v ${parm} > ${NWPSdir}/templates/${LSID}/CGinclude.pm 
+	cat ${HOMEnwps}/templates/${LSID}/CGinclude.pm > ${VARdir}/CGinclude_spectra.pm
+	cat ${VARdir}/CGinclude_spectra.pm | grep -v ${parm} > ${HOMEnwps}/templates/${LSID}/CGinclude.pm 
     done
 fi
 
@@ -1496,44 +1496,44 @@ fi
 #    parms="NUMOFOUTPUTPART PARTITIONNAMES PARTLONGITUDES PARTLATITUDES"
 #    for parm in ${parms}
 #    do
-#	cat ${NWPSdir}/templates/${LSID}/CGinclude.pm > ${VARdir}/CGinclude_spectra.pm
-#	cat ${VARdir}/CGinclude_spectra.pm | grep -v ${parm} > ${NWPSdir}/templates/${LSID}/CGinclude.pm 
+#	cat ${HOMEnwps}/templates/${LSID}/CGinclude.pm > ${VARdir}/CGinclude_spectra.pm
+#	cat ${VARdir}/CGinclude_spectra.pm | grep -v ${parm} > ${HOMEnwps}/templates/${LSID}/CGinclude.pm 
 #    done
 #fi
 
 rm -rf ${WD}/templates/install
 cd ${WD}
 
-logit ": Setup setting ${NWPSdir}/etc/siteid.sh for local SITE ID ... "
-mkdir -p ${NWPSdir}/etc
-cat /dev/null > ${NWPSdir}/etc/siteid.sh
-echo "#!/bin/bash" >> ${NWPSdir}/etc/siteid.sh
-echo "# Set our 3 letter SITE ID"  >> ${NWPSdir}/etc/siteid.sh
-echo "# NOTE: Do NOT manually edit this script" >> ${NWPSdir}/etc/siteid.sh
-echo "# NOTE: This script will be created during your domain setup" >> ${NWPSdir}/etc/siteid.sh
-echo "#"  >> ${NWPSdir}/etc/siteid.sh
-echo "export SITEID=$USID" >> ${NWPSdir}/etc/siteid.sh
-echo "export siteid=$LSID" >> ${NWPSdir}/etc/siteid.sh
-echo "#"  >> ${NWPSdir}/etc/siteid.sh
-echo "# Set our 2 letter Region ID"  >> ${NWPSdir}/etc/siteid.sh
-echo "export REGIONID=$URID" >> ${NWPSdir}/etc/siteid.sh
-echo "export regionid=$LRID" >> ${NWPSdir}/etc/siteid.sh
+logit ": Setup setting ${HOMEnwps}/etc/siteid.sh for local SITE ID ... "
+mkdir -p ${HOMEnwps}/etc
+cat /dev/null > ${HOMEnwps}/etc/siteid.sh
+echo "#!/bin/bash" >> ${HOMEnwps}/etc/siteid.sh
+echo "# Set our 3 letter SITE ID"  >> ${HOMEnwps}/etc/siteid.sh
+echo "# NOTE: Do NOT manually edit this script" >> ${HOMEnwps}/etc/siteid.sh
+echo "# NOTE: This script will be created during your domain setup" >> ${HOMEnwps}/etc/siteid.sh
+echo "#"  >> ${HOMEnwps}/etc/siteid.sh
+echo "export SITEID=$USID" >> ${HOMEnwps}/etc/siteid.sh
+echo "export siteid=$LSID" >> ${HOMEnwps}/etc/siteid.sh
+echo "#"  >> ${HOMEnwps}/etc/siteid.sh
+echo "# Set our 2 letter Region ID"  >> ${HOMEnwps}/etc/siteid.sh
+echo "export REGIONID=$URID" >> ${HOMEnwps}/etc/siteid.sh
+echo "export regionid=$LRID" >> ${HOMEnwps}/etc/siteid.sh
 
-chmod 775 ${NWPSdir}/etc/siteid.sh
+chmod 775 ${HOMEnwps}/etc/siteid.sh
 
 # Create a backup of the siteid.sh so we can run backup domains
-cp -fp ${NWPSdir}/etc/siteid.sh ${NWPSdir}/templates/${LSID}/.
+cp -fp ${HOMEnwps}/etc/siteid.sh ${HOMEnwps}/templates/${LSID}/.
 
-logit ": Setup setting ${NWPSdir}/etc/modeltype.sh for model type ... "
-cat /dev/null > ${NWPSdir}/etc/modeltype.sh
-echo "#!/bin/bash" >> ${NWPSdir}/etc/modeltype.sh
-echo "# Set our core Wave Model"  >> ${NWPSdir}/etc/modeltype.sh
-echo "#"  >> ${NWPSdir}/etc/modeltype.sh
-echo "export MODELTYPE=$URMODEL" >> ${NWPSdir}/etc/modeltype.sh
-echo "export modeltype=$LRMODEL" >> ${NWPSdir}/etc/modeltype.sh
-chmod 775 ${NWPSdir}/etc/modeltype.sh
+logit ": Setup setting ${HOMEnwps}/etc/modeltype.sh for model type ... "
+cat /dev/null > ${HOMEnwps}/etc/modeltype.sh
+echo "#!/bin/bash" >> ${HOMEnwps}/etc/modeltype.sh
+echo "# Set our core Wave Model"  >> ${HOMEnwps}/etc/modeltype.sh
+echo "#"  >> ${HOMEnwps}/etc/modeltype.sh
+echo "export MODELTYPE=$URMODEL" >> ${HOMEnwps}/etc/modeltype.sh
+echo "export modeltype=$LRMODEL" >> ${HOMEnwps}/etc/modeltype.sh
+chmod 775 ${HOMEnwps}/etc/modeltype.sh
 # Create a backup on siteid so we can run backup domains
-cp -fp ${NWPSdir}/etc/modeltype.sh ${NWPSdir}/templates/${LSID}/.
+cp -fp ${HOMEnwps}/etc/modeltype.sh ${HOMEnwps}/templates/${LSID}/.
 
 cd ${WD}
 

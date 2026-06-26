@@ -36,7 +36,7 @@ fi
 # Check to see if our NWPS directory is set
 if [ "${USHnwps}" == "" ]
     then 
-    echo "ERROR - Your NWPSdir variable is not set"
+    echo "ERROR - Your HOMEnwps variable is not set"
     export err=1; err_chk
 fi
 
@@ -107,7 +107,7 @@ USERDELTAC="NO"
 if [ "${8}" != "" ]; then USERDELTAC=${8}; fi
 export USERDELTAC;
 
-# NOTE: The default variable is defined in master config $NWPSdir/etc/nwps_config.sh
+# NOTE: The default variable is defined in master config $HOMEnwps/etc/nwps_config.sh
 # NOTE: This must TRUE or FALSE to work with RunSwan.pm module
 if [ "${9}" != "" ];
 then
@@ -259,7 +259,7 @@ cp -vfp ${DATA}/parm/templates/${siteid}/cdlHeader* ${OUTPUTdir}/grid/. | tee -a
 cp -vfp ${DATA}/parm/templates/${siteid}/ww3_systrk.inp ${RUNdir}/. | tee -a $logfile
 #
 #NOTE: Eventhough the user can choose to include boundary conditions from the
-#      domain file ({$NWPSdir}/fix/domains/FILE,  this can be overridden
+#      domain file ({$HOMEnwps}/fix/domains/FILE,  this can be overridden
 #      by the input information from the GUI.
 #
 #Following lines will delete the  BOUN SEG command lines in inputCG1
@@ -554,7 +554,7 @@ if [ "${HOTSTART}" == "FALSE" ]; then rm -f ${INPUTdir}/hotstart/*; fi
 #Write parameters to a file
 cat /dev/null > ${RUNdir}/info_to_nwps_coremodel.txt
 # Setup our NWPS env
-echo "$NWPSdir" >> ${RUNdir}/info_to_nwps_coremodel.txt
+echo "$HOMEnwps" >> ${RUNdir}/info_to_nwps_coremodel.txt
 echo "$ISPRODUCTION" >> ${RUNdir}/info_to_nwps_coremodel.txt
 echo "$DEBUGGING" >> ${RUNdir}/info_to_nwps_coremodel.txt
 echo "$DEBUG_LEVEL" >> ${RUNdir}/info_to_nwps_coremodel.txt

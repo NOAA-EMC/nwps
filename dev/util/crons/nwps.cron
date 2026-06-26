@@ -2,9 +2,9 @@
 # --------------------------------------------------------------------------- #
 #                                                                             #
 # nwps.cron : This script manages the running of the parallel script          #
-#             ${NWPSdir}/dev/ecf/jnwps_datachk.ecf                            #
+#             ${HOMEnwps}/dev/ecf/jnwps_datachk.ecf                            #
 #                                                                             #
-# Remarks   - Set the WFOs to process in ${NWPSdir}/parm/wfo_dev.tbl          #
+# Remarks   - Set the WFOs to process in ${HOMEnwps}/parm/wfo_dev.tbl          #
 #                                                                             #
 # Last Changed : 12-05-2015                                    December 2015  #
 # --------------------------------------------------------------------------- #
@@ -95,7 +95,7 @@ export runon='BACKUPSYS'
 
   echo " "
   echo "        -> Submitting jnwps_datachk.ecf at: `date`"
-  ${NWPSdir}/dev/ecf/jnwps_datachk.ecf
+  ${HOMEnwps}/dev/ecf/jnwps_datachk.ecf
   echo " "
 
 # --------------------------------------------------------------------------- #

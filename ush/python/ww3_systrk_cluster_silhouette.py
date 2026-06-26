@@ -18,7 +18,7 @@ print('                   *** WAVEWATCH III Wave system tracking ***  ')
 print('               ===============================================')
 print
 
-NWPSdir = os.environ['NWPSdir']
+HOMEnwps = os.environ['HOMEnwps']
 
 # Parameters
 monthstr = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']

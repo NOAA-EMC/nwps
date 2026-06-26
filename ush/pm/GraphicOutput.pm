@@ -79,7 +79,7 @@ our $PATH=$ENV{PATH};
 use Archive qw(archiveFiles);
 
 # Setup our NWPS env
-my $NWPSdir = $ENV{'HOMEnwps'};
+my $HOMEnwps = $ENV{'HOMEnwps'};
 my $DATA = $ENV{'DATA'};
 my $ISPRODUCTION = $ENV{'ISPRODUCTION'};
 my $DEBUGGING = $ENV{'DEBUGGING'};
@@ -150,7 +150,7 @@ our (@dataMag,@dataDir);#resulting data (magnitude,direction) from the vector co
 if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     my $infoFile02 = "${RUNdir}/info_to_nwps_coremodel.txt";
     open IN, "<$infoFile02"  or die "Cannot open: $!";
-    our ($NWPSdir, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir);
+    our ($HOMEnwps, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir);
     our ($DATAdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN);
     our ($NESTS, $RTOFS, $ESTOFS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID);
     our ($WNA, $WINDS, $INPUTdir, $ISPRODUCTIO, $DATAdir, $siteid, $GEN_NETCDF);
@@ -161,7 +161,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
 	$ndata+=1;
 	chomp($_);
 	if ($ndata ==1) {
-	    $NWPSdir=$_;
+	    $HOMEnwps=$_;
 	}
 	if ($ndata ==2) {
 	    $ISPRODUCTIO=$_;
@@ -242,7 +242,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
     }
     close IN;
 
-#print "$NWPSdir, $ISPRODUCTIO, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir\n";
+#print "$HOMEnwps, $ISPRODUCTIO, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir\n";
 #print "$DATAdir, $INPUTdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN, $WNA\n";
 #print "$NESTS, $RTOFS, $ESTOFS, $WINDS, $WEB, $PLOT, $MODELCORE, $LOGdir, $SITEID, $DATAdir\n";
 #print "$GEN_NETCDF\n";
@@ -656,8 +656,8 @@ sub graphicOutputProcessing (%){
 
         if( $spc1dYorN eq 'YES' && $hasspcerror eq 'FALSE' ) { 
 	    print SPCLOG "Plotting spectra-1d images\n";
-	    #system("${NWPSdir}/ush/grads/bin/plot_specta.sh ${cgnum} >> ${LOGdir}/spectra1d_encoding.log 2>&1"); 
-	    #AW020117 system("${NWPSdir}/ush/python/plot_specta.sh ${cgnum} >> ${LOGdir}/spectra1d_encoding.log 2>&1"); 
+	    #system("${HOMEnwps}/ush/grads/bin/plot_specta.sh ${cgnum} >> ${LOGdir}/spectra1d_encoding.log 2>&1"); 
+	    #AW020117 system("${HOMEnwps}/ush/python/plot_specta.sh ${cgnum} >> ${LOGdir}/spectra1d_encoding.log 2>&1"); 
         }
         system("date +%s > ${VARdir}/spectra1d_end_secs.txt");
         print SPCLOG "Specta 1d processing complete\n";

@@ -45,8 +45,6 @@ echo "COARSE OR NESTED GRID(S): ${N}"
 
 echo "Starting NWPS PRODUCTS SCRIPT" | tee -a ${LOGdir}/prdgen_cgn.log 
 
-PARMwmo=${PARMnwps}/wmo_headers
-
 # Here some variables are defined if the run is for CG0 to CG5
 # For CG0 (the output of wave tracking) we need the number of wave systems
 
@@ -116,7 +114,7 @@ YMDH=${PDY}
   echo "   AWIPS grib fields : $awipsgrib"
   echo "   Wave  Grids       : $grids"
   echo ' '
-  [[ "$LOUD" = YES ]] && set -x
+  set -x
 
 # --------------------------------------------------------------------------- #
 # 1.  Get necessary files
@@ -125,7 +123,7 @@ YMDH=${PDY}
   echo ' '
   echo 'Preparing input files :'
   echo '-----------------------'
-  [[ "$LOUD" = YES ]] && set -x
+  set -x
 
 # 1.a Grib file (AWIPS and FAX charts)
 
@@ -141,7 +139,7 @@ YMDH=${PDY}
       then
         set +x
         echo "   Copying grib2 from ${GRIB2dir}/${grdID}/"
-        [[ "$LOUD" = YES ]] && set -x
+        set -x
         cd ${GRIB2dir}/${grdID}
         #subfix="*${grdID}*grib2"
         #file=`ls ${subfix}`
@@ -181,7 +179,7 @@ YMDH=${PDY}
       then
         set +x
         echo "   gribfile.$grdID exists."
-        [[ "$LOUD" = YES ]] && set -x
+        set -x
       else
         echo "FATAL ERROR: NO GRIB FILE FOR GRID $grdID"  | tee -a ${LOGdir}/prdgen_cgn.log 
         msg="FATAL ERROR: NO GRIB FILE FOR GRID $grdID"
@@ -195,7 +193,7 @@ YMDH=${PDY}
         echo '**************************** '
         echo ' '
         exit
-        [[ "$LOUD" = YES ]] && set -x
+        set -x
         echo "$siteid $grdID prdgen_cgn  : GRIB file missing."| tee -a ${LOGdir}/prdgen_cgn.log 
         awipsgrib='no'
         export err=1; err_chk
@@ -329,7 +327,7 @@ YMDH=${PDY}
         set +x
         echo "      Saving AWIPSGRIB as grib2.$cycle.awipsnwps_${siteid}_${grdID}"
         echo "          in $COMOUTwmo"
-        [[ "$LOUD" = YES ]] && set -x
+        set -x
         cp AWIPSGRIB $COMOUTwmo/grib2.$cycle.awipsnwps_${siteid}_${grdID}
         export err=$?; err_chk
       fi
@@ -349,7 +347,7 @@ YMDH=${PDY}
 # --------------------------------------------------------------------------- #
 # 5.  Clean up
 
-  set +x; [[ "$LOUD" = YES ]] && set -v
+  set +x;  set -v
   rm -f gribfile gribindex.* awipsgrb.*
   set +v
 
@@ -363,7 +361,7 @@ YMDH=${PDY}
   echo ' '
   echo '                *** End of NWPS product generation ***'
   echo ' '
-  [[ "$LOUD" = YES ]] && set -x
+  set -x
 
 echo "$job completed normally" | tee -a ${LOGdir}/prdgen_cgn.log 
 

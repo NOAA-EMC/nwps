@@ -2,7 +2,7 @@
 # --------------------------------------------------------------------------- #
 #                                                                             #
 # nwps_ofs_estofs_cur.cron : Script manages the running of the NWPS water level   #
-#                        extraction script ${NWPSdir}/dev/nwps_ofs_prep.ecf   #
+#                        extraction script ${HOMEnwps}/dev/nwps_ofs_prep.ecf   #
 #                                                                             #
 # Remarks   - Can be run interactively, or from LL.                           #
 #                                                                             #
@@ -75,7 +75,7 @@ export runon='BACKUPSYS'
 
   echo " "
   echo "        -> Submitting nwps_ofs_prep.ecf at: `date`"
-  qsub ${NWPSdir}/dev/ecf/jnwps_ofs_prep.ecf
+  qsub ${HOMEnwps}/dev/ecf/jnwps_ofs_prep.ecf
   echo " "
 
 # --------------------------------------------------------------------------- #

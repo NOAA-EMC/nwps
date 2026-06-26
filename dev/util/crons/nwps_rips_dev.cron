@@ -4,7 +4,7 @@
 # nwps_rips_dev.cron : This script manages the running of the parallel script #
 #                      nwps_plot_runup_6day.py                                #
 #                                                                             #
-# Remarks   - Set the WFOs to process in ${NWPSdir}/parm/wfo_dev.tbl          #
+# Remarks   - Set the WFOs to process in ${HOMEnwps}/parm/wfo_dev.tbl          #
 #                                                                             #
 # Last Changed : 06-14-2022                                        June 2022  #
 # --------------------------------------------------------------------------- #

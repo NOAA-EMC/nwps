@@ -64,8 +64,8 @@ import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import os
 
-NWPSdir = os.environ['NWPSdir']
-cartopy.config['pre_existing_data_dir'] = NWPSdir+'/lib/cartopy'
+HOMEnwps = os.environ['HOMEnwps']
+cartopy.config['pre_existing_data_dir'] = HOMEnwps+'/lib/cartopy'
 print('Reading cartopy shapefiles from:')
 print(cartopy.config['pre_existing_data_dir'])
 

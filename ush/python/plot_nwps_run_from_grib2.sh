@@ -86,8 +86,8 @@ echo "SITE ID: ${SITEID}"
 
 PYTHON=python
 
-ETCdir="${NWPSdir}/ush/python/etc"
-PYPdir="${NWPSdir}/ush/python"
+ETCdir="${HOMEnwps}/ush/python/etc"
+PYPdir="${HOMEnwps}/ush/python"
 FIGOUTPUTdir="${OUTPUTdir}/figures"
 PLOT_templdir=${DATA}/plot/templates
 #if [ ! -e ${PYPdir} ]; then mkdir -p ${PYPdir}; fi
@@ -104,7 +104,7 @@ if [ -f "${RUNdir}/nests.flag" ]; then
   hasnest=$(cat ${RUNdir}/nests.flag)
   if [ "${hasnest}" == "TRUE" ]; then export NESTS="YES"; fi
 fi 
-#SWANPARMS=`perl -I${NWPSdir}/ush/bin -I${RUNdir} ${PYPdir}/get_swan_config_parms.pl`
+#SWANPARMS=`perl -I${HOMEnwps}/ush/bin -I${RUNdir} ${PYPdir}/get_swan_config_parms.pl`
 SWANPARMS=`${PYPdir}/get_swan_config_parms.pl`
 
 # Process all CGs
@@ -333,8 +333,8 @@ for parm in ${SWANPARMS}
   #${GRIBMAP} -v -i swan.ctl
 
   # NOTE: If you change the default Python directory you will need to 
-  # NOTE: change or remake all ${NWPSdir}/ush/python/etc/siteid/python_elements.sh
-  # NOTE: files PYTHON variable is when we source ${NWPSdir}/utils/etc/nwps_config.sh
+  # NOTE: change or remake all ${HOMEnwps}/ush/python/etc/siteid/python_elements.sh
+  # NOTE: files PYTHON variable is when we source ${HOMEnwps}/utils/etc/nwps_config.sh
 #  if [ ! -e "${TEMPDIR}/python_grib2_elements.sh" ]
 #      then 
 #      echo "WARNING - No site specific python grib2_element file"

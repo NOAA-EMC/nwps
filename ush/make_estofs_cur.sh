@@ -305,7 +305,7 @@ mpiexec -np 36 --cpu-bind verbose,core cfp ${RUNdir}/cgn_cmdfile
 #export site=SEW; process_wfolist 
 #export site=AER; process_wfolist
 
-export err=$?; err_check
+export err=$?; err_chk
 
 datetime=`date -u`
 echo "Ending download at $datetime UTC" 
