@@ -113,7 +113,7 @@ export COMINstofs=/lfs/h1/ops/prod/com/stofs/${stofs_ver}/stofs_2d_glo.${PDY}
 export COMINrtofs=/lfs/h1/ops/prod/com/rtofs/${rtofs_ver}/rtofs.${PDY}
 export COMINsice=/lfs/h1/ops/prod/com/seaice_analysis/${seaice_analysis_ver}/seaice_analysis.${PDY}
 export COMINsicem1=/lfs/h1/ops/prod/com/seaice_analysis/${seaice_analysis_ver}/seaice_analysis.${PDYm1}
-export COMINpsurge=/lfs/h1/ops/prod/com/psurge/${psurge_ver}/psurge.${PDY}
+export COMINpsurge=/lfs/h1/ops/prod/com/psurge/${psurge_ver}
 
 export COMROOTp2=/gpfs/hps/nco/ops/com
 
