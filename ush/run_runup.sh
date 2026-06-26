@@ -30,6 +30,9 @@ if [[ ! -f ${CONTOUR}_contour_${CG}.${INIT_DATE}_${SITEID} ]]; then
 echo "Cant find ${CONTOUR}_contour_${CG}.${INIT_DATE}_${SITEID}" | tee -a logrunup
    continue
 fi
+
+. prep_step
+
 #
 # ======================================================================
 # Define Fortran Unit Number filenames
