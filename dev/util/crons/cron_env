@@ -35,9 +35,9 @@ glwu_ver='v1.1'
 # 1. Development crons -----------------------
 
 # 1.0 Model runs
-0 7,13,19 * * *  ${HOME}/nwps_ofs_estofs.cron > ${HOME}/cronlog.ofs_estofs 2>&1
-0 8,14,20 * * *  ${HOME}/nwps_ofs_estofs_cur.cron > ${HOME}/cronlog.ofs_estofs_cur 2>&1
-#0 6,12,18 * * *  ${HOME}/nwps_ofs_psurge.cron > ${HOME}/cronlog.ofs_estofs 2>&1
+0 7,13,19 * * *  ${HOME}/nwps_ofs_stofs.cron > ${HOME}/cronlog.ofs_stofs 2>&1
+0 8,14,20 * * *  ${HOME}/nwps_ofs_stofs_cur.cron > ${HOME}/cronlog.ofs_stofs_cur 2>&1
+#0 6,12,18 * * *  ${HOME}/nwps_ofs_psurge.cron > ${HOME}/cronlog.ofs_stofs 2>&1
 0 22 * * *       ${HOME}/nwps_ofs_rtofs.cron > ${HOME}/cronlog.ofs_rtofs 2>&1
 */5 * * * *      ${HOME}/nwps.cron > ${HOME}/cronlog.dev.nwps 2>&1
 

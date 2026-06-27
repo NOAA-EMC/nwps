@@ -42,7 +42,7 @@ ${HOMEnwps}/jobs/JNWPS_OFS_PREP
 #ORGANIZATION:   NP11
 #DATE:           SEP 2014
 #FULL NAME:    /nwps_para/nwps/SR/jnwps_psurge_prep
-#PURPOSE:  To execute the job that creates NWPS RTOFS and ESTOFS output files
+#PURPOSE:  To execute the job that creates NWPS RTOFS and STOFS output files
 #JOB SCRIPT CALLED: /nwprod/nwps.${nwps_ver}/jobs/JNWPS_OFS_PREP ==>
 #                            /nwprod/nwps.${nwps_ver}/scripts/exnwps_ofs_prep.sh.ecf
 #################################################################################

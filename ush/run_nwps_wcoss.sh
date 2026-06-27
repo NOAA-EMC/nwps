@@ -62,7 +62,7 @@ function HelpMessage()
     echo " --nodownload             Do not re-download Regional, NDFD, or GFS winds"
     echo ""
     echo "Advanced options:"
-    echo " --waterlevels XXXXXX     Specify ESTOFS or PSURGE. If not specified default is No."
+    echo " --waterlevels XXXXXX     Specify STOFS or PSURGE. If not specified default is No."
     echo " --excd nn                Specify if you want to use 10, 20, 30, 40, or 50 exceedance. If not specified, default is 10."
     echo " --deltac nnnn            Specify DELTAC value in seconds"
     echo " --windfile filename.txt  Start model run using archived wind file" 
@@ -163,7 +163,7 @@ Default_WEB="NO"
 # Default_HOTSTART="TRUE"
 [ "${COLDSTART}" == "YES" ] && Default_HOTSTART="FALSE" || Default_HOTSTART="TRUE"
 #
-Default_WATERLEVELS="ESTOFS"
+Default_WATERLEVELS="STOFS"
 Default_EXCD="10"
 
 # Check for unset ENV vars
@@ -566,10 +566,10 @@ else
    export MODELCORE="SWAN"
 fi
 
-# Set selected WFOs to use depth-integrated currents from ESTOFS
+# Set selected WFOs to use depth-integrated currents from STOFS
 if [ "${SITEID}" == "PQR" ] || [ "${SITEID}" == "EKA" ] || [ "${SITEID}" == "SEW" ]
 then
-   export RTOFS="ESTOFSCUR"
+   export RTOFS="STOFSCUR"
 fi
 
 cat /dev/null > ${LOGdir}/run_nwps.log
@@ -706,7 +706,7 @@ fi
 #Cleanup
 if [ -e ${RUNdir}/Psurge_End_Time ]; then rm ${RUNdir}/Psurge_End_Time; fi
 if [ -e ${RUNdir}/nortofs ]; then rm ${RUNdir}/nortofs; fi
-if [ -e ${RUNdir}/noestofs ]; then rm ${RUNdir}/noestofs; fi
+if [ -e ${RUNdir}/nostofs ]; then rm ${RUNdir}/nostofs; fi
 if [ -e ${RUNdir}/nopsurge ]; then rm ${RUNdir}/nopsurge; fi
 
 export MODELCORE=$(echo ${MODELCORE} | tr [:lower:] [:upper:])

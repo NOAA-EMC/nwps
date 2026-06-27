@@ -27,7 +27,7 @@ export MP_PGMMODEL=mpmd
 export MP_CSS_INTERRUPT=yes
 export cyc=%CYC%
 export KEEPDATA=%KEEPDATA%
-export OFSTYPE=estofs_cur
+export OFSTYPE=stofs_cur
 
 export OMP_NUM_THREADS=1
 

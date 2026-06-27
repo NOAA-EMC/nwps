@@ -18,7 +18,7 @@
 # ------------- Program Description and Details -------------
 # -----------------------------------------------------------
 #
-# Script used to download ESTOFS grib2 files. 
+# Script used to download STOFS grib2 files. 
 #
 # NOTE: This script is used on standalone workstations
 # NOTE: that are not fed by SBN or regional LDM. This script was
@@ -67,8 +67,8 @@ export TZ=UTC
 
 # Script variables
 # ===========================================================
-BINdir="${USHnwps}/estofs/bin"
-LOGfile="${LOGdir}/estofs_download.log"
+BINdir="${USHnwps}/stofs/bin"
+LOGfile="${LOGdir}/stofs_download.log"
 myPWD=$(pwd)
 
 # Setup our Regional domain here based on our NWPS site's region
@@ -84,7 +84,7 @@ then
 fi
 
 # Set our data processing directory
-DATAdir="${DATAdir}/estofs"
+DATAdir="${DATAdir}/stofs"
 # Set our output DIR for processed data
 OUTPUTdir="${DATAdir}/${REGION}_output"
 # Set the DIRs to download (mirror) the NCEP data
@@ -93,17 +93,17 @@ SPOOLdir="${DATAdir}/ncep_hourly.spool"
 CLIPdir="${DATAdir}/${REGION}_hourly"
 
 # Set our data ingest DIR 
-INGESTdir="${LDMdir}/estofs"
+INGESTdir="${LDMdir}/stofs"
 
 # Set our final output DIR for SWAN input files
-SWANINPUTfiles="${INPUTdir}/estofs"
+SWANINPUTfiles="${INPUTdir}/stofs"
 
 # Set our purging varaibles
-ESTOFSPURGEdays="5"
+STOFSPURGEdays="5"
 
 # Set our locking variables
 PROGRAMname="$0"
-LOCKfile="$VARdir/get_estofs.lck"
+LOCKfile="$VARdir/get_stofs.lck"
 MINold="60"
 
 # NOTE: Add WGET --no-remove-listing option for FTP downloads
@@ -127,10 +127,10 @@ if [ $curhour -ge 22 ]; then CYCLE="18"; fi
 echo ""
 echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
 
-HOURS="${ESTOFSHOURS}"
+HOURS="${STOFSHOURS}"
 if [ "$2" != "" ]; then HOURS="$2"; fi
 
-TIMESTEP="${ESTOFSTIMESTEP}"
+TIMESTEP="${STOFSTIMESTEP}"
 if [ "$3" != "" ]; then TIMESTEP="$3"; fi
 
 # Set the date stamp using the system Z time
@@ -150,31 +150,31 @@ fi
 # Use the current date
 if [ "${YYYYMMDD}" == "DEFAULT" ]; then YYYYMMDD="${YYYY}${MM}${DD}"; fi
 
-if [ "${ESTOFS_REGION}" == "" ]; then ESTOFS_REGION="conus"; fi
-if [ "$5" != "" ]; then ESTOFS_REGION="$5"; fi
+if [ "${STOFS_REGION}" == "" ]; then STOFS_REGION="conus"; fi
+if [ "$5" != "" ]; then STOFS_REGION="$5"; fi
 
-if [ "${ESTOFSDOMAIN}" == "" ] || [ "${ESTOFSNX}" == "" ] || [ "${ESTOFSNY}" == "" ]  || [ "${ESTOFS_REGION}" == "" ]
+if [ "${STOFSDOMAIN}" == "" ] || [ "${STOFSNX}" == "" ] || [ "${STOFSNY}" == "" ]  || [ "${STOFS_REGION}" == "" ]
 then
-    echo "ERROR - Your ESTOFS domain is not set"
-    echo "ERROR - Need to set ESTOFSDOMAIN, ESTOFSNX, ESTOFSNY, and ESTOFS_REGION vars"
+    echo "ERROR - Your STOFS domain is not set"
+    echo "ERROR - Need to set STOFSDOMAIN, STOFSNX, STOFSNY, and STOFS_REGION vars"
     echo "ERROR - Check your ${USHnwps}/${region}_nwps_config.sh config"
     export err=1; err_chk
 fi
 
 # Set our script variables from the global config
-NX=${ESTOFSNX}
-NY=${ESTOFSNY}
-LL_LON=$(echo ${ESTOFSDOMAIN} | awk '{ print $1}')
-LL_LAT=$(echo ${ESTOFSDOMAIN} | awk '{ print $2}')
-DX=$(echo ${ESTOFSDOMAIN} | awk '{ print $6}')
-DY=$(echo ${ESTOFSDOMAIN} | awk '{ print $7}')
+NX=${STOFSNX}
+NY=${STOFSNY}
+LL_LON=$(echo ${STOFSDOMAIN} | awk '{ print $1}')
+LL_LAT=$(echo ${STOFSDOMAIN} | awk '{ print $2}')
+DX=$(echo ${STOFSDOMAIN} | awk '{ print $6}')
+DY=$(echo ${STOFSDOMAIN} | awk '{ print $7}')
 
-echo "ESTOFSHOURS = ${ESTOFSHOURS}"
-echo "ESTOFSTIMESTEP = ${ESTOFSTIMESTEP}"
-echo "ESTOFS_REGION = ${ESTOFS_REGION}"
-echo "ESTOFSDOMAIN = ${ESTOFSDOMAIN}"
-echo "NX = ${ESTOFSNX}"
-echo "NY = ${ESTOFSNY}"
+echo "STOFSHOURS = ${STOFSHOURS}"
+echo "STOFSTIMESTEP = ${STOFSTIMESTEP}"
+echo "STOFS_REGION = ${STOFS_REGION}"
+echo "STOFSDOMAIN = ${STOFSDOMAIN}"
+echo "NX = ${STOFSNX}"
+echo "NY = ${STOFSNY}"
 echo "LL_LON= ${LL_LON}"
 echo "LL_LAT= ${LL_LAT}"
 echo "DX = ${DX}"
@@ -182,7 +182,7 @@ echo "DY = ${DY}"
 
 #source ${USHnwps}/process_lock.sh
 
-echo "Starting ESTOFS data processing"
+echo "Starting STOFS data processing"
 #echo "Checking for lock files"
 #LockFileCheck $MINold
 #CreateLockFile
@@ -213,8 +213,8 @@ function MakeClip() {
 	FF=`echo 00$HOUR`
     fi
 
-    clip_file="${REGION}SWAN_estofs.atl.t${CYCLE}z.conus.f${FF}.grib2"
-    datfile="${REGION}SWAN_estofs.atl.t${CYCLE}z.conus.f${FF}.dat"
+    clip_file="${REGION}SWAN_stofs.atl.t${CYCLE}z.conus.f${FF}.grib2"
+    datfile="${REGION}SWAN_stofs.atl.t${CYCLE}z.conus.f${FF}.dat"
 
     if [ ! -e ${CLIPdir}/${clip_file} ]
     then
@@ -223,7 +223,7 @@ function MakeClip() {
 	${WGRIB2} ${DIR}/${FILE} -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/${clip_file} | tee -a ${LOGfile} 2>&1
     fi
 
-    swan_wl_ofile_fname="wave_estofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
+    swan_wl_ofile_fname="wave_stofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
     swan_wl_ofile="${OUTPUTdir}/${swan_wl_ofile_fname}"
 
     if [ ! -e ${swan_wl_ofile} ]
@@ -240,12 +240,12 @@ function MakeClip() {
     if [ "${IS_LDMSERVER}" == "TRUE" ]
     then
 	cd ${OUTPUTdir}
-	swan_dist_file="${OUTPUTdir}/estofs_swan_${epoc_time}_${date_str}_t${CYCLE}z_f${FF}_${REGION}.tar.gz" 
+	swan_dist_file="${OUTPUTdir}/stofs_swan_${epoc_time}_${date_str}_t${CYCLE}z_f${FF}_${REGION}.tar.gz" 
 	if [ ! -e ${swan_dist_file} ]
 	then 
 	    echo "Creating SWAN distrib file ${swan_dist_file}" | tee -a ${LOGfile}
 	    cd ${OUTPUTdir}
-	    tar cvfz ${swan_dist_file} ${swan_wl_ofile_fname} estofs_waterlevel_start_time.txt estofs_waterlevel_domain.txt 
+	    tar cvfz ${swan_dist_file} ${swan_wl_ofile_fname} stofs_waterlevel_start_time.txt stofs_waterlevel_domain.txt 
 	    cd ${CLIPdir}
 	    if [ -e ${ldm_server_script} ]; then source ${ldm_server_script}; fi 
 	fi
@@ -262,21 +262,21 @@ function MakeClip() {
 cat /dev/null > ${LOGfile}
 
 # Starting purging here
-echo "Purging any ESTOFS data older than ${ESTOFSPURGEdays} days old" | tee -a ${LOGfile}
-find ${OUTPUTdir} -type f -mtime +${ESTOFSPURGEdays} | xargs rm -f
-find ${SPOOLdir} -type f -mtime +${ESTOFSPURGEdays} | xargs rm -f
-find ${CLIPdir} -type f -mtime +${ESTOFSPURGEdays} | xargs rm -f
-find ${INGESTdir} -type f -mtime +${ESTOFSPURGEdays} | xargs rm -f
-find ${PRODUCTdir} -type f -mtime +${ESTOFSPURGEdays} | xargs rm -f
+echo "Purging any STOFS data older than ${STOFSPURGEdays} days old" | tee -a ${LOGfile}
+find ${OUTPUTdir} -type f -mtime +${STOFSPURGEdays} | xargs rm -f
+find ${SPOOLdir} -type f -mtime +${STOFSPURGEdays} | xargs rm -f
+find ${CLIPdir} -type f -mtime +${STOFSPURGEdays} | xargs rm -f
+find ${INGESTdir} -type f -mtime +${STOFSPURGEdays} | xargs rm -f
+find ${PRODUCTdir} -type f -mtime +${STOFSPURGEdays} | xargs rm -f
 
 # Set our download URL
-url="ftp://ftp.ncep.noaa.gov/pub/data/nccf/com/estofs/prod/estofs.${YYYYMMDD}"
+url="ftp://ftp.ncep.noaa.gov/pub/data/nccf/com/stofs/prod/stofs.${YYYYMMDD}"
 
 echo "Our spool DIR for FTP data is: ${SPOOLdir}" | tee -a ${LOGfile}  
 
 # Get the first forecast cycle
 FF="000"
-file="estofs.atl.t${CYCLE}z.${ESTOFS_REGION}.f${FF}.grib2"
+file="stofs.atl.t${CYCLE}z.${STOFS_REGION}.f${FF}.grib2"
 outfile="${file}"
 cd ${SPOOLdir}
 echo "Downloading $url/$file to $outfile" | tee -a ${LOGfile}
@@ -298,9 +298,9 @@ then
 fi
 epoc_time=`${WGRIB2} -unix_time ${SPOOLdir}/${file} | grep "1:4:unix" | awk -F= '{ print $3 }'`
 date_str=`echo ${epoc_time} | awk '{ print strftime("%Y%m%d", $1) }'`
-echo ${epoc_time} > ${OUTPUTdir}/estofs_waterlevel_start_time.txt
-echo "ESTOFSDOMAIN:${ESTOFSDOMAIN}" > ${OUTPUTdir}/estofs_waterlevel_domain.txt
-swan_wl_ofile_fname="wave_estofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
+echo ${epoc_time} > ${OUTPUTdir}/stofs_waterlevel_start_time.txt
+echo "STOFSDOMAIN:${STOFSDOMAIN}" > ${OUTPUTdir}/stofs_waterlevel_domain.txt
+swan_wl_ofile_fname="wave_stofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
 swan_wl_ofile="${OUTPUTdir}/${swan_wl_ofile_fname}"
 
 if [ ! -e ${swan_wl_ofile} ]
@@ -325,7 +325,7 @@ until [ $end -gt $HOURS ]; do
 	FF=`echo 00$end`
     fi
 
-    swan_wl_ofile_fname="wave_estofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
+    swan_wl_ofile_fname="wave_stofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
     swan_wl_ofile="${OUTPUTdir}/${swan_wl_ofile_fname}"
     if [ -e ${swan_wl_ofile} ] 
     then
@@ -335,7 +335,7 @@ until [ $end -gt $HOURS ]; do
 	continue
     fi
 
-    file="estofs.atl.t${CYCLE}z.${ESTOFS_REGION}.f${FF}.grib2"
+    file="stofs.atl.t${CYCLE}z.${STOFS_REGION}.f${FF}.grib2"
     outfile="${file}"
     cd ${SPOOLdir}
     echo "Downloading $url/$file to $outfile" | tee -a ${LOGfile}
@@ -356,7 +356,7 @@ until [ $end -gt $HOURS ]; do
 	export err=1; err_chk
     fi
 
-    file="estofs.atl.t${CYCLE}z.${ESTOFS_REGION}.f${FF}.grib2"
+    file="stofs.atl.t${CYCLE}z.${STOFS_REGION}.f${FF}.grib2"
     outfile="${file}"
     cd ${PRODUCTdir}
     echo "Downloading $url/$file to $outfile" | tee -a ${LOGfile}
@@ -386,15 +386,15 @@ datetime=`date -u`
 echo "Ending download at $datetime UTC" | tee -a ${LOGfile}
 
 echo "Purging previous run from ${OUTPUTdir}" | tee -a ${LOGfile} 2>&1
-${BINdir}/purge_estofs.sh ${OUTPUTdir} ${ESTOFSHOURS} | tee -a ${LOGfile}
+${BINdir}/purge_stofs.sh ${OUTPUTdir} ${STOFSHOURS} | tee -a ${LOGfile}
 
 if [ $end -ge $HOURS ] && [ "${IS_LDMSERVER}" == "FALSE" ]
 then 
     echo "We completed the download out to ${HOURS}" | tee -a ${LOGfile} 2>&1
-    echo ${epoc_time} > ${INGESTdir}/estofs_waterlevel_start_time.txt
-    echo "ESTOFSDOMAIN:${ESTOFSDOMAIN}" > ${INGESTdir}/estofs_waterlevel_domain.txt
+    echo ${epoc_time} > ${INGESTdir}/stofs_waterlevel_start_time.txt
+    echo "STOFSDOMAIN:${STOFSDOMAIN}" > ${INGESTdir}/stofs_waterlevel_domain.txt
     echo "Purging previous run from ${INGESTdir}" | tee -a ${LOGfile} 2>&1
-    ${BINdir}/purge_estofs.sh ${INGESTdir} ${ESTOFSHOURS} | tee -a ${LOGfile}
+    ${BINdir}/purge_stofs.sh ${INGESTdir} ${STOFSHOURS} | tee -a ${LOGfile}
     echo "$RSYNC -av --force ${OUTPUTdir}/*.dat ${INGESTdir}/." | tee -a ${LOGfile} 2>&1
     $RSYNC -av --force ${OUTPUTdir}/*.dat ${INGESTdir}/.  | tee -a ${LOGfile} 2>&1
 fi

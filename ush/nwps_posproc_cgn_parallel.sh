@@ -84,7 +84,7 @@ while read p; do
      RTOFS=$p;
    fi
    if [ ${ndata} -eq 19 ]; then
-     ESTOFS=$p;
+     STOFS=$p;
    fi
    if [ ${ndata} -eq 20 ]; then
      WINDS=$p;
@@ -106,7 +106,7 @@ done < ${RUNdir}/info_to_nwps_coremodel.txt
 
 #export HOMEnwps DEBUGGING DEBUG_LEVEL BATHYdb SHAPEFILEdb ARCHdir
 #export DATAdir LOGdir VARdir OUTPUTdir RUNdir TMPdir RUNLEN
-#export NEST RTOFS ESTOFS WEB PLOT MODELCORE LOGdir SITEID WNA 
+#export NEST RTOFS STOFS WEB PLOT MODELCORE LOGdir SITEID WNA 
 #export WINDS INPUTdir  ISPRODUCTIO DATAdir
 #source ${HOMEnwps}/parm/platform/set_platform.sh
 logrunup=${LOGdir}/runup.log

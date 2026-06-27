@@ -7,10 +7,10 @@ set -xa
 export RTOFSLON="281.50 285.75"
 export RTOFSLAT="33.35 37.10"
 
-# ESTOFS Domain for water level
-export ESTOFS_REGION="conus"
+# STOFS Domain for water level
+export STOFS_REGION="conus"
 # ESFOTSDOMAIN="LON LAT 0. NX NY EW-RESOLUTION NS-RESOLUTION"
-export ESTOFSDOMAIN="281.50 33.35 0. 145 139 0.029326 0.027027"
-export ESTOFSNX="146"
-export ESTOFSNY="140"
+export STOFSDOMAIN="281.50 33.35 0. 145 139 0.029326 0.027027"
+export STOFSNX="146"
+export STOFSNY="140"
 

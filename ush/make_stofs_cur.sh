@@ -20,7 +20,7 @@ set -xa
 # ------------- Program Description and Details -------------
 # -----------------------------------------------------------
 #
-# Script used to make ESTOFS SWAN init files all WFOs. 
+# Script used to make STOFS SWAN init files all WFOs. 
 #
 #
 # -----------------------------------------------------------
@@ -41,18 +41,18 @@ INGESTdir="${COMOUT}"
 YYYYMMDD=${PDY}
 CYCLE=${cyc}
 NCHOURS=6  # 5 hindcast hours plus 1 nowcast hour
-HOURS="${ESTOFSHOURS}"
-TIMESTEP="${ESTOFSTIMESTEP}"
+HOURS="${STOFSHOURS}"
+TIMESTEP="${STOFSTIMESTEP}"
 
 #mkdir -p ${RUNdir}/eka_output_cur
-#python ${USHnwps}/estofs/bin/get_estofs_currents.py -124.300 -124.150 40.700 40.850 ${HOURS} ${RUNdir}/eka_output_cur /gpfs/dell1/nco/ops/#com/estofs/prod/estofs.20210806/estofs.t00z.fields.cwl.vel.forecast.nc
+#python ${USHnwps}/stofs/bin/get_stofs_currents.py -124.300 -124.150 40.700 40.850 ${HOURS} ${RUNdir}/eka_output_cur /gpfs/dell1/nco/ops/#com/stofs/prod/stofs.20210806/stofs.t00z.fields.cwl.vel.forecast.nc
 
 #mkdir -p ${RUNdir}/pqr_output_cur
-#python ${USHnwps}/estofs/bin/get_estofs_currents.py -126.28 -123.30 43.50 47.15 ${HOURS} ${RUNdir}/pqr_output_cur /gpfs/dell1/nco/ops/com/estofs/prod/estofs.20210806/estofs.t00z.fields.cwl.vel.forecast.nc
+#python ${USHnwps}/stofs/bin/get_stofs_currents.py -126.28 -123.30 43.50 47.15 ${HOURS} ${RUNdir}/pqr_output_cur /gpfs/dell1/nco/ops/com/stofs/prod/stofs.20210806/stofs.t00z.fields.cwl.vel.forecast.nc
 
 #exit 0
 
-if [ "${ESTOFSCUR_REGION}" == "" ]; then ESTOFSCUR_REGION="conus.east"; fi
+if [ "${STOFSCUR_REGION}" == "" ]; then STOFSCUR_REGION="conus.east"; fi
 
 check_bad_nc_file() {
     f="${1}"
@@ -68,7 +68,7 @@ check_bad_nc_file() {
     return 0
 }
 
-warn_and_disable_estofscur_nc() {
+warn_and_disable_stofscur_nc() {
     msg="${1}"
     echo "WARNING: ${msg}" | tee -a ${LOGfile}
 }
@@ -76,27 +76,27 @@ warn_and_disable_estofscur_nc() {
 function process_wfolist() {
     WFO=$(echo ${site} | tr [:lower:] [:upper:])
     wfo=$(echo ${site} | tr [:upper:] [:lower:])
-    echo "Creating ESTOFS init files for ${WFO}" 
+    echo "Creating STOFS init files for ${WFO}" 
     source ${FIXnwps}/configs/${wfo}_ncep_config.sh    
     export err=$?; err_chk
-    ESTOFSCUR_REGION=$(echo ${ESTOFSCUR_REGION} | tr [:upper:] [:lower:])
+    STOFSCUR_REGION=$(echo ${STOFSCUR_REGION} | tr [:upper:] [:lower:])
 #..........................................
-     if [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "conus.east" ]
+     if [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "conus.east" ]
      then
        hasdownload_000=${hasDL[1]}
-     elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "puertori" ]
+     elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "puertori" ]
      then
        hasdownload_000=${hasDL[2]}
-     elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "conus.west" ]
+     elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "conus.west" ]
      then
        hasdownload_000=${hasDL[3]}
-     elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "hawaii" ]
+     elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "hawaii" ]
      then
        hasdownload_000=${hasDL[4]}
-     elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "alaska" ]
+     elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "alaska" ]
      then
        hasdownload_000=${hasDL[5]}
-     elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "guam" ]
+     elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "guam" ]
      then
        hasdownload_000=${hasDL[6]}
      fi
@@ -108,21 +108,21 @@ function process_wfolist() {
     if [ ! -e ${CLIPdir} ]; then mkdir -p ${CLIPdir}; fi
 #    if [ ! -e ${INGESTdir} ]; then mkdir -p ${INGESTdir}; fi
 
-    if [ "${ESTOFSCUR_REGION}" == "none" ];then
-    	echo "ERROR - No ESTOFS region for ${WFO}" 
+    if [ "${STOFSCUR_REGION}" == "none" ];then
+    	echo "ERROR - No STOFS region for ${WFO}" 
     	echo "ERROR - Skipping init files for ${WFO}" 
     	continue
     fi
 
-    NX=${ESTOFSCURNX}
-    NY=${ESTOFSCURNY}
-    LL_LON=$(echo ${ESTOFSCURDOMAIN} | awk '{ print $1}')
-    LL_LAT=$(echo ${ESTOFSCURDOMAIN} | awk '{ print $2}')
-    DX=$(echo ${ESTOFSCURDOMAIN} | awk '{ print $6}')
-    DY=$(echo ${ESTOFSCURDOMAIN} | awk '{ print $7}')
+    NX=${STOFSCURNX}
+    NY=${STOFSCURNY}
+    LL_LON=$(echo ${STOFSCURDOMAIN} | awk '{ print $1}')
+    LL_LAT=$(echo ${STOFSCURDOMAIN} | awk '{ print $2}')
+    DX=$(echo ${STOFSCURDOMAIN} | awk '{ print $6}')
+    DY=$(echo ${STOFSCURDOMAIN} | awk '{ print $7}')
     
-    echo "ESTOFSCUR_REGION = ${ESTOFSCUR_REGION}"
-    echo "ESTOFSCURDOMAIN = ${ESTOFSCURDOMAIN}"
+    echo "STOFSCUR_REGION = ${STOFSCUR_REGION}"
+    echo "STOFSCURDOMAIN = ${STOFSCURDOMAIN}"
     echo "NX = ${NX}"
     echo "NY = ${NY}"
     echo "LL_LON= ${LL_LON}"
@@ -133,8 +133,8 @@ function process_wfolist() {
     # Get the first forecast cycle
     touch ${OUTPUTdir}/LOCKFILE
     FF="000"
-    file1="${ESTOFSCUR_BASIN}.t${CYCLE}z.fields.cwl.vel.nc"
-    file2="${ESTOFSCUR_BASIN}.t${CYCLE}z.fields.cwl.vel.nc"
+    file1="${STOFSCUR_BASIN}.t${CYCLE}z.fields.cwl.vel.nc"
+    file2="${STOFSCUR_BASIN}.t${CYCLE}z.fields.cwl.vel.nc"
     outfile1="${file1}"
     outfile2="${file2}"
     cd ${SPOOLdir}
@@ -142,25 +142,25 @@ function process_wfolist() {
     if [ "${hasdownload_000}" == "" ]; then hasdownload_000="false"; fi
     
     if [ "${hasdownload_000}" == "false" ];then
-        if [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "conus.east" ];then
+        if [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "conus.east" ];then
            hasDL[1]="true"
-        elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "puertori" ];then
+        elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "puertori" ];then
            hasDL[2]="true"
-        elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "conus.west" ];then
+        elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "conus.west" ];then
            hasDL[3]="true"
-        elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "hawaii" ];then
+        elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "hawaii" ];then
            hasDL[4]="true"
-        elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "alaska" ];then
+        elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "alaska" ];then
            hasDL[5]="true"
-        elif [ "${ESTOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFSCUR_REGION}" == "guam" ];then
+        elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "guam" ];then
            hasDL[6]="true"
         fi
 
-        # Copy ESTOFS nowcast output
+        # Copy STOFS nowcast output
         echo "Downloading ${SPOOLdir}/$file1 to $outfile1" 
         echo "cp -p ${COMINstofs}/${file1} ."
         if ! check_bad_nc_file "${COMINstofs}/${file1}"; then
-           warn_and_disable_estofscur_nc "ESTOFS current file ${COMINstofs}/${file1} is missing or 0-byte. Run will continue without ESTOFS current fields for ${WFO}."
+           warn_and_disable_stofscur_nc "STOFS current file ${COMINstofs}/${file1} is missing or 0-byte. Run will continue without STOFS current fields for ${WFO}."
            rm -f ${OUTPUTdir}/LOCKFILE
            return
         fi
@@ -177,11 +177,11 @@ function process_wfolist() {
            export err=1; err_chk
         fi
 
-        # Copy ESTOFS forecast output
+        # Copy STOFS forecast output
         echo "Downloading ${SPOOLdir}/$file2 to $outfile2" 
         echo "cp -p ${COMINstofs}/${file2} ."
         if ! check_bad_nc_file "${COMINstofs}/${file2}"; then
-           warn_and_disable_estofscur_nc "ESTOFS current file ${COMINstofs}/${file2} is missing or 0-byte. Run will continue without ESTOFS current fields for ${WFO}."
+           warn_and_disable_stofscur_nc "STOFS current file ${COMINstofs}/${file2} is missing or 0-byte. Run will continue without STOFS current fields for ${WFO}."
            rm -f ${OUTPUTdir}/LOCKFILE
            return
         fi
@@ -208,12 +208,12 @@ function process_wfolist() {
     #done
     #epoc_time=`${WGRIB2} -unix_time ${SPOOLdir}/${file} | grep "1:4:unix" | awk -F= '{ print $3 }'`
     #date_str=`echo ${epoc_time} | awk '{ print strftime("%Y%m%d", $1) }'`
-    #echo ${epoc_time} > ${OUTPUTdir}/estofs_waterlevel_start_time.txt
-    echo "ESTOFSCURDOMAIN:${ESTOFSCURDOMAIN}" > ${OUTPUTdir}/estofs_current_domain.txt
-    swan_time_ofile="${OUTPUTdir}/estofs_current_start_time.txt"
+    #echo ${epoc_time} > ${OUTPUTdir}/stofs_waterlevel_start_time.txt
+    echo "STOFSCURDOMAIN:${STOFSCURDOMAIN}" > ${OUTPUTdir}/stofs_current_domain.txt
+    swan_time_ofile="${OUTPUTdir}/stofs_current_start_time.txt"
     touch ${swan_time_ofile}
 
-    swan_wl_ofile_fname="wave_estofs_uv_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
+    swan_wl_ofile_fname="wave_stofs_uv_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
     swan_wl_ofile="${OUTPUTdir}"
 
     #if [ ! -e ${swan_wl_ofile} ];then
@@ -228,7 +228,7 @@ function process_wfolist() {
         lonmax=$(echo "$lonmin + $DX * $NX" | bc)
         latmin=${LL_LAT}
         latmax=$(echo "$latmin + $DY * $NY" | bc)
-        echo "Calling get_estofs_currents.py:"
+        echo "Calling get_stofs_currents.py:"
         echo "lonmin = ${lonmin}"
         echo "lonmax = ${lonmax}"
         echo "latmin = ${latmin}"
@@ -239,9 +239,9 @@ function process_wfolist() {
         echo "CLIPdir/file2 = ${CLIPdir}/${file2}"
 	echo "swan_wl_ofile = ${swan_wl_ofile}"
         echo "swan_time_ofile = ${swan_time_ofile}"
-        #AW ${USHnwps}/estofs/bin/get_estofs_currents.py ${lonmin} ${lonmax} ${latmin} ${latmax} ${NCHOURS} ${CLIPdir}/${file1} ${swan_wl_ofile} ${swan_time_ofile} nowcast
+        #AW ${USHnwps}/stofs/bin/get_stofs_currents.py ${lonmin} ${lonmax} ${latmin} ${latmax} ${NCHOURS} ${CLIPdir}/${file1} ${swan_wl_ofile} ${swan_time_ofile} nowcast
     	#AW export err=$?; err_chk
-        ${USHnwps}/estofs/bin/get_estofs_currents.py ${lonmin} ${lonmax} ${latmin} ${latmax} ${HOURS} ${CLIPdir}/${file2} ${swan_wl_ofile} ${swan_time_ofile} forecast
+        ${USHnwps}/stofs/bin/get_stofs_currents.py ${lonmin} ${lonmax} ${latmin} ${latmax} ${HOURS} ${CLIPdir}/${file2} ${swan_wl_ofile} ${swan_time_ofile} forecast
 	export err=$?; err_chk
         #------------------------------------------------------------
     else
@@ -251,33 +251,33 @@ function process_wfolist() {
 
     rm ${OUTPUTdir}/LOCKFILE
     #--- Copy WFO output to COMOUT
-    mkdir -p ${COMOUT}/estofs/${wfo}_output
-    cp ${OUTPUTdir}/wave_estofs_uv_*_${CYCLE}_f*.dat ${COMOUT}/estofs/${wfo}_output/
-    cp ${OUTPUTdir}/estofs_current_domain.txt ${COMOUT}/estofs/${wfo}_output/
-    cp ${OUTPUTdir}/estofs_current_start_time.txt ${COMOUT}/estofs/${wfo}_output/
+    mkdir -p ${COMOUT}/stofs/${wfo}_output
+    cp ${OUTPUTdir}/wave_stofs_uv_*_${CYCLE}_f*.dat ${COMOUT}/stofs/${wfo}_output/
+    cp ${OUTPUTdir}/stofs_current_domain.txt ${COMOUT}/stofs/${wfo}_output/
+    cp ${OUTPUTdir}/stofs_current_start_time.txt ${COMOUT}/stofs/${wfo}_output/
 }
 
 # Make any of the following directories if needed
 mkdir -p ${PRODUCTdir}
 mkdir -p ${SPOOLdir}
 mkdir -p ${VARdir}
-mkdir -p ${COMOUT}/estofs/
+mkdir -p ${COMOUT}/stofs/
 
 # Cleanup
 echo "Clean up working directory ${VARdir}..."
-rm ${VARdir}/hasestofsdownload_${CYCLE}z*
+rm ${VARdir}/hasstofsdownload_${CYCLE}z*
 rm ${VARdir}/wfolist.dat
-rm ${VARdir}/wfolist_sorted_estofscur.dat
-rm ${VARdir}/wfolist_estofscur.sh
+rm ${VARdir}/wfolist_sorted_stofscur.dat
+rm ${VARdir}/wfolist_stofscur.sh
 
 echo "Our spool DIR for FTP n000 data is: ${SPOOLdir}" 
 echo "Our spool DIR for FTP forecast data is: ${PRODUCTdir}" 
 
 # Create WFO list to make init files for
-#${USHnwps}/make_wfolist.sh ESTOFS
+#${USHnwps}/make_wfolist.sh STOFS
 #export err=$?; err_chk
-echo -n 'export WFOLIST="EKA PQR SEW AER"' >> ${VARdir}/wfolist_estofscur.sh
-source ${VARdir}/wfolist_estofscur.sh
+echo -n 'export WFOLIST="EKA PQR SEW AER"' >> ${VARdir}/wfolist_stofscur.sh
+source ${VARdir}/wfolist_stofscur.sh
 
 if [ "${WFOLIST}" == "" ];then
     echo "ERROR - Our WFOLIST is empty" 
@@ -286,8 +286,8 @@ if [ "${WFOLIST}" == "" ];then
 fi
 
 # Set our script variables from the global config
-echo "ESTOFSHOURS = ${ESTOFSHOURS}" 
-echo "ESTOFSTIMESTEP = ${ESTOFSTIMESTEP}" 
+echo "STOFSHOURS = ${STOFSHOURS}" 
+echo "STOFSTIMESTEP = ${STOFSTIMESTEP}" 
 INGESTdir_org="${INGESTdir}"
 
 if [ -e ${RUNdir}/cgn_cmdfile ];then

@@ -200,7 +200,7 @@ if((${NWPSplatform} eq 'WCOSS') || (${NWPSplatform} eq 'DEVWCOSS')) {
 
 print "$HOMEnwps, $ISPRODUCTIO, $DEBUGGING, $DEBUG_LEVEL, $BATHYdb, $SHAPEFILEdb, $ARCHdir\n";
 print "$DATAdir, $INPUTdir, $LOGdir, $VARdir, $OUTPUTdir, $RUNdir, $TMPdir, $RUNLEN, $WNA\n";
-print "$NESTS, $RTOFS, $ESTOFS, $WINDS, $WEB, $PLOT, $SITEID, $MODELCORE,\n";
+print "$NESTS, $RTOFS, $STOFS, $WINDS, $WEB, $PLOT, $SITEID, $MODELCORE,\n";
 print "$GEN_NETCDF, $USERDELTAC \n";
 
 }

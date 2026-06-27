@@ -18,9 +18,9 @@ _=/usr/bin/env
 # 1. Development crons -----------------------
 
 # 1.0 Model runs
-10 6,12,18 * * *  ${HOME}/nwps_ofs_estofs.cron > ${HOME}/cronlog.ofs_estofs 2>&1
-10 7,13,19 * * *  ${HOME}/nwps_ofs_estofs_cur.cron > ${HOME}/cronlog.ofs_estofs_cur 2>&1
-#0 6,12,18 * * * ${HOME}/nwps_ofs_psurge.cron > ${HOME}/cronlog.ofs_estofs 2>&1
+10 6,12,18 * * *  ${HOME}/nwps_ofs_stofs.cron > ${HOME}/cronlog.ofs_stofs 2>&1
+10 7,13,19 * * *  ${HOME}/nwps_ofs_stofs_cur.cron > ${HOME}/cronlog.ofs_stofs_cur 2>&1
+#0 6,12,18 * * * ${HOME}/nwps_ofs_psurge.cron > ${HOME}/cronlog.ofs_stofs 2>&1
 0 22 * * *       ${HOME}/nwps_ofs_rtofs.cron > ${HOME}/cronlog.ofs_rtofs 2>&1
 */5 * * * *      ${HOME}/nwps.cron > ${HOME}/cronlog.dev.nwps 2>&1
 
@@ -78,8 +78,8 @@ _=/usr/bin/env
 # 3. Development crons for checking stofs check run-----------------------
 
 # 1.0 Model runs
-#30 7,13,19 * * *  ${HOME}/nwps_ofs_estofs2.cron > ${HOME}/cronlog.ofs_estofs2 2>&1
-#30 8,14,20 * * *  ${HOME}/nwps_ofs_estofs_cur2.cron > ${HOME}/cronlog.ofs_estofs_cur2 2>&1
+#30 7,13,19 * * *  ${HOME}/nwps_ofs_stofs2.cron > ${HOME}/cronlog.ofs_stofs2 2>&1
+#30 8,14,20 * * *  ${HOME}/nwps_ofs_stofs_cur2.cron > ${HOME}/cronlog.ofs_stofs_cur2 2>&1
 #30 22 * * *       ${HOME}/nwps_ofs_rtofs2.cron > ${HOME}/cronlog.ofs_rtofs2 2>&1
 #*/15 * * * *      ${HOME}/nwps_1.4.11.cron > ${HOME}/cronlog.dev.nwps_1.4.11 2>&1
 
@@ -93,8 +93,8 @@ _=/usr/bin/env
 
 # 4. Development crons for O2 and sew bc run-----------------------
 
-#10 6,12,18 * * *  ${HOME}/nwps_ofs_estofs_alis.cron > ${HOME}/cronlog.ofs_estofs_alis 2>&1
-#10 7,13,19 * * *  ${HOME}/nwps_ofs_estofs_cur_alis.cron > ${HOME}/cronlog.ofs_estofs_cur_alis 2>&1
+#10 6,12,18 * * *  ${HOME}/nwps_ofs_stofs_alis.cron > ${HOME}/cronlog.ofs_stofs_alis 2>&1
+#10 7,13,19 * * *  ${HOME}/nwps_ofs_stofs_cur_alis.cron > ${HOME}/cronlog.ofs_stofs_cur_alis 2>&1
 #30 22 * * *       ${HOME}/nwps_ofs_rtofs_alis.cron > ${HOME}/cronlog.ofs_rtofs_alis 2>&1
 #*/15 * * * *      ${HOME}/nwps_alis.cron > ${HOME}/cronlog.dev.nwps_alis 2>&1
 

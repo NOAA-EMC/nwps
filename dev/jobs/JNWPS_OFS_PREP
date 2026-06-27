@@ -37,7 +37,7 @@ if [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
 if [ $curhour -ge 22 ]; then CYCLE="18"; fi
 echo ""
 ##### 07/20/22: Realtime test of Global STOFS upgrade ###############
-if [ "${OFSTYPE}" == "estofs_cur" ]; then CYCLE="00"; fi
+if [ "${OFSTYPE}" == "stofs_cur" ]; then CYCLE="00"; fi
 #####################################################################
 echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
 export cyc=${CYCLE}
