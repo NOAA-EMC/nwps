@@ -96,7 +96,7 @@ export STATN1="NON"
 # Spectra points defined as space delimited list of:
 #   "name1:lat1:lon1 name2:lat2:lon2 name3:lat3:lon3 name4:lat4:lon4 ...."
 #
-export SPECPOINTS="42040:29.212:-88.207 BPass:29.014:-90.206 ChRim:29.658:-88.799 BrRim:29.149:-89.536 SWPass:28.856:-89.456"
+export SPECPOINTS="42040:29.212:-88.207 bpass:29.014:-90.206 chrim:29.658:-88.799 brrim:29.149:-89.536 swpass:28.856:-89.456"
 #
 #========================================================================
 #                    WAVE TRACKING (and WAVE PARTITION) ON/OFF          =
