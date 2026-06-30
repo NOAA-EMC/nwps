@@ -105,7 +105,7 @@ my $NWPSplatform = $ENV{'NWPSplatform'};
 Logs::initialize(); 
 Logs::run("BEGIN RUN");
 
-if ($WATERLEVELS eq "STOFS") {
+if ($WATERLEVELS eq "ESTOFS") {
     $STOFS = "YES";
 }
 
@@ -198,7 +198,7 @@ elsif ($RTOFS eq "STOFSCUR") {
   }
 }
 
-if ($WATERLEVELS eq "STOFS" && $STOFS eq "YES") {
+if ($WATERLEVELS eq "ESTOFS" && $STOFS eq "YES") {
   if (-e "${USHnwps}/stofs/bin/gen_waterlevel.sh" ) {
     system("${USHnwps}/stofs/bin/gen_waterlevel.sh ${date}");
   }

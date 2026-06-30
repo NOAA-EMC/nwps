@@ -292,9 +292,9 @@ then
       #send inside the next for
       for i in $(ls wave_stofs_uv*.dat)
       do
-         init_time=`echo $i | cut -c24-33`
-         fhour=`echo $i | cut -c48-50`
-         cycle=`echo $i | cut -c44-45`
+         init_time=`echo $i | cut -c23-32`
+         fhour=`echo $i | cut -c47-49`
+         cycle=`echo $i | cut -c43-44`
          echo "Processing $i $init_time $start_time $fhour $cycle"
          if [ $init_time -lt $start_time ]  && [ -e wave_stofs_uv_${start_time}_${cycle}_f144.dat ]
          then
@@ -369,9 +369,9 @@ then
       #send inside the next for
       for i in $(ls wave_stofs_waterlevel*.dat)
       do
-         init_time=`echo $i | cut -c24-33`
-         fhour=`echo $i | cut -c48-50`
-         cycle=`echo $i | cut -c44-45`
+         init_time=`echo $i | cut -c23-32`
+         fhour=`echo $i | cut -c47-49`
+         cycle=`echo $i | cut -c43-44`
          echo "Processing $i $init_time $start_time $fhour $cycle"
          if [ $init_time -lt $start_time ]  && [ -e wave_stofs_waterlevel_${start_time}_${cycle}_f144.dat ]
          then

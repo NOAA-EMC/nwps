@@ -233,7 +233,7 @@ model_start_time=`echo ${time_str} | awk -F: '{ print mktime($1 $2 $3 $4 $5 $6) 
 # Find most recent currents file by comparing the model init epoch time 
 # to those of all available STOFS files (ignoring stofs_current_start_time.txt)
 # This allows the same currents file to be used in case of a model rerun.
-stofs_current_start_time=`ls ${INPUTdir}/wave_stofs_uv* | xargs -n1 basename | cut -b16-25 | sort | uniq | awk -v thresh=$model_start_time '$1 <= thresh' | tail -1`
+stofs_current_start_time=`ls ${INPUTdir}/wave_stofs_uv* | xargs -n1 basename | cut -b15-24 | sort | uniq | awk -v thresh=$model_start_time '$1 <= thresh' | tail -1`
 stofs_date_str=`echo ${stofs_current_start_time} | awk '{ print strftime("%Y%m%d", $1) }'`
 stofs_model_cycle=`echo ${stofs_current_start_time} | awk '{ print strftime("%H", $1) }'`
 

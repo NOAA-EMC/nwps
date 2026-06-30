@@ -125,7 +125,7 @@ then
     export WATERLEVELS
     export STOFS="NO"
     export PSURGE="NO"
-    if [ "${WATERLEVELS}" == "STOFS" ]; then export STOFS="YES"; fi
+    if [ "${WATERLEVELS}" == "ESTOFS" ]; then export STOFS="YES"; fi
     if [ "${WATERLEVELS}" == "PSURGE" ]; then export PSURGE="YES"; fi
 fi
 

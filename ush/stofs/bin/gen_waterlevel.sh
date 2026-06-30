@@ -232,7 +232,7 @@ model_start_time=`echo ${time_str} | awk -F: '{ print mktime($1 $2 $3 $4 $5 $6) 
 # Find most recent water level file by comparing the model init epoch time 
 # to those of all available STOFS files (ignoring stofs_waterlevel_start_time.txt)
 # This allows the same water level file to be used in case of a model rerun.
-stofs_waterlevel_start_time=`ls ${INPUTdir}/wave_stofs_waterlevel* | xargs -n1 basename | cut -b24-33 | sort | uniq | awk -v thresh=$model_start_time '$1 <= thresh' | tail -1`
+stofs_waterlevel_start_time=`ls ${INPUTdir}/wave_stofs_waterlevel* | xargs -n1 basename | cut -b23-32 | sort | uniq | awk -v thresh=$model_start_time '$1 <= thresh' | tail -1`
 stofs_date_str=`echo ${stofs_waterlevel_start_time} | awk '{ print strftime("%Y%m%d", $1) }'`
 stofs_model_cycle=`echo ${stofs_waterlevel_start_time} | awk '{ print strftime("%H", $1) }'`
 
