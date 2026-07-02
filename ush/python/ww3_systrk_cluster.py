@@ -64,7 +64,7 @@ if (wfo == 'mfl'):
    buoy = '41114'
    fracwet = 0.7703
 if (wfo == 'key'):
-   buoy = 'GSTRM'
+   buoy = 'gstrm'
    fracwet = 0.9120
 if (wfo == 'mlb'):
    buoy = '41009'
