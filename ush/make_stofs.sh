@@ -438,10 +438,24 @@ mkdir -p ${COMOUT}/stofs/
 
 # Cleanup
 echo "Clean up working directory ${VARdir}..."
-rm ${VARdir}/hasstofsdownload_${CYCLE}z*
-rm ${VARdir}/wfolist.dat
-rm ${VARdir}/wfolist_sorted_stofs.dat
-rm ${VARdir}/wfolist_stofs.sh
+files=(${VARdir}/hasstofsdownload_${CYCLE}z*)
+files_exit=false
+for f_file in "${files[@]}"; do
+  # Check if any file actually exists
+  [ -e "$f_file" ] && files_exist=true && break
+done
+if [ "$files_exist" = true ]; then
+  rm ${VARdir}/hasstofsdownload_${CYCLE}z*
+fi 
+if [ -e "${VARdir}/wfolist.dat" ]; then 
+  rm ${VARdir}/wfolist.dat
+fi 
+if [ -e "${VARdir}/wfolist_sorted_stofs.dat" ]; then
+  rm ${VARdir}/wfolist_sorted_stofs.dat
+fi
+if [ -e "${VARdir}/wfolist_stofs.sh" ]; then
+  rm ${VARdir}/wfolist_stofs.sh
+fi
 
 echo "Our spool DIR for FTP n000 data is: ${SPOOLdir}" 
 echo "Our spool DIR for FTP forecast data is: ${PRODUCTdir}" 

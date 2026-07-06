@@ -457,12 +457,21 @@ then
        if [ -f  ${CFGFILE} ]; then
           # Copying shiproute plots to COMOUT
           #echo "Publishing results" | tee -a ${LOGFILE}
-          cp -pfv ${VARdir}/shiproutes/route*/swan*hr*.png ${GRAPHICSdirshiproutes}/.
-          chmod 777 ${GRAPHICSdirshiproutes}/swan*hr*.png
-          cd ${GRAPHICSdirshiproutes}
-          figsTarFile="shiproute_plots_CG1_${yyyy}${mon}${dd}${hh}.tar.gz"
-          tar cvfz ${figsTarFile} *.png
-          cp -fpv ${figsTarFile} $COMOUTCYC/${figsTarFile}
+          files=(${VARdir}/shiproutes/route*/swan*hr*.png)
+          files_exit=false
+          for f_file in "${files[@]}"; do
+            # Check if any file actually exists 
+            [ -e "$f_file" ] && files_exist=true && break
+          done
+
+          if [ "$files_exist" = true ]; then
+            cp -pfv "${files[@]}" "${GRAPHICSdirshiproutes}/."
+            chmod 777 ${GRAPHICSdirshiproutes}/swan*hr*.png
+            cd ${GRAPHICSdirshiproutes}
+            figsTarFile="shiproute_plots_CG1_${yyyy}${mon}${dd}${hh}.tar.gz"
+            tar cvfz ${figsTarFile} *.png
+            cp -fpv ${figsTarFile} $COMOUTCYC/${figsTarFile}
+          fi 
        fi
     fi
 
@@ -508,11 +517,21 @@ cd ${DATA}/output/grib2/CG${CGNUM}
         #cp -fv  ${RUNdir}/info* ${COMOUTCYC}/
         #cp -fv  ${RUNdir}/*.pm ${COMOUTCYC}/
         if [ "${MODELCORE}" == "SWAN" ]; then
-           cp -fv  ${RUNdir}/${date_stamp}.${cycle}00* ${COMOUTCYC}/
+	   files=(${RUNdir}/${date_stamp}.${cycle}00*)
+	   files_exit=false
+           for f_file in "${files[@]}"; do
+             # Check if any file actually exists
+             [ -e "$f_file" ] && files_exist=true && break
+           done
+           if [ "$files_exist" = true ]; then
+             cp -fv "${files[@]}" "${COMOUTCYC}/"
+           fi
         elif [ "${MODELCORE}" == "UNSWAN" ]; then
            for i in {0..9}; do
-              mkdir -p ${COMOUTCYC}/PE000${i}/
-              cp -fv  ${RUNdir}/PE000${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE000${i}/
+              if [ -e ${RUNdir}/PE000${i}/${date_stamp}.${cycle}00 ]; then  
+                mkdir -p ${COMOUTCYC}/PE000${i}/
+                cp -fv  ${RUNdir}/PE000${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE000${i}/
+              fi 
            done
            # Additional copies for domains running on 48 cores
            if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CARX" ] || [ "${SITEID}" == "TBWX" ] \
@@ -527,32 +546,40 @@ cd ${DATA}/output/grib2/CG${CGNUM}
               || [ "${SITEID}" == "LIX" ] || [ "${SITEID}" == "LWX" ]
            then
               for i in {10..47}; do
-                 mkdir -p ${COMOUTCYC}/PE00${i}/
-                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 if [ -e "${RUNdir}/PE00${i}/${date_stamp}.${cycle}00" ]; then  
+                   mkdir -p ${COMOUTCYC}/PE00${i}/
+                   cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 fi 
               done
            fi
            # Additional copies for domains running on 84 cores
            if [ "${SITEID}" == "OKX" ]
            then
               for i in {10..59}; do
-                 mkdir -p ${COMOUTCYC}/PE00${i}/
-                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+		 if [ -e "${RUNdir}/PE00${i}/${date_stamp}.${cycle}00" ]; then      
+                   mkdir -p ${COMOUTCYC}/PE00${i}/
+                   cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 fi 
               done
            fi
 	   
 	   if [ "${SITEID}" == "SEW" ] || [ "${SITEID}" == "LOX" ]
            then
               for i in {10..35}; do
-                 mkdir -p ${COMOUTCYC}/PE00${i}/
-                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 if [ -e "${RUNdir}/PE00${i}/${date_stamp}.${cycle}00" ]; then 
+                   mkdir -p ${COMOUTCYC}/PE00${i}/
+                   cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 fi 
               done
            fi
            # Additional copies for domains running on 84 cores
            if [ "${SITEID}" == "ALU" ]
            then
               for i in {10..83}; do
-                 mkdir -p ${COMOUTCYC}/PE00${i}/
-                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 if [ -e "${RUNdir}/PE00${i}/${date_stamp}.${cycle}00" ]; then 
+                   mkdir -p ${COMOUTCYC}/PE00${i}/
+                   cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 fi 
               done
            fi
            # Additional copies for domains running on 96 cores
@@ -564,37 +591,51 @@ cd ${DATA}/output/grib2/CG${CGNUM}
               || [ "${SITEID}" == "CAR" ] || [ "${SITEID}" == "TAE" ]
            then
               for i in {10..95}; do
-                 mkdir -p ${COMOUTCYC}/PE00${i}/
-                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 if [ -e "${RUNdir}/PE00${i}/${date_stamp}.${cycle}00" ]; then 
+                   mkdir -p ${COMOUTCYC}/PE00${i}/
+                   cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 fi 
               done
            fi
            # Additional copies for domains running on 96 cores
            if [ "${SITEID}" == "HGX" ] || [ "${SITEID}" == "MOBX" ]
            then
               for i in {96..99}; do
-                 mkdir -p ${COMOUTCYC}/PE00${i}/
-                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 if [ -e "${RUNdir}/PE00${i}/${date_stamp}.${cycle}00" ]; then 
+                   mkdir -p ${COMOUTCYC}/PE00${i}/
+                   cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 fi 
               done
               for i in {100..119}; do
-                 mkdir -p ${COMOUTCYC}/PE0${i}/
-                 cp -fv  ${RUNdir}/PE0${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE0${i}/
+                 if [ -e "${RUNdir}/PE0${i}/${date_stamp}.${cycle}00" ]; then 
+                   mkdir -p ${COMOUTCYC}/PE0${i}/
+                   cp -fv  ${RUNdir}/PE0${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE0${i}/
+                 fi 
               done
            fi
            # Additional copies for domains running on 96 cores
            if [ "${SITEID}" == "MOB" ]
            then
               for i in {96..99}; do
-                 mkdir -p ${COMOUTCYC}/PE00${i}/
-                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 if [ -e "${RUNdir}/PE00${i}/${date_stamp}.${cycle}00" ]; then 
+                   mkdir -p ${COMOUTCYC}/PE00${i}/
+                   cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 fi 
               done
               for i in {100..143}; do
-                 mkdir -p ${COMOUTCYC}/PE0${i}/
-                 cp -fv  ${RUNdir}/PE0${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE0${i}/
+                 if [ -e "${RUNdir}/PE0${i}/${date_stamp}.${cycle}00" ]; then 
+                   mkdir -p ${COMOUTCYC}/PE0${i}/
+                   cp -fv  ${RUNdir}/PE0${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE0${i}/
+                 fi 
               done
            fi
         fi
-        cp -fv  ${RUNdir}/inputCG${CGNUM} ${COMOUTCYC}/
-        cp -fv  ${RUNdir}/${date_stamp}${cycle}.wnd ${COMOUTCYC}/
+        if [ -e "${RUNdir}/inputCG${CGNUM}" ]; then 
+          cp -fv  ${RUNdir}/inputCG${CGNUM} ${COMOUTCYC}/
+        fi
+        if [ -e "${RUNdir}/${date_stamp}${cycle}.wnd" ]; then 
+          cp -fv  ${RUNdir}/${date_stamp}${cycle}.wnd ${COMOUTCYC}/
+        fi
         if [ -e ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.wlev ]; then
            cp -fv  ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.wlev ${COMOUTCYC}/
         fi
