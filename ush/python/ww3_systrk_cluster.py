@@ -519,7 +519,7 @@ with open(fname_pnt,'a') as f:                  # append to file
 hh = datetime.datetime.fromtimestamp(startdate).strftime('%H')
 
 # Construct the new filename
-bulfilenm = f"nwps.t{hh}z.CG0_Trkng.{wfo}.bull"
+bulfilenm = f"nwps.t{hh}z.cg0_Trkng.{wfo}.bull"
 bul_file = open(bulfilenm, "w")
 bul_file.write("%s" % '  Location : '+wfo.upper()+' domain spatial average\n')
 bul_file.write("%s" % '  Model    : Cluster-based wave system tracking\n')

@@ -217,9 +217,9 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
      # nomenclature input file for run_runup.sh e.g 20m_contour_CG2.20150202_0000_MHX
      fileor="${dpt_runup_contour}_contour_CG${CGNUM}"
      filein="${dpt_runup_contour}_contour_CG${CGNUM}.${yyyy}${mon}${dd}_${CYCLErunup}_${SITEID}"
-     filecomout="${NET}.t${hh}z.${dpt_runup_contour}_contour_CG${CGNUM}.${SITEID}.txt"
-     #fileout="${dpt_runup_contour}_CG${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}_${SITEID}.txt"
-     #fileout="${WFO}_${NET}_${dpt_runup_contour}_CG${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}"
+     filecomout="${NET}.t${hh}z.${dpt_runup_contour}_contour_cg${CGNUM}.${SITEID}.txt"
+     #fileout="${dpt_runup_contour}_cg${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}_${SITEID}.txt"
+     #fileout="${WFO}_${NET}_${dpt_runup_contour}_cg${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}"
      echo "filein: ${filein}"  | tee -a $logrunup
      cp -fvp ${RUNdir}/${fileor} .
      cp ${fileor} ${filein}    | tee -a $logrunup
@@ -449,7 +449,7 @@ then
        cp -vpf ${TEMPDIR}/*.png ${GRAPHICSdir}/.
        chmod 777 ${GRAPHICSdir}/*.png
        cd ${GRAPHICSdir}
-       figsTarFile="plots_CG${CGNUM}_${yyyy}${mon}${dd}${hh}.tar.gz"
+       figsTarFile="plots_cg${CGNUM}_${yyyy}${mon}${dd}${hh}.tar.gz"
        tar cvfz ${figsTarFile} *.png
        cp ${figsTarFile} $COMOUTCYC/${figsTarFile}
 
@@ -468,7 +468,7 @@ then
             cp -pfv "${files[@]}" "${GRAPHICSdirshiproutes}/."
             chmod 777 ${GRAPHICSdirshiproutes}/swan*hr*.png
             cd ${GRAPHICSdirshiproutes}
-            figsTarFile="shiproute_plots_CG1_${yyyy}${mon}${dd}${hh}.tar.gz"
+            figsTarFile="shiproute_plots_cg1_${yyyy}${mon}${dd}${hh}.tar.gz"
             tar cvfz ${figsTarFile} *.png
             cp -fpv ${figsTarFile} $COMOUTCYC/${figsTarFile}
           fi 
@@ -505,11 +505,12 @@ cd ${DATA}/output/grib2/CG${CGNUM}
 
      date_stamp="${yyyy}${mon}${dd}"
      grib2File="nwps.t${hh}z.CG${CGNUM}.${siteid}.grib2"
+     g2f=${grib2File,,}
      cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
      COMOUTCYC="${COMOUT_CORRECT}/${cycle}/CG${CGNUM}"
      if [ "${SENDCOM}" == "YES" ]; then
         mkdir -p $COMOUTCYC
-        cp -fv  ${grib2File} ${COMOUTCYC}/${grib2File}
+        cp -fv  ${grib2File} ${COMOUTCYC}/${g2f}
 
         # Archive restart and other processed input files
         cd ${RUNdir}
@@ -674,7 +675,7 @@ cd ${DATA}/output/grib2/CG${CGNUM}
         fi
 
         if [ "${SENDDBN}" == "YES" ]; then
-            ${DBNROOT}/bin/dbn_alert MODEL NWPS_GRIB $job ${COMOUTCYC}/${grib2File}
+            ${DBNROOT}/bin/dbn_alert MODEL NWPS_GRIB $job ${COMOUTCYC}/${g2F}
         fi
      fi
 
@@ -687,7 +688,7 @@ cd ${DATA}/output/spectra/CG${CGNUM}
        for orig_file in ${spec2dFile}; do
          # Extract bouy ID
          suffix=$(echo "$orig_file" | cut -d '.' -f2)
-         new_spc2d="nwps.t${cycle}z.spc2d_${suffix}_CG${CGNUM}.${WFO}.txt"
+         new_spc2d="nwps.t${cycle}z.spc2d_${suffix}_cg${CGNUM}.${WFO}.txt"
 
          cp -fv "$orig_file" "${COMOUTCYC}/${new_spc2d}"
        done
@@ -699,7 +700,7 @@ cd ${DATA}/output/spectra/CG${CGNUM}
 if [ "${SENDDBN}" == "YES" ]; then
   for file in ${spec2dFile}; do
     suffix=$(echo "$file" | cut -d '.' -f2)
-    new_spc2d="nwps.t${cycle}z.spc2d_${suffix}_CG${CGNUM}.${WFO}.txt"
+    new_spc2d="nwps.t${cycle}z.spc2d_${suffix}_cg${CGNUM}.${WFO}.txt"
     if [ -f "${COMOUTCYC}/${new_spc2d}" ]; then
       echo "Sending ${new_spc2d} to DBNet"
       $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_SPECTRA ${job} ${COMOUTCYC}/${new_spc2d}

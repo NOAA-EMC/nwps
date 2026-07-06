@@ -198,8 +198,9 @@ cycle="${CYCLE}00"
 
 fullname="${DATE}_${CYCLE}00"
 #CG=${contour}m_${CGnumber}_"$CYCLE"_"$DATE"_prob.txt_${SITEID}
+cgnumber=${CGnumber,,}
 CGCONT=${contour}m_contour_${CGnumber}."$fullname"_${SITEID}
-COM_CGCONT=${NET}.t${CYCLE}z.${contour}m_contour_${CGnumber}.${WFO}.txt
+COM_CGCONT=${NET}.t${CYCLE}z.${contour}m_contour_${cgnumber}.${WFO}.txt
 echo "" 
 echo "_________________________________________________________________"
 echo "                           Rip Current Program                   "
@@ -433,7 +434,7 @@ done
 done 
 #CONT
 
-FORT23="${NET}.t${cycle%??}z.${contour}m_${CGnumber}_ripprob.${WFO}.txt"
+FORT23="${NET}.t${cycle%??}z.${contour}m_${cgnumber}_ripprob.${WFO}.txt"
 cp ${RIPDATA}/fort.23 ${RIPDATA}/${FORT23}
 
 #exit 0
