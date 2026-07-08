@@ -157,7 +157,7 @@ YMDH=${PDY}
            yyyy=$(cat year)
            mon=$(cat mon)
            dd=$(cat day)
-           file="${NET}.t${cycle}z.cg0_Trkng.${WFO}.grib2"
+           file="${NET}.t${cycle}z.cg0_trkng.${WFO}.grib2"
         else 
            #cycle=${file:22:2}
            grep "^INPGRID WIND" ${RUNdir}/input${grdID} > blah1

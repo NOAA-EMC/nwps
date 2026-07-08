@@ -213,9 +213,9 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
      echo "date_stamp: ${date_stamp}"  | tee -a $logrunup
      CYCLErunup="${hh}${mm}" 
      CYCLErunupout="${hh}"
-     # nomenclature input file for run_runup.sh e.g 20m_contour_CG2.20150202_0000_MHX
+     # nomenclature input file for run_runup.sh e.g 20m_contour_cg2.20150202_0000_MHX
      fileor="${dpt_runup_contour}_contour_CG${CGNUM}"
-     filein="${dpt_runup_contour}_contour_CG${CGNUM}.${yyyy}${mon}${dd}_${CYCLErunup}_${SITEID}"
+     filein="${dpt_runup_contour}_contour_cg${CGNUM}.${yyyy}${mon}${dd}_${CYCLErunup}_${SITEID}"
      filecomout="${NET}.t${hh}z.${dpt_runup_contour}_contour_cg${CGNUM}.${siteid}.txt"
      #fileout="${dpt_runup_contour}_cg${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}_${SITEID}.txt"
      #fileout="${WFO}_${NET}_${dpt_runup_contour}_cg${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}"

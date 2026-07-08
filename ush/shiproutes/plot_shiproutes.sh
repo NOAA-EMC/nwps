@@ -446,7 +446,7 @@ done < ${CFGFILE}
 echo "Publishing results" | tee -a ${LOGFILE}
 cp -pfv ${PROCdir}/route*/swan*hr*.png  ${GRAPHICOUTPUTdir}/. >> ${DEBUGLOGfile} 2>&1
 chmod 777 ${GRAPHICOUTPUTdir}/swan*hr*.png
-figsTarFile="shiproute_plots_CG1_${yyyy}${mon}${dd}${hh}.tar.gz"
+figsTarFile="shiproute_plots_cg1_${yyyy}${mon}${dd}${hh}.tar.gz"
 cd ${GRAPHICOUTPUTdir}
 tar cvfz ${figsTarFile} *.png >> ${DEBUGLOGfile} 2>&1
 

@@ -475,7 +475,7 @@ if core==0:
 hh = datetime.datetime.fromtimestamp(startdate).strftime('%H')
 
 # Construct the new filename
-bulfilenm = f"nwps.t{hh}z.cg0_Trkng.{wfo}.bull-{str(core).zfill(3)}"
+bulfilenm = f"nwps.t{hh}z.cg0_trkng.{wfo}.bull-{str(core).zfill(3)}"
 
 bul_file = open(bulfilenm, "w")
 if core==0:
