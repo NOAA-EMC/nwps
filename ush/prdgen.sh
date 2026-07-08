@@ -134,6 +134,7 @@ YMDH=${PDY}
     do
       cx=$(( $cx + 1 ))
       grdID="CG${cx}"
+      grdid="cg${cx}"
       echo "Preparing input file for: ${grdID}"
       if [ ! -f gribfile.$grdID ]
       then
@@ -328,14 +329,14 @@ YMDH=${PDY}
         echo "      Saving AWIPSGRIB as grib2.$cycle.awipsnwps_${siteid}_${grdID}"
         echo "          in $COMOUTwmo"
         set -x
-        cp AWIPSGRIB $COMOUTwmo/grib2.$cycle.awipsnwps_${siteid}_${grdID}
+        cp AWIPSGRIB $COMOUTwmo/grib2.$cycle.awipsnwps_${siteid}_${grdid}
         export err=$?; err_chk
       fi
 
       if [ "$SENDDBN" = 'YES' ]
       then
-        echo "      Sending grib2.$cycle.awipsnwps_${siteid}_${grdID} to DBNET."
-        $DBNROOT/bin/dbn_alert GRIB_LOW $NET $job $COMOUTwmo/grib2.$cycle.awipsnwps_${siteid}_${grdID}
+        echo "      Sending grib2.$cycle.awipsnwps_${siteid}_${grdid} to DBNET."
+        $DBNROOT/bin/dbn_alert GRIB_LOW $NET $job $COMOUTwmo/grib2.$cycle.awipsnwps_${siteid}_${grdid}
       fi
 
       ##rm -f "tocgrib2_${grdID}.out"
