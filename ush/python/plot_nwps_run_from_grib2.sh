@@ -74,7 +74,7 @@ if [ "${tst1}" != "" ]
    source ${RUNdir}/PEXCD
 elif [ "${tst2}" != "" ]
    then
-   export WATERLEVELS='ESTOFS'
+   export WATERLEVELS='STOFS'
 else
    export WATERLEVELS='NO'
 fi
@@ -447,7 +447,7 @@ for parm in ${SWANPARMS}
 #     cd ${GRAPHICSdir}
 ##     Spectra plots (if any) must be in ${GRAPHICSdir} already
 ##     AW010620: Spectra plots no longer produced, so copy command deactivated.
-#     figsTarFile="plots_CG${CGNUM}_${YYYY}${MM}${DD}${HH}.tar.gz"
+#     figsTarFile="plots_cg${CGNUM}_${YYYY}${MM}${DD}${HH}.tar.gz"
 #     #cp ${FIGOUTPUTdir}/${SITEID}/spectra/CG${CGNUM}/*.png .
 #
 #     tar cvfz ${figsTarFile} *.png

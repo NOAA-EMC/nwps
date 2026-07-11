@@ -1,19 +1,19 @@
 #!/usr/bin/env python
-# estofs_extend.py script
+# stofs_extend.py script
 # Author: Andre van der Westhuysen, 04/19/15
 #
 # Contributor: Roberto Padilla-Hernandez
 #
 # Purpose:
-#    Extends ESTOFS water level field towards the coast with a nearest neighbor extrapolation
-#    method, for a given time level. Uses as input the ESTOFS domain file (estofs_waterlevel_domain.txt)
-#    and water level field file (e.g. wave_estofs_waterlevel_1429336800_20150418_06_f000.dat).
+#    Extends STOFS water level field towards the coast with a nearest neighbor extrapolation
+#    method, for a given time level. Uses as input the STOFS domain file (stofs_waterlevel_domain.txt)
+#    and water level field file (e.g. wave_stofs_waterlevel_1429336800_20150418_06_f000.dat).
 #
 # Usage:
-#    $ python estofs_extend.py [ESTOFS water level field file]
+#    $ python stofs_extend.py [STOFS water level field file]
 #
 #    e.g.
-#    $ python estofs_extend.py wave_estofs_waterlevel_1429336800_20150418_06_f000.dat
+#    $ python stofs_extend.py wave_stofs_waterlevel_1429336800_20150418_06_f000.dat
 #
 
 import sys
@@ -30,12 +30,12 @@ if (pltflag):
    from mpl_toolkits.basemap import Basemap
 
 # Read domain file
-domainfile = 'estofs_waterlevel_domain.txt'
+domainfile = 'stofs_waterlevel_domain.txt'
 if os.path.isfile(domainfile):
-   print('*** estofs_extend.py ***')
+   print('*** stofs_extend.py ***')
    print('Reading: '+domainfile)
 else:
-   print('*** TERMINATING ERROR: Missing ESTOFS domain file: '+domainfile)
+   print('*** TERMINATING ERROR: Missing STOFS domain file: '+domainfile)
    sys.exit()
 
 with open(domainfile) as f:
@@ -49,7 +49,7 @@ y0 = float(dummy[1])
 dx = float(dummy[5])
 dy = float(dummy[6])
 
-#print('ESTOFS field dimensions: nlon='+str(nlon)+', nlat='+str(nlat))
+#print('STOFS field dimensions: nlon='+str(nlon)+', nlat='+str(nlat))
 #print('x0='+str(x0)+', y0='+str(y0)+', dx='+str(dx)+', dy='+str(dy))
 
 lons=np.linspace(x0,x0+float(nlon-1)*dx,num=nlon)
@@ -62,12 +62,12 @@ lons = lons-360
 #print(lats.shape)
 #print(lats.min(), lats.max())
 
-# Read ESTOFS data file
+# Read STOFS data file
 infile = sys.argv[1]
 if os.path.isfile(infile):
    print('Reading: '+infile)
 else:
-   print('*** TERMINATING ERROR: Missing ESTOFS data file: '+infile)
+   print('*** TERMINATING ERROR: Missing STOFS data file: '+infile)
    sys.exit()
 
 data=np.loadtxt(infile)
@@ -98,10 +98,10 @@ if (pltflag):
    m.drawmeridians(np.arange(lons.min(),lons.max(),1.0),labels=[0,0,0,0.5],dashes=[1,3],color='0.50',fontsize=7)
    m.drawparallels(np.arange(lats.min(),lats.max(),0.5),labels=[0.5,0,0,0],dashes=[1,3],color='0.50',fontsize=7)
 
-   figtitle = 'ESTOFS water level, before extension (m):\n'+infile
+   figtitle = 'STOFS water level, before extension (m):\n'+infile
    plt.title(figtitle,fontsize=14)
 
-   filenm = 'estofs.png'
+   filenm = 'stofs.png'
    plt.savefig(filenm,dpi=150,bbox_inches='tight',pad_inches=0.1)
    plt.clf
 
@@ -145,10 +145,10 @@ for iter in range(1,niter+1):
       m.drawmeridians(np.arange(lons.min(),lons.max(),1.0),labels=[0,0,0,0.5],dashes=[1,3],color='0.50',fontsize=7)
       m.drawparallels(np.arange(lats.min(),lats.max(),0.5),labels=[0.5,0,0,0],dashes=[1,3],color='0.50',fontsize=7)
 
-      figtitle = 'ESTOFS water level, extension iter '+str(iter)+' (m):\n'+infile
+      figtitle = 'STOFS water level, extension iter '+str(iter)+' (m):\n'+infile
       plt.title(figtitle,fontsize=14)
 
-      filenm = 'estofs_iter'+str(iter)+'.png'
+      filenm = 'stofs_iter'+str(iter)+'.png'
       plt.savefig(filenm,dpi=150,bbox_inches='tight',pad_inches=0.1)
       plt.clf
 

@@ -25,11 +25,11 @@ export SHAPEFILEdb=${HOMEnwps}/fix/shapefile_db
 export DEBUGGING="FALSE"
 export ISPRODUCTION="TRUE"
 export SITETYPE="EMC"
-export ESTOFSTIMESTEP="1"
-export ESTOFSHOURS="180"
-export ESTOFSDOMAIN="262.00 23.0 0. 682 370 0.029326 0.027027"
-export ESTOFSNX="683"
-export ESTOFSNY="371"
+export STOFSTIMESTEP="1"
+export STOFSHOURS="180"
+export STOFSDOMAIN="262.00 23.0 0. 682 370 0.029326 0.027027"
+export STOFSNX="683"
+export STOFSNY="371"
 export RTOFSLON="262.00 282.00"
 export RTOFSLAT="23.0 33.00"
 export RTOFSDATFILE="pdef_ncep_global"
@@ -45,14 +45,14 @@ export SENDLDADALERTS="FALSE"
 
 ##Execute OFS script
 case ${OFSTYPE} in 
-    estofs)
+    stofs)
         export CYCLE="${CYC}"
-        ${USHnwps}/make_estofs.sh
+        ${USHnwps}/make_stofs.sh
         export err=$?; err_chk
     ;;
-    estofs_cur)
+    stofs_cur)
         export CYCLE="${CYC}"
-        ${USHnwps}/make_estofs_cur.sh
+        ${USHnwps}/make_stofs_cur.sh
         export err=$?; err_chk
     ;;
     rtofs)

@@ -223,21 +223,21 @@ if [ "${RTOFSHOURS}" == "" ]; then export RTOFSHOURS=${DEFAULT_RTOFSHOURS}; fi
 if [ "${RTOFSTIMESTEP}" == "" ]; then export RTOFSTIMESTEP=${DEFAULT_RTOFSTIMESTEP}; fi
 
 
-# ESTOFS Domain for water level
-export DEFAULT_ESTOFS_REGION="conus"
+# STOFS Domain for water level
+export DEFAULT_STOFS_REGION="conus"
 # ESFOTSDOMAIN="LON LAT 0. NX NY EW-RESOLUTION NS-RESOLUTION"
-export DEFAULT_ESTOFSDOMAIN="262.00 23.0 0. 682 370 0.029326 0.027027"
-export DEFAULT_ESTOFSNX="683"
-export DEFAULT_ESTOFSNY="371"
-export DEFAULT_ESTOFSHOURS="180"
-export DEFAULT_ESTOFSTIMESTEP="1"
+export DEFAULT_STOFSDOMAIN="262.00 23.0 0. 682 370 0.029326 0.027027"
+export DEFAULT_STOFSNX="683"
+export DEFAULT_STOFSNY="371"
+export DEFAULT_STOFSHOURS="180"
+export DEFAULT_STOFSTIMESTEP="1"
 
-if [ "${ESTOFS_REGION}" == "" ]; then export ESTOFS_REGION="${DEFAULT_ESTOFS_REGION}"; fi
-if [ "${ESTOFSDOMAIN}" == "" ]; then export ESTOFSDOMAIN="${DEFAULT_ESTOFSDOMAIN}"; fi
-if [ "${ESTOFSNX}" == "" ]; then export ESTOFSNX=${DEFAULT_ESTOFSNX}; fi
-if [ "${ESTOFSNY}" == "" ]; then export ESTOFSNY=${DEFAULT_ESTOFSNY}; fi
-if [ "${ESTOFSHOURS}" == "" ]; then export ESTOFSHOURS=${DEFAULT_ESTOFSHOURS}; fi
-if [ "${ESTOFSTIMESTEP}" == "" ]; then export ESTOFSTIMESTEP=${DEFAULT_ESTOFSTIMESTEP}; fi
+if [ "${STOFS_REGION}" == "" ]; then export STOFS_REGION="${DEFAULT_STOFS_REGION}"; fi
+if [ "${STOFSDOMAIN}" == "" ]; then export STOFSDOMAIN="${DEFAULT_STOFSDOMAIN}"; fi
+if [ "${STOFSNX}" == "" ]; then export STOFSNX=${DEFAULT_STOFSNX}; fi
+if [ "${STOFSNY}" == "" ]; then export STOFSNY=${DEFAULT_STOFSNY}; fi
+if [ "${STOFSHOURS}" == "" ]; then export STOFSHOURS=${DEFAULT_STOFSHOURS}; fi
+if [ "${STOFSTIMESTEP}" == "" ]; then export STOFSTIMESTEP=${DEFAULT_STOFSTIMESTEP}; fi
 #AW #FOR PSURGE
 #AW export PSURGEHOURS="102"
 
@@ -269,19 +269,6 @@ then
     echo "INFO - Debug level ${DEBUG_LEVEL}"
 else
     echo "INFO - Debugging is disabled for this run"
-fi
-
-if [ "${ISPRODUCTION}" == "TRUE" ]
-then 
-    echo "INFO - Production mode is enabled for this run"
-else
-    echo "INFO - Production mode is disabled for this run"
-fi
-
-if [ "${ISPRODUCTION}" == "TRUE" ] && [ "${DEBUGGING}" == "TRUE" ]
-then
-    echo "WARNING - This is a production workstation with debugging on"
-    echo "WARNING - Check your DEBUGGING setting"
 fi
 
 # Look for region specific overrides

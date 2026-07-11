@@ -48,8 +48,6 @@ myPWD=$(pwd)
 # Set our purging varaibles
 PSURGEPURGEdays="5"
 export DEGRIB=${DEGRIB}
-#export DEGRIB=${EXECnwps}/degrib
-#export DEGRIB=/nwprod2/grib_util.v1.0.0/exec/degrib2
 PSURGE2NWPS=${EXECnwps}/exec/psurge2nwps
 
 
@@ -139,12 +137,6 @@ find ${INGESTdir} -type f -mtime +${PSURGEPURGEdays} | xargs rm -f
 # Production?
 workdir=$(echo `pwd`)
 PSurge_latest=${COMINpsurge}
-#cd ${PSurge_latest}
-#NewD=$(basename `ls -t * | head -1`)
-#NewestDir=$(echo "${NewD%?}")
-#cd ${NewestDir}
-#NewestPsurge=$(basename `ls -t ${PSurge_latest}/*e??_inc_dat.h102.conus_625m.grib2 | head -1`)
-#NewestPsurge=$(basename `ls -t ${PSurge_latest}/*e[1-5]?_inc_dat.h102.conus_625m.grib2 | head -1`)
 # psurge update v3.0 to find the first prioritized CONUS storm from the *.go file
 #NewestPsurge=$(awk '/CONUS/ {print $1}' `ls -t ${PSurge_latest}/psurge.$YYYYMMDD/*.go | head -1`)
 NewestPsurge=$(awk '/CONUS/ {print $1}' $(lfs find ${PSurge_latest}/psurge.${YYYYMMDD} -name *.go | sort |tail -1 )| head -1)

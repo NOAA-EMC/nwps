@@ -122,7 +122,7 @@ export STATN4="NON"
 # Spectra points defined as space delimited list of:
 #   "name1:lat1:lon1 name2:lat2:lon2 name3:lat3:lon3 name4:lat4:lon4 ...."
 #
-export SPECPOINTS="SJM:30.398:-81.37 MTZ:29.706:-81.223 SAI:29.912:-81.281 NSS:30.513:-81.407 41112:30.718:-81.293 41012:30.041:-80.533 41008:31.402:-80.869"
+export SPECPOINTS="sjm:30.398:-81.37 mtz:29.706:-81.223 sai:29.912:-81.281 nss:30.513:-81.407 41112:30.718:-81.293 41012:30.041:-80.533 41008:31.402:-80.869"
 #
 #========================================================================
 #                    WAVE TRACKING (and WAVE PARTITION) ON/OFF          =

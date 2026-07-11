@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script used to fill missing ESTOFS hours
+# Script used to fill missing STOFS hours
 
 # Setup our NWPS environment                                                    
 set -xa
@@ -20,15 +20,15 @@ source ${USHnwps}/nwps_config.sh &> /dev/null
 myPWD=$(pwd)
 
 # Set our data processing DIRS
-LDMdir="${LDMdir}/estofs"
-INPUTdir="${INPUTdir}/estofs"
+LDMdir="${LDMdir}/stofs"
+INPUTdir="${INPUTdir}/stofs"
 
 HOURS="144"
 if [ "${1}" != "" ]; then HOURS="${1}"; fi
 TIMESTEP="1"
 end=0
 
-ingest_dir_start=$(cat ${LDMdir}/estofs_waterlevel_start_time.txt)
+ingest_dir_start=$(cat ${LDMdir}/stofs_waterlevel_start_time.txt)
 
 cd ${LDMdir}
 ingest_filehours=$(ls -1rat --color=none *.dat)

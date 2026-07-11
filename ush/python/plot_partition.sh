@@ -294,7 +294,7 @@ do
   export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
   
   
-  figsTarFile="plots_CG0_${YYYY}${MM}${DD}${HH}.tar.gz"
+  figsTarFile="plots_cg0_${YYYY}${MM}${DD}${HH}.tar.gz"
   tar cvfz ${figsTarFile} *.png
   cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
 # tarbal with plots send to CG0

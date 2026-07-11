@@ -318,9 +318,9 @@ do
         echo "Filter table file to 3-hourly..."
         # Accounting for init hours that differ from the 3-hourly cadence (00z, 03z, 06z, 09z, ...)
 	cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
-	hourshift=$(( expr $cycle % 3 ))
-	starthour=$(( expr $hourshift % 3 - 3 ))
-	endhour=$(( 21 + expr $hourshift % 3 ))
+	hourshift=`expr $cycle % 3`
+	starthour=$(( `expr $hourshift % 3` - 3 ))
+	endhour=$(( 21 + `expr $hourshift % 3` ))
 
 	for (( h=$starthour; h<=$endhour; h+=3 )); do
            hp1=$(printf "%02d" $((h+1)) )
@@ -446,7 +446,7 @@ done < ${CFGFILE}
 echo "Publishing results" | tee -a ${LOGFILE}
 cp -pfv ${PROCdir}/route*/swan*hr*.png  ${GRAPHICOUTPUTdir}/. >> ${DEBUGLOGfile} 2>&1
 chmod 777 ${GRAPHICOUTPUTdir}/swan*hr*.png
-figsTarFile="shiproute_plots_CG1_${yyyy}${mon}${dd}${hh}.tar.gz"
+figsTarFile="shiproute_plots_cg1_${yyyy}${mon}${dd}${hh}.tar.gz"
 cd ${GRAPHICOUTPUTdir}
 tar cvfz ${figsTarFile} *.png >> ${DEBUGLOGfile} 2>&1
 

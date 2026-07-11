@@ -64,7 +64,7 @@ if (wfo == 'mfl'):
    buoy = '41114'
    fracwet = 0.7703
 if (wfo == 'key'):
-   buoy = 'GSTRM'
+   buoy = 'gstrm'
    fracwet = 0.9120
 if (wfo == 'mlb'):
    buoy = '41009'
@@ -519,7 +519,7 @@ with open(fname_pnt,'a') as f:                  # append to file
 hh = datetime.datetime.fromtimestamp(startdate).strftime('%H')
 
 # Construct the new filename
-bulfilenm = f"nwps.t{hh}z.CG0_Trkng.{wfo}.bull"
+bulfilenm = f"nwps.t{hh}z.cg0_trkng.{wfo}.bull"
 bul_file = open(bulfilenm, "w")
 bul_file.write("%s" % '  Location : '+wfo.upper()+' domain spatial average\n')
 bul_file.write("%s" % '  Model    : Cluster-based wave system tracking\n')

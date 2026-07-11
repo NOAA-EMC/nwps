@@ -14,7 +14,7 @@ export WAVEMODEL=${WAVEMODEL:-swan}
 export WINDS=${WINDS:-FORECASTER}
 export DOMAINSET=${DOMAINSET:-${FIXnwps}/domains/${SITEID}}
 
-${USHnwps}/run_nwps_wcoss.sh --sitename ${SITEID} --runlen ${RUNLEN}  --wna --nest --waterlevels ESTOFS --rtofs --winds ${WINDS} --domainsetup ${DOMAINSET} --deltac ${DELTAC} --plot --wavemodel ${WAVEMODEL}
+${USHnwps}/run_nwps_wcoss.sh --sitename ${SITEID} --runlen ${RUNLEN}  --wna --nest --waterlevels STOFS --rtofs --winds ${WINDS} --domainsetup ${DOMAINSET} --deltac ${DELTAC} --plot --wavemodel ${WAVEMODEL}
 export err=$?; err_chk
 
 echo "Pre-process completed"

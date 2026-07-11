@@ -71,7 +71,7 @@ export STATN2="NON"
 #   "name1:lat1:lon1 name2:lat2:lon2 name3:lat3:lon3 name4:lat4:lon4 name5:lat5:lon5 ...."
 #
 #export SPECPOINTS="46066:52.785:-155.047"
-export SPECPOINTS="46075:53.911:-160.806 46073:55.031:-172.001 VCVA2:57.125:-170.285"
+export SPECPOINTS="46075:53.911:-160.806 46073:55.031:-172.001 vcva2:57.125:-170.285"
 #
 #========================================================================
 #                    WAVE TRACKING (and WAVE PARTITION) ON/OFF          =

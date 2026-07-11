@@ -17,12 +17,12 @@
 # ------------- Program Description and Details -------------
 # -----------------------------------------------------------
 #
-# This script is used to purge the previous ESTOFS data set.
+# This script is used to purge the previous STOFS data set.
 # We need to keep the current run, which is good out to 5 days
-# This will allow to use the ESTOFS data in the event of a 
-# data ingest problem. The ESTOFS model input script will know
+# This will allow to use the STOFS data in the event of a 
+# data ingest problem. The STOFS model input script will know
 # what times this data set is valid for and alert the forecaster
-# if ESTOFS data is not available for their model run times.
+# if STOFS data is not available for their model run times.
 #
 # -----------------------------------------------------------
 set -xa
@@ -52,11 +52,11 @@ then
     fi
 fi
 
-ESTOFSdir="${INPUTdir}/estofs"
-last_hour="${ESTOFSHOURS}"
+STOFSdir="${INPUTdir}/stofs"
+last_hour="${STOFSHOURS}"
 
-# Allow calling script to set the ESTOFS data dir
-if [ "${1}" != "" ]; then ESTOFSdir="${1}"; fi
+# Allow calling script to set the STOFS data dir
+if [ "${1}" != "" ]; then STOFSdir="${1}"; fi
 if [ "${2}" != "" ]; then last_hour="${2}"; fi
 
 FF=`echo $last_hour`
@@ -69,33 +69,33 @@ then
     FF=`echo 00$last_hour`
 fi
 
-echo "Purging previous ESTOFS data in DIR ${ESTOFSdir}"
-if [ ! -e ${ESTOFSdir} ]
+echo "Purging previous STOFS data in DIR ${STOFSdir}"
+if [ ! -e ${STOFSdir} ]
     then
-    echo "INFO - Cannot find DIR ${ESTOFSdir}"
+    echo "INFO - Cannot find DIR ${STOFSdir}"
     export err=1; err_chk
 fi
 
-if [ -e ${ESTOFSdir}/estofs_waterlevel_start_time.txt ]
+if [ -e ${STOFSdir}/stofs_waterlevel_start_time.txt ]
     then
-    water_run_time=$(cat ${ESTOFSdir}/estofs_waterlevel_start_time.txt)
-    cd ${ESTOFSdir}
+    water_run_time=$(cat ${STOFSdir}/stofs_waterlevel_start_time.txt)
+    cd ${STOFSdir}
 
-    file=$(ls --color=none -1 ${ESTOFSdir}/* | grep wave_estofs_waterlevel | grep ${water_run_time} | grep f${FF}.dat)
+    file=$(ls --color=none -1 ${STOFSdir}/* | grep wave_stofs_waterlevel | grep ${water_run_time} | grep f${FF}.dat)
     if [ "${file}" != "" ] 
     then
-	old_files=$(ls --color=none -1 ${ESTOFSdir}/wave_estofs_waterlevel*.dat | grep -v ${water_run_time})
+	old_files=$(ls --color=none -1 ${STOFSdir}/wave_stofs_waterlevel*.dat | grep -v ${water_run_time})
 	for i in ${old_files}
 	do
 	    echo "Purging ${i}"
 	    rm -f ${i}
 	done
     else
-	echo "INFO - We do not have latest ESTOFS data out to ${last_hour} hours for waterlevel"
+	echo "INFO - We do not have latest STOFS data out to ${last_hour} hours for waterlevel"
 	echo "INFO - Not purging any data"
     fi
 else
-    echo "INFO - Cannot find DIR ${ESTOFSdir}/estofs_waterlevel_start_time.txt file"
+    echo "INFO - Cannot find DIR ${STOFSdir}/stofs_waterlevel_start_time.txt file"
 fi
 
 echo "Purge complete"

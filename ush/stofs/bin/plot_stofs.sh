@@ -17,7 +17,7 @@
 # ------------- Program Description and Details -------------
 # -----------------------------------------------------------
 #
-# Script used to plot ESTOFS input ASCII point files
+# Script used to plot STOFS input ASCII point files
 #
 # -----------------------------------------------------------
 set -xa
@@ -52,8 +52,8 @@ if [ "${SITEID}" == "" ]
 fi
 SITEID=$(echo ${SITEID} | tr [:upper:] [:lower:])
 
-RUNdir="${USHnwps}/estofs"
-INPUTdir="${INPUTdir}/estofs"
+RUNdir="${USHnwps}/stofs"
+INPUTdir="${INPUTdir}/stofs"
 BINdir="${RUNdir}/bin"
 ETCdir="${RUNdir}/grads/etc"
 GRADSOUTPUTdir="${OUTPUTdir}/grads"
@@ -89,23 +89,23 @@ then
     cp -f ${ETCdir}/default/*.* ${ETCdir}/${SITEID}/.
 fi
 
-if [ ! -e ${INPUTdir}/estofs_waterlevel_domain.txt ]
+if [ ! -e ${INPUTdir}/stofs_waterlevel_domain.txt ]
 then
     echo "ERROR - Missing domain file in input DIR"
-    echo "ERROR - Can't find ${INPUTdir}/estofs_waterlevel_domain.txt"
+    echo "ERROR - Can't find ${INPUTdir}/stofs_waterlevel_domain.txt"
     export err=1; err_chk
 fi
 
-if [ ! -e ${INPUTdir}/estofs_waterlevel_start_time.txt ]
+if [ ! -e ${INPUTdir}/stofs_waterlevel_start_time.txt ]
 then
     echo "ERROR - Missing model start time file in input DIR"
-    echo "ERROR - Can't find ${INPUTdir}/estofs_waterlevel_start_time.txt"
+    echo "ERROR - Can't find ${INPUTdir}/stofs_waterlevel_start_time.txt"
     export err=1; err_chk
 fi
 
-epoc_time=$(cat ${INPUTdir}/estofs_waterlevel_start_time.txt)
+epoc_time=$(cat ${INPUTdir}/stofs_waterlevel_start_time.txt)
 
-DOMAIN=$(cat ${INPUTdir}/estofs_waterlevel_domain.txt | awk -F: '{ print $2 }')
+DOMAIN=$(cat ${INPUTdir}/stofs_waterlevel_domain.txt | awk -F: '{ print $2 }')
 LON=$(echo ${DOMAIN} | awk '{ print $1 }')
 NX=$(echo ${DOMAIN} | awk '{ print $4 }')
 NX=$(echo "${NX} + 1" | bc)
@@ -122,9 +122,9 @@ YRES=$(echo ${DOMAIN} | awk '{ print $7 }')
 XDEF=$(echo "xdef ${NX}   linear ${LON} ${XRES}")
 YDEF=$(echo "ydef ${NY}   linear ${LAT} ${YRES}")
 
-echo "ESTOFSDOMAIN = ${DOMAIN}"
-echo "ESTOFSNX = ${NX}"
-echo "ESTOFSNY = ${NY}"
+echo "STOFSDOMAIN = ${DOMAIN}"
+echo "STOFSNX = ${NX}"
+echo "STOFSNY = ${NY}"
 
 cd ${INPUTdir}
 files=`ls --color=none -1rat wave*_waterlevel_*.dat`
@@ -149,7 +149,7 @@ do
     ${GRADS} -b -l -c waterlevel.gs
     fhour=$(echo "${label}" | awk -F_ '{ print $3 }')
     echo "Forecast hour ${fhour}"
-    mv waterlevel.png ${GRAPHICSdir}/estofs_waterlevel_f${FHOUR}.png
+    mv waterlevel.png ${GRAPHICSdir}/stofs_waterlevel_f${FHOUR}.png
 done
 
 # NOTE: In NWPS we have a send to Web option in the global configuration

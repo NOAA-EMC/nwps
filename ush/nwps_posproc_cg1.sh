@@ -82,7 +82,7 @@ while read p; do
      RTOFS=$p;
    fi
    if [ ${ndata} -eq 19 ]; then
-     ESTOFS=$p;
+     STOFS=$p;
    fi
    if [ ${ndata} -eq 20 ]; then
      WINDS=$p;
@@ -104,7 +104,7 @@ done < ${RUNdir}/info_to_nwps_coremodel.txt
 
 #export HOMEnwps DEBUGGING DEBUG_LEVEL BATHYdb SHAPEFILEdb ARCHdir
 #export DATAdir LOGdir VARdir OUTPUTdir RUNdir TMPdir RUNLEN
-#export NEST RTOFS ESTOFS WEB PLOT MODELCORE LOGdir SITEID WNA 
+#export NEST RTOFS STOFS WEB PLOT MODELCORE LOGdir SITEID WNA 
 #export WINDS INPUTdir  ISPRODUCTIO DATAdir
 #source ${HOMEnwps}/parm/platform/set_platform.sh
 logrunup=${LOGdir}/runup.log
@@ -214,12 +214,12 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
      echo "date_stamp: ${date_stamp}"  | tee -a $logrunup
      CYCLErunup="${hh}${mm}" 
      CYCLErunupout="${hh}"
-     # nomenclature input file for run_runup.sh e.g 20m_contour_CG2.20150202_0000_MHX
+     # nomenclature input file for run_runup.sh e.g 20m_contour_cg2.20150202_0000_MHX
      fileor="${dpt_runup_contour}_contour_CG${CGNUM}"
-     filein="${dpt_runup_contour}_contour_CG${CGNUM}.${yyyy}${mon}${dd}_${CYCLErunup}_${SITEID}"
-     filecomout="${NET}.t${hh}z.${dpt_runup_contour}_contour_CG${CGNUM}.${SITEID}.txt"
-     #fileout="${dpt_runup_contour}_CG${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}_${SITEID}.txt"
-     #fileout="${WFO}_${NET}_${dpt_runup_contour}_CG${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}"
+     filein="${dpt_runup_contour}_contour_cg${CGNUM}.${yyyy}${mon}${dd}_${CYCLErunup}_${SITEID}"
+     filecomout="${NET}.t${hh}z.${dpt_runup_contour}_contour_cg${CGNUM}.${siteid}.txt"
+     #fileout="${dpt_runup_contour}_cg${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}_${SITEID}.txt"
+     #fileout="${WFO}_${NET}_${dpt_runup_contour}_cg${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}"
      echo "filein: ${filein}"  | tee -a $logrunup
      cp -fvp ${RUNdir}/${fileor} .
      cp ${fileor} ${filein}    | tee -a $logrunup
@@ -449,7 +449,7 @@ then
        cp -vpf ${TEMPDIR}/*.png ${GRAPHICSdir}/.
        chmod 777 ${GRAPHICSdir}/*.png
        cd ${GRAPHICSdir}
-       figsTarFile="plots_CG${CGNUM}_${yyyy}${mon}${dd}${hh}.tar.gz"
+       figsTarFile="plots_cg${CGNUM}_${yyyy}${mon}${dd}${hh}.tar.gz"
        tar cvfz ${figsTarFile} *.png
        cp ${figsTarFile} $COMOUTCYC/${figsTarFile}
 
@@ -457,12 +457,21 @@ then
        if [ -f  ${CFGFILE} ]; then
           # Copying shiproute plots to COMOUT
           #echo "Publishing results" | tee -a ${LOGFILE}
-          cp -pfv ${VARdir}/shiproutes/route*/swan*hr*.png ${GRAPHICSdirshiproutes}/.
-          chmod 777 ${GRAPHICSdirshiproutes}/swan*hr*.png
-          cd ${GRAPHICSdirshiproutes}
-          figsTarFile="shiproute_plots_CG1_${yyyy}${mon}${dd}${hh}.tar.gz"
-          tar cvfz ${figsTarFile} *.png
-          cp -fpv ${figsTarFile} $COMOUTCYC/${figsTarFile}
+          files=(${VARdir}/shiproutes/route*/swan*hr*.png)
+          files_exit=false
+          for f_file in "${files[@]}"; do
+            # Check if any file actually exists 
+            [ -e "$f_file" ] && files_exist=true && break
+          done
+
+          if [ "$files_exist" = true ]; then
+            cp -pfv "${files[@]}" "${GRAPHICSdirshiproutes}/."
+            chmod 777 ${GRAPHICSdirshiproutes}/swan*hr*.png
+            cd ${GRAPHICSdirshiproutes}
+            figsTarFile="shiproute_plots_cg1_${yyyy}${mon}${dd}${hh}.tar.gz"
+            tar cvfz ${figsTarFile} *.png
+            cp -fpv ${figsTarFile} $COMOUTCYC/${figsTarFile}
+          fi 
        fi
     fi
 
@@ -496,11 +505,12 @@ cd ${DATA}/output/grib2/CG${CGNUM}
 
      date_stamp="${yyyy}${mon}${dd}"
      grib2File="nwps.t${hh}z.CG${CGNUM}.${siteid}.grib2"
+     g2f=${grib2File,,}
      cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
      COMOUTCYC="${COMOUT_CORRECT}/${cycle}/CG${CGNUM}"
      if [ "${SENDCOM}" == "YES" ]; then
         mkdir -p $COMOUTCYC
-        cp -fv  ${grib2File} ${COMOUTCYC}/${grib2File}
+        cp -fv  ${grib2File} ${COMOUTCYC}/${g2f}
 
         # Archive restart and other processed input files
         cd ${RUNdir}
@@ -508,11 +518,21 @@ cd ${DATA}/output/grib2/CG${CGNUM}
         #cp -fv  ${RUNdir}/info* ${COMOUTCYC}/
         #cp -fv  ${RUNdir}/*.pm ${COMOUTCYC}/
         if [ "${MODELCORE}" == "SWAN" ]; then
-           cp -fv  ${RUNdir}/${date_stamp}.${cycle}00* ${COMOUTCYC}/
+	   files=(${RUNdir}/${date_stamp}.${cycle}00*)
+	   files_exit=false
+           for f_file in "${files[@]}"; do
+             # Check if any file actually exists
+             [ -e "$f_file" ] && files_exist=true && break
+           done
+           if [ "$files_exist" = true ]; then
+             cp -fv "${files[@]}" "${COMOUTCYC}/"
+           fi
         elif [ "${MODELCORE}" == "UNSWAN" ]; then
            for i in {0..9}; do
-              mkdir -p ${COMOUTCYC}/PE000${i}/
-              cp -fv  ${RUNdir}/PE000${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE000${i}/
+              if [ -e ${RUNdir}/PE000${i}/${date_stamp}.${cycle}00 ]; then  
+                mkdir -p ${COMOUTCYC}/PE000${i}/
+                cp -fv  ${RUNdir}/PE000${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE000${i}/
+              fi 
            done
            # Additional copies for domains running on 48 cores
            if [ "${SITEID}" == "MHX" ] || [ "${SITEID}" == "CARX" ] || [ "${SITEID}" == "TBWX" ] \
@@ -527,32 +547,40 @@ cd ${DATA}/output/grib2/CG${CGNUM}
               || [ "${SITEID}" == "LIX" ] || [ "${SITEID}" == "LWX" ]
            then
               for i in {10..47}; do
-                 mkdir -p ${COMOUTCYC}/PE00${i}/
-                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 if [ -e "${RUNdir}/PE00${i}/${date_stamp}.${cycle}00" ]; then  
+                   mkdir -p ${COMOUTCYC}/PE00${i}/
+                   cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 fi 
               done
            fi
            # Additional copies for domains running on 84 cores
            if [ "${SITEID}" == "OKX" ]
            then
               for i in {10..59}; do
-                 mkdir -p ${COMOUTCYC}/PE00${i}/
-                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+		 if [ -e "${RUNdir}/PE00${i}/${date_stamp}.${cycle}00" ]; then      
+                   mkdir -p ${COMOUTCYC}/PE00${i}/
+                   cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 fi 
               done
            fi
 	   
 	   if [ "${SITEID}" == "SEW" ] || [ "${SITEID}" == "LOX" ]
            then
               for i in {10..35}; do
-                 mkdir -p ${COMOUTCYC}/PE00${i}/
-                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 if [ -e "${RUNdir}/PE00${i}/${date_stamp}.${cycle}00" ]; then 
+                   mkdir -p ${COMOUTCYC}/PE00${i}/
+                   cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 fi 
               done
            fi
            # Additional copies for domains running on 84 cores
            if [ "${SITEID}" == "ALU" ]
            then
               for i in {10..83}; do
-                 mkdir -p ${COMOUTCYC}/PE00${i}/
-                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 if [ -e "${RUNdir}/PE00${i}/${date_stamp}.${cycle}00" ]; then 
+                   mkdir -p ${COMOUTCYC}/PE00${i}/
+                   cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 fi 
               done
            fi
            # Additional copies for domains running on 96 cores
@@ -564,37 +592,51 @@ cd ${DATA}/output/grib2/CG${CGNUM}
               || [ "${SITEID}" == "CAR" ] || [ "${SITEID}" == "TAE" ]
            then
               for i in {10..95}; do
-                 mkdir -p ${COMOUTCYC}/PE00${i}/
-                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 if [ -e "${RUNdir}/PE00${i}/${date_stamp}.${cycle}00" ]; then 
+                   mkdir -p ${COMOUTCYC}/PE00${i}/
+                   cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 fi 
               done
            fi
            # Additional copies for domains running on 96 cores
            if [ "${SITEID}" == "HGX" ] || [ "${SITEID}" == "MOBX" ]
            then
               for i in {96..99}; do
-                 mkdir -p ${COMOUTCYC}/PE00${i}/
-                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 if [ -e "${RUNdir}/PE00${i}/${date_stamp}.${cycle}00" ]; then 
+                   mkdir -p ${COMOUTCYC}/PE00${i}/
+                   cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 fi 
               done
               for i in {100..119}; do
-                 mkdir -p ${COMOUTCYC}/PE0${i}/
-                 cp -fv  ${RUNdir}/PE0${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE0${i}/
+                 if [ -e "${RUNdir}/PE0${i}/${date_stamp}.${cycle}00" ]; then 
+                   mkdir -p ${COMOUTCYC}/PE0${i}/
+                   cp -fv  ${RUNdir}/PE0${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE0${i}/
+                 fi 
               done
            fi
            # Additional copies for domains running on 96 cores
            if [ "${SITEID}" == "MOB" ]
            then
               for i in {96..99}; do
-                 mkdir -p ${COMOUTCYC}/PE00${i}/
-                 cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 if [ -e "${RUNdir}/PE00${i}/${date_stamp}.${cycle}00" ]; then 
+                   mkdir -p ${COMOUTCYC}/PE00${i}/
+                   cp -fv  ${RUNdir}/PE00${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE00${i}/
+                 fi 
               done
               for i in {100..143}; do
-                 mkdir -p ${COMOUTCYC}/PE0${i}/
-                 cp -fv  ${RUNdir}/PE0${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE0${i}/
+                 if [ -e "${RUNdir}/PE0${i}/${date_stamp}.${cycle}00" ]; then 
+                   mkdir -p ${COMOUTCYC}/PE0${i}/
+                   cp -fv  ${RUNdir}/PE0${i}/${date_stamp}.${cycle}00* ${COMOUTCYC}/PE0${i}/
+                 fi 
               done
            fi
         fi
-        cp -fv  ${RUNdir}/inputCG${CGNUM} ${COMOUTCYC}/
-        cp -fv  ${RUNdir}/${date_stamp}${cycle}.wnd ${COMOUTCYC}/
+        if [ -e "${RUNdir}/inputCG${CGNUM}" ]; then 
+          cp -fv  ${RUNdir}/inputCG${CGNUM} ${COMOUTCYC}/
+        fi
+        if [ -e "${RUNdir}/${date_stamp}${cycle}.wnd" ]; then 
+          cp -fv  ${RUNdir}/${date_stamp}${cycle}.wnd ${COMOUTCYC}/
+        fi
         if [ -e ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.wlev ]; then
            cp -fv  ${RUNdir}/${date_stamp}${cycle}_CG${CGNUM}.wlev ${COMOUTCYC}/
         fi
@@ -609,12 +651,12 @@ cd ${DATA}/output/grib2/CG${CGNUM}
         cd ${INPUTdir}
         NewestWind=$(basename `ls -t ${INPUTdir}/NWPSWINDGRID_${siteid}* | head -1`)
         cp ${INPUTdir}/${NewestWind} ${COMOUTCYC}/
-        # b. ESTOFS water level fields (if available)
-        if [ -e ${INPUTdir}/estofs/estofs_waterlevel_start_time.txt ]; then
-           cd ${INPUTdir}/estofs
-           waterlevel_start_time=`cat ${INPUTdir}/estofs/estofs_waterlevel_start_time.txt`
-           tar -cf wave_estofs_waterlevel_${waterlevel_start_time}.tar *.txt wave_estofs_waterlevel_${waterlevel_start_time}*.dat
-           mv  ${INPUTdir}/estofs/wave_estofs_waterlevel_${waterlevel_start_time}.tar ${COMOUTCYC}/
+        # b. STOFS water level fields (if available)
+        if [ -e ${INPUTdir}/stofs/stofs_waterlevel_start_time.txt ]; then
+           cd ${INPUTdir}/stofs
+           waterlevel_start_time=`cat ${INPUTdir}/stofs/stofs_waterlevel_start_time.txt`
+           tar -cf wave_stofs_waterlevel_${waterlevel_start_time}.tar *.txt wave_stofs_waterlevel_${waterlevel_start_time}*.dat
+           mv  ${INPUTdir}/stofs/wave_stofs_waterlevel_${waterlevel_start_time}.tar ${COMOUTCYC}/
         fi
         # b. P-Surge water level fields (if available)
         if [ -e ${INPUTdir}/psurge/psurge_waterlevel_start_time.txt ]; then
@@ -633,7 +675,7 @@ cd ${DATA}/output/grib2/CG${CGNUM}
         fi
 
         if [ "${SENDDBN}" == "YES" ]; then
-            ${DBNROOT}/bin/dbn_alert MODEL NWPS_GRIB $job ${COMOUTCYC}/${grib2File}
+            ${DBNROOT}/bin/dbn_alert MODEL NWPS_GRIB $job ${COMOUTCYC}/${g2F}
         fi
      fi
 
@@ -646,7 +688,7 @@ cd ${DATA}/output/spectra/CG${CGNUM}
        for orig_file in ${spec2dFile}; do
          # Extract bouy ID
          suffix=$(echo "$orig_file" | cut -d '.' -f2)
-         new_spc2d="nwps.t${cycle}z.spc2d_${suffix}_CG${CGNUM}.${WFO}.txt"
+         new_spc2d="nwps.t${cycle}z.spc2d_${suffix}_cg${CGNUM}.${WFO}.txt"
 
          cp -fv "$orig_file" "${COMOUTCYC}/${new_spc2d}"
        done
@@ -658,7 +700,7 @@ cd ${DATA}/output/spectra/CG${CGNUM}
 if [ "${SENDDBN}" == "YES" ]; then
   for file in ${spec2dFile}; do
     suffix=$(echo "$file" | cut -d '.' -f2)
-    new_spc2d="nwps.t${cycle}z.spc2d_${suffix}_CG${CGNUM}.${WFO}.txt"
+    new_spc2d="nwps.t${cycle}z.spc2d_${suffix}_cg${CGNUM}.${WFO}.txt"
     if [ -f "${COMOUTCYC}/${new_spc2d}" ]; then
       echo "Sending ${new_spc2d} to DBNet"
       $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_SPECTRA ${job} ${COMOUTCYC}/${new_spc2d}

@@ -107,14 +107,14 @@ cat ${RUNdir}/SYS_TP.OUT-00? > ${RUNdir}/SYS_TP.OUT
 cat ${RUNdir}/SYS_PNT.OUT-00? > ${RUNdir}/SYS_PNT.OUT
 yyyymmdd=`ls *.wnd | cut -c1-8`
 hh=`ls *.wnd | cut -c9-10`
-cat /dev/null > nwps.t${hh}z.CG0_Trkng.${SITEID,,}.bull
-cat nwps.t${hh}z.CG0_Trkng.${SITEID,,}.bull-00? > nwps.t${hh}z.CG0_Trkng.${SITEID,,}.bull
+cat /dev/null > nwps.t${hh}z.cg0_trkng.${SITEID,,}.bull
+cat nwps.t${hh}z.cg0_trkng.${SITEID,,}.bull-00? > nwps.t${hh}z.cg0_trkng.${SITEID,,}.bull
 
 rm ${RUNdir}/SYS_HSIGN.OUT-00?
 rm ${RUNdir}/SYS_DIR.OUT-00?
 rm ${RUNdir}/SYS_TP.OUT-00?
 rm ${RUNdir}/SYS_PNT.OUT-00?
-rm nwps.t${hh}z.CG0_Trkng.${SITEID,,}.bull-00?
+rm nwps.t${hh}z.cg0_trkng.${SITEID,,}.bull-00?
 
 #if [ "${err}" == "0" ];then
 #   mv -fv sys_pnt.ww3   SYS_PNT.OUT

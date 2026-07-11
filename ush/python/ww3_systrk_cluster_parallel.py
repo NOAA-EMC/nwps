@@ -48,7 +48,7 @@ wfo_dict = {
     'tae': ('42039', 0.7052),
     'tbw': ('42036', 0.7159),
     'mfl': ('41114', 0.7703),
-    'key': ('GSTRM', 0.9120),
+    'key': ('gstrm', 0.9120),
     'mlb': ('41009', 0.7416),
     'jax': ('41112', 0.8252),
     'sju': ('41053', 0.9255),
@@ -475,7 +475,7 @@ if core==0:
 hh = datetime.datetime.fromtimestamp(startdate).strftime('%H')
 
 # Construct the new filename
-bulfilenm = f"nwps.t{hh}z.CG0_Trkng.{wfo}.bull-{str(core).zfill(3)}"
+bulfilenm = f"nwps.t{hh}z.cg0_trkng.{wfo}.bull-{str(core).zfill(3)}"
 
 bul_file = open(bulfilenm, "w")
 if core==0:

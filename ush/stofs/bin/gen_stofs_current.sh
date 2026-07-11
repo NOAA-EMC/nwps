@@ -18,8 +18,8 @@ set -xa
 # ------------- Program Description and Details -------------
 # -----------------------------------------------------------
 #
-# Script used to create water level files for SWAN
-# using hi-res ESTOFS data.
+# Script used to create depth-integrated current files for SWAN
+# using hi-res STOFS data.
 #
 # -----------------------------------------------------------
 
@@ -56,16 +56,16 @@ export TZ="UTC"
 
 # Script variables
 # ===========================================================
-BINdir="${USHnwps}/estofs/bin"
-LOGfile="${LOGdir}/gen_waterlevel.log"
+BINdir="${USHnwps}/stofs/bin"
+LOGfile="${LOGdir}/gen_stofs_current.log"
 
 # Set our data processing directory
-LDMdir="${LDMdir}/estofs"
-INPUTdir="${INPUTdir}/estofs"
+LDMdir="${LDMdir}/stofs"
+INPUTdir="${INPUTdir}/stofs"
 
 # Set our locking variables
 PROGRAMname="$0"
-LOCKfile="$VARdir/gen_waterlevel.lck"
+LOCKfile="$VARdir/gen_stofs_current.lck"
 MINold="30"
 
 #source ${USHnwps}/process_lock.sh
@@ -77,15 +77,14 @@ mkdir -p ${LOGdir}
 
 cat /dev/null > ${LOGfile}
 
-echo "Generating waterlevel files for NWPS model" | tee -a ${LOGfile}
+echo "Generating STOFS current files for NWPS model" | tee -a ${LOGfile}
 #echo "Checking for lock files" | tee -a ${LOGfile}
 #LockFileCheck $MINold
 
 if [ "${RETROSPECTIVE}" == "TRUE" ]; then    #RETROSPECTIVE
    echo "Extracting water level configuration from archived inputCG"
    cd ${RUNdir}
-   #SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/estofs_match.pl`
-   SWANPARMS=`${BINdir}/estofs_match.pl`
+   SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/stofs_match.pl`
    for parm in ${SWANPARMS}
       do
       CG=`echo ${parm} | awk -F, '{ print $1 }'`
@@ -101,32 +100,33 @@ echo "Starting processing at at $datetime UTC" | tee -a ${LOGfile}
 
 #CreateLockFile
 
-echo $$ > /${TMPdir}/${USERNAME}/nwps/8889_gen_waterlevel_sh.pid
+echo $$ > /${TMPdir}/${USERNAME}/nwps/8889_gen_stofs_current_sh.pid
 
 myPWD=`pwd`
 
 if [ "${RETROSPECTIVE}" == "FALSE" ]; then    #RETROSPECTIVE
 
-if [ ! -e ${INPUTdir}/estofs_waterlevel_start_time.txt ] || [ ! -e ${INPUTdir}/estofs_waterlevel_domain.txt ]
+if [ ! -e ${INPUTdir}/stofs_current_start_time.txt ] || [ ! -e ${INPUTdir}/stofs_current_domain.txt ]
     then
-    echo "INFO - No ESTOFS data to process" | tee -a ${LOGfile}
+    echo "INFO - No STOFS data to process" | tee -a ${LOGfile}
     echo "INFO - Will try to copy files from ${LDMdir}" | tee -a ${LOGfile}
-    if [ ! -e ${LDMdir}/estofs_waterlevel_start_time.txt ]
+    if [ ! -e ${LDMdir}/stofs_current_start_time.txt ]
     then
-       echo "ERROR - No ESTOFS data to process" | tee -a ${LOGfile}
-       echo "ERROR - Missing ESTOFS start time file ${LDMdir}/estofs_waterlevel_start_time.txt" | tee -a ${LOGfile}
+       echo "ERROR - No STOFS data to process" | tee -a ${LOGfile}
+       echo "ERROR - Missing STOFS start time file ${LDMdir}/stofs_current_start_time.txt" | tee -a ${LOGfile}
        #RemoveLockFile
        export err=1; err_chk
     fi
-    rsync -av --force --stats --progress ${LDMdir}/*waterlevel* ${INPUTdir}/.
+    rsync -av --force --stats --progress ${LDMdir}/wave_stofs_uv* ${INPUTdir}/.
+    rsync -av --force --stats --progress ${LDMdir}/stofs_current* ${INPUTdir}/.
 fi
 
 
-input_dir_start=$(cat ${INPUTdir}/estofs_waterlevel_start_time.txt)
+input_dir_start=$(cat ${INPUTdir}/stofs_current_start_time.txt)
 
-if [ -e ${LDMdir}/estofs_waterlevel_start_time.txt ]
+if [ -e ${LDMdir}/stofs_current_start_time.txt ]
     then 
-    ingest_dir_start=$(cat ${LDMdir}/estofs_waterlevel_start_time.txt)
+    ingest_dir_start=$(cat ${LDMdir}/stofs_current_start_time.txt)
 
     cd ${LDMdir}
     ingest_filehours=$(ls -1rat --color=none *.dat)
@@ -145,15 +145,16 @@ if [ -e ${LDMdir}/estofs_waterlevel_start_time.txt ]
     
     if [ $ingest_dir_start -gt $input_dir_start ] || [ $ingest_lasthour -gt $input_lasthour ]
     then
-	echo "INFO - New ESTOFS data to process in ingest DIR" | tee -a ${LOGfile}
+	echo "INFO - New STOFS data to process in ingest DIR" | tee -a ${LOGfile}
 	echo "INFO - Will copy files from ${LDMdir}" | tee -a ${LOGfile}
-	rsync -av --force --stats --progress ${LDMdir}/*waterlevel* ${INPUTdir}/.
+	rsync -av --force --stats --progress ${LDMdir}/wave_stofs_uv* ${INPUTdir}/.
+        rsync -av --force --stats --progress ${LDMdir}/stofs_current* ${INPUTdir}/.
     fi
 
-    if [ ! -e ${INPUTdir}/estofs_waterlevel_start_time.txt ]
+    if [ ! -e ${INPUTdir}/stofs_current_start_time.txt ]
     then
-	echo "ERROR - No ESTOFS data to process" | tee -a ${LOGfile}
-	echo "ERROR - Missing ESTOFS start time file ${INPUTdir}/estofs_waterlevel_start_time.txt" | tee -a ${LOGfile}
+	echo "ERROR - No STOFS data to process" | tee -a ${LOGfile}
+	echo "ERROR - Missing STOFS start time file ${INPUTdir}/stofs_current_start_time.txt" | tee -a ${LOGfile}
 	#RemoveLockFile
 	export err=1; err_chk
     fi
@@ -161,26 +162,26 @@ fi
 
 fi     #RETROSPECTIVE
 
-if [ ! -e ${INPUTdir}/estofs_waterlevel_domain.txt ]
+if [ ! -e ${INPUTdir}/stofs_current_domain.txt ]
 then 
     echo "ERROR - No domain info found with this data set"
-    echo "ERROR - Missing ${INPUTdir}/estofs_waterlevel_domain.txt"
+    echo "ERROR - Missing ${INPUTdir}/stofs_current_domain.txt"
     #RemoveLockFile
     export err=1; err_chk
 fi
 
 # This file must contain a line in the following format
-# ESTOFSDOMAIN:LON LAT NX NY EW-RESOLUTION NS-RESOLUTION 
+# STOFSDOMAIN:LON LAT NX NY EW-RESOLUTION NS-RESOLUTION 
 # for example:
 #
-# ESTOFSDOMAIN:254.97 16.5 0. 1001 670 0.05000 0.050000"
+# STOFSDOMAIN:254.97 16.5 0. 1001 670 0.05000 0.050000"
 #
-ESTOFSDOMAIN=$(grep ^ESTOFSDOMAIN ${INPUTdir}/estofs_waterlevel_domain.txt | awk -F: '{ print $2 }')
+STOFSDOMAIN=$(grep ^STOFSCURDOMAIN ${INPUTdir}/stofs_current_domain.txt | awk -F: '{ print $2 }')
 cd ${LDMdir}
 
 if [ "${RETROSPECTIVE}" == "FALSE" ]; then    #RETROSPECTIVE
    echo "INFO - Checking ${LDMdir} for updates" | tee -a ${LOGfile}
-   diff ${INPUTdir}/estofs_waterlevel_start_time.txt ${LDMdir}/estofs_waterlevel_start_time.txt
+   diff ${INPUTdir}/stofs_current_start_time.txt ${LDMdir}/stofs_current_start_time.txt
    if [ "$?" == "0" ]
    then
        echo "INFO - We have no more forecast hours to add to this data set" | tee -a ${LOGfile}
@@ -200,23 +201,23 @@ cd ${myPWD}
 #done
 
 #AW echo "Purging any old model ingest" | tee -a ${LOGfile}
-#AW last_hour="${ESTOFSHOURS}"
-#AW ${BINdir}/purge_estofs.sh ${INPUTdir} ${last_hour}
+#AW last_hour="${STOFSHOURS}"
+#AW ${BINdir}/purge_stofs.sh ${INPUTdir} ${last_hour}
 
-#AW estofs_waterlevel_start_time=`cat ${INPUTdir}/estofs_waterlevel_start_time.txt`
-#AW estofs_date_str=`echo ${estofs_waterlevel_start_time} | awk '{ print strftime("%Y%m%d", $1) }'`
-#AW estofs_model_cycle=`echo ${estofs_waterlevel_start_time} | awk '{ print strftime("%H", $1) }'`
+#AW stofs_waterlevel_start_time=`cat ${INPUTdir}/stofs_waterlevel_start_time.txt`
+#AW stofs_date_str=`echo ${stofs_waterlevel_start_time} | awk '{ print strftime("%Y%m%d", $1) }'`
+#AW stofs_model_cycle=`echo ${stofs_waterlevel_start_time} | awk '{ print strftime("%H", $1) }'`
 if [ "$1" != "" ]
     then 
     YYYYMMDDHH=${1}
 else
-    YYYYMMDDHH=`echo ${estofs_waterlevel_start_time} | awk '{ print strftime("%Y%m%d%H", $1) }'`
+    YYYYMMDDHH=`echo ${stofs_current_start_time} | awk '{ print strftime("%Y%m%d%H", $1) }'`
 fi
 
-PROCESS_WATERLEVEL="TRUE"
+PROCESS_CURRENT="TRUE"
 if [ "$2" != "" ]
     then
-    if [ "$2" == "No" ]; then PROCESS_WATERLEVEL="FALSE"; fi
+    if [ "$2" == "No" ]; then PROCESS_CURRENT="FALSE"; fi
 fi
 
 echo "Our YYYYMMDDHH is ${YYYYMMDDHH}" | tee -a ${LOGfile}
@@ -229,36 +230,35 @@ HH=`echo ${YYYYMMDDHH} | cut -b9-10`
 time_str="${YYYY} ${MM} ${DD} ${HH} 00 00"
 model_start_time=`echo ${time_str} | awk -F: '{ print mktime($1 $2 $3 $4 $5 $6) }'`
 
-# Find most recent water level file by comparing the model init epoch time 
-# to those of all available ESTOFS files (ignoring estofs_waterlevel_start_time.txt)
-# This allows the same water level file to be used in case of a model rerun.
-estofs_waterlevel_start_time=`ls ${INPUTdir}/wave_estofs_waterlevel* | xargs -n1 basename | cut -b24-33 | sort | uniq | awk -v thresh=$model_start_time '$1 <= thresh' | tail -1`
-estofs_date_str=`echo ${estofs_waterlevel_start_time} | awk '{ print strftime("%Y%m%d", $1) }'`
-estofs_model_cycle=`echo ${estofs_waterlevel_start_time} | awk '{ print strftime("%H", $1) }'`
+# Find most recent currents file by comparing the model init epoch time 
+# to those of all available STOFS files (ignoring stofs_current_start_time.txt)
+# This allows the same currents file to be used in case of a model rerun.
+stofs_current_start_time=`ls ${INPUTdir}/wave_stofs_uv* | xargs -n1 basename | cut -b15-24 | sort | uniq | awk -v thresh=$model_start_time '$1 <= thresh' | tail -1`
+stofs_date_str=`echo ${stofs_current_start_time} | awk '{ print strftime("%Y%m%d", $1) }'`
+stofs_model_cycle=`echo ${stofs_current_start_time} | awk '{ print strftime("%H", $1) }'`
 
-echo "ESTOFS start UNIX time: ${estofs_waterlevel_start_time}" | tee -a ${LOGfile}
+echo "STOFS start UNIX time: ${stofs_current_start_time}" | tee -a ${LOGfile}
 echo "Model start UNIX time: ${model_start_time}" | tee -a ${LOGfile}
 
-# Calculate our start time for the ESTOFS data set
+# Calculate our start time for the STOFS data set
 # Start with the SWAN RUN time input by the user
 start=$model_start_time
-# Subtract the ESTOFS start time and convert seconds to hours
-let start-=estofs_waterlevel_start_time
+# Subtract the STOFS start time and convert seconds to hours
+let start-=stofs_current_start_time
 let start/=3600
   if [ $start -le 0 ]
       then
       start=0
   fi
 
-# Lets clean the waterlevel data from all inputCG files
-#SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/estofs_match.pl`
-SWANPARMS=`${BINdir}/estofs_match.pl`
+# Lets clean the current data from all inputCG files
+SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/stofs_match.pl`
 for parm in ${SWANPARMS}
   do
   CG=`echo ${parm} | awk -F, '{ print $1 }'`
   inputCG="${RUNdir}/input${CG}"
 
-  echo "Removing any old water level lines from ${inputCG}" | tee -a ${LOGfile}
+  echo "Removing any old current lines from ${inputCG}" | tee -a ${LOGfile}
   Psurge_End_Time="${RUNdir}/Psurge_End_Time"
   if [ ! -e ${Psurge_End_Time} ]
      then
@@ -267,69 +267,68 @@ for parm in ${SWANPARMS}
         echo "ERROR - Missing input file: ${inputCG}" | tee -a ${LOGfile}
      else
         tmpfile="${VARdir}/input${CG}.$$"
-        grep -v "INPGRID WLEV " ${inputCG} > ${tmpfile} 
-        grep -v "READINP WLEV " ${tmpfile} > ${inputCG} 
+        grep -v "INPGRID CUR " ${inputCG} > ${tmpfile} 
+        grep -v "READINP CUR " ${tmpfile} > ${inputCG} 
         rm -f ${tmpfile}
      fi
   fi
 done
 
-if [ "${PROCESS_WATERLEVEL}"  == "FALSE" ]
+if [ "${PROCESS_CURRENT}"  == "FALSE" ]
     then 
-    echo "WARNING - The caller of this script has disabled water level data" | tee -a ${LOGfile}
+    echo "WARNING - The caller of this script has disabled STOFS current data" | tee -a ${LOGfile}
     echo "WARNING - Argument 2 is set: ${2}" | tee -a ${LOGfile}
     echo "WARNING - To enable again re-run without argument 2 set to NO" | tee -a ${LOGfile}
-    echo "WARNING - This SWAN run will not have any water level interaction" | tee -a ${LOGfile}
+    echo "WARNING - This SWAN run will not have any STOFS current interaction" | tee -a ${LOGfile}
     #RemoveLockFile
     export err=1; err_chk
 fi
 
 # Lets check our forecast length and compare it against the hours we have for 
-# the waterlevel data. If the forecaster has exceeded the number number of hours
-# we will truncate the forecast hours to match the waterlevel data.
-#SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/estofs_match.pl`
-SWANPARMS=`${BINdir}/estofs_match.pl`
+# the current data. If the forecaster has exceeded the number number of hours
+# we will truncate the forecast hours to match the current data.
+SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/stofs_match.pl`
 FCSTLENGTH=`echo ${parm} | awk -F, '{ print $3 }'`
 lencheck=$FCSTLENGTH
 let lencheck*=3600
 timecheck=model_start_time
-let timecheck-=estofs_waterlevel_start_time
+let timecheck-=stofs_current_start_time
 
-echo "ESTOFSHOURS: ${ESTOFSHOURS}" | tee -a ${LOGfile}
+echo "STOFSHOURS: ${STOFSHOURS}" | tee -a ${LOGfile}
 echo "FCSTLENGTH: ${FCSTLENGTH}" | tee -a ${LOGfile}
 
-# Max hours old our waterlevel data can be
+# Max hours old our current data can be
 maxage=60
 let maxage*=3600
 
 if [ $timecheck -gt $maxage ]
     then
-    echo "WARNING: ESTOFS data is too old - check the ESTOFS download from NCEP" | tee -a ${LOGfile}
-    echo "WARNING The NWPS run will not include any ESTOFS water level variation" | tee -a ${LOGfile}
+    echo "WARNING: STOFS data is too old - check the STOFS download from NCEP" | tee -a ${LOGfile}
+    echo "WARNING The NWPS run will not include any STOFS currents" | tee -a ${LOGfile}
 
-    echo "WARNING: ESTOFS data is too old or absent. Run will not include any ESTOFS water level variation" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-    msg="WARNING: ESTOFS data is too old or absent. Run will not include any ESTOFS water level variation."
+    echo "WARNING: STOFS data is too old or absent. Run will not include any STOFS currents" | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+    msg="WARNING: STOFS data is too old or absent. Run will not include any STOFS currents."
     postmsg "$jlogfile" "$msg"
    
     # Alert the forecasters that the forecast length was truncated
     echo "Sending alert message to the forecasters"  | tee -a ${LOGfile}
-    SendAWIPSMessage ${VARdir} "ESTOFS DATA IS TOO OLD" \
-	"HAVE IT OR SOO CHECK THE ESTOFS DOWNLOAD FROM LDM or from NCEP" \
-	"THE SWAN WILL NOT INCLUDE ANY WATER LEVEL INTERACTION" | tee -a ${LOGfile} 2>&1
+    SendAWIPSMessage ${VARdir} "STOFS DATA IS TOO OLD" \
+	"HAVE IT OR SOO CHECK THE STOFS DOWNLOAD FROM LDM or from NCEP" \
+	"THE SWAN WILL NOT INCLUDE ANY STOFS CURRENTS" | tee -a ${LOGfile} 2>&1
     #RemoveLockFile
     #export err=1; err_chk
-    touch ${RUNdir}/noestofs
+    touch ${RUNdir}/nostofs
     #Non-fatal exit
     exit 0
 fi
 
-maxhours="${ESTOFSHOURS}"
+maxhours="${STOFSHOURS}"
 let maxhours*=3600
 let maxhours-=timecheck
 
 if [ $lencheck -gt $maxhours ]
     then 
-    echo "WARNING: The forecast length has exceeded the max hours of waterlevel data" | tee -a ${LOGfile}
+    echo "WARNING: The forecast length has exceeded the max hours of STOFS current data" | tee -a ${LOGfile}
     lencheck=$maxhours
     let lencheck/=3600
     echo "WARNING: Truncating the forecast length from $FCSTLENGTH to $lencheck" | tee -a ${LOGfile}
@@ -349,21 +348,20 @@ if [ $lencheck -gt $maxhours ]
     #"THE FORECAST LENGTH HAS EXCEEDED THE MAX HOURS OF WATERLEVEL DATA" | tee -a ${LOGfile} 2>&1
 #echo "RUNLEN ${FCSTLENGTH} exceeded the max hours of  data $lencheck " | tee -a ${RUNdir}/Warn_Forecaster.txt
 
-    echo "WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available ESTOFS water level data. No water level variations will be included after ${lencheck} h." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-    msg="WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available ESTOFS water level data. No water level variations will be included after ${lencheck} h."
+    echo "WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available STOFS current data. No currents will be included after ${lencheck} h." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+    msg="WARNING: Run length of ${FCSTLENGTH} h exceeds the max hours of available STOFS current data. No currents will be included after ${lencheck} h."
     postmsg "$jlogfile" "$msg"
 fi
 
-# Generate the waterlevel data for SWAN and update all inputCG files
-#SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/estofs_match.pl`
-SWANPARMS=`${BINdir}/estofs_match.pl`
+# Generate the current data for SWAN and update all inputCG files
+SWANPARMS=`perl -I${PMnwps} -I${RUNdir} ${BINdir}/stofs_match.pl`
 for parm in ${SWANPARMS}
   do
   echo "Processing SWAN parameters: ${parm}" | tee -a ${LOGfile}
   CG=`echo ${parm} | awk -F, '{ print $1 }'`
   TIMESTEP=`echo ${parm} | awk -F, '{ print $2 }'`
-  # Rather use the ESTOFSTIMESTEP set in nwps_config.sh
-  TIMESTEP=${ESTOFSTIMESTEP}
+  # Rather use the STOFSTIMESTEP set in nwps_config.sh
+  TIMESTEP=${STOFSTIMESTEP}
   FCSTLENGTH=`echo ${parm} | awk -F, '{ print $3 }'`
   echo "CG=${CG} TIMESTEP=${TIMESTEP} FCSTLENGTH=${FCSTLENGTH}" | tee -a ${LOGfile}
 
@@ -377,8 +375,8 @@ for parm in ${SWANPARMS}
 
   end=0
   let t0=start
-  outfile="${RUNdir}/${YYYYMMDDHH}_${CG}.wlev"
-  echo "SWAN waterlevel file: ${outfile}" | tee -a ${LOGfile}
+  outfile="${RUNdir}/${YYYYMMDDHH}_${CG}.cur"
+  echo "SWAN STOFS current file: ${outfile}" | tee -a ${LOGfile}
 
   FF=`echo $t0`
   if [ $t0 -le 99 ]
@@ -390,15 +388,15 @@ for parm in ${SWANPARMS}
       FF=`echo 00$t0`
   fi
 
-  infile="${INPUTdir}/wave_estofs_waterlevel_${estofs_waterlevel_start_time}_${estofs_date_str}_${estofs_model_cycle}_f${FF}.dat"
+  infile="${INPUTdir}/wave_stofs_uv_${stofs_current_start_time}_${stofs_date_str}_${stofs_model_cycle}_f${FF}.dat"
   echo "SWAN input file for $t0: ${infile}" | tee -a ${LOGfile}
   if [ ! -s ${infile} ]
   then
       echo "ERROR - Missing input file: ${infile}" | tee -a ${LOGfile}
       #RemoveLockFile
       #export err=1; err_chk
-      echo "WARNING: Missing input file: ${infile}. Omitting water level variations for this run." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-      msg="WARNING: Missing input file: ${infile}. Omitting water level variations for this run."
+      echo "WARNING: Missing input file: ${infile}. Omitting wave-current interaction for this run." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+      msg="WARNING: Missing input file: ${infile}. Omitting wave-current interaction for this run."
       postmsg "$jlogfile" "$msg"
       exit 0
   fi
@@ -417,7 +415,7 @@ for parm in ${SWANPARMS}
 	  FF=`echo 00$tstep`
       fi
 
-      infile="${INPUTdir}/wave_estofs_waterlevel_${estofs_waterlevel_start_time}_${estofs_date_str}_${estofs_model_cycle}_f${FF}.dat"
+      infile="${INPUTdir}/wave_stofs_uv_${stofs_current_start_time}_${stofs_date_str}_${stofs_model_cycle}_f${FF}.dat"
       echo "SWAN input file for $tstep: ${infile}" | tee -a ${LOGfile}  
       if [ ! -s ${infile} ]
 	then
@@ -425,8 +423,8 @@ for parm in ${SWANPARMS}
 	  rm -f ${VARdir}/wlevel_temp.$$
 	  #RemoveLockFile
 	  #export err=1; err_chk
-          echo "WARNING: Missing input file: ${infile}. Omitting water level variations for this run." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-          msg="WARNING: Missing input file: ${infile}. Omitting water level variations for this run."
+          echo "WARNING: Missing input file: ${infile}. Omitting wave-current interaction for this run." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+          msg="WARNING: Missing input file: ${infile}. Omitting wave-current interaction for this run."
           postmsg "$jlogfile" "$msg"
           exit 0
       fi
@@ -444,32 +442,19 @@ for parm in ${SWANPARMS}
   let model_end_time+=$secs
   model_end_time_str=`echo ${model_end_time} | awk '{ print strftime("%Y%m%d.%H00", $1) }'`
 
-  Psurge_End_Time="${RUNdir}/Psurge_End_Time"
-
-  if [ ! -e ${Psurge_End_Time} ]
+  cat /dev/null > ${tmpfile}
+  while read line; do
+     echo "${line}" >> ${tmpfile}
+     if [ "${line}" == "\$ CURR STARTS HERE" ]
      then
-     cat /dev/null > ${tmpfile}
-     while read line; do
-        echo "${line}" >> ${tmpfile}
-        if [ "${line}" == "\$ WLEVEL STARTS HERE" ]
-        then
-	  echo "INPGRID WLEV ${ESTOFSDOMAIN} NONSTAT ${YYYY}${MM}${DD}.${HH}00 ${TIMESTEP}.0 HR ${model_end_time_str}" >> ${tmpfile}
-	  echo "READINP WLEV 1.0 '${YYYYMMDDHH}_${CG}.wlev' 3 0 FREE" >> ${tmpfile}
-        fi
-     done < ${inputCG}
-
-     cat ${tmpfile} > ${inputCG}
-     rm -f ${tmpfile}
-  else 
-     Estofs_Lines="${RUNdir}/Estofs_Linesinput${CG}"
-     if [ -e ${Estofs_Lines} ]
-     then
-        rm -f ${Estofs_Lines}
+	echo "INPGRID CUR ${STOFSDOMAIN} NONSTAT ${YYYY}${MM}${DD}.${HH}00 ${TIMESTEP}.0 HR ${model_end_time_str}" >> ${tmpfile}
+	echo "READINP CUR 1.0 '${YYYYMMDDHH}_${CG}.cur' 3 0 0 0 FREE" >> ${tmpfile}
      fi
-     cat /dev/null > ${Estofs_Lines}
-     echo  "INPGRID WLEV ${ESTOFSDOMAIN} NONSTAT ${YYYY}${MM}${DD}.${HH}00 ${TIMESTEP}.0 HR ${model_end_time_str}" >> ${Estofs_Lines}
-     echo "READINP WLEV 1.0 '${YYYYMMDDHH}_${CG}.wlev' 3 0 FREE" >> ${Estofs_Lines}
-  fi
+  done < ${inputCG}
+
+  cat ${tmpfile} > ${inputCG}
+  rm -f ${tmpfile}
+
 done
 
 echo "Processing complete" | tee -a ${LOGfile}

@@ -75,9 +75,9 @@ if [ "${hastracking}" == "TRUE" ]
    
    cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
    COMOUTCYC="${COMOUT_CORRECT}/${cycle}/CG0"
-   tar -czvf mapplots_CG0_${PDY_INPUT}${cycle}.tar.gz swan_systrk1_hr???.png
-   cp -fv ${RUNdir}/mapplots_CG0_${PDY_INPUT}${cycle}.tar.gz $COMOUTCYC/
-   cp -fv ${RUNdir}/nwps.t${cycle}z.CG0_Trkng.${siteid}.bull $COMOUTCYC/
+   tar -czvf mapplots_cg0_${PDY_INPUT}${cycle}.tar.gz swan_systrk1_hr???.png
+   cp -fv ${RUNdir}/mapplots_cg0_${PDY_INPUT}${cycle}.tar.gz $COMOUTCYC/
+   cp -fv ${RUNdir}/nwps.t${cycle}z.cg0_trkng.${siteid}.bull $COMOUTCYC/
    rm ${RUNdir}/swan_systrk1_hr???.png
 fi
 

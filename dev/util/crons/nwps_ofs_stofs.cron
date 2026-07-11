@@ -1,7 +1,7 @@
 #!/bin/bash  
 # --------------------------------------------------------------------------- #
 #                                                                             #
-# nwps_ofs_estofs.cron : Script manages the running of the NWPS water level   #
+# nwps_ofs_stofs.cron : Script manages the running of the NWPS water level   #
 #                        extraction script ${HOMEnwps}/dev/nwps_ofs_prep.ecf   #
 #                                                                             #
 # Remarks   - Can be run interactively, or from LL.                           #
@@ -22,15 +22,15 @@ module load xt-lsfhpc
 module list
 
 # 0.a Set necessary variables
-export OFSTYPE="estofs"
+export OFSTYPE="stofs"
 
 # 0.b Host assessment
 
-export script='nwps_ofs_estofs.cron'
+export script='nwps_ofs_stofs.cron'
 export runon='BACKUPSYS'
 
   echo '                  ************************************************'
-  echo '                  *** NWPS HOOK-IN SCRIPT nwps_ofs_estofs.cron ***'
+  echo '                  *** NWPS HOOK-IN SCRIPT nwps_ofs_stofs.cron ***'
   echo '                  ************************************************'
   echo ' '
   echo " Time : `date`"
@@ -66,7 +66,7 @@ export runon='BACKUPSYS'
     echo " Time : `date`"
     echo ' '
     echo ' '
-    echo '                        *** End of nwps_ofs_estofs.cron ***'
+    echo '                        *** End of nwps_ofs_stofs.cron ***'
     exit 0
   fi
 
@@ -85,6 +85,6 @@ export runon='BACKUPSYS'
   echo ' '
   echo " Time : `date`"
   echo ' '
-  echo '                        *** End of nwps_ofs_estofs.cron ***'
+  echo '                        *** End of nwps_ofs_stofs.cron ***'
 
-# - end of nwps_ofs_estofs.cron --------------------------------------------- #
+# - end of nwps_ofs_stofs.cron --------------------------------------------- #

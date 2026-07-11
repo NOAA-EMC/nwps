@@ -18,7 +18,7 @@ set -xa
 # ------------- Program Description and Details ------------- 
 # ----------------------------------------------------------- 
 #
-# Script used to download RTOFS, ESTOFS, init files 
+# Script used to download RTOFS, STOFS, init files 
 # from NCEP by site. 
 #
 # ----------------------------------------------------------- 
@@ -56,7 +56,7 @@ fi
 #Cleanup (AW 11-01-15: Moved to run_nwps_wcoss.sh)
 #rm ${RUNdir}/Psurge_End_Time
 #rm ${RUNdir}/nortofs
-#rm ${RUNdir}/noestofs
+#rm ${RUNdir}/nostofs
 #rm ${RUNdir}/nopsurge
 
 #SITE="polar.ncep.noaa.gov"
@@ -72,14 +72,14 @@ then
   datey=`date +%Y%m%d --date=yesterday`
   #RTOFSPATH="ofs.${PDY}/rtofs/${siteid}_output"
   #RTOFSPATHY="ofs.${PDYm1}/rtofs/${siteid}_output"
-  #ESTOFSPATH="ofs.${PDY}/estofs/${siteid}_output"
-  #ESTOFSPATHY="ofs.${PDYm1}/estofs/${siteid}_output"
+  #STOFSPATH="ofs.${PDY}/stofs/${siteid}_output"
+  #STOFSPATHY="ofs.${PDYm1}/stofs/${siteid}_output"
   #PSURGEPATH="ofs.${PDY}/psurge/${siteid}_output"
   #PSURGEPATHY="ofs.${PDYm1}/psurge/${siteid}_output"
 else
   date=${2}
   #RTOFSPATH="ofs.${PDY}/rtofs/${siteid}_output"
-  #ESTOFSPATH="ofs.${PDY}/estofs/${siteid}_output"
+  #STOFSPATH="ofs.${PDY}/stofs/${siteid}_output"
   #PSURGEPATH="ofs.${PDY}/psurge/${siteid}_output"
 fi
 
@@ -89,7 +89,7 @@ WGET="/usr/bin/wget"
 echo "Downloading NCEP init files for NWPS"
 /bin/date -u
 
-/bin/mkdir -p ${LDMdir}/rtofs ${LDMdir}/estofs ${LDMdir}/psurge
+/bin/mkdir -p ${LDMdir}/rtofs ${LDMdir}/stofs ${LDMdir}/psurge
 
 
 list_zerobyte_files_in_dir () {
@@ -102,7 +102,7 @@ list_zerobyte_files_in_dir () {
 }
 
 warn_and_disable_forcing () {
-  # $1 = tag (RTOFS/ESTOFS/PSURGE)
+  # $1 = tag (RTOFS/STOFS/PSURGE)
   # $2 = full warning message
   # $3 = flag file to touch (e.g. ${RUNdir}/nortofs)
   # $4 = optional list of 0-byte files (full paths), may be empty
@@ -234,159 +234,159 @@ then
       touch ${RUNdir}/nortofs
    fi
 
-elif [ $1 == "ESTOFSCUR" ]
+elif [ $1 == "STOFSCUR" ]
 then
-   cd ${LDMdir}/estofs
+   cd ${LDMdir}/stofs
    pwd
    if [ $# -eq 1 ]
    then
-      echo "Downloading ESTOFS current Data. Checking Yesterday First."
-      #${WGET} ${WGETargs} http://${SITE}/${ESTOFSPATHY}
+      echo "Downloading STOFS current Data. Checking Yesterday First."
+      #${WGET} ${WGETargs} http://${SITE}/${STOFSPATHY}
       if [ -e ${COMIN_OFS_stofsm1}/LOCKFILE ]; then sleep 600; fi 
-      if [ -e ${COMIN_OFS_stofsm1}/estofs_current_start_time.txt ]
+      if [ -e ${COMIN_OFS_stofsm1}/stofs_current_start_time.txt ]
       then
-         zfiles=$(list_zerobyte_files_in_dir "${COMIN_OFS_stofsm1}" "wave_estofs_uv*.dat")
+         zfiles=$(list_zerobyte_files_in_dir "${COMIN_OFS_stofsm1}" "wave_stofs_uv*.dat")
 	 if [ -n "$zfiles" ]; then
 	    warn_and_disable_forcing \
-              "ESTOFS" \
-              "There are invalid ESTOFS current data in ${COMIN_OFS_stofsm1} (0-byte *.dat files). Run will continue without current." \
-              "${RUNdir}/noestofs_cur" \
+              "STOFS" \
+              "There are invalid STOFS current data in ${COMIN_OFS_stofsm1} (0-byte *.dat files). Run will continue without current." \
+              "${RUNdir}/nostofs_cur" \
               "$zfiles"
          else
-	    cp -pfv ${COMIN_OFS_stofsm1}/wave_estofs_uv* .
-	    cp -pfv ${COMIN_OFS_stofsm1}/estofs_current_domain.txt .
-	    cp -pfv ${COMIN_OFS_stofsm1}/estofs_current_start_time.txt .
+	    cp -pfv ${COMIN_OFS_stofsm1}/wave_stofs_uv* .
+	    cp -pfv ${COMIN_OFS_stofsm1}/stofs_current_domain.txt .
+	    cp -pfv ${COMIN_OFS_stofsm1}/stofs_current_start_time.txt .
 	    rm -fr index.* robots.*
 	 fi
       else
-         echo "WARNING: Optional ESTOFS current data not available for Yesterday."
+         echo "WARNING: Optional STOFS current data not available for Yesterday."
       fi
    fi
-   echo "Downloading ESTOFS current data for Today"
-   ##${WGET} ${WGETargs} http://${SITE}/${ESTOFSPATH}
+   echo "Downloading STOFS current data for Today"
+   ##${WGET} ${WGETargs} http://${SITE}/${STOFSPATH}
    if [ -e ${COMIN_OFS_stofs}/LOCKFILE ]; then sleep 600; fi
-   if [ -e ${COMIN_OFS_stofs}/estofs_current_start_time.txt ]
+   if [ -e ${COMIN_OFS_stofs}/stofs_current_start_time.txt ]
    then
-      zfiles=$(list_zerobyte_files_in_dir "${COMIN_OFS_stofs}" "wave_estofs_uv*.dat")
+      zfiles=$(list_zerobyte_files_in_dir "${COMIN_OFS_stofs}" "wave_stofs_uv*.dat")
       if [ -n "$zfiles" ]; then
 	 warn_and_disable_forcing \
-           "ESTOFS" \
-           "There are invalid ESTOFS current data in ${COMIN_OFS_stofs} (0-byte *.dat files). Run will continue without current." \
-           "${RUNdir}/noestofs_cur" \
+           "STOFS" \
+           "There are invalid STOFS current data in ${COMIN_OFS_stofs} (0-byte *.dat files). Run will continue without current." \
+           "${RUNdir}/nostofs_cur" \
 	   "$zfiles"
       else
-         cp -pfv ${COMIN_OFS_stofs}/wave_estofs_uv* .
-         cp -pfv ${COMIN_OFS_stofs}/estofs_current_domain.txt .
-         cp -pfv ${COMIN_OFS_stofs}/estofs_current_start_time.txt .
+         cp -pfv ${COMIN_OFS_stofs}/wave_stofs_uv* .
+         cp -pfv ${COMIN_OFS_stofs}/stofs_current_domain.txt .
+         cp -pfv ${COMIN_OFS_stofs}/stofs_current_start_time.txt .
          rm -fr index.* robots.*
       fi
    else
-      echo "WARNING: Optional ESTOFS current data not available for Today."
+      echo "WARNING: Optional STOFS current data not available for Today."
    fi
-   echo "Cleaning OLD data from ESTOFS Directory"
-   if [ -e estofs_current_start_time.txt ]
+   echo "Cleaning OLD data from STOFS Directory"
+   if [ -e stofs_current_start_time.txt ]
    then
-      start_time=`cat estofs_current_start_time.txt`
-      file=`ls wave_estofs_uv_${start_time}_*_f000.dat`
+      start_time=`cat stofs_current_start_time.txt`
+      file=`ls wave_stofs_uv_${start_time}_*_f000.dat`
       #XXXXXXXXXXXcycle=`echo $file | cut -c35-45`
       #send inside the next for
-      for i in $(ls wave_estofs_uv*.dat)
+      for i in $(ls wave_stofs_uv*.dat)
       do
-         init_time=`echo $i | cut -c24-33`
-         fhour=`echo $i | cut -c48-50`
-         cycle=`echo $i | cut -c44-45`
+         init_time=`echo $i | cut -c23-32`
+         fhour=`echo $i | cut -c47-49`
+         cycle=`echo $i | cut -c43-44`
          echo "Processing $i $init_time $start_time $fhour $cycle"
-         if [ $init_time -lt $start_time ]  && [ -e wave_estofs_uv_${start_time}_${cycle}_f144.dat ]
+         if [ $init_time -lt $start_time ]  && [ -e wave_stofs_uv_${start_time}_${cycle}_f144.dat ]
          then
             echo "Removing $i"
             rm -f $i
          fi
       done
    else
-      echo "WARNING: There are no ESTOFS current data available (neither today nor yesterday). Run will continue without wave-current interaction." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-      msg="WARNING: There are no ESTOFS current data available (neither today nor yesterday). Run will continue without wave-current interaction."
+      echo "WARNING: There are no STOFS current data available (neither today nor yesterday). Run will continue without wave-current interaction." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+      msg="WARNING: There are no STOFS current data available (neither today nor yesterday). Run will continue without wave-current interaction."
       postmsg "$jlogfile" "$msg"
-      #AW touch ${RUNdir}/noestofs
+      #AW touch ${RUNdir}/nostofs
    fi
    # Remove any erroneous files from the extraction script
-   #rm ${LDMdir}/estofs/wave_estofs_waterlevel__19700101_??_f???.dat
+   #rm ${LDMdir}/stofs/wave_stofs_waterlevel__19700101_??_f???.dat
 
-elif [ $1 == "ESTOFS" ]
+elif [ $1 == "STOFS" ]
 then
-   cd ${LDMdir}/estofs
+   cd ${LDMdir}/stofs
    pwd
    if [ $# -eq 1 ]
    then
-      echo "Downloading ESTOFS Data. Checking Yesterday First."
-      #${WGET} ${WGETargs} http://${SITE}/${ESTOFSPATHY}
+      echo "Downloading STOFS Data. Checking Yesterday First."
+      #${WGET} ${WGETargs} http://${SITE}/${STOFSPATHY}
       if [ -e ${COMIN_OFS_stofsm1}/LOCKFILE ]; then sleep 600; fi 
-      if [ -e ${COMIN_OFS_stofsm1}/estofs_waterlevel_start_time.txt ]
+      if [ -e ${COMIN_OFS_stofsm1}/stofs_waterlevel_start_time.txt ]
       then
-         zfiles=$(list_zerobyte_files_in_dir "${COMIN_OFS_stofsm1}" "wave_estofs_waterlevel*.dat")
+         zfiles=$(list_zerobyte_files_in_dir "${COMIN_OFS_stofsm1}" "wave_stofs_waterlevel*.dat")
 	 if [ -n "$zfiles" ]; then
             warn_and_disable_forcing \
-              "ESTOFS" \
-              "There are invalid ESTOFS/Sea Ice data in ${COMIN_OFS_stofsm1} (0-byte *.dat files). Run will continue without water level variation and ice blocking." \
-              "${RUNdir}/noestofs" \
+              "STOFS" \
+              "There are invalid STOFS/Sea Ice data in ${COMIN_OFS_stofsm1} (0-byte *.dat files). Run will continue without water level variation and ice blocking." \
+              "${RUNdir}/nostofs" \
               "$zfiles"
          else
-            cp -pfv ${COMIN_OFS_stofsm1}/wave_estofs_waterlevel* .
-            cp -pfv ${COMIN_OFS_stofsm1}/estofs_waterlevel_domain.txt .
-            cp -pfv ${COMIN_OFS_stofsm1}/estofs_waterlevel_start_time.txt .
+            cp -pfv ${COMIN_OFS_stofsm1}/wave_stofs_waterlevel* .
+            cp -pfv ${COMIN_OFS_stofsm1}/stofs_waterlevel_domain.txt .
+            cp -pfv ${COMIN_OFS_stofsm1}/stofs_waterlevel_start_time.txt .
             rm -fr index.* robots.*
 	 fi
       else
-         echo "WARNING: Optional ESTOFS data not available for Yesterday."
+         echo "WARNING: Optional STOFS data not available for Yesterday."
       fi
    fi
-   echo "Downloading ESTOFS data for Today"
-   ##${WGET} ${WGETargs} http://${SITE}/${ESTOFSPATH}
+   echo "Downloading STOFS data for Today"
+   ##${WGET} ${WGETargs} http://${SITE}/${STOFSPATH}
    if [ -e ${COMIN_OFS_stofs}/LOCKFILE ]; then sleep 600; fi
-   if [ -e ${COMIN_OFS_stofs}/estofs_waterlevel_start_time.txt ]
+   if [ -e ${COMIN_OFS_stofs}/stofs_waterlevel_start_time.txt ]
    then
-      zfiles=$(list_zerobyte_files_in_dir "${COMIN_OFS_stofs}" "wave_estofs_waterlevel*.dat")
+      zfiles=$(list_zerobyte_files_in_dir "${COMIN_OFS_stofs}" "wave_stofs_waterlevel*.dat")
       if [ -n "$zfiles" ]; then
          warn_and_disable_forcing \
-           "ESTOFS" \
-           "There are invalid ESTOFS/Sea Ice data in ${COMIN_OFS_stofs} (0-byte *.dat files). Run will continue without water level variation and ice blocking." \
-           "${RUNdir}/noestofs" \
+           "STOFS" \
+           "There are invalid STOFS/Sea Ice data in ${COMIN_OFS_stofs} (0-byte *.dat files). Run will continue without water level variation and ice blocking." \
+           "${RUNdir}/nostofs" \
            "$zfiles"
       else
-         cp -pfv ${COMIN_OFS_stofs}/wave_estofs_waterlevel* .
-         cp -pfv ${COMIN_OFS_stofs}/estofs_waterlevel_domain.txt .
-         cp -pfv ${COMIN_OFS_stofs}/estofs_waterlevel_start_time.txt .
+         cp -pfv ${COMIN_OFS_stofs}/wave_stofs_waterlevel* .
+         cp -pfv ${COMIN_OFS_stofs}/stofs_waterlevel_domain.txt .
+         cp -pfv ${COMIN_OFS_stofs}/stofs_waterlevel_start_time.txt .
          rm -fr index.* robots.*
       fi
    else
-      echo "WARNING: Optional ESTOFS data not available for Today."
+      echo "WARNING: Optional STOFS data not available for Today."
    fi
-   echo "Cleaning OLD data from ESTOFS Directory"
-   if [ -e estofs_waterlevel_start_time.txt ]
+   echo "Cleaning OLD data from STOFS Directory"
+   if [ -e stofs_waterlevel_start_time.txt ]
    then
-      start_time=`cat estofs_waterlevel_start_time.txt`
-      file=`ls wave_estofs_waterlevel_${start_time}_*_f000.dat`
+      start_time=`cat stofs_waterlevel_start_time.txt`
+      file=`ls wave_stofs_waterlevel_${start_time}_*_f000.dat`
       #XXXXXXXXXXXcycle=`echo $file | cut -c35-45`
       #send inside the next for
-      for i in $(ls wave_estofs_waterlevel*.dat)
+      for i in $(ls wave_stofs_waterlevel*.dat)
       do
-         init_time=`echo $i | cut -c24-33`
-         fhour=`echo $i | cut -c48-50`
-         cycle=`echo $i | cut -c44-45`
+         init_time=`echo $i | cut -c23-32`
+         fhour=`echo $i | cut -c47-49`
+         cycle=`echo $i | cut -c43-44`
          echo "Processing $i $init_time $start_time $fhour $cycle"
-         if [ $init_time -lt $start_time ]  && [ -e wave_estofs_waterlevel_${start_time}_${cycle}_f144.dat ]
+         if [ $init_time -lt $start_time ]  && [ -e wave_stofs_waterlevel_${start_time}_${cycle}_f144.dat ]
          then
             echo "Removing $i"
             rm -f $i
          fi
       done
    else
-      echo "WARNING: There are no ESTOFS/Sea Ice data available (neither today nor yesterday). Run will continue without water level variation and ice blocking." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-      msg="WARNING: There are no ESTOFS/Sea Ice data available (neither today nor yesterday). Run will continue without water level variation and ice blocking."
+      echo "WARNING: There are no STOFS/Sea Ice data available (neither today nor yesterday). Run will continue without water level variation and ice blocking." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+      msg="WARNING: There are no STOFS/Sea Ice data available (neither today nor yesterday). Run will continue without water level variation and ice blocking."
       postmsg "$jlogfile" "$msg"
-      touch ${RUNdir}/noestofs
+      touch ${RUNdir}/nostofs
    fi
    # Remove any erroneous files from the extraction script
-   #rm ${LDMdir}/estofs/wave_estofs_waterlevel__19700101_??_f???.dat
+   #rm ${LDMdir}/stofs/wave_stofs_waterlevel__19700101_??_f???.dat
 
 elif [ $1 == "PSURGE" ]
 then
@@ -466,7 +466,7 @@ then
    echo "Model start UNIX time: ${model_start_time}" | tee -a ${LOGfile}
 
    echo "Checking age of PSURGE data relative to model init time"
-   echo "If PSURGE data is absent, or newer than the model init time, fail over to ESTOFS"
+   echo "If PSURGE data is absent, or newer than the model init time, fail over to STOFS"
    if [ -e psurge_waterlevel_start_time.txt ]
    then
       psurge_waterlevel_start_time=`ls wave_combnd_waterlevel* | xargs -n1 basename | cut -b24-33 | sort | uniq | awk -v thresh=$model_start_time '$1 <= thresh' | tail -1`
@@ -474,39 +474,39 @@ then
       if [ "$psurge_waterlevel_start_time" == "" ]
       then
          touch ${RUNdir}/nopsurge
-         if [ ! -e ${RUNdir}/noestofs ]
+         if [ ! -e ${RUNdir}/nostofs ]
          then
-            echo "WARNING: PSURGE fields all newer than run init time. ESTOFS fields will be used instead." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-            msg="WARNING: PSURGE fields all newer than run init time. ESTOFS fields will be used instead."
+            echo "WARNING: PSURGE fields all newer than run init time. STOFS fields will be used instead." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+            msg="WARNING: PSURGE fields all newer than run init time. STOFS fields will be used instead."
             postmsg "$jlogfile" "$msg"
-            export WATERLEVELS="ESTOFS"
-            export ESTOFS="YES"
+            export WATERLEVELS="STOFS"
+            export STOFS="YES"
             export PSURGE="NO"
          else
             echo "WARNING: PSURGE fields all newer than run init time. Run will continue without water level variation." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
             msg="WARNING: PSURGE fields all newer than run init time. Run will continue without water level variation."
             postmsg "$jlogfile" "$msg"
             export WATERLEVELS="NO"
-            export ESTOFS="NO"
+            export STOFS="NO"
             export PSURGE="NO"
          fi
       fi
    else    
       touch ${RUNdir}/nopsurge
-      if [ ! -e ${RUNdir}/noestofs ]
+      if [ ! -e ${RUNdir}/nostofs ]
       then
-         echo "WARNING: There are no PSURGE fields available. ESTOFS fields will be used instead." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
-         msg="WARNING: There are no PSURGE fields available. ESTOFS fields will be used instead."
+         echo "WARNING: There are no PSURGE fields available. STOFS fields will be used instead." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
+         msg="WARNING: There are no PSURGE fields available. STOFS fields will be used instead."
          postmsg "$jlogfile" "$msg"
-         export WATERLEVELS="ESTOFS"
-         export ESTOFS="YES"
+         export WATERLEVELS="STOFS"
+         export STOFS="YES"
          export PSURGE="NO"
       else
          echo "WARNING: There are no PSURGE fields available. Run will continue without water level variation." | tee -a ${RUNdir}/Warn_Forecaster_${SITEID}.${PDY}.txt
          msg="WARNING: There are no PSURGE fields available. Run will continue without water level variation."
          postmsg "$jlogfile" "$msg"
          export WATERLEVELS="NO"
-         export ESTOFS="NO"
+         export STOFS="NO"
          export PSURGE="NO"
       fi
    fi

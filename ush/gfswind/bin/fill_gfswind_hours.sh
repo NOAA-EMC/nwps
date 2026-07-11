@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script used to fill missing ESTOFS hours
+# Script used to fill missing STOFS hours
 set -xa
 
 # Setup our NWPS environment                                                    

@@ -88,7 +88,7 @@ my $WNA = $ENV{'WNA'};
 my $NESTS = $ENV{'NESTS'};
 my $RTOFS = $ENV{'RTOFS'};
 my $WATERLEVELS = $ENV{'WATERLEVELS'};
-my $ESTOFS = $ENV{'ESTOFS'};
+my $STOFS = $ENV{'STOFS'};
 my $WINDS = $ENV{'WINDS'};
 my $WEB = $ENV{'WEB'};
 my $PLOT = $ENV{'PLOT'};
@@ -106,7 +106,7 @@ Logs::initialize();
 Logs::run("BEGIN RUN");
 
 if ($WATERLEVELS eq "ESTOFS") {
-    $ESTOFS = "YES";
+    $STOFS = "YES";
 }
 
 if ($WATERLEVELS eq "PSURGE") {
@@ -123,7 +123,7 @@ if ($DEBUGGING eq "TRUE") {
     Logs::run("NESTS: $NESTS");
     Logs::run("RTOFS: $RTOFS");
     Logs::run("WATERLEVELS: $WATERLEVELS");
-    Logs::run("ESTOFS: $ESTOFS");
+    Logs::run("STOFS: $STOFS");
     Logs::run("PSURGE: $PSURGE");
     Logs::run("EXCD: $EXCD");
     Logs::run("WINDS: $WINDS");
@@ -169,14 +169,14 @@ if(-e "${RUNdir}/nortofs") {
   $RTOFS="NOT"
 }
 
-if(-e "${RUNdir}/noestofs") {
-  $ESTOFS="NOT"
+if(-e "${RUNdir}/nostofs") {
+  $STOFS="NOT"
 }
 if(-e "${RUNdir}/nopsurge") {
   $PSURGE="NOT"
 }
 print " ============ In nwps_preproc.pl ==============\n";
-print "RTOFS: $RTOFS,  ESTOFS: $ESTOFS,  PSURGE: $PSURGE   date:${date}\n";
+print "RTOFS: $RTOFS,  STOFS: $STOFS,  PSURGE: $PSURGE   date:${date}\n";
 
 #if ($RETROSPECTIVE eq "FALSE") {
 if ($RTOFS eq "YES") {
@@ -188,9 +188,9 @@ if ($RTOFS eq "YES") {
     Logs::run("Proceeding without current interactions.");
   }
 }
-elsif ($RTOFS eq "ESTOFSCUR") {
-  if (-e "${USHnwps}/estofs/bin/gen_estofs_current.sh" ) {
-    system("${USHnwps}/estofs/bin/gen_estofs_current.sh ${date}");
+elsif ($RTOFS eq "STOFSCUR") {
+  if (-e "${USHnwps}/stofs/bin/gen_stofs_current.sh" ) {
+    system("${USHnwps}/stofs/bin/gen_stofs_current.sh ${date}");
   }
   else {
     Logs::run("You do not have the current processing scripts installed.");
@@ -198,9 +198,9 @@ elsif ($RTOFS eq "ESTOFSCUR") {
   }
 }
 
-if ($WATERLEVELS eq "ESTOFS" && $ESTOFS eq "YES") {
-  if (-e "${USHnwps}/estofs/bin/gen_waterlevel.sh" ) {
-    system("${USHnwps}/estofs/bin/gen_waterlevel.sh ${date}");
+if ($WATERLEVELS eq "ESTOFS" && $STOFS eq "YES") {
+  if (-e "${USHnwps}/stofs/bin/gen_waterlevel.sh" ) {
+    system("${USHnwps}/stofs/bin/gen_waterlevel.sh ${date}");
   }
   else {
     Logs::run("You do not have the water level processing scripts installed.");
@@ -214,10 +214,10 @@ elsif ($WATERLEVELS eq "PSURGE" && $PSURGE eq "YES") {
      close(FILE);
      print " EXCEEDANCE IN NWPS_PREPROC.PL: ${EXCD}";
      system("${USHnwps}/psurge/bin/gen_waterlevel.sh ${date}");
-     # If Psurge is used, then it is necessary to add ESTOFS fields
+     # If Psurge is used, then it is necessary to add STOFS fields
      # for the end of the run as Psurge has only 78 hrs.. We need 102
-     #if ($ESTOFS eq "YES") {
-        system("${USHnwps}/estofs/bin/gen_waterlevel.sh ${date}");
+     #if ($STOFS eq "YES") {
+        system("${USHnwps}/stofs/bin/gen_waterlevel.sh ${date}");
      #}
   }
   else {

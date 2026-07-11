@@ -87,7 +87,7 @@ export STATN4="NON"
 # Specta points defined as space delimited list of:
 #   "name1:lat1:lon1 name2:lat2:lon2 name3:lat3:lon3 name4:lat4:lon4 name5:lat5:lon5 ...."
 # (285.158,36.611)
-export SPECPOINTS="41159:34.210:-76.948 44095:35.750:-75.330 41025:35.006:-75.402 44100:36.255:-75.591 44056:36.200:-75.714 Big_Rock:34.200:-76.200 Diamond:35.150:-75.360 Knuckle:34.447:-76.470"
+export SPECPOINTS="41159:34.210:-76.948 44095:35.750:-75.330 41025:35.006:-75.402 44100:36.255:-75.591 44056:36.200:-75.714 big_rock:34.200:-76.200 diamond:35.150:-75.360 knuckle:34.447:-76.470"
 #
 #========================================================================
 #                    WAVE TRACKING (and WAVE PARTITION) ON/OFF          =

@@ -20,7 +20,7 @@ set -xa
 # ------------- Program Description and Details -------------
 # -----------------------------------------------------------
 #
-# Script used to make ESTOFS SWAN init files all WFOs. 
+# Script used to make STOFS SWAN init files all WFOs. 
 #
 #
 # -----------------------------------------------------------
@@ -40,10 +40,10 @@ SPOOLdir="${RUNdir}/ncep_hourly.spool"
 INGESTdir="${COMOUT}"
 YYYYMMDD=${PDY}
 CYCLE=${cyc}
-HOURS="${ESTOFSHOURS}"
-TIMESTEP="${ESTOFSTIMESTEP}"
+HOURS="${STOFSHOURS}"
+TIMESTEP="${STOFSTIMESTEP}"
 
-if [ "${ESTOFS_REGION}" == "" ]; then ESTOFS_REGION="conus.east"; fi
+if [ "${STOFS_REGION}" == "" ]; then STOFS_REGION="conus.east"; fi
 
 check_bad_grib2_file() {
     f="${1}"
@@ -59,10 +59,10 @@ check_bad_grib2_file() {
     return 0
 }
 
-warn_and_disable_estofs_grib2() {
+warn_and_disable_stofs_grib2() {
     msg="${1}"
     echo "WARNING: ${msg}" | tee -a ${LOGfile}
-    touch ${RUNdir}/noestofs
+    touch ${RUNdir}/nostofs
 }
 
 function MakeClip() {
@@ -79,8 +79,8 @@ function MakeClip() {
 	    FF=`echo 00$HOUR`
     fi
 
-    clip_file="${WFO}SWAN_estofs.t${CYCLE}z.f${FF}.grib2"
-    datfile="${WFO}SWAN_estofs.t${CYCLE}z.f${FF}.dat"
+    clip_file="${WFO}SWAN_stofs.t${CYCLE}z.f${FF}.grib2"
+    datfile="${WFO}SWAN_stofs.t${CYCLE}z.f${FF}.dat"
 
     if [ ! -e ${CLIPdir}/${clip_file} ];then
 	    echo "Clip and reproject to LAT/LON grid" 
@@ -88,15 +88,15 @@ function MakeClip() {
 	    ${WGRIB2} ${DIR}/${FILE} -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/${clip_file}
     fi
 
-    swan_wl_ofile_fname="wave_estofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
+    swan_wl_ofile_fname="wave_stofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
     swan_wl_ofile="${OUTPUTdir}/${swan_wl_ofile_fname}"
 
     if [ ! -e ${swan_wl_ofile} ];then
 	PARM="var"
 	echo "Extract ${PARM} data"
-	if [ "${ESTOFSUSEICEMASK}" == "TRUE" ]
+	if [ "${STOFSUSEICEMASK}" == "TRUE" ]
 	then
-	    echo "Using sea ice to mask ESTOFS area with high ice density" | tee -a ${LOGfile}
+	    echo "Using sea ice to mask STOFS area with high ice density" | tee -a ${LOGfile}
 	    echo "${WGRIB2} -no_header -match ${PARM} -bin ${CLIPdir}/${PARM}.bin ${CLIPdir}/${clip_file}"
 	    ${WGRIB2} -no_header -match ${PARM} -bin ${CLIPdir}/${PARM}.bin ${CLIPdir}/${clip_file}
 	    echo "Writing final DAT file with ice mask"  
@@ -115,27 +115,27 @@ function MakeClip() {
 function process_wfolist() {
     WFO=$(echo ${site} | tr [:lower:] [:upper:])
     wfo=$(echo ${site} | tr [:upper:] [:lower:])
-    echo "Creating ESTOFS init files for ${WFO}" 
+    echo "Creating STOFS init files for ${WFO}" 
     source ${FIXnwps}/configs/${wfo}_ncep_config.sh    
     export err=$?; err_chk
-    ESTOFS_REGION=$(echo ${ESTOFS_REGION} | tr [:upper:] [:lower:])
+    STOFS_REGION=$(echo ${STOFS_REGION} | tr [:upper:] [:lower:])
 #..........................................
-     if [ "${ESTOFS_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFS_REGION}" == "conus.east" ]
+     if [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "conus.east" ]
      then
        hasdownload_000=${hasDL[1]}
-     elif [ "${ESTOFS_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFS_REGION}" == "puertori" ]
+     elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "puertori" ]
      then
        hasdownload_000=${hasDL[2]}
-     elif [ "${ESTOFS_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFS_REGION}" == "conus.west" ]
+     elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "conus.west" ]
      then
        hasdownload_000=${hasDL[3]}
-     elif [ "${ESTOFS_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFS_REGION}" == "hawaii" ]
+     elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "hawaii" ]
      then
        hasdownload_000=${hasDL[4]}
-     elif [ "${ESTOFS_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFS_REGION}" == "alaska" ]
+     elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "alaska" ]
      then
        hasdownload_000=${hasDL[5]}
-     elif [ "${ESTOFS_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFS_REGION}" == "guam" ]
+     elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "guam" ]
      then
        hasdownload_000=${hasDL[6]}
      fi
@@ -147,23 +147,23 @@ function process_wfolist() {
     if [ ! -e ${CLIPdir} ]; then mkdir -p ${CLIPdir}; fi
 #    if [ ! -e ${INGESTdir} ]; then mkdir -p ${INGESTdir}; fi
 
-    if [ "${ESTOFS_REGION}" == "none" ];then
-    	echo "ERROR - No ESTOFS region for ${WFO}" 
+    if [ "${STOFS_REGION}" == "none" ];then
+    	echo "ERROR - No STOFS region for ${WFO}" 
     	echo "ERROR - Skipping init files for ${WFO}" 
     	continue
     fi
 
-    NX=${ESTOFSNX}
-    NY=${ESTOFSNY}
-    LL_LON=$(echo ${ESTOFSDOMAIN} | awk '{ print $1}')
-    LL_LAT=$(echo ${ESTOFSDOMAIN} | awk '{ print $2}')
-    DX=$(echo ${ESTOFSDOMAIN} | awk '{ print $6}')
-    DY=$(echo ${ESTOFSDOMAIN} | awk '{ print $7}')
+    NX=${STOFSNX}
+    NY=${STOFSNY}
+    LL_LON=$(echo ${STOFSDOMAIN} | awk '{ print $1}')
+    LL_LAT=$(echo ${STOFSDOMAIN} | awk '{ print $2}')
+    DX=$(echo ${STOFSDOMAIN} | awk '{ print $6}')
+    DY=$(echo ${STOFSDOMAIN} | awk '{ print $7}')
     
-    echo "ESTOFS_REGION = ${ESTOFS_REGION}"
-    echo "ESTOFSDOMAIN = ${ESTOFSDOMAIN}"
-    echo "NX = ${ESTOFSNX}"
-    echo "NY = ${ESTOFSNY}"
+    echo "STOFS_REGION = ${STOFS_REGION}"
+    echo "STOFSDOMAIN = ${STOFSDOMAIN}"
+    echo "NX = ${STOFSNX}"
+    echo "NY = ${STOFSNY}"
     echo "LL_LON= ${LL_LON}"
     echo "LL_LAT= ${LL_LAT}"
     echo "DX = ${DX}"
@@ -172,7 +172,7 @@ function process_wfolist() {
     # Get the first forecast cycle
     touch ${OUTPUTdir}/LOCKFILE
     FF="000"
-    file="${ESTOFS_BASIN}.t${CYCLE}z.${ESTOFS_REGION}.f${FF}.grib2"
+    file="${STOFS_BASIN}.t${CYCLE}z.${STOFS_REGION}.f${FF}.grib2"
     icefile="seaice.t00z.5min.grb.grib2"
     outfile="${file}"
     cd ${SPOOLdir}
@@ -180,24 +180,24 @@ function process_wfolist() {
     if [ "${hasdownload_000}" == "" ]; then hasdownload_000="false"; fi
     
     if [ "${hasdownload_000}" == "false" ];then
-        if [ "${ESTOFS_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFS_REGION}" == "conus.east" ];then
+        if [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "conus.east" ];then
            hasDL[1]="true"
-        elif [ "${ESTOFS_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFS_REGION}" == "puertori" ];then
+        elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "puertori" ];then
            hasDL[2]="true"
-        elif [ "${ESTOFS_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFS_REGION}" == "conus.west" ];then
+        elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "conus.west" ];then
            hasDL[3]="true"
-        elif [ "${ESTOFS_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFS_REGION}" == "hawaii" ];then
+        elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "hawaii" ];then
            hasDL[4]="true"
-        elif [ "${ESTOFS_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFS_REGION}" == "alaska" ];then
+        elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "alaska" ];then
            hasDL[5]="true"
-        elif [ "${ESTOFS_BASIN}" == "stofs_2d_glo" ] && [ "${ESTOFS_REGION}" == "guam" ];then
+        elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "guam" ];then
            hasDL[6]="true"
         fi
 
         echo "Downloading ${SPOOLdir}/$file to $outfile" 
         echo "Checking source GRIB2 file ${COMINstofs}/${file}"
         if ! check_bad_grib2_file "${COMINstofs}/${file}"; then
-           warn_and_disable_estofs_grib2 "ESTOFS GRIB2 file ${COMINstofs}/${file} is missing or 0-byte. Run will continue without ESTOFS water level variation and ice blocking for ${WFO}."
+           warn_and_disable_stofs_grib2 "STOFS GRIB2 file ${COMINstofs}/${file} is missing or 0-byte. Run will continue without STOFS water level variation and ice blocking for ${WFO}."
            rm -f ${OUTPUTdir}/LOCKFILE
            return
         fi
@@ -213,14 +213,14 @@ function process_wfolist() {
            export err=1; err_chk
         fi
 
-        if [ "${ESTOFSUSEICEMASK}" == "TRUE" ]
+        if [ "${STOFSUSEICEMASK}" == "TRUE" ]
         then
-            echo "Using sea ice to mask ESTOFS area with high ice density"
+            echo "Using sea ice to mask STOFS area with high ice density"
 
             echo "Downloading ${SPOOLdir}/$icefile"
             if [ -e ${COMINsice}/${icefile} ];then
                if ! check_bad_grib2_file "${COMINsice}/${icefile}"; then
-                   warn_and_disable_estofs_grib2 "Sea ice GRIB2 file ${COMINsice}/${icefile} is missing or 0-byte. Run will continue without ESTOFS water level variation and ice blocking for ${WFO}."
+                   warn_and_disable_stofs_grib2 "Sea ice GRIB2 file ${COMINsice}/${icefile} is missing or 0-byte. Run will continue without STOFS water level variation and ice blocking for ${WFO}."
                    rm -f ${OUTPUTdir}/LOCKFILE
                    return
                fi
@@ -240,7 +240,7 @@ function process_wfolist() {
             elif [ -e ${COMINsicem1}/${icefile} ];then
                echo "Today's ice concentration file not yet available. Downloading yesterday's file."
                if ! check_bad_grib2_file "${COMINsicem1}/${icefile}"; then
-                   warn_and_disable_estofs_grib2 "Sea ice GRIB2 file ${COMINsicem1}/${icefile} is missing or 0-byte. Run will continue without ESTOFS water level variation and ice blocking for ${WFO}."
+                   warn_and_disable_stofs_grib2 "Sea ice GRIB2 file ${COMINsicem1}/${icefile} is missing or 0-byte. Run will continue without STOFS water level variation and ice blocking for ${WFO}."
                    rm -f ${OUTPUTdir}/LOCKFILE
                    return
                fi
@@ -267,9 +267,9 @@ function process_wfolist() {
     
     hasdownload_000="true"
 
-    if [ "${ESTOFSUSEICEMASK}" == "TRUE" ]
+    if [ "${STOFSUSEICEMASK}" == "TRUE" ]
     then
-       echo "Using sea ice to mask ESTOFS area with high ice density"
+       echo "Using sea ice to mask STOFS area with high ice density"
        echo "Clip and reproject to sea ice grid"
        #--- Make local copy of input file and check size -----------
        cp ${SPOOLdir}/${icefile} ${CLIPdir}/${icefile}
@@ -296,16 +296,16 @@ function process_wfolist() {
     done
     #epoc_time=`${WGRIB2} -unix_time ${SPOOLdir}/${file} | grep "1:4:unix" | awk -F= '{ print $3 }'`
     date_str=`echo ${epoc_time} | awk '{ print strftime("%Y%m%d", $1) }'`
-    echo ${epoc_time} > ${OUTPUTdir}/estofs_waterlevel_start_time.txt
-    echo "ESTOFSDOMAIN:${ESTOFSDOMAIN}" > ${OUTPUTdir}/estofs_waterlevel_domain.txt
+    echo ${epoc_time} > ${OUTPUTdir}/stofs_waterlevel_start_time.txt
+    echo "STOFSDOMAIN:${STOFSDOMAIN}" > ${OUTPUTdir}/stofs_waterlevel_domain.txt
 
 #    if [ $SENDDBN = YES ]; then
-#      $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_PARA $job ${OUTPUTdir}/estofs_waterlevel_start_time.txt
+#      $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_PARA $job ${OUTPUTdir}/stofs_waterlevel_start_time.txt
 #    fi
 #    if [ $SENDDBN = YES ]; then
-#      $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_PARA $job ${OUTPUTdir}/estofs_waterlevel_domain.txt
+#      $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_PARA $job ${OUTPUTdir}/stofs_waterlevel_domain.txt
 #    fi
-    swan_wl_ofile_fname="wave_estofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
+    swan_wl_ofile_fname="wave_stofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
     swan_wl_ofile="${OUTPUTdir}/${swan_wl_ofile_fname}"
 
     if [ ! -e ${swan_wl_ofile} ];then
@@ -325,11 +325,11 @@ function process_wfolist() {
         MakeClip ${CLIPdir} ${file} 0 ${WFO}
         #------------------------------------------------------------
     	export err=$?; err_chk
-        swan_wl_ifname="wave_estofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
+        swan_wl_ifname="wave_stofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
         if [ ${WFO} != "NHC" -a ${WFO} != "OPC" ]
         then
             cd ${OUTPUTdir}
-            ${USHnwps}/estofs/bin/estofs_extend.py  ${swan_wl_ifname}
+            ${USHnwps}/stofs/bin/stofs_extend.py  ${swan_wl_ifname}
             export err=$?; err_chk
             mv -f extend_${swan_wl_ifname} ${swan_wl_ifname}
         fi
@@ -353,7 +353,7 @@ function process_wfolist() {
     	    FF=`echo 00$end`
     	fi
     	
-    	swan_wl_ofile_fname="wave_estofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
+    	swan_wl_ofile_fname="wave_stofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
     	swan_wl_ofile="${OUTPUTdir}/${swan_wl_ofile_fname}"
     	if [ -e ${swan_wl_ofile} ];then
     	    echo "Already created ${swan_wl_ofile}" 
@@ -362,13 +362,13 @@ function process_wfolist() {
     	    continue
     	fi
     	
-        file="${ESTOFS_BASIN}.t${CYCLE}z.${ESTOFS_REGION}.f${FF}.grib2"
+        file="${STOFS_BASIN}.t${CYCLE}z.${STOFS_REGION}.f${FF}.grib2"
     	outfile="${file}"
     	cd ${PRODUCTdir}
-    	if [ ! -e ${VARdir}/hasestofsdownload_${CYCLE}z.${ESTOFS_BASIN}.${ESTOFS_REGION}.f${FF} ];then
+    	if [ ! -e ${VARdir}/hasstofsdownload_${CYCLE}z.${STOFS_BASIN}.${STOFS_REGION}.f${FF} ];then
             echo "Checking source GRIB2 file ${COMINstofs}/${file}"
             if ! check_bad_grib2_file "${COMINstofs}/${file}"; then
-                warn_and_disable_estofs_grib2 "ESTOFS GRIB2 file ${COMINstofs}/${file} is missing or 0-byte. Run will continue without ESTOFS water level variation and ice blocking for ${WFO}."
+                warn_and_disable_stofs_grib2 "STOFS GRIB2 file ${COMINstofs}/${file} is missing or 0-byte. Run will continue without STOFS water level variation and ice blocking for ${WFO}."
                 rm -f ${OUTPUTdir}/LOCKFILE
                 return
             fi
@@ -393,7 +393,7 @@ function process_wfolist() {
         		export err=1; err_chk
     	    fi
     	fi
-    	touch ${VARdir}/hasestofsdownload_${CYCLE}z.${ESTOFS_BASIN}.${ESTOFS_REGION}.f${FF}
+    	touch ${VARdir}/hasstofsdownload_${CYCLE}z.${STOFS_BASIN}.${STOFS_REGION}.f${FF}
 
         #--- Make local copy of input file and check size -----------
         cp ${PRODUCTdir}/${file} ${CLIPdir}/${file}
@@ -409,11 +409,11 @@ function process_wfolist() {
         #------------------------------------------------------------
     	#MakeClip ${PRODUCTdir} ${file} ${end} ${WFO}
     	export err=$?; err_chk
-        swan_wl_ifname="wave_estofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
+        swan_wl_ifname="wave_stofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f${FF}.dat"
         if [ ${WFO} != "NHC" -a ${WFO} != "OPC" ]
         then
             cd ${OUTPUTdir}
-            ${USHnwps}/estofs/bin/estofs_extend.py  ${swan_wl_ifname}
+            ${USHnwps}/stofs/bin/stofs_extend.py  ${swan_wl_ifname}
             export err=$?; err_chk
             mv -f extend_${swan_wl_ifname} ${swan_wl_ifname}
         fi
@@ -424,32 +424,46 @@ function process_wfolist() {
     done
     rm ${OUTPUTdir}/LOCKFILE
     #--- Copy WFO output to COMOUT
-    mkdir -p ${COMOUT}/estofs/${wfo}_output
-    cp ${OUTPUTdir}/wave_estofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f*.dat ${COMOUT}/estofs/${wfo}_output/
-    cp ${OUTPUTdir}/estofs_waterlevel_domain.txt ${COMOUT}/estofs/${wfo}_output/
-    cp ${OUTPUTdir}/estofs_waterlevel_start_time.txt ${COMOUT}/estofs/${wfo}_output/
+    mkdir -p ${COMOUT}/stofs/${wfo}_output
+    cp ${OUTPUTdir}/wave_stofs_waterlevel_${epoc_time}_${date_str}_${CYCLE}_f*.dat ${COMOUT}/stofs/${wfo}_output/
+    cp ${OUTPUTdir}/stofs_waterlevel_domain.txt ${COMOUT}/stofs/${wfo}_output/
+    cp ${OUTPUTdir}/stofs_waterlevel_start_time.txt ${COMOUT}/stofs/${wfo}_output/
 }
 
 # Make any of the following directories if needed
 mkdir -p ${PRODUCTdir}
 mkdir -p ${SPOOLdir}
 mkdir -p ${VARdir}
-mkdir -p ${COMOUT}/estofs/
+mkdir -p ${COMOUT}/stofs/
 
 # Cleanup
 echo "Clean up working directory ${VARdir}..."
-rm ${VARdir}/hasestofsdownload_${CYCLE}z*
-rm ${VARdir}/wfolist.dat
-rm ${VARdir}/wfolist_sorted_estofs.dat
-rm ${VARdir}/wfolist_estofs.sh
+files=(${VARdir}/hasstofsdownload_${CYCLE}z*)
+files_exit=false
+for f_file in "${files[@]}"; do
+  # Check if any file actually exists
+  [ -e "$f_file" ] && files_exist=true && break
+done
+if [ "$files_exist" = true ]; then
+  rm ${VARdir}/hasstofsdownload_${CYCLE}z*
+fi 
+if [ -e "${VARdir}/wfolist.dat" ]; then 
+  rm ${VARdir}/wfolist.dat
+fi 
+if [ -e "${VARdir}/wfolist_sorted_stofs.dat" ]; then
+  rm ${VARdir}/wfolist_sorted_stofs.dat
+fi
+if [ -e "${VARdir}/wfolist_stofs.sh" ]; then
+  rm ${VARdir}/wfolist_stofs.sh
+fi
 
 echo "Our spool DIR for FTP n000 data is: ${SPOOLdir}" 
 echo "Our spool DIR for FTP forecast data is: ${PRODUCTdir}" 
 
 # Create WFO list to make init files for
-${USHnwps}/make_wfolist.sh ESTOFS
+${USHnwps}/make_wfolist.sh STOFS
 export err=$?; err_chk
-source ${VARdir}/wfolist_estofs.sh
+source ${VARdir}/wfolist_stofs.sh
 
 if [ "${WFOLIST}" == "" ];then
     echo "ERROR - Our WFOLIST is empty" 
@@ -458,8 +472,8 @@ if [ "${WFOLIST}" == "" ];then
 fi
 
 # Set our script variables from the global config
-echo "ESTOFSHOURS = ${ESTOFSHOURS}" 
-echo "ESTOFSTIMESTEP = ${ESTOFSTIMESTEP}" 
+echo "STOFSHOURS = ${STOFSHOURS}" 
+echo "STOFSTIMESTEP = ${STOFSTIMESTEP}" 
 INGESTdir_org="${INGESTdir}"
 
 if [ -e ${RUNdir}/cgn_cmdfile ];then

@@ -84,7 +84,7 @@ while read p; do
      RTOFS=$p;
    fi
    if [ ${ndata} -eq 19 ]; then
-     ESTOFS=$p;
+     STOFS=$p;
    fi
    if [ ${ndata} -eq 20 ]; then
      WINDS=$p;
@@ -106,7 +106,7 @@ done < ${RUNdir}/info_to_nwps_coremodel.txt
 
 #export HOMEnwps DEBUGGING DEBUG_LEVEL BATHYdb SHAPEFILEdb ARCHdir
 #export DATAdir LOGdir VARdir OUTPUTdir RUNdir TMPdir RUNLEN
-#export NEST RTOFS ESTOFS WEB PLOT MODELCORE LOGdir SITEID WNA 
+#export NEST RTOFS STOFS WEB PLOT MODELCORE LOGdir SITEID WNA 
 #export WINDS INPUTdir  ISPRODUCTIO DATAdir
 #source ${HOMEnwps}/parm/platform/set_platform.sh
 logrunup=${LOGdir}/runup.log
@@ -213,12 +213,12 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
      echo "date_stamp: ${date_stamp}"  | tee -a $logrunup
      CYCLErunup="${hh}${mm}" 
      CYCLErunupout="${hh}"
-     # nomenclature input file for run_runup.sh e.g 20m_contour_CG2.20150202_0000_MHX
+     # nomenclature input file for run_runup.sh e.g 20m_contour_cg2.20150202_0000_MHX
      fileor="${dpt_runup_contour}_contour_CG${CGNUM}"
-     filein="${dpt_runup_contour}_contour_CG${CGNUM}.${yyyy}${mon}${dd}_${CYCLErunup}_${SITEID}"
-     filecomout="${NET}.t${hh}z.${dpt_runup_contour}_contour_CG${CGNUM}.${SITEID}.txt"
-     #fileout="${dpt_runup_contour}_CG${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}_${SITEID}.txt"
-     #fileout="${WFO}_${NET}_${dpt_runup_contour}_CG${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}"
+     filein="${dpt_runup_contour}_contour_cg${CGNUM}.${yyyy}${mon}${dd}_${CYCLErunup}_${SITEID}"
+     filecomout="${NET}.t${hh}z.${dpt_runup_contour}_contour_cg${CGNUM}.${siteid}.txt"
+     #fileout="${dpt_runup_contour}_cg${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}_${SITEID}.txt"
+     #fileout="${WFO}_${NET}_${dpt_runup_contour}_cg${CGNUM}_runup.${yyyy}${mon}${dd}_${hh}${mm}"
      echo "filein: ${filein}"  | tee -a $logrunup
      cp -fvp ${RUNdir}/${fileor} .
      cp ${fileor} ${filein}    | tee -a $logrunup
@@ -421,7 +421,7 @@ then
   cp -vpf ${TEMPDIR}/*.png ${GRAPHICSdir}/.
   chmod 777 ${GRAPHICSdir}/*.png
   cd ${GRAPHICSdir}
-  figsTarFile="plots_CG${CGNUM}_${yyyy}${mon}${dd}${hh}.tar.gz"
+  figsTarFile="plots_cg${CGNUM}_${yyyy}${mon}${dd}${hh}.tar.gz"
   tar cvfz ${figsTarFile} *.png
   cp ${figsTarFile} $COMOUTCYC/${figsTarFile}
 fi
@@ -455,11 +455,12 @@ cd ${DATA}/output/grib2/CG${CGNUM}
 
      date_stamp="${yyyy}${mon}${dd}"
      grib2File="nwps.t${hh}z.CG${CGNUM}.${siteid}.grib2"
+     g2f=${grib2File,,}
      cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
      COMOUTCYC="${COMOUT_CORRECT}/${cycle}/CG${CGNUM}"
      if [ "${SENDCOM}" == "YES" ]; then
         mkdir -p $COMOUTCYC
-        cp -fv  ${grib2File} ${COMOUTCYC}/${grib2File}
+        cp -fv  ${grib2File} ${COMOUTCYC}/${g2f}
         # Restart and other input files
         cp -fv  ${RUNdir}/inputCG${CGNUM} ${COMOUTCYC}/
         cp -fv  ${RUNdir}/${date_stamp}${cycle}.wnd ${COMOUTCYC}/
@@ -472,7 +473,7 @@ cd ${DATA}/output/grib2/CG${CGNUM}
         #cp -fv  ${RUNdir}/bc_CG${CGNUM} ${COMOUTCYC}/
 
         if [ "${SENDDBN}" == "YES" ]; then
-            ${DBNROOT}/bin/dbn_alert MODEL NWPS_GRIB $job ${COMOUTCYC}/${grib2File}
+            ${DBNROOT}/bin/dbn_alert MODEL NWPS_GRIB $job ${COMOUTCYC}/${g2f}
         fi
      fi
 
@@ -486,7 +487,7 @@ if [[ -d "${DATA}/output/spectra/CG${CGNUM}" ]]; then
       mkdir -p $COMOUTCYC
       for orig_file in ${spec2dFile}; do
 	    suffix=$(echo "$orig_file" | cut -d '.' -f2)
-	    new_spc2d="nwps.t${cycle}z.spc2d_${suffix}_CG${CGNUM}.${WFO}.txt"
+	    new_spc2d="nwps.t${cycle}z.spc2d_${suffix}_cg${CGNUM}.${WFO}.txt"
 	    cp -fv "$orig_file" "${COMOUTCYC}/${new_spc2d}"
       done
    fi
@@ -496,7 +497,7 @@ if [[ -d "${DATA}/output/spectra/CG${CGNUM}" ]]; then
   if [ "${SENDDBN}" == "YES" ]; then
     for file in ${spec2dFile}; do
       suffix=$(echo "$file" | cut -d '.' -f2)
-      new_spc2d="nwps.t${cycle}z.spc2d_${suffix}_CG${CGNUM}.${WFO}.txt"
+      new_spc2d="nwps.t${cycle}z.spc2d_${suffix}_cg${CGNUM}.${WFO}.txt"
       if [ -f "${COMOUTCYC}/${new_spc2d}" ]; then
         echo "Sending ${new_spc2d} to DBNet"
         $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_SPECTRA ${job} ${COMOUTCYC}/${new_spc2d}

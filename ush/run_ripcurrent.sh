@@ -111,7 +111,7 @@ while read p; do
      RTOFS=$p;
    fi
    if [ ${ndata} -eq 19 ]; then
-     ESTOFS=$p;
+     STOFS=$p;
    fi
    if [ ${ndata} -eq 20 ]; then
      WINDS=$p;
@@ -198,8 +198,9 @@ cycle="${CYCLE}00"
 
 fullname="${DATE}_${CYCLE}00"
 #CG=${contour}m_${CGnumber}_"$CYCLE"_"$DATE"_prob.txt_${SITEID}
-CGCONT=${contour}m_contour_${CGnumber}."$fullname"_${SITEID}
-COM_CGCONT=${NET}.t${CYCLE}z.${contour}m_contour_${CGnumber}.${WFO}.txt
+cgnumber=${CGnumber,,}
+CGCONT=${contour}m_contour_${cgnumber}."$fullname"_${SITEID}
+COM_CGCONT=${NET}.t${CYCLE}z.${contour}m_contour_${cgnumber}.${WFO}.txt
 echo "" 
 echo "_________________________________________________________________"
 echo "                           Rip Current Program                   "
@@ -234,15 +235,16 @@ siteid="${SITEID,,}"
 # ======================================================================
 
 # Copy required input data: (1) Wave model output along contour, (2) Beach orientation file
-cp ${NWPSDATA}/run/${contour}m_contour_${CGnumber} ${RIPDATA}/${contour}m_contour_${CGnumber}"."${DATE}"_"$cycle"_${SITEID}"
+cp ${NWPSDATA}/run/${contour}m_contour_${CGnumber} ${RIPDATA}/${contour}m_contour_${cgnumber}"."${DATE}"_"$cycle"_${SITEID}"
 cp ${FIXnwps}/beach_orient_db/${contour}m_RipForecastShoreline_${SITEID}.txt .
 
 # Loop through contours and computational grids
 for CONT in $contour; do
 for CG in $CGnumber; do
 
+cg="${CG,,}"
 # If the model file doesn't exist, move on to the next one
-if [[ ! -f ${RIPDATA}/${CONT}m_contour_${CG}.${INIT_DATE}_${SITEID} ]]; then
+if [[ ! -f ${RIPDATA}/${CONT}m_contour_${cg}.${INIT_DATE}_${SITEID} ]]; then
    continue
 fi
 
@@ -305,7 +307,7 @@ done
 # ======================================================================
 echo "% " > fort.23
 echo "% " >> fort.23
-grep SWAN ${RIPDATA}/${CONT}m_contour_${CG}.${INIT_DATE}_${SITEID} >> fort.23
+grep SWAN ${RIPDATA}/${CONT}m_contour_${cg}.${INIT_DATE}_${SITEID} >> fort.23
 echo "% Rip Current Code Version:1.0" >> fort.23
 echo "% " >> fort.23
 echo "%DATE             Xp           Yp         Prob     Hs         pp        mwdsn      tide  event" >> fort.23
@@ -330,9 +332,9 @@ while read line; do
       rm -f fort.20
    fi
    # Get the current model data
-   if [[ -f ${RIPDATA}/${CONT}m_contour_${CG}.${INIT_DATE}_${SITEID} ]]; then
+   if [[ -f ${RIPDATA}/${CONT}m_contour_${cg}.${INIT_DATE}_${SITEID} ]]; then
       let ntimes=${RUNLEN}+1
-      cat ${RIPDATA}/${CONT}m_contour_${CG}.${INIT_DATE}_${SITEID} | \
+      cat ${RIPDATA}/${CONT}m_contour_${cg}.${INIT_DATE}_${SITEID} | \
       awk "/${LAT}/ && /${LON}/" | \
       head -${ntimes} >> fort.20
    fi
@@ -433,7 +435,7 @@ done
 done 
 #CONT
 
-FORT23="${NET}.t${cycle%??}z.${contour}m_${CGnumber}_ripprob.${WFO}.txt"
+FORT23="${NET}.t${cycle%??}z.${contour}m_${cgnumber}_ripprob.${WFO}.txt"
 cp ${RIPDATA}/fort.23 ${RIPDATA}/${FORT23}
 
 #exit 0

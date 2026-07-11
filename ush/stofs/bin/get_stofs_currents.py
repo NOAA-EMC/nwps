@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
-print('Entering get_estofs_currents.py...')
+print('Entering get_stofs_currents.py...')
 import os, sys
 lonmin = float(sys.argv[1])
 lonmax = float(sys.argv[2])
 latmin = float(sys.argv[3])
 latmax = float(sys.argv[4])
-estofshours = int(sys.argv[5])
+stofshours = int(sys.argv[5])
 datafile = sys.argv[6]
 outputdir = sys.argv[7]
 outputtime = sys.argv[8]
@@ -15,7 +15,7 @@ print(lonmin)
 print(lonmax)
 print(latmin)
 print(latmax)
-print(estofshours)
+print(stofshours)
 print(datafile)
 print(outputdir)
 print(outputtime)
@@ -53,7 +53,7 @@ lonmin = float(sys.argv[1])
 lonmax = float(sys.argv[2])
 latmin = float(sys.argv[3])
 latmax = float(sys.argv[4])
-estofshours = int(sys.argv[5])
+stofshours = int(sys.argv[5])
 datafile = sys.argv[6]
 outputdir = sys.argv[7]
 outputtime = sys.argv[8]
@@ -62,7 +62,7 @@ print('Plotting unstructured file '+str(datafile))
 
 def plot_cur(storm, datafile, lonmin, lonmax, latmin, latmax):
 
-   print('Extracting ESTOFS '+mode+' currents for: WFO '+outputdir[-10:-7].upper()+' '+str(lonmin)+' '+str(lonmax)+' '+str(latmin)+' '+str(latmax))
+   print('Extracting STOFS '+mode+' currents for: WFO '+outputdir[-10:-7].upper()+' '+str(lonmin)+' '+str(lonmax)+' '+str(latmin)+' '+str(latmax))
 
    #Single file netCDF reading
    ncf=datafile
@@ -80,7 +80,7 @@ def plot_cur(storm, datafile, lonmin, lonmax, latmin, latmax):
    #AW triangles=nco.variables['element'][:,:]
 
    datetime_basedate = datetime.datetime.strptime(base_date[:19], '%Y-%m-%d %H:%M:%S')
-   print('ESTOFS base date is',datetime_basedate)
+   print('STOFS base date is',datetime_basedate)
 
    #AW ucur[ucur<-9.] = 0.
    #AW vcur[vcur<-9.] = 0.
@@ -109,7 +109,7 @@ def plot_cur(storm, datafile, lonmin, lonmax, latmin, latmax):
    tri.set_mask(mask)
 
    # Loop through each time step and plot results
-   for hour in range(0, estofshours):
+   for hour in range(0, stofshours):
       ucur=nco.variables['u-vel'][hour,:]
       vcur=nco.variables['v-vel'][hour,:]
       ucur[ucur<-9.] = 0.
@@ -123,7 +123,7 @@ def plot_cur(storm, datafile, lonmin, lonmax, latmin, latmax):
 
       dt = datetime_basedate + datetime.timedelta(seconds=timeinseconds[hour])
       if mode == 'nowcast':
-         dt_init = datetime_basedate + datetime.timedelta(seconds=(timeinseconds[0]+(estofshours-1)*3600)) # Add 5 hours to get nowcast time at f000
+         dt_init = datetime_basedate + datetime.timedelta(seconds=(timeinseconds[0]+(stofshours-1)*3600)) # Add 5 hours to get nowcast time at f000
       else:
          #AW dt_init = datetime_basedate + datetime.timedelta(seconds=(timeinseconds[0]-3600)) # Count back 1 hour since forecast file starts at f001
          dt_init = datetime_basedate + datetime.timedelta(seconds=(timeinseconds[0]+5*3600)) # Add 5 hours to get nowcast time at f000
@@ -178,7 +178,7 @@ def plot_cur(storm, datafile, lonmin, lonmax, latmin, latmax):
 
       dtlabel = datetime.date.strftime(dt,'%Y%m%d%H%M%S')
       dtlabel = dtlabel[0:8]+'_'+dtlabel[8:14]
-      filenm = 'estofs_'+storm+'_cur_'+dtlabel+'.png'
+      filenm = 'stofs_'+storm+'_cur_'+dtlabel+'.png'
       plt.savefig(outputdir+"/"+filenm,dpi=150,bbox_inches='tight',pad_inches=0.1)
       """
 
@@ -196,16 +196,16 @@ def plot_cur(storm, datafile, lonmin, lonmax, latmin, latmax):
       #print(v_interp_1d.shape)
 
       if mode == 'nowcast':
-         if hour < (estofshours-1):
-            with open(outputdir+"/"+"wave_estofs_uv_"+str(epoch_init)+"_"+dstr_init+"_h"+str(estofshours-1-hour).zfill(3)+".dat", "w") as f:
+         if hour < (stofshours-1):
+            with open(outputdir+"/"+"wave_stofs_uv_"+str(epoch_init)+"_"+dstr_init+"_h"+str(stofshours-1-hour).zfill(3)+".dat", "w") as f:
                np.savetxt(f, u_interp_1d, fmt='%1.2f')
                np.savetxt(f, v_interp_1d, fmt='%1.2f')
          else:
-            with open(outputdir+"/"+"wave_estofs_uv_"+str(epoch_init)+"_"+dstr_init+"_f"+str(estofshours-1-hour).zfill(3)+".dat", "w") as f:
+            with open(outputdir+"/"+"wave_stofs_uv_"+str(epoch_init)+"_"+dstr_init+"_f"+str(stofshours-1-hour).zfill(3)+".dat", "w") as f:
                np.savetxt(f, u_interp_1d, fmt='%1.2f')
                np.savetxt(f, v_interp_1d, fmt='%1.2f')
       else:
-         with open(outputdir+"/"+"wave_estofs_uv_"+str(epoch_init)+"_"+dstr_init+"_f"+str(hour-5).zfill(3)+".dat", "w") as f:
+         with open(outputdir+"/"+"wave_stofs_uv_"+str(epoch_init)+"_"+dstr_init+"_f"+str(hour-5).zfill(3)+".dat", "w") as f:
             np.savetxt(f, u_interp_1d, fmt='%1.2f')
             np.savetxt(f, v_interp_1d, fmt='%1.2f')
     
@@ -221,7 +221,7 @@ def plot_cur(storm, datafile, lonmin, lonmax, latmin, latmax):
    f2.close()
 
 if __name__ == "__main__":
-   #plot_cur(storm='Global_ESTOFS', datafile1='estofs.t18z.fields.cwl.vel.nowcast.nc')
-   #plot_cur(storm='Global_ESTOFS', datafile1='estofs.t18z.fields.cwl.vel.forecast.nc')
-   plot_cur(storm='Global_ESTOFS', datafile=datafile, lonmin=lonmin, lonmax=lonmax, latmin=latmin, latmax=latmax)
+   #plot_cur(storm='Global_STOFS', datafile1='stofs.t18z.fields.cwl.vel.nowcast.nc')
+   #plot_cur(storm='Global_STOFS', datafile1='stofs.t18z.fields.cwl.vel.forecast.nc')
+   plot_cur(storm='Global_STOFS', datafile=datafile, lonmin=lonmin, lonmax=lonmax, latmin=latmin, latmax=latmax)
 

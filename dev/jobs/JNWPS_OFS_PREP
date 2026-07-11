@@ -37,7 +37,7 @@ if [ $curhour -ge 18 ] && [ $curhour -lt 22 ]; then CYCLE="12"; fi
 if [ $curhour -ge 22 ]; then CYCLE="18"; fi
 echo ""
 ##### 07/20/22: Realtime test of Global STOFS upgrade ###############
-if [ "${OFSTYPE}" == "estofs_cur" ]; then CYCLE="00"; fi
+if [ "${OFSTYPE}" == "stofs_cur" ]; then CYCLE="00"; fi
 #####################################################################
 echo "INFO - Current hour is ${curhour}, setting model cycle to ${CYCLE}"
 export cyc=${CYCLE}
@@ -113,7 +113,7 @@ export COMINstofs=/lfs/h1/ops/prod/com/stofs/${stofs_ver}/stofs_2d_glo.${PDY}
 export COMINrtofs=/lfs/h1/ops/prod/com/rtofs/${rtofs_ver}/rtofs.${PDY}
 export COMINsice=/lfs/h1/ops/prod/com/seaice_analysis/${seaice_analysis_ver}/seaice_analysis.${PDY}
 export COMINsicem1=/lfs/h1/ops/prod/com/seaice_analysis/${seaice_analysis_ver}/seaice_analysis.${PDYm1}
-export COMINpsurge=/lfs/h1/ops/prod/com/psurge/${psurge_ver}/psurge.${PDY}
+export COMINpsurge=/lfs/h1/ops/prod/com/psurge/${psurge_ver}
 
 export COMROOTp2=/gpfs/hps/nco/ops/com
 

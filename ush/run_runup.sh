@@ -23,13 +23,17 @@ echo " ${DATA}  ${siteid}/${SITEID} ${SLOPEDATADIR} ${CONTOURS} ${CGS}"  | tee -
 echo " ${TEMPDIRrunup} ${RUNUPDOMAIN}"  | tee -a logrunup
 for CONTOUR in $CONTOURS; do
 for CG in $CGS; do
-echo "LOOKING FOR FILE :  ${CONTOUR}_contour_${CG}.${INIT_DATE}_${SITEID}" | tee -a logrunup
+cg="${CG,,}"
+echo "LOOKING FOR FILE :  ${CONTOUR}_contour_${cg}.${INIT_DATE}_${SITEID}" | tee -a logrunup
 #
 # If the model file doesn't exist, move on to the next one
-if [[ ! -f ${CONTOUR}_contour_${CG}.${INIT_DATE}_${SITEID} ]]; then
-echo "Cant find ${CONTOUR}_contour_${CG}.${INIT_DATE}_${SITEID}" | tee -a logrunup
+if [[ ! -f ${CONTOUR}_contour_${cg}.${INIT_DATE}_${SITEID} ]]; then
+echo "Cant find ${CONTOUR}_contour_${cg}.${INIT_DATE}_${SITEID}" | tee -a logrunup
    continue
 fi
+
+. prep_step
+
 #
 # ======================================================================
 # Define Fortran Unit Number filenames
@@ -41,14 +45,14 @@ fi
 # ======================================================================
 export FORT20="${CONTOUR}_${CG}_data.txt"
 export FORT21="${CG}.${SITEID}_slopes.txt"
-export FORT22="${NET}.t${CYCLE%??}z.${CONTOUR}_${CG}_runup.${WFO}.txt"
+export FORT22="${NET}.t${CYCLE%??}z.${CONTOUR}_${cg}_runup.${siteid}.txt"
 #
 # ======================================================================
 # Set up the output file
 # ======================================================================
 echo "% " > $FORT22
 echo "% " >> $FORT22
-grep SWAN ${CONTOUR}_contour_${CG}.${INIT_DATE}_${SITEID} >> $FORT22
+grep SWAN ${CONTOUR}_contour_${cg}.${INIT_DATE}_${SITEID} >> $FORT22
 echo "% Runup Code Version:1.0" >> $FORT22
 echo "% NOTE:  X,Y locations refer to shoreline location projected from the 20m contour" >> $FORT22
 echo "% NOTE:  twl, twl95, twl05, dune crest and dune toe elevations all relative to MSL" >> $FORT22
@@ -76,12 +80,12 @@ while read line; do
       rm -f $FORT20
    fi
 ## Get the current model data
-  if [[ -f ${CONTOUR}_contour_${CG}.${INIT_DATE}_${SITEID} ]]; then
+  if [[ -f ${CONTOUR}_contour_${cg}.${INIT_DATE}_${SITEID} ]]; then
 #      cat ${TEMPDIRrunup}/${CONTOUR}_contour_${CG}.${INIT_DATE}_MHX | \
 #      awk "/${LAT}/ && /${LON}/" | \
 #      head -24 >> $FORT20
 #   fi
-      cat ${CONTOUR}_contour_${CG}.${INIT_DATE}_${SITEID} | \
+      cat ${CONTOUR}_contour_${cg}.${INIT_DATE}_${SITEID} | \
       awk "/${LAT}/ && /${LON}/" >> $FORT20
     fi
 # ======================================================================
