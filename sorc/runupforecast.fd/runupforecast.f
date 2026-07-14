@@ -167,6 +167,29 @@
       
 !        write the output file
       do i=1,nhs
+
+        write(6,*) '=========================================='
+        write(6,*) 'Writing record ',i
+        write(6,*) 'ftime = ',ftime(i)
+        write(6,*) 'sxp,syp = ',sxp,syp
+        write(6,*) 'hsig,pwp,slo = ',hsig(i),pwp(i),slo
+        write(6,*) 'twl      = ',twl(i)
+        write(6,*) 'twl95    = ',twl95(i)
+        write(6,*) 'twl05    = ',twl05(i)
+        write(6,*) 'runup    = ',runup(i)
+        write(6,*) 'runup95  = ',runup95(i)
+        write(6,*) 'runup05  = ',runup05(i)
+        write(6,*) 'setup    = ',setup(i)
+        write(6,*) 's        = ',s(i)
+        write(6,*) 'sinc     = ',sinc(i)
+        write(6,*) 'sig      = ',sig(i)
+        write(6,*) 'dh,dl    = ',dh,dl
+        write(6,*) 'owash    = ',owash(i)
+        write(6,*) 'erosn    = ',erosn(i)
+        write(6,*) 'owashexd = ',owashexd(i)
+        write(6,*) 'erosnexd = ',erosnexd(i)
+        write(6,*) '=========================================='
+
         write(furun,100)ftime(i),sxp,syp,hsig(i),
      1        pwp(i),slo,twl(i),twl95(i),twl05(i),runup(i),runup95(i),
      2        runup05(i),setup(i),s(i),sinc(i),sig(i),
@@ -174,7 +197,7 @@
  100   format(F14.4,4X,F8.4,5X,F8.4,4X,F5.3,5X,F7.4,6X,F5.4,5X,F5.2,8X,
      1        F5.2,6X,F5.2,12X,F4.2,12X,F4.2,12X,F4.2,12X,F4.2,10X,
      2        F4.2,12X,F4.2,17X,F4.2,11X,F8.4,10X,F8.4,
-     3        10X,F5.2,10X,F5.2,12X,I3,15X,I3)
+     3        10X,F6.2,10X,F6.2,12X,I3,15X,I3)
       end do
       close(furun)
 !
