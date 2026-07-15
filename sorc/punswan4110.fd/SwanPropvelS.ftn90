@@ -156,6 +156,12 @@ subroutine SwanPropvelS ( cad   , cas   , ux2   , uy2   , &
     !
     cd = 0.
     cs = 0.
+
+    duxdx = 0.
+    duxdy = 0.
+    duydx = 0.
+    duydy = 0.
+
     !
     iv1 = vs(1)
     iv2 = vs(2)

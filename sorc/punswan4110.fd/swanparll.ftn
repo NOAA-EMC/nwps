@@ -3889,7 +3889,7 @@
       USE SWCOMM3                                                         40.41
       USE OUTP_DATA
       USE M_PARALL                                                        40.31
-!PUN      USE SwanGriddata, ONLY: nvertsg                                     41.36
+!PUN      USE SwanGriddata, ONLY: nvertsg, xcugrdgl, ycugrdgl                 41.36
 !PUN      USE SIZES                                                           41.36
 !
       IMPLICIT NONE
@@ -4154,6 +4154,11 @@
                IF (.NOT.ALLOCATED(YP)) ALLOCATE(YP(MIP))
                IF (.NOT.ALLOCATED(CROSS)) ALLOCATE(CROSS(4,MIP))          40.86
 
+               XP = OVEXCV(1)
+               YP = OVEXCV(2)
+               XC = OVEXCV(1)
+               YC = OVEXCV(2)
+
 !              --- compute coordinates of output points                   40.51
 
                ITMP1  = MXC
@@ -4176,14 +4181,31 @@
                XCLMAX = XCGMAX
                YCLMIN = YCGMIN
                YCLMAX = YCGMAX
-               CALL SWOEXC (PSTYPE              ,
+
+               IF (PSTYPE.EQ.'U' .AND. LCOMPGRD) THEN
+
+                 CALL SWOEXC (PSTYPE           ,
+     &               CUOPS%OPI                 ,CUOPS%OPR           ,
+     &               xcugrdgl                  ,ycugrdgl            ,
+     &               MIP                       ,XP                  ,
+     &               YP                        ,XC                  ,
+     &               YC                        ,KGRPGL              ,
+     &               XGRDGL                    ,YGRDGL              ,
+     &               CROSS                     )
+
+               ELSE
+
+                 CALL SWOEXC (PSTYPE            ,
      &                      CUOPS%OPI           ,CUOPS%OPR           ,
      &                      CUOPS%XP            ,CUOPS%YP            ,
      &                      MIP                 ,XP                  ,
      &                      YP                  ,XC                  ,
      &                      YC                  ,KGRPGL              ,
      &                      XGRDGL              ,YGRDGL              ,
-     &                      CROSS               )                         40.86
+     &                      CROSS               )
+
+               ENDIF                                                        40.86
+
                MXC    = ITMP1
                MYC    = ITMP2
                MCGRD  = ITMP3

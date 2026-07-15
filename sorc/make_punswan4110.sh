@@ -49,7 +49,7 @@ rm -f macros.inc
 make config | tee -a ./punswan_build.log
 
 #Build parallel unstructured version
-make punswan FLAGS_OPT="${OPTFLAGS}" | tee -a ./punswan_build.log
+make punswan FLAGS_OPT="${FLAGS_OPT}" | tee -a ./punswan_build.log
 cp -pfv swan.exe ${HOMEnwps}/exec/punswan4110.exe
 
 make clobber | tee -a ./punswan_build.log

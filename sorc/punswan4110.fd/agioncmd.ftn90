@@ -174,7 +174,7 @@
 
         type recordaxe_type
             integer*8, dimension(:), allocatable     :: content
-            integer                                  :: delta
+            integer*8                                :: delta
             integer                                  :: ncontent = 0, dimid, varid
             logical                                  :: nstatm = .true.
         end type recordaxe_type
@@ -738,7 +738,8 @@
             integer,               intent (   in)                 :: ncid
             type (recordaxe_type), intent (inout)                 :: recordaxe
             logical, optional   ,  intent (   in)                 :: monthly
-            integer                                               :: t1(6), t2(6), i
+            integer                                               :: t1(6), t2(6)
+            integer*8                                             :: i
             if ( recordaxe%varid < 1 ) call agnc_get_recordaxe_ids(ncid, recordaxe%dimid, recordaxe%varid)
 
             ! Some sanity checks
@@ -1875,10 +1876,11 @@
 
         function axe_is_regular_integer64(x, nx, dx, fill_check) result (isregular)
             integer*8, intent(in)                :: x(:)
-            integer,   intent(in)                :: dx,nx
+            integer*8, intent(in)                :: dx
+            integer,   intent(in)                :: nx
             logical,   intent(in), optional      :: fill_check
             logical                              :: isregular
-            integer,   dimension(:), allocatable :: dx2
+            integer*8, dimension(:), allocatable :: dx2
 
             isregular = .false.
             if ( nx > 0 ) then
@@ -2217,7 +2219,9 @@
         function seconds_since_epoch_twoint ( date, time ) result (seconds_since_epoch)
             integer, intent( in)    :: date, time
             integer*8               :: seconds_since_epoch
-            seconds_since_epoch = seconds_since_epoch_datevec( datevec_from_twoint(date, time) )
+            integer                 :: datevec(6)
+            datevec = datevec_from_twoint(date, time)
+            seconds_since_epoch = seconds_since_epoch_datevec(datevec)
         end function seconds_since_epoch_twoint
 
         function seconds_since_epoch_datevec ( datevec ) result (seconds_since_epoch)

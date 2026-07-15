@@ -101,7 +101,7 @@
          call read_nwps(fupast,ninput,npast72,ftime,xpos,ypos,hsig,
      1                  pwp,mwd,xvel,yvel,watlev,uwind,vwind,npast72,
      2                  ier)
-         hspast72=hsig(1:npast72)
+         hspast72(1:npast72)=hsig(1:npast72)
       else
 !        If past file doesn't exist, set all past hs to zero (no event)
          write(6,*) 'No history file. Values of hspast72 set to zero.'

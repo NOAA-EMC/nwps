@@ -115,7 +115,7 @@
 !
       endif         
 !            
-      eventout=eventout1(nall-nhs+1:nall)
+      eventout(1:nall-npast72)=eventout1(nall-nhs+1:nall)
       deallocate(hsall)
 !
       return

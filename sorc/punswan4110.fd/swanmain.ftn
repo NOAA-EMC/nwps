@@ -584,6 +584,37 @@
 !           --- update boundary conditions and input fields
 !
 !TIMG            CALL SWTSTA(7)                                                40.23
+
+            IF (.NOT.ALLOCATED(FRIC)) THEN
+              ALLOCATE(FRIC(1))
+              FRIC = 0.
+            ENDIF
+
+            IF (.NOT.ALLOCATED(UXB)) THEN
+              ALLOCATE(UXB(1))
+              UXB = 0.
+            ENDIF
+
+            IF (.NOT.ALLOCATED(UYB)) THEN
+              ALLOCATE(UYB(1))
+              UYB = 0.
+            ENDIF
+
+            IF (.NOT.ALLOCATED(NPLAF)) THEN
+              ALLOCATE(NPLAF(1))
+              NPLAF = 0.
+            ENDIF
+
+            IF (.NOT.ALLOCATED(TURBF)) THEN
+              ALLOCATE(TURBF(1))
+              TURBF = 0.
+            ENDIF
+
+            IF (.NOT.ALLOCATED(MUDLF)) THEN
+              ALLOCATE(MUDLF(1))
+              MUDLF = 0.
+            ENDIF
+
             CALL SNEXTI ( BSPECS, BGRIDP, COMPDA, AC1   , AC2   ,         40.31
      &                    SPCSIG, SPCDIR, XCGRID, YCGRID, KGRPNT,         40.31
      &                    XYTST , DEPTH , WLEVL , FRIC  , UXB   ,         40.31
@@ -710,10 +741,12 @@
       IF ( PARLL ) THEN                                                   40.30
          ALLOCATE (BLKND(MXC*MYC))                                        40.51 40.41
          BLKND = REAL(INODE)                                              40.41
-         IF ( IAMMASTER ) THEN                                            40.95
+
+         IF (.NOT.ALLOCATED(BLKNDC)) THEN                                 40.95
             ALLOCATE(BLKNDC(MXCGL*MYCGL))                                 40.51 40.41
             BLKNDC = 0.                                                   40.96
          END IF
+
          CALL SWCOLLECT ( BLKNDC, BLKND, .TRUE. )                         40.51 40.41
          IF (STPNOW()) RETURN                                             40.41
          IF ( IAMMASTER ) THEN                                            40.95 40.30
@@ -723,7 +756,7 @@
       END IF                                                              40.30
 !PUN      !
 !PUN      IF ( MNPROC>1 ) THEN                                                41.36
-!PUN         IF ( IAMMASTER ) THEN                                            41.36
+!PUN         IF (.NOT.ALLOCATED(BLKNDC)) THEN                                 41.36
 !PUN            ALLOCATE(BLKNDC(nvertsg))                                     41.36
 !PUN            BLKNDC = 0.                                                   41.36
 !PUN         ENDIF                                                            41.36
@@ -5995,6 +6028,9 @@
       REAL        TSTVAL(10)                                              40.00
       TYPE(BSPCDAT), POINTER :: CURBFL                                    40.31
       LOGICAL LPB                                                         40.80
+
+      REAL ::     ZERO_COMP(1) = 0.0
+
       SAVE  IENT
       DATA  IENT/0/
       IF (LTRACE) CALL STRACE(IENT,'SNEXTI')
@@ -6177,7 +6213,7 @@
 
 !     field 4: friction coeff.
       IF (IFLDYN(4) .EQ. 1) THEN
-        CALL FLFILE ( 4, 0, FRIC, (/0./),                                 40.31
+        CALL FLFILE ( 4, 0, FRIC, ZERO_COMP,                                 40.31
      &               0, JFRC2, JFRC3, 0, 0, 0,
      &               1., 0.,                                              40.31 30.90
      &               COMPDA, XCGRID, YCGRID,
@@ -6204,7 +6240,7 @@
 
 !     field 7: water level
       IF (IFLDYN(7) .EQ. 1) THEN
-        CALL FLFILE ( 7, 0, WLEVL, (/0./),                                40.31
+        CALL FLFILE ( 7, 0, WLEVL, ZERO_COMP,                             40.31
      &               JWLV1, JWLV2, JWLV3, 0, 0, 0,
      &               1., 0.,                                              40.31 30.90
      &               COMPDA, XCGRID, YCGRID,
@@ -6354,7 +6390,7 @@
 
 !     field 11: field containing number of plants per square meter
       IF (IFLDYN(11) .EQ. 1) THEN
-        CALL FLFILE (11, 0, NPLAF, (/0./),
+        CALL FLFILE (11, 0, NPLAF, ZERO_COMP,
      &               0, JNPLA2, JNPLA3, 0, 0, 0,
      &               1., 0.,
      &               COMPDA, XCGRID, YCGRID,
@@ -6381,7 +6417,7 @@
 
 !     field 12: field containing turbulent viscosity
       IF (IFLDYN(12) .EQ. 1) THEN
-        CALL FLFILE (12, 0, TURBF, (/0./),
+        CALL FLFILE (12, 0, TURBF, ZERO_COMP,
      &               0, JTURB2, JTURB3, 0, 0, 0,
      &               1., 0.,
      &               COMPDA, XCGRID, YCGRID,
@@ -6408,7 +6444,7 @@
 
 !     field 13: field containing fluid mud layer
       IF (IFLDYN(13) .EQ. 1) THEN
-        CALL FLFILE (13, 0, MUDLF, (/0./),
+        CALL FLFILE (13, 0, MUDLF, ZERO_COMP,
      &               JMUDL1, JMUDL2, JMUDL3, 0, 0, 0,
      &               1., 0.,
      &               COMPDA, XCGRID, YCGRID,

@@ -47,7 +47,7 @@ make clobber | tee -a ./swan_build.log
 rm -f macros.inc
 : > macros.inc
 make config | tee -a ./swan_build.log
-make mpi FLAGS_OPT="${OPTFLAGS}" | tee -a ./swan_build.log
+make mpi FLAGS_OPT="${FLAGS_OPT}" | tee -a ./swan_build.log
 cp -pfv swan.exe ${HOMEnwps}/exec/swan.exe
 
 make clobber | tee -a ./swan_build.log

@@ -3104,14 +3104,14 @@
 ! 13. Source text
 !
       PARAMETER  (NVOTP=93)                                               41.62 41.15 40.64 40.51 40.41 40.00
-      REAL       XC(MIP)        ,YC(MIP)       ,AC2(MDC,MSC,MCGRD),
+      REAL       XC(MIP)        ,YC(MIP)        ,AC2(MDC,MSC,MCGRD),
      &           VOQ(MIP,*)     ,
      &           WK(*)          ,
-     &           CG(*)          ,ACLOC(MDC,MSC),
-     &           NE(*)          ,NED(*)        ,DEPXY(MCGRD), ECS(MDC)
+     &           CG(*)          ,ACLOC(MDC,MSC) ,ACLOC_TR(MSC,MDC),
+     &           NE(*)          ,NED(*)         ,DEPXY(MCGRD), ECS(MDC)
       LOGICAL    CROSS(4,MIP)                                             40.86
 !
-      INTEGER    VOQR(*)        ,BKC           ,IVOTP(NVOTP)      ,
+      INTEGER    VOQR(*)        ,BKC            ,IVOTP(NVOTP)      ,
      &           KGRPNT(MXC,MYC)                                          30.21
 !
       INTEGER    NP             ,DIMXPT                                   41.62
@@ -4509,7 +4509,8 @@
 !          IF (UDIR.LT.360.) UDIR = UDIR + 360.                            41.62   !Check the computation of UDIR. does this work only if comp is NAUT??
 !
 !         compute partitioning and integral parameters per partition      41.62
-          CALL SWPART (TRANSPOSE(ACLOC), UABS, UDIR, VOQ(IP,VOQR(4)),     41.62
+          ACLOC_TR = TRANSPOSE(ACLOC)
+          CALL SWPART (ACLOC_TR, UABS, UDIR, VOQ(IP,VOQR(4)),             41.62
      &                 WK, SPCSIG, SPCDIR, NP, XPT, DIMXPT)               41.62
 !
           IF (OQPROC(171)) VOQ(IP,VOQR(171))     = 0.                     41.62
