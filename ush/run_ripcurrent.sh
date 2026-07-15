@@ -183,9 +183,9 @@ cat /dev/null > ${NWPSDATA}/logs/runrip.log
 
 # Find newest GRIB2 output file to process
 ls -lt ${NWPSDATA}/output/grib2/${CGnumber}
-gribfile=$(ls ${NWPSDATA}/output/grib2/${CGnumber}/*${CGnumber}*grib2 | xargs -n 1 basename | tail -n 1)
+gribfile=$(ls -t ${NWPSDATA}/output/grib2/${CGnumber}/*${CGnumber}*grib2 | xargs -n 1 basename | head -n 1)
 # Get the full path to the file
-gribpath=$(ls ${NWPSDATA}/output/grib2/${CGnumber}/*${CGnumber}*grib2 | tail -n 1)
+gribpath=$(ls -t ${NWPSDATA}/output/grib2/${CGnumber}/*${CGnumber}*grib2 | head -n 1)
 
 # 1. Extract the reference date/time using wgrib2
 # This outputs a string like "d=2026060912" (YYYYMMDDHH)
