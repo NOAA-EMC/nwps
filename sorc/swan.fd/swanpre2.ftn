@@ -4159,6 +4159,7 @@
         IF (EQCSTR(HEDLIN(2:4),'DIR')) THEN                               40.03
           READ (NDSD, *) NANG
           ALLOCATE(BSPFIL%BSPDIR(NANG))                                   40.31
+          DORDER = 1
           DO IANG = 1, NANG
 !           read direction in degr and convert to radians
             READ (NDSD, *) DIRDEG
