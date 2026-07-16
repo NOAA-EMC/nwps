@@ -489,7 +489,7 @@
 !
       INTEGER :: JUMPYEAR = 30     ! Used in interpretation of 2-digit year code
       INTEGER    IOPT, DTTIME(6)
-      CHARACTER  TIMSTR *24, MONC(12) *3, MONCI *3
+      CHARACTER  TIMSTR *(*), MONC(12) *3, MONCI *3
       DATA MONC /'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL',
      &           'AUG', 'SEP', 'OCT', 'NOV', 'DEC'/
 !
