@@ -3433,7 +3433,7 @@
                 END IF
               END IF
            END DO
-           IF (ISIGM.GT.1) THEN
+           IF (ISIGM.GT.1 .AND. ISIGM.LT.MSC) THEN
              SIG1 = SPCSIG(ISIGM-1)
              SIG2 = SPCSIG(ISIGM+1)
              SIG3 = SPCSIG(ISIGM  )
@@ -3453,6 +3453,8 @@
              VOQ(IP,VOQR(IVTYPE)) = 2.*PI/SIGP
            ELSE IF (ISIGM.EQ.1) THEN
              VOQ(IP,VOQR(IVTYPE)) = 2.*PI/SPCSIG(1)
+           ELSE IF (ISIGM.EQ.MSC) THEN
+             VOQ(IP,VOQR(IVTYPE)) = 2.*PI/SPCSIG(MSC)
            ELSE
              VOQ(IP,VOQR(IVTYPE)) = OVEXCV(IVTYPE)
            END IF
