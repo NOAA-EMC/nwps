@@ -4410,7 +4410,7 @@
 !          WRITE(PRINTF,*) 'In SWOEXA: WK(1:MSC) = ', WK(1:MSC)                          
           ! Compute partitioning and integral parameters per partition    40.PART
           ACLOC_TR = TRANSPOSE(ACLOC)
-          CALL SWPART (TRANSPOSE(ACLOC), UABS, UDIR, VOQ(IP,VOQR(4)),     40.PART
+          CALL SWPART (ACLOC_TR, UABS, UDIR, VOQ(IP,VOQR(4)),             40.PART
      &                 WK, SPCSIG, SPCDIR, NP, XPT, DIMXPT)               40.PART
 !          WRITE(PRINTF,*) 'OQPROC(100:109)', OQPROC(100:109)
 !          WRITE(PRINTF,*) 'Number of partitions NP = ',NP
