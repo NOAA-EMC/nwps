@@ -3038,7 +3038,7 @@
       REAL       XC(MIP)        ,YC(MIP)       ,AC2(MDC,MSC,MCGRD),
      &           VOQ(MIP,*)     ,
      &           WK(*)          ,
-     &           CG(*)          ,ACLOC(MDC,MSC),
+     &           CG(*)          ,ACLOC(MDC,MSC),ACLOC_TR(MSC,MDC),
      &           NE(*)          ,NED(*)        ,DEPXY(MCGRD), ECS(MDC)
       REAL       UABS           ,UDIR                                     40.PART
       REAL, ALLOCATABLE :: XPT(:,:)                                       40.PART
@@ -4409,6 +4409,7 @@
 !          WRITE(PRINTF,*) 'UABS, UDIR =', UABS, UDIR   
 !          WRITE(PRINTF,*) 'In SWOEXA: WK(1:MSC) = ', WK(1:MSC)                          
           ! Compute partitioning and integral parameters per partition    40.PART
+          ACLOC_TR = TRANSPOSE(ACLOC)
           CALL SWPART (TRANSPOSE(ACLOC), UABS, UDIR, VOQ(IP,VOQR(4)),     40.PART
      &                 WK, SPCSIG, SPCDIR, NP, XPT, DIMXPT)               40.PART
 !          WRITE(PRINTF,*) 'OQPROC(100:109)', OQPROC(100:109)
