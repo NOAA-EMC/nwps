@@ -1587,6 +1587,12 @@
         MYC    = MYCGL                                                    40.31
         MCGRD  = MCGRDGL                                                  40.31
         NGRBND = NGRBGL                                                   40.31
+!
+        IF (.NOT.ALLOCATED(XYTST)) THEN                                   40.31
+          ALLOCATE(XYTST(2))                                              40.31
+          XYTST = 0                                                       40.31
+        ENDIF                                                             40.31
+!
         CALL SWBOUN ( XGRDGL, YGRDGL, KGRPGL, XYTST, KGRBGL )             40.31
         IF (STPNOW()) RETURN                                              34.01
         MXC    = ITMP1                                                    40.31
