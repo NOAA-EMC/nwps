@@ -667,14 +667,16 @@
          BLKND = REAL(INODE)                                              40.41
          IF ( INODE.EQ.MASTER ) THEN
             ALLOCATE(BLKNDC(MXCGL*MYCGL))                                 40.51 40.41
-            BLKNDC = 0.                                                   40.96
+         ELSE
+            ALLOCATE(BLKNDC(1))
          END IF
+         BLKNDC = 0.                                                      40.96
          CALL SWCOLLECT ( BLKNDC, BLKND, .TRUE. )                         40.51 40.41
          IF (STPNOW()) RETURN                                             40.41
          IF ( INODE.EQ.MASTER ) THEN                                      40.30
             CALL SWCOLOUT ( OURQT, BLKNDC )                               40.51 40.41 40.30
-            DEALLOCATE(BLKNDC)                                            40.41 40.30
          END IF                                                           40.30
+         DEALLOCATE(BLKNDC)
       END IF                                                              40.30
 !TIMG      CALL SWTSTO(9)                                                      40.30
 !
