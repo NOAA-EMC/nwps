@@ -1096,7 +1096,7 @@
            END DO
            RD     = (C(IK)-UPAR) / (C(IK)-C(IK+1))
            IF ( RD .LT. 0 ) THEN
-              IK     = 0
+              IK     = 1
               RD     = MAX ( 0., RD+1. )
            END IF
            FCDIR(ITH) = RD*SPCSIG(IK+1) + (1.-RD)*SPCSIG(IK)
