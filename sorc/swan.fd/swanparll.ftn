@@ -996,7 +996,12 @@
       IF (INODE.EQ.MASTER) THEN
          ALLOCATE(ICOUNT(0:NPROC-1))
          ALLOCATE(IDSPLC(0:NPROC-1))
+      ELSE
+         ALLOCATE(ICOUNT(0:0))
+         ALLOCATE(IDSPLC(0:0))
       END IF
+      ICOUNT = 0
+      IDSPLC = 0
 
 !MPI!     --- gather the array sizes to the master
 !MPI
@@ -1018,6 +1023,7 @@
          IF ( SUM(ICOUNT).GT.IOLEN ) THEN
             CALL MSGERR(4,
      &                  'Not enough space allocated for gathered data')
+            DEALLOCATE(ICOUNT,IDSPLC)
             RETURN
          END IF
       END IF
@@ -1046,7 +1052,7 @@
 !MPI         RETURN
 !MPI      END IF
 
-      IF (INODE.EQ.MASTER) DEALLOCATE(ICOUNT,IDSPLC)
+      DEALLOCATE(ICOUNT,IDSPLC)
 
       RETURN
       END
@@ -3009,11 +3015,18 @@
                ILEN = MXCGL*MYCGL +
      &                       4*MAX(IHALOX,IHALOY)*NPROC*MAX(MXCGL,MYCGL)
                ALLOCATE(KGRPTC(ILEN))
+            ELSE
+               ILEN = 1
+               ALLOCATE(KGRPTC(1))
             END IF
+            KGRPTC = 0
             CALL SWGATHER ( KGRPTC, ILEN, KGRPNT, MXC*MYC, SWINT )
-            IF (STPNOW()) RETURN
+            IF (STPNOW()) THEN
+               DEALLOCATE(KGRPTC)
+               RETURN
+            END IF
          ELSE
-            IF (INODE.EQ.MASTER) ALLOCATE(KGRPTC(0))
+            ALLOCATE(KGRPTC(0))
          END IF
 
          IF (INODE.EQ.MASTER) THEN
@@ -3025,7 +3038,12 @@
      &                       4*MAX(IHALOX,IHALOY)*NPROC*MAX(MXCGL,MYCGL)
             END IF
             ALLOCATE(FLDC(ILEN))
+         ELSE
+            ILEN = 1
+            ALLOCATE(FLDC(1))
          END IF
+         FLDC = 0.
+
          IF (FULL) THEN
             ILEN2 = MXC*MYC
          ELSE
@@ -3116,7 +3134,7 @@
 
          END IF
 
-         IF (INODE.EQ.MASTER) DEALLOCATE(KGRPTC,FLDC)
+         DEALLOCATE(KGRPTC,FLDC)
 
       END IF
 
