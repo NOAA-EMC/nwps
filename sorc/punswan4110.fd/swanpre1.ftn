@@ -2961,6 +2961,12 @@
 !
 !     process output requests                                             40.00
 !
+
+      IF (.NOT.ALLOCATED(WLEVL)) THEN
+         ALLOCATE(WLEVL(1))
+         WLEVL = 0.
+      ENDIF
+
       CALL SPROUT(FOUND, DEPTH, WLEVL)                                    40.31
       IF (STPNOW()) RETURN                                                34.01
       IF (.NOT.FOUND) THEN
