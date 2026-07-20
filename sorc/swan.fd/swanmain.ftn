@@ -530,6 +530,10 @@
 !
 !TIMG            CALL SWTSTA(7)                                                40.23
 !
+            IF (.NOT.ALLOCATED(XYTST)) THEN
+               ALLOCATE(XYTST(1))
+               XYTST = 0
+            ENDIF
             IF (.NOT.ALLOCATED(FRIC)) THEN
                ALLOCATE(FRIC(1))
                FRIC = 0.
