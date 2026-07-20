@@ -585,6 +585,16 @@
 !
 !TIMG            CALL SWTSTA(7)                                                40.23
 
+            IF (.NOT.ALLOCATED(XYTST)) THEN
+              ALLOCATE(XYTST(1))
+              XYTST = 0
+            ENDIF
+
+            IF (.NOT.ALLOCATED(WLEVL)) THEN
+              ALLOCATE(WLEVL(1))
+              WLEVL = 0.
+            ENDIF
+
             IF (.NOT.ALLOCATED(FRIC)) THEN
               ALLOCATE(FRIC(1))
               FRIC = 0.
@@ -613,6 +623,16 @@
             IF (.NOT.ALLOCATED(MUDLF)) THEN
               ALLOCATE(MUDLF(1))
               MUDLF = 0.
+            ENDIF
+
+            IF (.NOT.ALLOCATED(WXI)) THEN
+              ALLOCATE(WXI(1))
+              WXI = 0.
+            ENDIF
+
+            IF (.NOT.ALLOCATED(WYI)) THEN
+              ALLOCATE(WYI(1))
+              WYI = 0.
             ENDIF
 
             CALL SNEXTI ( BSPECS, BGRIDP, COMPDA, AC1   , AC2   ,         40.31
