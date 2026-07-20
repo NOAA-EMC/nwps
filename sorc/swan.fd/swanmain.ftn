@@ -534,6 +534,10 @@
                ALLOCATE(XYTST(1))
                XYTST = 0
             ENDIF
+            IF (.NOT.ALLOCATED(WLEVL)) THEN
+               ALLOCATE(WLEVL(1))
+               WLEVL = 0.
+            ENDIF
             IF (.NOT.ALLOCATED(FRIC)) THEN
                ALLOCATE(FRIC(1))
                FRIC = 0.
