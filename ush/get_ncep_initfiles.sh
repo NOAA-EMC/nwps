@@ -68,7 +68,7 @@ echo "Copying ${1} fields for SITE: ${siteid}"
 
 if [ $# -eq 1 ]
 then
-  date=$(NDATE)
+  date=$($NDATE)
   datey=${PDYm1}
   #RTOFSPATH="ofs.${PDY}/rtofs/${siteid}_output"
   #RTOFSPATHY="ofs.${PDYm1}/rtofs/${siteid}_output"
