@@ -205,12 +205,14 @@ function process_wfolist() {
         cp -rp ${COMINstofs}/${file} .
         if [ "$?" != "0" ] && [ ! -e ${file} ];then
            sleep 2
-           echo "ERROR - downling file ${PRODUCTdir}/${file}" 
-        fi
-        cp -rp ${COMINstofs}/${file} .
-        if [ "$?" != "0" ] && [ ! -e ${file} ];then
-           echo "ERROR - downling file ${PRODUCTdir}/${file}" 
-           export err=1; err_chk
+           echo "Retrying copy of ${SPOOLdir}/${file}"
+           cp -rp ${COMINstofs}/${file} .
+
+            if [ "$?" != "0" ] && [ ! -e ${file} ]; then
+               echo "ERROR - downloading file ${SPOOLdir}/${file}"
+               export err=1
+               err_chk
+            fi
         fi
 
         if [ "${STOFSUSEICEMASK}" == "TRUE" ]
@@ -229,12 +231,14 @@ function process_wfolist() {
 
                if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
                    sleep 2
-                   echo "ERROR - downling file ${PRODUCTdir}/${icefile}" 
-               fi
-               cp -rp ${COMINsice}/${icefile} .
-               if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
-                   echo "ERROR - downling file ${PRODUCTdir}/${icefile}"
-                   export err=1; err_chk
+                   echo "Retrying copy of ${SPOOLdir}/${icefile}"
+                   cp -rp ${COMINsice}/${icefile} .
+
+                   if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
+                       echo "ERROR - downling file ${SPOOLdir}/${icefile}"
+                       export err=1
+                       err_chk
+                   fi
                fi
 
             elif [ -e ${COMINsicem1}/${icefile} ];then
@@ -249,12 +253,13 @@ function process_wfolist() {
 
                if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
                    sleep 2
-                   echo "ERROR - downling file ${PRODUCTdir}/${icefile}" 
-               fi
-               cp -rp ${COMINsicem1}/${icefile} .
-               if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
-                   echo "ERROR - downling file ${PRODUCTdir}/${icefile}"
-                   export err=1; err_chk
+                   echo "Retrying copy of ${SPOOLdir}/${icefile}"
+                   cp -rp ${COMINsicem1}/${icefile} .
+                   if [ "$?" != "0" ] && [ ! -e ${icefile} ];then
+                      echo "ERROR - downling file ${SPOOLdir}/${icefile}"
+                      export err=1
+                      err_chk
+                   fi
                fi
             else
                 echo "FATAL ERROR - Sea ice file ${PRODUCTdir}/${icefile} not available today or yesterday."
@@ -376,13 +381,14 @@ function process_wfolist() {
 	        echo "cp -rp ${COMINstofs}/${file} ."
 	        cp -rp ${COMINstofs}/${file} .
 	        if [ "$?" != "0" ] && [ ! -e ${file} ];then
-                sleep 2
-	            echo "ERROR - downling file ${PRODUCTdir}/${file}" 
-	        fi
- 	        cp -rp ${COMINstofs}/${file} .
-	        if [ "$?" != "0" ] && [ ! -e ${file} ];then
-	            echo "ERROR - downling file ${PRODUCTdir}/${file}" 
-                export err=1; err_chk
+                   sleep 2
+                   echo "Retrying copy of ${PRODUCTdir}/${file}"
+                   cp -rp ${COMINstofs}/${file} .
+                   if [ "$?" != "0" ] && [ ! -e ${file} ];then
+                      echo "ERROR - downling file ${PRODUCTdir}/${file}"
+                      export err=1
+                      err_chk
+                   fi
 	        fi
             echo " "
 	        echo "++++++++++++++++++++++++++++++++++++++++++++"
