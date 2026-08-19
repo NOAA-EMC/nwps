@@ -140,7 +140,7 @@ function process_wfolist() {
     cd ${SPOOLdir}
 
     if [ "${hasdownload_000}" == "" ]; then hasdownload_000="false"; fi
-    
+
     if [ "${hasdownload_000}" == "false" ];then
         if [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "conus.east" ];then
            hasDL[1]="true"
@@ -165,16 +165,21 @@ function process_wfolist() {
            return
         fi
         cp -rp ${COMINstofs}/${file1} .
+        rc=$?
         sleep 10
-        if [ "$?" != "0" ] && [ ! -e ${file1} ];then
+
+        if [ "${rc}" != "0" ] && [ ! -e ${file1} ];then
            sleep 2
-           echo "ERROR - downling file ${PRODUCTdir}/${file1}" 
-        fi
-        cp -rp ${COMINstofs}/${file1} .
-        sleep 10
-        if [ "$?" != "0" ] && [ ! -e ${file1} ];then
-           echo "ERROR - downling file ${PRODUCTdir}/${file1}" 
-           export err=1; err_chk
+           echo "Retrying copy of ${file1}"
+           cp -rp ${COMINstofs}/${file1} .
+           rc=$?
+           sleep 10
+
+           if [ "${rc}" != "0" ] && [ ! -e ${file1} ];then
+              echo "ERROR - downling file ${PRODUCTdir}/${file1}"
+              export err=1
+              err_chk
+           fi
         fi
 
         # Copy STOFS forecast output
@@ -186,20 +191,25 @@ function process_wfolist() {
            return
         fi
         cp -rp ${COMINstofs}/${file2} .
+        rc=$?
         sleep 10
-        if [ "$?" != "0" ] && [ ! -e ${file2} ];then
+
+        if [ "${rc}" != "0" ] && [ ! -e ${file2} ];then
            sleep 2
-           echo "ERROR - downling file ${PRODUCTdir}/${file2}" 
-        fi
-        cp -rp ${COMINstofs}/${file2} .
-        sleep 10
-        if [ "$?" != "0" ] && [ ! -e ${file2} ];then
-           echo "ERROR - downling file ${PRODUCTdir}/${file2}" 
-           export err=1; err_chk
+           echo "Retrying copy of ${file2}"
+           cp -rp ${COMINstofs}/${file2} .
+           rc=$?
+           sleep 10
+
+           if [ "${rc}" != "0" ] && [ ! -e ${file2} ];then
+              echo "ERROR - downling file ${PRODUCTdir}/${file2}"
+              export err=1
+              err_chk
+           fi
         fi
 
     fi
-    
+
     hasdownload_000="true"
 
     #while [ "${epoc_time}" == "" ]; do
