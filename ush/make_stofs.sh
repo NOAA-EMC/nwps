@@ -120,26 +120,6 @@ function process_wfolist() {
     export err=$?; err_chk
     STOFS_REGION=$(echo ${STOFS_REGION} | tr [:upper:] [:lower:])
 #..........................................
-     if [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "conus.east" ]
-     then
-       hasdownload_000=${hasDL[1]}
-     elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "puertori" ]
-     then
-       hasdownload_000=${hasDL[2]}
-     elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "conus.west" ]
-     then
-       hasdownload_000=${hasDL[3]}
-     elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "hawaii" ]
-     then
-       hasdownload_000=${hasDL[4]}
-     elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "alaska" ]
-     then
-       hasdownload_000=${hasDL[5]}
-     elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "guam" ]
-     then
-       hasdownload_000=${hasDL[6]}
-     fi
-#................................................
     OUTPUTdir="${RUNdir}/${wfo}_output"
     CLIPdir="${RUNdir}/${wfo}_hourly"
     INGESTdir="${INGESTdir_org}/${wfo}"
@@ -175,44 +155,27 @@ function process_wfolist() {
     file="${STOFS_BASIN}.t${CYCLE}z.${STOFS_REGION}.f${FF}.grib2"
     icefile="seaice.t00z.5min.grb.grib2"
     outfile="${file}"
-    cd ${SPOOLdir}
 
-    if [ "${hasdownload_000}" == "" ]; then hasdownload_000="false"; fi
+    echo "Checking source GRIB2 file ${COMINstofs}/${file}"
 
-    if [ "${hasdownload_000}" == "false" ];then
-        if [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "conus.east" ];then
-           hasDL[1]="true"
-        elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "puertori" ];then
-           hasDL[2]="true"
-        elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "conus.west" ];then
-           hasDL[3]="true"
-        elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "hawaii" ];then
-           hasDL[4]="true"
-        elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "alaska" ];then
-           hasDL[5]="true"
-        elif [ "${STOFS_BASIN}" == "stofs_2d_glo" ] && [ "${STOFS_REGION}" == "guam" ];then
-           hasDL[6]="true"
-        fi
+    if ! check_bad_grib2_file "${COMINstofs}/${file}"; then
+       warn_and_disable_stofs_grib2 "STOFS GRIB2 file ${COMINstofs}/${file} is missing or 0-byte. Run will continue without STOFS water level variation and ice blocking for ${WFO}."
+       rm -f ${OUTPUTdir}/LOCKFILE
+       return
+    fi
 
-        echo "Downloading ${SPOOLdir}/$file to $outfile"
-        echo "Checking source GRIB2 file ${COMINstofs}/${file}"
-        if ! check_bad_grib2_file "${COMINstofs}/${file}"; then
-           warn_and_disable_stofs_grib2 "STOFS GRIB2 file ${COMINstofs}/${file} is missing or 0-byte. Run will continue without STOFS water level variation and ice blocking for ${WFO}."
-           rm -f ${OUTPUTdir}/LOCKFILE
-           return
-        fi
-        echo "cp -rp ${COMINstofs}/${file} ."
-        cp -rp ${COMINstofs}/${file} .
-        if [ "$?" != "0" ] && [ ! -e ${file} ];then
-           sleep 2
-           echo "Retrying copy of ${SPOOLdir}/${file}"
-           cp -rp ${COMINstofs}/${file} .
+    echo "cp -rp ${COMINstofs}/${file} ${CLIPdir}/${file}"
+    cp -rp "${COMINstofs}/${file}" "${CLIPdir}/${file}"
 
-            if [ "$?" != "0" ] && [ ! -e ${file} ]; then
-               echo "ERROR - downloading file ${SPOOLdir}/${file}"
-               export err=1
-               err_chk
-            fi
+    if [ "$?" != "0" ] && [ ! -e "${CLIPdir}/${file}" ];then
+        sleep 2
+        echo "Retrying copy of ${CLIPdir}/${file}"
+        cp -rp "${COMINstofs}/${file}" "${CLIPdir}/${file}"
+
+        if [ "$?" != "0" ] && [ ! -e "${CLIPdir}/${file}" ]; then
+            echo "ERROR - copying file ${CLIPdir}/${file}"
+            export err=1
+            err_chk
         fi
     fi
 
@@ -256,8 +219,6 @@ function process_wfolist() {
         fi
     fi
 
-    hasdownload_000="true"
-
     if [ "${STOFSUSEICEMASK}" == "TRUE" ]
     then
        echo "Using sea ice to mask STOFS area with high ice density"
@@ -269,7 +230,7 @@ function process_wfolist() {
           echo "Repeating GRIB2 ice file copy for ${wfo}"
           cp -rp "${ice_source}" "${CLIPdir}/${icefile}"
           $WGRIB2 -count ${CLIPdir}/${icefile} > ${CLIPdir}/filechk 2>/dev/null
-	  nrecords=$(wc -l < ${CLIPdir}/filechk)
+          nrecords=$(wc -l < ${CLIPdir}/filechk)
        done
        #------------------------------------------------------------
        echo "${WGRIB2} ${CLIPdir}/${icefile} -new_grid latlon ${LL_LON}:${NX}:${DX} ${LL_LAT}:${NY}:${DY} ${CLIPdir}/ice.grib2"
@@ -282,9 +243,8 @@ function process_wfolist() {
 
     while [ "${epoc_time}" == "" ] || [ "${epoc_time}" == "-1" ]; do
        echo "Extracting epoc time for ${wfo}"
-       epoc_time=`${WGRIB2} -unix_time ${SPOOLdir}/${file} | grep "1:4:unix" | awk -F= '{ print $3 }'`
+       epoc_time=`${WGRIB2} -unix_time ${CLIPdir}/${file} | grep "1:4:unix" | awk -F= '{ print $3 }'`
     done
-    #epoc_time=`${WGRIB2} -unix_time ${SPOOLdir}/${file} | grep "1:4:unix" | awk -F= '{ print $3 }'`
     date_str=`echo ${epoc_time} | awk '{ print strftime("%Y%m%d", $1) }'`
     echo ${epoc_time} > ${OUTPUTdir}/stofs_waterlevel_start_time.txt
     echo "STOFSDOMAIN:${STOFSDOMAIN}" > ${OUTPUTdir}/stofs_waterlevel_domain.txt
@@ -299,16 +259,12 @@ function process_wfolist() {
     swan_wl_ofile="${OUTPUTdir}/${swan_wl_ofile_fname}"
 
     if [ ! -e ${swan_wl_ofile} ];then
-        #MakeClip ${SPOOLdir} ${file} 0 ${WFO}
         #--- Make local copy of input file and check size -----------
-        while [ ! -s ${CLIPdir}/${file} ]; do
-           cp ${SPOOLdir}/${file} ${CLIPdir}/${file}
-        done
         $WGRIB2 -count ${CLIPdir}/${file} > ${CLIPdir}/filechk 2>/dev/null
         nrecords=$(wc -l < ${CLIPdir}/filechk)
         while [ ${nrecords} -ne 3 ]; do
            echo "Repeating GRIB2 file copy for ${wfo} f000"
-           cp ${SPOOLdir}/${file} ${CLIPdir}/${file}
+           cp -rp "${COMINstofs}/${file}" "${CLIPdir}/${file}"
            $WGRIB2 -count ${CLIPdir}/${file} > ${CLIPdir}/filechk 2>/dev/null
            nrecords=$(wc -l < ${CLIPdir}/filechk)
         done
