@@ -79,8 +79,12 @@ if [ "${hastracking}" == "TRUE" ]
    
    cycle=$(awk '{print $1;}' ${RUNdir}/CYCLE)
    COMOUTCYC="${COMOUT_CORRECT}/${cycle}/CG0"
-   tar -czvf mapplots_cg0_${PDY_INPUT}${cycle}.tar.gz swan_systrk1_hr???.png
-   cp -fv ${RUNdir}/mapplots_cg0_${PDY_INPUT}${cycle}.tar.gz $COMOUTCYC/
+   figsTarFile="nwps.t${hh}z.mapplots_cg0.${siteid}.tar.gz"
+   tar -czvf ${figsTarFile} swan_systrk1_hr???.png
+   cp -fv ${RUNdir}/${figsTarFile} $COMOUTCYC/
+   if [ ${SENDDBN} = YES ]; then
+     ${DBNROOT}/bin/dbn_alert MODEL NWPS_PLOTS_TAR ${job} ${COMOUTCYC}/${figsTarFile}
+   fi
    cp -fv ${RUNdir}/nwps.t${cycle}z.cg0_trkng.${siteid}.bull $COMOUTCYC/
    rm ${RUNdir}/swan_systrk1_hr???.png
 fi

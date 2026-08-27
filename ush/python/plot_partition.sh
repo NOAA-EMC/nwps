@@ -294,7 +294,8 @@ do
   export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
   
   
-  figsTarFile="plots_cg0_${YYYY}${MM}${DD}${HH}.tar.gz"
+  #figsTarFile="plots_cg0_${YYYY}${MM}${DD}${HH}.tar.gz"
+  figsTarFile="nwps.t${CC}z.plots_cg0.${SITEID}.tar.gz"
   tar cvfz ${figsTarFile} *.png
   cycleout=$(awk '{print $1;}' ${RUNdir}/CYCLE)
 # tarbal with plots send to CG0
@@ -304,6 +305,10 @@ do
   COMOUTCYC="${COMOUT_CORRECT}/${cycleout}/CG0"
   mkdir -p $COMOUTCYC
   cp ${figsTarFile} $COMOUTCYC/${figsTarFile}
+  if [ ${SENDDBN} = YES ]; then
+    ${DBNROOT}/bin/dbn_alert MODEL NWPS_PLOTS_TAR ${job} ${COMOUTCYC}/${figsTarFile}
+  fi 
+
 done
 
 echo "NWPS partition output plots can be viewed at: ${GRAPHICSdir}"

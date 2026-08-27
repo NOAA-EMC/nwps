@@ -449,9 +449,14 @@ then
        cp -vpf ${TEMPDIR}/*.png ${GRAPHICSdir}/.
        chmod 777 ${GRAPHICSdir}/*.png
        cd ${GRAPHICSdir}
-       figsTarFile="plots_cg${CGNUM}_${yyyy}${mon}${dd}${hh}.tar.gz"
+       #figsTarFile="plots_cg${CGNUM}_${yyyy}${mon}${dd}${hh}.tar.gz"
+       figsTarFile="nwps.t${hh}z.plots_cg${CGNUM}.${siteid}.tar.gz"
        tar cvfz ${figsTarFile} *.png
        cp ${figsTarFile} $COMOUTCYC/${figsTarFile}
+       if [ ${SENDDBN} = YES ]; then
+         ${DBNROOT}/bin/dbn_alert MODEL NWPS_PLOTS_TAR ${job} ${COMOUTCYC}/${figsTarFile}
+       fi
+
 
        CFGFILE=${FIXnwps}/shiproutes/${siteid}_shiproutes.cfg
        if [ -f  ${CFGFILE} ]; then
@@ -468,9 +473,13 @@ then
             cp -pfv "${files[@]}" "${GRAPHICSdirshiproutes}/."
             chmod 777 ${GRAPHICSdirshiproutes}/swan*hr*.png
             cd ${GRAPHICSdirshiproutes}
-            figsTarFile="shiproute_plots_cg1_${yyyy}${mon}${dd}${hh}.tar.gz"
+            #figsTarFile="shiproute_plots_cg1_${yyyy}${mon}${dd}${hh}.tar.gz"
+	    figsTarFile="nwps.t${hh}z.shiproute_plots_cg1.${siteid}.tar.gz"
             tar cvfz ${figsTarFile} *.png
             cp -fpv ${figsTarFile} $COMOUTCYC/${figsTarFile}
+	    if [ ${SENDDBN} = YES ]; then
+              ${DBNROOT}/bin/dbn_alert MODEL NWPS_PLOTS_TAR ${job} ${COMOUTCYC}/${figsTarFile}
+            fi
           fi 
        fi
     fi

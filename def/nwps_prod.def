@@ -813,25 +813,25 @@ suite prod
               family 00
                 edit CYC '00'
                 task jnwps_stofs_prep
-                  trigger /prod/primary/00/stofs/v2.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
+                  trigger /prod/primary/00/stofs/v3.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
                   cron 06:40
               endfamily
               family 06
                 edit CYC '06'
                 task jnwps_stofs_prep
-                  trigger /prod/primary/06/stofs/v2.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
+                  trigger /prod/primary/06/stofs/v3.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
                   cron 12:40
               endfamily
               family 12
                 edit CYC '12'
                 task jnwps_stofs_prep
-                  trigger /prod/primary/12/stofs/v2.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
+                  trigger /prod/primary/12/stofs/v3.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
                   cron 18:40
               endfamily
               family 18
                 edit CYC '18'
                 task jnwps_stofs_prep
-                  trigger /prod/primary/18/stofs/v2.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
+                  trigger /prod/primary/18/stofs/v3.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
                   cron 00:40
               endfamily
             endfamily
@@ -840,25 +840,25 @@ suite prod
               family 00
                 edit CYC '00'
                 task jnwps_stofs_cur_prep
-                  trigger /prod/primary/00/stofs/v2.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
+                  trigger /prod/primary/00/stofs/v3.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
                   cron 06:40
               endfamily 
               family 06
                 edit CYC '06'
                 task jnwps_stofs_cur_prep
-                  trigger /prod/primary/06/stofs/v2.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
+                  trigger /prod/primary/06/stofs/v3.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
                   cron 12:40
               endfamily
               family 12
                 edit CYC '12'
                 task jnwps_stofs_cur_prep
-                  trigger /prod/primary/12/stofs/v2.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
+                  trigger /prod/primary/12/stofs/v3.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
                   cron 18:40
               endfamily
               family 18
                 edit CYC '18'
                 task jnwps_stofs_cur_prep
-                  trigger /prod/primary/18/stofs/v2.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
+                  trigger /prod/primary/18/stofs/v3.1/2d_glo/jstofs_2d_glo_post_grib2 == complete
                   cron 00:40
               endfamily
             endfamily
@@ -866,7 +866,7 @@ suite prod
               edit KEEPDATA 'YES'
               edit CYC '12'
               task jnwps_psurge_prep
-                trigger /prod/primary/ondemand/psurge/v3.1/jpsurge_nwps_ready == active
+                trigger /prod/primary/ondemand/psurge/v3.2/jpsurge_nwps_ready == active
                 edit CYC '00'
             endfamily
             family rtofs

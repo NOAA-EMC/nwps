@@ -421,9 +421,13 @@ then
   cp -vpf ${TEMPDIR}/*.png ${GRAPHICSdir}/.
   chmod 777 ${GRAPHICSdir}/*.png
   cd ${GRAPHICSdir}
-  figsTarFile="plots_cg${CGNUM}_${yyyy}${mon}${dd}${hh}.tar.gz"
+  #figsTarFile="plots_cg${CGNUM}_${yyyy}${mon}${dd}${hh}.tar.gz"
+  figsTarFile="nwps.t${hh}z.plots_cg${CGNUM}.${siteid}.tar.gz"
   tar cvfz ${figsTarFile} *.png
   cp ${figsTarFile} $COMOUTCYC/${figsTarFile}
+  if [ ${SENDDBN} = YES ]; then
+    ${DBNROOT}/bin/dbn_alert MODEL NWPS_PLOTS_TAR ${job} ${COMOUTCYC}/${figsTarFile}
+  fi
 fi
 
 #Sending grib2 files with gridded wave parameters to COMOUT

@@ -67,7 +67,6 @@ case ${OFSTYPE} in
         export CYCLE="00"
         ${USHnwps}/make_psurge.sh
         export err=$?; err_chk
-        rm -rf ${COMOUT}/${OFSTYPE}/{*hourly,*hourly.spool}
     ;;
     *)
         echo "\$OFS type not found"
@@ -80,14 +79,19 @@ if [ ${SENDDBN} = YES ] && [ "${OFSTYPE}" != "stofs_cur" ]; then
     mkdir ${DATA}/tars
     for i in ${COMOUT}/${OFSTYPE}/*_output; do
         if [ "${OFSTYPE}" == "psurge" ]; then
+            epoc_waterlevel_start_time=`cat ${COMOUT}/psurge/${i##*/}_output/psurge_waterlevel_start_time.txt`
+            wldateinname_t=$(date -d @${epoc_waterlevel_start_time} +"%Y%m%d%T" )
+            TARCYCLE=${wldateinname_t:8:2}
             find ${i}/ -name *txt -exec basename '{}' ';' >> ${DATA}/tars/${i##*/}.list
-            find ${i}/ -name *gz -exec basename '{}' ';' >> ${DATA}/tars/${i##*/}.list
+            find ${i}/ -name wave_psurge_waterlevel_*_${TARCYCLE}_*_e*.dat.tar.gz -exec basename '{}' ';' >> ${DATA}/tars/${i##*/}.list
         else
             find ${i}/ -name wave_${OFSTYPE}*_${CYCLE}_*dat -exec basename '{}' ';' > ${DATA}/tars/${i##*/}.list
             find ${i}/ -name *txt -exec basename '{}' ';' >> ${DATA}/tars/${i##*/}.list
+	    TARCYCLE=${CYCLE}
         fi
-
-        echo "tar cvf ${DATA}/tars/${i##*/}.tar -C ${i} -T ${DATA}/tars/${i##*/}.list; if [ "$?" = "0" ]; then mv ${DATA}/tars/${i##*/}.tar ${COMOUT}/${OFSTYPE}/; $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_TAR $job ${COMOUT}/${OFSTYPE}/${i##*/}.tar; fi" >> ${DATA}/tars/tar_cmdfile
+        
+	tarfilename=nwps.t${TARCYCLE}z.${i##*/}.tar
+        echo "tar cvf ${DATA}/tars/${tarfilename} -C ${i} -T ${DATA}/tars/${i##*/}.list; if [ "$?" = "0" ]; then mv ${DATA}/tars/${tarfilename} ${COMOUT}/${OFSTYPE}/; $DBNROOT/bin/dbn_alert MODEL NWPS_ASCII_TAR $job ${COMOUT}/${OFSTYPE}/${tarfilename}; fi" >> ${DATA}/tars/tar_cmdfile
     done
     #aprun -n24 -N24 -j1 -d1 cfp ${DATA}/tars/tar_cmdfile
     mpiexec -np 24 --cpu-bind verbose,core cfp ${DATA}/tars/tar_cmdfile

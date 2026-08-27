@@ -147,6 +147,21 @@ if [ "${NewestPsurge}" == "" ]
     export err=1; err_chk
 fi
 
+# Determine what the latest cycle of psurge is by grabbing the latest ZZz from the file names:
+z_cycle=$((shopt -s nullglob; printf '%s\n' ${PSurge_latest}/psurge.${YYYYMMDD}/psurge.t${YYYYMMDD}*z.${NewestPsurge}_e[1-5]?_inc_dat.h102.conus_625m.grib2) | sed -n 's|.*/psurge\.t[0-9]\{8\}\([0-9]\{2\}\)z.*|\1|p' | sort -n | tail -n1)
+
+#Update CYCLE definition:
+# Check for command line CYCLE
+
+if [ "$1" != "" ]
+then
+   CYCLE="$1"
+else
+   export CYCLE=${zcycle:-00}
+   echo ""
+   echo "Cycle being set based on psurge data, CYCLE=${CYCLE}"
+fi
+
 #psurge.t2004091418z.al822004_e10_inc_dat.conus_625m.grib2
 split=(${NewestPsurge//_/ })
 for part in ${split[@]} ; do echo $part; done
@@ -154,7 +169,7 @@ for part in ${split[@]} ; do echo $part; done
 #cp ${PSurge_latest}/${split[0]}_e??_inc_dat.h102.conus_625m.grib2 ${RUNdir} 
 #cp ${PSurge_latest}/${split[0]}_e[1-5]?_inc_dat.h102.conus_625m.grib2 ${RUNdir} 
 # psurge update v3.0 
-for srcfile in ${PSurge_latest}/psurge.${YYYYMMDD}/*.${NewestPsurge}_e[1-5]?_inc_dat.h102.conus_625m.grib2
+for srcfile in ${PSurge_latest}/psurge.${YYYYMMDD}/*${CYCLE}z.${NewestPsurge}_e[1-5]?_inc_dat.h102.conus_625m.grib2
 do
    if [ -f "${srcfile}" ]; then
       if ! check_bad_grib2_file "${srcfile}"; then
@@ -167,7 +182,9 @@ do
       fi
    fi
 done
-cp ${PSurge_latest}/psurge.${YYYYMMDD}/*.${NewestPsurge}_e[1-5]?_inc_dat.h102.conus_625m.grib2 ${RUNdir}
+
+# only copy the latest cycle data 
+cp ${PSurge_latest}/psurge.${YYYYMMDD}/*${CYCLE}z.${NewestPsurge}_e[1-5]?_inc_dat.h102.conus_625m.grib2 ${RUNdir}
 cd $workdir
 #--------------------------------------------------------------
 
