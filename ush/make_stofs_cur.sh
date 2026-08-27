@@ -15,12 +15,12 @@ set -xa
 # Support Team:
 #
 # Contributors: Roberto Padilla
-#               
+#
 # -----------------------------------------------------------
 # ------------- Program Description and Details -------------
 # -----------------------------------------------------------
 #
-# Script used to make STOFS SWAN init files all WFOs. 
+# Script used to make STOFS SWAN init files all WFOs.
 #
 #
 # -----------------------------------------------------------
@@ -76,31 +76,11 @@ warn_and_disable_stofscur_nc() {
 function process_wfolist() {
     WFO=$(echo ${site} | tr [:lower:] [:upper:])
     wfo=$(echo ${site} | tr [:upper:] [:lower:])
-    echo "Creating STOFS init files for ${WFO}" 
-    source ${FIXnwps}/configs/${wfo}_ncep_config.sh    
+    echo "Creating STOFS init files for ${WFO}"
+    source ${FIXnwps}/configs/${wfo}_ncep_config.sh
     export err=$?; err_chk
     STOFSCUR_REGION=$(echo ${STOFSCUR_REGION} | tr [:upper:] [:lower:])
 #..........................................
-     if [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "conus.east" ]
-     then
-       hasdownload_000=${hasDL[1]}
-     elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "puertori" ]
-     then
-       hasdownload_000=${hasDL[2]}
-     elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "conus.west" ]
-     then
-       hasdownload_000=${hasDL[3]}
-     elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "hawaii" ]
-     then
-       hasdownload_000=${hasDL[4]}
-     elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "alaska" ]
-     then
-       hasdownload_000=${hasDL[5]}
-     elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "guam" ]
-     then
-       hasdownload_000=${hasDL[6]}
-     fi
-#................................................
     OUTPUTdir="${RUNdir}/${wfo}_output"
     CLIPdir="${RUNdir}/${wfo}_hourly"
     INGESTdir="${INGESTdir_org}/${wfo}"
@@ -109,8 +89,8 @@ function process_wfolist() {
 #    if [ ! -e ${INGESTdir} ]; then mkdir -p ${INGESTdir}; fi
 
     if [ "${STOFSCUR_REGION}" == "none" ];then
-    	echo "ERROR - No STOFS region for ${WFO}" 
-    	echo "ERROR - Skipping init files for ${WFO}" 
+        echo "ERROR - No STOFS region for ${WFO}"
+        echo "ERROR - Skipping init files for ${WFO}"
     	continue
     fi
 
@@ -120,7 +100,7 @@ function process_wfolist() {
     LL_LAT=$(echo ${STOFSCURDOMAIN} | awk '{ print $2}')
     DX=$(echo ${STOFSCURDOMAIN} | awk '{ print $6}')
     DY=$(echo ${STOFSCURDOMAIN} | awk '{ print $7}')
-    
+
     echo "STOFSCUR_REGION = ${STOFSCUR_REGION}"
     echo "STOFSCURDOMAIN = ${STOFSCURDOMAIN}"
     echo "NX = ${NX}"
@@ -133,84 +113,35 @@ function process_wfolist() {
     # Get the first forecast cycle
     touch ${OUTPUTdir}/LOCKFILE
     FF="000"
-    file1="${STOFSCUR_BASIN}.t${CYCLE}z.fields.cwl.vel.nc"
-    file2="${STOFSCUR_BASIN}.t${CYCLE}z.fields.cwl.vel.nc"
-    outfile1="${file1}"
-    outfile2="${file2}"
-    cd ${SPOOLdir}
 
-    if [ "${hasdownload_000}" == "" ]; then hasdownload_000="false"; fi
+    file="${STOFSCUR_BASIN}.t${CYCLE}z.fields.cwl.vel.nc"
 
-    if [ "${hasdownload_000}" == "false" ];then
-        if [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "conus.east" ];then
-           hasDL[1]="true"
-        elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "puertori" ];then
-           hasDL[2]="true"
-        elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "conus.west" ];then
-           hasDL[3]="true"
-        elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "hawaii" ];then
-           hasDL[4]="true"
-        elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "alaska" ];then
-           hasDL[5]="true"
-        elif [ "${STOFSCUR_BASIN}" == "stofs_2d_glo" ] && [ "${STOFSCUR_REGION}" == "guam" ];then
-           hasDL[6]="true"
-        fi
+    echo "Checking source NetCDF file ${COMINstofs}/${file}"
 
-        # Copy STOFS nowcast output
-        echo "Downloading ${SPOOLdir}/$file1 to $outfile1" 
-        echo "cp -p ${COMINstofs}/${file1} ."
-        if ! check_bad_nc_file "${COMINstofs}/${file1}"; then
-           warn_and_disable_stofscur_nc "STOFS current file ${COMINstofs}/${file1} is missing or 0-byte. Run will continue without STOFS current fields for ${WFO}."
-           rm -f ${OUTPUTdir}/LOCKFILE
-           return
-        fi
-        cp -rp ${COMINstofs}/${file1} .
-        rc=$?
-        sleep 10
-
-        if [ "${rc}" != "0" ] && [ ! -e ${file1} ];then
-           sleep 2
-           echo "Retrying copy of ${file1}"
-           cp -rp ${COMINstofs}/${file1} .
-           rc=$?
-           sleep 10
-
-           if [ "${rc}" != "0" ] && [ ! -e ${file1} ];then
-              echo "ERROR - downling file ${PRODUCTdir}/${file1}"
-              export err=1
-              err_chk
-           fi
-        fi
-
-        # Copy STOFS forecast output
-        echo "Downloading ${SPOOLdir}/$file2 to $outfile2" 
-        echo "cp -p ${COMINstofs}/${file2} ."
-        if ! check_bad_nc_file "${COMINstofs}/${file2}"; then
-           warn_and_disable_stofscur_nc "STOFS current file ${COMINstofs}/${file2} is missing or 0-byte. Run will continue without STOFS current fields for ${WFO}."
-           rm -f ${OUTPUTdir}/LOCKFILE
-           return
-        fi
-        cp -rp ${COMINstofs}/${file2} .
-        rc=$?
-        sleep 10
-
-        if [ "${rc}" != "0" ] && [ ! -e ${file2} ];then
-           sleep 2
-           echo "Retrying copy of ${file2}"
-           cp -rp ${COMINstofs}/${file2} .
-           rc=$?
-           sleep 10
-
-           if [ "${rc}" != "0" ] && [ ! -e ${file2} ];then
-              echo "ERROR - downling file ${PRODUCTdir}/${file2}"
-              export err=1
-              err_chk
-           fi
-        fi
-
+    if ! check_bad_nc_file "${COMINstofs}/${file}"; then
+       warn_and_disable_stofscur_nc "STOFS current file ${COMINstofs}/${file} is missing or 0-byte. Run will continue without STOFS current fields for ${WFO}."
+       rm -f ${OUTPUTdir}/LOCKFILE
+       return
     fi
 
-    hasdownload_000="true"
+    echo "Copying ${COMINstofs}/${file} to ${CLIPdir}/${file}"
+    cp -rp "${COMINstofs}/${file}" "${CLIPdir}/${file}"
+    rc=$?
+    sleep 10
+
+    if [ "${rc}" != "0" ] && [ ! -e "${CLIPdir}/${file}" ];then
+       sleep 2
+       echo "Retrying copy of ${CLIPdir}/${file}"
+       cp -rp "${COMINstofs}/${file}" "${CLIPdir}/${file}"
+       rc=$?
+       sleep 10
+
+       if [ "${rc}" != "0" ] && [ ! -e "${CLIPdir}/${file}" ];then
+          echo "ERROR - copying file ${CLIPdir}/${file}"
+          export err=1
+          err_chk
+       fi
+    fi
 
     #while [ "${epoc_time}" == "" ]; do
     #   echo "Extracting epoc time for ${wfo}"
@@ -228,12 +159,6 @@ function process_wfolist() {
 
     #if [ ! -e ${swan_wl_ofile} ];then
     if [ -e ${swan_wl_ofile} ];then
-        #MakeClip ${SPOOLdir} ${file} 0 ${WFO}
-        #--- Make local copy of input file --------------------------
-        cp -p ${SPOOLdir}/${file1} ${CLIPdir}/${file1}
-        sleep 10
-        cp -p ${SPOOLdir}/${file2} ${CLIPdir}/${file2}
-        sleep 10
         lonmin=$(echo "$LL_LON - 360." | bc)
         lonmax=$(echo "$lonmin + $DX * $NX" | bc)
         latmin=${LL_LAT}
@@ -245,18 +170,17 @@ function process_wfolist() {
         echo "latmax = ${latmax}"
         echo "NCHOURS = ${NCHOURS}"
         echo "HOURS = ${HOURS}"
-        echo "CLIPdir/file1 = ${CLIPdir}/${file1}"
-        echo "CLIPdir/file2 = ${CLIPdir}/${file2}"
+        echo "CLIPdir/file = ${CLIPdir}/${file}"
 	echo "swan_wl_ofile = ${swan_wl_ofile}"
         echo "swan_time_ofile = ${swan_time_ofile}"
         #AW ${USHnwps}/stofs/bin/get_stofs_currents.py ${lonmin} ${lonmax} ${latmin} ${latmax} ${NCHOURS} ${CLIPdir}/${file1} ${swan_wl_ofile} ${swan_time_ofile} nowcast
     	#AW export err=$?; err_chk
-        ${USHnwps}/stofs/bin/get_stofs_currents.py ${lonmin} ${lonmax} ${latmin} ${latmax} ${HOURS} ${CLIPdir}/${file2} ${swan_wl_ofile} ${swan_time_ofile} forecast
+        ${USHnwps}/stofs/bin/get_stofs_currents.py ${lonmin} ${lonmax} ${latmin} ${latmax} ${HOURS} ${CLIPdir}/${file} ${swan_wl_ofile} ${swan_time_ofile} forecast
 	export err=$?; err_chk
         #------------------------------------------------------------
     else
-    	echo "Already created ${swan_wl_ofile}" 
-    	echo "Skipping this file" 
+        echo "Already created ${swan_wl_ofile}"
+        echo "Skipping this file"
     fi
 
     rm ${OUTPUTdir}/LOCKFILE
@@ -294,8 +218,8 @@ if [ -e "${VARdir}/wfolist_stofscur.sh" ]; then
   rm ${VARdir}/wfolist_stofscur.sh
 fi
 
-echo "Our spool DIR for FTP n000 data is: ${SPOOLdir}" 
-echo "Our spool DIR for FTP forecast data is: ${PRODUCTdir}" 
+echo "Our spool DIR for FTP n000 data is: ${SPOOLdir}"
+echo "Our spool DIR for FTP forecast data is: ${PRODUCTdir}"
 
 # Create WFO list to make init files for
 #${USHnwps}/make_wfolist.sh STOFS
@@ -304,14 +228,14 @@ echo -n 'export WFOLIST="EKA PQR SEW AER"' >> ${VARdir}/wfolist_stofscur.sh
 source ${VARdir}/wfolist_stofscur.sh
 
 if [ "${WFOLIST}" == "" ];then
-    echo "ERROR - Our WFOLIST is empty" 
-    echo "ERROR - Check the ${FIXnwps}/wfolist.dat file" 
+    echo "ERROR - Our WFOLIST is empty"
+    echo "ERROR - Check the ${FIXnwps}/wfolist.dat file"
     export err=1; err_chk
 fi
 
 # Set our script variables from the global config
-echo "STOFSHOURS = ${STOFSHOURS}" 
-echo "STOFSTIMESTEP = ${STOFSTIMESTEP}" 
+echo "STOFSHOURS = ${STOFSHOURS}"
+echo "STOFSTIMESTEP = ${STOFSTIMESTEP}"
 INGESTdir_org="${INGESTdir}"
 
 if [ -e ${RUNdir}/cgn_cmdfile ];then
@@ -324,16 +248,16 @@ done
 
 #aprun -n36 -N18 -j1 -d1 cfp ${RUNdir}/cgn_cmdfile
 mpiexec -np 36 --cpu-bind verbose,core cfp ${RUNdir}/cgn_cmdfile
-#export site=EKA; process_wfolist 
-#export site=PQR; process_wfolist 
-#export site=SEW; process_wfolist 
+#export site=EKA; process_wfolist
+#export site=PQR; process_wfolist
+#export site=SEW; process_wfolist
 #export site=AER; process_wfolist
 
 export err=$?; err_chk
 
-echo "Ending download at $($MDATE) UTC" 
-echo "Processing complete" 
-echo "Exiting..." 
+echo "Ending download at $($MDATE) UTC"
+echo "Processing complete"
+echo "Exiting..."
 exit 0
 # -----------------------------------------------------------
 # *******************************
