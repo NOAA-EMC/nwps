@@ -23,7 +23,7 @@
 # ----------------------------------------------------------- 
 
 date
-export PS4='+ $SECONDS ${0/\/nw.*\/nwps.*\/} + '
+export PS4='+ $SECONDS + ${0/\/nw.*\/nwps.*\/} + '
 set -xa
 
 # ############# ###############################
@@ -90,6 +90,7 @@ export pgmout=OUTPUT.$$
 
 # Determine WFO's Region
 export REGION=$( grep ${WFO,,} ${PARMnwps}/wfo.tbl | cut -c1-2 | tr '[:upper:]' '[:lower:]' )
+export RUN=$( grep ${WFO,,} ${PARMnwps}/wfo.tbl | cut -c1-2 | tr '[:upper:]' '[:lower:]' )
 echo ${REGION}
 
 ##############################################
@@ -117,8 +118,6 @@ if [ "${SENDCOM}" = YES ]; then
 fi
 
 mkdir -p $COMIN $LOGdir $RUNdir $TMPdir $OUTPUTdir $ARCHdir $DATAdir $INPUTdir $VARdir
-
-env
 
 ##############################################
 # Execute the script

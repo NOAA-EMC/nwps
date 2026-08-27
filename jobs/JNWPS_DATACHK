@@ -1,6 +1,6 @@
 #!/bin/sh
 date
-export PS4='+ $SECONDS ${0/\/nw.*\/nwps.*\/} + '
+export PS4='+ $SECONDS + ${0/\/nw.*\/nwps.*\/} + '
 set -xa
 
 # #### 04/01/15 ###############################

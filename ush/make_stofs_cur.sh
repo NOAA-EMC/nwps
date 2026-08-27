@@ -274,7 +274,7 @@ done
 if [ "$files_exist" = true ]; then
   rm ${VARdir}/hasstofsdownload_${CYCLE}z*
 fi
-if [ -e "${VARdir}/wfolist.dat"]; then
+if [ -e "${VARdir}/wfolist.dat" ]; then
   rm ${VARdir}/wfolist.dat
 fi
 if [ -e "${VARdir}/wfolist_sorted_stofscur.dat" ]; then

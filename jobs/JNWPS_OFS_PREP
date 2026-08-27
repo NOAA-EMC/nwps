@@ -1,6 +1,6 @@
 #!/bin/sh
 date
-export PS4='+ $SECONDS ${0/\/nw.*\/nwps.*\/} + '
+export PS4='+ $SECONDS + ${0/\/nw.*\/nwps.*\/} + '
 set -xa
 
 # #### 04/01/15 ###############################
@@ -15,7 +15,8 @@ cd $DATA
 ####################################
 export NET=${model}
 export OFS=ofs
-export RUN=${OFSTYPE:-${OFSTYPE:?}}
+#export RUN=${OFSTYPE:-${OFSTYPE:?}}
+export RUN=${OFS}
 
 ##### cycle - WW 20200918##
 export CYC=${cyc}
@@ -85,8 +86,6 @@ if [ "${SENDCOM}" = YES ]; then
 fi
 
 mkdir -p $LOGdir $RUNdir $TMPdir $OUTPUTdir $ARCHdir $DATAdir $INPUTdir $VARdir $GESOUT
-
-env
 
 ##############################################
 # Execute the script
