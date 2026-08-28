@@ -1,8 +1,8 @@
 ##############################################################################
 # IA32_Intel/x86-64_Intel:	Intel Pentium with Linux using Intel compiler 11.
 ##############################################################################
-F90_SER = ifort
-F90_OMP = ifort
+F90_SER = ftn
+F90_OMP = ftn
 F90_MPI = ftn
 FLAGS_OPT = -O2
 FLAGS_MSC = -g -traceback
