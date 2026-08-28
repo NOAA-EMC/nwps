@@ -1,6 +1,6 @@
 #!/bin/sh
 date
-export PS4='+ $SECONDS ${0/\/nw.*\/nwps.*\/} + '
+export PS4='+ $SECONDS + ${0/\/nw.*\/nwps.*\/} + '
 set -xa
 
 # #############################################
@@ -77,6 +77,7 @@ setpdy.sh
 
 # Determine WFO's Region
 export REGION=$( grep ${WFO,,} ${PARMnwps}/wfo.tbl | cut -c1-2 | tr '[:upper:]' '[:lower:]' )
+export RUN=$( grep ${WFO,,} ${PARMnwps}/wfo.tbl | cut -c1-2 | tr '[:upper:]' '[:lower:]' )
 
 ##############################################
 # Define COM directory
@@ -116,8 +117,6 @@ if [ "${SENDCOM}" = YES ]; then
 fi
 
 mkdir -p $COMIN $COMOUT $LOGdir $RUNdir $TMPdir $OUTPUTdir $ARCHdir $DATAdir $INPUTdir $VARdir $GESOUT
-
-env
 
 ##############################################
 # Execute the script

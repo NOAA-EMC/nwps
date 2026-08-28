@@ -26,13 +26,13 @@ export w3nco_ver=2.4.1
 export util_shared_ver=1.5.1
 export perl_ver=5.32.0 # new
 #export emapfc_ver=1.0.0 # unused
-export degrib_ver=2.28.0 
+export degrib_ver=2.28.0
 
 export LOUD=on
 
 # FOR TESTING IN PARA
 
-export COMPATH=/lfs/h1/ops/prod/com/psurge:/lfs/h1/ops/prod/com/rtofs:/lfs/h1/ops/para/com/stofs:/lfs/h1/ops/prod/com/seaice_analysis:/lfs/h1/ops/prod/com/gfs:/lfs/h1/ops/para/com/nwps
+export COMPATH=/lfs/h1/ops/prod/com/psurge:/lfs/h1/ops/prod/com/rtofs:/lfs/h1/ops/prod/com/stofs:/lfs/h1/ops/prod/com/seaice_analysis:/lfs/h1/ops/prod/com/gfs:/lfs/h1/ops/para/com/nwps
 #export COMPATH=/lfs/h1/ops/prod/com/psurge:/lfs/h1/ops/xxx/com/rtofs:/lfs/h1/ops/prod/com/stofs:/lfs/h1/ops/xxx/com/seaice_analysis:/lfs/h1/ops/prod/com/gfs:/lfs/h1/ops/para/com/nwps
 
 #prod testing
