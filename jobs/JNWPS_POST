@@ -29,7 +29,7 @@ set -xa
 # ############# ###############################
 # SETUP NWPS SHELL VARIABLES
 # #############################################
-export DATA=$DATAROOT/p${model}_${WFO}_${envir}
+export DATA=$DATAROOT/p${model}_${WFO}_${envir}_${nwps_ver%.*}
 if [[ ! -d "${DATA}" ]]; then mkdir -p "${DATA}"; fi
 cd $DATA
 
