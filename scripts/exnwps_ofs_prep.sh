@@ -79,7 +79,7 @@ if [ ${SENDDBN} = YES ] && [ "${OFSTYPE}" != "stofs_cur" ]; then
     mkdir ${DATA}/tars
     for i in ${COMOUT}/${OFSTYPE}/*_output; do
         if [ "${OFSTYPE}" == "psurge" ]; then
-            epoc_waterlevel_start_time=`cat ${COMOUT}/psurge/${i##*/}_output/psurge_waterlevel_start_time.txt`
+            epoc_waterlevel_start_time=`cat ${COMOUT}/psurge/${i##*/}/psurge_waterlevel_start_time.txt`
             wldateinname_t=$(date -d @${epoc_waterlevel_start_time} +"%Y%m%d%T" )
             TARCYCLE=${wldateinname_t:8:2}
             find ${i}/ -name *txt -exec basename '{}' ';' >> ${DATA}/tars/${i##*/}.list
