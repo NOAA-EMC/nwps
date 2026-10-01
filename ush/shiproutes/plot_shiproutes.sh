@@ -256,7 +256,6 @@ do
 	fi
 
 	cp -fpv ${SWANoutputfile} ${PROCdirparll}/${swan_table_name} | tee -a ${LOGFILE}
-	rm -f ${SWANoutputfile}
 
 	echo "Departing point: ${stlat} ${stlon}" | tee -a ${LOGFILE}
 	echo "Final Destination: ${endlat} ${endlon}" | tee -a ${LOGFILE}
