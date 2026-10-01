@@ -369,8 +369,8 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
         ${RIP_CURRENT_TO_BIN} -v -d ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin >> $logrunup
      else
         # Write a cluster of 9 at each output point to improve visibility (add argument "-c")
-        echo "${RIP_CURRENT_TO_BIN} -v -d -c ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin"
-        ${RIP_CURRENT_TO_BIN} -v -d -c ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin
+        echo "${RIP_CURRENT_TO_BIN} -v -d -c ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin" | tee -a $logrunup
+        ${RIP_CURRENT_TO_BIN} -v -d -c ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin >> $logrunup
      fi
      if [ $? -eq 0 ]; then
 	 # Only create the GRIB2 file if the encoding process is successful
