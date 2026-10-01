@@ -275,8 +275,8 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
 	 sed -i s/'<< SET LA2 >>'/${cgnLAT2}/g ${parm}.meta
 	 sed -i s/'<< SET LO1 >>'/${cgnLON1}/g ${parm}.meta
 	 sed -i s/'<< SET LO2 >>'/${cgnLON2}/g ${parm}.meta
-	 echo "${WAVE_RUNUP_TO_BIN} -v -d -c ${SWAN_RUNUP_OUTPUT_FILE} ${parm} ${parm}.meta ${parm}_templates.grib2 ${parm}_points.bin"
-	 ${WAVE_RUNUP_TO_BIN} -v -d -c ${SWAN_RUNUP_OUTPUT_FILE} ${parm} ${parm}.meta ${parm}_templates.grib2 ${parm}_points.bin
+	 echo "${WAVE_RUNUP_TO_BIN} -v -d -c ${SWAN_RUNUP_OUTPUT_FILE} ${parm} ${parm}.meta ${parm}_templates.grib2 ${parm}_points.bin" | tee -a $logrunup
+	 ${WAVE_RUNUP_TO_BIN} -v -d -c ${SWAN_RUNUP_OUTPUT_FILE} ${parm} ${parm}.meta ${parm}_templates.grib2 ${parm}_points.bin >> $logrunup
 	 if [ $? -eq 0 ]; then
 	     echo "${WGRIB2} ${parm}_templates.grib2  -no_header -import_bin ${parm}_points.bin -grib_out ${parm}_final_runup.grib2"
 	     ${WGRIB2} ${parm}_templates.grib2  -no_header -import_bin ${parm}_points.bin -grib_out ${parm}_final_runup.grib2
@@ -365,8 +365,8 @@ export COMOUT_CORRECT="${COMOUT_ROOT}/${REGION_ONLY}.${PDY_INPUT}/${COMOUT_WFO}"
      sed -i s/'<< SET LO2 >>'/${cgnLON2}/g ${rip_current_meta}
      if [ "${SITEID}" == "GUM" ]; then
         # Write only original output points to file
-        echo "${RIP_CURRENT_TO_BIN} -v -d ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin"
-        ${RIP_CURRENT_TO_BIN} -v -d ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin
+        echo "${RIP_CURRENT_TO_BIN} -v -d ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin" | tee -a $logrunup
+        ${RIP_CURRENT_TO_BIN} -v -d ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin >> $logrunup
      else
         # Write a cluster of 9 at each output point to improve visibility (add argument "-c")
         echo "${RIP_CURRENT_TO_BIN} -v -d -c ${SWAN_RIP_OUTPUT_FILE} ${rip_current_meta} ${RIPDATA}/templates.grib2 ${RIPDATA}/points.bin"

@@ -150,7 +150,7 @@ if [ "${NewestPsurge}" == "" ]
         if [ "${NewestPsurge}" == "" ]
         then
            echo "ERROR - No Psurge fields to process"
-           export err=1; err_chk
+           export err=1; err_chk "No Psurge fields to process at ${PSurge_latest}/psurge.${YYYYMMDD}/"
 	fi 
 fi
 
