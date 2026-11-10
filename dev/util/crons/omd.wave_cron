@@ -4,64 +4,32 @@ HOMEcron=/lfs/h2/emc/couple/noscrub/omd.wave/nwps/crons
 LOGNAME=omd.wave
 HOMEnwps=/lfs/h2/emc/couple/noscrub/omd.wave/nwps/nwps.v1.5.0/
 VALIDATIONdir=/lfs/h2/emc/couple/noscrub/omd.wave/nwps_para
+_=/usr/bin/env
 
-# 1. Development crons -----------------------
 
-# 1.0 Model runs
-10 6,12,18 * * *  ${HOMEcron}/nwps_ofs_stofs.cron > ${HOMEcron}/cronlog.ofs_stofs 2>&1
-10 7,13,19 * * *  ${HOMEcron}/nwps_ofs_stofs_cur.cron > ${HOMEcron}/cronlog.ofs_stofs_cur 2>&1
-#0 6,12,18 * * * ${HOMEcron}/nwps_ofs_psurge.cron > ${HOMEcron}/cronlog.ofs_stofs 2>&1
-#0 22 * * *       ${HOMEcron}/nwps_ofs_rtofs.cron > ${HOMEcron}/cronlog.ofs_rtofs 2>&1
-#*/5 * * * *      ${HOMEcron}/nwps.cron > ${HOMEcron}/cronlog.dev.nwps 2>&1
-
-# 1.1 Model data
-#0 */2 * * *        ${HOMEcron}/nwps_rsync_dev.cron > ${HOMEcron}/cronlog.dev.nwps_rsync 2>&1
-#*/10 * * * *     ${HOMEcron}/nwps_ftp_all_dev.cron > ${HOMEcron}/cronlog.para.nwps_ftp 2>&1
-
-# 1.2 Web graphics
-#0 * * * *     ${HOMEcron}/nwps_webgraph_dev.cron > ${HOMEcron}/cronlog.dev.nwps_web 2>&1
-#0 */2 * * *      ${HOMEcron}/nwps_plot_cgn_dev.cron > ${HOMEcron}/cronlog.plot_cgn_dev 2>&1
-#15 */3 * * *      ${HOMEcron}/nwps_trans_cgn_dev.cron > ${HOMEcron}/cronlog.trans_cgn_dev 2>&1
-#0 */2 * * *        ${HOMEcron}/nwps_rips_dev.cron > ${HOMEcron}/cronlog.plot_rips 2>&1
-#15 */3 * * *        ${HOMEcron}/nwps_trans_rips_dev.cron > ${HOMEcron}/cronlog.trans_rips_dev 2>&1
-
-# 1.3 Validation
-#0 */6 * * *        ${HOMEcron}/nwps_val_dev.cron > ${HOMEcron}/cronlog.dev.nwps_val 2>&1
-#0 */6 * * *        ${HOMEcron}/nwps_val_devwr.cron > ${HOMEcron}/cronlog.devwr.nwps_val 2>&1
-#30 */3 * * *        ${HOMEcron}/nwps_val_rt_dev.cron > ${HOMEcron}/cronlog.dev.nwps_val_rt 2>&1
-#30 */3 * * *        ${HOMEcron}/nwps_val_rt_devwr.cron > ${HOMEcron}/cronlog.devwr.nwps_val_rt 2>&1
-#30 */3 * * *        ${HOMEcron}/nwps_val_rt_dev_prar.cron > ${HOMEcron}/cronlog.dev_prar.nwps_val_rt 2>&1
-
-#45 7 * * *        ${HOMEcron}/nwps_val_rt_dev_6day.cron > ${HOMEcron}/cronlog.dev.nwps_val_rt_6day 2>&1
-#15 8 * * *        ${HOMEcron}/nwps_val_rt_devwr_6day.cron > ${HOMEcron}/cronlog.devwr.nwps_val_rt_6day 2>&1
-#45 8 * * *        ${HOMEcron}/nwps_val_rt_dev_prar_6day.cron > ${HOMEcron}/cronlog.dev_prar.nwps_val_rt_6day 2>&1
-## 1.4 rzdm transfer
-#30 10 * * *        ${HOMEcron}/nwps_val_dev_rzdm.cron > ${HOMEcron}/cronlog.nwps_val_rzdm_transfer_dev.cron 2>&1
-
-# 2. Production crons -----------------------
+# 1. Production crons -----------------------
 
 # 2.1 Model data
-#0 */2 * * *        ${HOMEcron}/nwps_rsync_prod.cron > ${HOMEcron}/cronlog.prod.nwps_rsync 2>&1
+0 */2 * * *        ${HOMEcron}/nwps_rsync_prod.cron > ${HOMEcron}/cronlog.prod.nwps_rsync 2>&1
 ##*/10 * * * *     ${HOMEcron}/nwps_ftp_all_prod.cron > ${HOMEcron}/cronlog.para.nwps_ftp 2>&1
 #*/30 * * * *     ${HOMEcron}/nwps_ftp_protide_prod.cron > ${HOMEcron}/cronlog.prod.nwps_ftp_protide 2>&1
 
 # 2.2 Web graphics
-#0 * * * *     ${HOMEcron}/nwps_webgraph_prod.cron > ${HOMEcron}/cronlog.prod.nwps_web 2>&1
-#0 */2 * * *      ${HOMEcron}/nwps_plot_cgn_prod.cron > ${HOMEcron}/cronlog.plot_cgn_prod 2>&1
-#15 */3 * * *      ${HOMEcron}/nwps_trans_cgn_prod.cron > ${HOMEcron}/cronlog.trans_cgn_prod 2>&1
-#0 */2 * * *     ${HOMEcron}/nwps_rips_prod.cron > ${HOMEcron}/cronlog.plot_rips_prod 2>&1
-#15 */3 * * *        ${HOMEcron}/nwps_trans_rips_prod.cron > ${HOMEcron}/cronlog.trans_rips_prod 2>&1
+0 * * * *     ${HOMEcron}/nwps_webgraph_prod.cron > ${HOMEcron}/cronlog.prod.nwps_web 2>&1
+0 */2 * * *      ${HOMEcron}/nwps_plot_cgn_prod.cron > ${HOMEcron}/cronlog.plot_cgn_prod 2>&1
+15 */3 * * *      ${HOMEcron}/nwps_trans_cgn_prod.cron > ${HOMEcron}/cronlog.trans_cgn_prod 2>&1
+0 */2 * * *     ${HOMEcron}/nwps_rips_prod.cron > ${HOMEcron}/cronlog.plot_rips_prod 2>&1
+15 */3 * * *        ${HOMEcron}/nwps_trans_rips_prod.cron > ${HOMEcron}/cronlog.trans_rips_prod 2>&1
 
 # 2.3 Validation
-#0 */6 * * *        ${HOMEcron}/nwps_val_prod.cron > ${HOMEcron}/cronlog.prod.nwps_val 2>&1
-#0 */6 * * *        ${HOMEcron}/nwps_val_prodwr.cron > ${HOMEcron}/cronlog.prodwr.nwps_val 2>&1
-#30 */3 * * *        ${HOMEcron}/nwps_val_rt_prod.cron > ${HOMEcron}/cronlog.prod.nwps_val_rt 2>&1
-#30 */3 * * *        ${HOMEcron}/nwps_val_rt_prodwr.cron > ${HOMEcron}/cronlog.prodwr.nwps_val_rt 2>&1
-#30 */3 * * *        ${HOMEcron}/nwps_val_rt_prod_prar.cron > ${HOMEcron}/cronlog.prod_prar.nwps_val_rt 2>&1
+0 */6 * * *        ${HOMEcron}/nwps_val_prod.cron > ${HOMEcron}/cronlog.prod.nwps_val 2>&1
+0 */6 * * *        ${HOMEcron}/nwps_val_prodwr.cron > ${HOMEcron}/cronlog.prodwr.nwps_val 2>&1
+30 */3 * * *        ${HOMEcron}/nwps_val_rt_prod.cron > ${HOMEcron}/cronlog.prod.nwps_val_rt 2>&1
+30 */3 * * *        ${HOMEcron}/nwps_val_rt_prodwr.cron > ${HOMEcron}/cronlog.prodwr.nwps_val_rt 2>&1
+30 */3 * * *        ${HOMEcron}/nwps_val_rt_prod_prar.cron > ${HOMEcron}/cronlog.prod_prar.nwps_val_rt 2>&1
 ## 1.4 rzdm transfer
-#30 10 * * *        ${HOMEcron}/nwps_val_prod_rzdm.cron > ${HOMEcron}/cronlog.nwps_val_rzdm_transfer_prod.cron 2>&1
+30 10 * * *        ${HOMEcron}/nwps_val_prod_rzdm.cron > ${HOMEcron}/cronlog.nwps_val_rzdm_transfer_prod.cron 2>&1
 
 # hpss archive
 
 #0 * * * *       ${HOMEcron}/nwps_hpss.cron > ${HOMEcron}/cronlog.dev.nwps_hpss 2>&1
-

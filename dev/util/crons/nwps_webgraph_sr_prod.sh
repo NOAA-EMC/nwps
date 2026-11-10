@@ -23,7 +23,7 @@ do
    #datafound='false'
    #for cycle in $cycles
    #do
-   workdir=/lfs/h1/ops/prod/com/nwps/v1.4/${region}.${PDY}/${wfo}
+   workdir=/lfs/h1/ops/prod/com/nwps/v1.5/${region}.${PDY}/${wfo}
    echo ${workdir}
    cd ${workdir}
    cycle=$(ls -t | head -1)
@@ -32,23 +32,23 @@ do
          for cgnum in $cgnums
          do
             echo 'Searching' ${wfo} ${cgnum}
-            if [ -f ${workdir}/${cycle}/${cgnum}/plots*.tar.gz ]
+            if [ -f ${workdir}/${cycle}/${cgnum}/nwps.t*z.plots*.tar.gz ]
             then
                echo 'Copying from' ${workdir}/${cycle}
                cd ${workdir}/${cycle}/${cgnum}/
 
-               scp ${workdir}/${cycle}/${cgnum}/plots*.tar.gz waves@emcrzdm:/home/www/polar/nwps/images/rtimages/${wfo}/nwps/${cgnum}/
-               scp ${workdir}/${cycle}/${cgnum}/shiproute_plots*.tar.gz waves@emcrzdm:/home/www/polar/nwps/images/rtimages/${wfo}/nwps/${cgnum}/
-               ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; tar -xf plots*.tar.gz'
-               ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; rm plots*.tar.gz'
-               ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; tar -xf shiproute_plots*.tar.gz'
-               ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; rm shiproute_plots*.tar.gz'
+               scp ${workdir}/${cycle}/${cgnum}/nwps.t*z.plots*.tar.gz waves@emcrzdm:/home/www/polar/nwps/images/rtimages/${wfo}/nwps/${cgnum}/
+               scp ${workdir}/${cycle}/${cgnum}/nwps.t*z.shiproute_plots*.tar.gz waves@emcrzdm:/home/www/polar/nwps/images/rtimages/${wfo}/nwps/${cgnum}/
+               ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; tar -xf nwps.t*z.plots*.tar.gz'
+               ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; rm nwps.t*z.plots*.tar.gz'
+               ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; tar -xf nwps.t*z.shiproute_plots*.tar.gz'
+               ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; rm nwps.t*z.shiproute_plots*.tar.gz'
                # In case of MFL copy also shiproute plots to prod
                if [ ${wfo} == 'mfl' ]
                then
                   scp ${workdir}/${cycle}/${cgnum}/shiproute_plots*.tar.gz waves@emcrzdm:/home/www/polar/nwps/images/rtimages/${wfo}/nwps/${cgnum}/ 
-                  ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; tar -xf shiproute_plots*.tar.gz'
-                  ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; rm shiproute_plots*.tar.gz'
+                  ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; tar -xf nwps.t*z.shiproute_plots*.tar.gz'
+                  ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; rm nwps.t*z.shiproute_plots*.tar.gz'
                fi
 
                # Copy new clustering-based wave tracking results
@@ -56,8 +56,8 @@ do
                #then
                   echo 'Copying cluster data...'
                   scp ${workdir}/${cycle}/${cgnum}/mapplots*.tar.gz waves@emcrzdm:/home/www/polar/nwps/images/rtimages/${wfo}/nwps/CG1/
-                  ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/CG1/; tar -xf mapplots*.tar.gz'
-                  ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/CG1/; rm mapplots*.tar.gz'
+                  ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/CG1/; tar -xf nwps.t*z.mapplots*.tar.gz'
+                  ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/CG1/; rm nwps.t*z.mapplots*.tar.gz'
                #fi
 
                #datafound='true'

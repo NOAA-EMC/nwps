@@ -23,7 +23,7 @@ do
    ssh waves@emcrzdm 'cd /home/ftp/polar/nwps/; rm -r '${region}'.'${PDYm5}
 
    #Check for yesterday's runs completed (shortly) after midnight
-   workdir=/lfs/h1/ops/prod/com/nwps/v1.4/${region}.${PDYm1}
+   workdir=/lfs/h1/ops/prod/com/nwps/v1.5/${region}.${PDYm1}
    echo ${workdir}
    if [ -d ${workdir} ]
    then
@@ -32,7 +32,7 @@ do
    fi
 
    #Check for today's runs
-   workdir=/lfs/h1/ops/prod/com/nwps/v1.4/${region}.${PDY}
+   workdir=/lfs/h1/ops/prod/com/nwps/v1.5/${region}.${PDY}
    echo ${workdir}
    if [ -d ${workdir} ]
    then

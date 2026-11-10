@@ -31,9 +31,9 @@ do
             echo 'Searching' ${wfo} ${cgnum}
             #dset=${outdir}/${cgnum}/${wfo}_nwps_${cgnum}_${PDY}_${cycle}00.grib2
             # Check if there is new data than has not yet been plotted
-            if [ -f ${outdir}/${cgnum}/${wfo}_nwps_${cgnum}_*.grib2 ]
+            if [ -f ${outdir}/${cgnum}/nwps.*.${cgnum,,}.${wfo}.grib2 ]
             then 
-               dset=$(ls ${outdir}/${cgnum}/${wfo}_nwps_${cgnum}_*.grib2)
+               dset=$(ls ${outdir}/${cgnum}/nwps.*.${cgnum,,}.${wfo}.grib2)
                if ! grep -q "${dset}" ${logfile}
                then
                   # Copy the data
