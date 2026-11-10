@@ -97,7 +97,7 @@ export runon='BACKUPSYS'
 # --------------------------------------------------------------------------- #
 # 1.  Manage batch job
 
-  qsub ${workdir}/nwps_ftp_all_prod.lsf
+  qsub nwps_ftp_all_prod.lsf
 
 # --------------------------------------------------------------------------- #
 # 2.  End of all.

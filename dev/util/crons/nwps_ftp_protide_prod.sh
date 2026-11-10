@@ -18,7 +18,7 @@ PDYm5=$(date -d "5 days ago" +%Y%m%d)
 
 for region in $regions
 do
-   workdir=/lfs/h1/ops/prod/com/nwps/v1.4/${region}.${PDY}
+   workdir=/lfs/h1/ops/prod/com/nwps/v1.5/${region}.${PDY}
 
    #Copy Protide data at LOX
    if [ $region = 'wr' ]

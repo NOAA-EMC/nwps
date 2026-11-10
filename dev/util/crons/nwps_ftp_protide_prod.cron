@@ -22,8 +22,6 @@ module load xt-lsfhpc
 module list
 
 # 0. Host assessment
-workdir=${HOMEcron}
-echo 'Running in '${workdir}
 
 export script='nwps_ftp_protide_prod.cron'
 export runon='PRIMARYSYS'
@@ -72,7 +70,7 @@ export runon='PRIMARYSYS'
 # --------------------------------------------------------------------------- #
 # 1.  Manage batch job
 
-  qsub ${workdir}/nwps_ftp_protide_prod.lsf
+  qsub nwps_ftp_protide_prod.lsf
 
 # --------------------------------------------------------------------------- #
 # 2.  End of all.
