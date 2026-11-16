@@ -1668,7 +1668,7 @@ for single_date in daterange(startDate,startDate):
       for cycle in revcycles:
          print('Checking cycle '+cycle)
          extdir=COMOUT+region+'.'+timestamp+'/'+wfo+'/'+cycle+'/'+CGextract+'/'
-         infile=wfo+'_nwps_'+CGextract+'_'+timestamp+'_'+cycle+'00.grib2'
+         infile='nwps.t'+cycle+'z.'+CGextract+'.'+wfo+'.grib2'
 
          if os.path.isfile(extdir+infile):
             print('Data found. Extracting at buoy locations...')
@@ -1814,7 +1814,7 @@ for single_date in daterange(startDatem1,startDatem1):
       for cycle in cycles:
          print('Checking cycle '+cycle)
          extdir=COMOUTm1+region+'.'+timestampm1+'/'+wfo+'/'+cycle+'/'+CGextract+'/'
-         infile=wfo+'_nwps_'+CGextract+'_'+timestampm1+'_'+cycle+'00.grib2'
+         infile='nwps.t'+cycle+'z.'+CGextract+'.'+wfo+'.grib2'
 
          if os.path.isfile(extdir+infile):
             print('Data found. Extracting at buoy locations...')
@@ -1957,7 +1957,7 @@ for single_date in daterange(startDatem2,startDatem2):
       for cycle in cycles:
          print('Checking cycle '+cycle)
          extdir=COMOUTm2+region+'.'+timestampm2+'/'+wfo+'/'+cycle+'/'+CGextract+'/'
-         infile=wfo+'_nwps_'+CGextract+'_'+timestampm2+'_'+cycle+'00.grib2'
+         infile='nwps.t'+cycle+'z.'+CGextract+'.'+wfo+'.grib2'
 
          if os.path.isfile(extdir+infile):
             #print('Data found. Extracting at buoy locations...')
