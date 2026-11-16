@@ -25,8 +25,8 @@ set -xa
 
 echo 'Running run_nwps_validation_dev.sh...'
 
-export COMOUT='/lfs/h2/emc/couple/noscrub/omd.wave/nwps_para/prod/com/nwps/v1.4/'
-export COMOUTm1='/lfs/h2/emc/couple/noscrub/omd.wave/nwps_para/prod/com/nwps/v1.4/'
+export COMOUT='/lfs/h2/emc/couple/noscrub/omd.wave/nwps_para/prod/com/nwps/v1.5/'
+export COMOUTm1='/lfs/h2/emc/couple/noscrub/omd.wave/nwps_para/prod/com/nwps/v1.5/'
 
 cd $workdir
 pwd

@@ -30,6 +30,28 @@ pwd
 
 #----- Set start and end dates of real-time analysis -----
 export STARTDATE=$(date +%Y%m%d)
+export STARTDATEm2=$(date -d "-6 days" +%Y%m%d)
+
+export copydir=${workdir}/${STARTDATEm2}
+
+scp ${copydir}/nwps_???_?????_ts_6day.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
+scp ${copydir}/nwps_???_????_ts_6day.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
+
+scp ${copydir}/nwps_gum_?????_ts_6day.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
+scp ${copydir}/nwps_gum_????_ts_6day.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
+
+scp ${copydir}/nwps_aer_?????_ts_6day.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
+scp ${copydir}/nwps_aer_????_ts_6day.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
+
+scp ${copydir}/nwps_alu_?????_ts_6day.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
+scp ${copydir}/nwps_alu_????_ts_6day.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
+
+scp ${copydir}/nwps_ajk_?????_ts_6day.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
+scp ${copydir}/nwps_ajk_????_ts_6day.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
+
+scp ${copydir}/nwps_afg_?????_ts_6day.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
+scp ${copydir}/nwps_afg_????_ts_6day.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/validation/
+
 
 scp ${workdir}/nwps_??_scatter.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/val_monthly/
 scp ${workdir}/nwps_????_scatter.png waves@emcrzdm:/home/www/polar/nwps/images/rtimages/val_monthly/

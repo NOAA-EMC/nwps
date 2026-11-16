@@ -43,7 +43,7 @@ do
                scp ${workdir}/${cgnum}/nwps.t*z.shiproute_plots*.tar.gz waves@emcrzdm:/home/www/polar/nwps/images/rtimages/${wfo}/nwps/${cgnum}/
                # Clean out old figures first
                #ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; rm *.png'
-               ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; tar -xf --overwrite nwps.t*z.plots*.tar.gz'
+               ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; tar -xf nwps.t*z.plots*.tar.gz'
                ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; cp  Hansonplot_buoy028.png Hansonplot_46028.png'
                ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; cp  Hansonplot_buoy219.png Hansonplot_46219.png'
                ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; cp  Hansonplot_buoy069.png Hansonplot_46069.png'
@@ -89,13 +89,13 @@ do
          for cgnum in $cgnums
          do
             echo 'Searching' ${wfo} ${cgnum}
-            if [ -f ${workdir}/${cgnum}/plots*.tar.gz ]
+            if [ -f ${workdir}/${cgnum}/nwps.t*z.plots*.tar.gz ]
             then
                echo 'Copying from' ${workdir}
                cd ${workdir}/${cgnum}/
 
-               scp ${workdir}/${cgnum}/plots*.tar.gz waves@emcrzdm:/home/www/polar/nwps/images/rtimages/${wfo}/nwps/${cgnum}/
-               scp ${workdir}/${cgnum}/shiproute_plots*.tar.gz waves@emcrzdm:/home/www/polar/nwps/images/rtimages/${wfo}/nwps/${cgnum}/
+               scp ${workdir}/${cgnum}/nwps.t*z.plots*.tar.gz waves@emcrzdm:/home/www/polar/nwps/images/rtimages/${wfo}/nwps/${cgnum}/
+               scp ${workdir}/${cgnum}/nwps.t*z.shiproute_plots*.tar.gz waves@emcrzdm:/home/www/polar/nwps/images/rtimages/${wfo}/nwps/${cgnum}/
                # Clean out old figures first
                #ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; rm *.png'
                ssh waves@emcrzdm 'cd /home/www/polar/nwps/images/rtimages/'${wfo}'/nwps/'${cgnum}'/; tar -xf nwps.t*z.plots*.tar.gz'

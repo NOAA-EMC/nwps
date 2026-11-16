@@ -35,7 +35,7 @@ export STARTDATEm2=$(date -d "-2 days" +%Y%m%d)
 #export STARTDATE=$(date -d "-1 days" +%Y%m%d)
 export ENDDATE=$(date -d "+7 days" +%Y%m%d)
 
-export COMOUT='/lfs/h1/ops/prod/com/nwps/v1.4/'
+export COMOUT='/lfs/h1/ops/prod/com/nwps/v1.5/'
 
 echo ''
 echo 'Analysing real-time data for:'

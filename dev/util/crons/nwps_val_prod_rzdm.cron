@@ -1,11 +1,10 @@
 #!/bin/bash  
 # --------------------------------------------------------------------------- #
 #                                                                             #
-# nwps_val_prod_rzdm.cron : Cron manages the running of the NWPS script       #
-#             ${workdir}/nwps_validation_prod_rzdm.lsf                        #
+# nwps_val_dev_rzdm.cron : Cron manages the running of the NWPS script        #
+#             ${workdir}/nwps_validation_dev_rzdm.lsf                         #
 #                                                                             #
-# Remarks   - Set the WFOs to process in ${HOMEnwps}/parm/wfo_prod.tbl          #
-#
+# Remarks   - Set the WFOs to process in ${HOMEnwps}/parm/wfo_dev.tbl          #
 #                                                                             #
 # Last Changed : 01-03-2026                                     January 2026  #
 # --------------------------------------------------------------------------- #
@@ -28,11 +27,11 @@ echo 'Running in '${workdir}
 
 # 0.b Host assessment
 
-export script='nwps_val_dev.cron'
+export script='nwps_val_prod.cron'
 export runon='BACKUPSYS'
 
   echo '                  *********************************************'
-  echo '                  *** NWPS HOOK-IN SCRIPT nwps_val_dev.cron ***'
+  echo '                  *** NWPS HOOK-IN SCRIPT nwps_val_prod.cron ***'
   echo '                  *********************************************'
   echo ' '
   echo " Time : `date`"
@@ -90,7 +89,7 @@ export runon='BACKUPSYS'
     echo ' '
     echo " nwps.cron $date : Dev run queues are closed. Exiting..."
     echo ' '
-    echo '                        *** End of nwps_val_dev.cron ***'
+    echo '                        *** End of nwps_val_prod.cron ***'
     exit 0
   fi  
 
@@ -98,7 +97,7 @@ export runon='BACKUPSYS'
 # 1.  Manage batch job
 
   echo " "
-  echo "        -> Submitting nwps_validation_dev.lsf at: `date`"
+  echo "        -> Submitting nwps_validation_prod.lsf at: `date`"
   qsub ${workdir}/nwps_validation_prod_rzdm.lsf
   echo " "
 
@@ -109,6 +108,6 @@ export runon='BACKUPSYS'
   echo ' '
   echo " Time : `date`"
   echo ' '
-  echo '                        *** End of nwps_val_dev.cron ***'
+  echo '                        *** End of nwps_val_prod.cron ***'
 
 # - end of nwps_val_dev.cron ------------------------------------------------ #
