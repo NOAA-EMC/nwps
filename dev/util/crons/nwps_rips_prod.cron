@@ -128,12 +128,12 @@ export runon='BACKUPSYS'
  
   region='wr'
   wfo='sgx'; sed -e "s/%REGION%/$region/g" -e "s/%WFO%/$wfo/g" ${workdir}/nwps_rips_wfo_prod.lsf.tmpl > ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}; qsub ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}
-  #wfo='lox'; sed -e "s/%REGION%/$region/g" -e "s/%WFO%/$wfo/g" ${workdir}/nwps_rips_wfo_prod.lsf.tmpl > ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}; qsub ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}
-  #wfo='mtr'; sed -e "s/%REGION%/$region/g" -e "s/%WFO%/$wfo/g" ${workdir}/nwps_rips_wfo_prod.lsf.tmpl > ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}; qsub ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}
-  #wfo='eka'; sed -e "s/%REGION%/$region/g" -e "s/%WFO%/$wfo/g" ${workdir}/nwps_rips_wfo_prod.lsf.tmpl > ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}; qsub ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}
-  #wfo='mfr'; sed -e "s/%REGION%/$region/g" -e "s/%WFO%/$wfo/g" ${workdir}/nwps_rips_wfo_prod.lsf.tmpl > ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}; qsub ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}
-  #wfo='pqr'; sed -e "s/%REGION%/$region/g" -e "s/%WFO%/$wfo/g" ${workdir}/nwps_rips_wfo_prod.lsf.tmpl > ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}; qsub ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}
-  #wfo='sew'; sed -e "s/%REGION%/$region/g" -e "s/%WFO%/$wfo/g" ${workdir}/nwps_rips_wfo_prod.lsf.tmpl > ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}; qsub ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}
+  wfo='lox'; sed -e "s/%REGION%/$region/g" -e "s/%WFO%/$wfo/g" ${workdir}/nwps_rips_wfo_prod.lsf.tmpl > ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}; qsub ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}
+  wfo='mtr'; sed -e "s/%REGION%/$region/g" -e "s/%WFO%/$wfo/g" ${workdir}/nwps_rips_wfo_prod.lsf.tmpl > ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}; qsub ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}
+  wfo='eka'; sed -e "s/%REGION%/$region/g" -e "s/%WFO%/$wfo/g" ${workdir}/nwps_rips_wfo_prod.lsf.tmpl > ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}; qsub ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}
+  wfo='mfr'; sed -e "s/%REGION%/$region/g" -e "s/%WFO%/$wfo/g" ${workdir}/nwps_rips_wfo_prod.lsf.tmpl > ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}; qsub ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}
+  wfo='pqr'; sed -e "s/%REGION%/$region/g" -e "s/%WFO%/$wfo/g" ${workdir}/nwps_rips_wfo_prod.lsf.tmpl > ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}; qsub ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}
+  wfo='sew'; sed -e "s/%REGION%/$region/g" -e "s/%WFO%/$wfo/g" ${workdir}/nwps_rips_wfo_prod.lsf.tmpl > ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}; qsub ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}
 
   region='pr'
   wfo='hfo'; sed -e "s/%REGION%/$region/g" -e "s/%WFO%/$wfo/g" ${workdir}/nwps_rips_wfo_prod.lsf.tmpl > ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}; qsub ${workdir}/nwps_rips_wfo_prod.lsf.${wfo}
