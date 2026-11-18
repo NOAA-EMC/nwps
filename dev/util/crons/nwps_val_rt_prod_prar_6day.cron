@@ -1,12 +1,8 @@
 #!/bin/bash  
 # --------------------------------------------------------------------------- #
 #                                                                             #
-# nwps_val_rt_dev.cron : This script manages the running of the script        #
-#             ${HOMEnwps}/dev/ecf/jnwps_datachk.ecf                            #
 #                                                                             #
-# Remarks   - Set the WFOs to process in ${HOMEnwps}/parm/wfo_dev.tbl          #
-#                                                                             #
-# Last Changed : 12-05-2015                                    December 2015  #
+# Last Changed : 11-18-2026                                    November 2026  #
 # --------------------------------------------------------------------------- #
 
 # Set up the modules
@@ -25,11 +21,11 @@ echo 'Running in '${workdir}
 
 # 0.b Host assessment
 
-export script='nwps_val_rt_prod_prar.cron'
+export script='nwps_val_rt_prod_prar_6day.cron'
 export runon='BACKUPSYS'
 
   echo '                  ************************************************'
-  echo '                  *** NWPS HOOK-IN SCRIPT nwps_val_rt_dev.cron ***'
+  echo '                  *** NWPS HOOK-IN SCRIPT nwps_val_rt_prod_prar_6day.cron ***'
   echo '                  ************************************************'
   echo ' '
   echo " Time : `date`"
@@ -87,7 +83,7 @@ export runon='BACKUPSYS'
     echo ' '
     echo " nwps.cron $date : Dev run queues are closed. Exiting..."
     echo ' '
-    echo '                        *** End of nwps_val_rt_dev.cron ***'
+    echo '                        *** End of nwps_val_rt_prod_prar_6day.cron ***'
     exit 0
   fi
 
@@ -108,6 +104,6 @@ export runon='BACKUPSYS'
   echo ' '
   echo " Time : `date`"
   echo ' '
-  echo '                        *** End of nwps_val_rt_devwr.cron ***'
+  echo '                        *** End of nwps_val_rt_prod_prar_6day.cron ***'
 
 # - end of nwps_val_rt_dev.cron --------------------------------------------- #
