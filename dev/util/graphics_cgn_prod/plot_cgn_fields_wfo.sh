@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash  
 set -x
 
 #region="sr"
@@ -43,6 +43,11 @@ do
                   cp -p ${workdir}/*.png ${workdir}/${wfo}/${cgnum}/
                   datafound='true'
 
+		  # Check the source of currents
+                  CURSOURCE='RTOFS'
+                  if grep -q ESTOFSCUR ${outdir}/Warn_Forecaster*.txt; then CURSOURCE='STOFS'; fi
+                  echo 'Currents sourced from ' $CURSOURCE
+
                   # Create the plots
                   export SITEID=${wfo}
                   export CGNUMPLOT=$(echo ${cgnum} | cut -c 3)
@@ -53,7 +58,7 @@ do
                   python wind.py 1 49
                   python swell.py 1 49
                   python wlev.py 1 49
-                  python cur.py 1 49
+                  python cur.py 1 49 ${CURSOURCE}
                   tar -czvf plots_${wfo}_${cgnum}.tar.gz swan*.png
 
                   echo 'Completed' ${wfo} ${cgnum}
