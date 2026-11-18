@@ -19,6 +19,7 @@ from matplotlib.ticker import MultipleLocator
 # global vars
 COMOUT = os.environ.get('COMOUT')
 COMOUTm1 = os.environ.get('COMOUTm1')
+COMOUTm5_dev = os.environ.get('COMOUTm5')
 COMOUTm5 =  os.environ.get('COMOUTm5')
 COMOUTww1 = os.environ.get('COMOUTww1')
 workdir = os.environ.get('workdir')
@@ -1647,6 +1648,153 @@ fhours=['000','003','006','009','012','015','018','021','024','027','030','033',
         '063','066','069','072','075','078','081','084','087','090','093','096','099','102','105','108','111','114','117','120','123','126','129','132','135','138','141','144']
 varname=['HTSGW','PERPW','DIRPW','WIND','WDIR']
 
+
+for single_date in daterange(startDatem5,startDatem5):
+
+   # Comprehensions
+   modtimm1 = [[0 for x in range(TDEF)] for x in range(len(wfos))]
+   modparm1 = [[0 for x in range(TDEF)] for x in range(len(wfos))]
+   modperm1 = [[0 for x in range(TDEF)] for x in range(len(wfos))]
+   moddirm1 = [[0 for x in range(TDEF)] for x in range(len(wfos))]
+   modwndm1 = [[0 for x in range(TDEF)] for x in range(len(wfos))]
+   modwdrm1 = [[0 for x in range(TDEF)] for x in range(len(wfos))]
+
+   timestampm1 = single_date.strftime("%Y%m%d")
+   print('')
+   print('Analysing '+timestampm1+'...')
+
+   for iwfo in range(len(wfos)):
+      print('')
+      wfo=wfos[iwfo]
+      iwfobuoy=iwfo
+      wfobuoy=wfobuoys[iwfobuoy]
+      print('Extracting '+region+'.'+timestampm1+', buoy '+wfobuoy+', on '+CGextract+':')
+
+      for cycle in cycles:
+         print('Checking cycle '+cycle)
+         extdir=COMOUTm5_dev+region+'.'+timestampm1+'/'+wfo+'/'+cycle+'/'+CGextract+'/'
+         infile='nwps.t'+cycle+'z.'+CGextract.lower()+'.'+wfo+'.grib2'
+         print(f"extdir = '{extdir}'")
+         print(f"infile = '{infile}'")
+         print(f"full_path = '{extdir}{infile}'")
+
+         if os.path.isfile(extdir+infile):
+            print('Data found. Extracting at buoy locations...')
+            command = 'cp '+extdir+infile+' '+workdir
+            os.system(command)
+
+            command = '$WGRIB2 '+workdir+infile+'  -match "'+varname[0]+'" -lon '+wfobuoycoors[iwfobuoy]+'  > '+wfo+'_'+wfobuoy+'_'+varname[0]+'_'+timestampm1+'_'+cycle+'00.pnt'
+            os.system(command)
+            command = '$WGRIB2 '+workdir+infile+'  -match "'+varname[1]+'" -lon '+wfobuoycoors[iwfobuoy]+'  > '+wfo+'_'+wfobuoy+'_'+varname[1]+'_'+timestampm1+'_'+cycle+'00.pnt'
+            os.system(command)
+            command = '$WGRIB2 '+workdir+infile+'  -match "'+varname[2]+'" -lon '+wfobuoycoors[iwfobuoy]+'  > '+wfo+'_'+wfobuoy+'_'+varname[2]+'_'+timestampm1+'_'+cycle+'00.pnt'
+            os.system(command)
+            command = '$WGRIB2 '+workdir+infile+'  -match "'+varname[3]+'" -lon '+wfobuoycoors[iwfobuoy]+'  > '+wfo+'_'+wfobuoy+'_'+varname[3]+'_'+timestampm1+'_'+cycle+'00.pnt'
+            os.system(command)
+            command = '$WGRIB2 '+workdir+infile+'  -match "'+varname[4]+'" -lon '+wfobuoycoors[iwfobuoy]+'  > '+wfo+'_'+wfobuoy+'_'+varname[4]+'_'+timestampm1+'_'+cycle+'00.pnt'
+            os.system(command)
+            command = 'rm '+workdir+infile
+            os.system(command)
+
+            command = 'ls -lrt *.pnt'
+            os.system(command)
+            break
+
+# ---------- Read NWPS model data into buoy-centered arrays ----------
+
+   for iwfo in range(len(wfos)):
+   #for ibuoy in range(len(allBuoys)):
+      print('')
+      wfo=wfos[iwfo]
+      print('Reading pnt data from '+wfo+'.'+timestampm1+':')
+
+      #for iwfobuoy in range(len(wfobuoys[iwfo][:])):
+      iwfobuoy=iwfo
+      wfobuoy=wfobuoys[iwfobuoy]
+      #wfobuoy=allBuoys[ibuoy]
+      datafound = 'false'
+
+      for cycle in cycles:
+         if datafound == 'true':
+            continue
+         print('Search for '+wfobuoy+' cycle '+cycle) 
+         infile  = wfo+'_'+wfobuoy+'_'+varname[0]+'_'+timestampm1+'_'+cycle+'00.pnt'
+         infile1 = wfo+'_'+wfobuoy+'_'+varname[1]+'_'+timestampm1+'_'+cycle+'00.pnt'
+         infile2 = wfo+'_'+wfobuoy+'_'+varname[2]+'_'+timestampm1+'_'+cycle+'00.pnt'
+         infile3 = wfo+'_'+wfobuoy+'_'+varname[3]+'_'+timestampm1+'_'+cycle+'00.pnt'
+         infile4 = wfo+'_'+wfobuoy+'_'+varname[4]+'_'+timestampm1+'_'+cycle+'00.pnt'
+         if os.path.isfile(infile):
+            print('Reading file '+infile)
+            print('Reading file '+infile1)
+            print('Reading file '+infile2)
+            print('Reading file '+infile3)
+            print('Reading file '+infile4)
+            datafound = 'true'
+            fo  = open(workdir+infile, "r")
+            fo1 = open(workdir+infile1, "r")
+            fo2 = open(workdir+infile2, "r")
+            fo3 = open(workdir+infile3, "r")
+            fo4 = open(workdir+infile4, "r")
+            for tstep in range(TDEF):
+               # Hs
+               line = fo.readline()
+               linesplit = [s for s in re.split(r',val=', line) if s]
+               modparm1[iwfobuoy][tstep] = float(linesplit[1])
+               # Tp
+               line = fo1.readline()
+               linesplit = [s for s in re.split(r',val=', line) if s]
+               modperm1[iwfobuoy][tstep] = float(linesplit[1])
+               # Dir
+               line = fo2.readline()
+               linesplit = [s for s in re.split(r',val=', line) if s]
+               moddirm1[iwfobuoy][tstep] = float(linesplit[1])
+               # Wind
+               line = fo3.readline()
+               linesplit = [s for s in re.split(r',val=', line) if s]
+               modwndm1[iwfobuoy][tstep] = float(linesplit[1])
+               # WDir
+               line = fo4.readline()
+               linesplit = [s for s in re.split(r',val=', line) if s]
+               modwdrm1[iwfobuoy][tstep] = float(linesplit[1])
+               # Date (Add the forecast hour to the start of the cycle timestamp)
+               date = datetime.datetime(int(timestampm1[0:4]),int(timestampm1[4:6]),int(timestampm1[6:8]),int(cycle))
+               date = date + datetime.timedelta(hours=(tstep*tdelta))
+               #modtimm1[iwfobuoy][tstep] = (date-datetime.datetime(1970,1,1)).total_seconds()
+               modtimm1[iwfobuoy][tstep] = timedelta_total_seconds(date-datetime.datetime(1970,1,1))
+               bcyclem1[iwfobuoy] = cycle
+               # Remove SWAN exception values
+               if (modparm1[iwfobuoy][tstep]<0.05) or (modparm1[iwfobuoy][tstep] == 9.999e+20):
+                  modparm1[iwfobuoy][tstep]=np.nan
+                  modperm1[iwfobuoy][tstep]=np.nan
+                  moddirm1[iwfobuoy][tstep]=np.nan
+                  modwndm1[iwfobuoy][tstep]=np.nan
+                  modwdrm1[iwfobuoy][tstep]=np.nan
+                  modtimm1[iwfobuoy][tstep] = np.nan
+            fo.close()
+            command = 'rm '+workdir+infile
+            os.system(command)
+            command = 'rm '+workdir+infile1
+            os.system(command)
+            command = 'rm '+workdir+infile2
+            os.system(command)
+            command = 'rm '+workdir+infile3
+            os.system(command)
+            command = 'rm '+workdir+infile4
+            os.system(command)
+         else:
+            continue
+      if (datafound == 'false'):
+         print(' *** Warning: no model data found')
+         for tstep in range(TDEF):
+            modparm1[iwfobuoy][tstep] = np.nan
+            modperm1[iwfobuoy][tstep] = np.nan
+            moddirm1[iwfobuoy][tstep] = np.nan
+            modwndm1[iwfobuoy][tstep] = np.nan
+            modwdrm1[iwfobuoy][tstep] = np.nan
+            modtimm1[iwfobuoy][tstep] = np.nan
+         bcyclem1[iwfobuoy] = '00'   # Reset the cycle if no data is found
+      #modpar(find(modpar==0.)) = NaN;
+
 for single_date in daterange(startDatem5,startDatem5):
 
    # Comprehensions
@@ -1671,7 +1819,7 @@ for single_date in daterange(startDatem5,startDatem5):
       for cycle in cycles:
          print('Checking cycle '+cycle)
          extdir=COMOUTm5+region+'.'+timestampm2+'/'+wfo+'/'+cycle+'/'+CGextract+'/'
-         infile='nwps.t'+cycle+'z.'+CGextract+'.'+wfo+'.grib2'
+         infile='nwps.t'+cycle+'z.'+CGextract.lower()+'.'+wfo+'.grib2'
 
          if os.path.isfile(extdir+infile):
             #print('Data found. Extracting at buoy locations...')
@@ -2261,9 +2409,9 @@ dstringm2 = timestampm2[0:4]+'/'+timestampm2[4:6]+'/'+timestampm2[6:8]+' '+bcycl
 if (not np.isnan(modparm2[iwfobuoy][0])):
    plt.text(0.02, 1.05, 'NWPS prod', color='k', transform = ax.transAxes, fontsize=8)
    dstringtitle = dstringm2
-if (not np.isnan(modparm1[iwfobuoy][0])):
-   plt.text(0.33, 1.05, 'NWPS dev', color='c', transform = ax.transAxes, fontsize=8)
-   dstringtitle = dstringm1
+#if (not np.isnan(modparm1[iwfobuoy][0])):
+#   plt.text(0.33, 1.05, 'NWPS dev', color='c', transform = ax.transAxes, fontsize=8)
+#   dstringtitle = dstringm1
 if ( (not np.isnan(ww1parm1[iwfobuoy][0])) or (not np.isnan(ww1parm2[iwfobuoy][0])) ):
    if wwgrid[-4:] == '0p16':
       plt.text(0.66, 1.05, 'GFS-Wave 10 arc-min', color='g', transform = ax.transAxes, fontsize=8)
@@ -2283,7 +2431,7 @@ ax.plot(ww1timm2_hours, ww1perftm2, 'g-x', markeredgecolor='g',markersize=3)
 #ax.plot(ww1timm1_hours, ww1perftm1, 'g-x', markeredgecolor='g',markersize=3)
 #ax.plot(ww1tim_hours, ww1perft, 'g-x', markeredgecolor='g',markersize=3)
 ax.plot(modtimm2_hours, modperftm2, 'k-o', markeredgecolor='k',markersize=2)
-ax.plot(modtimm1_hours, modperftm1, 'c-o', markeredgecolor='c',markersize=2)
+#ax.plot(modtimm1_hours, modperftm1, 'c-o', markeredgecolor='c',markersize=2)
 
 # --- X-Axis Customization for Forecast Hours ---
 

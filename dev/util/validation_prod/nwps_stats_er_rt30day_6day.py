@@ -799,7 +799,7 @@ for single_date in daterange(startDate,stopDate):
             COMOUT = os.environ.get('COMOUT')
             print ('Using para data: '+COMOUT)
          extdir=COMOUT+region+'.'+timestamp+'/'+wfo+'/'+cycle+'/'+CGextract+'/'
-         infile='nwps.t'+cycle+'z.'+CGextract+'.'+wfo+'.grib2'
+         infile='nwps.t'+cycle+'z.'+CGextract.lower()'.'+wfo+'.grib2'
 
          if os.path.isfile(extdir+infile):
             if (os.stat(extdir+infile).st_size !=0):
