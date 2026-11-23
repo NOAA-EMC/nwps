@@ -2376,7 +2376,7 @@ ax.plot(ww1timm2_hours, ww1parftm2, 'g-x', markeredgecolor='g',markersize=3)
 #ax.plot(ww1timm1_hours, ww1parftm1, 'g-x', markeredgecolor='g',markersize=3)
 #ax.plot(ww1tim_hours, ww1parft, 'g-x', markeredgecolor='g',markersize=3)
 ax.plot(modtimm2_hours, modparftm2, 'k-o', markeredgecolor='k',markersize=2)
-ax.plot(modtimm1_hours, modparftm1, 'c-o', markeredgecolor='c',markersize=2)
+#ax.plot(modtimm1_hours, modparftm1, 'c-o', markeredgecolor='c',markersize=2)
 
 # --- 5. Adjust X-Axis Ticks/Labels ---
 
