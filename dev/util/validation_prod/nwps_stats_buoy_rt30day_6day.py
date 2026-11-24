@@ -1588,7 +1588,7 @@ for single_date in daterange(startDate,stopDate):
       for cycle in cycles:
          print('Checking cycle '+cycle)
          extdir=COMOUT+region+'.'+timestamp+'/'+wfo+'/'+cycle+'/'+CGextract+'/'
-         infile=wfo+'_nwps_'+CGextract+'_'+timestamp+'_'+cycle+'00.grib2'
+         infile='nwps.t'+cycle+'z.'+CGextract.lower()+'.'+wfo+'.grib2'
          print('Checking '+extdir+infile)
 
          if os.path.isfile(extdir+infile):

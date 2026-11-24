@@ -18,8 +18,10 @@ from matplotlib.colors import Normalize
 print('*** cur.py ***')
 TSTART = int(sys.argv[1])
 TEND = int(sys.argv[2])
+cursource = sys.argv[3]
 print('TSTART = '+str(TSTART))
 print('TEND = '+str(TEND))
+print('cursource = '+cursource)
 
 HOMEnwps = os.environ['HOMEnwps']
 cartopy.config['pre_existing_data_dir'] = HOMEnwps+'/lib/cartopy'
@@ -275,9 +277,14 @@ for tstep in range(TSTART, (int(TEND)+1)):
       plt.plot(npierlons, npierlats, color="black", linewidth=2.5, linestyle="-", transform=ccrs.PlateCarree())
       plt.plot(spierlons, spierlats, color="black", linewidth=2.5, linestyle="-", transform=ccrs.PlateCarree())
 
-   figtitle = 'NWPS RTOFS-GLOBAL Surface Horizontal Current (knots) \n Hour '\
-              +str(forecastTime)+' ('+str(date.hour).zfill(2)+'Z'+str(date.day).zfill(2)\
-              +monthstr[int(date.month)-1]+str(date.year)+')'
+   if (cursource == 'STOFS'):
+      figtitle = 'NWPS GLOBAL STOFS Depth-Integrated Current (knots) \n Hour '\
+                 +str(forecastTime)+' ('+str(date.hour).zfill(2)+'Z'+str(date.day).zfill(2)\
+                 +monthstr[int(date.month)-1]+str(date.year)+')'
+   else:
+      figtitle = 'NWPS RTOFS-GLOBAL Surface Horizontal Current (knots) \n Hour '\
+                 +str(forecastTime)+' ('+str(date.hour).zfill(2)+'Z'+str(date.day).zfill(2)\
+                 +monthstr[int(date.month)-1]+str(date.year)+')'
    plt.title(figtitle,fontsize=10)
    #plt.figtext(0.40, 0.06, '**EXPERIMENTAL**',fontsize=9)
 

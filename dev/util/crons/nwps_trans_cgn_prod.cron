@@ -11,7 +11,7 @@
 
 # 0.a Set necessary variables
 export workdir=${VALIDATIONdir}'/graphics_cgn_prod'
-export comroot=/lfs/h1/ops/prod/com/nwps/v1.4
+export comroot=/lfs/h1/ops/prod/com/nwps/v1.5
 echo 'Running in '${workdir}
 echo 'With COMROOT='${comroot}
 

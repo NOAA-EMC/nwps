@@ -61,7 +61,8 @@ for cycle in revcycles:
    print('Search for '+WFO+' cycle '+cycle) 
    extdir=COMOUT+REGION+'.'+timestamp+'/'+WFO+'/'+cycle+'/'+CGextract+'/'
    #infile = WFO+'_nwps_5m_'+CGextract+'_ripprob.'+timestamp+'_'+cycle+'00'
-   infile = 'nwps.t' + cycle + 'z.5m_' + CGextract + '_ripprob.' + WFO + '.txt'
+   infile = 'nwps.t' + cycle + 'z.5m_' + CGextract.lower() + '_ripprob.' + WFO + '.txt'
+   print('Checking path: ' + extdir + infile)
    if os.path.isfile(extdir+infile):
       print('Reading file '+infile)
       datafound = 'true'

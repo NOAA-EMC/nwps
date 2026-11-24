@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash  
 set -x
 
 #region="sr"
@@ -31,9 +31,9 @@ do
             echo 'Searching' ${wfo} ${cgnum}
             #dset=${outdir}/${cgnum}/${wfo}_nwps_${cgnum}_${PDY}_${cycle}00.grib2
             # Check if there is new data than has not yet been plotted
-            if [ -f ${outdir}/${cgnum}/${wfo}_nwps_${cgnum}_*.grib2 ]
+            if [ -f ${outdir}/${cgnum}/nwps.*.${cgnum,,}.${wfo}.grib2 ]
             then 
-               dset=$(ls ${outdir}/${cgnum}/${wfo}_nwps_${cgnum}_*.grib2)
+               dset=$(ls ${outdir}/${cgnum}/nwps.*.${cgnum,,}.${wfo}.grib2)
                if ! grep -q "${dset}" ${logfile}
                then
                   # Copy the data
@@ -42,6 +42,11 @@ do
                   cp -p ${workdir}/*.py ${workdir}/${wfo}/${cgnum}/
                   cp -p ${workdir}/*.png ${workdir}/${wfo}/${cgnum}/
                   datafound='true'
+
+		  # Check the source of currents
+                  CURSOURCE='RTOFS'
+                  if grep -q ESTOFSCUR ${outdir}/Warn_Forecaster*.txt; then CURSOURCE='STOFS'; fi
+                  echo 'Currents sourced from ' $CURSOURCE
 
                   # Create the plots
                   export SITEID=${wfo}
@@ -53,7 +58,7 @@ do
                   python wind.py 1 49
                   python swell.py 1 49
                   python wlev.py 1 49
-                  python cur.py 1 49
+                  python cur.py 1 49 ${CURSOURCE}
                   tar -czvf plots_${wfo}_${cgnum}.tar.gz swan*.png
 
                   echo 'Completed' ${wfo} ${cgnum}
