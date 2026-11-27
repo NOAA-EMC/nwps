@@ -1,4 +1,4 @@
-#PBS -N nwps_datachk_%TIME%
+#PBS -N nwps_datachk_%TIME%%VER:""%
 #PBS -j oe
 #PBS -S /bin/bash
 #PBS -q %QUEUE%
