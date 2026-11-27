@@ -1,4 +1,4 @@
-#PBS -N nwps_%FAMILY1%_prep
+#PBS -N nwps_%FAMILY1%_prep%VER:""%
 #PBS -j oe
 #PBS -S /bin/bash
 #PBS -q %QUEUE%
